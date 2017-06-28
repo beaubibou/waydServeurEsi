@@ -409,11 +409,11 @@ public class PersonneDAO {
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom) throws Exception, SQLException {
+			String photostr, String nom,String gcmToken) throws Exception, SQLException {
 		Date datecreation = Calendar.getInstance().getTime();
 		String requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
-				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion,gcm)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		String commentaire =null;
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
@@ -445,6 +445,8 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(19, true);// affiche sexe
 		preparedStatement.setBoolean(20, true);// affiche age
 		preparedStatement.setBoolean(21, true);// affiche age
+		preparedStatement.setString(22, gcmToken);// affiche age
+		
 		preparedStatement.execute();
 	//	System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -572,17 +574,18 @@ public class PersonneDAO {
 	}
 
 	public void updateJeton(String iduser, String idtoken, String photostr,
-			String nom) throws SQLException {
+			String nom,String gcmToken) throws SQLException {
 
 		if (photostr.equals("")) {// Cas ou la photo vient d'un compte avec mot de passe
 
-			String requete = "UPDATE  personne set jeton=?,nom=? "
+			String requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 					+ " WHERE login=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
 			preparedStatement.setString(3, iduser);
+			preparedStatement.setString(4, gcmToken);
 			preparedStatement.execute();
 			preparedStatement.close();
 		}
@@ -622,7 +625,7 @@ public class PersonneDAO {
 
 		}
 
-		System.out.println("Jeton mis a jour");
+	
 
 	}
 

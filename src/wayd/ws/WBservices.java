@@ -78,7 +78,7 @@ public class WBservices {
 		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
 	}
 
-	public boolean testToken(String idtoken, String photostr, String nom) {
+	public boolean testToken(String idtoken, String photostr, String nom,String gcmToken) {
 		long debut = System.currentTimeMillis();
 		System.out.print("test token");
 		FirebaseOptions options;
@@ -130,13 +130,13 @@ public class WBservices {
 							if (!personnedao.isLoginExist(uid)) {
 								int idpersonne = personnedao
 										.addCompteGenerique(uid, idtoken,
-												photostr, nom);
+												photostr, nom,gcmToken);
 
 							}
 
 							else
 								personnedao.updateJeton(uid, idtoken, photostr,
-										nom);
+										nom,gcmToken);
 						} catch (SQLException | NamingException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
