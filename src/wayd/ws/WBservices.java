@@ -2931,6 +2931,29 @@ public class WBservices {
 			System.out.println(formatDate.format(new Date())
 					+ ";UpdateNotification;"
 					+ (System.currentTimeMillis() - debut) + "ms");
+			
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					Connection connexionGcm = null;
+					try {
+						connexionGcm = CxoPool.getConnection();
+						new ServeurMethodes(connexionGcm)
+								.envoiAndroidUpdateNotification(idpersonne);
+
+					} catch (SQLException | NamingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} finally {
+						CxoPool.closeConnection(connexionGcm);
+					}
+
+				}
+			}).start();
+			
+			
 			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

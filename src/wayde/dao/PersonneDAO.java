@@ -584,8 +584,8 @@ public class PersonneDAO {
 					.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
-			preparedStatement.setString(3, iduser);
-			preparedStatement.setString(4, gcmToken);
+			preparedStatement.setString(3, gcmToken);
+			preparedStatement.setString(4, iduser);
 			preparedStatement.execute();
 			preparedStatement.close();
 		}
@@ -597,26 +597,29 @@ public class PersonneDAO {
 			String photo=isPhotoExist(iduser);
 			
 			if (photo==null){
-			String requete = "UPDATE  personne set jeton=?,nom=?,photo=? "
+			String requete = "UPDATE  personne set jeton=?,nom=?,photo=?,gcm=? "
 					+ " WHERE login=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
 			preparedStatement.setString(3, photostr);
-			preparedStatement.setString(4, iduser);
+			preparedStatement.setString(4, gcmToken);
+			preparedStatement.setString(5, iduser);
 			preparedStatement.execute();
 			preparedStatement.close();
 			}
+			
 			else
 			{	
-				String requete = "UPDATE  personne set jeton=?,nom=? "
+				String requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 						+ " WHERE login=?";
 				PreparedStatement preparedStatement = connexion
 						.prepareStatement(requete);
 				preparedStatement.setString(1, idtoken);
 				preparedStatement.setString(2, nom);
-				preparedStatement.setString(3, iduser);
+				preparedStatement.setString(3, gcmToken);
+				preparedStatement.setString(4, iduser);
 				preparedStatement.execute();
 				preparedStatement.close();
 				

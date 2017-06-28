@@ -86,7 +86,7 @@ public class NotificationDAO {
 		preparedStatement.setInt(1, idDestinataire);
 		preparedStatement.setInt(2, Notification.DonneAvis);
 		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
+				new java.sql.Timestamp(new Date().getTime()));
 		preparedStatement.setInt(4, idactivite);
 		preparedStatement.setInt(5, idpersonneAnoter);
 		preparedStatement.execute();
