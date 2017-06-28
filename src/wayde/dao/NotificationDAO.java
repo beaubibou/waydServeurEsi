@@ -96,7 +96,7 @@ public class NotificationDAO {
 	public void addNotificationFromAvis(
 			 int idpersonne) throws SQLException {
 
-		// ****************Recupere les avis à donner pour les activite à noter
+		// **************Recuperles avis à donner pour les activite à noter
 		AvisaDonnerDAO avisadonnerdao = new AvisaDonnerDAO(connexion);
 		ArrayList<AvisaDonnerDb> listavisadonner=avisadonnerdao.getListAvisaDonner(idpersonne);
 			
