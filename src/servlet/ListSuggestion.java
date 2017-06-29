@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import website.dao.ProblemeDAO;
 import website.dao.SuggestionDAO;
-import website.metier.ProblemeBean;
 import website.metier.SuggestionBean;
 
 /**

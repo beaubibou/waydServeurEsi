@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 
 import javax.servlet.ServletException;
@@ -11,18 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.api.client.googleapis.auth.clientlogin.ClientLogin.Response;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import website.dao.ActiviteDAO;
 import website.dao.AmiDAO;
 import website.dao.PersonneDAO;
 import website.dao.SignalementDAO;
 import website.metier.ActiviteBean;
 import website.metier.AmiBean;
-import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.SignalementBean;
 

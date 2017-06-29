@@ -5,14 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.naming.NamingException;
 
-import wayde.bean.Ami;
 import wayde.bean.CxoPool;
-import website.metier.ActiviteBean;
-import website.metier.AmiBean;
 import website.metier.StatistiqueBean;
 
 public class StatDAO {

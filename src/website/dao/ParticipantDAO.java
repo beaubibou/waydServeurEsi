@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
-import wayde.bean.Participant;
 import website.metier.ParticipantBean;
 
 public class ParticipantDAO {

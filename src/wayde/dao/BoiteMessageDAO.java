@@ -13,7 +13,6 @@ import wayde.bean.Discussion;
 import wayde.bean.Message;
 import wayde.bean.MessageBoite;
 import wayde.bean.Personne;
-import wayde.bean.RetourMessage;
 
 public class BoiteMessageDAO {
 	Connection connexion;
@@ -510,7 +509,6 @@ public class BoiteMessageDAO {
 			Date datecreation = rs.getTimestamp("datecreation");
 			String nomemetteur = rs.getString("nom");
 			String prenomemetteur = rs.getString("prenom");
-			String photo = rs.getString("photo");
 			int idmetteur = rs.getInt("idpersonne");
 			int idmessage = rs.getInt("idmessage");
 			boolean lu = rs.getBoolean("lu");

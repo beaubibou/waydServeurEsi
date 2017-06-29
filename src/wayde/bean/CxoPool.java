@@ -18,7 +18,9 @@ public abstract class CxoPool {
 			// Récupération connection référencées dans le JNDI - cf context.xml 
 			Context ctx = new InitialContext();
 			// Connexion avec Oracle
-			DataSource source = (DataSource) ctx.lookup("java:/comp/env/PostgresDS");
+			
+			
+			DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
 			
 			// Connexion avec Postgre
 			//DataSource source = (DataSource) ctx.lookup("java:/comp/env/PostgreDS");

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import wayde.bean.Participation;
 import wayde.bean.Personne;
 
@@ -154,7 +155,6 @@ public class ParticipationDAO {
 
 	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws Exception {
 
-		long debut = System.currentTimeMillis();
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
 		String requete = " SELECT personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "

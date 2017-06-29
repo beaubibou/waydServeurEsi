@@ -5,26 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 import javax.naming.NamingException;
 
-import wayde.bean.Activite;
 import wayde.bean.CxoPool;
-import wayde.bean.Droit;
-import wayde.bean.Parametres;
-import wayde.bean.Personne;
-import wayde.bean.Profil;
-import wayde.bean.ProfilNotation;
-import wayde.bean.ProprietePref;
-import wayde.bean.Tutoriel;
-import wayde.bean.ProfilDiscussion;
-import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
@@ -243,8 +229,7 @@ public class PersonneDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ProfilBean profil = null;
-
+	
 		try {
 			connexion = CxoPool.getConnection();
 

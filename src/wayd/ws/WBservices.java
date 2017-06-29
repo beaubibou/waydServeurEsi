@@ -3317,7 +3317,6 @@ public class WBservices {
 
 	public String test_GetToken(int idpersonne) {
 		long debut = System.currentTimeMillis();
-
 		Connection connexion = null;
 
 		try {

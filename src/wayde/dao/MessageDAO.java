@@ -445,7 +445,6 @@ public class MessageDAO {
 			Date datecreation = rs.getTimestamp("datecreation");
 			String nomemetteur = rs.getString("nom");
 			String prenomemetteur = rs.getString("prenom");
-			String photo = rs.getString("photo");
 			int idmetteur = rs.getInt("idpersonne");
 			int idmessage = rs.getInt("idmessage");
 			boolean lu = rs.getBoolean("lu");

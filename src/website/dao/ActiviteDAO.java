@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.naming.NamingException;
 
-import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.ServeurMethodes;
 import website.metier.ActiviteBean;
@@ -339,7 +337,7 @@ public class ActiviteDAO {
 			}
 
 			preparedStatement.close();
-
+			rs.close();
 			// Cherche dans les activite
 
 			requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"

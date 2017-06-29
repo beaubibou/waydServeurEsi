@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.PersonneDAO;
-import website.dao.ProblemeDAO;
-import website.metier.ProblemeBean;
 import website.metier.ProfilBean;
 
 /**

@@ -22,7 +22,7 @@ import wayde.dao.Outils;
 import wayde.dao.PersonneDAO;
 
 public class ServeurMethodes {
-	static String api_gcm = "AIzaSyAoEUElgfNpZgoAnBtNQ0kLSfVOGmq9nSE";
+	static String api_gcm = "AIzaSyC_BMfY8tNRB0pjv_tXFevIcwdz-8cALE8";
 
 	Connection connexion;
 

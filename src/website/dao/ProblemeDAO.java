@@ -9,10 +9,7 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
-import wayde.bean.Ami;
 import wayde.bean.CxoPool;
-import website.metier.ActiviteBean;
-import website.metier.AmiBean;
 import website.metier.ProblemeBean;
 
 public class ProblemeDAO {

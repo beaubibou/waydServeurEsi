@@ -25,21 +25,19 @@ import com.google.firebase.tasks.OnSuccessListener;
  */
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	
-	
+
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		FirebaseOptions options;
 		if (FirebaseApp.getApps().isEmpty()) {
 
 			try {
-				
-			
+
 				options = new FirebaseOptions.Builder()
 						// .setServiceAccount(new
 						// FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
@@ -56,7 +54,7 @@ public class Connexion extends HttpServlet {
 		}
 
 		if (FirebaseApp.getApps().isEmpty()) {
-		
+
 			try {
 				options = new FirebaseOptions.Builder()
 						.setServiceAccount(
@@ -73,14 +71,14 @@ public class Connexion extends HttpServlet {
 		}
 
 	}
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println("token " + request.getParameter("token"));
-		
-		testToken(request.getParameter("token"),request,response);
-		// response.sendRedirect("login.jsp");
+		// System.out.println("token " + request.getParameter("token"));
+
+		testToken(request.getParameter("token"), request, response);
 
 	}
 
@@ -91,66 +89,62 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String email = request.getParameter("email");
-		String pwd = request.getParameter("pwd");
 		System.out.println("Do post Connexion");
 		HttpSession session = request.getSession();
 
-		session.setAttribute("profil",new ProfilBean());
+		session.setAttribute("profil", new ProfilBean());
 
 		if (true)
 			response.sendRedirect("Acceuil");
 
 	}
 
-	public void testToken(String idtoken, HttpServletRequest request, HttpServletResponse response) {
+	public void testToken(String idtoken, HttpServletRequest request,
+			HttpServletResponse response) {
 
-	
-		HttpSession session=request.getSession();
-		
+		HttpSession session = request.getSession();
+
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
 					@Override
 					public void onSuccess(FirebaseToken decodedToken) {
-						
+
 						String uid = decodedToken.getUid();
-						ProfilBean profil=PersonneDAO.getFullProfilByUid(uid);
-						System.out.println("admin"+profil.isAdmin());	
-						if (profil!=null)
-							if (profil.isAdmin()){
+						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
+						System.out.println("admin" + profil.isAdmin());
 						
-						System.out.println(profil.getPseudo());
-						session.setAttribute("profil", profil);
-						
-						try {
-							response.sendRedirect("Acceuil");
-							
-						
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						}
-							else{
-							
-							try {
-							
-								response.sendRedirect("Error.jsp");
-								
-							
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+					
+						if (profil != null)
+							if (profil.isAdmin()) {
+
+								System.out.println(profil.getPseudo());
+								session.setAttribute("profil", profil);
+
+								try {
+									response.sendRedirect("Acceuil");
+
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} else
+							{
+
+								try {
+
+									response.sendRedirect("Error.jsp");
+
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
 							}
-							
-							
-						}
-						
-						
+
 					}
+
 				});
-				
-				
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

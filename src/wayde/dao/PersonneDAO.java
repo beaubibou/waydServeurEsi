@@ -17,10 +17,9 @@ import wayde.bean.Droit;
 import wayde.bean.Parametres;
 import wayde.bean.Personne;
 import wayde.bean.Profil;
+import wayde.bean.ProfilDiscussion;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProprietePref;
-import wayde.bean.Tutoriel;
-import wayde.bean.ProfilDiscussion;
 
 public class PersonneDAO {
 	Connection connexion;
