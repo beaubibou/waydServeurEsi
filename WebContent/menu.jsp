@@ -10,7 +10,6 @@
 				if (session.getAttribute("profil") != null) {
 
 					ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
 					out.println("<a class=\"navbar-brand\">" + "Bienvenue "
 							+ profil.getPseudo() + "</a>");
 				}
@@ -23,7 +22,8 @@
 			<li><a href="ListActivite">Activités</a></li>
 			<li><a href="ListProbleme">Problèmes</a></li>
 			<li><a href="ListSuggestion">Suggestions</a></li>
-			<li><a href="ListSignalement">Signalements</a></li>
+			<li><a href="ListSignalementProfils">Signalements Profils</a></li>
+			<li><a href="ListSignalementActivite">Signalements Activités</a></li>
 			<li><a href="ListProfil">Profils</a></li>
 			<li><a href="Controleur?action=deconnexion">Déconnexion</a></li>
 

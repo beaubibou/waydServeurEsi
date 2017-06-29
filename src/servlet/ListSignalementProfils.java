@@ -15,13 +15,13 @@ import website.metier.SignalementCount;
 /**
  * Servlet implementation class ListSignalement
  */
-public class ListSignalement extends HttpServlet {
+public class ListSignalementProfils extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ListSignalement() {
+	public ListSignalementProfils() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

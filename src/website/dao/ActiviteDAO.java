@@ -584,4 +584,72 @@ public class ActiviteDAO {
 
 	}
 
+	public static ArrayList<ActiviteBean> getListActiviteSignale() {
+		// TODO Auto-generated method stub
+		ActiviteBean activite = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
+		Connection connexion = null;
+		try {
+
+			connexion = CxoPool.getConnection();
+
+			String requete = " SELECT activite.datedebut,      activite.adresse,    activite.latitude,"
+					+ " activite.longitude,  personne.prenom as pseudo,    personne.sexe,    personne.nom,"
+					+ "personne.datenaissance  ,    personne.idpersonne, "
+					+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
+					+ "activite.nbrwaydeur as nbrparticipant,"
+					+ "activite.idactivite,  activite.libelle,activite.d_finactivite, activite.titre,"
+					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd "
+					+ " FROM personne,activite,signaler_activite  "
+					+ "  WHERE personne.idpersonne = activite.idpersonne and signaler_activite.idactivite=activite.idactivite"
+					+ " ORDER BY datedebut desc";
+
+			preparedStatement = connexion.prepareStatement(requete);
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int sexe = rs.getInt("sexe");
+				int nbmaxwayd = rs.getInt("nbmaxwayd");
+				int nbrparticipant = rs.getInt("nbrparticipant");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Date datefin = rs.getTimestamp("datefin");
+				double note = rs.getDouble("note");
+				String nom = rs.getString("nom");
+				String pseudo = rs.getString("pseudo");
+				String photo = rs.getString("photo");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				Date datefinactivite = rs.getTimestamp("d_finactivite");
+
+				int totalavis = rs.getInt("totalavis");
+				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
+						datedebut, datefin, idtypeactivite, latitude,
+						longitude, nom, pseudo, photo, note, totalavis,
+						datenaissance, sexe, nbrparticipant, nbmaxwayd,
+						datefinactivite);
+
+				retour.add(activite);
+
+			}
+
+			return retour;
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
 }

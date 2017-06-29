@@ -104,7 +104,7 @@ public class DetailParticipant extends HttpServlet {
 		ArrayList<ActiviteBean> listActivite = ActiviteDAO
 				.getListActivite(idParticipant);
 		ArrayList<SignalementBean> listSignalement = SignalementDAO.getListSignalement(idParticipant);
-				
+		System.out.println("listetettet"+listSignalement.size());		
 		
 		profilBean.setListAmi(listAmi);
 		profilBean.setListActivite(listActivite);

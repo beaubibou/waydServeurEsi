@@ -164,13 +164,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ListSignalement</display-name>
-    <servlet-name>ListSignalement</servlet-name>
-    <servlet-class>servlet.ListSignalement</servlet-class>
+    <display-name>ListSignalementProfils</display-name>
+    <servlet-name>ListSignalementProfils</servlet-name>
+    <servlet-class>servlet.ListSignalementProfils</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ListSignalement</servlet-name>
-    <url-pattern>/ListSignalement</url-pattern>
+    <servlet-name>ListSignalementProfils</servlet-name>
+    <url-pattern>/ListSignalementProfils</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -181,5 +181,15 @@
   <servlet-mapping>
     <servlet-name>ListProfil</servlet-name>
     <url-pattern>/ListProfil</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListSignalementActivite</display-name>
+    <servlet-name>ListSignalementActivite</servlet-name>
+    <servlet-class>servlet.ListSignalementActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListSignalementActivite</servlet-name>
+    <url-pattern>/ListSignalementActivite</url-pattern>
   </servlet-mapping>
 </web-app>
