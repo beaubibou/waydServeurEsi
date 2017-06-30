@@ -594,7 +594,6 @@ public class ActiviteDAO {
 		try {
 
 			connexion = CxoPool.getConnection();
-
 			String requete = " SELECT activite.datedebut,      activite.adresse,    activite.latitude,"
 					+ " activite.longitude,  personne.prenom as pseudo,    personne.sexe,    personne.nom,"
 					+ "personne.datenaissance  ,    personne.idpersonne, "

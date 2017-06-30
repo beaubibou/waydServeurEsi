@@ -215,7 +215,7 @@ function popup(){
 			  // ...
 			//  document.getElementById("demo").innerHTML ="opo";
 			   document.location.href="Connexion?token="+idToken;
-		  
+		 
 		  }).catch(function(error) {
 			  var errorMessage = error.message;
 			  alert(errorMessage);

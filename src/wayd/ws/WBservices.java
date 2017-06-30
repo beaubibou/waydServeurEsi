@@ -3019,7 +3019,8 @@ public class WBservices {
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			Droit droit = personnedao.getDroit(idpersonne, jeton);
 			ParticipationDAO participationDAO= new ParticipationDAO(connexion);
-			participationDAO.getListPartipantActiviteExpect(idactivite, idpersonne);
+			
+			ArrayList<Personne> listpersonne=participationDAO.getListPartipantActiviteExpect(idactivite, idpersonne);
 			
 			if (droit == null)
 				return new MessageServeur(false, LibelleMessage.pasReconnu);
@@ -3034,6 +3035,32 @@ public class WBservices {
 			activitedao.updateActivite(idpersonne, libelle, titre, idactivite,
 					nbrmax);
 
+			
+			
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+
+					Connection connexionGcm = null;
+					try {
+						connexionGcm = CxoPool.getConnection();
+					
+
+						new ServeurMethodes(connexionGcm)
+								.envoiAndroidUpdateActivite(listpersonne,
+										idactivite);// envoi la mise à jour à tous les participants sauf l'organisateur
+						// sa mise à jour est en local.
+						
+					} catch (SQLException | NamingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} finally {
+						CxoPool.closeConnection(connexionGcm);
+					}
+				}
+			}).start();
+			
+			
 			
 			
 			System.out.println(formatDate.format(new Date())

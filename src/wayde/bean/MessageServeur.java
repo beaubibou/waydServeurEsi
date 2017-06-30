@@ -9,7 +9,7 @@ String message;
 }
 
 	public MessageServeur(boolean reponse, String message) {
-		super();
+		super();//kjlkjlk
 		this.reponse = reponse;
 		this.message = message;
 	}
