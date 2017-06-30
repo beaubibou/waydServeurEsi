@@ -3533,7 +3533,7 @@ public class WBservices {
 				if (discussion != null)
 					retour.add(discussion);
 
-			// RECUPERE LES MESSAGE DES AMIS//
+			// RECUPERE jhLES MESSAGE DES AMIS//
 			listdiscussion = messagedao.getListDiscussion(idpersonne);
 
 			for (Discussion discussion : listdiscussion)
@@ -3552,6 +3552,7 @@ public class WBservices {
 		System.out.println(formatDate.format(new Date())
 				+ ";getListDiscussion;" + (System.currentTimeMillis() - debut)
 				+ "ms");
+		
 		return (Discussion[]) retour.toArray(new Discussion[retour.size()]);
 
 	}
