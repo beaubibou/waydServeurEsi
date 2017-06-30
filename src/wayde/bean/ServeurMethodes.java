@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+
+import wayde.dao.ActiviteDAO;
+import wayde.dao.PersonneDAO;
 
 import com.google.android.gcm.server.Sender;
 import com.google.firebase.FirebaseApp;
@@ -16,10 +16,6 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnSuccessListener;
-
-import wayde.dao.ActiviteDAO;
-import wayde.dao.Outils;
-import wayde.dao.PersonneDAO;
 
 public class ServeurMethodes {
 	static String api_gcm = "AIzaSyC_BMfY8tNRB0pjv_tXFevIcwdz-8cALE8";

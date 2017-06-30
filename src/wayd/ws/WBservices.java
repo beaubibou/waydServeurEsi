@@ -28,7 +28,6 @@ import wayde.bean.IndicateurWayd;
 import wayde.bean.InfoNotation;
 import wayde.bean.LibelleMessage;
 import wayde.bean.Message;
-import wayde.bean.MessageBoite;
 import wayde.bean.MessageServeur;
 import wayde.bean.Notification;
 import wayde.bean.Participant;
@@ -49,7 +48,6 @@ import wayde.dao.ActiviteDAO;
 import wayde.dao.AmiDAO;
 import wayde.dao.AvisDAO;
 import wayde.dao.AvisaDonnerDAO;
-import wayde.dao.BoiteMessageDAO;
 import wayde.dao.DefinintionPreferenceDAO;
 import wayde.dao.DiscussionDAO;
 import wayde.dao.MessageDAO;
@@ -128,7 +126,7 @@ public class WBservices {
 							connexion = CxoPool.getConnection();
 							PersonneDAO personnedao = new PersonneDAO(connexion);
 							if (!personnedao.isLoginExist(uid)) {
-								int idpersonne = personnedao
+								 personnedao
 										.addCompteGenerique(uid, idtoken,
 												photostr, nom,gcmToken);
 
@@ -3403,7 +3401,6 @@ public class WBservices {
 	}
 
 	public void test_addCompte() {
-		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		try {
@@ -3518,128 +3515,7 @@ public class WBservices {
 
 	}
 
-	public RetourMessage addMessageNew(int idemetteur, int iddestinataire,
-			String message, int idactivite, int from, String jeton) {
-		long debut = System.currentTimeMillis();
-
-		if (message.length() == 0)
-			return null;
-		// return new MessageServeur(false, "Chaine vide non autorisée");
-
-		Connection connexion = null;
-		final ArrayList<Personne> listparticipantGcm;
-		ArrayList<Personne> listparticipant = null;
-
-		try {
-
-			connexion = CxoPool.getConnection();
-			ParticipationDAO participationdao = new ParticipationDAO(connexion);
-			BoiteMessageDAO boiteMessageDao = new BoiteMessageDAO(connexion);
-
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idemetteur, jeton);
-
-			// if (droit == null)
-			// return new RetourMessage(new Date().getTime(),
-			// RetourMessage.NON_AUTORISE, idemetteur);
-			// // return new MessageServeur(false, "Tu n'es pas reconnu");
-			//
-			// MessageServeur autorisation = droit.isDefautAccess();
-			// if (!autorisation.isReponse()) {
-			// return new RetourMessage(new Date().getTime(),
-			// RetourMessage.NON_AUTORISE, idemetteur);
-			// // return autorisation;
-			// }
-
-			switch (from) {
-
-			case MessageBoite.FROM_ACTIVTE:// Si le message vient d'une activite
-
-				// Recupere les participants de l'activité
-				listparticipant = participationdao
-						.getListPartipantActivite(idactivite);
-
-				// Si la personne ne participe plus
-				if (!participationdao.isInListParticipant(listparticipant,
-						idemetteur)) {
-					return new RetourMessage(new Date().getTime(),
-							RetourMessage.PLUS_INSCRIT, idemetteur);
-				}
-
-				boiteMessageDao.addMessageActivite(idemetteur, idactivite,
-						message, listparticipant);
-
-				break;
-
-			case MessageBoite.FROM_DISCUSSION:// Si le message vient d'une
-												// activite
-
-				listparticipant = null;
-				boiteMessageDao.addMessage(idemetteur, iddestinataire, message);
-
-				break;
-
-			default:
-
-				return new RetourMessage(new Date().getTime(),
-						RetourMessage.PLUS_INSCRIT, idemetteur);
-
-			}
-
-			listparticipantGcm = listparticipant;
-
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					Connection connexionGcm = null;
-
-					try {
-						connexionGcm = CxoPool.getConnection();
-						switch (from) {
-
-						case MessageBoite.FROM_DISCUSSION:
-							new ServeurMethodes(connexionGcm)
-									.gcmUpdateNbrMessageByAct(listparticipantGcm);
-							break;
-
-						}
-
-					} catch (SQLException | NamingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} finally {
-						CxoPool.closeConnection(connexionGcm);
-					}
-
-				}
-			}).start();
-
-			System.out.println(formatDate.format(new Date())
-					+ ";addMessageByAct;"
-					+ (System.currentTimeMillis() - debut) + "ms");
-			return new RetourMessage(new Date().getTime(), 0, idemetteur);
-			// return new MessageServeur(true, "" + idmessage);
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-
-			// return new MessageServeur(false, e.getMessage());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-			// return new MessageServeur(false, e.getMessage());
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-	}
-
+	
 	public Discussion[] getListDiscussionNew(int idpersonne) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();

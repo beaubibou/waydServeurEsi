@@ -10,11 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
-import website.dao.PersonneDAO;
-import website.dao.SignalementDAO;
 import website.metier.ActiviteBean;
-import website.metier.ProfilBean;
-import website.metier.SignalementCount;
 
 /**
  * Servlet implementation class ListSignalementActivite
