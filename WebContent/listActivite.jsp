@@ -1,3 +1,4 @@
+<%@taglib uri="/typeActiviteTag" prefix="typeactivite" %>
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
@@ -24,17 +25,17 @@
 
 	<%
 		int rayon=10000000;
-	   	String ville="";
-	   	double latitude=0,longitude=0;
-	   
-	   	FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
-	   	
-	   	if (filtre!=null){
-	   	 	rayon=filtre.getRayon();
-	   		latitude=filtre.getLatitude();
-	   		longitude=filtre.getLongitude();
-	   		ville=filtre.getVille();
-	   	}
+		   	String ville="";
+		   	double latitude=0,longitude=0;
+		   
+		   	FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
+		   	
+		   	if (filtre!=null){
+		   	 	rayon=filtre.getRayon();
+		   		latitude=filtre.getLatitude();
+		   		longitude=filtre.getLongitude();
+		   		ville=filtre.getVille();
+		   	}
 	%>
 
 
@@ -53,26 +54,13 @@
 					class="form-control" id="latitude" name="latitude"
 					value="<%=latitude%>"> <input type="hidden" step="any"
 					class="form-control" id="longitude" name="longitude"
-					value="<%=longitude%>"> <label for="rayon">Rayon:</label>
-				<input type="number" class="form-control" id="rayon" name="rayon"
-					value="<%=rayon%>"> <label for="sel1">Type
-					activité</label> <select class="form-control" id="sel1" name="typeactivite">
-
-					<option value="-1">Toutes</option>
-					<%
-						ArrayList<TypeActiviteBean> listTypeActivite = (ArrayList<TypeActiviteBean>) request
-										.getAttribute("listtypeactivite");
-												for (TypeActiviteBean typeactivite:listTypeActivite){
-					%>
-					<option value="<%=typeactivite.getId()%>"
-						id="<%=typeactivite.getId()%>">
-						<%=typeactivite.getLibelle()%>
-					</option>
-
-					<%
-						}
-					%>
-				</select>
+					value="<%=longitude%>"> <label for="rayon">Rayon:</label> <input
+					type="number" class="form-control" id="rayon" name="rayon"
+					value="<%=rayon%>"> <label for="sel1">Type activité</label>
+				
+				<typeactivite:typeactivites></typeactivite:typeactivites>
+				
+				
 				<button id="go" type="submit" class="btn btn-default"
 					name="rechercheactivite">Rechercher</button>
 
@@ -95,11 +83,11 @@
 			<tbody>
 				<%
 					ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request
-																	.getAttribute("listActivite");
-										
-								if (listActivite!=null)
-									for (ActiviteBean activite : listActivite) {
-											String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																			.getAttribute("listActivite");
+												
+										if (listActivite!=null)
+											for (ActiviteBean activite : listActivite) {
+													String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 				<tr>
@@ -193,11 +181,19 @@ document.getElementById("<%=filtre.getTypeactivite()%>").selected = true;
 					.getAttribute("pagination");
 			if (pagination != null) {
 				for (String numpage : pagination.getPagination()) {
+					if (Integer.valueOf(numpage) == pagination.getPage()) {
+		%>
+
+		<li class="active"><a href=ListActivite?pageAafficher=<%=numpage%>><%=numpage%></a></li>
+
+		<%
+			} else {
 		%>
 		<li><a href=ListActivite?pageAafficher=<%=numpage%>><%=numpage%></a></li>
-		
+
 		<%
 			}
+				}
 			}
 		%>
 

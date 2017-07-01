@@ -41,54 +41,54 @@ public class ListActivite extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null) {
-			
 
-			if (request.getParameter("pageAafficher")!=null){
-				
-					FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
-					int nbrTotalLigne = ActiviteDAO.getCountListActivite(filtre.getLatitude(),
-							filtre.getLongitude(), filtre.getRayon(), filtre.getTypeactivite());
-					System.out.println("page afiicher"+request.getParameter("pageAafficher"));
-					System.out.println(filtre.toString());
-					
-					
-					
-					int pageAfficher = Integer.parseInt(request
-							.getParameter("pageAafficher"));
+			if (request.getParameter("pageAafficher") != null) {
 
-					//int paginationAafficher = Integer.parseInt(request
-						//	.getParameter("paginationAafficher"));
-					
-					Pagination pagination = new website.metier.Pagination(nbrTotalLigne,
-							pageAfficher, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
-							1);
-					
-					ArrayList<ActiviteBean>  listActivite = ActiviteDAO.getListActivite(filtre.getLatitude(),
-							filtre.getLongitude(), filtre.getRayon(), filtre.getTypeactivite(),
-							Outils.nbrLigneParPage, pagination.getDebut());
+				FiltreJSP filtre = (FiltreJSP) session.getAttribute("filtre");
+				int nbrTotalLigne = ActiviteDAO.getCountListActivite(
+						filtre.getLatitude(), filtre.getLongitude(),
+						filtre.getRayon(), filtre.getTypeactivite());
+				System.out.println("page afiicher"
+						+ request.getParameter("pageAafficher"));
+				System.out.println(filtre.toString());
 
-					request.setAttribute("pagination", pagination);
-					request.setAttribute("listActivite", listActivite);
-					request.getRequestDispatcher("listActivite.jsp").forward(
-							request, response);
-					
-				
-				
-			}
-			else
-			{
+				int pageAfficher = Integer.parseInt(request
+						.getParameter("pageAafficher"));
+
+				// int paginationAafficher = Integer.parseInt(request
+				// .getParameter("paginationAafficher"));
+
+				Pagination pagination = new website.metier.Pagination(
+						nbrTotalLigne, pageAfficher, Outils.nbrLigneParPage,
+						Outils.nbrMaxPagination, 1);
+
+				System.out.println(pagination);
+				ArrayList<ActiviteBean> listActivite = ActiviteDAO
+						.getListActivite(filtre.getLatitude(),
+								filtre.getLongitude(), filtre.getRayon(),
+								filtre.getTypeactivite(),
+								Outils.nbrLigneParPage, pagination.getDebut());
+
+				request.setAttribute("pagination", pagination);
+				request.setAttribute("listActivite", listActivite);
+				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
+						.getListTypeActivite();
+				request.setAttribute("listtypeactivite", listTypeActivite);
+				request.getRequestDispatcher("listActivite.jsp").forward(
+						request, response);
+
+			} else {
 				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
 						.getListTypeActivite();
 
 				request.setAttribute("listtypeactivite", listTypeActivite);
-				request.getRequestDispatcher("listActivite.jsp").forward(request,
-						response);
-				
+				request.getRequestDispatcher("listActivite.jsp").forward(
+						request, response);
+
 			}
-		
+
 		}
 
-		
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class ListActivite extends HttpServlet {
 
 		if (session.getAttribute("profil") != null) {
 
-			//Si la rechereche vient du submit
-			
+			// Si la rechereche vient du submit
+
 			if (request.getParameter("rechercheactivite") != null) {
 
 				System.out.println("rechercher acti!=null");
@@ -142,7 +142,7 @@ public class ListActivite extends HttpServlet {
 					listActivite = ActiviteDAO.getListActivite(latitude,
 							longitude, rayon, idtypeactivite,
 							Outils.nbrLigneParPage, pagination.getDebut());
-				} 
+				}
 
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
@@ -151,8 +151,6 @@ public class ListActivite extends HttpServlet {
 
 				return;
 			}
-			
-			
 
 		} else {
 			response.sendRedirect("login.jsp");
