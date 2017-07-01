@@ -1,0 +1,10 @@
+<taglib version="2.0">
+ <tlibversion>1.0</tlibversion>
+ <uri>/typeActiviteTag</uri>
+ <tag>
+ <name>typeactivites</name>
+ <tag-class>tag.TypeActiviteTag</tag-class>
+ 
+ <body-content>empty</body-content>
+ </tag>
+</taglib>
