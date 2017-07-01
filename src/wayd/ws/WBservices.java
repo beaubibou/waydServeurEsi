@@ -3540,7 +3540,7 @@ public class WBservices {
 				retour.add(discussion);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-    nkljhgenerated catch block
 			e.printStackTrace();
 		}
 
