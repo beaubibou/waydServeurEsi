@@ -44,23 +44,28 @@ public class ListActivite extends HttpServlet {
 
 			if (request.getParameter("pageAafficher") != null) {
 
+				// Si on rentre par page à afficher c'est que le filtre est stocké dans la session
+				// Suite à une  recherche. (submit du form listactivite).
 				FiltreJSP filtre = (FiltreJSP) session.getAttribute("filtre");
+			
 				int nbrTotalLigne = ActiviteDAO.getCountListActivite(
 						filtre.getLatitude(), filtre.getLongitude(),
 						filtre.getRayon(), filtre.getTypeactivite());
+				
 				System.out.println("page afiicher"
 						+ request.getParameter("pageAafficher"));
 				System.out.println(filtre.toString());
 
-				int pageAfficher = Integer.parseInt(request
+				int pageAafficher = Integer.parseInt(request
 						.getParameter("pageAafficher"));
 
-				// int paginationAafficher = Integer.parseInt(request
-				// .getParameter("paginationAafficher"));
-
+			
 				Pagination pagination = new website.metier.Pagination(
-						nbrTotalLigne, pageAfficher, Outils.nbrLigneParPage,
+						nbrTotalLigne, pageAafficher, Outils.nbrLigneParPage,
 						Outils.nbrMaxPagination, 1);
+				
+				
+				
 
 				System.out.println(pagination);
 				ArrayList<ActiviteBean> listActivite = ActiviteDAO
@@ -71,17 +76,13 @@ public class ListActivite extends HttpServlet {
 
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
-				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
-						.getListTypeActivite();
-				request.setAttribute("listtypeactivite", listTypeActivite);
+				request.setAttribute("nbrTotalLigne", nbrTotalLigne);
+				request.setAttribute("pageAafficher", pageAafficher);
 				request.getRequestDispatcher("listActivite.jsp").forward(
 						request, response);
 
 			} else {
-				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
-						.getListTypeActivite();
-
-				request.setAttribute("listtypeactivite", listTypeActivite);
+			
 				request.getRequestDispatcher("listActivite.jsp").forward(
 						request, response);
 
@@ -121,10 +122,7 @@ public class ListActivite extends HttpServlet {
 				FiltreJSP filtreActivite = new FiltreJSP(rayon, idtypeactivite,
 						ville, latitude, longitude);
 
-				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
-						.getListTypeActivite();
-
-				request.setAttribute("listtypeactivite", listTypeActivite);
+				
 				session.setAttribute("filtre", filtreActivite);
 
 				ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
@@ -132,9 +130,7 @@ public class ListActivite extends HttpServlet {
 				int nbrTotalLigne = ActiviteDAO.getCountListActivite(latitude,
 						longitude, rayon, idtypeactivite);
 
-				if (request.getParameter("pageAfficher") == null) {
-
-					pagination = new website.metier.Pagination(nbrTotalLigne,
+				pagination = new website.metier.Pagination(nbrTotalLigne,
 							1, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
 							1);
 					System.out.println(pagination.toString());
@@ -142,8 +138,9 @@ public class ListActivite extends HttpServlet {
 					listActivite = ActiviteDAO.getListActivite(latitude,
 							longitude, rayon, idtypeactivite,
 							Outils.nbrLigneParPage, pagination.getDebut());
-				}
-
+				
+				request.setAttribute("nbrTotalLigne", 1);
+				request.setAttribute("pageAafficher", 1);
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
 				request.getRequestDispatcher("listActivite.jsp").forward(

@@ -1,4 +1,5 @@
 <%@taglib uri="/typeActiviteTag" prefix="typeactivite" %>
+<%@taglib uri="/paginationTag" prefix="paginationtag" %>
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
@@ -36,7 +37,13 @@
 		   		longitude=filtre.getLongitude();
 		   		ville=filtre.getVille();
 		   	}
+		   	int nbrTotalLigne= Integer.valueOf((String)request.getAttribute("nbrTotalLigne"));
+			int pageAafficher=Integer.valueOf((String)request.getAttribute("pageAafficher"));
+			
+			
 	%>
+	
+	
 
 
 	<div class="container">
@@ -179,6 +186,8 @@ document.getElementById("<%=filtre.getTypeactivite()%>").selected = true;
 		<%
 			Pagination pagination = (Pagination) request
 					.getAttribute("pagination");
+		
+		
 			if (pagination != null) {
 				for (String numpage : pagination.getPagination()) {
 					if (Integer.valueOf(numpage) == pagination.getPage()) {
@@ -198,5 +207,9 @@ document.getElementById("<%=filtre.getTypeactivite()%>").selected = true;
 		%>
 
 	</ul>
+	
+	<paginationtag:paginations/>
+
+	
 </footer>
 </html>

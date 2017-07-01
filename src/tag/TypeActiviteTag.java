@@ -15,9 +15,7 @@ public class TypeActiviteTag extends SimpleTagSupport {
 		JspWriter out = getJspContext().getOut();
 		ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
 				.getListTypeActivite();
-
-		System.out.println("kkkkkkkkkkkkkkkk");
-		out.println("<select class=\"form-control\" id=\"sel1\" name=\"typeactivite\">\"");
+	out.println("<select class=\"form-control\" id=\"sel1\" name=\"typeactivite\">\"");
 		out.println("<option value=\"-1\">Toutes</option>");
 		for (TypeActiviteBean typeactivite : listTypeActivite) {
 
