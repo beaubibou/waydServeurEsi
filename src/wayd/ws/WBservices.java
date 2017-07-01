@@ -74,8 +74,10 @@ public class WBservices {
 	public void envoyerMail() {
 
 		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
+	//kljlkj
 	}
 
+	
 	public boolean testToken(String idtoken, String photostr, String nom,String gcmToken) {
 		long debut = System.currentTimeMillis();
 		System.out.print("test token");
@@ -86,7 +88,7 @@ public class WBservices {
 				options = new FirebaseOptions.Builder()
 						// .setServiceAccount(new
 						// FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
-
+//jklmjl
 						.setServiceAccount(new FileInputStream("d:/cle.json"))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com/")
 						.build();

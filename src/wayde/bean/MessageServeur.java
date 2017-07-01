@@ -9,7 +9,8 @@ String message;
 }
 
 	public MessageServeur(boolean reponse, String message) {
-		super();//kjlkjlk
+		//lmklm
+		super();
 		this.reponse = reponse;
 		this.message = message;
 	}
@@ -23,6 +24,7 @@ String message;
 	}
 
 	public String getMessage() {
+		//mlml
 		return message;
 	}
 
