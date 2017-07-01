@@ -20,6 +20,12 @@ public class FiltreJSP {
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
+	@Override
+	public String toString() {
+		return "FiltreJSP [rayon=" + rayon + ", typeactivite=" + typeactivite
+				+ ", ville=" + ville + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
+	}
 	public double getLatitude() {
 		return latitude;
 	}

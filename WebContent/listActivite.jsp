@@ -1,6 +1,7 @@
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.Pagination"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -21,67 +22,64 @@
 
 	<%@ include file="menu.jsp"%>
 
-   <%
-    int rayon=10000000;
-   	String ville="";
-   	double latitude=0,longitude=0;
-   
-   	FiltreJSP filtre=(FiltreJSP)request.getAttribute("filtre");
-   	
-   	if (filtre!=null){
-   	 	rayon=filtre.getRayon();
-   		latitude=filtre.getLatitude();
-   		longitude=filtre.getLongitude();
-   		ville=filtre.getVille();
-   	}
-   %>
+	<%
+		int rayon=10000000;
+	   	String ville="";
+	   	double latitude=0,longitude=0;
+	   
+	   	FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
+	   	
+	   	if (filtre!=null){
+	   	 	rayon=filtre.getRayon();
+	   		latitude=filtre.getLatitude();
+	   		longitude=filtre.getLongitude();
+	   		ville=filtre.getVille();
+	   	}
+	%>
 
 
-<div class="container">
+	<div class="container">
 
-	<h3>Critéres</h3>
+		<h3>Critéres</h3>
 
-	
-	<form  class="form-inline" method="post" action="ListActivite">
 
-		<div class="form-group">
-			<label for="autocomplete">Ville:</label> <input
-				placeholder="Enter your address" onFocus="geolocate()" type="text"
-				class="form-control" id="autocomplete" name="autocomplete" value="<%=ville%>">
-		
-			<input type="hidden"
-				step="any" class="form-control" id="latitude" name="latitude"
-				value="<%=latitude%>">
-			 <input  type="hidden"
-				step="any" class="form-control" id="longitude" name="longitude"
-				value="<%=longitude%>" >
-				<label for="rayon">Rayon:</label> <input type="number"
-				class="form-control" id="rayon" name="rayon" value="<%=rayon%>" >
-		
-			<label for="sel1">Type activité</label> <select class="form-control"
-				id="sel1" name="typeactivite">
+		<form class="form-inline" method="post" action="ListActivite">
 
-				<option value="-1">Toutes</option>
-				<%
-					ArrayList<TypeActiviteBean> listTypeActivite = (ArrayList<TypeActiviteBean>) request
-							.getAttribute("listtypeactivite");
-									for (TypeActiviteBean typeactivite:listTypeActivite){
-				%>
-				<option value="<%=typeactivite.getId()%>" id="<%=typeactivite.getId()%>">
-					<%=typeactivite.getLibelle()%>
-				</option>
+			<div class="form-group">
+				<label for="autocomplete">Ville:</label> <input
+					placeholder="Enter your address" onFocus="geolocate()" type="text"
+					class="form-control" id="autocomplete" name="autocomplete"
+					value="<%=ville%>"> <input type="hidden" step="any"
+					class="form-control" id="latitude" name="latitude"
+					value="<%=latitude%>"> <input type="hidden" step="any"
+					class="form-control" id="longitude" name="longitude"
+					value="<%=longitude%>"> <label for="rayon">Rayon:</label>
+				<input type="number" class="form-control" id="rayon" name="rayon"
+					value="<%=rayon%>"> <label for="sel1">Type
+					activité</label> <select class="form-control" id="sel1" name="typeactivite">
 
-				<%
-					}
-				%>
-			</select>
-			<button id="go" type="submit" class="btn btn-default"
-				name="rechercheactivite">Rechercher</button>
-	
+					<option value="-1">Toutes</option>
+					<%
+						ArrayList<TypeActiviteBean> listTypeActivite = (ArrayList<TypeActiviteBean>) request
+										.getAttribute("listtypeactivite");
+												for (TypeActiviteBean typeactivite:listTypeActivite){
+					%>
+					<option value="<%=typeactivite.getId()%>"
+						id="<%=typeactivite.getId()%>">
+						<%=typeactivite.getLibelle()%>
+					</option>
+
+					<%
+						}
+					%>
+				</select>
+				<button id="go" type="submit" class="btn btn-default"
+					name="rechercheactivite">Rechercher</button>
+
 			</div>
 		</form>
 
-</div>
+	</div>
 	<div class="container">
 		<h2>Liste activites</h2>
 
@@ -97,11 +95,11 @@
 			<tbody>
 				<%
 					ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request
-															.getAttribute("listActivite");
-								
-						if (listActivite!=null)
-							for (ActiviteBean activite : listActivite) {
-									String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																	.getAttribute("listActivite");
+										
+								if (listActivite!=null)
+									for (ActiviteBean activite : listActivite) {
+											String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 				<tr>
@@ -175,19 +173,34 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
-<%if (filtre!=null) {%>
+	<%
+		if (filtre!=null) {
+	%>
 
-<script type="text/javascript">
-document.getElementById("<%=filtre.getTypeactivite()%>").selected=true;
-</script>
-<%} %>
+	<script type="text/javascript">
+document.getElementById("<%=filtre.getTypeactivite()%>").selected = true;
+	</script>
+	<%
+		}
+	%>
 
 </body>
-<footer  class="container-fluid bg-4 text-center"><ul class="pagination">
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-</ul></footer>
+<footer class="container-fluid bg-4 text-center">
+	<ul class="pagination">
+
+		<%
+			Pagination pagination = (Pagination) request
+					.getAttribute("pagination");
+			if (pagination != null) {
+				for (String numpage : pagination.getPagination()) {
+		%>
+		<li><a href=ListActivite?pageAafficher=<%=numpage%>><%=numpage%></a></li>
+		
+		<%
+			}
+			}
+		%>
+
+	</ul>
+</footer>
 </html>

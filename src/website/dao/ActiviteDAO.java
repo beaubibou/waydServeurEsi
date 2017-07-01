@@ -395,7 +395,7 @@ public class ActiviteDAO {
 	}
 
 	public static ArrayList<ActiviteBean> getListActivite(double malatitude,
-			double malongitude, int rayonmetre, int typeactivite) {
+			double malongitude, int rayonmetre, int typeactivite,int nbxmaxEnregistrement,int indexDebutResultat) {
 
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
@@ -423,13 +423,15 @@ public class ActiviteDAO {
 						+ " activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?"
-						+ " ORDER BY datedebut desc";
+						+ " ORDER BY datedebut  desc limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, typeactivite);
 				preparedStatement.setDouble(2, latMin);
 				preparedStatement.setDouble(3, latMax);
 				preparedStatement.setDouble(4, longMin);
 				preparedStatement.setDouble(5, longMax);
+				preparedStatement.setInt(6, nbxmaxEnregistrement);
+				preparedStatement.setInt(7, indexDebutResultat);
 				rs = preparedStatement.executeQuery();
 
 			}
@@ -444,12 +446,14 @@ public class ActiviteDAO {
 						+ " WHERE personne.idpersonne = activite.idpersonne    "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?"
-						+ " ORDER BY datedebut desc";
+						+ " ORDER BY datedebut desc limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setDouble(1, latMin);
 				preparedStatement.setDouble(2, latMax);
 				preparedStatement.setDouble(3, longMin);
 				preparedStatement.setDouble(4, longMax);
+				preparedStatement.setInt(5, nbxmaxEnregistrement);
+				preparedStatement.setInt(6, indexDebutResultat);
 				rs = preparedStatement.executeQuery();
 
 			}
@@ -493,6 +497,76 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+	}
+	
+	public static int getCountListActivite(double malatitude,
+			double malongitude, int rayonmetre, int typeactivite) {
+
+		double coef = rayonmetre * 0.007 / 700;
+		double latMin = malatitude - coef;
+		double latMax = malatitude + coef;
+		double longMin = malongitude - coef;
+		double longMax = malongitude + coef;
+
+		ActiviteBean activite = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
+		Connection connexion = null;
+		try {
+
+			connexion = CxoPool.getConnection();
+
+			if (typeactivite != -1) {// on trie sur l'activité
+				System.out.println("tire sur l'activite");
+				String requete = " SELECT count(idactivite) as nbr "
+						+ " FROM personne, activite"
+						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?"	;
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, typeactivite);
+				preparedStatement.setDouble(2, latMin);
+				preparedStatement.setDouble(3, latMax);
+				preparedStatement.setDouble(4, longMin);
+				preparedStatement.setDouble(5, longMax);
+				rs = preparedStatement.executeQuery();
+
+			}
+
+			else { // On renvou toutes
+				System.out.println("tire toutes");
+				String requete = " SELECT count(idactivite) as nbr "
+						+ "FROM personne, activite "
+						+ " WHERE personne.idpersonne = activite.idpersonne    "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?";
+						
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setDouble(1, latMin);
+				preparedStatement.setDouble(2, latMax);
+				preparedStatement.setDouble(3, longMin);
+				preparedStatement.setDouble(4, longMax);
+				rs = preparedStatement.executeQuery();
+
+			}
+			if (rs.next()) {
+
+				int nbr = rs.getInt("nbr");
+				return nbr;
+
+			}
+
+			return 0;
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);

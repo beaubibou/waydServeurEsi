@@ -7,6 +7,10 @@ import java.util.Date;
 
 public class Outils {
 
+	public static int nbrLigneParPage=6;
+	public static int nbrMaxPagination=8;
+
+	
 	public static String getStringWsFromDate(Date date) {
 		if (date == null)
 			return "Pas de date";

@@ -13,6 +13,8 @@ import website.dao.ActiviteDAO;
 import website.dao.TypeActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.FiltreJSP;
+import website.metier.Outils;
+import website.metier.Pagination;
 import website.metier.TypeActiviteBean;
 
 /**
@@ -39,19 +41,54 @@ public class ListActivite extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null) {
-			// ArrayList<ActiviteBean> listActivite= new
-			// ArrayList<ActiviteBean>();
-			ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
-					.getListTypeActivite();
+			
 
-			// listActivite=ActiviteDAO.getListActiviteTotal();
-			// request.setAttribute("listActivite", listActivite);
-			request.setAttribute("listtypeactivite", listTypeActivite);
-			request.getRequestDispatcher("listActivite.jsp").forward(request,
-					response);
+			if (request.getParameter("pageAafficher")!=null){
+				
+					FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
+					int nbrTotalLigne = ActiviteDAO.getCountListActivite(filtre.getLatitude(),
+							filtre.getLongitude(), filtre.getRayon(), filtre.getTypeactivite());
+					System.out.println("page afiicher"+request.getParameter("pageAafficher"));
+					System.out.println(filtre.toString());
+					
+					
+					
+					int pageAfficher = Integer.parseInt(request
+							.getParameter("pageAafficher"));
 
+					//int paginationAafficher = Integer.parseInt(request
+						//	.getParameter("paginationAafficher"));
+					
+					Pagination pagination = new website.metier.Pagination(nbrTotalLigne,
+							pageAfficher, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
+							1);
+					
+					ArrayList<ActiviteBean>  listActivite = ActiviteDAO.getListActivite(filtre.getLatitude(),
+							filtre.getLongitude(), filtre.getRayon(), filtre.getTypeactivite(),
+							Outils.nbrLigneParPage, pagination.getDebut());
+
+					request.setAttribute("pagination", pagination);
+					request.setAttribute("listActivite", listActivite);
+					request.getRequestDispatcher("listActivite.jsp").forward(
+							request, response);
+					
+				
+				
+			}
+			else
+			{
+				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
+						.getListTypeActivite();
+
+				request.setAttribute("listtypeactivite", listTypeActivite);
+				request.getRequestDispatcher("listActivite.jsp").forward(request,
+						response);
+				
+			}
+		
 		}
 
+		
 	}
 
 	/**
@@ -65,8 +102,11 @@ public class ListActivite extends HttpServlet {
 
 		if (session.getAttribute("profil") != null) {
 
+			//Si la rechereche vient du submit
+			
 			if (request.getParameter("rechercheactivite") != null) {
 
+				System.out.println("rechercher acti!=null");
 				int rayon = Integer.parseInt(request.getParameter("rayon"));
 				int idtypeactivite = Integer.parseInt(request
 						.getParameter("typeactivite"));
@@ -76,28 +116,43 @@ public class ListActivite extends HttpServlet {
 						.getParameter("longitude"));
 				String ville = (String) request.getParameter("autocomplete");
 
+				Pagination pagination = null;
+
 				FiltreJSP filtreActivite = new FiltreJSP(rayon, idtypeactivite,
 						ville, latitude, longitude);
 
 				ArrayList<TypeActiviteBean> listTypeActivite = TypeActiviteDAO
 						.getListTypeActivite();
 
-				System.out.println(listTypeActivite.size() + " rayon " + rayon
-						+ " type " + idtypeactivite + " long" + longitude
-						+ " lat " + latitude);
-
 				request.setAttribute("listtypeactivite", listTypeActivite);
-				request.setAttribute("filtre", filtreActivite);
+				session.setAttribute("filtre", filtreActivite);
 
 				ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
-				listActivite = ActiviteDAO.getListActivite(latitude, longitude,
-						rayon, idtypeactivite);
+
+				int nbrTotalLigne = ActiviteDAO.getCountListActivite(latitude,
+						longitude, rayon, idtypeactivite);
+
+				if (request.getParameter("pageAfficher") == null) {
+
+					pagination = new website.metier.Pagination(nbrTotalLigne,
+							1, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
+							1);
+					System.out.println(pagination.toString());
+
+					listActivite = ActiviteDAO.getListActivite(latitude,
+							longitude, rayon, idtypeactivite,
+							Outils.nbrLigneParPage, pagination.getDebut());
+				} 
+
+				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
 				request.getRequestDispatcher("listActivite.jsp").forward(
 						request, response);
 
 				return;
 			}
+			
+			
 
 		} else {
 			response.sendRedirect("login.jsp");
