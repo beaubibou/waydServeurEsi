@@ -1,4 +1,4 @@
-package wayde.bean;
+package fcm;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import wayde.bean.Personne;
+import wayde.bean.TableauBord;
 import wayde.dao.ActiviteDAO;
 import wayde.dao.PersonneDAO;
 
@@ -18,7 +20,7 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnSuccessListener;
 
 public class ServeurMethodes {
-	static String api_gcm = "AIzaSyC_BMfY8tNRB0pjv_tXFevIcwdz-8cALE8";
+	static String key_gcm = "AIzaSyC_BMfY8tNRB0pjv_tXFevIcwdz-8cALE8";
 
 	Connection connexion;
 
@@ -46,7 +48,7 @@ public class ServeurMethodes {
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.refreshtdb));
-			String Er = api_gcm;
+			String Er = key_gcm;
 			Sender n = new Sender(Er);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
@@ -89,7 +91,7 @@ public class ServeurMethodes {
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 						Integer.toString(PushAndroidMessage.NBR_SUGGESTION));
-				Sender n = new Sender(api_gcm);
+				Sender n = new Sender(key_gcm);
 					com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 						.timeToLive(5)
 						.addData("id", messageaenvoyer.getId())
@@ -134,7 +136,7 @@ public class ServeurMethodes {
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 						Integer.toString(PushAndroidMessage.NBR_MESSAGE_NONLU));
-				String Er = api_gcm;
+				String Er = key_gcm;
 				Sender n = new Sender(Er);
 				com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 						.timeToLive(5)
@@ -182,7 +184,7 @@ public class ServeurMethodes {
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 						Integer.toString(PushAndroidMessage.TDB_REFRESH));
-				String Er = api_gcm;
+				String Er = key_gcm;
 				Sender n = new Sender(Er);
 				com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 						.timeToLive(5)
@@ -230,7 +232,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.NBR_MESSAGE_NONLU));
 
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
 					.addData("id", messageaenvoyer.getId())
@@ -269,7 +271,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.NBR_AMI));
 
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
 					.addData("id", messageaenvoyer.getId())
@@ -309,7 +311,7 @@ public class ServeurMethodes {
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.NBR_ACTIVITE));
-			String Er = api_gcm;
+			String Er = key_gcm;
 			Sender n = new Sender(Er);
 			
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
@@ -351,7 +353,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.NBR_NOTIFICATION));
 
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
 					.addData("id", messageaenvoyer.getId())
@@ -391,7 +393,7 @@ public class ServeurMethodes {
 		System.out.println(tmp.getId());
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.refreshtdb));
-			String Er = api_gcm;
+			String Er = key_gcm;
 			Sender n = new Sender(Er);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(10)
@@ -421,7 +423,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_ACTIVITE));
 			
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(10)
 					.addData("id", messageaenvoyer.getId())
@@ -451,7 +453,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_NOTIFICATION));
 			
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(10)
 					.addData("id", messageaenvoyer.getId())
@@ -476,7 +478,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_NOTIFICATION));
 			
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(10)
 					.addData("id", messageaenvoyer.getId())
@@ -505,7 +507,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.Annule_Activite));
 
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
 					.addData("id", messageaenvoyer.getId())
@@ -531,7 +533,7 @@ public class ServeurMethodes {
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.EFFACE_SUGGESTION));
 
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
 					.addData("id", messageaenvoyer.getId())
@@ -559,7 +561,7 @@ public class ServeurMethodes {
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.Annule_PARTICIPATION));
-			String Er = api_gcm;
+			String Er = key_gcm;
 			Sender n = new Sender(Er);
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
@@ -593,7 +595,7 @@ public class ServeurMethodes {
 		
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.notification));
-			Sender n = new Sender(api_gcm);
+			Sender n = new Sender(key_gcm);
 			
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5)
@@ -613,7 +615,7 @@ public class ServeurMethodes {
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.notification));
-			String Er = api_gcm;
+			String Er = key_gcm;
 			Sender n = new Sender(Er);
 		
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()

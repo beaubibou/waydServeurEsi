@@ -2,6 +2,7 @@ package wayd.ws;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,6 @@ import wayde.bean.Profil;
 import wayde.bean.ProfilDiscussion;
 import wayde.bean.ProfilNotation;
 import wayde.bean.RetourMessage;
-import wayde.bean.ServeurMethodes;
 import wayde.bean.TableauBord;
 import wayde.bean.TypeActivite;
 import wayde.beandatabase.AvisaDonnerDb;
@@ -65,7 +65,10 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnSuccessListener;
+
 import comparator.DiscussionDateComparator;
+import fcm.PushNotifictionHelper;
+import fcm.ServeurMethodes;
 
 public class WBservices {
 	public final static int NB_MAX_ACTIVITE = 100;
@@ -3269,6 +3272,17 @@ public class WBservices {
 		return nbractivite;
 	}
 
+	public void tesgcm(String gmcToken){
+		
+		try {
+			PushNotifictionHelper.sendPushNotification(gmcToken);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public int test_getPremierId() {
 
 		Connection connexion = null;

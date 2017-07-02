@@ -9,8 +9,8 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
-import wayde.bean.ServeurMethodes;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;

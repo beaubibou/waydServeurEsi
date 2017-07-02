@@ -1,4 +1,4 @@
-package wayde.bean;
+package fcm;
 
 import java.util.Date;
 

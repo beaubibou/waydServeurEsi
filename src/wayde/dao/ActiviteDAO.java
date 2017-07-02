@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.IndicateurWayd;
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
-import wayde.bean.ServeurMethodes;
 import wayde.bean.TableauBord;
 
 public class ActiviteDAO {

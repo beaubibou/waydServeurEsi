@@ -409,12 +409,26 @@ public class PersonneDAO {
 
 	public int addCompteGenerique(String iduser, String idtoken,
 			String photostr, String nom,String gcmToken) throws Exception, SQLException {
+		
+		
+		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de l'utlsation de plusieurs
+		//compte sur um mêm terminal de ne pas recevoir les rafaichissement des autres.
+		
+		String  requete= "UPDATE  personne set gcm=? WHERE gcm=?;";
+		PreparedStatement  preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setString(1, null);
+		preparedStatement.setString(2, gcmToken);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+		
 		Date datecreation = Calendar.getInstance().getTime();
-		String requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
+		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion,gcm)"
 				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		String commentaire =null;
-		PreparedStatement preparedStatement = connexion.prepareStatement(
+		preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, nom);
 		preparedStatement.setString(2, "waydeur");
@@ -574,12 +588,21 @@ public class PersonneDAO {
 
 	public void updateJeton(String iduser, String idtoken, String photostr,
 			String nom,String gcmToken) throws SQLException {
-
+		
+		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setString(1, null);
+		preparedStatement.setString(2, gcmToken);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+		
 		if (photostr.equals("")) {// Cas ou la photo vient d'un compte avec mot de passe
 
-			String requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+			 requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 					+ " WHERE login=?";
-			PreparedStatement preparedStatement = connexion
+			 preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
@@ -596,9 +619,9 @@ public class PersonneDAO {
 			String photo=isPhotoExist(iduser);
 			
 			if (photo==null){
-			String requete = "UPDATE  personne set jeton=?,nom=?,photo=?,gcm=? "
+			 requete = "UPDATE  personne set jeton=?,nom=?,photo=?,gcm=? "
 					+ " WHERE login=?";
-			PreparedStatement preparedStatement = connexion
+			 preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
@@ -611,9 +634,9 @@ public class PersonneDAO {
 			
 			else
 			{	
-				String requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+				 requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 						+ " WHERE login=?";
-				PreparedStatement preparedStatement = connexion
+				 preparedStatement = connexion
 						.prepareStatement(requete);
 				preparedStatement.setString(1, idtoken);
 				preparedStatement.setString(2, nom);
@@ -626,7 +649,7 @@ public class PersonneDAO {
 			}
 
 		}
-
+	
 	
 
 	}
