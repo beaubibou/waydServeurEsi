@@ -68,7 +68,7 @@ import com.google.firebase.tasks.OnSuccessListener;
 import comparator.DiscussionDateComparator;
 
 public class WBservices {
-	public final static int NB_MAX_ACTIVITE = 1;
+	public final static int NB_MAX_ACTIVITE = 100;
 	public SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
 
 	public void envoyerMail() {

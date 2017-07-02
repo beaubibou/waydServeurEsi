@@ -59,14 +59,10 @@ public class ListActivite extends HttpServlet {
 				int pageAafficher = Integer.parseInt(request
 						.getParameter("pageAafficher"));
 
-			
-				Pagination pagination = new website.metier.Pagination(
+			Pagination pagination = new website.metier.Pagination(
 						nbrTotalLigne, pageAafficher, Outils.nbrLigneParPage,
 						Outils.nbrMaxPagination, 1);
-				
-				
-				
-
+			
 				System.out.println(pagination);
 				ArrayList<ActiviteBean> listActivite = ActiviteDAO
 						.getListActivite(filtre.getLatitude(),
@@ -76,13 +72,15 @@ public class ListActivite extends HttpServlet {
 
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
-				request.setAttribute("nbrTotalLigne", nbrTotalLigne);
-				request.setAttribute("pageAafficher", pageAafficher);
+				request.setAttribute("nbrTotalLigne",Integer.toString(nbrTotalLigne) );
+				request.setAttribute("pageAafficher",Integer.toString(pageAafficher));
 				request.getRequestDispatcher("listActivite.jsp").forward(
 						request, response);
 
 			} else {
 			
+				request.setAttribute("nbrTotalLigne", Integer.toString(0));
+				request.setAttribute("pageAafficher", Integer.toString(0));
 				request.getRequestDispatcher("listActivite.jsp").forward(
 						request, response);
 
@@ -139,8 +137,9 @@ public class ListActivite extends HttpServlet {
 							longitude, rayon, idtypeactivite,
 							Outils.nbrLigneParPage, pagination.getDebut());
 				
-				request.setAttribute("nbrTotalLigne", 1);
-				request.setAttribute("pageAafficher", 1);
+					request.setAttribute("nbrTotalLigne",Integer.toString(1) );
+					request.setAttribute("pageAafficher",Integer.toString(1));
+				
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
 				request.getRequestDispatcher("listActivite.jsp").forward(
