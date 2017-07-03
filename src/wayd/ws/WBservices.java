@@ -1307,10 +1307,15 @@ public class WBservices {
 								personneinteresse, activite.getId());
 						serveurmethode
 								.gcmUpdateNbrSuggestion(personneinteresse);
+					
+						PushNotifictionHelper.sendPushNotificationSuggestionList(personneinteresse,activite);
 
 					} catch (SQLException | NamingException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					} finally {
 						CxoPool.closeConnection(connexiongcm);
 					}
@@ -3275,7 +3280,7 @@ public class WBservices {
 	public void tesgcm(String gmcToken){
 		
 		try {
-			PushNotifictionHelper.sendPushNotification(gmcToken);
+			PushNotifictionHelper.sendPushNotificationTo(gmcToken);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
