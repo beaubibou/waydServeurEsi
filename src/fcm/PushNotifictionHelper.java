@@ -105,9 +105,9 @@ public class PushNotifictionHelper {
 		JSONObject info = new JSONObject();
 		info.put("title", "notification title"); // Notification title
 		info.put("body", "message body"); // Notification
-		//info.put("click_action", "notificationSuggestion");
+		info.put("click_action", "notificationSuggestion");
 		json.put("notification", info);
-		
+		//
 
 		JSONObject data = new JSONObject();
 		data.put("idactivite", 397694);
