@@ -224,6 +224,8 @@ public String getTempsRestant(Date datefinactivite){
 	public int getTypeactivite() {
 		return typeactivite;
 	}
+	
+
 
 	public void setTypeactivite(int typeactivite) {
 		this.typeactivite = typeactivite;
