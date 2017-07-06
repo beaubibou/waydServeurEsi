@@ -42,8 +42,7 @@ public class PushNotifictionHelper {
 			ArrayList<Personne> listpersonne, Activite activite)
 			throws IOException {
 
-		ArrayList<String> listpersonneGcm = ServeurMethodes
-				.getListGCM(listpersonne);
+		ArrayList<String> listpersonneGcm =getListGCMNotification(listpersonne);
 
 		String result = "";
 		URL url = new URL(API_URL_FCM);
@@ -159,4 +158,21 @@ public class PushNotifictionHelper {
 		return result;
 
 	}
+	
+	public static ArrayList<String> getListGCMNotification(ArrayList<Personne> listpersonne) {
+
+		
+		ArrayList<String> listgcm = new ArrayList<String>();
+		for (Personne pers : listpersonne) {
+			if (pers.getGcm()!=null ){
+				
+				if (pers.isNotification())
+				listgcm.add(pers.getGcm());
+			
+			}
+			
+		}
+		return listgcm;
+	}
+	
 }

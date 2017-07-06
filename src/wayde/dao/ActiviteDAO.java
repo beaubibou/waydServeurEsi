@@ -109,7 +109,7 @@ public class ActiviteDAO {
 		double actlatitude = activite.getLatitude();
 		double actlongitude = activite.getLongitude();
 
-		String requete = "SELECT personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne,"
+		String requete = "SELECT personne.notification,personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne,"
 				+ " prefere.idtypeactivite FROM public.plage,prefere,personne "
 				+ "where jour=? and heuredebut<=? and ?<=heurefin and plage.idtypeactivite=? "
 				+ " and prefere.idpersonne=plage.idpersonne	 and prefere.idtypeactivite=plage.idtypeactivite"
@@ -144,12 +144,13 @@ public class ActiviteDAO {
 			double personnelatitude = rs.getDouble("latitude");
 			double personnelongitude = rs.getDouble("longitude");
 			int rayon = rs.getInt("rayon");
+			boolean notification=rs.getBoolean("notification");
 			double distance = ServeurMethodes.getDistance(actlatitude,
 					personnelatitude, actlongitude, personnelongitude);
 		//	System.out.println("Rayon " + rayon + " distance " + distance);
 
 			if (idpersonne != activite.getIdorganisateur() && distance <= rayon)
-				listpersonne.add(new Personne(gcm, idpersonne));
+				listpersonne.add(new Personne(gcm, idpersonne,notification));
 		}
 
 		rs.close();

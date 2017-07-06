@@ -33,6 +33,7 @@ public class Personne {
 	public String cleactivation;
 	private int nbravis;
 	private double note;
+	private boolean notification;
 	public double getLatitude() {
 		return latitude;
 	}
@@ -117,6 +118,18 @@ public class Personne {
 
 
 
+	public boolean isNotification() {
+		return notification;
+	}
+
+
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
+
+
+
 	public void setNbravis(int nbravis) {
 		this.nbravis = nbravis;
 	}
@@ -155,7 +168,7 @@ public class Personne {
 			int nbrecheccnx, Date datecreation, Date datenaissance,
 			 String photo,  int sexe,String mail, String cleactivation,double note,
 			 int totalavis,String commentaire,boolean afficheage,boolean affichesexe,
-			boolean premiereconnexion,int rayon,boolean admin,double latitude,double longitude) {
+			boolean premiereconnexion,int rayon,boolean admin,double latitude,double longitude,boolean notification) {
 		super();
 		this.id = id;
 		this.login =login;
@@ -182,6 +195,7 @@ public class Personne {
 		this.rayon=rayon;
 		this.latitude=latitude;
 		this.longitude=longitude;
+		this.notification=notification;
 	}
 
 	
@@ -219,9 +233,10 @@ public class Personne {
 		this.afficheage = afficheage;
 	}
 
-	public Personne(String gcm, int idpersonne) {
+	public Personne(String gcm, int idpersonne,boolean notification) {
 		this.gcm=gcm;
 		this.id=idpersonne;
+		this.notification=notification;
 		}
 
 	public String getGcm() {

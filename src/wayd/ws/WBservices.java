@@ -2972,6 +2972,32 @@ public class WBservices {
 		}
 	}
 
+	public MessageServeur updateNotificationPref(int idpersonne, String jeton,boolean notification) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		try {
+
+			connexion = CxoPool.getConnection();
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			personneDAO.updateNotificationPref(idpersonne,notification);
+
+			System.out.println(formatDate.format(new Date())
+					+ ";UpdateNotification;"
+					+ (System.currentTimeMillis() - debut) + "ms");
+			
+	
+			
+			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new MessageServeur(false, e.getMessage());
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+	}
+
+	
 	public MessageServeur updatePosition(int idpersonne, String latitudestr,
 			String longitudestr) {
 		long debut = System.currentTimeMillis();

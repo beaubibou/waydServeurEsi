@@ -157,7 +157,7 @@ public class ParticipationDAO {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
-		String requete = " SELECT personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "
+		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "
 				+ "SELECT personne.idpersonne,personne.gcm from activite,personne where idactivite=?  and personne.idpersonne=activite.idpersonne";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
@@ -168,7 +168,8 @@ public class ParticipationDAO {
 		while (rs.next()) {
 			int idpersonne=rs.getInt("idpersonne");
 			String gcm=rs.getString("gcm");
-			retour.add(new Personne(gcm, idpersonne));
+			boolean notification=rs.getBoolean("notification");
+			retour.add(new Personne(gcm, idpersonne,notification));
 		}
 		
 	//	System.out.println("Cherche les participants à l'activité en "
@@ -203,7 +204,7 @@ public class ParticipationDAO {
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
 	//	System.out.println("Cherche touts participants à l'activité"+ idactivite);
-		String requete = " SELECT personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
+		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
 				+ "	and personne.idpersonne=participer.idpersonne and  personne.idpersonne!=? union "
 				+ "SELECT personne.idpersonne,personne.gcm from activite,personne where idactivite=? "
 				+ "and personne.idpersonne=activite.idpersonne and personne.idpersonne!=?";
@@ -214,11 +215,12 @@ public class ParticipationDAO {
 		preparedStatement.setInt(4, idexpect);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-			
+		
 		while (rs.next()) {
 			int idpersonne=rs.getInt("idpersonne");
 			String gcm=rs.getString("gcm");
-			retour.add(new Personne(gcm, idpersonne));
+			boolean notification=rs.getBoolean("notification");
+			retour.add(new Personne(gcm, idpersonne,notification));
 		}
 		return retour;
 

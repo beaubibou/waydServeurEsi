@@ -120,7 +120,7 @@ public class PersonneDAO {
 	public Personne getUnProfil(int idpersonne) throws SQLException {
 		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par Id" + idpersonne);
-		String requete = " SELECT  note, nbravis as totalavis,"
+		String requete = " SELECT  notification,note, nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,"
 				+ "nbrecheccnx, datecreation,  datenaissance,latitude,longitude, sexe,affichesexe,afficheage"
 				+ " , mail, cleactivation, photo,commentaire,premiereconnexion,nbravis,note FROM personne where idpersonne=?";
@@ -203,7 +203,7 @@ public class PersonneDAO {
 		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par token:");
 
-		String requete = " SELECT personne.note,personne.nbravis as totalavis,"
+		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
 				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,rayon,admin FROM personne where jeton=?";
@@ -245,13 +245,15 @@ public class PersonneDAO {
 			int totalavis = rs.getInt("totalavis");
 			double latitude = rs.getDouble("latitude");
 			double longitude = rs.getDouble("longitude");
+			boolean notification = rs.getBoolean("notification");
+			
 
 			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
-					rayonrecherche, admin, latitude, longitude);
+					rayonrecherche, admin, latitude, longitude,notification);
 			// System.out.println("Trouvé");
 			rs.close();
 			return personne;
@@ -276,6 +278,7 @@ public class PersonneDAO {
 			boolean affichesexe = rs.getBoolean("affichesexe");
 			boolean premiereconnexion = rs.getBoolean("premiereconnexion");
 			boolean admin = rs.getBoolean("admin");
+			boolean notification = rs.getBoolean("notification");
 			Date datecreation = rs.getTimestamp("datecreation");
 			Date datenaissance = rs.getTimestamp("datenaissance");
 			String photo = rs.getString("photo");
@@ -297,7 +300,7 @@ public class PersonneDAO {
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
 					afficheage, affichesexe, premiereconnexion, rayonrecherche,
-					admin, latitude, longitude);
+					admin, latitude, longitude,notification);
 			
 			rs.close();
 			return personne;
@@ -680,10 +683,25 @@ public class PersonneDAO {
 		preparedStatement.close();
 
 	}
+	
+	public void updateNotificationPref(int idpersonne,boolean notification) throws SQLException{
+		
+		String requete = "UPDATE  personne set notification=? "
+				+ " WHERE idpersonne=?";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setBoolean(1, notification);
+		preparedStatement.setInt(2, idpersonne);
+	
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+
+	}
 
 	public void updatePseudo(String pseudo, Long datenaissance, int sexe,
 			String token, int idpersonne) throws SQLException, ParseException {
-		System.out.println(" debur update");
+		
 		String requete = "UPDATE  personne set prenom=?,premiereconnexion=false,sexe=?,datenaissance=?  "
 				+ " WHERE idpersonne=?";
 		PreparedStatement preparedStatement = connexion
@@ -694,7 +712,7 @@ public class PersonneDAO {
 		preparedStatement.setInt(4, idpersonne);
 		preparedStatement.execute();
 		preparedStatement.close();
-		System.out.println(" fin update");
+		
 
 	}
 
