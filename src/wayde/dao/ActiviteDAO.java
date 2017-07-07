@@ -115,7 +115,7 @@ public class ActiviteDAO {
 				+ " and prefere.idpersonne=plage.idpersonne	 and prefere.idtypeactivite=plage.idtypeactivite"
 				+ "  and prefere.active=true  and prefere.always=false  and personne.idpersonne=prefere.idpersonne "
 				+ "and personne.idpersonne!=? union"
-				+ "  select personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne, prefere.idtypeactivite  "
+				+ "  select personne.notification,personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne, prefere.idtypeactivite  "
 				+ "FROM prefere,personne "
 				+ "where "
 				+ " prefere.idtypeactivite=? and  prefere.active=true  and prefere.always=true"

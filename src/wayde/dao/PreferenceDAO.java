@@ -31,7 +31,6 @@ public class PreferenceDAO {
 		}
 		rs.close();
 		stmt.close();
-
 		return retour;
 
 	}

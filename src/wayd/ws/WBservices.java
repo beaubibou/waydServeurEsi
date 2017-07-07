@@ -72,7 +72,7 @@ import fcm.ServeurMethodes;
 
 public class WBservices {
 	public final static int NB_MAX_ACTIVITE = 100;
-	public SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
+	public static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
 
 	public void envoyerMail() {
 
@@ -839,7 +839,7 @@ public class WBservices {
 
 	}
 
-	public Activite getActivite(int idpersonne, int idactivite) {
+	public static Activite getActivite(int idpersonne, int idactivite) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -905,7 +905,7 @@ public class WBservices {
 
 	}
 
-	public IndicateurWayd getIndicateurs() {
+	public static IndicateurWayd getIndicateurs() {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		IndicateurWayd indicateurs;
@@ -959,7 +959,7 @@ public class WBservices {
 
 	}
 
-	public Preference[] getLisPreference(int idpersonne) {
+	public static Preference[] getLisPreference(int idpersonne) {
 
 		long debut = System.currentTimeMillis();
 		ArrayList<Preference> listpreference = new ArrayList<Preference>();
@@ -968,9 +968,7 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
-
 			PreferenceDAO preferencedao = new PreferenceDAO(connexion);
-
 			listpreference = preferencedao.getLisPreference(idpersonne);
 
 		}
@@ -1231,7 +1229,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur addActivite(String titre, String libelle,
+	public static MessageServeur addActivite(String titre, String libelle,
 			int idorganisateur, int dureebalise, int idtypeactivite,
 			String latitudestr, String longitudestr, String adresse,
 			int nbmaxwaydeur, int dureeactivite, String jeton)
@@ -1697,7 +1695,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceActivite(int idorganisateur, int idactivite,
+	public static MessageServeur effaceActivite(int idorganisateur, int idactivite,
 			String jeton) {
 
 		long debut = System.currentTimeMillis();
@@ -2876,9 +2874,10 @@ public class WBservices {
 
 	}
 
-	public MessageServeur updatePseudo(String pseudo, Long datenaissance,
+	public static MessageServeur updatePseudo(String pseudo, Long datenaissance,
 			int sexe, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		String lowerpseudo = pseudo.toLowerCase();
 
@@ -3151,7 +3150,7 @@ public class WBservices {
 
 	}
 
-	public Profil getFullProfil(int idpersonne) {
+	public static Profil getFullProfil(int idpersonne) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 

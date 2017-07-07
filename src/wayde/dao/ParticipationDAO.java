@@ -158,7 +158,7 @@ public class ParticipationDAO {
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "
-				+ "SELECT personne.idpersonne,personne.gcm from activite,personne where idactivite=?  and personne.idpersonne=activite.idpersonne";
+				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=?  and personne.idpersonne=activite.idpersonne";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
@@ -206,7 +206,7 @@ public class ParticipationDAO {
 	//	System.out.println("Cherche touts participants à l'activité"+ idactivite);
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
 				+ "	and personne.idpersonne=participer.idpersonne and  personne.idpersonne!=? union "
-				+ "SELECT personne.idpersonne,personne.gcm from activite,personne where idactivite=? "
+				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=? "
 				+ "and personne.idpersonne=activite.idpersonne and personne.idpersonne!=?";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);

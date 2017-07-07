@@ -35,7 +35,7 @@ public class PersonneDAO {
 	public Personne getPersonneId(int idpersonne) throws SQLException {
 		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par Id" + idpersonne);
-		String requete = " SELECT personne.note,"
+		String requete = " SELECT personne.notification,personne.note,"
 				+ "personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation,  datenaissance, sexe,admin,rayon,latitude,longitude,"
@@ -58,7 +58,6 @@ public class PersonneDAO {
 		boolean isAmi = new AmiDAO(connexion).isAmiFrom(notateur, idpersonne);
 		Profil profil = getFullProfil(idpersonne);
 		Activite activite = new ActiviteDAO(connexion).getActivite(idactivite);
-
 		return new ProfilNotation(profil, isAmi, activite.getTitre());
 
 	}
@@ -428,8 +427,9 @@ public class PersonneDAO {
 		
 		Date datecreation = Calendar.getInstance().getTime();
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
-				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion,gcm)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
+				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		String commentaire =null;
 		preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
@@ -462,6 +462,7 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(20, true);// affiche age
 		preparedStatement.setBoolean(21, true);// affiche age
 		preparedStatement.setString(22, gcmToken);// affiche age
+		preparedStatement.setBoolean(23, true);// affiche age
 		
 		preparedStatement.execute();
 	//	System.out.println("Cree compte generique ");
