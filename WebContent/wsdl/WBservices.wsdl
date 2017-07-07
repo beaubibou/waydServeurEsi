@@ -179,21 +179,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getListDefinitionPref">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idtypeactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListDefinitionPrefResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListDefinitionPrefReturn" type="tns1:DefinitionPreference"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getListDiscussion">
     <complexType>
      <sequence>
@@ -1325,16 +1310,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="message" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="DefinitionPreference">
-    <sequence>
-     <element name="active" type="xsd:boolean"/>
-     <element name="always" type="xsd:boolean"/>
-     <element name="heuredebut" type="xsd:int"/>
-     <element name="heurefin" type="xsd:int"/>
-     <element name="jour" type="xsd:int"/>
-     <element name="typeactivite" type="xsd:int"/>
-    </sequence>
-   </complexType>
    <complexType name="Discussion">
     <sequence>
      <element name="dateMessage" type="xsd:long"/>
@@ -1425,6 +1400,16 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="pwd" nillable="true" type="xsd:string"/>
      <element name="datenaissance" nillable="true" type="xsd:dateTime"/>
      <element name="cleactivation" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="DefinitionPreference">
+    <sequence>
+     <element name="active" type="xsd:boolean"/>
+     <element name="always" type="xsd:boolean"/>
+     <element name="heuredebut" type="xsd:int"/>
+     <element name="heurefin" type="xsd:int"/>
+     <element name="jour" type="xsd:int"/>
+     <element name="typeactivite" type="xsd:int"/>
     </sequence>
    </complexType>
    <complexType name="Avis">
@@ -2524,25 +2509,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListDefinitionPrefRequest">
-
-      <wsdl:part element="impl:getListDefinitionPref" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="getMessageRequest">
 
       <wsdl:part element="impl:getMessage" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getListDefinitionPrefResponse">
-
-      <wsdl:part element="impl:getListDefinitionPrefResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2961,18 +2930,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getListMessageAfterByActResponse" name="getListMessageAfterByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListDefinitionPref">
-
-         <wsdl:input message="impl:getListDefinitionPrefRequest" name="getListDefinitionPrefRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListDefinitionPrefResponse" name="getListDefinitionPrefResponse">
 
        </wsdl:output>
 
@@ -4021,24 +3978,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getListMessageAfterByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListDefinitionPref">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListDefinitionPrefRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListDefinitionPrefResponse">
 
             <wsdlsoap:body use="literal"/>
 

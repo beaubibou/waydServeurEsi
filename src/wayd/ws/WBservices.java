@@ -162,7 +162,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur isAmiFrom(int idpersonne, int idami) {
+	public static MessageServeur isAmiFrom(int idpersonne, int idami) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		boolean retour;
@@ -323,7 +323,7 @@ public class WBservices {
 
 	}
 
-	public InfoNotation getInfoNotation(int idpersonne) {
+	public static InfoNotation getInfoNotation(int idpersonne) {
 		// System.out.println("Cherche notation de " + idpersonne);
 
 		long debut = System.currentTimeMillis();
@@ -366,31 +366,6 @@ public class WBservices {
 
 	}
 
-	public Message getMessage(int idmessage) {
-
-		// AvisDb avisdb = AvisDAO.getAvis(id);
-
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		try {
-			connexion = CxoPool.getConnection();
-			MessageDAO messagedao = new MessageDAO(connexion);
-			Message message;
-			message = messagedao.getMessage(idmessage);
-			System.out.println(formatDate.format(new Date()) + ";getMessage;"
-					+ (System.currentTimeMillis() - debut) + "ms");
-			return message;
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-			return null;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-	}
-
 	public Message[] getListMessageNonLu(int idpersonne) {
 
 		Connection connexion = null;
@@ -417,7 +392,7 @@ public class WBservices {
 
 	}
 
-	public Ami[] getListAmi(int idpersonne) {
+	public static Ami[] getListAmi(int idpersonne) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Ami> retour = new ArrayList<Ami>();
@@ -439,7 +414,7 @@ public class WBservices {
 
 	}
 
-	public Participant[] getListParticipant(int idactivite) {
+	public static Participant[] getListParticipant(int idactivite) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Participant> retour = new ArrayList<Participant>();
@@ -567,7 +542,7 @@ public class WBservices {
 
 	}
 
-	public Message[] getDiscussionByAct(int iddestinataire, int idactivite) {
+	public static Message[] getDiscussionByAct(int iddestinataire, int idactivite) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -593,7 +568,7 @@ public class WBservices {
 
 	}
 
-	public Discussion[] getListDiscussion(int idpersonne) {
+	public static Discussion[] getListDiscussion(int idpersonne) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<Discussion> retour = new ArrayList<Discussion>();
@@ -782,63 +757,6 @@ public class WBservices {
 
 	}
 
-	public Message[] getListMessageArchive(int idpersonne) {
-
-		Connection connexion = null;
-		ArrayList<Message> listmessage = new ArrayList<Message>();
-		long debut = System.currentTimeMillis();
-		try {
-			connexion = CxoPool.getConnection();
-			MessageDAO messagedao = new MessageDAO(connexion);
-			listmessage = messagedao.getListMessageNonLu(idpersonne);
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		System.out.println(formatDate.format(new Date())
-				+ ";getListMessageArchive;"
-				+ (System.currentTimeMillis() - debut) + "ms");
-		return (Message[]) listmessage.toArray(new Message[listmessage.size()]);
-
-	}
-
-	public DefinitionPreference[] getListDefinitionPref(int idpersonne,
-			int idtypeactivite) {
-		Connection connexion = null;
-		long debut = System.currentTimeMillis();
-		ArrayList<DefinitionPreference> retour = new ArrayList<DefinitionPreference>();
-		// System.out.print("getListDefinitionPref;");
-
-		try {
-			connexion = CxoPool.getConnection();
-			DefinintionPreferenceDAO definitionpref = new DefinintionPreferenceDAO(
-					connexion);
-
-			ArrayList<DefinitionPreferenceDb> listDefPrefdb;
-			listDefPrefdb = definitionpref.getListDefinitionPref(idpersonne,
-					idtypeactivite);
-
-			for (DefinitionPreferenceDb defPrefdb : listDefPrefdb)
-				retour.add(new DefinitionPreference(defPrefdb));
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-		System.out.println(formatDate.format(new Date())
-				+ ";getListDefinitionPref;"
-				+ (System.currentTimeMillis() - debut) + "ms");
-		return (DefinitionPreference[]) retour
-				.toArray(new DefinitionPreference[retour.size()]);
-
-	}
-
 	public static Activite getActivite(int idpersonne, int idactivite) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -871,7 +789,7 @@ public class WBservices {
 
 	}
 
-	public TableauBord getTableauBord(int idpersonne) {
+	public static TableauBord getTableauBord(int idpersonne) {
 		// System.out.println("Get Tableau de bord " + idpersonne);
 		Connection connexion = null;
 		TableauBord tableaubord;
@@ -934,7 +852,7 @@ public class WBservices {
 
 	}
 
-	public Avis[] getListAvis(int idpersonnenotee) {
+	public static Avis[] getListAvis(int idpersonnenotee) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -1100,7 +1018,7 @@ public class WBservices {
 
 	}
 
-	public Activite[] getMesActiviteEncours(int idpersonne) {
+	public static Activite[] getMesActiviteEncours(int idpersonne) {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -1130,7 +1048,7 @@ public class WBservices {
 				.size()]);
 	}
 
-	public Activite[] getMesActiviteArchive(int idpersonne) {
+	public  static Activite[] getMesActiviteArchive(int idpersonne) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
@@ -1200,7 +1118,7 @@ public class WBservices {
 
 	}
 
-	public TypeActivite[] getListTypeActivite() {
+	public static TypeActivite[] getListTypeActivite() {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -1483,7 +1401,7 @@ public class WBservices {
 
 	}
 
-	public RetourMessage addMessageByAct(int idemetteur, String corps,
+	public static RetourMessage addMessageByAct(int idemetteur, String corps,
 			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -2106,7 +2024,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceMessageEmisByAct(int idpersonne, int idmessage,
+	public static MessageServeur effaceMessageEmisByAct(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2165,7 +2083,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceMessageEmis(int idpersonne, int idmessage,
+	public  MessageServeur effaceMessageEmis(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -2926,7 +2844,7 @@ public class WBservices {
 	// ************** Il n' y pas de thread sur le serveur d'appli c'est le
 	// client qui sollicite toutes les 5 minutes
 
-	public MessageServeur updateNotification(int idpersonne, String jeton) {
+	public static MessageServeur updateNotification(int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -2971,7 +2889,7 @@ public class WBservices {
 		}
 	}
 
-	public MessageServeur updateNotificationPref(int idpersonne, String jeton,boolean notification) {
+	public static MessageServeur updateNotificationPref(int idpersonne, String jeton,boolean notification) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -3040,7 +2958,7 @@ public class WBservices {
 		}
 	}
 
-	public MessageServeur updateActivite(int idpersonne, int idactivite,
+	public static MessageServeur updateActivite(int idpersonne, int idactivite,
 			String titre, String libelle, int nbrmax, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -3200,7 +3118,7 @@ public class WBservices {
 
 	}
 
-	public Personne getPersonnebyToken(String idtoken) {
+	public static Personne getPersonnebyToken(String idtoken) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		try {
