@@ -517,7 +517,7 @@ public class WBservices {
 
 	}
 
-	public Message[] getDiscussion(int iddestinataire, int idemetteur) {
+	public   static Message[] getDiscussion(int iddestinataire, int idemetteur) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<Message> listmessage = new ArrayList<Message>();
@@ -608,7 +608,7 @@ public class WBservices {
 
 	}
 
-	public Notification[] getListNotification(int idpersonne) {
+	public static Notification[] getListNotification(int idpersonne) {
 		ArrayList<Notification> retour = new ArrayList<Notification>();
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -1087,37 +1087,7 @@ public class WBservices {
 
 	}
 
-	public AvisaDonner[] getListAvisaDonner(int idpersonne) {
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		ArrayList<AvisaDonner> retour = new ArrayList<AvisaDonner>();
-
-		try {
-			connexion = CxoPool.getConnection();
-			AvisaDonnerDAO avisadonner = new AvisaDonnerDAO(connexion);
-			ArrayList<AvisaDonnerDb> listavisadonner;
-			listavisadonner = avisadonner.getListAvisaDonner(idpersonne);
-
-			for (AvisaDonnerDb avisadonnerdb : listavisadonner) {
-				AvisaDonner avisadonne = new AvisaDonner(avisadonnerdb);
-				retour.add(avisadonne);
-
-			}
-			System.out.println(formatDate.format(new Date())
-					+ ";getListAvisaDonner"
-					+ (System.currentTimeMillis() - debut) + "ms");
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-		return (AvisaDonner[]) retour.toArray(new AvisaDonner[retour.size()]);
-
-	}
-
+	
 	public static TypeActivite[] getListTypeActivite() {
 
 		Connection connexion = null;
@@ -1318,7 +1288,7 @@ public class WBservices {
 
 	}
 
-	public RetourMessage addMessage(int idemetteur, String corps,
+	public static RetourMessage addMessage(int idemetteur, String corps,
 			int iddestinataire, String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -1492,8 +1462,8 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceParticipation(int idAeffacer, int idactivite,
-			int idorganisateur, int idDemandeur, String jeton) {
+	public static MessageServeur effaceParticipation(int idDemandeur,int idAeffacer, int idactivite,
+		  String jeton) {
 
 		long debut = System.currentTimeMillis();
 
@@ -1541,7 +1511,7 @@ public class WBservices {
 			Personne personne = new PersonneDAO(connexion)
 					.getPersonneId(idAeffacer);
 			Message message;
-			if (idDemandeur == idorganisateur) {
+			if (idDemandeur == activite.getIdorganisateur()) {
 
 				message = new Message(idAeffacer,
 						"L'organisateur à désinscrit " + personne.getPrenom(),
@@ -1557,7 +1527,7 @@ public class WBservices {
 
 			messagedao.addMessageByAct(message, listepersonne);
 			participationdao.RemoveParticipation(idAeffacer, idactivite,
-					idorganisateur);// Efface la particiaption attention a
+					activite.getIdorganisateur());// Efface la particiaption attention a
 									// l'orrde.
 			new ActiviteDAO(connexion).updateChampCalcule(idactivite);
 
@@ -1897,7 +1867,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceNotificationRecu(int iddestinataire,
+	public static MessageServeur effaceNotificationRecu(int iddestinataire,
 			int idnotification, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2187,7 +2157,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitMessageDiscussion(int idpersonne,
+	public static MessageServeur acquitMessageDiscussion(int idpersonne,
 			int idemetteur, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
@@ -2248,7 +2218,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
+	public static MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
 			int idactivite, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
@@ -2309,7 +2279,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitAllNotification(int idpersonne, String jeton) {
+	public static MessageServeur acquitAllNotification(int idpersonne, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire
 		long debut = System.currentTimeMillis();
@@ -2431,7 +2401,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
+	public  static MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2650,7 +2620,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur addAvis(int idpersonne, int idpersonnenotee,
+	public static MessageServeur addAvis(int idpersonne, int idpersonnenotee,
 			int idactivite, String titre, String libelle, String notestr,
 			boolean demandeami, String jeton) {
 		long debut = System.currentTimeMillis();
@@ -3473,48 +3443,6 @@ public class WBservices {
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-
-	}
-
-	
-	public Discussion[] getListDiscussionNew(int idpersonne) {
-		Connection connexion = null;
-		long debut = System.currentTimeMillis();
-		ArrayList<Discussion> retour = new ArrayList<Discussion>();
-
-		try {
-			connexion = CxoPool.getConnection();
-			MessageDAO messagedao = new MessageDAO(connexion);
-			ArrayList<Discussion> listdiscussion = null;
-
-			// RECUPERE LES MESSAGE DES ACTIVITES//
-
-			for (Discussion discussion : new DiscussionDAO(connexion)
-					.getArrayDiscussionByAct(idpersonne))
-				if (discussion != null)
-					retour.add(discussion);
-
-			// RECUPERE jhLES MESSAGE DES AMIS//
-			listdiscussion = messagedao.getListDiscussion(idpersonne);
-
-			for (Discussion discussion : listdiscussion)
-				retour.add(discussion);
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-    nkljhgenerated catch block
-			e.printStackTrace();
-		}
-
-		finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-		Collections.sort(retour, new DiscussionDateComparator());
-		System.out.println(formatDate.format(new Date())
-				+ ";getListDiscussion;" + (System.currentTimeMillis() - debut)
-				+ "ms");
-		
-		return (Discussion[]) retour.toArray(new Discussion[retour.size()]);
 
 	}
 

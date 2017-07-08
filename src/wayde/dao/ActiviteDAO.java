@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.naming.NamingException;
+
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
+import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
@@ -1296,6 +1299,34 @@ public class ActiviteDAO {
 		return false;
 
 	}
+	
+	public static boolean terminerActivite(int idActivite) {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = "UPDATE public.activite   SET       datefin=current_timestamp,d_finactivite=current_timestamp WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idActivite);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+			return true;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return false;
+
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+		}
+
+	}
+
 
 	
 

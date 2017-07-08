@@ -40,7 +40,7 @@ public class AvisDAO {
 			String libelle, double note) throws SQLException {
 
 		String requete = "UPDATE public.noter   SET datenotation=?, note=?, libelle=?, titre=?,  fait=? "
-				+ "WHERE idpersonnenotee=? and idactivite=?;";
+				+ "WHERE idpersonnenotee=? and idactivite=? and fait=false;";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setTimestamp(1,
