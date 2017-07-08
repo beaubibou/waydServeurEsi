@@ -74,6 +74,7 @@ public class WBservices {
 	public final static int NB_MAX_ACTIVITE = 100;
 	public static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
 
+	
 	public void envoyerMail() {
 
 		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
@@ -1024,6 +1025,8 @@ public class WBservices {
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
 
+		
+		
 		try {
 			connexion = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
@@ -1929,7 +1932,7 @@ public class WBservices {
 
 	}
 
-	public MessageServeur effaceAmi(int idpersonne, int idami, String jeton) {
+	public static MessageServeur effaceAmi(int idpersonne, int idami, String jeton) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();

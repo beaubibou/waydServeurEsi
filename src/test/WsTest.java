@@ -49,9 +49,7 @@ public class WsTest {
 	static final String corpMessage = "testMessage";
 	static final String libelleActivite = "Activite test";
 	static Connection connexion;
-	static {
 
-	}
 
 	@Before
 	public void init() throws SQLException {
@@ -673,6 +671,16 @@ public class WsTest {
 				idactivite, token1);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
+		
+		// Verifie le nombre d'activite en cours pour chacun doit être égale à un pour les 2
+		
+		Activite[] listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne);
+		assertTrue(listActiviteEncours != null);
+		assertTrue(listActiviteEncours.length==1);	
+		
+		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant);
+		assertTrue(listActiviteEncours != null);
+		assertTrue(listActiviteEncours.length==1);	
 
 		// Verifie le nombre de participant
 
@@ -750,10 +758,7 @@ public class WsTest {
 		retourMessage=WBservices.addMessage(idparticipant, "message", idpersonne, token1);
 		assertTrue(retourMessage != null);
 		assertTrue(retourMessage.getId()==RetourMessage.PLUS_SON_AMI);	
-		
-		
-		
-
+	
 		// met à jour les notifications (demande de notation)
 		messageServeur = WBservices.updateNotification(idpersonne, token);
 		assertTrue(messageServeur != null);
@@ -854,8 +859,6 @@ public class WsTest {
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length==0);
 		
-		
-		
 		// Verifie pas de messages au départ.
 	
 		messages= WBservices.getDiscussion(idpersonne, idparticipant);
@@ -891,6 +894,54 @@ public class WsTest {
 		messageServeur=WBservices.acquitMessageDiscussion(idpersonne, idparticipant, token);
 		messageServeur=WBservices.acquitMessageDiscussion(idparticipant, idpersonne, token1);
 			
+		
+		// Regarde ses archives
+		
+		Activite[] listActiviteArchives=WBservices.getMesActiviteArchive(idpersonne);
+		assertTrue(listActiviteArchives != null);
+		assertTrue(listActiviteArchives.length==1);	
+		
+		listActiviteArchives=WBservices.getMesActiviteArchive(idparticipant);
+		assertTrue(listActiviteArchives != null);
+		assertTrue(listActiviteArchives.length==1);	
+		
+		// Activite en cours ==0
+		
+		listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne);
+		assertTrue(listActiviteEncours != null);
+		assertTrue(listActiviteEncours.length==0);	
+		
+		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant);
+		assertTrue(listActiviteEncours != null);
+		assertTrue(listActiviteEncours.length==0);	
+		
+		
+		// Verifie la liste d'ami
+		
+		listAmi=WBservices.getListAmi(idpersonne);
+		assertTrue(listAmi != null);
+		assertTrue(listAmi.length==1);
+		assertTrue(listAmi[0].getId()==idparticipant);	
+		
+		listAmi=WBservices.getListAmi(idparticipant);
+		assertTrue(listAmi != null);
+		assertTrue(listAmi.length==1);
+		assertTrue(listAmi[0].getId()==idpersonne);	
+	
+	 
+		// l'effacement d'un ami l'efface des 2 cotes
+		
+		messageServeur=WBservices.effaceAmi(idpersonne, idparticipant, token);
+		assertTrue(messageServeur != null);
+		assertTrue(messageServeur.isReponse());
+		listAmi=WBservices.getListAmi(idpersonne);
+		assertTrue(listAmi != null);
+		assertTrue(listAmi.length==0);
+	
+		listAmi=WBservices.getListAmi(idparticipant);
+		assertTrue(listAmi != null);
+		assertTrue(listAmi.length==0);
+		
 		
 		try {
 			connexion.close();
