@@ -35,10 +35,17 @@ import wayde.dao.PersonneDAO;
 public class WsTest {
 
 	String uid = "uiduid";
+	String uid1 = "uiduid1";
 	String token = "token";
+	String token1 = "token1";
 	String photostr = "photostr";
-	String nom = "jj";
+	String nom = "nom";
+	String nom1 = "nom1";
 	String gcmToken = "gcmToken";
+	String gcmToken1 = "gcmToken1";
+	static final String corpMessageByAct="testMessageByAct";
+	static final String corpMessage="testMessage";
+	static final String libelleActivite="Activite test";
 	static Connection connexion;
 	static {
 
@@ -54,24 +61,43 @@ public class WsTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		String requete = "delete from messagebyact where corps=?";
+		
+		String requete = "delete from noter";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-		preparedStatement.setString(1, "testunit");
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+		 requete = "delete from demandeami";
+		 preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+
+		 requete = "delete from participer";
+		 preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+		 requete = "delete from messagebyact where corps=?";
+		 preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setString(1, corpMessageByAct);
 		preparedStatement.execute();
 		preparedStatement.close();
 		
 		 requete = "delete from activite where libelle=?";
 		 preparedStatement = connexion
 				.prepareStatement(requete);
-		preparedStatement.setString(1, "activite test");
+		preparedStatement.setString(1, libelleActivite);
 		preparedStatement.execute();
 		preparedStatement.close();
 	
-		requete = "delete from personne where personne.login=?";
+		requete = "delete from personne where personne.login like ?";
 		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setString(1, uid);
+		preparedStatement.setString(1, uid+"%");
 		preparedStatement.execute();
 		preparedStatement.close();
 
@@ -147,18 +173,18 @@ public class WsTest {
 		assertTrue(listAvis!=null);
 		assertTrue(listAvis.length==0);
 		
-		//Recupere discussion
+		//Recupere ses discussion
 		Discussion[] listDiscussion=WBservices.getListDiscussion(idpersonne);
 		assertTrue(listDiscussion!=null);
 		assertTrue(listDiscussion.length==0);
 		
-		// Recupere le TDB
+		// Recupere son TDB
 		
 		TableauBord tableauBord=WBservices.getTableauBord(idpersonne);
 		assertTrue(tableauBord!=null);
 		assertTrue(tableauBord.getNbractiviteencours()==0);
 		
-		// Test l'ami
+		// Test un ami inexistant
 		MessageServeur messageServeur=WBservices.isAmiFrom(idpersonne, 10);
 		assertTrue(messageServeur!=null);
 		assertFalse(messageServeur.isReponse());
@@ -176,7 +202,13 @@ public class WsTest {
 		assertTrue(messageServeur!=null);
 		assertTrue(messageServeur.isReponse());
 		
+		// Recueper les activité archivées
 		
+		Activite[] activiteArchies= WBservices.getMesActiviteArchive(idpersonne);
+		assertTrue(activiteArchies!=null);
+		assertTrue(activiteArchies.length==0);
+
+				
 		// Mets à jour les préfrence de diffusion de notification
 		
 		messageServeur=WBservices.updateNotificationPref( idpersonne,  token, false);
@@ -188,18 +220,10 @@ public class WsTest {
 		
 		
 		
-		// Recueper les activité archivées
-		
-				Activite[] activiteArchies= WBservices.getMesActiviteArchive(idpersonne);
-				assertTrue(activiteArchies!=null);
-				assertTrue(activiteArchies.length==0);
-		
-		
-		
 		//********************** Ajoute une activité
 
 		messageServeur = WBservices.addActivite("test"
-				+ new Date().getTime(), "activite test", idpersonne, 90, 1,
+				+ new Date().getTime(), libelleActivite, idpersonne, 90, 1,
 				"42", "3", "adresse", 3, 90, token);
 
 		assertTrue(messageServeur != null);
@@ -230,7 +254,7 @@ public class WsTest {
 		// Modifie l'activité
 		
 		messageServeur=WBservices.updateActivite( idpersonne,  idactivite,
-				 "titres", "activite test",  5,  token);
+				 "titres", libelleActivite,  5,  token);
 		assertTrue(messageServeur!=null);
 		assertTrue(messageServeur.isReponse());
 		
@@ -241,12 +265,12 @@ public class WsTest {
 		assertTrue(activite.getId() == idactivite);
 		assertTrue(activite.getIdorganisateur() == idpersonne);
 		assertTrue(activite.getTitre().compareTo("titres")==0);
-		assertTrue(activite.getLibelle().compareTo("activite test")==0);
+		assertTrue(activite.getLibelle().compareTo(libelleActivite)==0);
 		assertTrue(activite.getNbmaxwaydeur()==5);
 	
 		// Ajoute un message à l'activité
 		
-		RetourMessage retourMessage=WBservices.addMessageByAct(idpersonne, "testunit", idactivite, token);
+		RetourMessage retourMessage=WBservices.addMessageByAct(idpersonne, corpMessageByAct, idactivite, token);
 		assertTrue(retourMessage != null);
 		assertTrue(retourMessage.getId()!=0);
 	
@@ -262,14 +286,85 @@ public class WsTest {
 		// Efface le message
 		messageServeur=WBservices.effaceMessageEmisByAct(idpersonne,idmessage,token);
 		
-		// Verifie son effacement
+		// Verifie son l'effacement du message effacement
 		
 		messages=WBservices.getDiscussionByAct(idpersonne,  idactivite);
 		assertTrue(messages != null);
 		assertTrue(messages.length==0);
+	
+		// Verifie le nombre d'activité en cours 1 seule
+		
+		activiteEnCours= WBservices.getMesActiviteEncours(idpersonne);
+		assertTrue(activiteEnCours!=null);
+		assertTrue(activiteEnCours.length==1);
+	
+		
+		//**************************** Creation du participant
 		
 		
+		int idparticipant = 0;
+		idparticipant = personnedao.addCompteGenerique(uid1, token1, photostr, nom1,
+				gcmToken1);
+
+		// *******************Verifice que la personne est crée
+
+		assertTrue(idparticipant != 0);
+
+		//*********************** Recupere la personne créée
+
+		Personne participant = WBservices.getPersonnebyToken(token1);
+
+		assertTrue(personne != null);
+		// Test les valeurs par défaut
+		assertTrue(participant.isPremiereconnexion());
+		assertTrue(participant.isNotification());
+		assertTrue(participant.isActif());
+		assertFalse(participant.isAdmin());
+
+		// ************************* Premiere connexion
+
+		WBservices.updatePseudo("tutu1", new Date().getTime(), 0, idparticipant,
+				token1);
+
+		participant = personnedao.getPersonneId(idparticipant);
+		assertTrue(participant != null);
+		assertFalse(participant.isPremiereconnexion());
+		assertTrue(participant.isNotification());
+		assertTrue(participant.isActif());
+		assertFalse(participant.isAdmin());
+	
 		
+		
+		// ***************AJOUT DU PARTICIPANT A L'ACTIVITE
+		
+		messageServeur=WBservices.addParticipation( idparticipant, idpersonne,
+				 idactivite,  token1);
+		assertTrue(messageServeur != null);
+		assertTrue(messageServeur.isReponse());
+		
+		// Verifie le nombre de participant
+		
+		 participants=WBservices.getListParticipant(idactivite);
+			assertTrue(participants != null);
+			assertTrue(participants.length==2);
+			
+		// Verifie le nombre de participant de l'activité
+			 activite = WBservices.getActivite(idpersonne, idactivite);
+
+			assertTrue(activite != null);
+			assertTrue(activite.getNbrparticipant() == 2);
+			
+			
+			activiteEnCours= WBservices.getMesActiviteEncours(idpersonne);
+			assertTrue(activiteEnCours!=null);
+			assertTrue(activiteEnCours.length==1);
+			
+			activiteEnCours= WBservices.getMesActiviteEncours(idparticipant);
+			assertTrue(activiteEnCours!=null);
+			assertTrue(activiteEnCours.length==1);
+		
+			
+			
 		
 		
 		try {

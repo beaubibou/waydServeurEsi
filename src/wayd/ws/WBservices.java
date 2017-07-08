@@ -2541,15 +2541,12 @@ public class WBservices {
 
 	}
 
-	public MessageServeur addParticipation(int iddemandeur, int idorganisateur,
+	public static MessageServeur addParticipation(int iddemandeur, int idorganisateur,
 			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
-			
-			
-			
-
+	
 			if (iddemandeur == idorganisateur)
 				return new MessageServeur(false,
 						LibelleMessage.infoParticpationActivite);
