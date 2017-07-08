@@ -91,7 +91,7 @@ public class WBservices {
 			try {
 				options = new FirebaseOptions.Builder()
 						// .setServiceAccount(new
-						// FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
+						//   FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
 //jklmjl
 						.setServiceAccount(new FileInputStream("d:/cle.json"))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com/")
