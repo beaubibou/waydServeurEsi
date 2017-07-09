@@ -19,8 +19,6 @@ public abstract class CxoPool {
 		// context.xml
 
 		Context ctx = new InitialContext();
-		// Connexion avec Oracle
-		System.out.println("contexte"+ctx);
 		try{
 			DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
 			return source.getConnection();
@@ -36,13 +34,12 @@ public abstract class CxoPool {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Driver O.K.");
-
+		
 		String url = "jdbc:postgresql://localhost:5432/wayd";
 		String user = "postgres";
 		String passwd = "azerty";
 		Connection conn = DriverManager.getConnection(url, user, passwd);
-		System.out.println("Connexion effective !");
+		
 		return conn;
 		
 		
@@ -73,33 +70,14 @@ public abstract class CxoPool {
 				String user = "postgres";
 				String passwd = "azerty";
 				Connection conn = DriverManager.getConnection(url, user, passwd);
-				System.out.println("Connexion effective !");
+			
 				return conn;
 				
 			}
 	
 	}
 
-	public static Connection getConnectionTest() throws NamingException,
-			SQLException {
-		// Récupération connection référencées dans le JNDI - cf
-		// context.xml
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("Driver O.K.");
 
-		String url = "jdbc:postgresql://localhost:5432/wayd";
-		String user = "postgres";
-		String passwd = "azerty";
-		Connection conn = DriverManager.getConnection(url, user, passwd);
-		System.out.println("Connexion effective !");
-		return conn;
-
-	}
 
 	public static void close(Connection connection, Statement statement,
 			ResultSet resultSet) {

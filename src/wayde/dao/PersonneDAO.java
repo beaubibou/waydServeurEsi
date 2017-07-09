@@ -14,6 +14,8 @@ import java.util.Random;
 
 import wayde.bean.Activite;
 import wayde.bean.Droit;
+import wayde.bean.LibelleMessage;
+import wayde.bean.MessageServeur;
 import wayde.bean.Parametres;
 import wayde.bean.Personne;
 import wayde.bean.Profil;
@@ -25,6 +27,45 @@ public class PersonneDAO {
 	Connection connexion;
 
 	public PersonneDAO() {
+
+	}
+
+	public MessageServeur isAutoriseMessageServeur(int idpersonne, String jeton) {
+
+		Droit droit;
+		try {
+			droit = getDroit(idpersonne, jeton);
+			if (droit == null)
+				return new MessageServeur(false, LibelleMessage.pasReconnu);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new MessageServeur(false, LibelleMessage.pasReconnu);
+		}
+
+		
+		return droit.isDefautAccess();
+		
+	}
+
+	public boolean isAutorise(int idDemandeur, String jeton) {
+
+		Droit droit = null;
+		;
+		try {
+
+			droit = getDroit(idDemandeur, jeton);
+			if (droit == null)
+				return false;
+
+			MessageServeur autorisation = droit.isDefautAccess();
+			return autorisation.isReponse();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 
 	}
 
@@ -245,14 +286,13 @@ public class PersonneDAO {
 			double latitude = rs.getDouble("latitude");
 			double longitude = rs.getDouble("longitude");
 			boolean notification = rs.getBoolean("notification");
-			
 
 			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
-					rayonrecherche, admin, latitude, longitude,notification);
+					rayonrecherche, admin, latitude, longitude, notification);
 			// System.out.println("Trouvé");
 			rs.close();
 			return personne;
@@ -294,13 +334,13 @@ public class PersonneDAO {
 			double longitude = rs.getDouble("longitude");
 
 			int totalavis = rs.getInt("nbravis");
-		//	System.out.println("Note" + note);
+			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
 					afficheage, affichesexe, premiereconnexion, rayonrecherche,
-					admin, latitude, longitude,notification);
-			
+					admin, latitude, longitude, notification);
+
 			rs.close();
 			return personne;
 
@@ -318,7 +358,7 @@ public class PersonneDAO {
 			boolean admin = rs.getBoolean("admin");
 
 			droit = new Droit(idpersonne, admin, verrouille, actif);
-			
+
 			rs.close();
 
 			return droit;
@@ -326,12 +366,12 @@ public class PersonneDAO {
 		}
 		// A CHANGER pour les test
 		return null;
-		
-	//	return new Droit(1, false, false, true);
+
+		// return new Droit(1, false, false, true);
 	}
 
 	public void updatePersonne(Personne personne) throws SQLException {
-	
+
 		String requete = "UPDATE public.personne   SET nom=?, prenom=?, login=?, pwd=?, ville=?, actif=?,  "
 				+ "   verrouille=?, nbrecheccnx=?,  photo=?, "
 				+ "       datenaissance=?, sexe=?,   mail=?"
@@ -410,29 +450,30 @@ public class PersonneDAO {
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom,String gcmToken) throws Exception, SQLException {
-		
-		
-		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de l'utlsation de plusieurs
-		//compte sur um mêm terminal de ne pas recevoir les rafaichissement des autres.
-		
-		String  requete= "UPDATE  personne set gcm=? WHERE gcm=?;";
-		PreparedStatement  preparedStatement = connexion
+			String photostr, String nom, String gcmToken) throws Exception,
+			SQLException {
+
+		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
+		// l'utlsation de plusieurs
+		// compte sur um mêm terminal de ne pas recevoir les rafaichissement des
+		// autres.
+
+		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
+		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setString(1, null);
 		preparedStatement.setString(2, gcmToken);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
-		
+
 		Date datecreation = Calendar.getInstance().getTime();
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
 				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification)"
 				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-		String commentaire =null;
-		preparedStatement = connexion.prepareStatement(
-				requete, Statement.RETURN_GENERATED_KEYS);
+		String commentaire = null;
+		preparedStatement = connexion.prepareStatement(requete,
+				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, nom);
 		preparedStatement.setString(2, "waydeur");
 		preparedStatement.setString(3, iduser);
@@ -451,21 +492,21 @@ public class PersonneDAO {
 		preparedStatement.setInt(14, 10000);
 		preparedStatement.setString(15, "Paris, France");
 		preparedStatement.setString(16, idtoken);
-	
+
 		if (photostr.equals(""))
-		preparedStatement.setString(17, null);
+			preparedStatement.setString(17, null);
 		else
-		preparedStatement.setString(17, photostr);
-			
+			preparedStatement.setString(17, photostr);
+
 		preparedStatement.setString(18, commentaire);
 		preparedStatement.setBoolean(19, true);// affiche sexe
 		preparedStatement.setBoolean(20, true);// affiche age
 		preparedStatement.setBoolean(21, true);// affiche age
 		preparedStatement.setString(22, gcmToken);// affiche age
 		preparedStatement.setBoolean(23, true);// affiche age
-		
+
 		preparedStatement.execute();
-	//	System.out.println("Cree compte generique ");
+		// System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
 		if (rs.next())
@@ -579,8 +620,9 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(20, false);// affiche age
 		preparedStatement.setBoolean(21, false);// affiche age
 		preparedStatement.execute();
-		//System.out.println("Cree compte generique " + nom + " " + pseudo + " "
-	//			+ latitude + " " + longitude);
+		// System.out.println("Cree compte generique " + nom + " " + pseudo +
+		// " "
+		// + latitude + " " + longitude);
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
 		if (rs.next())
@@ -591,8 +633,8 @@ public class PersonneDAO {
 	}
 
 	public void updateJeton(String iduser, String idtoken, String photostr,
-			String nom,String gcmToken) throws SQLException {
-		
+			String nom, String gcmToken) throws SQLException {
+
 		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -600,14 +642,13 @@ public class PersonneDAO {
 		preparedStatement.setString(2, gcmToken);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
-		
-		if (photostr.equals("")) {// Cas ou la photo vient d'un compte avec mot de passe
 
-			 requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+		if (photostr.equals("")) {// Cas ou la photo vient d'un compte avec mot
+									// de passe
+
+			requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 					+ " WHERE login=?";
-			 preparedStatement = connexion
-					.prepareStatement(requete);
+			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
 			preparedStatement.setString(3, gcmToken);
@@ -618,43 +659,37 @@ public class PersonneDAO {
 
 		else
 
-		{//Cas opu la photo vient de FB ou google
-			
-			String photo=isPhotoExist(iduser);
-			
-			if (photo==null){
-			 requete = "UPDATE  personne set jeton=?,nom=?,photo=?,gcm=? "
-					+ " WHERE login=?";
-			 preparedStatement = connexion
-					.prepareStatement(requete);
-			preparedStatement.setString(1, idtoken);
-			preparedStatement.setString(2, nom);
-			preparedStatement.setString(3, photostr);
-			preparedStatement.setString(4, gcmToken);
-			preparedStatement.setString(5, iduser);
-			preparedStatement.execute();
-			preparedStatement.close();
-			}
-			
-			else
-			{	
-				 requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+		{// Cas opu la photo vient de FB ou google
+
+			String photo = isPhotoExist(iduser);
+
+			if (photo == null) {
+				requete = "UPDATE  personne set jeton=?,nom=?,photo=?,gcm=? "
 						+ " WHERE login=?";
-				 preparedStatement = connexion
-						.prepareStatement(requete);
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setString(1, idtoken);
+				preparedStatement.setString(2, nom);
+				preparedStatement.setString(3, photostr);
+				preparedStatement.setString(4, gcmToken);
+				preparedStatement.setString(5, iduser);
+				preparedStatement.execute();
+				preparedStatement.close();
+			}
+
+			else {
+				requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+						+ " WHERE login=?";
+				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setString(1, idtoken);
 				preparedStatement.setString(2, nom);
 				preparedStatement.setString(3, gcmToken);
 				preparedStatement.setString(4, iduser);
 				preparedStatement.execute();
 				preparedStatement.close();
-				
-				
+
 			}
 
 		}
-	
-	
 
 	}
 
@@ -674,7 +709,7 @@ public class PersonneDAO {
 				dateanniversaire.getTime()));
 		preparedStatement.setInt(5, sexe);
 		if (commentaire.equals(""))
-		preparedStatement.setString(6, null);
+			preparedStatement.setString(6, null);
 		else
 			preparedStatement.setString(6, commentaire);
 		preparedStatement.setBoolean(7, afficheage);
@@ -684,25 +719,25 @@ public class PersonneDAO {
 		preparedStatement.close();
 
 	}
-	
-	public void updateNotificationPref(int idpersonne,boolean notification) throws SQLException{
-		
+
+	public void updateNotificationPref(int idpersonne, boolean notification)
+			throws SQLException {
+
 		String requete = "UPDATE  personne set notification=? "
 				+ " WHERE idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setBoolean(1, notification);
 		preparedStatement.setInt(2, idpersonne);
-	
+
 		preparedStatement.execute();
 		preparedStatement.close();
-		
 
 	}
 
 	public void updatePseudo(String pseudo, Long datenaissance, int sexe,
 			String token, int idpersonne) throws SQLException, ParseException {
-		
+
 		String requete = "UPDATE  personne set prenom=?,premiereconnexion=false,sexe=?,datenaissance=?  "
 				+ " WHERE idpersonne=?";
 		PreparedStatement preparedStatement = connexion
@@ -713,7 +748,6 @@ public class PersonneDAO {
 		preparedStatement.setInt(4, idpersonne);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
 
 	}
 
@@ -774,31 +808,31 @@ public class PersonneDAO {
 
 		// TODO Auto-generated method stub
 	}
-	
+
 	public String isPhotoExist(String login) throws SQLException {
 		String requete = "SELECT photo  FROM personne where login=?;";
-		String photo=null;
+		String photo = null;
 		PreparedStatement preparedStatement;
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setString(1, login);
 		ResultSet rs = preparedStatement.executeQuery();
 		if (rs.next()) {
-			
-			photo=rs.getString("photo");
-			
-		} 
-		
-			preparedStatement.close();
-		
-			return photo;
+
+			photo = rs.getString("photo");
+
+		}
+
+		preparedStatement.close();
+
+		return photo;
 
 		// TODO Auto-generated method stub
 	}
-	
 
 	public boolean isPseudoExist(String pseudo) throws SQLException {
 
-		String requete = "SELECT prenom  FROM personne " + "where LOWER(prenom)=?;";
+		String requete = "SELECT prenom  FROM personne "
+				+ "where LOWER(prenom)=?;";
 
 		PreparedStatement preparedStatement;
 
@@ -818,12 +852,6 @@ public class PersonneDAO {
 
 		// TODO Auto-generated method stub
 	}
-
-	
-
-
-
-	
 
 	public Personne test_GetPersonneAle() throws SQLException {
 		// .String requete =

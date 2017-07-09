@@ -5,612 +5,197 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://ws.wayd" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://bean.wayde"/>
-   <element name="test_getPremierId">
+   <element name="addAvis">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idpersonnenotee" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="notestr" type="xsd:string"/>
+      <element name="demandeami" type="xsd:boolean"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addAvisResponse">
+    <complexType>
+     <sequence>
+      <element name="addAvisReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="signalerActivite">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="idmotif" type="xsd:int"/>
+      <element name="motif" type="xsd:string"/>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="signalerActiviteResponse">
+    <complexType>
+     <sequence>
+      <element name="signalerActiviteReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getFullProfil">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getFullProfilResponse">
+    <complexType>
+     <sequence>
+      <element name="getFullProfilReturn" type="tns1:Profil"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_GetToken">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_GetTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="test_GetTokenReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="signalerProfil">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idsignalement" type="xsd:int"/>
+      <element name="idmotif" type="xsd:int"/>
+      <element name="motif" type="xsd:string"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="signalerProfilResponse">
+    <complexType>
+     <sequence>
+      <element name="signalerProfilReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateProfilWayd">
+    <complexType>
+     <sequence>
+      <element name="photostr" type="xsd:string"/>
+      <element name="nom" type="xsd:string"/>
+      <element name="prenom" type="xsd:string"/>
+      <element name="datenaissancestr" type="xsd:string"/>
+      <element name="sexe" type="xsd:int"/>
+      <element name="commentaire" type="xsd:string"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="afficheage" type="xsd:boolean"/>
+      <element name="affichesexe" type="xsd:boolean"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateProfilWaydResponse">
+    <complexType>
+     <sequence>
+      <element name="updateProfilWaydReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateGCM">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="gcm" type="xsd:string"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateGCMResponse">
+    <complexType>
+     <sequence>
+      <element name="updateGCMReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateActivite">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="nbrmax" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateActiviteResponse">
+    <complexType>
+     <sequence>
+      <element name="updateActiviteReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="tesgcm">
+    <complexType>
+     <sequence>
+      <element name="gmcToken" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="tesgcmResponse">
     <complexType/>
    </element>
-   <element name="test_getPremierIdResponse">
+   <element name="updatePseudo">
     <complexType>
      <sequence>
-      <element name="test_getPremierIdReturn" type="xsd:int"/>
+      <element name="pseudo" type="xsd:string"/>
+      <element name="datenaissance" type="xsd:long"/>
+      <element name="sexe" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="test_getDernierId">
+   <element name="updatePseudoResponse">
+    <complexType>
+     <sequence>
+      <element name="updatePseudoReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_DonneAvis">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_DonneAvisResponse">
     <complexType/>
    </element>
-   <element name="test_getDernierIdResponse">
-    <complexType>
-     <sequence>
-      <element name="test_getDernierIdReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProfilNotation">
-    <complexType>
-     <sequence>
-      <element name="notateur" type="xsd:int"/>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProfilNotationResponse">
-    <complexType>
-     <sequence>
-      <element name="getProfilNotationReturn" type="tns1:ProfilNotation"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateNotification">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateNotificationResponse">
-    <complexType>
-     <sequence>
-      <element name="updateNotificationReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="test_getNbrActiviteEncours">
+   <element name="test_addCompte">
     <complexType/>
    </element>
-   <element name="test_getNbrActiviteEncoursResponse">
-    <complexType>
-     <sequence>
-      <element name="test_getNbrActiviteEncoursReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateNotificationPref">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-      <element name="notification" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateNotificationPrefResponse">
-    <complexType>
-     <sequence>
-      <element name="updateNotificationPrefReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="test_GetPersonneAlea">
+   <element name="test_addCompteResponse">
     <complexType/>
-   </element>
-   <element name="test_GetPersonneAleaResponse">
-    <complexType>
-     <sequence>
-      <element name="test_GetPersonneAleaReturn" type="tns1:Personne"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPersonnebyToken">
-    <complexType>
-     <sequence>
-      <element name="idtoken" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPersonnebyTokenResponse">
-    <complexType>
-     <sequence>
-      <element name="getPersonnebyTokenReturn" type="tns1:Personne"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitNotification">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitNotificationResponse">
-    <complexType>
-     <sequence>
-      <element name="acquitNotificationReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListDiscussion">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListDiscussionResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListDiscussionReturn" type="tns1:Discussion"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDiscussionByAct">
-    <complexType>
-     <sequence>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDiscussionByActResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getDiscussionByActReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListProfilDiscussion">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListProfilDiscussionResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListProfilDiscussionReturn" type="tns1:ProfilDiscussion"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageNonLu">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageNonLuResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListMessageNonLuReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProfilDiscussion">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProfilDiscussionResponse">
-    <complexType>
-     <sequence>
-      <element name="getProfilDiscussionReturn" type="tns1:ProfilDiscussion"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListParticipant">
-    <complexType>
-     <sequence>
-      <element name="idactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListParticipantResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListParticipantReturn" type="tns1:Participant"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListPreferences">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListPreferencesResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListPreferencesReturn" type="tns1:Preference"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActiviteAvenirNocritere">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
-      <element name="rayon" type="xsd:int"/>
-      <element name="motcle" type="xsd:string"/>
-      <element name="commencedans" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActiviteAvenirNocritereResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListActiviteAvenirNocritereReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListTypeActivite">
-    <complexType/>
-   </element>
-   <element name="getListTypeActiviteResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListTypeActiviteReturn" type="tns1:TypeActivite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageAfterByAct">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idxmessage" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageAfterByActResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListMessageAfterByActReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getMesActiviteEncours">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getMesActiviteEncoursResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getMesActiviteEncoursReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListNotification">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListNotificationResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListNotificationReturn" type="tns1:Notification"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActivitePref">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActivitePrefResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListActivitePrefReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageAfter">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idxmessage" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageAfterResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListMessageAfterReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getMesActiviteArchive">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getMesActiviteArchiveResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getMesActiviteArchiveReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListNotificationAfter">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idxmessage" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListNotificationAfterResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListNotificationAfterReturn" type="tns1:Notification"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActiviteAvenir">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
-      <element name="rayon" type="xsd:int"/>
-      <element name="idtypeactivite" type="xsd:int"/>
-      <element name="motcle" type="xsd:string"/>
-      <element name="commencedans" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListActiviteAvenirResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListActiviteAvenirReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageBefore">
-    <complexType>
-     <sequence>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="idemetteur" type="xsd:int"/>
-      <element name="idxmessage" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageBeforeResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListMessageBeforeReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageBeforeByAct">
-    <complexType>
-     <sequence>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="activite" type="xsd:int"/>
-      <element name="idxmessage" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getListMessageBeforeByActResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getListMessageBeforeByActReturn" type="tns1:Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageEmisByAct">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageEmisByActResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceMessageEmisByActReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageEmis">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageEmisResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceMessageEmisReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceNotificationRecu">
-    <complexType>
-     <sequence>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="idnotification" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceNotificationRecuResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceNotificationRecuReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageRecuByAct">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageRecuByActResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceMessageRecuByActReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceParticipation">
-    <complexType>
-     <sequence>
-      <element name="idDemandeur" type="xsd:int"/>
-      <element name="idAeffacer" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceParticipationResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceParticipationReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageRecu">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="effaceMessageRecuResponse">
-    <complexType>
-     <sequence>
-      <element name="effaceMessageRecuReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageByAct">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idmessage" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageByActResponse">
-    <complexType>
-     <sequence>
-      <element name="acquitMessageByActReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageDiscussionByAct">
-    <complexType>
-     <sequence>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageDiscussionByActResponse">
-    <complexType>
-     <sequence>
-      <element name="acquitMessageDiscussionByActReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitAllNotification">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitAllNotificationResponse">
-    <complexType>
-     <sequence>
-      <element name="acquitAllNotificationReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageDiscussion">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idemetteur" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="acquitMessageDiscussionResponse">
-    <complexType>
-     <sequence>
-      <element name="acquitMessageDiscussionReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updatePosition">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updatePositionResponse">
-    <complexType>
-     <sequence>
-      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addMessage">
-    <complexType>
-     <sequence>
-      <element name="idemetteur" type="xsd:int"/>
-      <element name="corps" type="xsd:string"/>
-      <element name="iddestinataire" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addMessageResponse">
-    <complexType>
-     <sequence>
-      <element name="addMessageReturn" type="tns1:RetourMessage"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="isAmiFrom">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idami" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="isAmiFromResponse">
-    <complexType>
-     <sequence>
-      <element name="isAmiFromReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
    </element>
    <element name="envoyerMail">
     <complexType/>
@@ -652,17 +237,21 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getTableauBord">
+   <element name="updatePreference">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
+      <element name="rayon" type="xsd:int"/>
+      <element maxOccurs="unbounded" name="idtypeactivite" type="xsd:int"/>
+      <element maxOccurs="unbounded" name="active" type="xsd:boolean"/>
+      <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getTableauBordResponse">
+   <element name="updatePreferenceResponse">
     <complexType>
      <sequence>
-      <element name="getTableauBordReturn" type="tns1:TableauBord"/>
+      <element name="updatePreferenceReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -685,6 +274,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <sequence>
       <element name="iddestinataire" type="xsd:int"/>
       <element name="idemetteur" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -695,53 +285,12 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updatePreference">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="rayon" type="xsd:int"/>
-      <element maxOccurs="unbounded" name="idtypeactivite" type="xsd:int"/>
-      <element maxOccurs="unbounded" name="active" type="xsd:boolean"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updatePreferenceResponse">
-    <complexType>
-     <sequence>
-      <element name="updatePreferenceReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getActivite">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getActiviteResponse">
-    <complexType>
-     <sequence>
-      <element name="getActiviteReturn" type="tns1:Activite"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getIndicateurs">
-    <complexType/>
-   </element>
-   <element name="getIndicateursResponse">
-    <complexType>
-     <sequence>
-      <element name="getIndicateursReturn" type="tns1:IndicateurWayd"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getListAmi">
     <complexType>
      <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
       <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -755,7 +304,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="getListAvis">
     <complexType>
      <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
       <element name="idpersonnenotee" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -766,49 +317,67 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getDefPref">
+   <element name="getActivite">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
-      <element name="idtypeactivite" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDefPrefResponse">
-    <complexType>
-     <sequence>
-      <element name="getDefPrefReturn" type="tns1:DefinitionPreference"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addMessageByAct">
-    <complexType>
-     <sequence>
-      <element name="idemetteur" type="xsd:int"/>
-      <element name="corps" type="xsd:string"/>
       <element name="idactivite" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="addMessageByActResponse">
+   <element name="getActiviteResponse">
     <complexType>
      <sequence>
-      <element name="addMessageByActReturn" type="tns1:RetourMessage"/>
+      <element name="getActiviteReturn" type="tns1:Activite"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getLisPreference">
+   <element name="getTableauBord">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getLisPreferenceResponse">
+   <element name="getTableauBordResponse">
     <complexType>
      <sequence>
-      <element maxOccurs="unbounded" name="getLisPreferenceReturn" type="tns1:Preference"/>
+      <element name="getTableauBordReturn" type="tns1:TableauBord"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getIndicateurs">
+    <complexType/>
+   </element>
+   <element name="getIndicateursResponse">
+    <complexType>
+     <sequence>
+      <element name="getIndicateursReturn" type="tns1:IndicateurWayd"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addActivite">
+    <complexType>
+     <sequence>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="idorganisateur" type="xsd:int"/>
+      <element name="dureebalise" type="xsd:int"/>
+      <element name="idtypeactivite" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+      <element name="adresse" type="xsd:string"/>
+      <element name="nbmaxwaydeur" type="xsd:int"/>
+      <element name="dureeactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addActiviteResponse">
+    <complexType>
+     <sequence>
+      <element name="addActiviteReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -843,43 +412,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="effaceActivite">
+   <element name="addMessageByAct">
     <complexType>
      <sequence>
-      <element name="idorganisateur" type="xsd:int"/>
+      <element name="idemetteur" type="xsd:int"/>
+      <element name="corps" type="xsd:string"/>
       <element name="idactivite" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="effaceActiviteResponse">
+   <element name="addMessageByActResponse">
     <complexType>
      <sequence>
-      <element name="effaceActiviteReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addActivite">
-    <complexType>
-     <sequence>
-      <element name="titre" type="xsd:string"/>
-      <element name="libelle" type="xsd:string"/>
-      <element name="idorganisateur" type="xsd:int"/>
-      <element name="dureebalise" type="xsd:int"/>
-      <element name="idtypeactivite" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
-      <element name="adresse" type="xsd:string"/>
-      <element name="nbmaxwaydeur" type="xsd:int"/>
-      <element name="dureeactivite" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addActiviteResponse">
-    <complexType>
-     <sequence>
-      <element name="addActiviteReturn" type="tns1:MessageServeur"/>
+      <element name="addMessageByActReturn" type="tns1:RetourMessage"/>
      </sequence>
     </complexType>
    </element>
@@ -899,22 +445,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updateGCM">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="gcm" type="xsd:string"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateGCMResponse">
-    <complexType>
-     <sequence>
-      <element name="updateGCMReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="effaceAmi">
     <complexType>
      <sequence>
@@ -931,30 +461,19 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="genereJeu">
-    <complexType/>
-   </element>
-   <element name="genereJeuResponse">
-    <complexType/>
-   </element>
-   <element name="addAvis">
+   <element name="effaceActivite">
     <complexType>
      <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idpersonnenotee" type="xsd:int"/>
+      <element name="idorganisateur" type="xsd:int"/>
       <element name="idactivite" type="xsd:int"/>
-      <element name="titre" type="xsd:string"/>
-      <element name="libelle" type="xsd:string"/>
-      <element name="notestr" type="xsd:string"/>
-      <element name="demandeami" type="xsd:boolean"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="addAvisResponse">
+   <element name="effaceActiviteResponse">
     <complexType>
      <sequence>
-      <element name="addAvisReturn" type="tns1:MessageServeur"/>
+      <element name="effaceActiviteReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -974,59 +493,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updateProfilWayd">
+   <element name="addParticipation">
     <complexType>
      <sequence>
-      <element name="photostr" type="xsd:string"/>
-      <element name="nom" type="xsd:string"/>
-      <element name="prenom" type="xsd:string"/>
-      <element name="datenaissancestr" type="xsd:string"/>
-      <element name="sexe" type="xsd:int"/>
-      <element name="commentaire" type="xsd:string"/>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="afficheage" type="xsd:boolean"/>
-      <element name="affichesexe" type="xsd:boolean"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateProfilWaydResponse">
-    <complexType>
-     <sequence>
-      <element name="updateProfilWaydReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateActivite">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idorganisateur" type="xsd:int"/>
       <element name="idactivite" type="xsd:int"/>
-      <element name="titre" type="xsd:string"/>
-      <element name="libelle" type="xsd:string"/>
-      <element name="nbrmax" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="updateActiviteResponse">
+   <element name="addParticipationResponse">
     <complexType>
      <sequence>
-      <element name="updateActiviteReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getFullProfil">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getFullProfilResponse">
-    <complexType>
-     <sequence>
-      <element name="getFullProfilReturn" type="tns1:Profil"/>
+      <element name="addParticipationReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -1046,126 +526,624 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updatePseudo">
+   <element name="updatePosition">
     <complexType>
      <sequence>
-      <element name="pseudo" type="xsd:string"/>
-      <element name="datenaissance" type="xsd:long"/>
-      <element name="sexe" type="xsd:int"/>
       <element name="idpersonne" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updatePositionResponse">
+    <complexType>
+     <sequence>
+      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addMessage">
+    <complexType>
+     <sequence>
+      <element name="idemetteur" type="xsd:int"/>
+      <element name="corps" type="xsd:string"/>
+      <element name="iddestinataire" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="updatePseudoResponse">
+   <element name="addMessageResponse">
     <complexType>
      <sequence>
-      <element name="updatePseudoReturn" type="tns1:MessageServeur"/>
+      <element name="addMessageReturn" type="tns1:RetourMessage"/>
      </sequence>
     </complexType>
    </element>
-   <element name="tesgcm">
+   <element name="getListMessageNonLu">
     <complexType>
      <sequence>
-      <element name="gmcToken" type="xsd:string"/>
+      <element name="idpersonne" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
-   <element name="tesgcmResponse">
-    <complexType/>
+   <element name="getListMessageNonLuResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListMessageNonLuReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
    </element>
-   <element name="addParticipation">
+   <element name="getListPreferences">
     <complexType>
      <sequence>
       <element name="iddemandeur" type="xsd:int"/>
-      <element name="idorganisateur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListPreferencesResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListPreferencesReturn" type="tns1:Preference"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListParticipant">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
       <element name="idactivite" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="addParticipationResponse">
+   <element name="getListParticipantResponse">
     <complexType>
      <sequence>
-      <element name="addParticipationReturn" type="tns1:MessageServeur"/>
+      <element maxOccurs="unbounded" name="getListParticipantReturn" type="tns1:Participant"/>
      </sequence>
     </complexType>
    </element>
-   <element name="test_addCompte">
-    <complexType/>
-   </element>
-   <element name="test_addCompteResponse">
-    <complexType/>
-   </element>
-   <element name="signalerActivite">
+   <element name="getListProfilDiscussion">
     <complexType>
      <sequence>
+      <element maxOccurs="unbounded" name="idpersonne" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListProfilDiscussionResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListProfilDiscussionReturn" type="tns1:ProfilDiscussion"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageAfter">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idxmessage" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageAfterResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListMessageAfterReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListNotification">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListNotificationResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListNotificationReturn" type="tns1:Notification"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageBeforeByAct">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="activite" type="xsd:int"/>
+      <element name="idxmessage" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageBeforeByActResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListMessageBeforeByActReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageAfterByAct">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idxmessage" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageAfterByActResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListMessageAfterByActReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListDiscussion">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListDiscussionResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListDiscussionReturn" type="tns1:Discussion"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageBefore">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="idemetteur" type="xsd:int"/>
+      <element name="idxmessage" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListMessageBeforeResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListMessageBeforeReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfilDiscussion">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfilDiscussionResponse">
+    <complexType>
+     <sequence>
+      <element name="getProfilDiscussionReturn" type="tns1:ProfilDiscussion"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActivitePref">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActivitePrefResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListActivitePrefReturn" type="tns1:Activite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActiviteAvenir">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+      <element name="rayon" type="xsd:int"/>
+      <element name="idtypeactivite" type="xsd:int"/>
+      <element name="motcle" type="xsd:string"/>
+      <element name="commencedans" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActiviteAvenirResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListActiviteAvenirReturn" type="tns1:Activite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActiviteAvenirNocritere">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+      <element name="rayon" type="xsd:int"/>
+      <element name="motcle" type="xsd:string"/>
+      <element name="commencedans" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListActiviteAvenirNocritereResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListActiviteAvenirNocritereReturn" type="tns1:Activite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMesActiviteEncours">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMesActiviteEncoursResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getMesActiviteEncoursReturn" type="tns1:Activite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListNotificationAfter">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idxmessage" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListNotificationAfterResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListNotificationAfterReturn" type="tns1:Notification"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDiscussionByAct">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDiscussionByActResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getDiscussionByActReturn" type="tns1:Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMesActiviteArchive">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMesActiviteArchiveResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getMesActiviteArchiveReturn" type="tns1:Activite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageRecuByAct">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageRecuByActResponse">
+    <complexType>
+     <sequence>
+      <element name="effaceMessageRecuByActReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceNotificationRecu">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="idnotification" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceNotificationRecuResponse">
+    <complexType>
+     <sequence>
+      <element name="effaceNotificationRecuReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceParticipation">
+    <complexType>
+     <sequence>
+      <element name="idDemandeur" type="xsd:int"/>
+      <element name="idAeffacer" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceParticipationResponse">
+    <complexType>
+     <sequence>
+      <element name="effaceParticipationReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageEmisByAct">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageEmisByActResponse">
+    <complexType>
+     <sequence>
+      <element name="effaceMessageEmisByActReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageRecu">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageRecuResponse">
+    <complexType>
+     <sequence>
+      <element name="effaceMessageRecuReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getListTypeActivite">
+    <complexType/>
+   </element>
+   <element name="getListTypeActiviteResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getListTypeActiviteReturn" type="tns1:TypeActivite"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageByAct">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageByActResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageByActReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussion">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idemetteur" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageDiscussionReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitAllNotification">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitAllNotificationResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitAllNotificationReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNotification">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNotificationResponse">
+    <complexType>
+     <sequence>
+      <element name="updateNotificationReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionByAct">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionByActResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageDiscussionByActReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfilNotation">
+    <complexType>
+     <sequence>
+      <element name="notateur" type="xsd:int"/>
       <element name="idpersonne" type="xsd:int"/>
       <element name="idactivite" type="xsd:int"/>
-      <element name="idmotif" type="xsd:int"/>
-      <element name="motif" type="xsd:string"/>
-      <element name="titre" type="xsd:string"/>
-      <element name="libelle" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProfilNotationResponse">
+    <complexType>
+     <sequence>
+      <element name="getProfilNotationReturn" type="tns1:ProfilNotation"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPersonnebyToken">
+    <complexType>
+     <sequence>
+      <element name="idtoken" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPersonnebyTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="getPersonnebyTokenReturn" type="tns1:Personne"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="effaceMessageEmis">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="signalerActiviteResponse">
+   <element name="effaceMessageEmisResponse">
     <complexType>
      <sequence>
-      <element name="signalerActiviteReturn" type="tns1:MessageServeur"/>
+      <element name="effaceMessageEmisReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
-   <element name="test_GetToken">
+   <element name="acquitNotification">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="test_GetTokenResponse">
-    <complexType>
-     <sequence>
-      <element name="test_GetTokenReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="test_DonneAvis">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="test_DonneAvisResponse">
+   <element name="acquitNotificationResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitNotificationReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_getNbrActiviteEncours">
     <complexType/>
    </element>
-   <element name="signalerProfil">
+   <element name="test_getNbrActiviteEncoursResponse">
     <complexType>
      <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="idsignalement" type="xsd:int"/>
-      <element name="idmotif" type="xsd:int"/>
-      <element name="motif" type="xsd:string"/>
-      <element name="jeton" type="xsd:string"/>
+      <element name="test_getNbrActiviteEncoursReturn" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
-   <element name="signalerProfilResponse">
+   <element name="updateNotificationPref">
     <complexType>
      <sequence>
-      <element name="signalerProfilReturn" type="tns1:MessageServeur"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+      <element name="notification" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateNotificationPrefResponse">
+    <complexType>
+     <sequence>
+      <element name="updateNotificationPrefReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_GetPersonneAlea">
+    <complexType/>
+   </element>
+   <element name="test_GetPersonneAleaResponse">
+    <complexType>
+     <sequence>
+      <element name="test_GetPersonneAleaReturn" type="tns1:Personne"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_getDernierId">
+    <complexType/>
+   </element>
+   <element name="test_getDernierIdResponse">
+    <complexType>
+     <sequence>
+      <element name="test_getDernierIdReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="test_getPremierId">
+    <complexType/>
+   </element>
+   <element name="test_getPremierIdResponse">
+    <complexType>
+     <sequence>
+      <element name="test_getPremierIdReturn" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://bean.wayde" xmlns="http://www.w3.org/2001/XMLSchema">
-   <complexType name="ProfilNotation">
+   <complexType name="MessageServeur">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="reponse" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
+   <complexType name="Profil">
     <sequence>
      <element name="age" nillable="true" type="xsd:string"/>
-     <element name="ami" type="xsd:boolean"/>
      <element name="commentaire" nillable="true" type="xsd:string"/>
      <element name="id" type="xsd:int"/>
      <element name="nbractivite" type="xsd:int"/>
@@ -1177,62 +1155,32 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="photostr" nillable="true" type="xsd:string"/>
      <element name="prenom" nillable="true" type="xsd:string"/>
      <element name="sexe" type="xsd:int"/>
-     <element name="titreActivite" nillable="true" type="xsd:string"/>
      <element name="ville" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="MessageServeur">
+   <complexType name="Avis">
     <sequence>
-     <element name="message" nillable="true" type="xsd:string"/>
-     <element name="reponse" type="xsd:boolean"/>
-    </sequence>
-   </complexType>
-   <complexType name="Personne">
-    <sequence>
-     <element name="actif" type="xsd:boolean"/>
-     <element name="admin" type="xsd:boolean"/>
-     <element name="afficheage" type="xsd:boolean"/>
-     <element name="affichesexe" type="xsd:boolean"/>
-     <element name="commentaire" nillable="true" type="xsd:string"/>
-     <element name="datecreationstr" nillable="true" type="xsd:string"/>
-     <element name="datenaissancestr" nillable="true" type="xsd:string"/>
-     <element name="gcm" nillable="true" type="xsd:string"/>
-     <element name="id" type="xsd:int"/>
-     <element name="latitude" type="xsd:double"/>
-     <element name="login" nillable="true" type="xsd:string"/>
-     <element name="longitude" type="xsd:double"/>
-     <element name="mdp" nillable="true" type="xsd:string"/>
-     <element name="message" nillable="true" type="xsd:string"/>
-     <element name="nbravis" type="xsd:int"/>
-     <element name="nbrecheccnx" type="xsd:int"/>
-     <element name="nom" nillable="true" type="xsd:string"/>
-     <element name="note" type="xsd:double"/>
-     <element name="notification" type="xsd:boolean"/>
-     <element name="photo" nillable="true" type="xsd:string"/>
-     <element name="premiereconnexion" type="xsd:boolean"/>
-     <element name="prenom" nillable="true" type="xsd:string"/>
-     <element name="rayon" type="xsd:int"/>
-     <element name="sexe" type="xsd:int"/>
-     <element name="verrouille" type="xsd:boolean"/>
-     <element name="ville" nillable="true" type="xsd:string"/>
-     <element name="mail" nillable="true" type="xsd:string"/>
-     <element name="pwd" nillable="true" type="xsd:string"/>
-     <element name="datenaissance" nillable="true" type="xsd:dateTime"/>
-     <element name="cleactivation" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="Discussion">
-    <sequence>
-     <element name="dateMessage" type="xsd:long"/>
-     <element name="datecreationstr" nillable="true" type="xsd:string"/>
+     <element name="datenotationstr" nillable="true" type="xsd:string"/>
+     <element name="fait" type="xsd:boolean"/>
      <element name="idactivite" type="xsd:int"/>
-     <element name="idemetteur" type="xsd:int"/>
-     <element name="idtypeactivite" type="xsd:int"/>
-     <element name="message" nillable="true" type="xsd:string"/>
-     <element name="nbnonlu" type="xsd:int"/>
-     <element name="photo" nillable="true" type="xsd:string"/>
+     <element name="idnoter" type="xsd:int"/>
+     <element name="idpersonnenotateur" type="xsd:int"/>
+     <element name="idpersonnenotee" type="xsd:int"/>
+     <element name="libelle" nillable="true" type="xsd:string"/>
+     <element name="nomnotateur" nillable="true" type="xsd:string"/>
+     <element name="nomnote" nillable="true" type="xsd:string"/>
+     <element name="note" type="xsd:double"/>
+     <element name="photonotateur" nillable="true" type="xsd:string"/>
+     <element name="prenomnotateur" nillable="true" type="xsd:string"/>
+     <element name="prenomnote" nillable="true" type="xsd:string"/>
      <element name="titre" nillable="true" type="xsd:string"/>
-     <element name="type" type="xsd:int"/>
+     <element name="titreactivite" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="InfoNotation">
+    <sequence>
+     <element name="moyenne" type="xsd:double"/>
+     <element name="totalavis" type="xsd:int"/>
     </sequence>
    </complexType>
    <complexType name="Message">
@@ -1252,30 +1200,15 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="datecreation" nillable="true" type="xsd:dateTime"/>
     </sequence>
    </complexType>
-   <complexType name="ProfilDiscussion">
+   <complexType name="Ami">
     <sequence>
+     <element name="depuisle" nillable="true" type="xsd:string"/>
      <element name="id" type="xsd:int"/>
-     <element name="photo" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="Participant">
-    <sequence>
-     <element name="age" nillable="true" type="xsd:string"/>
-     <element name="id" type="xsd:int"/>
-     <element name="nbravis" type="xsd:int"/>
+     <element name="login" nillable="true" type="xsd:string"/>
+     <element name="nom" nillable="true" type="xsd:string"/>
      <element name="note" type="xsd:double"/>
      <element name="photostr" nillable="true" type="xsd:string"/>
-     <element name="pseudo" nillable="true" type="xsd:string"/>
-     <element name="sexe" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="Preference">
-    <sequence>
-     <element name="active" type="xsd:boolean"/>
-     <element name="always" type="xsd:boolean"/>
-     <element name="idpersonne" type="xsd:long"/>
-     <element name="idtypeactivite" type="xsd:long"/>
-     <element name="nom" nillable="true" type="xsd:string"/>
+     <element name="prenom" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="Activite">
@@ -1314,12 +1247,55 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="role" type="xsd:int"/>
     </sequence>
    </complexType>
-   <complexType name="TypeActivite">
+   <complexType name="TableauBord">
     <sequence>
-     <element name="id" type="xsd:long"/>
-     <element name="idcategorie" type="xsd:long"/>
-     <element name="ischecked" type="xsd:boolean"/>
+     <element name="nbractiviteencours" type="xsd:int"/>
+     <element name="nbrami" type="xsd:int"/>
+     <element name="nbrmessagenonlu" type="xsd:int"/>
+     <element name="nbrnotification" type="xsd:int"/>
+     <element name="nbrsuggestion" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="IndicateurWayd">
+    <sequence>
+     <element name="nbrTotalActivite" type="xsd:int"/>
+     <element name="nbrTotalInscrit" type="xsd:int"/>
+     <element name="nbrTotalMessage" type="xsd:int"/>
+     <element name="nbrTotalMessageByact" type="xsd:int"/>
+     <element name="nbrTotalParticipation" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="RetourMessage">
+    <sequence>
+     <element name="datecreation" type="xsd:long"/>
+     <element name="id" type="xsd:int"/>
+     <element name="idemetteur" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="Preference">
+    <sequence>
+     <element name="active" type="xsd:boolean"/>
+     <element name="always" type="xsd:boolean"/>
+     <element name="idpersonne" type="xsd:long"/>
+     <element name="idtypeactivite" type="xsd:long"/>
      <element name="nom" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Participant">
+    <sequence>
+     <element name="age" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="nbravis" type="xsd:int"/>
+     <element name="note" type="xsd:double"/>
+     <element name="photostr" nillable="true" type="xsd:string"/>
+     <element name="pseudo" nillable="true" type="xsd:string"/>
+     <element name="sexe" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="ProfilDiscussion">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="photo" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="Notification">
@@ -1334,80 +1310,32 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="message" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="RetourMessage">
+   <complexType name="Discussion">
     <sequence>
-     <element name="datecreation" type="xsd:long"/>
-     <element name="id" type="xsd:int"/>
-     <element name="idemetteur" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="Avis">
-    <sequence>
-     <element name="datenotationstr" nillable="true" type="xsd:string"/>
-     <element name="fait" type="xsd:boolean"/>
+     <element name="dateMessage" type="xsd:long"/>
+     <element name="datecreationstr" nillable="true" type="xsd:string"/>
      <element name="idactivite" type="xsd:int"/>
-     <element name="idnoter" type="xsd:int"/>
-     <element name="idpersonnenotateur" type="xsd:int"/>
-     <element name="idpersonnenotee" type="xsd:int"/>
-     <element name="libelle" nillable="true" type="xsd:string"/>
-     <element name="nomnotateur" nillable="true" type="xsd:string"/>
-     <element name="nomnote" nillable="true" type="xsd:string"/>
-     <element name="note" type="xsd:double"/>
-     <element name="photonotateur" nillable="true" type="xsd:string"/>
-     <element name="prenomnotateur" nillable="true" type="xsd:string"/>
-     <element name="prenomnote" nillable="true" type="xsd:string"/>
+     <element name="idemetteur" type="xsd:int"/>
+     <element name="idtypeactivite" type="xsd:int"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="nbnonlu" type="xsd:int"/>
+     <element name="photo" nillable="true" type="xsd:string"/>
      <element name="titre" nillable="true" type="xsd:string"/>
-     <element name="titreactivite" nillable="true" type="xsd:string"/>
+     <element name="type" type="xsd:int"/>
     </sequence>
    </complexType>
-   <complexType name="TableauBord">
+   <complexType name="TypeActivite">
     <sequence>
-     <element name="nbractiviteencours" type="xsd:int"/>
-     <element name="nbrami" type="xsd:int"/>
-     <element name="nbrmessagenonlu" type="xsd:int"/>
-     <element name="nbrnotification" type="xsd:int"/>
-     <element name="nbrsuggestion" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="InfoNotation">
-    <sequence>
-     <element name="moyenne" type="xsd:double"/>
-     <element name="totalavis" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="IndicateurWayd">
-    <sequence>
-     <element name="nbrTotalActivite" type="xsd:int"/>
-     <element name="nbrTotalInscrit" type="xsd:int"/>
-     <element name="nbrTotalMessage" type="xsd:int"/>
-     <element name="nbrTotalMessageByact" type="xsd:int"/>
-     <element name="nbrTotalParticipation" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="Ami">
-    <sequence>
-     <element name="depuisle" nillable="true" type="xsd:string"/>
-     <element name="id" type="xsd:int"/>
-     <element name="login" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:long"/>
+     <element name="idcategorie" type="xsd:long"/>
+     <element name="ischecked" type="xsd:boolean"/>
      <element name="nom" nillable="true" type="xsd:string"/>
-     <element name="note" type="xsd:double"/>
-     <element name="photostr" nillable="true" type="xsd:string"/>
-     <element name="prenom" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="DefinitionPreference">
-    <sequence>
-     <element name="active" type="xsd:boolean"/>
-     <element name="always" type="xsd:boolean"/>
-     <element name="heuredebut" type="xsd:int"/>
-     <element name="heurefin" type="xsd:int"/>
-     <element name="jour" type="xsd:int"/>
-     <element name="typeactivite" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="Profil">
+   <complexType name="ProfilNotation">
     <sequence>
      <element name="age" nillable="true" type="xsd:string"/>
+     <element name="ami" type="xsd:boolean"/>
      <element name="commentaire" nillable="true" type="xsd:string"/>
      <element name="id" type="xsd:int"/>
      <element name="nbractivite" type="xsd:int"/>
@@ -1419,19 +1347,46 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="photostr" nillable="true" type="xsd:string"/>
      <element name="prenom" nillable="true" type="xsd:string"/>
      <element name="sexe" type="xsd:int"/>
+     <element name="titreActivite" nillable="true" type="xsd:string"/>
      <element name="ville" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Personne">
+    <sequence>
+     <element name="actif" type="xsd:boolean"/>
+     <element name="admin" type="xsd:boolean"/>
+     <element name="afficheage" type="xsd:boolean"/>
+     <element name="affichesexe" type="xsd:boolean"/>
+     <element name="commentaire" nillable="true" type="xsd:string"/>
+     <element name="datecreationstr" nillable="true" type="xsd:string"/>
+     <element name="datenaissancestr" nillable="true" type="xsd:string"/>
+     <element name="gcm" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="latitude" type="xsd:double"/>
+     <element name="login" nillable="true" type="xsd:string"/>
+     <element name="longitude" type="xsd:double"/>
+     <element name="mdp" nillable="true" type="xsd:string"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="nbravis" type="xsd:int"/>
+     <element name="nbrecheccnx" type="xsd:int"/>
+     <element name="nom" nillable="true" type="xsd:string"/>
+     <element name="note" type="xsd:double"/>
+     <element name="notification" type="xsd:boolean"/>
+     <element name="photo" nillable="true" type="xsd:string"/>
+     <element name="premiereconnexion" type="xsd:boolean"/>
+     <element name="prenom" nillable="true" type="xsd:string"/>
+     <element name="rayon" type="xsd:int"/>
+     <element name="sexe" type="xsd:int"/>
+     <element name="verrouille" type="xsd:boolean"/>
+     <element name="ville" nillable="true" type="xsd:string"/>
+     <element name="mail" nillable="true" type="xsd:string"/>
+     <element name="pwd" nillable="true" type="xsd:string"/>
+     <element name="datenaissance" nillable="true" type="xsd:dateTime"/>
+     <element name="cleactivation" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
   </schema>
  </wsdl:types>
-
-   <wsdl:message name="acquitMessageDiscussionByActRequest">
-
-      <wsdl:part element="impl:acquitMessageDiscussionByAct" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
 
    <wsdl:message name="getListAmiRequest">
 
@@ -1441,9 +1396,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="test_getDernierIdResponse">
+   <wsdl:message name="acquitMessageDiscussionByActRequest">
 
-      <wsdl:part element="impl:test_getDernierIdResponse" name="parameters">
+      <wsdl:part element="impl:acquitMessageDiscussionByAct" name="parameters">
 
       </wsdl:part>
 
@@ -1452,6 +1407,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="addAvisRequest">
 
       <wsdl:part element="impl:addAvis" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="test_getDernierIdResponse">
+
+      <wsdl:part element="impl:test_getDernierIdResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1473,17 +1436,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListMessageNonLuRequest">
+   <wsdl:message name="getListAvisRequest">
 
-      <wsdl:part element="impl:getListMessageNonLu" name="parameters">
+      <wsdl:part element="impl:getListAvis" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getListAvisRequest">
+   <wsdl:message name="getListMessageNonLuRequest">
 
-      <wsdl:part element="impl:getListAvis" name="parameters">
+      <wsdl:part element="impl:getListMessageNonLu" name="parameters">
 
       </wsdl:part>
 
@@ -1516,14 +1479,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getListAmiResponse">
 
       <wsdl:part element="impl:getListAmiResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getLisPreferenceRequest">
-
-      <wsdl:part element="impl:getLisPreference" name="parameters">
 
       </wsdl:part>
 
@@ -1609,17 +1564,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListActiviteAvenirNocritereResponse">
+   <wsdl:message name="updatePreferenceResponse">
 
-      <wsdl:part element="impl:getListActiviteAvenirNocritereResponse" name="parameters">
+      <wsdl:part element="impl:updatePreferenceResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updatePreferenceResponse">
+   <wsdl:message name="getListActiviteAvenirNocritereResponse">
 
-      <wsdl:part element="impl:updatePreferenceResponse" name="parameters">
+      <wsdl:part element="impl:getListActiviteAvenirNocritereResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1641,17 +1596,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="acquitMessageDiscussionByActResponse">
+   <wsdl:message name="getDiscussionResponse">
 
-      <wsdl:part element="impl:acquitMessageDiscussionByActResponse" name="parameters">
+      <wsdl:part element="impl:getDiscussionResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getDiscussionResponse">
+   <wsdl:message name="acquitMessageDiscussionByActResponse">
 
-      <wsdl:part element="impl:getDiscussionResponse" name="parameters">
+      <wsdl:part element="impl:acquitMessageDiscussionByActResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1665,14 +1620,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="acquitMessageRequest">
-
-      <wsdl:part element="impl:acquitMessage" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="signalerActiviteResponse">
 
       <wsdl:part element="impl:signalerActiviteResponse" name="parameters">
@@ -1681,9 +1628,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getProfilDiscussionRequest">
+   <wsdl:message name="acquitMessageRequest">
 
-      <wsdl:part element="impl:getProfilDiscussion" name="parameters">
+      <wsdl:part element="impl:acquitMessage" name="parameters">
 
       </wsdl:part>
 
@@ -1692,6 +1639,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="updatePseudoResponse">
 
       <wsdl:part element="impl:updatePseudoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProfilDiscussionRequest">
+
+      <wsdl:part element="impl:getProfilDiscussion" name="parameters">
 
       </wsdl:part>
 
@@ -1713,17 +1668,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDiscussionByActRequest">
+   <wsdl:message name="getListActivitePrefRequest">
 
-      <wsdl:part element="impl:getDiscussionByAct" name="parameters">
+      <wsdl:part element="impl:getListActivitePref" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getListActivitePrefRequest">
+   <wsdl:message name="getDiscussionByActRequest">
 
-      <wsdl:part element="impl:getListActivitePref" name="parameters">
+      <wsdl:part element="impl:getDiscussionByAct" name="parameters">
 
       </wsdl:part>
 
@@ -1745,14 +1700,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="acquitMessageByActResponse">
-
-      <wsdl:part element="impl:acquitMessageByActResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="effaceMessageRequest">
 
       <wsdl:part element="impl:effaceMessage" name="parameters">
@@ -1769,17 +1716,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDefPrefResponse">
+   <wsdl:message name="acquitMessageByActResponse">
 
-      <wsdl:part element="impl:getDefPrefResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getMesActiviteEncoursResponse">
-
-      <wsdl:part element="impl:getMesActiviteEncoursResponse" name="parameters">
+      <wsdl:part element="impl:acquitMessageByActResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1788,6 +1727,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="updatePseudoRequest">
 
       <wsdl:part element="impl:updatePseudo" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMesActiviteEncoursResponse">
+
+      <wsdl:part element="impl:getMesActiviteEncoursResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1809,9 +1756,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addMessageResponse">
+   <wsdl:message name="tesgcmResponse">
 
-      <wsdl:part element="impl:addMessageResponse" name="parameters">
+      <wsdl:part element="impl:tesgcmResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1825,9 +1772,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="tesgcmResponse">
+   <wsdl:message name="addMessageResponse">
 
-      <wsdl:part element="impl:tesgcmResponse" name="parameters">
+      <wsdl:part element="impl:addMessageResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1857,17 +1804,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="envoyerMailResponse">
+   <wsdl:message name="signalerActiviteRequest">
 
-      <wsdl:part element="impl:envoyerMailResponse" name="parameters">
+      <wsdl:part element="impl:signalerActivite" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="signalerActiviteRequest">
+   <wsdl:message name="envoyerMailResponse">
 
-      <wsdl:part element="impl:signalerActivite" name="parameters">
+      <wsdl:part element="impl:envoyerMailResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1905,9 +1852,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="test_getPremierIdRequest">
+   <wsdl:message name="effaceNotificationRecuResponse">
 
-      <wsdl:part element="impl:test_getPremierId" name="parameters">
+      <wsdl:part element="impl:effaceNotificationRecuResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1921,17 +1868,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="effaceNotificationRecuResponse">
+   <wsdl:message name="test_getPremierIdRequest">
 
-      <wsdl:part element="impl:effaceNotificationRecuResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getListProfilDiscussionResponse">
-
-      <wsdl:part element="impl:getListProfilDiscussionResponse" name="parameters">
+      <wsdl:part element="impl:test_getPremierId" name="parameters">
 
       </wsdl:part>
 
@@ -1940,6 +1879,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="addSuggestionRequest">
 
       <wsdl:part element="impl:addSuggestion" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getListProfilDiscussionResponse">
+
+      <wsdl:part element="impl:getListProfilDiscussionResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1977,14 +1924,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="acquitMessageDiscussionRequest">
-
-      <wsdl:part element="impl:acquitMessageDiscussion" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="effaceMessageResponse">
 
       <wsdl:part element="impl:effaceMessageResponse" name="parameters">
@@ -1993,9 +1932,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitMessageDiscussionRequest">
+
+      <wsdl:part element="impl:acquitMessageDiscussion" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="effaceActiviteResponse">
 
       <wsdl:part element="impl:effaceActiviteResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addAvisResponse">
+
+      <wsdl:part element="impl:addAvisResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2017,9 +1972,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addAvisResponse">
+   <wsdl:message name="getTableauBordRequest">
 
-      <wsdl:part element="impl:addAvisResponse" name="parameters">
+      <wsdl:part element="impl:getTableauBord" name="parameters">
 
       </wsdl:part>
 
@@ -2033,9 +1988,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getTableauBordRequest">
+   <wsdl:message name="effaceDiscussionRequest">
 
-      <wsdl:part element="impl:getTableauBord" name="parameters">
+      <wsdl:part element="impl:effaceDiscussion" name="parameters">
 
       </wsdl:part>
 
@@ -2049,14 +2004,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="effaceDiscussionRequest">
-
-      <wsdl:part element="impl:effaceDiscussion" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="effaceMessageRecuByActRequest">
 
       <wsdl:part element="impl:effaceMessageRecuByAct" name="parameters">
@@ -2065,17 +2012,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="acquitAllNotificationResponse">
+   <wsdl:message name="test_addCompteRequest">
 
-      <wsdl:part element="impl:acquitAllNotificationResponse" name="parameters">
+      <wsdl:part element="impl:test_addCompte" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="test_addCompteRequest">
+   <wsdl:message name="acquitAllNotificationResponse">
 
-      <wsdl:part element="impl:test_addCompte" name="parameters">
+      <wsdl:part element="impl:acquitAllNotificationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2097,14 +2044,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListMessageAfterByActResponse">
-
-      <wsdl:part element="impl:getListMessageAfterByActResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="addPrbConnexionRequest">
 
       <wsdl:part element="impl:addPrbConnexion" name="parameters">
@@ -2113,9 +2052,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getLisPreferenceResponse">
+   <wsdl:message name="getListMessageAfterByActResponse">
 
-      <wsdl:part element="impl:getLisPreferenceResponse" name="parameters">
+      <wsdl:part element="impl:getListMessageAfterByActResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2177,14 +2116,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="isAmiFromResponse">
-
-      <wsdl:part element="impl:isAmiFromResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="updateGCMRequest">
 
       <wsdl:part element="impl:updateGCM" name="parameters">
@@ -2201,14 +2132,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateNotificationResponse">
-
-      <wsdl:part element="impl:updateNotificationResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="updateActiviteResponse">
 
       <wsdl:part element="impl:updateActiviteResponse" name="parameters">
@@ -2217,9 +2140,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="genereJeuResponse">
+   <wsdl:message name="updateNotificationResponse">
 
-      <wsdl:part element="impl:genereJeuResponse" name="parameters">
+      <wsdl:part element="impl:updateNotificationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2281,9 +2204,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="test_GetPersonneAleaRequest">
+   <wsdl:message name="getAvisResponse">
 
-      <wsdl:part element="impl:test_GetPersonneAlea" name="parameters">
+      <wsdl:part element="impl:getAvisResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2297,9 +2220,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getAvisResponse">
+   <wsdl:message name="test_GetPersonneAleaRequest">
 
-      <wsdl:part element="impl:getAvisResponse" name="parameters">
+      <wsdl:part element="impl:test_GetPersonneAlea" name="parameters">
 
       </wsdl:part>
 
@@ -2337,14 +2260,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="isAmiFromRequest">
-
-      <wsdl:part element="impl:isAmiFrom" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="signalerProfilRequest">
 
       <wsdl:part element="impl:signalerProfil" name="parameters">
@@ -2356,14 +2271,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="effaceMessageEmisResponse">
 
       <wsdl:part element="impl:effaceMessageEmisResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="genereJeuRequest">
-
-      <wsdl:part element="impl:genereJeu" name="parameters">
 
       </wsdl:part>
 
@@ -2393,14 +2300,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDefPrefRequest">
-
-      <wsdl:part element="impl:getDefPref" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="acquitMessageByActRequest">
 
       <wsdl:part element="impl:acquitMessageByAct" name="parameters">
@@ -2417,9 +2316,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="effaceParticipationResponse">
+   <wsdl:message name="getFullProfilResponse">
 
-      <wsdl:part element="impl:effaceParticipationResponse" name="parameters">
+      <wsdl:part element="impl:getFullProfilResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2433,9 +2332,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getFullProfilResponse">
+   <wsdl:message name="effaceParticipationResponse">
 
-      <wsdl:part element="impl:getFullProfilResponse" name="parameters">
+      <wsdl:part element="impl:effaceParticipationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2481,14 +2380,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="test_getNbrActiviteEncoursRequest">
-
-      <wsdl:part element="impl:test_getNbrActiviteEncours" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="getListParticipantRequest">
 
       <wsdl:part element="impl:getListParticipant" name="parameters">
@@ -2505,9 +2396,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateNotificationRequest">
+   <wsdl:message name="test_getNbrActiviteEncoursRequest">
 
-      <wsdl:part element="impl:updateNotification" name="parameters">
+      <wsdl:part element="impl:test_getNbrActiviteEncours" name="parameters">
 
       </wsdl:part>
 
@@ -2529,33 +2420,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="updateNotificationRequest">
+
+      <wsdl:part element="impl:updateNotification" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="effaceAmiRequest">
 
       <wsdl:part element="impl:effaceAmi" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getMesActiviteArchiveResponse">
-
-      <wsdl:part element="impl:getMesActiviteArchiveResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getListNotificationAfterResponse">
-
-      <wsdl:part element="impl:getListNotificationAfterResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getInfoNotationResponse">
-
-      <wsdl:part element="impl:getInfoNotationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2569,6 +2444,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getInfoNotationResponse">
+
+      <wsdl:part element="impl:getInfoNotationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getListNotificationAfterResponse">
+
+      <wsdl:part element="impl:getListNotificationAfterResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMesActiviteArchiveResponse">
+
+      <wsdl:part element="impl:getMesActiviteArchiveResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getTableauBordResponse">
 
       <wsdl:part element="impl:getTableauBordResponse" name="parameters">
@@ -2577,17 +2476,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListNotificationRequest">
+   <wsdl:message name="getActiviteRequest">
 
-      <wsdl:part element="impl:getListNotification" name="parameters">
+      <wsdl:part element="impl:getActivite" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getActiviteRequest">
+   <wsdl:message name="getListNotificationRequest">
 
-      <wsdl:part element="impl:getActivite" name="parameters">
+      <wsdl:part element="impl:getListNotification" name="parameters">
 
       </wsdl:part>
 
@@ -2659,493 +2558,145 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="WBservices">
 
-      <wsdl:operation name="test_getPremierId">
+      <wsdl:operation name="addAvis">
 
-         <wsdl:input message="impl:test_getPremierIdRequest" name="test_getPremierIdRequest">
+         <wsdl:input message="impl:addAvisRequest" name="addAvisRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_getPremierIdResponse" name="test_getPremierIdResponse">
+         <wsdl:output message="impl:addAvisResponse" name="addAvisResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_getDernierId">
+      <wsdl:operation name="signalerActivite">
 
-         <wsdl:input message="impl:test_getDernierIdRequest" name="test_getDernierIdRequest">
+         <wsdl:input message="impl:signalerActiviteRequest" name="signalerActiviteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_getDernierIdResponse" name="test_getDernierIdResponse">
+         <wsdl:output message="impl:signalerActiviteResponse" name="signalerActiviteResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getProfilNotation">
+      <wsdl:operation name="getFullProfil">
 
-         <wsdl:input message="impl:getProfilNotationRequest" name="getProfilNotationRequest">
+         <wsdl:input message="impl:getFullProfilRequest" name="getFullProfilRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getProfilNotationResponse" name="getProfilNotationResponse">
+         <wsdl:output message="impl:getFullProfilResponse" name="getFullProfilResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateNotification">
+      <wsdl:operation name="test_GetToken">
 
-         <wsdl:input message="impl:updateNotificationRequest" name="updateNotificationRequest">
+         <wsdl:input message="impl:test_GetTokenRequest" name="test_GetTokenRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updateNotificationResponse" name="updateNotificationResponse">
+         <wsdl:output message="impl:test_GetTokenResponse" name="test_GetTokenResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_getNbrActiviteEncours">
+      <wsdl:operation name="signalerProfil">
 
-         <wsdl:input message="impl:test_getNbrActiviteEncoursRequest" name="test_getNbrActiviteEncoursRequest">
+         <wsdl:input message="impl:signalerProfilRequest" name="signalerProfilRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_getNbrActiviteEncoursResponse" name="test_getNbrActiviteEncoursResponse">
+         <wsdl:output message="impl:signalerProfilResponse" name="signalerProfilResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateNotificationPref">
+      <wsdl:operation name="updateProfilWayd">
 
-         <wsdl:input message="impl:updateNotificationPrefRequest" name="updateNotificationPrefRequest">
+         <wsdl:input message="impl:updateProfilWaydRequest" name="updateProfilWaydRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updateNotificationPrefResponse" name="updateNotificationPrefResponse">
+         <wsdl:output message="impl:updateProfilWaydResponse" name="updateProfilWaydResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_GetPersonneAlea">
+      <wsdl:operation name="updateGCM">
 
-         <wsdl:input message="impl:test_GetPersonneAleaRequest" name="test_GetPersonneAleaRequest">
+         <wsdl:input message="impl:updateGCMRequest" name="updateGCMRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_GetPersonneAleaResponse" name="test_GetPersonneAleaResponse">
+         <wsdl:output message="impl:updateGCMResponse" name="updateGCMResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getPersonnebyToken">
+      <wsdl:operation name="updateActivite">
 
-         <wsdl:input message="impl:getPersonnebyTokenRequest" name="getPersonnebyTokenRequest">
+         <wsdl:input message="impl:updateActiviteRequest" name="updateActiviteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getPersonnebyTokenResponse" name="getPersonnebyTokenResponse">
+         <wsdl:output message="impl:updateActiviteResponse" name="updateActiviteResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="acquitNotification">
+      <wsdl:operation name="tesgcm">
 
-         <wsdl:input message="impl:acquitNotificationRequest" name="acquitNotificationRequest">
+         <wsdl:input message="impl:tesgcmRequest" name="tesgcmRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:acquitNotificationResponse" name="acquitNotificationResponse">
+         <wsdl:output message="impl:tesgcmResponse" name="tesgcmResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getListDiscussion">
+      <wsdl:operation name="updatePseudo">
 
-         <wsdl:input message="impl:getListDiscussionRequest" name="getListDiscussionRequest">
+         <wsdl:input message="impl:updatePseudoRequest" name="updatePseudoRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getListDiscussionResponse" name="getListDiscussionResponse">
+         <wsdl:output message="impl:updatePseudoResponse" name="updatePseudoResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getDiscussionByAct">
+      <wsdl:operation name="test_DonneAvis">
 
-         <wsdl:input message="impl:getDiscussionByActRequest" name="getDiscussionByActRequest">
+         <wsdl:input message="impl:test_DonneAvisRequest" name="test_DonneAvisRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getDiscussionByActResponse" name="getDiscussionByActResponse">
+         <wsdl:output message="impl:test_DonneAvisResponse" name="test_DonneAvisResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getListProfilDiscussion">
+      <wsdl:operation name="test_addCompte">
 
-         <wsdl:input message="impl:getListProfilDiscussionRequest" name="getListProfilDiscussionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListProfilDiscussionResponse" name="getListProfilDiscussionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageNonLu">
-
-         <wsdl:input message="impl:getListMessageNonLuRequest" name="getListMessageNonLuRequest">
+         <wsdl:input message="impl:test_addCompteRequest" name="test_addCompteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getListMessageNonLuResponse" name="getListMessageNonLuResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProfilDiscussion">
-
-         <wsdl:input message="impl:getProfilDiscussionRequest" name="getProfilDiscussionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getProfilDiscussionResponse" name="getProfilDiscussionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListParticipant">
-
-         <wsdl:input message="impl:getListParticipantRequest" name="getListParticipantRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListParticipantResponse" name="getListParticipantResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListPreferences">
-
-         <wsdl:input message="impl:getListPreferencesRequest" name="getListPreferencesRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListPreferencesResponse" name="getListPreferencesResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActiviteAvenirNocritere">
-
-         <wsdl:input message="impl:getListActiviteAvenirNocritereRequest" name="getListActiviteAvenirNocritereRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListActiviteAvenirNocritereResponse" name="getListActiviteAvenirNocritereResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListTypeActivite">
-
-         <wsdl:input message="impl:getListTypeActiviteRequest" name="getListTypeActiviteRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListTypeActiviteResponse" name="getListTypeActiviteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageAfterByAct">
-
-         <wsdl:input message="impl:getListMessageAfterByActRequest" name="getListMessageAfterByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListMessageAfterByActResponse" name="getListMessageAfterByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getMesActiviteEncours">
-
-         <wsdl:input message="impl:getMesActiviteEncoursRequest" name="getMesActiviteEncoursRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getMesActiviteEncoursResponse" name="getMesActiviteEncoursResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListNotification">
-
-         <wsdl:input message="impl:getListNotificationRequest" name="getListNotificationRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListNotificationResponse" name="getListNotificationResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActivitePref">
-
-         <wsdl:input message="impl:getListActivitePrefRequest" name="getListActivitePrefRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListActivitePrefResponse" name="getListActivitePrefResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageAfter">
-
-         <wsdl:input message="impl:getListMessageAfterRequest" name="getListMessageAfterRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListMessageAfterResponse" name="getListMessageAfterResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getMesActiviteArchive">
-
-         <wsdl:input message="impl:getMesActiviteArchiveRequest" name="getMesActiviteArchiveRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getMesActiviteArchiveResponse" name="getMesActiviteArchiveResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListNotificationAfter">
-
-         <wsdl:input message="impl:getListNotificationAfterRequest" name="getListNotificationAfterRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListNotificationAfterResponse" name="getListNotificationAfterResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActiviteAvenir">
-
-         <wsdl:input message="impl:getListActiviteAvenirRequest" name="getListActiviteAvenirRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListActiviteAvenirResponse" name="getListActiviteAvenirResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageBefore">
-
-         <wsdl:input message="impl:getListMessageBeforeRequest" name="getListMessageBeforeRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListMessageBeforeResponse" name="getListMessageBeforeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageBeforeByAct">
-
-         <wsdl:input message="impl:getListMessageBeforeByActRequest" name="getListMessageBeforeByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getListMessageBeforeByActResponse" name="getListMessageBeforeByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageEmisByAct">
-
-         <wsdl:input message="impl:effaceMessageEmisByActRequest" name="effaceMessageEmisByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceMessageEmisByActResponse" name="effaceMessageEmisByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageEmis">
-
-         <wsdl:input message="impl:effaceMessageEmisRequest" name="effaceMessageEmisRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceMessageEmisResponse" name="effaceMessageEmisResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceNotificationRecu">
-
-         <wsdl:input message="impl:effaceNotificationRecuRequest" name="effaceNotificationRecuRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceNotificationRecuResponse" name="effaceNotificationRecuResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageRecuByAct">
-
-         <wsdl:input message="impl:effaceMessageRecuByActRequest" name="effaceMessageRecuByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceMessageRecuByActResponse" name="effaceMessageRecuByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceParticipation">
-
-         <wsdl:input message="impl:effaceParticipationRequest" name="effaceParticipationRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceParticipationResponse" name="effaceParticipationResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageRecu">
-
-         <wsdl:input message="impl:effaceMessageRecuRequest" name="effaceMessageRecuRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceMessageRecuResponse" name="effaceMessageRecuResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageByAct">
-
-         <wsdl:input message="impl:acquitMessageByActRequest" name="acquitMessageByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:acquitMessageByActResponse" name="acquitMessageByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageDiscussionByAct">
-
-         <wsdl:input message="impl:acquitMessageDiscussionByActRequest" name="acquitMessageDiscussionByActRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:acquitMessageDiscussionByActResponse" name="acquitMessageDiscussionByActResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitAllNotification">
-
-         <wsdl:input message="impl:acquitAllNotificationRequest" name="acquitAllNotificationRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:acquitAllNotificationResponse" name="acquitAllNotificationResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageDiscussion">
-
-         <wsdl:input message="impl:acquitMessageDiscussionRequest" name="acquitMessageDiscussionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:acquitMessageDiscussionResponse" name="acquitMessageDiscussionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updatePosition">
-
-         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addMessage">
-
-         <wsdl:input message="impl:addMessageRequest" name="addMessageRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addMessageResponse" name="addMessageResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="isAmiFrom">
-
-         <wsdl:input message="impl:isAmiFromRequest" name="isAmiFromRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:isAmiFromResponse" name="isAmiFromResponse">
+         <wsdl:output message="impl:test_addCompteResponse" name="test_addCompteResponse">
 
        </wsdl:output>
 
@@ -3187,13 +2738,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getTableauBord">
+      <wsdl:operation name="updatePreference">
 
-         <wsdl:input message="impl:getTableauBordRequest" name="getTableauBordRequest">
+         <wsdl:input message="impl:updatePreferenceRequest" name="updatePreferenceRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getTableauBordResponse" name="getTableauBordResponse">
+         <wsdl:output message="impl:updatePreferenceResponse" name="updatePreferenceResponse">
 
        </wsdl:output>
 
@@ -3223,42 +2774,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePreference">
-
-         <wsdl:input message="impl:updatePreferenceRequest" name="updatePreferenceRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updatePreferenceResponse" name="updatePreferenceResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getActivite">
-
-         <wsdl:input message="impl:getActiviteRequest" name="getActiviteRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getActiviteResponse" name="getActiviteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getIndicateurs">
-
-         <wsdl:input message="impl:getIndicateursRequest" name="getIndicateursRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getIndicateursResponse" name="getIndicateursResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getListAmi">
 
          <wsdl:input message="impl:getListAmiRequest" name="getListAmiRequest">
@@ -3283,37 +2798,49 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getDefPref">
+      <wsdl:operation name="getActivite">
 
-         <wsdl:input message="impl:getDefPrefRequest" name="getDefPrefRequest">
+         <wsdl:input message="impl:getActiviteRequest" name="getActiviteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getDefPrefResponse" name="getDefPrefResponse">
+         <wsdl:output message="impl:getActiviteResponse" name="getActiviteResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="addMessageByAct">
+      <wsdl:operation name="getTableauBord">
 
-         <wsdl:input message="impl:addMessageByActRequest" name="addMessageByActRequest">
+         <wsdl:input message="impl:getTableauBordRequest" name="getTableauBordRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:addMessageByActResponse" name="addMessageByActResponse">
+         <wsdl:output message="impl:getTableauBordResponse" name="getTableauBordResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="getLisPreference">
+      <wsdl:operation name="getIndicateurs">
 
-         <wsdl:input message="impl:getLisPreferenceRequest" name="getLisPreferenceRequest">
+         <wsdl:input message="impl:getIndicateursRequest" name="getIndicateursRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:getLisPreferenceResponse" name="getLisPreferenceResponse">
+         <wsdl:output message="impl:getIndicateursResponse" name="getIndicateursResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addActivite">
+
+         <wsdl:input message="impl:addActiviteRequest" name="addActiviteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addActiviteResponse" name="addActiviteResponse">
 
        </wsdl:output>
 
@@ -3343,25 +2870,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="effaceActivite">
+      <wsdl:operation name="addMessageByAct">
 
-         <wsdl:input message="impl:effaceActiviteRequest" name="effaceActiviteRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:effaceActiviteResponse" name="effaceActiviteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addActivite">
-
-         <wsdl:input message="impl:addActiviteRequest" name="addActiviteRequest">
+         <wsdl:input message="impl:addMessageByActRequest" name="addMessageByActRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:addActiviteResponse" name="addActiviteResponse">
+         <wsdl:output message="impl:addMessageByActResponse" name="addMessageByActResponse">
 
        </wsdl:output>
 
@@ -3379,18 +2894,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateGCM">
-
-         <wsdl:input message="impl:updateGCMRequest" name="updateGCMRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateGCMResponse" name="updateGCMResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="effaceAmi">
 
          <wsdl:input message="impl:effaceAmiRequest" name="effaceAmiRequest">
@@ -3403,25 +2906,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="genereJeu">
+      <wsdl:operation name="effaceActivite">
 
-         <wsdl:input message="impl:genereJeuRequest" name="genereJeuRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:genereJeuResponse" name="genereJeuResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addAvis">
-
-         <wsdl:input message="impl:addAvisRequest" name="addAvisRequest">
+         <wsdl:input message="impl:effaceActiviteRequest" name="effaceActiviteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:addAvisResponse" name="addAvisResponse">
+         <wsdl:output message="impl:effaceActiviteResponse" name="effaceActiviteResponse">
 
        </wsdl:output>
 
@@ -3439,37 +2930,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateProfilWayd">
+      <wsdl:operation name="addParticipation">
 
-         <wsdl:input message="impl:updateProfilWaydRequest" name="updateProfilWaydRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateProfilWaydResponse" name="updateProfilWaydResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateActivite">
-
-         <wsdl:input message="impl:updateActiviteRequest" name="updateActiviteRequest">
+         <wsdl:input message="impl:addParticipationRequest" name="addParticipationRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updateActiviteResponse" name="updateActiviteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getFullProfil">
-
-         <wsdl:input message="impl:getFullProfilRequest" name="getFullProfilRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getFullProfilResponse" name="getFullProfilResponse">
+         <wsdl:output message="impl:addParticipationResponse" name="addParticipationResponse">
 
        </wsdl:output>
 
@@ -3487,97 +2954,481 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePseudo">
+      <wsdl:operation name="updatePosition">
 
-         <wsdl:input message="impl:updatePseudoRequest" name="updatePseudoRequest">
+         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updatePseudoResponse" name="updatePseudoResponse">
+         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="tesgcm">
+      <wsdl:operation name="addMessage">
 
-         <wsdl:input message="impl:tesgcmRequest" name="tesgcmRequest">
+         <wsdl:input message="impl:addMessageRequest" name="addMessageRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:tesgcmResponse" name="tesgcmResponse">
+         <wsdl:output message="impl:addMessageResponse" name="addMessageResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="addParticipation">
+      <wsdl:operation name="getListMessageNonLu">
 
-         <wsdl:input message="impl:addParticipationRequest" name="addParticipationRequest">
+         <wsdl:input message="impl:getListMessageNonLuRequest" name="getListMessageNonLuRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:addParticipationResponse" name="addParticipationResponse">
+         <wsdl:output message="impl:getListMessageNonLuResponse" name="getListMessageNonLuResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_addCompte">
+      <wsdl:operation name="getListPreferences">
 
-         <wsdl:input message="impl:test_addCompteRequest" name="test_addCompteRequest">
+         <wsdl:input message="impl:getListPreferencesRequest" name="getListPreferencesRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_addCompteResponse" name="test_addCompteResponse">
+         <wsdl:output message="impl:getListPreferencesResponse" name="getListPreferencesResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="signalerActivite">
+      <wsdl:operation name="getListParticipant">
 
-         <wsdl:input message="impl:signalerActiviteRequest" name="signalerActiviteRequest">
+         <wsdl:input message="impl:getListParticipantRequest" name="getListParticipantRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:signalerActiviteResponse" name="signalerActiviteResponse">
+         <wsdl:output message="impl:getListParticipantResponse" name="getListParticipantResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_GetToken">
+      <wsdl:operation name="getListProfilDiscussion">
 
-         <wsdl:input message="impl:test_GetTokenRequest" name="test_GetTokenRequest">
+         <wsdl:input message="impl:getListProfilDiscussionRequest" name="getListProfilDiscussionRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_GetTokenResponse" name="test_GetTokenResponse">
+         <wsdl:output message="impl:getListProfilDiscussionResponse" name="getListProfilDiscussionResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_DonneAvis">
+      <wsdl:operation name="getListMessageAfter">
 
-         <wsdl:input message="impl:test_DonneAvisRequest" name="test_DonneAvisRequest">
+         <wsdl:input message="impl:getListMessageAfterRequest" name="getListMessageAfterRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:test_DonneAvisResponse" name="test_DonneAvisResponse">
+         <wsdl:output message="impl:getListMessageAfterResponse" name="getListMessageAfterResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="signalerProfil">
+      <wsdl:operation name="getListNotification">
 
-         <wsdl:input message="impl:signalerProfilRequest" name="signalerProfilRequest">
+         <wsdl:input message="impl:getListNotificationRequest" name="getListNotificationRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:signalerProfilResponse" name="signalerProfilResponse">
+         <wsdl:output message="impl:getListNotificationResponse" name="getListNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageBeforeByAct">
+
+         <wsdl:input message="impl:getListMessageBeforeByActRequest" name="getListMessageBeforeByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListMessageBeforeByActResponse" name="getListMessageBeforeByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageAfterByAct">
+
+         <wsdl:input message="impl:getListMessageAfterByActRequest" name="getListMessageAfterByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListMessageAfterByActResponse" name="getListMessageAfterByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListDiscussion">
+
+         <wsdl:input message="impl:getListDiscussionRequest" name="getListDiscussionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListDiscussionResponse" name="getListDiscussionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageBefore">
+
+         <wsdl:input message="impl:getListMessageBeforeRequest" name="getListMessageBeforeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListMessageBeforeResponse" name="getListMessageBeforeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfilDiscussion">
+
+         <wsdl:input message="impl:getProfilDiscussionRequest" name="getProfilDiscussionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProfilDiscussionResponse" name="getProfilDiscussionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActivitePref">
+
+         <wsdl:input message="impl:getListActivitePrefRequest" name="getListActivitePrefRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListActivitePrefResponse" name="getListActivitePrefResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActiviteAvenir">
+
+         <wsdl:input message="impl:getListActiviteAvenirRequest" name="getListActiviteAvenirRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListActiviteAvenirResponse" name="getListActiviteAvenirResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActiviteAvenirNocritere">
+
+         <wsdl:input message="impl:getListActiviteAvenirNocritereRequest" name="getListActiviteAvenirNocritereRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListActiviteAvenirNocritereResponse" name="getListActiviteAvenirNocritereResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMesActiviteEncours">
+
+         <wsdl:input message="impl:getMesActiviteEncoursRequest" name="getMesActiviteEncoursRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getMesActiviteEncoursResponse" name="getMesActiviteEncoursResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListNotificationAfter">
+
+         <wsdl:input message="impl:getListNotificationAfterRequest" name="getListNotificationAfterRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListNotificationAfterResponse" name="getListNotificationAfterResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDiscussionByAct">
+
+         <wsdl:input message="impl:getDiscussionByActRequest" name="getDiscussionByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDiscussionByActResponse" name="getDiscussionByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMesActiviteArchive">
+
+         <wsdl:input message="impl:getMesActiviteArchiveRequest" name="getMesActiviteArchiveRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getMesActiviteArchiveResponse" name="getMesActiviteArchiveResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageRecuByAct">
+
+         <wsdl:input message="impl:effaceMessageRecuByActRequest" name="effaceMessageRecuByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceMessageRecuByActResponse" name="effaceMessageRecuByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceNotificationRecu">
+
+         <wsdl:input message="impl:effaceNotificationRecuRequest" name="effaceNotificationRecuRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceNotificationRecuResponse" name="effaceNotificationRecuResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceParticipation">
+
+         <wsdl:input message="impl:effaceParticipationRequest" name="effaceParticipationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceParticipationResponse" name="effaceParticipationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageEmisByAct">
+
+         <wsdl:input message="impl:effaceMessageEmisByActRequest" name="effaceMessageEmisByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceMessageEmisByActResponse" name="effaceMessageEmisByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageRecu">
+
+         <wsdl:input message="impl:effaceMessageRecuRequest" name="effaceMessageRecuRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceMessageRecuResponse" name="effaceMessageRecuResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListTypeActivite">
+
+         <wsdl:input message="impl:getListTypeActiviteRequest" name="getListTypeActiviteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getListTypeActiviteResponse" name="getListTypeActiviteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageByAct">
+
+         <wsdl:input message="impl:acquitMessageByActRequest" name="acquitMessageByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageByActResponse" name="acquitMessageByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussion">
+
+         <wsdl:input message="impl:acquitMessageDiscussionRequest" name="acquitMessageDiscussionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageDiscussionResponse" name="acquitMessageDiscussionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitAllNotification">
+
+         <wsdl:input message="impl:acquitAllNotificationRequest" name="acquitAllNotificationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitAllNotificationResponse" name="acquitAllNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotification">
+
+         <wsdl:input message="impl:updateNotificationRequest" name="updateNotificationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateNotificationResponse" name="updateNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussionByAct">
+
+         <wsdl:input message="impl:acquitMessageDiscussionByActRequest" name="acquitMessageDiscussionByActRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageDiscussionByActResponse" name="acquitMessageDiscussionByActResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfilNotation">
+
+         <wsdl:input message="impl:getProfilNotationRequest" name="getProfilNotationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProfilNotationResponse" name="getProfilNotationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPersonnebyToken">
+
+         <wsdl:input message="impl:getPersonnebyTokenRequest" name="getPersonnebyTokenRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPersonnebyTokenResponse" name="getPersonnebyTokenResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageEmis">
+
+         <wsdl:input message="impl:effaceMessageEmisRequest" name="effaceMessageEmisRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:effaceMessageEmisResponse" name="effaceMessageEmisResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitNotification">
+
+         <wsdl:input message="impl:acquitNotificationRequest" name="acquitNotificationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitNotificationResponse" name="acquitNotificationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getNbrActiviteEncours">
+
+         <wsdl:input message="impl:test_getNbrActiviteEncoursRequest" name="test_getNbrActiviteEncoursRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:test_getNbrActiviteEncoursResponse" name="test_getNbrActiviteEncoursResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotificationPref">
+
+         <wsdl:input message="impl:updateNotificationPrefRequest" name="updateNotificationPrefRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateNotificationPrefResponse" name="updateNotificationPrefResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_GetPersonneAlea">
+
+         <wsdl:input message="impl:test_GetPersonneAleaRequest" name="test_GetPersonneAleaRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:test_GetPersonneAleaResponse" name="test_GetPersonneAleaResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getDernierId">
+
+         <wsdl:input message="impl:test_getDernierIdRequest" name="test_getDernierIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:test_getDernierIdResponse" name="test_getDernierIdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getPremierId">
+
+         <wsdl:input message="impl:test_getPremierIdRequest" name="test_getPremierIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:test_getPremierIdResponse" name="test_getPremierIdResponse">
 
        </wsdl:output>
 
@@ -3589,17 +3440,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
-      <wsdl:operation name="test_getPremierId">
+      <wsdl:operation name="addAvis">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_getPremierIdRequest">
+         <wsdl:input name="addAvisRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_getPremierIdResponse">
+         <wsdl:output name="addAvisResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3607,17 +3458,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_getDernierId">
+      <wsdl:operation name="signalerActivite">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_getDernierIdRequest">
+         <wsdl:input name="signalerActiviteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_getDernierIdResponse">
+         <wsdl:output name="signalerActiviteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3625,17 +3476,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getProfilNotation">
+      <wsdl:operation name="getFullProfil">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getProfilNotationRequest">
+         <wsdl:input name="getFullProfilRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getProfilNotationResponse">
+         <wsdl:output name="getFullProfilResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3643,17 +3494,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateNotification">
+      <wsdl:operation name="test_GetToken">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updateNotificationRequest">
+         <wsdl:input name="test_GetTokenRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updateNotificationResponse">
+         <wsdl:output name="test_GetTokenResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3661,17 +3512,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_getNbrActiviteEncours">
+      <wsdl:operation name="signalerProfil">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_getNbrActiviteEncoursRequest">
+         <wsdl:input name="signalerProfilRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_getNbrActiviteEncoursResponse">
+         <wsdl:output name="signalerProfilResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3679,17 +3530,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateNotificationPref">
+      <wsdl:operation name="updateProfilWayd">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updateNotificationPrefRequest">
+         <wsdl:input name="updateProfilWaydRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updateNotificationPrefResponse">
+         <wsdl:output name="updateProfilWaydResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3697,17 +3548,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_GetPersonneAlea">
+      <wsdl:operation name="updateGCM">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_GetPersonneAleaRequest">
+         <wsdl:input name="updateGCMRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_GetPersonneAleaResponse">
+         <wsdl:output name="updateGCMResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3715,17 +3566,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getPersonnebyToken">
+      <wsdl:operation name="updateActivite">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getPersonnebyTokenRequest">
+         <wsdl:input name="updateActiviteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getPersonnebyTokenResponse">
+         <wsdl:output name="updateActiviteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3733,17 +3584,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="acquitNotification">
+      <wsdl:operation name="tesgcm">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="acquitNotificationRequest">
+         <wsdl:input name="tesgcmRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="acquitNotificationResponse">
+         <wsdl:output name="tesgcmResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3751,17 +3602,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getListDiscussion">
+      <wsdl:operation name="updatePseudo">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getListDiscussionRequest">
+         <wsdl:input name="updatePseudoRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getListDiscussionResponse">
+         <wsdl:output name="updatePseudoResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3769,17 +3620,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getDiscussionByAct">
+      <wsdl:operation name="test_DonneAvis">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getDiscussionByActRequest">
+         <wsdl:input name="test_DonneAvisRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getDiscussionByActResponse">
+         <wsdl:output name="test_DonneAvisResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3787,539 +3638,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getListProfilDiscussion">
+      <wsdl:operation name="test_addCompte">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getListProfilDiscussionRequest">
+         <wsdl:input name="test_addCompteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getListProfilDiscussionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageNonLu">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListMessageNonLuRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListMessageNonLuResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProfilDiscussion">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getProfilDiscussionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getProfilDiscussionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListParticipant">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListParticipantRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListParticipantResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListPreferences">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListPreferencesRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListPreferencesResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActiviteAvenirNocritere">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListActiviteAvenirNocritereRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListActiviteAvenirNocritereResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListTypeActivite">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListTypeActiviteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListTypeActiviteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageAfterByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListMessageAfterByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListMessageAfterByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getMesActiviteEncours">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getMesActiviteEncoursRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getMesActiviteEncoursResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListNotification">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListNotificationRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListNotificationResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActivitePref">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListActivitePrefRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListActivitePrefResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageAfter">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListMessageAfterRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListMessageAfterResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getMesActiviteArchive">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getMesActiviteArchiveRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getMesActiviteArchiveResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListNotificationAfter">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListNotificationAfterRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListNotificationAfterResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListActiviteAvenir">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListActiviteAvenirRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListActiviteAvenirResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageBefore">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListMessageBeforeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListMessageBeforeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getListMessageBeforeByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getListMessageBeforeByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getListMessageBeforeByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageEmisByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceMessageEmisByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceMessageEmisByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageEmis">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceMessageEmisRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceMessageEmisResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceNotificationRecu">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceNotificationRecuRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceNotificationRecuResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageRecuByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceMessageRecuByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceMessageRecuByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceParticipation">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceParticipationRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceParticipationResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="effaceMessageRecu">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="effaceMessageRecuRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="effaceMessageRecuResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="acquitMessageByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="acquitMessageByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageDiscussionByAct">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="acquitMessageDiscussionByActRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="acquitMessageDiscussionByActResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitAllNotification">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="acquitAllNotificationRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="acquitAllNotificationResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="acquitMessageDiscussion">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="acquitMessageDiscussionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="acquitMessageDiscussionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updatePosition">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updatePositionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updatePositionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addMessage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addMessageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addMessageResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="isAmiFrom">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="isAmiFromRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="isAmiFromResponse">
+         <wsdl:output name="test_addCompteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4381,17 +3710,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getTableauBord">
+      <wsdl:operation name="updatePreference">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getTableauBordRequest">
+         <wsdl:input name="updatePreferenceRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getTableauBordResponse">
+         <wsdl:output name="updatePreferenceResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4435,60 +3764,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePreference">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updatePreferenceRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updatePreferenceResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getActivite">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getActiviteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getActiviteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getIndicateurs">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getIndicateursRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getIndicateursResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getListAmi">
 
          <wsdlsoap:operation soapAction=""/>
@@ -4525,17 +3800,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getDefPref">
+      <wsdl:operation name="getActivite">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getDefPrefRequest">
+         <wsdl:input name="getActiviteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getDefPrefResponse">
+         <wsdl:output name="getActiviteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4543,17 +3818,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addMessageByAct">
+      <wsdl:operation name="getTableauBord">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="addMessageByActRequest">
+         <wsdl:input name="getTableauBordRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="addMessageByActResponse">
+         <wsdl:output name="getTableauBordResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4561,17 +3836,35 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getLisPreference">
+      <wsdl:operation name="getIndicateurs">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getLisPreferenceRequest">
+         <wsdl:input name="getIndicateursRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getLisPreferenceResponse">
+         <wsdl:output name="getIndicateursResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addActivite">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addActiviteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addActiviteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4615,35 +3908,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="effaceActivite">
+      <wsdl:operation name="addMessageByAct">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="effaceActiviteRequest">
+         <wsdl:input name="addMessageByActRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="effaceActiviteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addActivite">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addActiviteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addActiviteResponse">
+         <wsdl:output name="addMessageByActResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4669,24 +3944,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateGCM">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateGCMRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateGCMResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="effaceAmi">
 
          <wsdlsoap:operation soapAction=""/>
@@ -4705,35 +3962,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="genereJeu">
+      <wsdl:operation name="effaceActivite">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="genereJeuRequest">
+         <wsdl:input name="effaceActiviteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="genereJeuResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addAvis">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addAvisRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addAvisResponse">
+         <wsdl:output name="effaceActiviteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4759,53 +3998,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateProfilWayd">
+      <wsdl:operation name="addParticipation">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updateProfilWaydRequest">
+         <wsdl:input name="addParticipationRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updateProfilWaydResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateActivite">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateActiviteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateActiviteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getFullProfil">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getFullProfilRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getFullProfilResponse">
+         <wsdl:output name="addParticipationResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4831,17 +4034,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePseudo">
+      <wsdl:operation name="updatePosition">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updatePseudoRequest">
+         <wsdl:input name="updatePositionRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updatePseudoResponse">
+         <wsdl:output name="updatePositionResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4849,17 +4052,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="tesgcm">
+      <wsdl:operation name="addMessage">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="tesgcmRequest">
+         <wsdl:input name="addMessageRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="tesgcmResponse">
+         <wsdl:output name="addMessageResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4867,17 +4070,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addParticipation">
+      <wsdl:operation name="getListMessageNonLu">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="addParticipationRequest">
+         <wsdl:input name="getListMessageNonLuRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="addParticipationResponse">
+         <wsdl:output name="getListMessageNonLuResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4885,17 +4088,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_addCompte">
+      <wsdl:operation name="getListPreferences">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_addCompteRequest">
+         <wsdl:input name="getListPreferencesRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_addCompteResponse">
+         <wsdl:output name="getListPreferencesResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4903,17 +4106,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="signalerActivite">
+      <wsdl:operation name="getListParticipant">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="signalerActiviteRequest">
+         <wsdl:input name="getListParticipantRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="signalerActiviteResponse">
+         <wsdl:output name="getListParticipantResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4921,17 +4124,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_GetToken">
+      <wsdl:operation name="getListProfilDiscussion">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_GetTokenRequest">
+         <wsdl:input name="getListProfilDiscussionRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_GetTokenResponse">
+         <wsdl:output name="getListProfilDiscussionResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4939,17 +4142,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="test_DonneAvis">
+      <wsdl:operation name="getListMessageAfter">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="test_DonneAvisRequest">
+         <wsdl:input name="getListMessageAfterRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="test_DonneAvisResponse">
+         <wsdl:output name="getListMessageAfterResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4957,17 +4160,593 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="signalerProfil">
+      <wsdl:operation name="getListNotification">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="signalerProfilRequest">
+         <wsdl:input name="getListNotificationRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="signalerProfilResponse">
+         <wsdl:output name="getListNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageBeforeByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListMessageBeforeByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListMessageBeforeByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageAfterByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListMessageAfterByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListMessageAfterByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListDiscussion">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListDiscussionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListDiscussionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListMessageBefore">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListMessageBeforeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListMessageBeforeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfilDiscussion">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProfilDiscussionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProfilDiscussionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActivitePref">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListActivitePrefRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListActivitePrefResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActiviteAvenir">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListActiviteAvenirRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListActiviteAvenirResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListActiviteAvenirNocritere">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListActiviteAvenirNocritereRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListActiviteAvenirNocritereResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMesActiviteEncours">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMesActiviteEncoursRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMesActiviteEncoursResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListNotificationAfter">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListNotificationAfterRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListNotificationAfterResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDiscussionByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDiscussionByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDiscussionByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMesActiviteArchive">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMesActiviteArchiveRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMesActiviteArchiveResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageRecuByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceMessageRecuByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceMessageRecuByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceNotificationRecu">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceNotificationRecuRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceNotificationRecuResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceParticipation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceParticipationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceParticipationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageEmisByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceMessageEmisByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceMessageEmisByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageRecu">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceMessageRecuRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceMessageRecuResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getListTypeActivite">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getListTypeActiviteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getListTypeActiviteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussion">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageDiscussionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageDiscussionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitAllNotification">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitAllNotificationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitAllNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotification">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateNotificationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussionByAct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageDiscussionByActRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageDiscussionByActResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProfilNotation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProfilNotationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProfilNotationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPersonnebyToken">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPersonnebyTokenRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPersonnebyTokenResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="effaceMessageEmis">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="effaceMessageEmisRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="effaceMessageEmisResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitNotification">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitNotificationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitNotificationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getNbrActiviteEncours">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="test_getNbrActiviteEncoursRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="test_getNbrActiviteEncoursResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateNotificationPref">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateNotificationPrefRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateNotificationPrefResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_GetPersonneAlea">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="test_GetPersonneAleaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="test_GetPersonneAleaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getDernierId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="test_getDernierIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="test_getDernierIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="test_getPremierId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="test_getPremierIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="test_getPremierIdResponse">
 
             <wsdlsoap:body use="literal"/>
 

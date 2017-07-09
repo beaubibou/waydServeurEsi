@@ -72,17 +72,17 @@ import fcm.ServeurMethodes;
 
 public class WBservices {
 	public final static int NB_MAX_ACTIVITE = 100;
-	public static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
+	public static SimpleDateFormat formatDate = new SimpleDateFormat(
+			"dd-MM HH:mm:ss");
 
-	
 	public void envoyerMail() {
 
 		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
-	//kljlkj
+		// kljlkj
 	}
 
-	
-	public boolean testToken(String idtoken, String photostr, String nom,String gcmToken) {
+	public boolean testToken(String idtoken, String photostr, String nom,
+			String gcmToken) {
 		long debut = System.currentTimeMillis();
 		System.out.print("test token");
 		FirebaseOptions options;
@@ -91,8 +91,8 @@ public class WBservices {
 			try {
 				options = new FirebaseOptions.Builder()
 						// .setServiceAccount(new
-						//   FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
-//jklmjl
+						// FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
+						// jklmjl
 						.setServiceAccount(new FileInputStream("d:/cle.json"))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com/")
 						.build();
@@ -132,15 +132,14 @@ public class WBservices {
 							connexion = CxoPool.getConnection();
 							PersonneDAO personnedao = new PersonneDAO(connexion);
 							if (!personnedao.isLoginExist(uid)) {
-								 personnedao
-										.addCompteGenerique(uid, idtoken,
-												photostr, nom,gcmToken);
+								personnedao.addCompteGenerique(uid, idtoken,
+										photostr, nom, gcmToken);
 
 							}
 
 							else
 								personnedao.updateJeton(uid, idtoken, photostr,
-										nom,gcmToken);
+										nom, gcmToken);
 						} catch (SQLException | NamingException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -160,32 +159,6 @@ public class WBservices {
 				+ (System.currentTimeMillis() - debut) + "ms");
 
 		return true;
-
-	}
-
-	public static MessageServeur isAmiFrom(int idpersonne, int idami) {
-		Connection connexion = null;
-		long debut = System.currentTimeMillis();
-		boolean retour;
-		try {
-			connexion = CxoPool.getConnection();
-			AmiDAO amiddao = new AmiDAO(connexion);
-			retour = amiddao.isAmiFrom(idpersonne, idami);
-			System.out.println(formatDate.format(new Date()) + ";isAmiFrom;"
-					+ (System.currentTimeMillis() - debut) + "ms");
-
-			return new MessageServeur(retour, LibelleMessage.pasAMI);
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		finally {
-			CxoPool.closeConnection(connexion);
-
-		}
-		return new MessageServeur(false, LibelleMessage.pasAMI);
 
 	}
 
@@ -226,41 +199,6 @@ public class WBservices {
 		}
 	}
 
-	public DefinitionPreference getDefPref(int idpersonne, int idtypeactivite) {
-
-		Connection connexion = null;
-
-		long debut = System.currentTimeMillis();
-		DefinitionPreferenceDb defprefdb;
-
-		try {
-			connexion = CxoPool.getConnection();
-			DefinintionPreferenceDAO definitionprefdao = new DefinintionPreferenceDAO(
-					connexion);
-
-			defprefdb = definitionprefdao
-					.getDefPref(idpersonne, idtypeactivite);
-
-			if (defprefdb == null)
-				return null;
-
-			DefinitionPreference defpref = new DefinitionPreference(defprefdb);
-
-			System.out.println(formatDate.format(new Date()) + ";getDefPref;"
-					+ (System.currentTimeMillis() - debut) + "ms");
-			return defpref;
-
-		} catch (SQLException | NamingException e) {
-
-			e.printStackTrace();
-			return null;
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-	}
-
 	public MessageServeur updatePreference(int idpersonne, int rayon,
 			int idtypeactivite[], Boolean[] active, String jeton) {
 
@@ -270,20 +208,14 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 			PreferenceDAO preferencedao = new PreferenceDAO(connexion);
-			PersonneDAO personnedao = new PersonneDAO(connexion);
 
 			// SECURITE*************************************
 
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idpersonne, jeton);
-
-			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return autorisation;
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
 			}
 
 			// ******************************************************
@@ -393,13 +325,22 @@ public class WBservices {
 
 	}
 
-	public static Ami[] getListAmi(int idpersonne) {
+	public static Ami[] getListAmi(int iddemandeur, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Ami> retour = new ArrayList<Ami>();
 
 		try {
 			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+
 			AmiDAO amidao = new AmiDAO(connexion);
 			retour = amidao.getListAmi(idpersonne);
 
@@ -415,15 +356,22 @@ public class WBservices {
 
 	}
 
-	public static Participant[] getListParticipant(int idactivite) {
+	public static Participant[] getListParticipant(int iddemandeur,
+			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Participant> retour = new ArrayList<Participant>();
 
-		// System.out.println("Recupere tous les participants de l'activite "
-		// + idactivite);
 		try {
 			connexion = CxoPool.getConnection();
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+
 			ParticipantDAO participantdao = new ParticipantDAO(connexion);
 			retour = participantdao.getListPaticipant(idactivite);
 			System.out.println(formatDate.format(new Date())
@@ -441,7 +389,8 @@ public class WBservices {
 
 	}
 
-	public Preference[] getListPreferences(int idpersonne) {
+	public static Preference[] getListPreferences(int iddemandeur,
+			int idpersonne, String jeton) {
 
 		Connection connexion = null;
 		ArrayList<Preference> retour = new ArrayList<Preference>();
@@ -449,6 +398,13 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
 			PreferenceDAO preferencedao = new PreferenceDAO(connexion);
 			retour = preferencedao.getLisPreferences(idpersonne);
 
@@ -500,7 +456,6 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 			PersonneDAO personneDao = new PersonneDAO(connexion);
-
 			System.out.println(formatDate.format(new Date())
 					+ ";getProfilDiscussion;"
 					+ (System.currentTimeMillis() - debut) + "ms");
@@ -518,7 +473,8 @@ public class WBservices {
 
 	}
 
-	public   static Message[] getDiscussion(int iddestinataire, int idemetteur) {
+	public static Message[] getDiscussion(int iddestinataire, int idemetteur,
+			String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<Message> listmessage = new ArrayList<Message>();
@@ -526,6 +482,10 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddestinataire, jeton))
+				return null;
+
 			MessageDAO messagedao = new MessageDAO(connexion);
 			listmessage = messagedao.getDiscussion(iddestinataire, idemetteur);
 
@@ -543,7 +503,8 @@ public class WBservices {
 
 	}
 
-	public static Message[] getDiscussionByAct(int iddestinataire, int idactivite) {
+	public static Message[] getDiscussionByAct(int iddestinataire,
+			int idactivite, String jeton) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -552,6 +513,10 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddestinataire, jeton))
+				return null;
+
 			MessageDAO messagedao = new MessageDAO(connexion);
 			listmessage = messagedao.getDiscussionByAct(iddestinataire,
 					idactivite);
@@ -569,13 +534,22 @@ public class WBservices {
 
 	}
 
-	public static Discussion[] getListDiscussion(int idpersonne) {
+	public static Discussion[] getListDiscussion(int iddemandeur,
+			int idpersonne, String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<Discussion> retour = new ArrayList<Discussion>();
 
 		try {
 			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+
 			MessageDAO messagedao = new MessageDAO(connexion);
 			ArrayList<Discussion> listdiscussion = null;
 
@@ -609,13 +583,21 @@ public class WBservices {
 
 	}
 
-	public static Notification[] getListNotification(int idpersonne) {
+	public static Notification[] getListNotification(int iddemandeur,
+			int idpersonne, String jeton) {
 		ArrayList<Notification> retour = new ArrayList<Notification>();
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		try {
 			connexion = CxoPool.getConnection();
+
+			// ************************************Securite
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+			// ************************************
+
 			NotificationDAO notificationdao = new NotificationDAO(connexion);
 			retour = notificationdao.getListNotification(idpersonne);
 
@@ -758,13 +740,21 @@ public class WBservices {
 
 	}
 
-	public static Activite getActivite(int idpersonne, int idactivite) {
+	public static Activite getActivite(int idpersonne, int idactivite,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		try {
 			// connexion = CxoPool.getConnection();
 			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return null;
+			// ************************************
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			Activite activite = activitedao.getActivite(idactivite);
 
@@ -853,7 +843,8 @@ public class WBservices {
 
 	}
 
-	public static Avis[] getListAvis(int idpersonnenotee) {
+	public static Avis[] getListAvis(int iddemandeur, int idpersonnenotee,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -861,6 +852,15 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+
 			AvisDAO avisdao = new AvisDAO(connexion);
 			listavis = avisdao.getListAvis(idpersonnenotee);
 
@@ -878,41 +878,21 @@ public class WBservices {
 
 	}
 
-	public static Preference[] getLisPreference(int idpersonne) {
-
-		long debut = System.currentTimeMillis();
-		ArrayList<Preference> listpreference = new ArrayList<Preference>();
-
-		Connection connexion = null;
-
-		try {
-			connexion = CxoPool.getConnection();
-			PreferenceDAO preferencedao = new PreferenceDAO(connexion);
-			listpreference = preferencedao.getLisPreference(idpersonne);
-
-		}
-
-		catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		System.out.println(formatDate.format(new Date())
-				+ ";getListPreference;" + (System.currentTimeMillis() - debut)
-				+ "ms");
-		return (Preference[]) listpreference
-				.toArray(new Preference[listpreference.size()]);
-
-	}
-
-	public Activite[] getListActivitePref(int idpersonne) {
+	public Activite[] getListActivitePref(int iddemandeur, int idpersonne,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
 
 		try {
 			connexion = CxoPool.getConnection();
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			listActivite = activitedao.getListActivitePref(idpersonne);
 
@@ -979,7 +959,7 @@ public class WBservices {
 
 	}
 
-	public Activite[] getListActiviteAvenirNocritere(int idpersonne,
+	public static Activite[] getListActiviteAvenirNocritere(int idpersonne,
 			String latitudestr, String longitudestr, int rayon, String motcle,
 			int commencedans) {
 
@@ -1019,16 +999,21 @@ public class WBservices {
 
 	}
 
-	public static Activite[] getMesActiviteEncours(int idpersonne) {
+	public static Activite[] getMesActiviteEncours(int iddemandeur,
+			int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
 
-		
-		
 		try {
 			connexion = CxoPool.getConnection();
+			// ************************************Securite
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+			// ************************************
+
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 
 			listActivite = activitedao.getMesActiviteEncours(idpersonne);
@@ -1051,12 +1036,19 @@ public class WBservices {
 				.size()]);
 	}
 
-	public  static Activite[] getMesActiviteArchive(int idpersonne) {
+	public static Activite[] getMesActiviteArchive(int iddemandeur,
+			int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
 		try {
 			connexion = CxoPool.getConnection();
+			// ************************************Securite
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+			// ************************************
+
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			listActivite = activitedao.getMesActiviteArchive(idpersonne);
 
@@ -1090,7 +1082,6 @@ public class WBservices {
 
 	}
 
-	
 	public static TypeActivite[] getListTypeActivite() {
 
 		Connection connexion = null;
@@ -1196,8 +1187,10 @@ public class WBservices {
 								personneinteresse, activite.getId());
 						serveurmethode
 								.gcmUpdateNbrSuggestion(personneinteresse);
-					
-						PushNotifictionHelper.sendPushNotificationSuggestionList(personneinteresse,activite);
+
+						PushNotifictionHelper
+								.sendPushNotificationSuggestionList(
+										personneinteresse, activite);
 
 					} catch (SQLException | NamingException e1) {
 						// TODO Auto-generated catch block
@@ -1465,8 +1458,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceParticipation(int idDemandeur,int idAeffacer, int idactivite,
-		  String jeton) {
+	public static MessageServeur effaceParticipation(int idDemandeur,
+			int idAeffacer, int idactivite, String jeton) {
 
 		long debut = System.currentTimeMillis();
 
@@ -1489,8 +1482,7 @@ public class WBservices {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 			if (activite.isTerminee())
 				return new MessageServeur(false, "Activité terminéee");
-				
-			
+
 			Droit droit = new PersonneDAO(connexion).getDroit(idDemandeur,
 					jeton);
 
@@ -1530,8 +1522,9 @@ public class WBservices {
 
 			messagedao.addMessageByAct(message, listepersonne);
 			participationdao.RemoveParticipation(idAeffacer, idactivite,
-					activite.getIdorganisateur());// Efface la particiaption attention a
-									// l'orrde.
+					activite.getIdorganisateur());// Efface la particiaption
+													// attention a
+			// l'orrde.
 			new ActiviteDAO(connexion).updateChampCalcule(idactivite);
 
 			new Thread(new Runnable() {
@@ -1586,8 +1579,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceActivite(int idorganisateur, int idactivite,
-			String jeton) {
+	public static MessageServeur effaceActivite(int idorganisateur,
+			int idactivite, String jeton) {
 
 		long debut = System.currentTimeMillis();
 
@@ -1608,7 +1601,7 @@ public class WBservices {
 
 			if (activite.isTerminee())
 				return new MessageServeur(false, "L'activite est terminée");
-		
+
 			Droit droit = new PersonneDAO(connexion).getDroit(idorganisateur,
 					jeton);
 
@@ -1932,7 +1925,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceAmi(int idpersonne, int idami, String jeton) {
+	public static MessageServeur effaceAmi(int idpersonne, int idami,
+			String jeton) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -1997,8 +1991,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceMessageEmisByAct(int idpersonne, int idmessage,
-			String jeton) {
+	public static MessageServeur effaceMessageEmisByAct(int idpersonne,
+			int idmessage, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -2056,7 +2050,7 @@ public class WBservices {
 
 	}
 
-	public  MessageServeur effaceMessageEmis(int idpersonne, int idmessage,
+	public MessageServeur effaceMessageEmis(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -2221,8 +2215,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
-			int idactivite, String jeton) {
+	public static MessageServeur acquitMessageDiscussionByAct(
+			int iddestinataire, int idactivite, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
 		long debut = System.currentTimeMillis();
@@ -2282,7 +2276,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitAllNotification(int idpersonne, String jeton) {
+	public static MessageServeur acquitAllNotification(int idpersonne,
+			String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire
 		long debut = System.currentTimeMillis();
@@ -2404,8 +2399,8 @@ public class WBservices {
 
 	}
 
-	public  static MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
-			String jeton) {
+	public static MessageServeur acquitMessageByAct(int idpersonne,
+			int idmessage, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -2463,16 +2458,11 @@ public class WBservices {
 		try {
 			connexion = CxoPool.getConnection();
 
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idpersonne, jeton);
-
-			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return autorisation;
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
 			}
 
 			NotificationDAO notificationdao = new NotificationDAO(connexion);
@@ -2514,22 +2504,20 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur addParticipation(int iddemandeur, int idorganisateur,
-			int idactivite, String jeton) {
+	public static MessageServeur addParticipation(int iddemandeur,
+			int idorganisateur, int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
-	
+
 			if (iddemandeur == idorganisateur)
 				return new MessageServeur(false,
 						LibelleMessage.infoParticpationActivite);
-			
+
 			connexion = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			Activite activite = activitedao.getActivite(idactivite);
 
-			
-				
 			Droit droit = new PersonneDAO(connexion).getDroit(iddemandeur,
 					jeton);
 
@@ -2544,10 +2532,10 @@ public class WBservices {
 
 			if (activite == null)
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
-			
+
 			if (activite.isTerminee())
 				return new MessageServeur(false, "Activité terminéee");
-		
+
 			if (activite.isComplete())
 				return new MessageServeur(false,
 						LibelleMessage.activiteComplete);
@@ -2714,10 +2702,6 @@ public class WBservices {
 
 	}
 
-	public static void genereJeu() {
-
-	}
-
 	public MessageServeur updateProfilWayd(String photostr, String nom,
 			String prenom, String datenaissancestr, int sexe,
 			String commentaire, int idpersonne, boolean afficheage,
@@ -2730,17 +2714,10 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 			// SECURITE*************************************
 			PersonneDAO personnedao = new PersonneDAO(connexion);
-
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idpersonne, jeton);
-
-			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return autorisation;
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
 			}
 
 			// ******************************************************
@@ -2762,10 +2739,10 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur updatePseudo(String pseudo, Long datenaissance,
-			int sexe, int idpersonne, String jeton) {
+	public static MessageServeur updatePseudo(String pseudo,
+			Long datenaissance, int sexe, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
-		
+
 		Connection connexion = null;
 		String lowerpseudo = pseudo.toLowerCase();
 
@@ -2820,13 +2797,22 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
+
+			// **************Securité
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+			// ****************************************
 			NotificationDAO notificationdao = new NotificationDAO(connexion);
 			notificationdao.addNotificationFromAvis(idpersonne);
 
 			System.out.println(formatDate.format(new Date())
 					+ ";UpdateNotification;"
 					+ (System.currentTimeMillis() - debut) + "ms");
-			
+
 			new Thread(new Runnable() {
 
 				@Override
@@ -2847,8 +2833,7 @@ public class WBservices {
 
 				}
 			}).start();
-			
-			
+
 			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2859,21 +2844,34 @@ public class WBservices {
 		}
 	}
 
-	public static MessageServeur updateNotificationPref(int idpersonne, String jeton,boolean notification) {
+	public static MessageServeur updateNotificationPref(int idpersonne,
+			String jeton, boolean notification) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
 
 			connexion = CxoPool.getConnection();
+
+			Droit droit = new PersonneDAO(connexion)
+					.getDroit(idpersonne, jeton);
+
+			if (droit == null)
+				return new MessageServeur(false, LibelleMessage.pasReconnu);
+
+			MessageServeur autorisation = droit.isDefautAccess();
+
+			if (!autorisation.isReponse()) {
+				return autorisation;
+			}
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			personneDAO.updateNotificationPref(idpersonne,notification);
+
+			personneDAO.updateNotificationPref(idpersonne, notification);
 
 			System.out.println(formatDate.format(new Date())
 					+ ";UpdateNotification;"
 					+ (System.currentTimeMillis() - debut) + "ms");
-			
-	
-			
+
 			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2884,7 +2882,6 @@ public class WBservices {
 		}
 	}
 
-	
 	public MessageServeur updatePosition(int idpersonne, String latitudestr,
 			String longitudestr) {
 		long debut = System.currentTimeMillis();
@@ -2939,10 +2936,11 @@ public class WBservices {
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			Droit droit = personnedao.getDroit(idpersonne, jeton);
-			ParticipationDAO participationDAO= new ParticipationDAO(connexion);
-			
-			ArrayList<Personne> listpersonne=participationDAO.getListPartipantActiviteExpect(idactivite, idpersonne);
-			
+			ParticipationDAO participationDAO = new ParticipationDAO(connexion);
+
+			ArrayList<Personne> listpersonne = participationDAO
+					.getListPartipantActiviteExpect(idactivite, idpersonne);
+
 			if (droit == null)
 				return new MessageServeur(false, LibelleMessage.pasReconnu);
 
@@ -2956,8 +2954,6 @@ public class WBservices {
 			activitedao.updateActivite(idpersonne, libelle, titre, idactivite,
 					nbrmax);
 
-			
-			
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -2965,13 +2961,14 @@ public class WBservices {
 					Connection connexionGcm = null;
 					try {
 						connexionGcm = CxoPool.getConnection();
-					
 
 						new ServeurMethodes(connexionGcm)
 								.envoiAndroidUpdateActivite(listpersonne,
-										idactivite);// envoi la mise à jour à tous les participants sauf l'organisateur
+										idactivite);// envoi la mise à jour à
+													// tous les participants
+													// sauf l'organisateur
 						// sa mise à jour est en local.
-						
+
 					} catch (SQLException | NamingException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -2980,10 +2977,7 @@ public class WBservices {
 					}
 				}
 			}).start();
-			
-			
-			
-			
+
 			System.out.println(formatDate.format(new Date())
 					+ ";UpdateActivite;" + (System.currentTimeMillis() - debut)
 					+ "ms");
@@ -3006,25 +3000,16 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 			// SECURITE*************************************
 			PersonneDAO personnedao = new PersonneDAO(connexion);
-
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idpersonne, jeton);
-
-			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return autorisation;
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
 			}
 
 			// ******************************************************
 
-		
 			personnedao.updateGCM(idpersonne, gcm);
-			
-			
+
 			System.out.println(formatDate.format(new Date()) + ";updateGCM;"
 					+ (System.currentTimeMillis() - debut) + "ms");
 			return new MessageServeur(true, LibelleMessage.profilMisAjour);
@@ -3038,14 +3023,21 @@ public class WBservices {
 
 	}
 
-	public static Profil getFullProfil(int idpersonne) {
+	public static Profil getFullProfil(int iddemandeur, int idpersonne,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		try {
 			connexion = CxoPool.getConnection();
-			PersonneDAO personnedao = new PersonneDAO(connexion);
-			Profil profil = personnedao.getFullProfil(idpersonne);
+
+			// ************************************Securite
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+			// ************************************
+
+			Profil profil = personneDAO.getFullProfil(idpersonne);
 			System.out.println(formatDate.format(new Date())
 					+ ";getFullProfil;" + (System.currentTimeMillis() - debut)
 					+ "ms");
@@ -3190,17 +3182,17 @@ public class WBservices {
 		return nbractivite;
 	}
 
-	public void tesgcm(String gmcToken){
-		
+	public void tesgcm(String gmcToken) {
+
 		try {
 			PushNotifictionHelper.sendPushNotificationTo(gmcToken);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public int test_getPremierId() {
 
 		Connection connexion = null;
