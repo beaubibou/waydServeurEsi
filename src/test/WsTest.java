@@ -162,7 +162,7 @@ public class WsTest {
 		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
 
 		assertTrue(preferences != null);
-		assertTrue(preferences.length == 0);
+		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 
@@ -480,7 +480,7 @@ public class WsTest {
 		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
 
 		assertTrue(preferences != null);
-		assertTrue(preferences.length == 0);
+		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 
@@ -998,7 +998,7 @@ public class WsTest {
 		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
 
 		assertTrue(preferences != null);
-		assertTrue(preferences.length == 0);
+		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 

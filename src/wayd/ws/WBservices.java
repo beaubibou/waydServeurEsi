@@ -406,8 +406,11 @@ public class WBservices {
 
 			// ************************************
 			PreferenceDAO preferencedao = new PreferenceDAO(connexion);
+		
+			
 			retour = preferencedao.getLisPreferences(idpersonne);
-
+	
+		
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
