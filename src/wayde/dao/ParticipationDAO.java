@@ -153,7 +153,7 @@ public class ParticipationDAO {
 
 	
 
-	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws Exception {
+	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws SQLException  {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
@@ -199,7 +199,7 @@ public class ParticipationDAO {
 
 	
 	
-	public  ArrayList<Personne> getListPartipantActiviteExpect(int idactivite,int idexpect) throws Exception {
+	public  ArrayList<Personne> getListPartipantActiviteExpect(int idactivite,int idexpect) throws SQLException  {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();

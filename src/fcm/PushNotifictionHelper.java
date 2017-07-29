@@ -18,15 +18,12 @@ import org.json.JSONObject;
 import wayde.bean.Activite;
 import wayde.bean.Personne;
 
-import com.google.gson.JsonArray;
-
 public class PushNotifictionHelper {
 	public final static String AUTH_KEY_FCM = ServeurMethodes.key_gcm;
 	public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
 	public static Map<Integer, String> mTypeActivite;
 	static {
 		mTypeActivite = new HashMap<Integer, String>();
-
 		mTypeActivite.put(1, "ic_barrestorond");
 		mTypeActivite.put(2, "ic_sportrnd");
 		mTypeActivite.put(3, "ic_expositionrnd");
@@ -160,7 +157,6 @@ public class PushNotifictionHelper {
 	}
 	
 	public static ArrayList<String> getListGCMNotification(ArrayList<Personne> listpersonne) {
-
 		
 		ArrayList<String> listgcm = new ArrayList<String>();
 		for (Personne pers : listpersonne) {

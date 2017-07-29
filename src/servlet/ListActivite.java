@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
-import website.dao.TypeActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.FiltreJSP;
 import website.metier.Outils;
 import website.metier.Pagination;
-import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class ListActivite

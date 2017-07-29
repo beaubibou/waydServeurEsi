@@ -739,7 +739,7 @@ public class WsTest {
 		assertTrue(listDiscussion.length == 1);
 
 		// Terminie l'activite
-		new ActiviteDAO(connexion).terminerActivite(idactivite);
+		 ActiviteDAO.terminerActivite(idactivite);
 
 		// Pause terminer une activite revient à la mettre à la date du jour.
 		// On fait une pause avant de lancer la mise à jour des notifications.
@@ -1216,7 +1216,7 @@ public class WsTest {
 		assertTrue(listDiscussion.length == 1);
 
 		// Terminie l'activite
-		new ActiviteDAO(connexion).terminerActivite(idactivite);
+		 ActiviteDAO.terminerActivite(idactivite);
 
 		// Pause terminer une activite revient à la mettre à la date du jour.
 		// On fait une pause avant de lancer la mise à jour des notifications.

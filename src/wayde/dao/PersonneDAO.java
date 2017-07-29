@@ -450,7 +450,7 @@ public class PersonneDAO {
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom, String gcmToken) throws Exception,
+			String photostr, String nom, String gcmToken) throws 
 			SQLException {
 
 		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
