@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
 
@@ -18,6 +21,7 @@ public class ParticipationDAO {
 	final int ATTENTE_REPONSE=0;
 	final int ACCEPT_AMI=1;
 	final int REFUSE_AMI=0;
+	private static final Logger LOG = Logger.getLogger(ParticipationDAO.class);
 
 	Connection connexion;
 
