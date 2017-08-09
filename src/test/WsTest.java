@@ -177,9 +177,7 @@ public class WsTest {
 
 		// Recupere sa nottaton
 
-		InfoNotation infoNotation = WBservices.getInfoNotation(idpersonne);
-		assertTrue(infoNotation != null);
-
+	
 		// Recupere ses avis
 		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);
 		assertTrue(listAvis != null);
@@ -495,9 +493,7 @@ public class WsTest {
 
 		// Recupere sa nottaton
 
-		InfoNotation infoNotation = WBservices.getInfoNotation(idpersonne);
-		assertTrue(infoNotation != null);
-
+	
 		// Recupere ses avis
 		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);
 		assertTrue(listAvis != null);
@@ -1012,9 +1008,6 @@ public class WsTest {
 		assertTrue(listAmi != null);
 
 		// Recupere sa nottaton
-
-		InfoNotation infoNotation = WBservices.getInfoNotation(idpersonne);
-		assertTrue(infoNotation != null);
 
 		// Recupere ses avis
 		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);

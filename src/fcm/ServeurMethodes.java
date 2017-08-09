@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnSuccessListener;
 
 public class ServeurMethodes {
-	static String key_gcm = "AIzaSyC_BMfY8tNRB0pjv_tXFevIcwdz-8cALE8";
+	static String key_gcm = "AIzaSyCpwBa7gclZ9H1oRi0jRZ-tVj2nTWfnrRI";
 
 	Connection connexion;
 

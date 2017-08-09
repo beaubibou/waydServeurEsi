@@ -262,47 +262,7 @@ public class WBservices {
 
 	}
 
-	public static InfoNotation getInfoNotation(int idpersonne) {
-		// System.out.println("Cherche notation de " + idpersonne);
-
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-
-		String requete = " SELECT (SELECT round(AVG(note),1) FROM noter where idpersonnenotee=? and fait=true) as moyenne"
-				+ " ,	(SELECT COUNT(*) FROM noter where idpersonnenotee=? and fait=true) as total";
-
-		PreparedStatement preparedStatement;
-		try {
-			connexion = CxoPool.getConnection();
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.setInt(1, idpersonne);
-			preparedStatement.setInt(2, idpersonne);
-			// preparedStatement.executeQuery();
-			ResultSet rs = preparedStatement.executeQuery();
-			int totalavis = 0;
-			double moyenne = 0;
-			while (rs.next()) {
-				moyenne = rs.getDouble("moyenne");
-				totalavis = rs.getInt("total");
-			}
-
-			preparedStatement.close();
-			rs.close();
-			// System.out.println("Trouve notation" + idpersonne);
-			// Stats.nbRequete++;
-			String loginfo = "getInfoNotation - " + (System.currentTimeMillis() - debut) + "ms";
-			LOG.info(loginfo);
-			return new InfoNotation(totalavis, moyenne);
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		return null;
-
-	}
+	
 
 	public Message[] getListMessageNonLu(int idpersonne) {
 
