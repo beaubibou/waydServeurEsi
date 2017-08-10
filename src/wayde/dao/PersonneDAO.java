@@ -516,17 +516,17 @@ public class PersonneDAO {
 		return cle;
 	}
 
-	public int TestaddCompteGenerique() throws Exception, SQLException {
+	public int TestaddCompteGenerique(long jeton) throws Exception, SQLException {
 		Date datecreation = Calendar.getInstance().getTime();
 		String requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion)"
 				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		String commentaire = " ";
 
-		String nom = "Waydeur" + System.currentTimeMillis();
-		String pseudo = "login" + System.currentTimeMillis();
-		String iduser = "iduser" + System.currentTimeMillis();
-		String idtoken = "token" + System.currentTimeMillis();
+		String nom = "Waydeur" + jeton;
+		String pseudo = "login" + jeton;
+		String iduser = "iduser" +jeton;
+		String idtoken = "jeton"+jeton;
 		Random ran = new Random();
 		double te = (ran.nextInt(8000) + 42000);
 		// double te = (ran.nextInt(200) + 43700);

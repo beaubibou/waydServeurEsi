@@ -2570,9 +2570,7 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 		try {
 			connexion = CxoPool.getConnection();
-			System.out.println(formatDate.format(new Date()) + ";*******************creation personne;"
-					+ (System.currentTimeMillis() - debut) + "ms");
-
+			
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 
 			Personne personne = personnedao.getPersonneJeton(idtoken);// Recherche
@@ -2803,14 +2801,14 @@ public class WBservices {
 
 	}
 
-	public void test_addCompte() {
+	public int test_addCompte(long jeton) {
 		Connection connexion = null;
 
 		try {
 			// for (int f=0;f<500;f++)
 			connexion = CxoPool.getConnection();
 			PersonneDAO personnedao = new PersonneDAO(connexion);
-			personnedao.TestaddCompteGenerique();
+			return personnedao.TestaddCompteGenerique(jeton);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -2823,6 +2821,7 @@ public class WBservices {
 			CxoPool.closeConnection(connexion);
 		}
 
+		return 0;
 	}
 
 	public MessageServeur signalerActivite(int idpersonne, int idactivite, int idmotif, String motif, String titre,
