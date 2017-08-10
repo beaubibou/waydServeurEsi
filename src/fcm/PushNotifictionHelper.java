@@ -13,14 +13,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
+import wayd.ws.WBservices;
 import wayde.bean.Activite;
 import wayde.bean.Personne;
 
 public class PushNotifictionHelper {
 	public final static String AUTH_KEY_FCM = ServeurMethodes.key_gcm;
 	public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
+	private static final Logger LOG = Logger.getLogger(PushNotifictionHelper.class);
+
+	
+	
 	public static Map<Integer, String> mTypeActivite;
 	static {
 		mTypeActivite = new HashMap<Integer, String>();
@@ -40,7 +46,11 @@ public class PushNotifictionHelper {
 			throws IOException {
 
 		ArrayList<String> listpersonneGcm =getListGCMNotification(listpersonne);
-
+	
+		String loginfo = "sendPushNotificationSuggestionList - Taille list personne GCMinterresee " +listpersonneGcm.size() ;
+		LOG.info(loginfo);
+		
+		if (listpersonneGcm.isEmpty())return "";
 		String result = "";
 		URL url = new URL(API_URL_FCM);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -70,10 +80,10 @@ public class PushNotifictionHelper {
 		int dureeNotification = (int) (activite.datefin.getTime() - new Date()
 				.getTime()) / 1000;
 
-		System.out.println("dureeenot"+dureeNotification);
+		//System.out.println("dureeenot"+dureeNotification);
 		data.put("time_to_live", dureeNotification);
 		json.put("data", data); // Notification
-
+		
 		try {
 			OutputStreamWriter wr = new OutputStreamWriter(
 					conn.getOutputStream());

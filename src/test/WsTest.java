@@ -50,7 +50,6 @@ public class WsTest {
 	static final String libelleActivite = "Activite test";
 	static Connection connexion;
 
-
 	@Before
 	public void init() throws SQLException {
 		connexion = null;
@@ -92,7 +91,7 @@ public class WsTest {
 
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "delete from message";
 		preparedStatement = connexion.prepareStatement(requete);
 
@@ -159,32 +158,33 @@ public class WsTest {
 
 		// recupere ses préférences
 
-		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
+		Preference[] preferences = WBservices.getListPreferences(idpersonne,
+				idpersonne, token);
 
 		assertTrue(preferences != null);
 		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 
-		Profil profil = WBservices.getFullProfil(idpersonne,idpersonne,token);
+		Profil profil = WBservices.getFullProfil(idpersonne, idpersonne, token);
 		assertTrue(profil != null);
 		assertTrue(profil.getId() == idpersonne);
 
 		// Recupere ami
 
-		Ami[] listAmi = WBservices.getListAmi(idpersonne,idpersonne,token);
+		Ami[] listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
 
 		// Recupere sa nottaton
 
-	
 		// Recupere ses avis
-		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);
+		Avis[] listAvis = WBservices.getListAvis(idpersonne, idpersonne, token);
 		assertTrue(listAvis != null);
 		assertTrue(listAvis.length == 0);
 
 		// Recupere ses discussion
-		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,idpersonne,token);
+		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,
+				idpersonne, token);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 0);
 
@@ -194,13 +194,12 @@ public class WsTest {
 		assertTrue(tableauBord != null);
 		assertTrue(tableauBord.getNbractiviteencours() == 0);
 
-		
-		MessageServeur messageServeur =null;
+		MessageServeur messageServeur = null;
 
 		// Recueper les activité en cours
 
-		Activite[] activiteEnCours = WBservices
-				.getMesActiviteEncours(idpersonne,idpersonne,token);
+		Activite[] activiteEnCours = WBservices.getMesActiviteEncours(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 0);
 
@@ -212,8 +211,8 @@ public class WsTest {
 
 		// Recueper les activité archivées
 
-		Activite[] activiteArchies = WBservices
-				.getMesActiviteArchive(idpersonne,idpersonne,token);
+		Activite[] activiteArchies = WBservices.getMesActiviteArchive(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteArchies != null);
 		assertTrue(activiteArchies.length == 0);
 
@@ -240,13 +239,15 @@ public class WsTest {
 
 		// Verifie le nbr activite en cours
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
 		// Récupere le detail activité
 
-		Activite activite = WBservices.getActivite(idpersonne, idactivite,token);
+		Activite activite = WBservices.getActivite(idpersonne, idactivite,
+				token);
 
 		assertTrue(activite != null);
 		assertTrue(activite.getId() == idactivite);
@@ -254,7 +255,8 @@ public class WsTest {
 
 		// Récupere la liste des participants
 
-		Participant[] participants = WBservices.getListParticipant(idpersonne,idactivite,token);
+		Participant[] participants = WBservices.getListParticipant(idpersonne,
+				idactivite, token);
 		assertTrue(participants != null);
 		assertTrue(participants.length == 1);
 
@@ -267,7 +269,7 @@ public class WsTest {
 
 		// Verifie la mise à jour
 
-		activite = WBservices.getActivite(idpersonne, idactivite,token);
+		activite = WBservices.getActivite(idpersonne, idactivite, token);
 		assertTrue(activite != null);
 		assertTrue(activite.getId() == idactivite);
 		assertTrue(activite.getIdorganisateur() == idpersonne);
@@ -287,7 +289,7 @@ public class WsTest {
 		// Recupere les discussions de l'activité
 
 		Message[] messages = WBservices.getDiscussionByAct(idpersonne,
-				idactivite,token);
+				idactivite, token);
 		assertTrue(messages != null);
 		assertTrue(messages.length == 1);
 
@@ -297,13 +299,14 @@ public class WsTest {
 
 		// Verifie son l'effacement du message effacement
 
-		messages = WBservices.getDiscussionByAct(idpersonne, idactivite,token);
+		messages = WBservices.getDiscussionByAct(idpersonne, idactivite, token);
 		assertTrue(messages != null);
 		assertTrue(messages.length == 0);
 
 		// Verifie le nombre d'activité en cours 1 seule
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -349,25 +352,28 @@ public class WsTest {
 
 		// Verifie le nombre de participant
 
-		participants = WBservices.getListParticipant(idpersonne,idactivite,token);
+		participants = WBservices.getListParticipant(idpersonne, idactivite,
+				token);
 		assertTrue(participants != null);
 		assertTrue(participants.length == 2);
 
 		// Verifie le nombre de participant de l'activité
-		activite = WBservices.getActivite(idpersonne, idactivite,token);
+		activite = WBservices.getActivite(idpersonne, idactivite, token);
 
 		assertTrue(activite != null);
 		assertTrue(activite.getNbrparticipant() == 2);
 
 		// Recupere la list des activite de l'oragisateur
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
 		// Recupere la list des activites du participant
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -382,7 +388,8 @@ public class WsTest {
 
 		// Le participant récupere la discussion de l'activité.
 
-		messages = WBservices.getDiscussionByAct(idparticipant, idactivite,token1);
+		messages = WBservices.getDiscussionByAct(idparticipant, idactivite,
+				token1);
 		assertTrue(messages != null);
 
 		// acquit le message
@@ -404,7 +411,8 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie que le participant à une discussion
-		listDiscussion = WBservices.getListDiscussion(idparticipant,idparticipant,token1);
+		listDiscussion = WBservices.getListDiscussion(idparticipant,
+				idparticipant, token1);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 1);
 
@@ -416,7 +424,8 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie que le participant n'a plus de discussion
-		listDiscussion = WBservices.getListDiscussion(idparticipant,idparticipant,token1);
+		listDiscussion = WBservices.getListDiscussion(idparticipant,
+				idparticipant, token1);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 0);
 
@@ -475,32 +484,33 @@ public class WsTest {
 
 		// recupere ses préférences
 
-		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
+		Preference[] preferences = WBservices.getListPreferences(idpersonne,
+				idpersonne, token);
 
 		assertTrue(preferences != null);
 		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 
-		Profil profil = WBservices.getFullProfil(idpersonne,idpersonne,token);
+		Profil profil = WBservices.getFullProfil(idpersonne, idpersonne, token);
 		assertTrue(profil != null);
 		assertTrue(profil.getId() == idpersonne);
 
 		// Recupere ami
 
-		Ami[] listAmi = WBservices.getListAmi(idpersonne,idpersonne,token);
+		Ami[] listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
 
 		// Recupere sa nottaton
 
-	
 		// Recupere ses avis
-		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);
+		Avis[] listAvis = WBservices.getListAvis(idpersonne, idpersonne, token);
 		assertTrue(listAvis != null);
 		assertTrue(listAvis.length == 0);
 
 		// Recupere ses discussion
-		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,idpersonne,token);
+		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,
+				idpersonne, token);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 0);
 
@@ -515,8 +525,8 @@ public class WsTest {
 
 		// Recueper les activité en cours
 
-		Activite[] activiteEnCours = WBservices
-				.getMesActiviteEncours(idpersonne,idpersonne,token);
+		Activite[] activiteEnCours = WBservices.getMesActiviteEncours(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 0);
 
@@ -528,8 +538,8 @@ public class WsTest {
 
 		// Recueper les activité archivées
 
-		Activite[] activiteArchies = WBservices
-				.getMesActiviteArchive(idpersonne,idpersonne,token);
+		Activite[] activiteArchies = WBservices.getMesActiviteArchive(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteArchies != null);
 		assertTrue(activiteArchies.length == 0);
 
@@ -556,13 +566,15 @@ public class WsTest {
 
 		// Verifie le nbr activite en cours
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
 		// Récupere le detail activité
 
-		Activite activite = WBservices.getActivite(idpersonne, idactivite,token);
+		Activite activite = WBservices.getActivite(idpersonne, idactivite,
+				token);
 
 		assertTrue(activite != null);
 		assertTrue(activite.getId() == idactivite);
@@ -570,7 +582,8 @@ public class WsTest {
 
 		// Récupere la liste des participants
 
-		Participant[] participants = WBservices.getListParticipant(idpersonne,idactivite,token);
+		Participant[] participants = WBservices.getListParticipant(idpersonne,
+				idactivite, token);
 		assertTrue(participants != null);
 		assertTrue(participants.length == 1);
 
@@ -583,7 +596,7 @@ public class WsTest {
 
 		// Verifie la mise à jour
 
-		activite = WBservices.getActivite(idpersonne, idactivite,token);
+		activite = WBservices.getActivite(idpersonne, idactivite, token);
 		assertTrue(activite != null);
 		assertTrue(activite.getId() == idactivite);
 		assertTrue(activite.getIdorganisateur() == idpersonne);
@@ -603,7 +616,7 @@ public class WsTest {
 		// Recupere les discussions de l'activité
 
 		Message[] messages = WBservices.getDiscussionByAct(idpersonne,
-				idactivite,token);
+				idactivite, token);
 		assertTrue(messages != null);
 		assertTrue(messages.length == 1);
 
@@ -613,13 +626,14 @@ public class WsTest {
 
 		// Verifie son l'effacement du message effacement
 
-		messages = WBservices.getDiscussionByAct(idpersonne, idactivite,token);
+		messages = WBservices.getDiscussionByAct(idpersonne, idactivite, token);
 		assertTrue(messages != null);
 		assertTrue(messages.length == 0);
 
 		// Verifie le nombre d'activité en cours 1 seule
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -662,38 +676,44 @@ public class WsTest {
 				idactivite, token1);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
-		
-		// Verifie le nombre d'activite en cours pour chacun doit être égale à un pour les 2
-		
-		Activite[] listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+
+		// Verifie le nombre d'activite en cours pour chacun doit être égale à
+		// un pour les 2
+
+		Activite[] listActiviteEncours = WBservices.getMesActiviteEncours(
+				idpersonne, idpersonne, token);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==1);	
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteEncours.length == 1);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==1);	
+		assertTrue(listActiviteEncours.length == 1);
 
 		// Verifie le nombre de participant
 
-		participants = WBservices.getListParticipant(idpersonne,idactivite,token);
+		participants = WBservices.getListParticipant(idpersonne, idactivite,
+				token);
 		assertTrue(participants != null);
 		assertTrue(participants.length == 2);
 
 		// Verifie le nombre de participant de l'activité
-		activite = WBservices.getActivite(idpersonne, idactivite,token);
+		activite = WBservices.getActivite(idpersonne, idactivite, token);
 
 		assertTrue(activite != null);
 		assertTrue(activite.getNbrparticipant() == 2);
 
 		// Recupere la list des activite de l'oragisateur
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
 		// Recupere la list des activites du participant
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -708,7 +728,8 @@ public class WsTest {
 
 		// Le participant récupere la discussion de l'activité.
 
-		messages = WBservices.getDiscussionByAct(idparticipant, idactivite,token1);
+		messages = WBservices.getDiscussionByAct(idparticipant, idactivite,
+				token1);
 		assertTrue(messages != null);
 
 		// acquit le message
@@ -730,34 +751,37 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie que le participant à une discussion
-		listDiscussion = WBservices.getListDiscussion(idparticipant,idparticipant,token1);
+		listDiscussion = WBservices.getListDiscussion(idparticipant,
+				idparticipant, token1);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 1);
 
 		// Terminie l'activite
-		 ActiviteDAO.terminerActivite(idactivite);
+		ActiviteDAO.terminerActivite(idactivite);
 
 		// Pause terminer une activite revient à la mettre à la date du jour.
 		// On fait une pause avant de lancer la mise à jour des notifications.
-		
+
 		// On essaie d'envyer un message - Il ne sont pas ami
-			
-		retourMessage=WBservices.addMessage(idpersonne, "message", idparticipant, token);
+
+		retourMessage = WBservices.addMessage(idpersonne, "message",
+				idparticipant, token);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()==RetourMessage.PLUS_SON_AMI);	
-			
-		retourMessage=WBservices.addMessage(idparticipant, "message", idpersonne, token1);
+		assertTrue(retourMessage.getId() == RetourMessage.PLUS_SON_AMI);
+
+		retourMessage = WBservices.addMessage(idparticipant, "message",
+				idpersonne, token1);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()==RetourMessage.PLUS_SON_AMI);	
-	
+		assertTrue(retourMessage.getId() == RetourMessage.PLUS_SON_AMI);
+
 		// met à jour les notifications (demande de notation)
 		messageServeur = WBservices.updateNotification(idpersonne, token);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie la creation de la notation pour l'orgainsateur
-		Notification[] listNotification = WBservices
-				.getListNotification(idpersonne,idpersonne,token);
+		Notification[] listNotification = WBservices.getListNotification(
+				idpersonne, idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 1);
 
@@ -770,7 +794,8 @@ public class WsTest {
 
 		// met à jour les notifications (demande de notation) pour le
 		// participant
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 1);
 
@@ -791,11 +816,13 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Le participant et l'oranisateur ont maintenant 2 notifications
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 2);
 
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 2);
 
@@ -814,7 +841,8 @@ public class WsTest {
 
 		// efface de toutes les notifications de l'organisteur
 
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 
 		for (Notification notification : listNotification) {
 
@@ -824,16 +852,17 @@ public class WsTest {
 			assertTrue(messageServeur.isReponse());
 
 		}
-		
-		// Verifie l'effacement
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
-		assertTrue(listNotification != null);
-		assertTrue(listNotification.length==0);
 
+		// Verifie l'effacement
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
+		assertTrue(listNotification != null);
+		assertTrue(listNotification.length == 0);
 
 		// efface de toutes les notifications du participant
 
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 
 		for (Notification notification : listNotification) {
 
@@ -843,97 +872,99 @@ public class WsTest {
 			assertTrue(messageServeur.isReponse());
 
 		}
-		
+
 		// Verifie l'effacement
-		
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 		assertTrue(listNotification != null);
-		assertTrue(listNotification.length==0);
-		
+		assertTrue(listNotification.length == 0);
+
 		// Verifie pas de messages au départ.
-	
-		messages= WBservices.getDiscussion(idpersonne, idparticipant,token);
+
+		messages = WBservices.getDiscussion(idpersonne, idparticipant, token);
 		assertTrue(messages != null);
-		assertTrue(messages.length==0);	
-		
-		messages= WBservices.getDiscussion( idparticipant,idpersonne,token1);
+		assertTrue(messages.length == 0);
+
+		messages = WBservices.getDiscussion(idparticipant, idpersonne, token1);
 		assertTrue(messages != null);
-		assertTrue(messages.length==0);	
-		
-		// Envoi de message 
-		
-		retourMessage=WBservices.addMessage(idpersonne, "message", idparticipant, token);
+		assertTrue(messages.length == 0);
+
+		// Envoi de message
+
+		retourMessage = WBservices.addMessage(idpersonne, "message",
+				idparticipant, token);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()>0);	
-			
-		
-		retourMessage=WBservices.addMessage(idparticipant, "message", idpersonne, token1);
+		assertTrue(retourMessage.getId() > 0);
+
+		retourMessage = WBservices.addMessage(idparticipant, "message",
+				idpersonne, token1);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()>0);	
-		
-		
+		assertTrue(retourMessage.getId() > 0);
+
 		// Verifie le nobmr de message 2 au total (1 envoye 1 recu).
-		messages= WBservices.getDiscussion(idpersonne, idparticipant,token);
+		messages = WBservices.getDiscussion(idpersonne, idparticipant, token);
 		assertTrue(messages != null);
-		assertTrue(messages.length==2);	
-		
-		messages= WBservices.getDiscussion( idparticipant,idpersonne,token1);
+		assertTrue(messages.length == 2);
+
+		messages = WBservices.getDiscussion(idparticipant, idpersonne, token1);
 		assertTrue(messages != null);
-		assertTrue(messages.length==2);	
-		
-	
-		messageServeur=WBservices.acquitMessageDiscussion(idpersonne, idparticipant, token);
-		messageServeur=WBservices.acquitMessageDiscussion(idparticipant, idpersonne, token1);
-			
-		
+		assertTrue(messages.length == 2);
+
+		messageServeur = WBservices.acquitMessageDiscussion(idpersonne,
+				idparticipant, token);
+		messageServeur = WBservices.acquitMessageDiscussion(idparticipant,
+				idpersonne, token1);
+
 		// Regarde ses archives
-		
-		Activite[] listActiviteArchives=WBservices.getMesActiviteArchive(idpersonne,idpersonne,token);
+
+		Activite[] listActiviteArchives = WBservices.getMesActiviteArchive(
+				idpersonne, idpersonne, token);
 		assertTrue(listActiviteArchives != null);
-		assertTrue(listActiviteArchives.length==1);	
-		
-		listActiviteArchives=WBservices.getMesActiviteArchive(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteArchives.length == 1);
+
+		listActiviteArchives = WBservices.getMesActiviteArchive(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteArchives != null);
-		assertTrue(listActiviteArchives.length==1);	
-		
+		assertTrue(listActiviteArchives.length == 1);
+
 		// Activite en cours ==0
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==0);	
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteEncours.length == 0);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==0);	
-		
-		
+		assertTrue(listActiviteEncours.length == 0);
+
 		// Verifie la liste d'ami
-		
-		listAmi=WBservices.getListAmi(idpersonne,idpersonne,token);
+
+		listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==1);
-		assertTrue(listAmi[0].getId()==idparticipant);	
-		
-		listAmi=WBservices.getListAmi(idparticipant,idparticipant,token1);
+		assertTrue(listAmi.length == 1);
+		assertTrue(listAmi[0].getId() == idparticipant);
+
+		listAmi = WBservices.getListAmi(idparticipant, idparticipant, token1);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==1);
-		assertTrue(listAmi[0].getId()==idpersonne);	
-	
-	 
+		assertTrue(listAmi.length == 1);
+		assertTrue(listAmi[0].getId() == idpersonne);
+
 		// l'effacement d'un ami l'efface des 2 cotes
-		
-		messageServeur=WBservices.effaceAmi(idpersonne, idparticipant, token);
+
+		messageServeur = WBservices.effaceAmi(idpersonne, idparticipant, token);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
-		listAmi=WBservices.getListAmi(idpersonne,idpersonne,token);
+		listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==0);
-	
-		listAmi=WBservices.getListAmi(idparticipant,idparticipant,token1);
+		assertTrue(listAmi.length == 0);
+
+		listAmi = WBservices.getListAmi(idparticipant, idparticipant, token1);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==0);
-		
-		
+		assertTrue(listAmi.length == 0);
+
 		try {
 			connexion.close();
 		} catch (SQLException e) {
@@ -942,15 +973,13 @@ public class WsTest {
 		}
 
 	}
-	
-	
+
 	@Test
 	public void rechercheActivite() throws SQLException, Exception {
 
 		// Test - Creation 2 utilisateurs.
 		// recherce et inscritpion
 
-		
 		TypeActivite[] listTypeActivite = WBservices.getListTypeActivite();
 		assertTrue(listTypeActivite != null);
 		assertTrue(listTypeActivite.length != 0);
@@ -991,31 +1020,33 @@ public class WsTest {
 
 		// recupere ses préférences
 
-		Preference[] preferences = WBservices.getListPreferences(idpersonne,idpersonne,token);
+		Preference[] preferences = WBservices.getListPreferences(idpersonne,
+				idpersonne, token);
 
 		assertTrue(preferences != null);
 		assertTrue(preferences.length == 8);
 
 		// recupere son profil
 
-		Profil profil = WBservices.getFullProfil(idpersonne,idpersonne,token);
+		Profil profil = WBservices.getFullProfil(idpersonne, idpersonne, token);
 		assertTrue(profil != null);
 		assertTrue(profil.getId() == idpersonne);
 
 		// Recupere ami
 
-		Ami[] listAmi = WBservices.getListAmi(idpersonne,idpersonne,token);
+		Ami[] listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
 
 		// Recupere sa nottaton
 
 		// Recupere ses avis
-		Avis[] listAvis = WBservices.getListAvis(idpersonne,idpersonne,token);
+		Avis[] listAvis = WBservices.getListAvis(idpersonne, idpersonne, token);
 		assertTrue(listAvis != null);
 		assertTrue(listAvis.length == 0);
 
 		// Recupere ses discussion
-		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,idpersonne,token);
+		Discussion[] listDiscussion = WBservices.getListDiscussion(idpersonne,
+				idpersonne, token);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 0);
 
@@ -1025,13 +1056,12 @@ public class WsTest {
 		assertTrue(tableauBord != null);
 		assertTrue(tableauBord.getNbractiviteencours() == 0);
 
-	
-		MessageServeur messageServeur =null;
+		MessageServeur messageServeur = null;
 
 		// Recueper les activité en cours
 
-		Activite[] activiteEnCours = WBservices
-				.getMesActiviteEncours(idpersonne,idpersonne,token);
+		Activite[] activiteEnCours = WBservices.getMesActiviteEncours(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 0);
 
@@ -1043,8 +1073,8 @@ public class WsTest {
 
 		// Recueper les activité archivées
 
-		Activite[] activiteArchies = WBservices
-				.getMesActiviteArchive(idpersonne,idpersonne,token);
+		Activite[] activiteArchies = WBservices.getMesActiviteArchive(
+				idpersonne, idpersonne, token);
 		assertTrue(activiteArchies != null);
 		assertTrue(activiteArchies.length == 0);
 
@@ -1060,11 +1090,11 @@ public class WsTest {
 
 		// ********************** Ajoute une activité *******
 
-		String longitudeStr="3";
-		String latitudeStr="42";
+		String longitudeStr = "3";
+		String latitudeStr = "42";
 		messageServeur = WBservices.addActivite("test" + new Date().getTime(),
-				libelleActivite, idpersonne, 90, 1, latitudeStr, longitudeStr, "adresse", 3,
-				90, token);
+				libelleActivite, idpersonne, 90, 1, latitudeStr, longitudeStr,
+				"adresse", 3, 90, token);
 
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
@@ -1073,7 +1103,8 @@ public class WsTest {
 
 		// Verifie le nbr activite en cours
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -1081,11 +1112,10 @@ public class WsTest {
 
 		Activite activite;
 
-		
-
 		// Verifie le nombre d'activité en cours 1 seule
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -1122,52 +1152,92 @@ public class WsTest {
 		assertTrue(participant.isActif());
 		assertFalse(participant.isAdmin());
 
-		// ***************Recherche de l'activité
-		
-		Activite[] listActivite=WBservices.getListActiviteAvenirNocritere(idparticipant,latitudeStr,longitudeStr,1000,"",0);
-		assertTrue(listActivite != null);
-		assertTrue(listActivite.length==1);
 	
+
+		// ***************Recherche de l'activité avec mot clé juste
+		int idtypeactivite = 1;
+		String motcle = libelleActivite;
+
+		Activite[] 	listActivite = WBservices.getListActiviteAvenir(idparticipant,
+				latitudeStr, longitudeStr, 1000, idtypeactivite, motcle, 0,
+				token1);
+		assertTrue(listActivite != null);
+		assertTrue(listActivite.length == 1);
+
+		//
+
+		// ***************Recherche de l'activité avec mot clé faux
+		idtypeactivite = 1;
+		motcle = "totoo";
+
+		listActivite = WBservices.getListActiviteAvenir(idparticipant,
+				latitudeStr, longitudeStr, 1000, idtypeactivite, motcle, 0,
+				token1);
+		assertTrue(listActivite != null);
+		assertTrue(listActivite.length == 0);
 		
+		// ***************Recherche de l'activité avec mavais jeton
+				idtypeactivite = 1;
+				motcle = "totoo";
+
+				listActivite = WBservices.getListActiviteAvenir(idparticipant,
+						latitudeStr, longitudeStr, 1000, idtypeactivite, motcle, 0,
+						token);
+				assertTrue(listActivite == null);
+			
+		
+		
+		// ***************Recherche de l'activité sans critere
+
+		listActivite = WBservices.getListActiviteAvenirNocritere(
+				idparticipant, latitudeStr, longitudeStr, 1000, "", 0, token1);
+		assertTrue(listActivite != null);
+		assertTrue(listActivite.length == 1);
+
 		// Inscription à l'activité
-		
-		
+
 		messageServeur = WBservices.addParticipation(idparticipant, idpersonne,
 				listActivite[0].getId(), token1);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
-		
-		// Verifie le nombre d'activite en cours pour chacun doit être égale à un pour les 2
-		
-		Activite[] listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+
+		// Verifie le nombre d'activite en cours pour chacun doit être égale à
+		// un pour les 2
+
+		Activite[] listActiviteEncours = WBservices.getMesActiviteEncours(
+				idpersonne, idpersonne, token);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==1);	
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteEncours.length == 1);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==1);	
+		assertTrue(listActiviteEncours.length == 1);
 
 		// Verifie le nombre de participant
 
-		Participant[]participants = WBservices.getListParticipant(idpersonne,idactivite,token);
+		Participant[] participants = WBservices.getListParticipant(idpersonne,
+				idactivite, token);
 		assertTrue(participants != null);
 		assertTrue(participants.length == 2);
 
 		// Verifie le nombre de participant de l'activité
-		activite = WBservices.getActivite(idpersonne, idactivite,token);
+		activite = WBservices.getActivite(idpersonne, idactivite, token);
 
 		assertTrue(activite != null);
 		assertTrue(activite.getNbrparticipant() == 2);
 
 		// Recupere la list des activite de l'organisateur
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+		activiteEnCours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
 		// Recupere la list des activites du participant
 
-		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		activiteEnCours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(activiteEnCours != null);
 		assertTrue(activiteEnCours.length == 1);
 
@@ -1182,7 +1252,8 @@ public class WsTest {
 
 		// Le participant récupere la discussion de l'activité.
 
-		Message[] messages = WBservices.getDiscussionByAct(idparticipant, idactivite,token1);
+		Message[] messages = WBservices.getDiscussionByAct(idparticipant,
+				idactivite, token1);
 		assertTrue(messages != null);
 
 		// acquit le message
@@ -1204,34 +1275,37 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie que le participant à une discussion
-		listDiscussion = WBservices.getListDiscussion(idparticipant,idparticipant,token1);
+		listDiscussion = WBservices.getListDiscussion(idparticipant,
+				idparticipant, token1);
 		assertTrue(listDiscussion != null);
 		assertTrue(listDiscussion.length == 1);
 
 		// Terminie l'activite
-		 ActiviteDAO.terminerActivite(idactivite);
+		ActiviteDAO.terminerActivite(idactivite);
 
 		// Pause terminer une activite revient à la mettre à la date du jour.
 		// On fait une pause avant de lancer la mise à jour des notifications.
-		
+
 		// On essaie d'envyer un message - Il ne sont pas ami
-			
-		retourMessage=WBservices.addMessage(idpersonne, "message", idparticipant, token);
+
+		retourMessage = WBservices.addMessage(idpersonne, "message",
+				idparticipant, token);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()==RetourMessage.PLUS_SON_AMI);	
-			
-		retourMessage=WBservices.addMessage(idparticipant, "message", idpersonne, token1);
+		assertTrue(retourMessage.getId() == RetourMessage.PLUS_SON_AMI);
+
+		retourMessage = WBservices.addMessage(idparticipant, "message",
+				idpersonne, token1);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()==RetourMessage.PLUS_SON_AMI);	
-	
+		assertTrue(retourMessage.getId() == RetourMessage.PLUS_SON_AMI);
+
 		// met à jour les notifications (demande de notation)
 		messageServeur = WBservices.updateNotification(idpersonne, token);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
 
 		// Verifie la creation de la notation pour l'orgainsateur
-		Notification[] listNotification = WBservices
-				.getListNotification(idpersonne,idpersonne,token);
+		Notification[] listNotification = WBservices.getListNotification(
+				idpersonne, idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 1);
 
@@ -1244,7 +1318,8 @@ public class WsTest {
 
 		// met à jour les notifications (demande de notation) pour le
 		// participant
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 1);
 
@@ -1265,11 +1340,13 @@ public class WsTest {
 		assertTrue(messageServeur.isReponse());
 
 		// Le participant et l'oranisateur ont maintenant 2 notifications
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 2);
 
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 		assertTrue(listNotification != null);
 		assertTrue(listNotification.length == 2);
 
@@ -1288,7 +1365,8 @@ public class WsTest {
 
 		// efface de toutes les notifications de l'organisteur
 
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
 
 		for (Notification notification : listNotification) {
 
@@ -1298,16 +1376,17 @@ public class WsTest {
 			assertTrue(messageServeur.isReponse());
 
 		}
-		
-		// Verifie l'effacement
-		listNotification = WBservices.getListNotification(idpersonne,idpersonne,token);
-		assertTrue(listNotification != null);
-		assertTrue(listNotification.length==0);
 
+		// Verifie l'effacement
+		listNotification = WBservices.getListNotification(idpersonne,
+				idpersonne, token);
+		assertTrue(listNotification != null);
+		assertTrue(listNotification.length == 0);
 
 		// efface de toutes les notifications du participant
 
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 
 		for (Notification notification : listNotification) {
 
@@ -1317,96 +1396,98 @@ public class WsTest {
 			assertTrue(messageServeur.isReponse());
 
 		}
-		
+
 		// Verifie l'effacement
-		
-		listNotification = WBservices.getListNotification(idparticipant,idparticipant,token1);
+
+		listNotification = WBservices.getListNotification(idparticipant,
+				idparticipant, token1);
 		assertTrue(listNotification != null);
-		assertTrue(listNotification.length==0);
-		
+		assertTrue(listNotification.length == 0);
+
 		// Verifie pas de messages au départ.
-	
-		messages= WBservices.getDiscussion(idpersonne, idparticipant,token);
+
+		messages = WBservices.getDiscussion(idpersonne, idparticipant, token);
 		assertTrue(messages != null);
-		assertTrue(messages.length==0);	
-		
-		messages= WBservices.getDiscussion( idparticipant,idpersonne,token1);
+		assertTrue(messages.length == 0);
+
+		messages = WBservices.getDiscussion(idparticipant, idpersonne, token1);
 		assertTrue(messages != null);
-		assertTrue(messages.length==0);	
-		
-		// Envoi de message 
-		
-		retourMessage=WBservices.addMessage(idpersonne, "message", idparticipant, token);
+		assertTrue(messages.length == 0);
+
+		// Envoi de message
+
+		retourMessage = WBservices.addMessage(idpersonne, "message",
+				idparticipant, token);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()>0);	
-			
-		
-		retourMessage=WBservices.addMessage(idparticipant, "message", idpersonne, token1);
+		assertTrue(retourMessage.getId() > 0);
+
+		retourMessage = WBservices.addMessage(idparticipant, "message",
+				idpersonne, token1);
 		assertTrue(retourMessage != null);
-		assertTrue(retourMessage.getId()>0);	
-		
-		
+		assertTrue(retourMessage.getId() > 0);
+
 		// Verifie le nobmr de message 2 au total (1 envoye 1 recu).
-		messages= WBservices.getDiscussion(idpersonne, idparticipant,token);
+		messages = WBservices.getDiscussion(idpersonne, idparticipant, token);
 		assertTrue(messages != null);
-		assertTrue(messages.length==2);	
-		
-		messages= WBservices.getDiscussion( idparticipant,idpersonne,token1);
+		assertTrue(messages.length == 2);
+
+		messages = WBservices.getDiscussion(idparticipant, idpersonne, token1);
 		assertTrue(messages != null);
-		assertTrue(messages.length==2);	
-			
-		messageServeur=WBservices.acquitMessageDiscussion(idpersonne, idparticipant, token);
-		messageServeur=WBservices.acquitMessageDiscussion(idparticipant, idpersonne, token1);
-			
-		
+		assertTrue(messages.length == 2);
+
+		messageServeur = WBservices.acquitMessageDiscussion(idpersonne,
+				idparticipant, token);
+		messageServeur = WBservices.acquitMessageDiscussion(idparticipant,
+				idpersonne, token1);
+
 		// Regarde ses archives
-		
-		Activite[] listActiviteArchives=WBservices.getMesActiviteArchive(idpersonne,idpersonne,token);
+
+		Activite[] listActiviteArchives = WBservices.getMesActiviteArchive(
+				idpersonne, idpersonne, token);
 		assertTrue(listActiviteArchives != null);
-		assertTrue(listActiviteArchives.length==1);	
-		
-		listActiviteArchives=WBservices.getMesActiviteArchive(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteArchives.length == 1);
+
+		listActiviteArchives = WBservices.getMesActiviteArchive(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteArchives != null);
-		assertTrue(listActiviteArchives.length==1);	
-		
+		assertTrue(listActiviteArchives.length == 1);
+
 		// Activite en cours ==0
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idpersonne,idpersonne,token);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idpersonne,
+				idpersonne, token);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==0);	
-		
-		listActiviteEncours=WBservices.getMesActiviteEncours(idparticipant,idparticipant,token1);
+		assertTrue(listActiviteEncours.length == 0);
+
+		listActiviteEncours = WBservices.getMesActiviteEncours(idparticipant,
+				idparticipant, token1);
 		assertTrue(listActiviteEncours != null);
-		assertTrue(listActiviteEncours.length==0);	
-		
-		
+		assertTrue(listActiviteEncours.length == 0);
+
 		// Verifie la liste d'ami
-		
-		listAmi=WBservices.getListAmi(idpersonne,idpersonne,token);
+
+		listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==1);
-		assertTrue(listAmi[0].getId()==idparticipant);	
-		
-		listAmi=WBservices.getListAmi(idparticipant,idparticipant,token1);
+		assertTrue(listAmi.length == 1);
+		assertTrue(listAmi[0].getId() == idparticipant);
+
+		listAmi = WBservices.getListAmi(idparticipant, idparticipant, token1);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==1);
-		assertTrue(listAmi[0].getId()==idpersonne);	
-	
-	 
+		assertTrue(listAmi.length == 1);
+		assertTrue(listAmi[0].getId() == idpersonne);
+
 		// l'effacement d'un ami l'efface des 2 cotes
-		
-		messageServeur=WBservices.effaceAmi(idpersonne, idparticipant, token);
+
+		messageServeur = WBservices.effaceAmi(idpersonne, idparticipant, token);
 		assertTrue(messageServeur != null);
 		assertTrue(messageServeur.isReponse());
-		listAmi=WBservices.getListAmi(idpersonne,idpersonne,token);
+		listAmi = WBservices.getListAmi(idpersonne, idpersonne, token);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==0);
-	
-		listAmi=WBservices.getListAmi(idparticipant,idparticipant,token1);
+		assertTrue(listAmi.length == 0);
+
+		listAmi = WBservices.getListAmi(idparticipant, idparticipant, token1);
 		assertTrue(listAmi != null);
-		assertTrue(listAmi.length==0);
-		
-		
+		assertTrue(listAmi.length == 0);
 
-
-}}
+	}
+}

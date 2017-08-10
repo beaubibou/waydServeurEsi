@@ -389,8 +389,6 @@ public class ServeurMethodes {
 			ArrayList<String> listpersonneGcm=getListGCM(listpersonne);
 		if (listpersonneGcm.isEmpty())return;
 	
-		for (Personne tmp:listpersonne)
-		System.out.println(tmp.getId());
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.refreshtdb));
 			String Er = key_gcm;
@@ -503,6 +501,8 @@ public class ServeurMethodes {
 
 			if (listpersonne.size() == 0)
 				return;
+			ArrayList<String> listpersonneGcm=getListGCM(listpersonne);
+			if (listpersonneGcm.isEmpty())return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.Annule_Activite));
@@ -513,7 +513,7 @@ public class ServeurMethodes {
 					.addData("id", messageaenvoyer.getId())
 					.addData("idactivite", Integer.toString(idactivite))
 					.build();
-			n.send(androidMessage, getListGCM(listpersonne), 3);
+			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -530,6 +530,9 @@ public class ServeurMethodes {
 			if (listpersonne.size() == 0)
 				return;
 
+			ArrayList<String> listpersonneGcm =getListGCM(listpersonne);	
+			if (listpersonneGcm.isEmpty())return;
+			
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.EFFACE_SUGGESTION));
 
@@ -539,7 +542,7 @@ public class ServeurMethodes {
 					.addData("id", messageaenvoyer.getId())
 					.addData("idactivite", Integer.toString(idactivite))
 					.build();
-			n.send(androidMessage, getListGCM(listpersonne), 3);
+			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -639,15 +642,13 @@ public class ServeurMethodes {
 
 	}
 
-	public static ArrayList<String> getListGCM(ArrayList<Personne> listpersonne) {
+	public  ArrayList<String> getListGCM(ArrayList<Personne> listpersonne) {
 
 		ArrayList<String> listgcm = new ArrayList<String>();
 		for (Personne pers : listpersonne) {
 			if (pers.getGcm()!=null ){
 				listgcm.add(pers.getGcm());
-			
 			}
-			
 		}
 		return listgcm;
 	}

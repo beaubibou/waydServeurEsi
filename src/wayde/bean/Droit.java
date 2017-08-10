@@ -66,7 +66,7 @@ public class Droit {
 
 	//	return new MessageServeur(true, "Ok");
 		
-		System.out.println("actif "+actif);
+	//	System.out.println("actif "+actif);
 		
 		if (!actif)
 			return new MessageServeur(false, "Votre compte n'est plus actif");
