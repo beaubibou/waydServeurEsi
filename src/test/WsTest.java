@@ -65,7 +65,17 @@ public class WsTest {
 				.prepareStatement(requete);
 		preparedStatement.execute();
 		preparedStatement.close();
+		
+		requete = "delete from amelioration";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.execute();
+		preparedStatement.close();
 
+		requete = "delete from prefere";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
 		requete = "delete from ami";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.execute();
@@ -98,15 +108,15 @@ public class WsTest {
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		requete = "delete from activite where libelle=?";
+		requete = "delete from activite ";
 		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setString(1, libelleActivite);
+	
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		requete = "delete from personne where personne.login like ?";
+		requete = "delete from personne  ";
 		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setString(1, uid + "%");
+		
 		preparedStatement.execute();
 		preparedStatement.close();
 

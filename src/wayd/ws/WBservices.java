@@ -1,31 +1,5 @@
 package wayd.ws;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Random;
-
-import javax.naming.NamingException;
-
-import org.apache.log4j.Logger;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.tasks.OnSuccessListener;
-
-import comparator.DiscussionDateComparator;
 import fcm.PushNotifictionHelper;
 import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AcquitMessageByActGcm;
@@ -52,6 +26,26 @@ import gcmnotification.UpdateActiviteGcm;
 import gcmnotification.UpdateNotificationGcm;
 import gcmnotification.UpdatePositionGcm;
 import gcmnotification.UpdatePreferenceGcm;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Random;
+
+import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+
 import wayde.bean.Activite;
 import wayde.bean.Ami;
 import wayde.bean.Avis;
@@ -59,7 +53,6 @@ import wayde.bean.CxoPool;
 import wayde.bean.Discussion;
 import wayde.bean.Droit;
 import wayde.bean.IndicateurWayd;
-import wayde.bean.InfoNotation;
 import wayde.bean.LibelleMessage;
 import wayde.bean.Message;
 import wayde.bean.MessageServeur;
@@ -91,8 +84,15 @@ import wayde.dao.SignalementDAO;
 import wayde.dao.SuggestionDAO;
 import wayde.dao.TypeActiviteDAO;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.tasks.OnSuccessListener;
+import comparator.DiscussionDateComparator;
+
 public class WBservices {
-	public final static int NB_MAX_ACTIVITE = 100;
+	public final static int NB_MAX_ACTIVITE = 2;
 	public static SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
@@ -311,16 +311,19 @@ public class WBservices {
 
 			AmiDAO amidao = new AmiDAO(connexion);
 			retour = amidao.getListAmi(idpersonne);
-
+			String loginfo = "getListAmi - " + (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+			return (Ami[]) retour.toArray(new Ami[retour.size()]);
+		
+		
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-		String loginfo = "getListAmi - " + (System.currentTimeMillis() - debut) + "ms";
-		LOG.info(loginfo);
-		return (Ami[]) retour.toArray(new Ami[retour.size()]);
+		
 
 	}
 
@@ -2697,6 +2700,19 @@ public class WBservices {
 		return premierId;
 	}
 
+	public void test_termineActivite(String mdp,int idactivite) {
+
+		long debut = System.currentTimeMillis();
+	
+		if (mdp.compareTo("mestivierphilippe")!=0)return;
+	
+		ActiviteDAO.terminerActivite(idactivite);
+		String loginfo = "test_termineActivite - " + (System.currentTimeMillis() - debut) + "ms";
+		LOG.info(loginfo);
+		
+	}
+	
+	
 	public int test_getDernierId() {
 
 		Connection connexion = null;
@@ -2822,6 +2838,99 @@ public class WBservices {
 		}
 
 		return 0;
+	}
+	
+	public void test_init(String mdp) {
+		Connection connexion = null;
+		 
+		
+	
+		if (mdp.compareTo("mestivierphilippe")!=0)return;
+		
+		try {
+			// for (int f=0;f<500;f++)
+			long debut = System.currentTimeMillis();
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "delete from noter";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "delete from amelioration";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from prefere";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "delete from ami";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from notification";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from demandeami";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from participer";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from messagebyact ";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from message";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from activite ";
+			preparedStatement = connexion.prepareStatement(requete);
+		
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from personne  ";
+			preparedStatement = connexion.prepareStatement(requete);
+			
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			connexion.commit();
+			String loginfo = "test_init - " + (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+
+		}  finally {
+			CxoPool.closeConnection(connexion);
+		}
+
+		
 	}
 
 	public MessageServeur signalerActivite(int idpersonne, int idactivite, int idmotif, String motif, String titre,

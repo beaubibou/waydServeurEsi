@@ -519,8 +519,8 @@ public class PersonneDAO {
 	public int TestaddCompteGenerique(long jeton) throws Exception, SQLException {
 		Date datecreation = Calendar.getInstance().getTime();
 		String requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
-				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion,notification,admin)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,true,false);";
 		String commentaire = " ";
 
 		String nom = "Waydeur" + jeton;
