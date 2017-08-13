@@ -19,7 +19,7 @@ import wayde.bean.MessageServeur;
 import wayde.bean.Parametres;
 import wayde.bean.Personne;
 import wayde.bean.Profil;
-import wayde.bean.ProfilDiscussion;
+import wayde.bean.PhotoWaydeur;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProprietePref;
 
@@ -885,10 +885,10 @@ public class PersonneDAO {
 		return getPersonneId(idAlea - 1);
 	}
 
-	public ArrayList<ProfilDiscussion> getListProfilDiscussion(int idpersonne[])
+	public ArrayList<PhotoWaydeur> getListPhotoWaydeur(int idpersonne[])
 			throws SQLException {
 
-		ArrayList<ProfilDiscussion> retour = new ArrayList<ProfilDiscussion>();
+		ArrayList<PhotoWaydeur> retour = new ArrayList<PhotoWaydeur>();
 		StringBuilder requete = new StringBuilder();
 		requete.append("select idpersonne,photo from personne where idpersonne in (");
 		for (int id : idpersonne) {
@@ -898,6 +898,7 @@ public class PersonneDAO {
 
 		requete.delete(requete.length() - 1, requete.length());
 		requete.append(")");
+		
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete.toString());
 
@@ -906,7 +907,7 @@ public class PersonneDAO {
 		while (rs.next()) {
 			String photo = rs.getString("photo");
 			int id = rs.getInt("idpersonne");
-			retour.add(new ProfilDiscussion(id, photo));
+			retour.add(new PhotoWaydeur(id, photo));
 
 		}
 		rs.close();
@@ -914,10 +915,10 @@ public class PersonneDAO {
 		return retour;
 	}
 
-	public ProfilDiscussion getProfilDiscussion(int idpersonne)
+	public PhotoWaydeur getPhotoWaydeur(int idpersonne)
 			throws SQLException {
 		// TODO Auto-generated method stub
-		ProfilDiscussion retour = null;
+		PhotoWaydeur retour = null;
 		String requete = "select idpersonne,photo from personne where idpersonne =?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -927,7 +928,7 @@ public class PersonneDAO {
 		while (rs.next()) {
 			String photo = rs.getString("photo");
 			int id = rs.getInt("idpersonne");
-			retour = new ProfilDiscussion(id, photo);
+			retour = new PhotoWaydeur(id, photo);
 
 		}
 		rs.close();

@@ -1,14 +1,14 @@
 package wayde.bean;
 
-public class ProfilDiscussion {
+public class PhotoWaydeur {
 
 	private int id;
 	private String photo;
-	public ProfilDiscussion() {
+	public PhotoWaydeur() {
 		super();
 		
 	}
-	public ProfilDiscussion(int id, String photo) {
+	public PhotoWaydeur(int id, String photo) {
 		super();
 		this.id = id;
 		this.photo = photo;
