@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class UpdatePositionGcm extends Thread {
+public class UpdatePositionGcm implements Runnable {
 
 	private int idPersonne;
 

@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class AddMessageGcm extends Thread{
+public class AddMessageGcm implements Runnable{
 	
 	int idDestinataire;
 	public AddMessageGcm(int idDestinataire) {

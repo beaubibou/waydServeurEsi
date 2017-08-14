@@ -46,6 +46,7 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
 import wayde.bean.Avis;
@@ -89,6 +90,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnSuccessListener;
+
 import comparator.DiscussionDateComparator;
 
 public class WBservices {
@@ -97,11 +99,6 @@ public class WBservices {
 			"dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
-	public void envoyerMail() {
-
-		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
-		// kljlkj
-	}
 
 	static {
 		FirebaseOptions options;
@@ -140,6 +137,11 @@ public class WBservices {
 
 	}
 
+	public void envoyerMail() {
+
+		// new Outils().EnvoyerMdp("pmestivier@club.fr", "ppp");
+		// kljlkj
+	}
 	public boolean testToken(String idtoken, String photostr, String nom,
 			String gcmToken) {
 		long debut = System.currentTimeMillis();
@@ -259,7 +261,8 @@ public class WBservices {
 			preferencedao.addPreference(idpersonne, idtypeactivite, active);
 			personnedao.updateRayon(idpersonne, rayon);
 			connexion.commit();
-			new UpdatePreferenceGcm(idpersonne).start();
+			// new UpdatePreferenceGcm(idpersonne).start();
+			PoolThreadGCM.poolThread					.execute(new UpdatePreferenceGcm(idpersonne));
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -280,7 +283,7 @@ public class WBservices {
 
 	}
 
-	public static Ami[] getListAmi(int iddemandeur, int idpersonne, String jeton) {
+	public Ami[] getListAmi(int iddemandeur, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Ami> retour = new ArrayList<Ami>();
@@ -313,8 +316,8 @@ public class WBservices {
 
 	}
 
-	public static Participant[] getListParticipant(int iddemandeur,
-			int idactivite, String jeton) {
+	public Participant[] getListParticipant(int iddemandeur, int idactivite,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Participant> retour = new ArrayList<Participant>();
@@ -347,8 +350,8 @@ public class WBservices {
 
 	}
 
-	public static Preference[] getListPreferences(int iddemandeur,
-			int idpersonne, String jeton) {
+	public Preference[] getListPreferences(int iddemandeur, int idpersonne,
+			String jeton) {
 
 		Connection connexion = null;
 		ArrayList<Preference> retour = new ArrayList<Preference>();
@@ -389,8 +392,7 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 			PersonneDAO personneDao = new PersonneDAO(connexion);
-			listPhotoWaydeur = personneDao
-					.getListPhotoWaydeur(idpersonne);
+			listPhotoWaydeur = personneDao.getListPhotoWaydeur(idpersonne);
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -406,8 +408,9 @@ public class WBservices {
 				.toArray(new PhotoWaydeur[listPhotoWaydeur.size()]);
 
 	}
-	
-	public PhotoWaydeur[] getListPhotoWaydeurByAct(int iddemandeur,int idactivite,String jeton) {
+
+	public PhotoWaydeur[] getListPhotoWaydeurByAct(int iddemandeur,
+			int idactivite, String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<PhotoWaydeur>();
@@ -415,13 +418,14 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
-			ParticipantDAO participantDAO=new ParticipantDAO(connexion);
-			ArrayList<Participant> listParticipants=participantDAO.getListPaticipant(idactivite);
-			for (Participant participant:listParticipants){
-				listPhotoWaydeur.add(new PhotoWaydeur(participant.getId(), participant.getPhotostr()));
+			ParticipantDAO participantDAO = new ParticipantDAO(connexion);
+			ArrayList<Participant> listParticipants = participantDAO
+					.getListPaticipant(idactivite);
+			for (Participant participant : listParticipants) {
+				listPhotoWaydeur.add(new PhotoWaydeur(participant.getId(),
+						participant.getPhotostr()));
 			}
-			
-			
+
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -436,7 +440,6 @@ public class WBservices {
 				.toArray(new PhotoWaydeur[listPhotoWaydeur.size()]);
 
 	}
-	
 
 	public PhotoWaydeur getPhotoWaydeur(int idpersonne) {
 		Connection connexion = null;
@@ -446,7 +449,7 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 			PersonneDAO personneDao = new PersonneDAO(connexion);
-			
+
 			String loginfo = "getPhotoWaydeur - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -464,7 +467,7 @@ public class WBservices {
 
 	}
 
-	public static Message[] getDiscussion(int iddestinataire, int idemetteur,
+	public Message[] getDiscussion(int iddestinataire, int idemetteur,
 			String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -496,8 +499,8 @@ public class WBservices {
 
 	}
 
-	public static Message[] getDiscussionByAct(int iddestinataire,
-			int idactivite, String jeton) {
+	public Message[] getDiscussionByAct(int iddestinataire, int idactivite,
+			String jeton) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -529,8 +532,8 @@ public class WBservices {
 
 	}
 
-	public static Discussion[] getListDiscussion(int iddemandeur,
-			int idpersonne, String jeton) {
+	public Discussion[] getListDiscussion(int iddemandeur, int idpersonne,
+			String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<Discussion> retour = new ArrayList<Discussion>();
@@ -578,8 +581,8 @@ public class WBservices {
 
 	}
 
-	public static Notification[] getListNotification(int iddemandeur,
-			int idpersonne, String jeton) {
+	public Notification[] getListNotification(int iddemandeur, int idpersonne,
+			String jeton) {
 		ArrayList<Notification> retour = new ArrayList<Notification>();
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -642,18 +645,18 @@ public class WBservices {
 	}
 
 	public Notification[] getListNotificationAfter(int idpersonne,
-			int idxmessage,String jeton) {
+			int idxmessage, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Notification> retour = new ArrayList<Notification>();
 
 		try {
 			connexion = CxoPool.getConnection();
-			
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			if (!personneDAO.isAutorise(idpersonne, jeton))
 				return null;
-			
+
 			retour = new NotificationDAO(connexion).getListNotificationAfter(
 					idpersonne, idxmessage);
 
@@ -671,7 +674,7 @@ public class WBservices {
 	}
 
 	public Message[] getListMessageAfterByAct(int idpersonne, int idxmessage,
-			int idactivite,String jeton) {
+			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Message> listmessage = new ArrayList<Message>();
@@ -681,7 +684,7 @@ public class WBservices {
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			if (!personneDAO.isAutorise(idpersonne, jeton))
 				return null;
-			
+
 			listmessage = new MessageDAO(connexion).getListMessageAfterByAct(
 					idpersonne, idxmessage, idactivite);
 
@@ -700,8 +703,7 @@ public class WBservices {
 
 	}
 
-	public static Activite getActivite(int idpersonne, int idactivite,
-			String jeton) {
+	public Activite getActivite(int idpersonne, int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -743,7 +745,7 @@ public class WBservices {
 
 	}
 
-	public static TableauBord getTableauBord(int idpersonne) {
+	public TableauBord getTableauBord(int idpersonne) {
 		// System.out.println("Get Tableau de bord " + idpersonne);
 		Connection connexion = null;
 		TableauBord tableaubord;
@@ -777,7 +779,7 @@ public class WBservices {
 
 	}
 
-	public static IndicateurWayd getIndicateurs() {
+	public IndicateurWayd getIndicateurs() {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		IndicateurWayd indicateurs;
@@ -806,8 +808,7 @@ public class WBservices {
 
 	}
 
-	public static Avis[] getListAvis(int iddemandeur, int idpersonnenotee,
-			String jeton) {
+	public Avis[] getListAvis(int iddemandeur, int idpersonnenotee, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -882,9 +883,9 @@ public class WBservices {
 
 	}
 
-	public static Activite[] getListActiviteAvenir(int idpersonne,
-			String latitudestr, String longitudestr, int rayon,
-			int idtypeactivite, String motcle, int commencedans, String jeton) {
+	public Activite[] getListActiviteAvenir(int idpersonne, String latitudestr,
+			String longitudestr, int rayon, int idtypeactivite, String motcle,
+			int commencedans, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -927,7 +928,7 @@ public class WBservices {
 
 	}
 
-	public static Activite[] getListActiviteAvenirNocritere(int idpersonne,
+	public Activite[] getListActiviteAvenirNocritere(int idpersonne,
 			String latitudestr, String longitudestr, int rayon, String motcle,
 			int commencedans, String jeton) {
 
@@ -974,8 +975,8 @@ public class WBservices {
 
 	}
 
-	public static Activite[] getMesActiviteEncours(int iddemandeur,
-			int idpersonne, String jeton) {
+	public Activite[] getMesActiviteEncours(int iddemandeur, int idpersonne,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -1011,8 +1012,8 @@ public class WBservices {
 				.size()]);
 	}
 
-	public static Activite[] getMesActiviteArchive(int iddemandeur,
-			int idpersonne, String jeton) {
+	public Activite[] getMesActiviteArchive(int iddemandeur, int idpersonne,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
@@ -1057,7 +1058,7 @@ public class WBservices {
 
 	}
 
-	public static TypeActivite[] getListTypeActivite() {
+	public TypeActivite[] getListTypeActivite() {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -1087,7 +1088,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur addActivite(String titre, String libelle,
+	public MessageServeur addActivite(String titre, String libelle,
 			int idorganisateur, int dureebalise, int idtypeactivite,
 			String latitudestr, String longitudestr, String adresse,
 			int nbmaxwaydeur, int dureeactivite, String jeton)
@@ -1138,8 +1139,10 @@ public class WBservices {
 			activitedao.addActivite(activite);
 			connexion.commit();
 
-			new AddActiviteGcm(activite, idorganisateur).start();
+			// new AddActiviteGcm(activite, idorganisateur).start();
 
+			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,					idorganisateur));
+		
 			String loginfo = "Addactivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1154,6 +1157,7 @@ public class WBservices {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			e.printStackTrace();
 			return new MessageServeur(false, e.getMessage());
 
 		} finally {
@@ -1234,7 +1238,7 @@ public class WBservices {
 
 	}
 
-	public static RetourMessage addMessage(int idemetteur, String corps,
+	public RetourMessage addMessage(int idemetteur, String corps,
 			int iddestinataire, String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -1278,8 +1282,8 @@ public class WBservices {
 			MessageDAO messagedao = new MessageDAO(connexion);
 			int idmessage = messagedao.addMessage(message, iddestinataire);
 			connexion.commit();
-			new AddMessageGcm(iddestinataire).start();
-
+			// new AddMessageGcm(iddestinataire).start();
+			PoolThreadGCM.poolThread.execute(new AddMessageGcm(iddestinataire));
 			String loginfo = "addMessage - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1305,7 +1309,7 @@ public class WBservices {
 
 	}
 
-	public static RetourMessage addMessageByAct(int idemetteur, String corps,
+	public RetourMessage addMessageByAct(int idemetteur, String corps,
 			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 
@@ -1354,8 +1358,8 @@ public class WBservices {
 					.addMessageByAct(message, listparticipant);
 			connexion.commit();
 
-			new AddMessageByActGcm(idactivite).start();
-
+			// new AddMessageByActGcm(idactivite).start();
+			PoolThreadGCM.poolThread.execute(new AddMessageByActGcm(idactivite));
 			String loginfo = "addMessageByAct - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1381,8 +1385,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceParticipation(int idDemandeur,
-			int idAeffacer, int idactivite, String jeton) {
+	public MessageServeur effaceParticipation(int idDemandeur, int idAeffacer,
+			int idactivite, String jeton) {
 
 		long debut = System.currentTimeMillis();
 
@@ -1446,8 +1450,9 @@ public class WBservices {
 			new ActiviteDAO(connexion).updateChampCalcule(idactivite);
 			connexion.commit();
 
-			new EffaceParticipationGcm(listepersonne, idactivite, idAeffacer)
-					.start();
+			// new EffaceParticipationGcm(listepersonne, idactivite, idAeffacer)
+			// .start();
+			PoolThreadGCM.poolThread.execute(new EffaceParticipationGcm(					listepersonne, idactivite, idAeffacer));
 
 			String loginfo = "effaceParticipation - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -1474,8 +1479,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceActivite(int idorganisateur,
-			int idactivite, String jeton) {
+	public MessageServeur effaceActivite(int idorganisateur, int idactivite,
+			String jeton) {
 
 		long debut = System.currentTimeMillis();
 
@@ -1518,8 +1523,10 @@ public class WBservices {
 					Notification.Supprime_Activite, 0, idorganisateur);
 			discussiondao.effaceDiscussionTouteActivite(idactivite);
 			connexion.commit();
-			new EffaceActiviteGcm(personneinteresse, participants, idactivite)
-					.start();
+			// new EffaceActiviteGcm(personneinteresse, participants,
+			// idactivite)
+			// .start();
+			PoolThreadGCM.poolThread.execute(new EffaceActiviteGcm(					personneinteresse, participants, idactivite));
 
 			String loginfo = "effaceActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -1566,8 +1573,8 @@ public class WBservices {
 			new MessageDAO(connexion).RemoveMessage(idpersonne, listmessage);
 			connexion.commit();
 
-			new EffaceMessageGcm(idpersonne).start();
-
+			// new EffaceMessageGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new EffaceMessageGcm(idpersonne));
 			String loginfo = "effaceMessage - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1613,8 +1620,9 @@ public class WBservices {
 
 			new MessageDAO(connexion).effaceMessageRecu(idpersonne, idmessage);
 			connexion.commit();
-			new EffaceMessageRecuGcm(idpersonne).start();
+			// new EffaceMessageRecuGcm(idpersonne).start();
 
+			PoolThreadGCM.poolThread					.execute(new EffaceMessageRecuGcm(idpersonne));
 			String loginfo = "effaceMessageRecu - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1659,7 +1667,8 @@ public class WBservices {
 					idmessage);
 			connexion.commit();
 
-			new EffaceMessageRecuByActGcm(idpersonne).start();
+			// new EffaceMessageRecuByActGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new EffaceMessageRecuByActGcm(					idpersonne));
 
 			String loginfo = "effaceMessageRecuByAct - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -1683,7 +1692,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceNotificationRecu(int iddestinataire,
+	public MessageServeur effaceNotificationRecu(int iddestinataire,
 			int idnotification, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -1706,8 +1715,8 @@ public class WBservices {
 			new NotificationDAO(connexion).effaceNotification(iddestinataire,
 					idnotification);
 			connexion.commit();
-			new EffaceNotificationRecuGcm(iddestinataire).start();
-
+			// new EffaceNotificationRecuGcm(iddestinataire).start();
+			PoolThreadGCM.poolThread.execute(new EffaceNotificationRecuGcm(					iddestinataire));
 			// new Thread(new Runnable() {
 			//
 			// @Override
@@ -1750,8 +1759,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceAmi(int idpersonne, int idami,
-			String jeton) {
+	public MessageServeur effaceAmi(int idpersonne, int idami, String jeton) {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
@@ -1773,12 +1781,15 @@ public class WBservices {
 					idami);
 			connexion.commit();
 
-			new EffaceAmiGcm(idami, idpersonne).start();
+			// new EffaceAmiGcm(idami, idpersonne).start();
+
+			PoolThreadGCM.poolThread					.execute(new EffaceAmiGcm(idami, idpersonne));
 
 			String loginfo = "effaceAmi - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 			return new MessageServeur(true, LibelleMessage.suppressionAmi);
+
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			try {
@@ -1797,8 +1808,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur effaceMessageEmisByAct(int idpersonne,
-			int idmessage, String jeton) {
+	public MessageServeur effaceMessageEmisByAct(int idpersonne, int idmessage,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -1818,8 +1829,8 @@ public class WBservices {
 			new MessageDAO(connexion).effaceMessageEmisByAct(idpersonne,
 					idmessage);
 			connexion.commit();
-			new EffaceMessageEmisByActGcm(idpersonne).start();
-
+			// new EffaceMessageEmisByActGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new EffaceMessageEmisByActGcm(					idpersonne));
 			String loginfo = "effaceMessageEmisByAct - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1862,8 +1873,8 @@ public class WBservices {
 			new MessageDAO(connexion).effaceMessageEmis(idpersonne, idmessage);
 			connexion.commit();
 
-			new EffaceMessageEmisGcm(idpersonne).start();
-
+			// new EffaceMessageEmisGcm(idpersonne).start();
+			PoolThreadGCM.poolThread					.execute(new EffaceMessageEmisGcm(idpersonne));
 			String loginfo = "effaceMessageEmis - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1905,8 +1916,8 @@ public class WBservices {
 			new MessageDAO(connexion).effaceDiscussion(iddestinataire,
 					idemetteur);
 			connexion.commit();
-			new EffaceDiscussionGcm(iddestinataire).start();
-
+			// new EffaceDiscussionGcm(iddestinataire).start();
+			PoolThreadGCM.poolThread.execute(new EffaceDiscussionGcm(					iddestinataire));
 			String loginfo = "effaceDiscussion - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1930,7 +1941,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitMessageDiscussion(int idpersonne,
+	public MessageServeur acquitMessageDiscussion(int idpersonne,
 			int idemetteur, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
@@ -1953,8 +1964,8 @@ public class WBservices {
 			messagedao.LitMessageDiscussion(idpersonne, idemetteur);
 			connexion.commit();
 
-			new AcquitMessageDiscussionGcm(idpersonne).start();
-
+			// new AcquitMessageDiscussionGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitMessageDiscussionGcm(					idpersonne));
 			String loginfo = "acquitMessageDiscussion - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1978,8 +1989,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitMessageDiscussionByAct(
-			int iddestinataire, int idactivite, String jeton) {
+	public MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
+			int idactivite, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
 		long debut = System.currentTimeMillis();
@@ -2001,8 +2012,8 @@ public class WBservices {
 			messagedao.LitMessageDiscussionByAct(iddestinataire, idactivite);
 			connexion.commit();
 
-			new AcquitMessageDiscussionByActGcm(iddestinataire).start();
-
+		//	new AcquitMessageDiscussionByActGcm(iddestinataire).start();
+PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinataire));
 			String loginfo = "acquitMessageDiscussionByAct - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -2025,8 +2036,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitAllNotification(int idpersonne,
-			String jeton) {
+	public MessageServeur acquitAllNotification(int idpersonne, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire
 		long debut = System.currentTimeMillis();
@@ -2047,7 +2057,8 @@ public class WBservices {
 			notificationdao.litNotification(idpersonne);
 			connexion.commit();
 
-			new AcquitAllNotificationGcm(idpersonne).start();
+			// new AcquitAllNotificationGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitAllNotificationGcm(					idpersonne));
 
 			String loginfo = "acquitAllNotification - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2095,7 +2106,9 @@ public class WBservices {
 			messagedao.LitMessage(idpersonne, idmessage);
 			connexion.commit();
 
-			new AcquitMessageGcm(idpersonne).start();
+			// new AcquitMessageGcm(idpersonne).start();
+
+			PoolThreadGCM.poolThread.execute(new AcquitMessageGcm(idpersonne));
 
 			String loginfo = "acquitMessage - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2120,8 +2133,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur acquitMessageByAct(int idpersonne,
-			int idmessage, String jeton) {
+	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
+			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -2131,6 +2144,7 @@ public class WBservices {
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
+
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
@@ -2140,7 +2154,9 @@ public class WBservices {
 			messagedao.LitMessageByAct(idpersonne, idmessage);
 			connexion.commit();
 
-			new AcquitMessageByActGcm(idpersonne).start();
+			// new AcquitMessageByActGcm(idpersonne).start();
+
+			PoolThreadGCM.poolThread.execute(new AcquitMessageByActGcm(					idpersonne));
 
 			String loginfo = "acquitMessageByAct - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2184,7 +2200,8 @@ public class WBservices {
 			NotificationDAO notificationdao = new NotificationDAO(connexion);
 			notificationdao.LitNotification(idpersonne, idmessage);
 			connexion.commit();
-			new AcquitNotificationGcm(idpersonne).start();
+			// new AcquitNotificationGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitNotificationGcm(					idpersonne));
 
 			String loginfo = "acquitNotification - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2212,8 +2229,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur addParticipation(int iddemandeur,
-			int idorganisateur, int idactivite, String jeton) {
+	public MessageServeur addParticipation(int iddemandeur, int idorganisateur,
+			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -2270,7 +2287,9 @@ public class WBservices {
 
 			connexion.commit();
 
-			new AddParticipationGcm(listparticipant, idactivite).start();
+			// new AddParticipationGcm(listparticipant, idactivite).start();
+
+			PoolThreadGCM.poolThread.execute(new AddParticipationGcm(					listparticipant, idactivite));
 
 			String loginfo = "addParticipation - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2295,7 +2314,7 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur addAvis(int idpersonne, int idpersonnenotee,
+	public MessageServeur addAvis(int idpersonne, int idpersonnenotee,
 			int idactivite, String titre, String libelle, String notestr,
 			boolean demandeami, String jeton) {
 		long debut = System.currentTimeMillis();
@@ -2339,7 +2358,9 @@ public class WBservices {
 
 			connexion.commit();
 
-			new AddAvisGcm(idpersonnenotee, idpersonne).start();
+			// new AddAvisGcm(idpersonnenotee, idpersonne).start();
+
+			PoolThreadGCM.poolThread.execute(new AddAvisGcm(idpersonnenotee,					idpersonne));
 
 			String loginfo = "addAvis - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -2412,8 +2433,8 @@ public class WBservices {
 
 	}
 
-	public static MessageServeur updatePseudo(String pseudo,
-			Long datenaissance, int sexe, int idpersonne, String jeton) {
+	public MessageServeur updatePseudo(String pseudo, Long datenaissance,
+			int sexe, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -2469,7 +2490,7 @@ public class WBservices {
 	// ************** Il n' y pas de thread sur le serveur d'appli c'est le
 	// client qui sollicite toutes les 5 minutes
 
-	public static MessageServeur updateNotification(int idpersonne, String jeton) {
+	public MessageServeur updateNotification(int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -2493,8 +2514,8 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			connexion.commit();
-			new UpdateNotificationGcm(idpersonne).start();
-
+			// new UpdateNotificationGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new UpdateNotificationGcm(					idpersonne));
 			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2511,8 +2532,8 @@ public class WBservices {
 		}
 	}
 
-	public static MessageServeur updateNotificationPref(int idpersonne,
-			String jeton, boolean notification) {
+	public MessageServeur updateNotificationPref(int idpersonne, String jeton,
+			boolean notification) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -2573,8 +2594,8 @@ public class WBservices {
 					Double.valueOf(longitudestr));
 			connexion.commit();
 
-			new UpdatePositionGcm(idpersonne).start();
-
+			// new UpdatePositionGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new UpdatePositionGcm(idpersonne));
 			String loginfo = "updatePosition - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -2595,7 +2616,7 @@ public class WBservices {
 		}
 	}
 
-	public static MessageServeur updateActivite(int idpersonne, int idactivite,
+	public MessageServeur updateActivite(int idpersonne, int idactivite,
 			String titre, String libelle, int nbrmax, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2618,8 +2639,9 @@ public class WBservices {
 					nbrmax);
 			connexion.commit();
 
-			new UpdateActiviteGcm(idactivite, idpersonne).start();
+			// new UpdateActiviteGcm(idactivite, idpersonne).start();
 
+			PoolThreadGCM.poolThread.execute(new UpdateActiviteGcm(idactivite,idpersonne));
 			String loginfo = "updateActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -2681,8 +2703,7 @@ public class WBservices {
 
 	}
 
-	public static Profil getFullProfil(int iddemandeur, int idpersonne,
-			String jeton) {
+	public Profil getFullProfil(int iddemandeur, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -2739,16 +2760,16 @@ public class WBservices {
 
 	}
 
-	public static Personne getPersonnebyToken(String idtoken) {
+	public Personne getPersonnebyToken(String idtoken) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
+
 		try {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 
 			Personne personne = personnedao.getPersonneJeton(idtoken);// Recherche
-
 			// un
 
 			if (personne == null) {

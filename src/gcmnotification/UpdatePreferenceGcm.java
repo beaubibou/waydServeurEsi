@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class UpdatePreferenceGcm extends Thread {
+public class UpdatePreferenceGcm implements Runnable {
 	int idPersonne;
 
 	public UpdatePreferenceGcm(int idPersonne) {

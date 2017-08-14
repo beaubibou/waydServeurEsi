@@ -10,7 +10,7 @@ import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 
-public class EffaceActiviteGcm extends Thread {
+public class EffaceActiviteGcm implements Runnable {
 
 	ArrayList<Personne> personneInterresse;
 	ArrayList<Personne> participants;

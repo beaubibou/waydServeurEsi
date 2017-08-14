@@ -690,7 +690,7 @@ public class PersonneDAO {
 			}
 
 		}
-
+		
 	}
 
 	public void updateProfilWayd(int idpersonne, String photostr, String nom,

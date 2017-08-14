@@ -14,7 +14,7 @@ import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ActiviteDAO;
 
-public class AddActiviteGcm extends Thread {
+public class AddActiviteGcm implements Runnable {
 	Activite activite;
 	int idOrganisateur;
 

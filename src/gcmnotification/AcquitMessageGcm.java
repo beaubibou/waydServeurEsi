@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class AcquitMessageGcm extends Thread {
+public class AcquitMessageGcm implements Runnable {
 	private int idPersonne;
 
 	public AcquitMessageGcm(int idPersonne) {

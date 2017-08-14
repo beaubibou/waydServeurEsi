@@ -9,7 +9,8 @@ import wayde.bean.CxoPool;
 
 
 
-public class EffaceMessageEmisGcm extends Thread{
+public class EffaceMessageEmisGcm implements Runnable
+{
 	
 	private int idPersonne;
 

@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class EffaceNotificationRecuGcm extends Thread {
+public class EffaceNotificationRecuGcm implements Runnable {
 	int idDestinataire;
 
 	public EffaceNotificationRecuGcm(int idDestinataire) {

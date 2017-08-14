@@ -28,20 +28,20 @@ public abstract class CxoPool {
 		}
 	
 		
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String url = "jdbc:postgresql://localhost:5432/wayd";
-		String user = "postgres";
-		String passwd = "azerty";
-		Connection conn = DriverManager.getConnection(url, user, passwd);
-		
-		return conn;
-		
+//		try {
+//			Class.forName("org.postgresql.Driver");
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		String url = "jdbc:postgresql://localhost:5432/wayd";
+//		String user = "postgres";
+//		String passwd = "azerty";
+//		Connection conn = DriverManager.getConnection(url, user, passwd);
+//		
+		//return conn;
+		return null;
 		
 		
 	}

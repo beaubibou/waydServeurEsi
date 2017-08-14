@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
-public class EffaceMessageRecuGcm extends Thread {
+public class EffaceMessageRecuGcm implements Runnable {
 
 	int idPersonne;
 	

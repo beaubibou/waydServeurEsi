@@ -9,13 +9,13 @@
   </appender>
 
   <appender name="util" class="org.apache.log4j.FileAppender">
-    <param name="file" value="logs/debug.html" />
+    <param name="file" value="/logs/debug.html" />
     <param name="append" value="false" />
     <layout class="org.apache.log4j.HTMLLayout" />
   </appender>
 
   <root>
-    <level value="INFO" />
+    <level value="INFOS" />
     <appender-ref ref="stdout" />
     <appender-ref ref="util" />
   </root>

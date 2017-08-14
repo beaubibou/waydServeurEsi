@@ -11,7 +11,7 @@ import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ParticipationDAO;
 
-public class AddMessageByActGcm extends Thread{
+public class AddMessageByActGcm implements Runnable{
 	
 	int idActivite;
 	public AddMessageByActGcm(int idActivite) {
