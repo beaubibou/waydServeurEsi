@@ -411,7 +411,6 @@ public class ActiviteDAO {
 		try {
 
 			connexion = CxoPool.getConnection();
-
 			if (typeactivite != -1) {// on trie sur l'activité
 				System.out.println("tire sur l'activite");
 				String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"

@@ -12,6 +12,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
+import wayde.bean.Activite;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
 
@@ -242,4 +243,38 @@ public class ParticipationDAO {
 		return false;
 		
 	}
+	
+	public int  getNbrParticipation(int idpersonne)
+			throws SQLException {
+		int nbr=0;
+	
+		String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+				+ " activite.longitude,    personne.prenom, personne.datenaissance  ,   personne.sexe,    personne.nom,    personne.idpersonne, "
+				+ "personne.note,0 as role,"
+				+ "personne.nbravis as totalavis,"
+				+ "activite.nbrwaydeur as nbrparticipant,    personne.photo, personne.photo,"
+				+ "activite.idactivite, activite.d_finactivite,   activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+				+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+				+ "activite.idactivite = participer.idactivite "
+				+ " and participer.idpersonne=? and activite.d_finactivite>? ) ORDER BY datedebut DESC";
+
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setInt(1, idpersonne);
+		preparedStatement.setTimestamp(2,
+				new java.sql.Timestamp(new Date().getTime()));
+
+		ResultSet rs = preparedStatement.executeQuery();
+		
+		while (rs.next()) {
+			nbr=nbr+1;
+		}
+
+		preparedStatement.close();
+
+		// Cherche dans les activite
+
+		return nbr;
+	}
+	
 }

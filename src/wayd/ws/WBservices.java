@@ -94,7 +94,7 @@ import com.google.firebase.tasks.OnSuccessListener;
 import comparator.DiscussionDateComparator;
 
 public class WBservices {
-	public final static int NB_MAX_ACTIVITE = 2;
+	public final static int NB_MAX_ACTIVITE = 1;
 	public static SimpleDateFormat formatDate = new SimpleDateFormat(
 			"dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
@@ -760,7 +760,7 @@ public class WBservices {
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			tableaubord = activitedao.getTableauBord(idpersonne);
 
-			String loginfo = "getTableauBord - "
+			String loginfo = "getTableauBord - "+idpersonne+" "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 			return tableaubord;
@@ -2241,10 +2241,22 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 
 			connexion = CxoPool.getConnection();
 
+			//Limite le nombre de participation a 2
+//			ParticipationDAO participationDAO=new ParticipationDAO(connexion);
+//			if (participationDAO.getNbrParticipation(iddemandeur)==2)
+//			{
+//				LOG.info("activite pleine");
+//				return  new MessageServeur(false, LibelleMessage.activiteFinie);
+//			}
+//			
+//				
+			
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			Activite activite = activitedao.getActivite(idactivite);
-
+			
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			
+			
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					iddemandeur, jeton);
 			if (!autorise.isReponse()) {
