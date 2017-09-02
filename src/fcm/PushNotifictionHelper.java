@@ -69,7 +69,7 @@ public class PushNotifictionHelper {
 		info.put("title", activite.getTitre()); // Notification title
 		info.put("body", StringEscapeUtils.unescapeJava(activite.getLibelle())); // Notification
 		info.put("click_action", "notificationSuggestion");
-		info.put("icon", mTypeActivite.get(activite.getTypeactivite()));
+		//info.put("icon", mTypeActivite.get(activite.getTypeactivite()));
 		json.put("notification", info);
 
 		JSONObject data = new JSONObject();
@@ -94,16 +94,18 @@ public class PushNotifictionHelper {
 					(conn.getInputStream())));
 
 			String output;
-			System.out.println("Output from Server .... \n");
+		//	System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
-				System.out.println(output);
+			//	System.out.println(output);
 			}
 			result = "ok";
+			LOG.info("Notification envoyée Ok");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Nok";
+			LOG.warn("Erreur envoi Notification envoyée Ok");
 		}
-		System.out.println("GCM Notification is sent successfully");
+		
 
 		return result;
 
