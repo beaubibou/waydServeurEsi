@@ -34,6 +34,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ import wayde.bean.ProfilNotation;
 import wayde.bean.RetourMessage;
 import wayde.bean.TableauBord;
 import wayde.bean.TypeActivite;
+import wayde.bean.Version;
 import wayde.beandatabase.AvisaDonnerDb;
 import wayde.beandatabase.TypeActiviteDb;
 import wayde.dao.ActiviteDAO;
@@ -1088,6 +1090,66 @@ public class WBservices {
 
 	}
 
+	public Version getVersion(){
+		
+		Connection connexion=null;
+		
+		Version retour=new Version(0,0,0);
+		
+		Statement stmt=null;
+		ResultSet rs=null;
+		try {
+			connexion = CxoPool.getConnection();
+			stmt = connexion.createStatement();
+			rs = stmt
+					.executeQuery("SELECT version,majeur,mineur from version");
+
+			while (rs.next()) {
+				int version = rs.getInt("version");
+				int majeur = rs.getInt("majeur");
+				int mineur = rs.getInt("mineur");
+				retour=new Version(version,majeur,mineur);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+				
+			if (rs!=null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			if (stmt!=null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		return retour;
+
+		
+	}
 	public MessageServeur addActivite(String titre, String libelle,
 			int idorganisateur, int dureebalise, int idtypeactivite,
 			String latitudestr, String longitudestr, String adresse,
