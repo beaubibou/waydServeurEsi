@@ -2,11 +2,11 @@ package wayde.bean;
 
 public class Version {
 
-	int versionn,majeur,mineur;
+	int version,majeur,mineur;
 
-	public Version(int versionn, int majeur, int mineur) {
+	public Version(int version, int majeur, int mineur) {
 		super();
-		this.versionn = versionn;
+		this.version = version;
 		this.majeur = majeur;
 		this.mineur = mineur;
 	}
@@ -15,12 +15,12 @@ public class Version {
 		
 	}
 
-	public int getVersionn() {
-		return versionn;
+	public int getVersion() {
+		return version;
 	}
 
-	public void setVersionn(int versionn) {
-		this.versionn = versionn;
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public int getMajeur() {
