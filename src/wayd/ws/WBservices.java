@@ -1091,7 +1091,8 @@ public class WBservices {
 	}
 
 	public Version getVersion(){
-		
+		long debut = System.currentTimeMillis();
+
 		Connection connexion=null;
 		
 		Version retour=new Version(0,0,0);
@@ -1145,7 +1146,10 @@ public class WBservices {
 			
 		}
 		
-		
+		String loginfo = "getVersion - "
+				+ (System.currentTimeMillis() - debut) + "ms";
+		LOG.info(loginfo);
+	
 		return retour;
 
 		

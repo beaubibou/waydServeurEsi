@@ -40,10 +40,10 @@ public class PreferenceDAO {
 		Preference preference = null;
 		ArrayList<Preference> retour = new ArrayList<Preference>();
 
-		String requete = "SELECT p.idtypeactivite,p.active,t.nom FROM prefere p ,type_activite t where p.idpersonne=?"
+		String requete = "SELECT p.idtypeactivite,p.active,t.nom,t.ordre FROM prefere p ,type_activite t where p.idpersonne=?"
 				+ " and p.idtypeactivite=t.idtypeactivite union"
-				+ "	(select idtypeactivite,false,nom from type_activite where idtypeactivite"
-				+ "	not in( SELECT idtypeactivite FROM prefere where idpersonne=?)) order by idtypeactivite";
+				+ "	(select idtypeactivite,false,nom,ordre from type_activite where idtypeactivite"
+				+ "	not in( SELECT idtypeactivite FROM prefere where idpersonne=?)) order by ordre";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
