@@ -77,7 +77,6 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		System.out.println("token " + request.getParameter("token"));
-
 		testToken(request.getParameter("token"), request, response);
 
 	}

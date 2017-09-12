@@ -45,7 +45,7 @@ public class DetailActivite extends HttpServlet {
 				System.out.println("Detail activite id=" + idActivite);
 				ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
 				request.setAttribute("activite", activite);
-				request.getRequestDispatcher("detailactivite.jsp").forward(
+				request.getRequestDispatcher("admin/detailactivite.jsp").forward(
 						request, response);
 
 			} else
@@ -74,7 +74,7 @@ public class DetailActivite extends HttpServlet {
 
 		} else {
 
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 
 	}

@@ -38,11 +38,11 @@ public class ListProbleme extends HttpServlet {
 				ArrayList<ProblemeBean> 	listProblemes= new ArrayList<ProblemeBean>();
 				listProblemes=ProblemeDAO.getListProbleme();
 				request.setAttribute("listProbleme", listProblemes);
-				request.getRequestDispatcher("listProbleme.jsp").forward(request, response);
+				request.getRequestDispatcher("admin/listProbleme.jsp").forward(request, response);
 			
 			}
 		else{
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 	
 	}

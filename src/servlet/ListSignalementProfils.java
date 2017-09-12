@@ -40,11 +40,11 @@ public class ListSignalementProfils extends HttpServlet {
 			ArrayList<SignalementCount> listSignalementCount = new ArrayList<SignalementCount>();
 			listSignalementCount = SignalementDAO.getCountSignalementBy();
 			request.setAttribute("listSignalementCount", listSignalementCount);
-			request.getRequestDispatcher("listSignalement.jsp").forward(request,
+			request.getRequestDispatcher("admin/listSignalement.jsp").forward(request,
 					response);
 
 		}else{
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 
 		// TODO Auto-generated method stub
@@ -61,7 +61,7 @@ public class ListSignalementProfils extends HttpServlet {
 		ArrayList<SignalementCount> listSignalementCount = new ArrayList<SignalementCount>();
 		listSignalementCount = SignalementDAO.getCountSignalementBy();
 		request.setAttribute("listSignalementCount", listSignalementCount);
-		request.getRequestDispatcher("listSignalement.jsp").forward(request,
+		request.getRequestDispatcher("admin/listSignalement.jsp").forward(request,
 				response);
 	}
 

@@ -39,12 +39,12 @@ public class ListSuggestion extends HttpServlet {
 			ArrayList<SuggestionBean> listSuggestion = new ArrayList<SuggestionBean>();
 			listSuggestion = SuggestionDAO.getListSuggestion();
 			request.setAttribute("listSuggestion", listSuggestion);
-			request.getRequestDispatcher("listSuggestion.jsp").forward(request,
+			request.getRequestDispatcher("admin/listSuggestion.jsp").forward(request,
 					response);
 
 		}
 		else{
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 
 	}

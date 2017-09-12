@@ -72,7 +72,7 @@ public class HistoriqueChart extends HttpServlet {
 
 		request.setAttribute("titre", titre);
 		request.setAttribute("requete", requete);
-		request.getRequestDispatcher("chartLine.jsp")
+		request.getRequestDispatcher("admin/chartLine.jsp")
 				.forward(request, response);
 
 	}

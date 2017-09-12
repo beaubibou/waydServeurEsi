@@ -124,14 +124,14 @@ public class DetailParticipant extends HttpServlet {
 
 		// Direction vers la page
 		request.setAttribute("profil", profilBean);
-		request.getRequestDispatcher("detailparticipant.jsp").forward(request,
+		request.getRequestDispatcher("admin/detailparticipant.jsp").forward(request,
 					response);
 		
 
 	}
 		else{
 			
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 		
 	}

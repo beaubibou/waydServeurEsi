@@ -33,7 +33,7 @@ public class Controleur extends HttpServlet {
 		HttpSession session=request.getSession();
 	
 		if (session.getAttribute("profil") == null ){
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 			return;
 		}
 		
@@ -43,7 +43,7 @@ public class Controleur extends HttpServlet {
 		
 		case "deconnexion":
 			session.invalidate();
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 			break;
 			
 		

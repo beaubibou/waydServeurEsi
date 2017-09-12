@@ -32,11 +32,8 @@
 			<div class="form-group">
 				<label for="pseudo">Pseudo:</label> <input type="date"
 					class="form-control" id="datedebut" name="datedebut">
-
-
 				<div class="form-group">
 					<button id="go" type="submit" class="btn btn-default">Rechercher</button>
-
 				</div>
 			</div>
 		</form>

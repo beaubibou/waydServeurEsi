@@ -249,7 +249,7 @@ function signPassword(){
 			  // Send token to your backend via HTTPS
 			
 			//  document.getElementById("login-username").innerHTML ="opo";
-			   document.location.href="Connexion?token="+idToken;
+			   document.location.href="../Connexion?token="+idToken;
 		  
 		  }).catch(function(error) {
 			  // Handle error

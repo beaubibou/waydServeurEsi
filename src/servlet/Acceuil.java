@@ -43,12 +43,12 @@ public class Acceuil extends HttpServlet {
 			indicateur.setNbrActiviteDuJour(StatDAO.getNbrActiviteDuJour());
 			indicateur.setNbrParticipationDuJour(StatDAO.getNbrParticipationDuJour());
 			request.setAttribute("indicateur", indicateur);
-			request.getRequestDispatcher("acceuil.jsp").forward(request, response);
+			request.getRequestDispatcher("admin/acceuil.jsp").forward(request, response);
 		
 		}
 		else{
 			
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 	}
 

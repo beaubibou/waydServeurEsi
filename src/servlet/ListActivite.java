@@ -72,14 +72,14 @@ public class ListActivite extends HttpServlet {
 				request.setAttribute("listActivite", listActivite);
 				request.setAttribute("nbrTotalLigne",Integer.toString(nbrTotalLigne) );
 				request.setAttribute("pageAafficher",Integer.toString(pageAafficher));
-				request.getRequestDispatcher("listActivite.jsp").forward(
+				request.getRequestDispatcher("admin/listActivite.jsp").forward(
 						request, response);
 
 			} else {
 			
 				request.setAttribute("nbrTotalLigne", Integer.toString(0));
 				request.setAttribute("pageAafficher", Integer.toString(0));
-				request.getRequestDispatcher("listActivite.jsp").forward(
+				request.getRequestDispatcher("admin/listActivite.jsp").forward(
 						request, response);
 
 			}
@@ -135,19 +135,19 @@ public class ListActivite extends HttpServlet {
 							longitude, rayon, idtypeactivite,
 							Outils.nbrLigneParPage, pagination.getDebut());
 				
-					request.setAttribute("nbrTotalLigne",Integer.toString(1) );
-					request.setAttribute("pageAafficher",Integer.toString(1));
+				request.setAttribute("nbrTotalLigne",Integer.toString(1) );
+				request.setAttribute("pageAafficher",Integer.toString(1));
 				
 				request.setAttribute("pagination", pagination);
 				request.setAttribute("listActivite", listActivite);
-				request.getRequestDispatcher("listActivite.jsp").forward(
+				request.getRequestDispatcher("admin/listActivite.jsp").forward(
 						request, response);
 
 				return;
 			}
 
 		} else {
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 	}
 

@@ -38,11 +38,11 @@ public class ListProfil extends HttpServlet {
 				ArrayList<ProfilBean> 	listProfil= new ArrayList<ProfilBean>();
 				listProfil=PersonneDAO.getListProfil();
 				request.setAttribute("listProfil", listProfil);
-				request.getRequestDispatcher("listProfil.jsp").forward(request, response);
+				request.getRequestDispatcher("admin/listProfil.jsp").forward(request, response);
 			
 			}
 		else{
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		}
 	
 	

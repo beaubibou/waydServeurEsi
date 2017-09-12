@@ -38,11 +38,11 @@ public class ListSignalementActivite extends HttpServlet {
 			ArrayList<ActiviteBean> 	listActivite= new ArrayList<ActiviteBean>();
 			listActivite=ActiviteDAO.getListActiviteSignale();
 			request.setAttribute("listActivite", listActivite);
-			request.getRequestDispatcher("listActiviteSignale.jsp").forward(request, response);
+			request.getRequestDispatcher("admin/listActiviteSignale.jsp").forward(request, response);
 		
 		}
 	else{
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("auth/login.jsp");
 	}
 
 	
