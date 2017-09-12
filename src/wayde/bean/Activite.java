@@ -19,8 +19,7 @@ public class Activite {
 	String datedebutStr;
 
 	String datefinStr;
-	
-	
+		
 	String adresse;
 	
 	double latitude;
@@ -53,7 +52,9 @@ public class Activite {
 
 	private String tpsrestant;
 	
-	public  Date datedebut,datefin,datecreation,datefinactivite;
+	public  Date datedebut,datecreation;
+	
+	public  Date datefinactivite;
 
 	public boolean actif;
 	 
@@ -109,7 +110,7 @@ public class Activite {
 		this.tpsrestant = tpsrestant;
 	}
 
-	public Activite(String titre, String libelle, int idorganisateur, Date datedebut,Date datefin,
+	public Activite(String titre, String libelle, int idorganisateur, Date datedebut,
 	        int idtypeactivite, double latitude, double longitude,String adresse,boolean actif,int nbmaxwaydeur,Date finactivite)
 	    {
 	        super();
@@ -119,7 +120,7 @@ public class Activite {
 	        this.datedebut = datedebut;
 	        this.latitude = latitude;
 	        this.longitude=longitude;
-	        this.datefin=datefin;// Fin de l'alerte
+	        
 	        this.adresse=adresse;
 	        this.datecreation = new Date();
 	        this.typeactivite=idtypeactivite;
@@ -137,7 +138,7 @@ public class Activite {
 	            Date datefin, int idtypeactivite, double latitude, double longitude,String adresse,
 	            String nom,String prenom,String photo,double note,
 	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
-	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,Date finactivite )
+	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur )
 	        {
 	            super();
 	        	this.id=id;
@@ -149,7 +150,7 @@ public class Activite {
 	    		this.adresse = adresse;
 	    		this.datefinStr = Parametres.getStringWsFromDate(datefin);
 	    		this.datedebut=datedebut;
-	    		this.datefin=datefin;
+	    		this.datefinactivite=datefin;
 	    		this.datedebutStr = Parametres.getStringWsFromDate(datedebut);
 	    		this.nomorganisateur=nom;
 	    		this.prenomorganisateur=prenom;
@@ -162,8 +163,8 @@ public class Activite {
 	    		this.sexe=sexe;
 	    		this.nbrparticipant=nbrparticipant;
 	    		this.typeactivite=idtypeactivite;
-	    		this.tpsrestant=getTempsRestant(finactivite);
-	    		this.finidans=getSeTermine(finactivite);
+	    		this.tpsrestant=getTempsRestant(datefin);
+	    		this.finidans=getSeTermine(datefin);
 	    		this.age=getAgeStr(datenaissance,afficheage);
 	    		if (affichesexe)this.sexe=3;
 	    		this.role=role;
@@ -401,7 +402,7 @@ public String getTempsRestant(Date datefinactivite){
 
 	public boolean isTerminee() {
 		// TODO Auto-generated method stub
-		if (datefin.before(new Date()))return true;
+		if (datefinactivite.before(new Date()))return true;
 		
 		return false;
 	}

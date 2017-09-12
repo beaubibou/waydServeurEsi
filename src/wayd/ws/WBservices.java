@@ -1180,12 +1180,12 @@ public class WBservices {
 			double latitude = Double.parseDouble(latitudestr);
 			double longitude = Double.parseDouble(longitudestr);
 			Date datedebut, datebalise, datefinActivite;
-			// datedebut_ = Parametres.formatDateWs.parse(datedebutstr);
 			datedebut = new Date();
-			Calendar calBalise = Calendar.getInstance();
-			calBalise.setTime(datedebut);
-			calBalise.add(Calendar.MINUTE, dureebalise);
-			datebalise = calBalise.getTime();
+		//	Calendar calBalise = Calendar.getInstance();
+		//	calBalise.setTime(datedebut);
+		//	calBalise.add(Calendar.MINUTE, dureebalise);
+		//	datebalise = calBalise.getTime();
+			
 			Calendar calFinActivite = Calendar.getInstance();
 			calFinActivite.setTime(datedebut);
 			calFinActivite.add(Calendar.MINUTE, dureeactivite);
@@ -1197,7 +1197,7 @@ public class WBservices {
 			}
 
 			Activite activite = new Activite(titre, libelle, idorganisateur,
-					datedebut, datebalise, idtypeactivite, latitude, longitude,
+					datedebut,  idtypeactivite, latitude, longitude,
 					adresse, true, nbmaxwaydeur, datefinActivite);
 
 			// ****************Ajoute l'activite*****************************
@@ -2920,7 +2920,7 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 		int nbractivite = 0;
 		try {
 			connexion = CxoPool.getConnection();
-			String requete = "Select count(idactivite) as nbractivite  FROM activite where  activite.d_finactivite>? ;";
+			String requete = "Select count(idactivite) as nbractivite  FROM activite where  activite.datefin>? ;";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 

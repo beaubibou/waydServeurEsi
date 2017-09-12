@@ -77,7 +77,7 @@ public class PushNotifictionHelper {
 		data.put("idactiviteFromNotification", activite.getId());
 		data.put("idtypeactivite",
 				mTypeActivite.get(activite.getTypeactivite()));
-		int dureeNotification = (int) (activite.datefin.getTime() - new Date()
+		int dureeNotification = (int) (activite.datefinactivite.getTime() - new Date()
 				.getTime()) / 1000;
 
 		//System.out.println("dureeenot"+dureeNotification);

@@ -253,10 +253,10 @@ public class ParticipationDAO {
 				+ "personne.note,0 as role,"
 				+ "personne.nbravis as totalavis,"
 				+ "activite.nbrwaydeur as nbrparticipant,    personne.photo, personne.photo,"
-				+ "activite.idactivite, activite.d_finactivite,   activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
 				+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
 				+ "activite.idactivite = participer.idactivite "
-				+ " and participer.idpersonne=? and activite.d_finactivite>? ) ORDER BY datedebut DESC";
+				+ " and participer.idpersonne=? and activite.datefin>? ) ORDER BY datedebut DESC";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);

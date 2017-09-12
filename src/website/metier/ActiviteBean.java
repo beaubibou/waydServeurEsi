@@ -11,7 +11,6 @@ public class ActiviteBean {
 
 	int id;
 
-	
 
 	String titre;
 
@@ -41,7 +40,7 @@ public class ActiviteBean {
 
 	private int nbrparticipant;
 
-	public Date datedebut, datefin, datecreation, datefinactivite;
+	public Date datedebut, datefin, datecreation;
 
 	public boolean actif;
 
@@ -134,8 +133,8 @@ public class ActiviteBean {
 
 	public ActiviteBean(String titre, String libelle, int idorganisateur,
 			Date datedebut, Date datefin, int idtypeactivite, double latitude,
-			double longitude, String adresse, boolean actif, int nbmaxwaydeur,
-			Date finactivite) {
+			double longitude, String adresse, boolean actif, int nbmaxwaydeur
+			) {
 		super();
 		this.titre = titre;
 		this.libelle = libelle;
@@ -147,7 +146,6 @@ public class ActiviteBean {
 		this.typeactivite = idtypeactivite;
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.nbrparticipant = 1;
-		this.datefinactivite = finactivite;
 		this.idorganisateur = idorganisateur;
 
 	}
@@ -174,8 +172,8 @@ public class ActiviteBean {
 			String adresse, String nom, String pseudo, String photo,
 			double note, int role, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
-			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
-			Date finactivite) {
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur
+			) {
 
 		super();
 		this.id = id;
@@ -213,8 +211,8 @@ public class ActiviteBean {
 			int idorganisateur, Date datedebut, Date datefin,
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
-			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
-			Date datefinactivite) {
+			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd
+			) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
