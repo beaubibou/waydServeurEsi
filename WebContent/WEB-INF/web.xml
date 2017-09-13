@@ -192,4 +192,24 @@
     <servlet-name>ListSignalementActivite</servlet-name>
     <url-pattern>/ListSignalementActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AcceuilPro</display-name>
+    <servlet-name>AcceuilPro</servlet-name>
+    <servlet-class>servlet.pro.AcceuilPro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AcceuilPro</servlet-name>
+    <url-pattern>/AcceuilPro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Inscription</display-name>
+    <servlet-name>Inscription</servlet-name>
+    <servlet-class>servlet.commun.Inscription</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Inscription</servlet-name>
+    <url-pattern>/Inscription</url-pattern>
+  </servlet-mapping>
 </web-app>

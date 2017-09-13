@@ -11,6 +11,11 @@ import wayde.bean.Parametres;
 public class ProfilBean {
 
 	int id;
+	public final static int PRO=1;
+	public final static int ASSOCIATION=2;
+	public final static int WAYDEUR=3;
+	
+	
 	private String nom;
 	private String pseudo;
 	private String ville;
@@ -26,6 +31,7 @@ public class ProfilBean {
 	private String age;
 	private String commentaire;
 	private boolean actif,admin;
+	private int typeuser;
 	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
 	private ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
 	private ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
@@ -59,6 +65,14 @@ public class ProfilBean {
 	}
 
 	
+	public int getTypeuser() {
+		return typeuser;
+	}
+
+	public void setTypeuser(int typeuser) {
+		this.typeuser = typeuser;
+	}
+
 	public String getDatecreationStr() {
 		return datecreationStr;
 	}
@@ -98,7 +112,7 @@ public class ProfilBean {
 			Date datenaissance, int nbravis, int sexe, int nbractivite,
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
-			boolean actif,boolean admin) {
+			boolean actif,boolean admin,int typeuser) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -116,6 +130,7 @@ public class ProfilBean {
 			this.sexe = 3;
 		this.commentaire = commentaire;
 		this.admin=admin;
+		this.typeuser=typeuser;
 		this.datecreationStr = Parametres.getStringWsFromDate(datecreation);
 		
 	}

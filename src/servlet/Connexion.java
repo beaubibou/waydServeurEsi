@@ -3,7 +3,10 @@ package servlet;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import wayde.bean.CxoPool;
 import website.dao.PersonneDAO;
 import website.metier.ProfilBean;
 
@@ -110,35 +114,95 @@ public class Connexion extends HttpServlet {
 
 						String uid = decodedToken.getUid();
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
-						System.out.println("admin" + profil.isAdmin());
+						System.out.println("admin" + profil);
+						
+						if (profil==null){
+							Connection connexion = null;
+						
+							try {
+								System.out.println("Creation du compte" + profil);
+								connexion = CxoPool.getConnection();
+								connexion.setAutoCommit(false);
+								wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(connexion);
+								personnedao.addCompteGenerique(uid, idtoken,
+										"", "", "");
+								connexion.commit();
+								profil = PersonneDAO.getFullProfilByUid(uid);
+								System.out.println("user cree" + profil);
+								response.sendRedirect("auth/form_profilInscription.html");
+								return;
+							} catch (SQLException | NamingException | IOException e) {
+								// TODO Auto-generated catch block
+								try {
+									connexion.rollback();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								e.printStackTrace();
+							} // ...
+							finally {
+								CxoPool.closeConnection(connexion);
+							}
+							
+							
+						}
 						
 					
-						if (profil != null)
+						
+						if (profil != null) {
+							
+							
+							
 							if (profil.isAdmin()) {
 
-								System.out.println(profil.getPseudo());
+								
 								session.setAttribute("profil", profil);
 
 								try {
 									response.sendRedirect("Acceuil");
-
+									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-							} else
-							{
+							}
+							switch (profil.getTypeuser()) {
 
+							case ProfilBean.PRO:
+								session.setAttribute("profil", profil);
 								try {
-
-									response.sendRedirect("Error.jsp");
-
+									response.sendRedirect("AcceuilPro");
+									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
+								
+								break;
+
+							case ProfilBean.WAYDEUR:
+
+								break;
+
+							case ProfilBean.ASSOCIATION:
+
+								break;
 
 							}
+
+						} else {
+
+							try {
+
+								response.sendRedirect("Error.jsp");
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+						}
 
 					}
 
