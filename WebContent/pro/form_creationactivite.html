@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>>Création activité</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+ <script src="js/moment.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>Description de l'activité</h2>
+  </br>
+  <form action="/action_page.php" onsubmit="return valideFormulaire()">
+    <div class="form-group">
+      <label for="titre">Titre:</label>
+      <input type="text" class="form-control" id="titre" placeholder="Nom " name="titre">
+    </div>
+    <div class="form-group">
+      <label for="adresse">Adresse:</label>
+      <input type="text" class="form-control" id="adresse" placeholder="Renseigner l'adresse" name="adresse">
+    </div>
+    
+     <div class="form-group">
+      <label for="description">Description:</label>
+       <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+    </div>
+      <div class="form-group">
+    <label for="acces">Acces à l'activité:</label>
+    
+      <select class="form-control" id="type" name="type">
+        <option value="1">Gratuite</option>
+        <option value="2">Payante</option>
+        <option value="3">Entrée gratuite</option>
+      
+       </select>
+     </div>
+        <div class="form-group"> 
+   <label for="typeactivite">Type d'activité:</label>
+    
+      <select class="form-control" id="type" name="type">
+        <option value="1">Vente flash</option>
+        <option value="2">Exposition</option>
+        <option value="3">Happy hours</option>
+      
+       </select>
+  </div>
+    <div class="form-group">
+    <div class="row">
+		<div class='col-sm-2'> <label for="iddatedebut">Date debut</label></div>
+        <div class='col-sm-4'>
+            <div class="form-group">
+                <div class='input-group date' id='datedebut'>
+                  
+                    <input type='text' class="form-control" id="iddatedebut" name="debut" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-2'>  <label for="iddatefin">Date fin</label></div>
+         <div class='col-sm-4'>
+            <div class="form-group">
+                <div class='input-group date' id='datefin'>
+                   
+                    <input type='text' class="form-control" id="iddatefin"  name="fin"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+   </div>
+   
+   
+    <button type="submit" class="btn btn-default">Enregistrer</button>
+    
+     <div class="form-group">
+      <label for="latitude">Latitude:</label>
+      <input type="text" class="form-control" id="latitude" placeholder="Renseigner l'adresse" name="latitude">
+    </div>
+     <div class="form-group">
+      <label for="longitude">Longitude:</label>
+      <input type="text" class="form-control" id="longitude" placeholder="Renseigner l'adresse" name="longitude">
+    </div>
+    
+   <div class="form-group">
+   
+   </div>
+
+  
+  </form>
+  
+
+   
+</div>
+
+<script>
+		var placeSearch, autocomplete;
+		var componentForm = {
+			street_number : 'short_name',
+			route : 'long_name',
+			locality : 'long_name',
+			administrative_area_level_1 : 'short_name',
+			country : 'long_name',
+			postal_code : 'short_name'
+		};
+		function initAutocomplete() {
+			// Create the autocomplete object, restricting the search to geographical
+			// location types.
+			autocomplete = new google.maps.places.Autocomplete(
+			/** @type {!HTMLInputElement} */
+			(document.getElementById('adresse')), {
+				types : [ 'geocode' ]
+			});
+			// When the user selects an address from the dropdown, populate the address
+			// fields in the form.
+			autocomplete.addListener('place_changed', fillInAddress);
+		}
+		function fillInAddress() {
+			// Get the place details from the autocomplete object.
+			var place = autocomplete.getPlace();
+			document.getElementById("latitude").value = autocomplete.getPlace().geometry.location
+					.lat();
+			document.getElementById("longitude").value = autocomplete
+					.getPlace().geometry.location.lng();
+		}
+		// Bias the autocomplete object to the user's geographical location,
+		// as supplied by the browser's 'navigator.geolocation' object.
+		function geolocate() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var geolocation = {
+						lat : position.coords.latitude,
+						lng : position.coords.longitude
+					};
+					var circle = new google.maps.Circle({
+						center : geolocation,
+						radius : position.coords.accuracy
+					});
+					autocomplete.setBounds(circle.getBounds());
+				});
+			}
+		}
+</script>
+
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
+async defer></script>
+<script>
+	$(function () {
+	
+	
+  $('#datedebut').datetimepicker({
+     defaultDate: new Date,
+    format: 'D/MM/YYYY HH:mm'
+	
+   
+  });
+  
+   $('#datefin').datetimepicker({
+    defaultDate: new Date,
+    format: 'D/MM/YYYY HH:mm'
+   
+   
+  });
+  
+  
+});</script>
+<script>
+	
+function dateDiff(date1, date2){
+    var diff = {}                           // Initialisation du retour
+    var tmp = date2 - date1;
+ 
+    tmp = Math.floor(tmp/1000);             // Nombre de secondes entre les 2 dates
+    diff.sec = tmp % 60;                    // Extraction du nombre de secondes
+ 
+    tmp = Math.floor((tmp-diff.sec)/60);    // Nombre de minutes (partie entière)
+    diff.min = tmp % 60;                    // Extraction du nombre de minutes
+ 
+    tmp = Math.floor((tmp-diff.min)/60);    // Nombre d'heures (entières)
+    diff.hour = tmp % 24;                   // Extraction du nombre d'heures
+     
+    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
+    diff.day = tmp;
+     
+    return diff;
+}	
+	
+function heureDiff(date1, date2){
+           
+    var tmp = date2 - date1;
+ 
+    tmp = Math.floor(tmp/1000)/3600;            
+    
+    return tmp;
+ 
+}
+	
+function valideFormulaire(){
+	
+	var datedebut=$('#datedebut').data('DateTimePicker').date();
+	var datefin=$('#datefin').data('DateTimePicker').date();
+	
+	if (datedebut>datefin)
+	{alert("date debut>datefin");
+		return false;
+	} 
+	if (datefin<new Date() ){
+		alert("date fin avant maientnant");
+		return false;
+	}
+	
+	
+	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
+	// Condition à rajouter pour le nbr d'heure max de l'activité
+	
+
+return true;
+}
+</script>
+</body>
+</html>
