@@ -885,6 +885,58 @@ public class WBservices {
 
 	}
 
+	public Activite[] getListActivites(int idpersonne, String latitudestr,
+			String longitudestr, int rayon, int idtypeactivite, String motcle,
+			long debutActivite,long finActivite,int typeUser,int accessActivite,int commenceDans, String jeton) {
+		
+		// commenceDans en minutes
+		// accessActivite payante/gratuite
+		//typeUser pro/asso/waydeur
+		
+		
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return null;
+
+			// ********************************************************
+
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			listActivite = activitedao.getListActivites(				
+					Double.valueOf(latitudestr), Double.valueOf(longitudestr),  rayon,  idtypeactivite,  motcle,
+					 debutActivite, finActivite, typeUser, accessActivite,commenceDans);
+					
+
+			for (Activite activite : listActivite) {
+				activite.defineOrganisateur(idpersonne);
+			}
+
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException | NamingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+		String loginfo = "getListActiviteAvenir - "
+				+ (System.currentTimeMillis() - debut) + "ms";
+		LOG.info(loginfo);
+		return (Activite[]) listActivite.toArray(new Activite[listActivite
+				.size()]);
+
+	}
+	
 	public Activite[] getListActiviteAvenir(int idpersonne, String latitudestr,
 			String longitudestr, int rayon, int idtypeactivite, String motcle,
 			int commencedans, String jeton) {

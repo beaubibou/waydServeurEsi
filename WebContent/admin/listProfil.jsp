@@ -26,9 +26,7 @@
 
 		<h3>Critères</h3>
 
-
 		<form class="form-inline" method="post" action="ListActivite">
-
 			<div class="form-group">
 				<label for="pseudo">Pseudo:</label> <input type="date"
 					class="form-control" id="datedebut" name="datedebut">
