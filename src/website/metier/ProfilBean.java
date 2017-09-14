@@ -32,6 +32,7 @@ public class ProfilBean {
 	private String commentaire;
 	private boolean actif,admin;
 	private int typeuser;
+	private boolean premiereconnexion;
 	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
 	private ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
 	private ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
@@ -42,6 +43,14 @@ public class ProfilBean {
 
 	public void setListSignalement(ArrayList<SignalementBean> listSignalement) {
 		this.listSignalement = listSignalement;
+	}
+
+	public boolean isPremiereconnexion() {
+		return premiereconnexion;
+	}
+
+	public void setPremiereconnexion(boolean premiereconnexion) {
+		this.premiereconnexion = premiereconnexion;
 	}
 
 	public String getUrlPhoto() {
@@ -112,7 +121,7 @@ public class ProfilBean {
 			Date datenaissance, int nbravis, int sexe, int nbractivite,
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
-			boolean actif,boolean admin,int typeuser) {
+			boolean actif,boolean admin,int typeuser,boolean premiereconnexion) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -132,7 +141,7 @@ public class ProfilBean {
 		this.admin=admin;
 		this.typeuser=typeuser;
 		this.datecreationStr = Parametres.getStringWsFromDate(datecreation);
-		
+		this.premiereconnexion=premiereconnexion;
 	}
 
 	public boolean isAdmin() {

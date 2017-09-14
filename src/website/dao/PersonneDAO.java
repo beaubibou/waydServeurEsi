@@ -35,7 +35,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser FROM personne";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion FROM personne";
 
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
@@ -60,13 +60,13 @@ public class PersonneDAO {
 				double note = rs.getDouble("note");
 				boolean admin=rs.getBoolean("admin");
 				int typeuser=rs.getInt("typeuser");
-
+				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
 				// System.out.println("Note" + note);
 
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser);
+						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
 
 				retour.add(profil);
 			
@@ -106,7 +106,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser FROM personne where idpersonne=?";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion FROM personne where idpersonne=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -134,11 +134,11 @@ public class PersonneDAO {
 				boolean admin=rs.getBoolean("admin");
 				int typeuser=rs.getInt("typeuser");
 				// System.out.println("Note" + note);
-
+				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser);
+						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
 
 			
 			
@@ -176,7 +176,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire,typeuser, photo FROM personne where login=?";
+					+ "  mail, cleactivation,commentaire,typeuser,photo,premiereconnexion FROM personne where login=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -203,13 +203,11 @@ public class PersonneDAO {
 				int sexe = rs.getInt("sexe");
 				int typeuser=rs.getInt("typeuser");
 				double note = rs.getDouble("note");
-
-				// System.out.println("Note" + note);
-				System.out.println("admin dao" + admin);
+				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser);
+						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
 	
 			
 			}

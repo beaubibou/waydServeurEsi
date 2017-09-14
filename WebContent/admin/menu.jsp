@@ -19,7 +19,7 @@
 		</div>
 		<ul class="nav navbar-nav">
 
-			<li><a href="ListActivite">popoActivités</a></li>
+			<li><a href="ListActivite">Activités</a></li>
 			<li><a href="ListProbleme">Problèmes</a></li>
 			<li><a href="ListSuggestion">Suggestions</a></li>
 			<li><a href="ListSignalementProfils">Signalements Profils</a></li>
