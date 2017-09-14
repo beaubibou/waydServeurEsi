@@ -127,9 +127,13 @@ public class Connexion extends HttpServlet {
 								personnedao.addCompteGenerique(uid, idtoken,
 										"", "", "");
 								connexion.commit();
+								
 								profil = PersonneDAO.getFullProfilByUid(uid);
 								System.out.println("user cree" + profil);
-								response.sendRedirect("auth/form_profilInscription.html");
+							
+								session.setAttribute("profil", profil);
+								response.sendRedirect("auth/form_PremierProfil.html");
+							
 								return;
 							} catch (SQLException | NamingException | IOException e) {
 								// TODO Auto-generated catch block
@@ -152,13 +156,25 @@ public class Connexion extends HttpServlet {
 						
 						if (profil != null) {
 							
+							session.setAttribute("profil", profil);
+
+							
+							if (profil.isPremiereconnexion()){
+								try {
+									response.sendRedirect("auth/form_PremierProfil.html");
+									return;
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}
 							
 							
 							if (profil.isAdmin()) {
 
 								
-								session.setAttribute("profil", profil);
-
+							
 								try {
 									response.sendRedirect("Acceuil");
 									return;
@@ -172,6 +188,7 @@ public class Connexion extends HttpServlet {
 							case ProfilBean.PRO:
 								session.setAttribute("profil", profil);
 								try {
+									System.out.println("Bacule vers acueeil pro");
 									response.sendRedirect("AcceuilPro");
 									return;
 								} catch (IOException e) {

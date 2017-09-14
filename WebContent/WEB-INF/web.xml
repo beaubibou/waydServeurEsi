@@ -212,4 +212,14 @@
     <servlet-name>Inscription</servlet-name>
     <url-pattern>/Inscription</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Form_PremierProfil</display-name>
+    <servlet-name>Form_PremierProfil</servlet-name>
+    <servlet-class>servlet.commun.Form_PremierProfil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Form_PremierProfil</servlet-name>
+    <url-pattern>/Form_PremierProfil</url-pattern>
+  </servlet-mapping>
 </web-app>

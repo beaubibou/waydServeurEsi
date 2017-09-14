@@ -11,17 +11,18 @@ import java.util.Date;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
+import wayde.bean.Parametres;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
 
-	public static ArrayList<ProfilBean> getListProfil( )  {
+	public static ArrayList<ProfilBean> getListProfil() {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		ProfilBean profil = null;
-		ArrayList<ProfilBean> retour=new ArrayList<ProfilBean>();
+		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -54,24 +55,23 @@ public class PersonneDAO {
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
-				boolean actif=rs.getBoolean("actif");
+				boolean actif = rs.getBoolean("actif");
 				String photo = rs.getString("photo");
 				int sexe = rs.getInt("sexe");
 				double note = rs.getDouble("note");
-				boolean admin=rs.getBoolean("admin");
-				int typeuser=rs.getInt("typeuser");
-				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
+				boolean admin = rs.getBoolean("admin");
+				int typeuser = rs.getInt("typeuser");
+				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
 				// System.out.println("Note" + note);
 
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
+						afficheage, commentaire, actif, admin, typeuser,
+						premiereconnexion);
 
 				retour.add(profil);
-			
-			
-			
+
 			}
 			return retour;
 
@@ -85,9 +85,8 @@ public class PersonneDAO {
 		}
 
 	}
-	
-	
-	public static ProfilBean getFullProfil(int idpersonne)  {
+
+	public static ProfilBean getFullProfil(int idpersonne) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -127,22 +126,20 @@ public class PersonneDAO {
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
-				boolean actif=rs.getBoolean("actif");
+				boolean actif = rs.getBoolean("actif");
 				String photo = rs.getString("photo");
 				int sexe = rs.getInt("sexe");
 				double note = rs.getDouble("note");
-				boolean admin=rs.getBoolean("admin");
-				int typeuser=rs.getInt("typeuser");
+				boolean admin = rs.getBoolean("admin");
+				int typeuser = rs.getInt("typeuser");
 				// System.out.println("Note" + note);
-				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
+				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
+						afficheage, commentaire, actif, admin, typeuser,
+						premiereconnexion);
 
-			
-			
-			
 			}
 			return profil;
 
@@ -156,8 +153,8 @@ public class PersonneDAO {
 		}
 
 	}
-	
-	public static ProfilBean getFullProfilByUid(String uid )  {
+
+	public static ProfilBean getFullProfilByUid(String uid) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -197,21 +194,21 @@ public class PersonneDAO {
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
-				boolean actif=rs.getBoolean("actif");
-				boolean admin=rs.getBoolean("admin");
+				boolean actif = rs.getBoolean("actif");
+				boolean admin = rs.getBoolean("admin");
 				String photo = rs.getString("photo");
 				int sexe = rs.getInt("sexe");
-				int typeuser=rs.getInt("typeuser");
+				int typeuser = rs.getInt("typeuser");
 				double note = rs.getDouble("note");
-				boolean premiereconnexion=rs.getBoolean("premiereconnexion");
+				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire,actif,admin,typeuser,premiereconnexion);
-	
-			
+						afficheage, commentaire, actif, admin, typeuser,
+						premiereconnexion);
+
 			}
-			
+
 			return profil;
 
 		} catch (SQLException | NamingException e) {
@@ -224,24 +221,23 @@ public class PersonneDAO {
 		}
 
 	}
-	
-	public static MessageBean activerProfil(int idpersonne,boolean actif)  {
+
+	public static MessageBean activerProfil(int idpersonne, boolean actif) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-	
+
 		try {
 			connexion = CxoPool.getConnection();
 
 			String requete = "UPDATE  personne set actif=? "
 					+ " WHERE idpersonne=?";
-			preparedStatement = connexion
-					.prepareStatement(requete);
+			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
 			preparedStatement.setInt(2, idpersonne);
 			preparedStatement.execute();
-			
+
 			return new MessageBean("Ok");
 
 		} catch (SQLException | NamingException e) {
@@ -255,6 +251,64 @@ public class PersonneDAO {
 		}
 
 	}
-	
+
+	public boolean updateProfilPro(String nom, String adresse, double latitude,
+			double longitude, int typeuser, String commentaire,int idpersonne) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			System.out.println("uopdate user");
+			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,premiereconnexion=false "
+					+ " WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+
+			preparedStatement.setString(1, nom);
+			preparedStatement.setString(2, adresse);
+			preparedStatement.setDouble(3, latitude);
+			preparedStatement.setDouble(4, longitude);
+			preparedStatement.setString(5, commentaire);
+			preparedStatement.setInt(6, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+
+	}
+
+	public void updateProfilAssociation(String nom, String adresse,
+			double latitude, double longitude, int typeuser) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void updateProfilWaydeur(String nom, String adresse,
+			double latitude, double longitude, int typeuser) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

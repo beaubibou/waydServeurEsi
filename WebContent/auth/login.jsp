@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Login</title>
 <meta charset="utf-8">
 <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
 <script>
   // Initialize Firebase
   var config = {
@@ -28,17 +27,19 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	 <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<div class="panel panel-info">
-				<div class="panel-heading">
+				<div class="panel panel-default">
+				<div class="panel-heading panel-heading-custom">
+		
 					<div class="panel-title">Sign In</div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
-						<a href="#">Forgot password?</a>
+						<a href="form_forget_password.html">Forgot password?</a>
 					</div>
 				</div>
 
@@ -90,12 +91,14 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Don't have an account! <a href="inscription.html">
+									Don't have an account! <a href="form_forget_password.html">
 										Sign Up Here </a>
 								</div>
 							</div>
 						</div>
 					</form>
+
+
 
 				</div>
 			</div>
