@@ -36,6 +36,9 @@ public class ProfilBean {
 	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
 	private ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
 	private ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
+	private double latitude;
+	private double longitude;
+	private String adresse;
 
 	public ArrayList<SignalementBean> getListSignalement() {
 		return listSignalement;
@@ -121,7 +124,7 @@ public class ProfilBean {
 			Date datenaissance, int nbravis, int sexe, int nbractivite,
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
-			boolean actif,boolean admin,int typeuser,boolean premiereconnexion) {
+			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -142,6 +145,9 @@ public class ProfilBean {
 		this.typeuser=typeuser;
 		this.datecreationStr = Parametres.getStringWsFromDate(datecreation);
 		this.premiereconnexion=premiereconnexion;
+		this.latitude=latitude;
+		this.longitude=longitude;
+		this.adresse=adresse;
 	}
 
 	public boolean isAdmin() {
@@ -288,6 +294,30 @@ public class ProfilBean {
 
 	public void setListActivite(ArrayList<ActiviteBean> listActivite) {
 		this.listActivite = listActivite;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
 }

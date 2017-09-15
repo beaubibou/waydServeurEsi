@@ -36,7 +36,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion FROM personne";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse FROM personne";
 
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
@@ -62,13 +62,16 @@ public class PersonneDAO {
 				boolean admin = rs.getBoolean("admin");
 				int typeuser = rs.getInt("typeuser");
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
-				// System.out.println("Note" + note);
-
+				double latitude=rs.getDouble("latitude");
+				double longitude=rs.getDouble("longitude");
+				String adresse = rs.getString("adresse");
+				
+				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion);
+						premiereconnexion,latitude,longitude,adresse);
 
 				retour.add(profil);
 
@@ -105,7 +108,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion FROM personne where idpersonne=?";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse FROM personne where idpersonne=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -134,11 +137,16 @@ public class PersonneDAO {
 				int typeuser = rs.getInt("typeuser");
 				// System.out.println("Note" + note);
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
+				double latitude=rs.getDouble("latitude");
+				double longitude=rs.getDouble("longitude");
+				String adresse = rs.getString("adresse");
+				
+				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion);
+						premiereconnexion,latitude,longitude,adresse);
 
 			}
 			return profil;
@@ -173,7 +181,8 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire,typeuser,photo,premiereconnexion FROM personne where login=?";
+					+ "  mail, cleactivation,commentaire,"
+					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse FROM personne where login=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -201,11 +210,16 @@ public class PersonneDAO {
 				int typeuser = rs.getInt("typeuser");
 				double note = rs.getDouble("note");
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
+				double latitude=rs.getDouble("latitude");
+				double longitude=rs.getDouble("longitude");
+				String adresse = rs.getString("adresse");
+				
+				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion);
+						premiereconnexion,latitude,longitude,adresse);
 
 			}
 
@@ -261,7 +275,7 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
-			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,premiereconnexion=false "
+			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,premiereconnexion=false,typeuser=? "
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -271,7 +285,9 @@ public class PersonneDAO {
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
 			preparedStatement.setString(5, commentaire);
-			preparedStatement.setInt(6, idpersonne);
+			preparedStatement.setInt(6, typeuser);
+			preparedStatement.setInt(7, idpersonne);
+			
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
