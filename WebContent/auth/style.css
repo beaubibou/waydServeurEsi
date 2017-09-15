@@ -1,0 +1,8 @@
+.table-responsive>.table>tbody>tr>td{
+    vertical-align: middle;
+    
+}
+
+.panel-default > .panel-heading-custom {
+    background: #ffD740; color: #fff;
+}
