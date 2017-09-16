@@ -36,7 +36,8 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse FROM personne";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,"
+					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone FROM personne";
 
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
@@ -66,12 +67,14 @@ public class PersonneDAO {
 				double longitude=rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
 				
+				String telephone=rs.getString("telephone");	
+				String siteWeb=rs.getString("siteweb");
 				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse);
+						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone);
 
 				retour.add(profil);
 
@@ -108,7 +111,9 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse FROM personne where idpersonne=?";
+					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse"
+					+ ",siteweb,telephone "
+					+ " FROM personne where idpersonne=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -140,13 +145,14 @@ public class PersonneDAO {
 				double latitude=rs.getDouble("latitude");
 				double longitude=rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-				
+				String telephone=rs.getString("telephone");	
+				String siteWeb=rs.getString("siteweb");
 				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse);
+						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone);
 
 			}
 			return profil;
@@ -182,7 +188,8 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire,"
-					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse FROM personne where login=?";
+					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse"
+					+ ",siteweb,telephone FROM personne where login=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -213,13 +220,14 @@ public class PersonneDAO {
 				double latitude=rs.getDouble("latitude");
 				double longitude=rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-				
+				String telephone=rs.getString("telephone");	
+				String siteWeb=rs.getString("siteweb");
 				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse);
+						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone);
 
 			}
 
@@ -279,7 +287,6 @@ public class PersonneDAO {
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
-
 			preparedStatement.setString(1, nom);
 			preparedStatement.setString(2, adresse);
 			preparedStatement.setDouble(3, latitude);
@@ -287,7 +294,6 @@ public class PersonneDAO {
 			preparedStatement.setString(5, commentaire);
 			preparedStatement.setInt(6, typeuser);
 			preparedStatement.setInt(7, idpersonne);
-			
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
@@ -314,6 +320,59 @@ public class PersonneDAO {
 		return true;
 
 	}
+	
+	
+	public boolean updateProfilProFull(String nom, String adresse, double latitude,
+			double longitude,  String commentaire,int idpersonne,String siteWeb,String telephone) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			System.out.println("uopdate user");
+			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
+					+ "siteweb=?,telephone=? "
+					+ " WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setString(1, nom);
+			preparedStatement.setString(2, adresse);
+			preparedStatement.setDouble(3, latitude);
+			preparedStatement.setDouble(4, longitude);
+			preparedStatement.setString(5, commentaire);
+			preparedStatement.setString(6, siteWeb);
+			preparedStatement.setString(7, telephone);
+			preparedStatement.setInt(8, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+		
+			
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+
+	}
+	
+	
 
 	public void updateProfilAssociation(String nom, String adresse,
 			double latitude, double longitude, int typeuser) {

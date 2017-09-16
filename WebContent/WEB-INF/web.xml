@@ -222,4 +222,14 @@
     <servlet-name>Form_PremierProfil</servlet-name>
     <url-pattern>/Form_PremierProfil</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ComptePro</display-name>
+    <servlet-name>ComptePro</servlet-name>
+    <servlet-class>servlet.pro.ComptePro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ComptePro</servlet-name>
+    <url-pattern>/ComptePro</url-pattern>
+  </servlet-mapping>
 </web-app>

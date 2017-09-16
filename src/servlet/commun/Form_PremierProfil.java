@@ -57,7 +57,6 @@ public class Form_PremierProfil extends HttpServlet {
 
 			case ProfilBean.PRO:
 
-				
 					personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
 							typeuser,commentaire,profil.getId());
 					profil.setPseudo(nom);
@@ -66,6 +65,7 @@ public class Form_PremierProfil extends HttpServlet {
 					profil.setTypeuser(typeuser);
 					profil.setLatitude(latitude);
 					profil.setLongitude(longitude);
+					profil.setPremiereconnexion(false);
 					response.sendRedirect("AcceuilPro");
 
 				break;

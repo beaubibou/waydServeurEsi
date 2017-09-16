@@ -39,6 +39,39 @@ public class ProfilBean {
 	private double latitude;
 	private double longitude;
 	private String adresse;
+	private String siteWeb;
+	private String telephone;
+
+	
+	public String getSiteWeb() {
+		return siteWeb;
+	}
+
+	public void setSiteWeb(String siteWeb) {
+		this.siteWeb = siteWeb;
+	}
+	
+	
+
+	public String getTelephone() {
+		return telephone;
+	}
+	
+	public String getTelephoneStr() {
+	if (telephone==null)
+		return "";
+	return telephone;
+	}
+	
+	public String getSiteWebStr() {
+		if (siteWeb==null)
+			return "";
+		return siteWeb;
+		}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	public ArrayList<SignalementBean> getListSignalement() {
 		return listSignalement;
@@ -100,6 +133,12 @@ public class ProfilBean {
 	public String getCommentaire() {
 		return commentaire;
 	}
+	
+	public String getCommentaireStr() {
+		if (commentaire==null)
+			return "";
+		return commentaire;
+	}
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
@@ -124,7 +163,8 @@ public class ProfilBean {
 			Date datenaissance, int nbravis, int sexe, int nbractivite,
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
-			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse) {
+			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse,String siteWeb,
+			String telephone) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -148,6 +188,8 @@ public class ProfilBean {
 		this.latitude=latitude;
 		this.longitude=longitude;
 		this.adresse=adresse;
+		this.siteWeb=siteWeb;
+		this.telephone=telephone;
 	}
 
 	public boolean isAdmin() {
@@ -318,6 +360,22 @@ public class ProfilBean {
 
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+	}
+
+	@Override
+	public String toString() {
+		return "ProfilBean [id=" + id + ", nom=" + nom + ", pseudo=" + pseudo
+				+ ", ville=" + ville + ", datecreationStr=" + datecreationStr
+				+ ", nbravis=" + nbravis + ", sexe=" + sexe + ", nbractivite="
+				+ nbractivite + ", nbrparticipation=" + nbrparticipation
+				+ ", nbrami=" + nbrami + ", note=" + note + ", photostr="
+				+ photostr + ", age=" + age + ", commentaire=" + commentaire
+				+ ", actif=" + actif + ", admin=" + admin + ", typeuser="
+				+ typeuser + ", premiereconnexion=" + premiereconnexion
+				+ ", listAmi=" + listAmi + ", listActivite=" + listActivite
+				+ ", listSignalement=" + listSignalement + ", latitude="
+				+ latitude + ", longitude=" + longitude + ", adresse="
+				+ adresse + "]";
 	}
 
 }
