@@ -18,7 +18,8 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-<link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+
 
 <script>
 	var latitude = 0;
@@ -27,6 +28,7 @@
 
 </head>
 <body>
+
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
@@ -34,14 +36,14 @@
 
 		}
 	%>
-
+<%@ include file="menu.jsp"%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-8 col-md-offset-3 col-sm-8">
+			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Inscription</div>
+					<div class="panel-title">Mon compte</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 

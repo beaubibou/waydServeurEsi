@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>>Cr√©ation activit√©</title>
+  <title>>CrÈation activitÈ</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+
  
- <script src="js/moment.js"></script>
+<script src="js/moment.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
+<%@ include file="menu.jsp"%>
 <div class="container">
-  <h2>Description de l'activit√©</h2>
-  </br>
-  <form action="../AjouteActivite" onsubmit="return valideFormulaire()" method="post">
+		<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-heading-custom">
+					<div class="panel-title">Mon compte</div>
+				</div>
+				<div style="padding-top: 30px" class="panel-body">
+  <form action="/wayd/AjouteActivite" onsubmit="return valideFormulaire()" method="post">
     <div class="form-group">
       <label for="titre">Titre:</label>
-      <input type="text" class="form-control" id="titre" placeholder="Nom " name="titre">
+      <input type="text" class="form-control" id="titre" required placeholder="Nom " name="titre">
     </div>
     <div class="form-group">
       <label for="adresse">Adresse:</label>
-      <input type="text" class="form-control" id="adresse" placeholder="Renseigner l'adresse" name="adresse">
+      <input type="text" class="form-control" id="adresse" required placeholder="Renseigner l'adresse" name="adresse" onkeypress="initPosition()">
     </div>
     
      <div class="form-group">
@@ -32,17 +50,17 @@
        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
     </div>
       <div class="form-group">
-    <label for="acces">Acces √† l'activit√©:</label>
+    <label for="acces">Acces ‡ l'activitÈe:</label>
     
       <select class="form-control" id="type" name="typeaccess">
         <option value="1">Gratuite</option>
         <option value="2">Payante</option>
-        <option value="3">Entr√©e gratuite</option>
+        <option value="3">EntrÈe gratuite</option>
       
        </select>
      </div>
         <div class="form-group"> 
-   <label for="typeactivite">Type d'activit√©:</label>
+   <label for="typeactivite">Type d'activitÈe:</label>
     
       <select class="form-control" id="type" name="typeactivite">
         <option value="1">Vente flash</option>
@@ -100,6 +118,11 @@
   
   </form>
   
+
+
+				</div>
+			</div>
+		</div>
 
    
 </div>
@@ -212,6 +235,20 @@ function valideFormulaire(){
 	var datedebut=$('#datedebut').data('DateTimePicker').date();
 	var datefin=$('#datefin').data('DateTimePicker').date();
 	
+	
+	// Verifie les positions
+	latitude=document.getElementById("latitude").value ;
+	longitude=document.getElementById("longitude").value ;
+		
+	
+		
+		if (latitude == 0 || longitude == 0) {
+			alert();
+			BootstrapDialog
+					.alert('La position GPS de votre adresse n\'a pas ÈtÈ trouvÈe. Veuillez ressaisir votre adresse');
+			return false;
+		}
+	
 	//if (datedebut>datefin)
 	//{alert("date debut>datefin");
 	//	return false;
@@ -227,6 +264,15 @@ function valideFormulaire(){
 	
 
 return true;
+}
+
+function initPosition() {
+	latitude = 0;
+	longitude = 0;
+	document.getElementById("latitude").value=0;
+	longitude=document.getElementById("longitude").value=0;
+	
+
 }
 </script>
 </body>
