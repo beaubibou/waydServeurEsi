@@ -232,4 +232,14 @@
     <servlet-name>ComptePro</servlet-name>
     <url-pattern>/ComptePro</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjouteActivite</display-name>
+    <servlet-name>AjouteActivite</servlet-name>
+    <servlet-class>servlet.pro.AjouteActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouteActivite</servlet-name>
+    <url-pattern>/AjouteActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

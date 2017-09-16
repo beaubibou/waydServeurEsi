@@ -50,7 +50,6 @@
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Nom*:</label>
-
 						</div>
 						<div class="form-group">
 							<div class="row">

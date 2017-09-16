@@ -1,7 +1,9 @@
 package website.metier;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -10,6 +12,17 @@ public class Outils {
 	public static int nbrLigneParPage=6;
 	public static int nbrMaxPagination=8;
 
+	public static Date getDateFromString(String datestr) throws ParseException{
+	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Date d = sdf.parse(datestr);
+		Calendar caldate = Calendar.getInstance();
+		caldate.setTime(d);
+		System.out.println(datestr);
+		System.out.println(d);
+		
+		return caldate.getTime();
+	}
 	
 	public static String getStringWsFromDate(Date date) {
 		if (date == null)

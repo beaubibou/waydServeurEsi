@@ -17,7 +17,7 @@
 <div class="container">
   <h2>Description de l'activité</h2>
   </br>
-  <form action="/action_page.php" onsubmit="return valideFormulaire()">
+  <form action="../AjouteActivite" onsubmit="return valideFormulaire()" method="post">
     <div class="form-group">
       <label for="titre">Titre:</label>
       <input type="text" class="form-control" id="titre" placeholder="Nom " name="titre">
@@ -34,7 +34,7 @@
       <div class="form-group">
     <label for="acces">Acces à l'activité:</label>
     
-      <select class="form-control" id="type" name="type">
+      <select class="form-control" id="type" name="typeaccess">
         <option value="1">Gratuite</option>
         <option value="2">Payante</option>
         <option value="3">Entrée gratuite</option>
@@ -44,7 +44,7 @@
         <div class="form-group"> 
    <label for="typeactivite">Type d'activité:</label>
     
-      <select class="form-control" id="type" name="type">
+      <select class="form-control" id="type" name="typeactivite">
         <option value="1">Vente flash</option>
         <option value="2">Exposition</option>
         <option value="3">Happy hours</option>
@@ -162,14 +162,14 @@ async defer></script>
 	
   $('#datedebut').datetimepicker({
      defaultDate: new Date,
-    format: 'D/MM/YYYY HH:mm'
+    format: 'DD/MM/YYYY HH:mm'
 	
    
   });
   
    $('#datefin').datetimepicker({
     defaultDate: new Date,
-    format: 'D/MM/YYYY HH:mm'
+    format: 'DD/MM/YYYY HH:mm'
    
    
   });
@@ -212,17 +212,17 @@ function valideFormulaire(){
 	var datedebut=$('#datedebut').data('DateTimePicker').date();
 	var datefin=$('#datefin').data('DateTimePicker').date();
 	
-	if (datedebut>datefin)
-	{alert("date debut>datefin");
-		return false;
-	} 
-	if (datefin<new Date() ){
-		alert("date fin avant maientnant");
-		return false;
-	}
+	//if (datedebut>datefin)
+	//{alert("date debut>datefin");
+	//	return false;
+	//} 
+	//if (datefin<new Date() ){
+	//	alert("date fin avant maientnant");
+	//	return false;
+	//}
 	
 	
-	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
+//	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
 	// Condition à rajouter pour le nbr d'heure max de l'activité
 	
 
