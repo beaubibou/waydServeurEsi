@@ -214,7 +214,7 @@ function popup(){
 			  // Send token to your backend via HTTPS
 			  // ...
 			//  document.getElementById("demo").innerHTML ="opo";
-			   document.location.href="Connexion?token="+idToken;
+			   document.location.href="/wayd/Connexion?token="+idToken;
 		 
 		  }).catch(function(error) {
 			  var errorMessage = error.message;
@@ -249,7 +249,7 @@ function signPassword(){
 			  // Send token to your backend via HTTPS
 			
 			//  document.getElementById("login-username").innerHTML ="opo";
-			   document.location.href="../Connexion?token="+idToken;
+			   document.location.href="/wayd/Connexion?token="+idToken+"&pwd=1";
 		  
 		  }).catch(function(error) {
 			  // Handle error

@@ -23,7 +23,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="Deconnexion"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+        <li><a href="/wayd/Deconnexion"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
       </ul>
     </div>
   </div>

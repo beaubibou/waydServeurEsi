@@ -81,7 +81,10 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		System.out.println("token " + request.getParameter("token"));
-		testToken(request.getParameter("token"), request, response);
+		
+		String pwd=(String)request.getParameter("pwd");
+		
+		testToken(request.getParameter("token"), request, response,pwd);
 
 	}
 
@@ -103,7 +106,7 @@ public class Connexion extends HttpServlet {
 	}
 
 	public void testToken(String idtoken, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String pwd) {
 
 		HttpSession session = request.getSession();
 
@@ -113,6 +116,18 @@ public class Connexion extends HttpServlet {
 					public void onSuccess(FirebaseToken decodedToken) {
 
 						String uid = decodedToken.getUid();
+						
+						if (!decodedToken.isEmailVerified() && pwd!=null ){
+							
+							try {
+								response.sendRedirect("/wayd/erreur/emailNonValide.jsp");
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							return;
+						}
+						
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 						System.out.println("admin" + profil);
 						
@@ -132,7 +147,7 @@ public class Connexion extends HttpServlet {
 								System.out.println("user cree" + profil);
 							
 								session.setAttribute("profil", profil);
-								response.sendRedirect("auth/form_PremierProfil.html");
+								response.sendRedirect("/wayd/auth/form_PremierProfil.html");
 							
 								return;
 							} catch (SQLException | NamingException | IOException e) {
@@ -161,7 +176,7 @@ public class Connexion extends HttpServlet {
 							
 							if (profil.isPremiereconnexion()){
 								try {
-									response.sendRedirect("auth/form_PremierProfil.html");
+									response.sendRedirect("/wayd/auth/form_PremierProfil.html");
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
