@@ -117,16 +117,16 @@ public class Connexion extends HttpServlet {
 
 						String uid = decodedToken.getUid();
 						
-						if (!decodedToken.isEmailVerified() && pwd!=null ){
-							
-							try {
-								response.sendRedirect("/wayd/erreur/emailNonValide.jsp");
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							return;
-						}
+//						if (!decodedToken.isEmailVerified() && pwd!=null ){
+//							
+//							try {
+//								response.sendRedirect("/wayd/erreur/emailNonValide.jsp");
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							return;
+//						}
 						
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 						System.out.println("admin" + profil);

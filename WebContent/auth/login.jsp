@@ -39,7 +39,7 @@
 					<div class="panel-title">Sign In</div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
-						<a href="form_forget_password.html">Forgot password?</a>
+						<a href="form_forget_password.html">Mot de passe oublié?</a>
 					</div>
 				</div>
 
@@ -91,8 +91,8 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Don't have an account! <a href="form_forget_password.html">
-										Sign Up Here </a>
+									Pas de compte! <a href="form_creation_compte.html">
+										Inscrivez vous!! </a>
 								</div>
 							</div>
 						</div>

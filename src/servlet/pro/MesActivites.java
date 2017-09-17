@@ -50,9 +50,19 @@ public class MesActivites extends HttpServlet {
 				}
 
 				ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
-				System.out.println(listMesActivite.size());
-				request.setAttribute("listMesActivite", listMesActivite);
-				request.getRequestDispatcher("pro/mesActivite.jsp").forward(request, response);
+				if (listMesActivite.size()==0){
+				
+					request.setAttribute("titre", "Conseil");
+					request.setAttribute("message", "il faut ajouter une activité");
+					request.getRequestDispatcher("pro/MessageInfo.jsp").forward(request, response);
+					
+				}else
+				{
+					request.setAttribute("listMesActivite", listMesActivite);
+					request.getRequestDispatcher("pro/mesActivite.jsp").forward(request, response);
+				
+					
+				}
 				
 				
 
