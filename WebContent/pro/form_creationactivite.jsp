@@ -1,7 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>>Cr�ation activit�</title>
+  <title>>Création activité</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -32,7 +34,7 @@
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Mon compte</div>
+					<div class="panel-title">Ajoute une activité</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
   <form action="/wayd/AjouteActivite" onsubmit="return valideFormulaire()" method="post">
@@ -50,17 +52,17 @@
        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
     </div>
       <div class="form-group">
-    <label for="acces">Acces � l'activit�e:</label>
+    <label for="acces">Acces à l'activitée:</label>
     
       <select class="form-control" id="type" name="typeaccess">
         <option value="1">Gratuite</option>
         <option value="2">Payante</option>
-        <option value="3">Entr�e gratuite</option>
+        <option value="3">Entrée gratuite</option>
       
        </select>
      </div>
         <div class="form-group"> 
-   <label for="typeactivite">Type d'activit�e:</label>
+   <label for="typeactivite">Type d'activitée:</label>
     
       <select class="form-control" id="type" name="typeactivite">
         <option value="1">Vente flash</option>
@@ -100,15 +102,15 @@
    </div>
    
    
-    <button type="submit" class="btn btn-default">Enregistrer</button>
+    <button type="submit" class="btn btn-info">Enregistrer</button>
     
      <div class="form-group">
-      <label for="latitude">Latitude:</label>
-      <input type="text" class="form-control" id="latitude" placeholder="Renseigner l'adresse" name="latitude">
+ 
+      <input type="hidden" class="form-control" id="latitude" placeholder="latitude" name="latitude">
     </div>
      <div class="form-group">
-      <label for="longitude">Longitude:</label>
-      <input type="text" class="form-control" id="longitude" placeholder="Renseigner l'adresse" name="longitude">
+     
+      <input type="hidden" class="form-control" id="longitude" placeholder="longitude" name="longitude">
     </div>
     
    <div class="form-group">
@@ -208,10 +210,10 @@ function dateDiff(date1, date2){
     tmp = Math.floor(tmp/1000);             // Nombre de secondes entre les 2 dates
     diff.sec = tmp % 60;                    // Extraction du nombre de secondes
  
-    tmp = Math.floor((tmp-diff.sec)/60);    // Nombre de minutes (partie entière)
+    tmp = Math.floor((tmp-diff.sec)/60);    // Nombre de minutes (partie entiÃ¨re)
     diff.min = tmp % 60;                    // Extraction du nombre de minutes
  
-    tmp = Math.floor((tmp-diff.min)/60);    // Nombre d'heures (entières)
+    tmp = Math.floor((tmp-diff.min)/60);    // Nombre d'heures (entiÃ¨res)
     diff.hour = tmp % 24;                   // Extraction du nombre d'heures
      
     tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
@@ -245,7 +247,7 @@ function valideFormulaire(){
 		if (latitude == 0 || longitude == 0) {
 			alert();
 			BootstrapDialog
-					.alert('La position GPS de votre adresse n\'a pas �t� trouv�e. Veuillez ressaisir votre adresse');
+					.alert('La position GPS de votre adresse n\'a pas été trouvée. Veuillez ressaisir votre adresse');
 			return false;
 		}
 	
@@ -260,7 +262,7 @@ function valideFormulaire(){
 	
 	
 //	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
-	// Condition à rajouter pour le nbr d'heure max de l'activité
+	// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 	
 
 return true;

@@ -121,7 +121,6 @@
   <servlet-mapping>
     <servlet-name>Controleur</servlet-name>
     <url-pattern>/Controleur</url-pattern>
-     
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -202,7 +201,6 @@
   <servlet-mapping>
     <servlet-name>AcceuilPro</servlet-name>
     <url-pattern>/AcceuilPro</url-pattern>
-    
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -233,18 +231,65 @@
   <servlet-mapping>
     <servlet-name>ComptePro</servlet-name>
     <url-pattern>/ComptePro</url-pattern>
-    
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>AjouteActivite</display-name>
     <servlet-name>AjouteActivite</servlet-name>
-    
     <servlet-class>servlet.pro.AjouteActivite</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AjouteActivite</servlet-name>
     <url-pattern>/AjouteActivite</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MesActivites</display-name>
+    <servlet-name>MesActivites</servlet-name>
+    <servlet-class>servlet.pro.MesActivites</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MesActivites</servlet-name>
+    <url-pattern>/MesActivites</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SupprimeActivite</display-name>
+    <servlet-name>SupprimeActivite</servlet-name>
+    <servlet-class>servlet.pro.SupprimeActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimeActivite</servlet-name>
+    <url-pattern>/SupprimeActivite</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Deconnexion</display-name>
+    <servlet-name>Deconnexion</servlet-name>
+    <servlet-class>servlet.pro.Deconnexion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Deconnexion</servlet-name>
+    <url-pattern>/Deconnexion</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ConfirmDialog</display-name>
+    <servlet-name>ConfirmDialog</servlet-name>
+    <servlet-class>servlet.pro.ConfirmDialog</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConfirmDialog</servlet-name>
+    <url-pattern>/ConfirmDialog</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Map</display-name>
+    <servlet-name>Map</servlet-name>
+    <servlet-class>servlet.pro.Map</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Map</servlet-name>
+    <url-pattern>/Map</url-pattern>
   </servlet-mapping>
 </web-app>

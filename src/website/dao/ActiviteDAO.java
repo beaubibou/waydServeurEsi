@@ -72,7 +72,7 @@ public class ActiviteDAO {
 		ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
 
 		if (!activite.isActive()) {
-
+			
 			return new MessageBean("L'activité n'est plus active");
 		}
 

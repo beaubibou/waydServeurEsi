@@ -1,3 +1,9 @@
+<%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.ProfilBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +24,18 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
-    </ul>
-  </div>
-</nav>
+<%@ include file="menu.jsp"%>
+	
+	
+<%
+
+ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+
+ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+
+%>
+
+
     <div id="map-container" class="col-sm-5 col-md-6 col-lg-12" style="background-color:yellow;">
      
     </div>
@@ -43,37 +48,41 @@
     <script>	
  
       function init_map() {
-		var var_location = new google.maps.LatLng(45.430817,12.331516);
-        
+	//	var var_location = new google.maps.LatLng(45.430817,12.331516);
+        var var_location = new google.maps.LatLng(<%=profil.getLatitude()%>,<%=profil.getLongitude()%>);
+       
          var var_mapoptions = {
           center: var_location,
-          zoom: 14
+          zoom: 12
         };
         
         var var_map = new google.maps.Map(document.getElementById("map-container"),
             var_mapoptions);
  
-       positionItem = new google.maps.LatLng(45.430817,12.331516);
+      
+     <%
+     for (ActiviteBean activite : listMesActivite) {
+			%>
+        
+        positionItem = new google.maps.LatLng(<%=activite.getLatitude()%>,<%=activite.getLongitude()%>);
        
 		 var_marker = new google.maps.Marker({
 			position: positionItem,
 			map: var_map,
 			title:"Venice"});
 	      var_marker.setMap(var_map);	
-	      
-	       positionItem = new google.maps.LatLng(45.420817,12.331516);
-       
-		 var_marker = new google.maps.Marker({
-			position: positionItem,
-			map: var_map,
-			title:"Venice"});
-	      var_marker.setMap(var_map);	
+	     
+	      <%}%>
+	       	
 	    
  
       }
  
       google.maps.event.addDomListener(window, 'load', init_map);
  
+    </script>
+      <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&callback=initMap">
     </script>
 </body>
 </html>

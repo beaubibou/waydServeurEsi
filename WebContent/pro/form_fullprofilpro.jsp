@@ -1,4 +1,6 @@
 <%@page import="website.metier.ProfilBean"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +38,7 @@
 
 		}
 	%>
-<%@ include file="menu.jsp"%>
+	<%@ include file="menu.jsp"%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -50,18 +52,24 @@
 
 					<form action="../ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
-						<div class="form-group">
-							<label for="nom">Nom*:</label>
-						</div>
+
+
+
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
-									<input type="text" class="form-control" id="nom"
-										placeholder="Nom " name="nom" required value=<%out.println(profil.getPseudo());%>>
+									<div class="form-group">
+										<label for="nom">Nom*:</label> <input type="text"
+											class="form-control" id="nom" placeholder="Nom " name="nom"
+											required value=<%out.println(profil.getPseudo());%>>
+									</div>
 								</div>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" disabled="true"
-										id="nom" placeholder="Nom " name="nom" value="Professionel">
+									<div class="form-group">
+										<label for="typro">Compte:</label> <input type="text"
+											class="form-control" disabled id="typepro"
+											value="Professionel">
+									</div>
 								</div>
 
 							</div>
@@ -79,7 +87,11 @@
 						<div class="form-group">
 							<label for="commentaire">Renseignements:</label>
 							<textarea class="form-control" rows="5" id="commentaire"
-								name="commentaire"   ><%out.println(profil.getCommentaireStr());%></textarea>
+								name="commentaire">
+								<%
+									out.println(profil.getCommentaireStr());
+								%>
+							</textarea>
 						</div>
 
 
@@ -90,15 +102,17 @@
 										<label for="siteweb">Site web:</label>
 									</div>
 									<input type="text" class="form-control" id="siteweb"
-										placeholder="http://monsite.fr" name="siteweb" value=<%out.println(profil.getSiteWebStr());%>>
+										placeholder="http://monsite.fr" name="siteweb"
+										value=<%out.println(profil.getSiteWebStr());%>>
 								</div>
 
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="tel">T�l�phone</label>
+										<label for="tel">Téléphone</label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="06-xx-xx-xx" name="telephone" value=<%out.println(profil.getTelephoneStr());%>>
+										placeholder="06-xx-xx-xx" name="telephone"
+										value=<%out.println(profil.getTelephoneStr());%>>
 								</div>
 
 							</div>
@@ -108,12 +122,12 @@
 
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="latitude"
+							<input type="hidden" class="form-control" id="latitude"
 								name="latitude" value=<%out.println(profil.getLatitude());%>>
 						</div>
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="longitude"
+							<input type="hidden" class="form-control" id="longitude"
 								name="longitude" value=<%out.println(profil.getLongitude());%>>
 						</div>
 
@@ -123,86 +137,85 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
 
-		<script>
-			var placeSearch, autocomplete;
-			var componentForm = {
-				street_number : 'short_name',
-				route : 'long_name',
-				locality : 'long_name',
-				administrative_area_level_1 : 'short_name',
-				country : 'long_name',
-				postal_code : 'short_name'
-			};
-			function initAutocomplete() {
-				// Create the autocomplete object, restricting the search to geographical
-				// location types.
-				autocomplete = new google.maps.places.Autocomplete(
-				/** @type {!HTMLInputElement} */
-				(document.getElementById('adresse')), {
-					types : [ 'geocode' ]
+	<script>
+		var placeSearch, autocomplete;
+		var componentForm = {
+			street_number : 'short_name',
+			route : 'long_name',
+			locality : 'long_name',
+			administrative_area_level_1 : 'short_name',
+			country : 'long_name',
+			postal_code : 'short_name'
+		};
+		function initAutocomplete() {
+			// Create the autocomplete object, restricting the search to geographical
+			// location types.
+			autocomplete = new google.maps.places.Autocomplete(
+			/** @type {!HTMLInputElement} */
+			(document.getElementById('adresse')), {
+				types : [ 'geocode' ]
+			});
+			// When the user selects an address from the dropdown, populate the address
+			// fields in the form.
+			autocomplete.addListener('place_changed', fillInAddress);
+		}
+		function fillInAddress() {
+			// Get the place details from the autocomplete object.
+
+			var place = autocomplete.getPlace();
+			document.getElementById("latitude").value = autocomplete.getPlace().geometry.location
+					.lat();
+			document.getElementById("longitude").value = autocomplete
+					.getPlace().geometry.location.lng();
+			latitude = autocomplete.getPlace().geometry.location.lat();
+
+			longitude = autocomplete.getPlace().geometry.location.lng();
+
+		}
+		// Bias the autocomplete object to the user's geographical location,
+		// as supplied by the browser's 'navigator.geolocation' object.
+		function geolocate() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var geolocation = {
+						lat : position.coords.latitude,
+						lng : position.coords.longitude
+					};
+					var circle = new google.maps.Circle({
+						center : geolocation,
+						radius : position.coords.accuracy
+					});
+					autocomplete.setBounds(circle.getBounds());
 				});
-				// When the user selects an address from the dropdown, populate the address
-				// fields in the form.
-				autocomplete.addListener('place_changed', fillInAddress);
 			}
-			function fillInAddress() {
-				// Get the place details from the autocomplete object.
+		}
+	</script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
+		async defer></script>
 
-				var place = autocomplete.getPlace();
-				document.getElementById("latitude").value = autocomplete
-						.getPlace().geometry.location.lat();
-				document.getElementById("longitude").value = autocomplete
-						.getPlace().geometry.location.lng();
-				latitude = autocomplete.getPlace().geometry.location.lat();
+	<script>
+		function valideFormulaire() {
 
-				longitude = autocomplete.getPlace().geometry.location.lng();
-
+			latitude = document.getElementById("latitude").value;
+			longitude = document.getElementById("longitude").value;
+			if (latitude == 0 || longitude == 0) {
+				BootstrapDialog
+						.alert('La position GPS de votre adresse n\'a pas Ã©tÃ© trouvÃ©e. Veuillez ressaisir votre adresse');
+				return false;
 			}
-			// Bias the autocomplete object to the user's geographical location,
-			// as supplied by the browser's 'navigator.geolocation' object.
-			function geolocate() {
-				if (navigator.geolocation) {
-					navigator.geolocation
-							.getCurrentPosition(function(position) {
-								var geolocation = {
-									lat : position.coords.latitude,
-									lng : position.coords.longitude
-								};
-								var circle = new google.maps.Circle({
-									center : geolocation,
-									radius : position.coords.accuracy
-								});
-								autocomplete.setBounds(circle.getBounds());
-							});
-				}
-			}
-		</script>
-		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
-			async defer></script>
+		}
 
-		<script>
-			function valideFormulaire() {
-				
-			latitude=document.getElementById("latitude").value ;
-			longitude=document.getElementById("longitude").value ;
-				if (latitude == 0 || longitude == 0) {
-					BootstrapDialog
-							.alert('La position GPS de votre adresse n\'a pas été trouvée. Veuillez ressaisir votre adresse');
-					return false;
-				}
-			}
+		function initPosition() {
+			latitude = 0;
+			longitude = 0;
+			document.getElementById("latitude").value = 0;
+			longitude = document.getElementById("longitude").value = 0;
 
-			function initPosition() {
-				latitude = 0;
-				longitude = 0;
-				document.getElementById("latitude").value=0;
-				longitude=document.getElementById("longitude").value=0;
-				
-
-			}
-		</script>
+		}
+	</script>
 </body>
 </html>

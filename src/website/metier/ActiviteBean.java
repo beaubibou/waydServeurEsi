@@ -287,6 +287,13 @@ public class ActiviteBean {
 		}
 
 	}
+	
+	public String getEtat(){
+		
+		if (isActive())return "En cours";
+	
+		return "Terminée";
+	}
 
 	public int getTypeactivite() {
 		return typeactivite;

@@ -51,13 +51,8 @@ public class AcceuilPro extends HttpServlet {
 		}
 		//*********************************************************
 			
-			IndicateurWayd 	indicateur=ActiviteDAO.getIndicateurs();
-			indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
-			indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());
-			indicateur.setNbrActiviteDuJour(StatDAO.getNbrActiviteDuJour());
-			indicateur.setNbrParticipationDuJour(StatDAO.getNbrParticipationDuJour());
-			request.setAttribute("indicateur", indicateur);
-			request.getRequestDispatcher("pro/listActivite.jsp").forward(request, response);
+			
+			request.getRequestDispatcher("MesActivites").forward(request, response);
 		
 		
 		// TODO Auto-generated method stub
