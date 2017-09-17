@@ -36,7 +36,7 @@ ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getA
 %>
 
 
-    <div id="map-container" class="col-sm-5 col-md-6 col-lg-12" style="background-color:yellow;">
+    <div id="map-container" class="col-sm-5 col-md-6 col-lg-12" style="background-color:white;">
      
     </div>
    

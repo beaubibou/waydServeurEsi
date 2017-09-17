@@ -48,12 +48,8 @@
 					<div class="panel-title">Mon compte</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
-
-
 					<form action="../ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
-
-
 
 						<div class="form-group">
 							<div class="row">

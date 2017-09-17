@@ -65,6 +65,11 @@ public class Form_PremierProfil extends HttpServlet {
 					profil.setTypeuser(typeuser);
 					profil.setLatitude(latitude);
 					profil.setLongitude(longitude);
+				
+					profil.setLatitudeFixe(latitude);
+					profil.setLongitudeFixe(longitude);
+							
+					
 					profil.setPremiereconnexion(false);
 					response.sendRedirect("AcceuilPro");
 

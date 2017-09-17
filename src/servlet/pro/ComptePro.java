@@ -88,6 +88,8 @@ public class ComptePro extends HttpServlet {
 			profil.setCommentaire(commentaire);
 			profil.setLatitude(latitude);
 			profil.setLongitude(longitude);
+			profil.setLatitudeFixe(latitude);
+			profil.setLongitudeFixe(longitude);
 			profil.setPremiereconnexion(false);
 			response.sendRedirect("AcceuilPro");
 			

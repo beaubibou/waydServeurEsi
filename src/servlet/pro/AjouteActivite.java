@@ -44,6 +44,8 @@ public class AjouteActivite extends HttpServlet {
 			return;
 		}
 
+		
+		
 			
 		
 		response.sendRedirect("pro/form_creationactivite.jsp");

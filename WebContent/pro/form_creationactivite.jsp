@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
+	<%@page import="website.metier.ProfilBean"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,15 @@
 </head>
 <body>
 <%@ include file="menu.jsp"%>
+
+	<%ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+System.out.println(profil.getAdresse());
+
+		if (profil == null) {
+
+		}
+		
+		%>
 <div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
@@ -44,7 +54,7 @@
     </div>
     <div class="form-group">
       <label for="adresse">Adresse:</label>
-      <input type="text" class="form-control" id="adresse" required placeholder="Renseigner l'adresse" name="adresse" onkeypress="initPosition()">
+      <input type="text"  class="form-control" id="adresse" required placeholder="<%out.println(profil.getAdresse());%>" name="adresse" onkeypress="initPosition()" >
     </div>
     
      <div class="form-group">
@@ -106,11 +116,11 @@
     
      <div class="form-group">
  
-      <input type="hidden" class="form-control" id="latitude" placeholder="latitude" name="latitude">
+      <input type="text" class="form-control" id="latitude" placeholder="latitude" name="latitude" value=<%=profil.getLatitudeFixe() %>>
     </div>
      <div class="form-group">
      
-      <input type="hidden" class="form-control" id="longitude" placeholder="longitude" name="longitude">
+      <input type="text" class="form-control" id="longitude" placeholder="longitude" name="longitude" value=<%=profil.getLongitudeFixe() %>>
     </div>
     
    <div class="form-group">

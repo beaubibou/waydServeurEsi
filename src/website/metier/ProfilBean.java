@@ -16,6 +16,22 @@ public class ProfilBean {
 	public final static int WAYDEUR=3;
 	
 	
+	public double getLatitudeFixe() {
+		return latitudeFixe;
+	}
+
+	public void setLatitudeFixe(double latitudeFixe) {
+		this.latitudeFixe = latitudeFixe;
+	}
+
+	public double getLongitudeFixe() {
+		return longitudeFixe;
+	}
+
+	public void setLongitudeFixe(double longitudeFixe) {
+		this.longitudeFixe = longitudeFixe;
+	}
+
 	private String nom;
 	private String pseudo;
 	private String ville;
@@ -38,6 +54,8 @@ public class ProfilBean {
 	private ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
 	private double latitude;
 	private double longitude;
+	private double latitudeFixe;
+	private double longitudeFixe;
 	private String adresse;
 	private String siteWeb;
 	private String telephone;
@@ -164,7 +182,7 @@ public class ProfilBean {
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
 			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse,String siteWeb,
-			String telephone) {
+			String telephone,double latitudeFixe,double longitudeFixe) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -190,6 +208,8 @@ public class ProfilBean {
 		this.adresse=adresse;
 		this.siteWeb=siteWeb;
 		this.telephone=telephone;
+		this.latitudeFixe=latitudeFixe;
+		this.longitudeFixe=longitudeFixe;
 	}
 
 	public boolean isAdmin() {
