@@ -47,14 +47,14 @@ System.out.println(profil.getAdresse());
 					<div class="panel-title">Ajoute une activité</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
-  <form action="/wayd/AjouteActivite" onsubmit="return valideFormulaire()" method="post">
+  <form action="/wayd/AjouteActivitePro" onsubmit="return valideFormulaire()" method="post">
     <div class="form-group">
       <label for="titre">Titre:</label>
       <input type="text" class="form-control" id="titre" required placeholder="Nom " name="titre">
     </div>
     <div class="form-group">
       <label for="adresse">Adresse:</label>
-      <input type="text"  class="form-control" id="adresse" required placeholder="<%out.println(profil.getAdresse());%>" name="adresse" onkeypress="initPosition()" >
+      <input type="text"  class="form-control" id="adresse" required value="<%out.println(profil.getAdresse());%>" name="adresse" onkeypress="initPosition()" >
     </div>
     
      <div class="form-group">
@@ -127,11 +127,8 @@ System.out.println(profil.getAdresse());
    
    </div>
 
+   </form>
   
-  </form>
-  
-
-
 				</div>
 			</div>
 		</div>

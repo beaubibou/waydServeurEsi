@@ -27,15 +27,21 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	 <link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+
+	<form id="formmasque" action="/wayd/Connexion" method="post">
+		<input id="token" type="hidden" class="form-control" name="token">
+		<input id="pwd" type="hidden" class="form-control" name="pwd">
+	</form>
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-				<div class="panel panel-default">
+			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-		
+
 					<div class="panel-title">Sign In</div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
@@ -48,14 +54,13 @@
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
 
-					<form  id="loginform"
-						class="form-horizontal" role="form">
+					<form id="loginform" class="form-horizontal" role="form">
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="email" value="pmestivier@club.fr"
-								placeholder="username or email">
+								type="text" class="form-control" name="email"
+								value="pmestivier@club.fr" placeholder="username or email">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
@@ -80,9 +85,8 @@
 
 							<div class="col-sm-12 controls">
 								<a id="btn-fblogin" onclick="popup()" class="btn btn-primary">Login
-									with Google</a>
-									<a id="btn-password" onclick="signPassword()" class="btn btn-primary">Loging pwd
-									</a>
+									with Google</a> <a id="btn-password" onclick="signPassword()"
+									class="btn btn-primary">Loging pwd </a>
 
 							</div>
 						</div>
@@ -214,7 +218,10 @@ function popup(){
 			  // Send token to your backend via HTTPS
 			  // ...
 			//  document.getElementById("demo").innerHTML ="opo";
-			   document.location.href="/wayd/Connexion?token="+idToken;
+			//   document.location.href="/wayd/Connexion?token="+idToken;
+			  document.getElementById("token").value =idToken;
+				document.getElementById("formmasque").submit();
+			
 		 
 		  }).catch(function(error) {
 			  var errorMessage = error.message;
@@ -251,7 +258,10 @@ function signPassword(){
 			  // Send token to your backend via HTTPS
 			
 			//  document.getElementById("login-username").innerHTML ="opo";
-			   document.location.href="/wayd/Connexion?token="+idToken+"&pwd=1";
+			 //  document.location.href="/wayd/Connexion?token="+idToken+"&pwd=1";
+			  document.getElementById("token").value =idToken;
+			    document.getElementById("pwd").value ="1";
+				document.getElementById("formmasque").submit();
 		  
 		  }).catch(function(error) {
 			  // Handle error

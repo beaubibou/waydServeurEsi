@@ -26,7 +26,6 @@ public class PersonneDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
-
 			Statement stmt = connexion.createStatement();
 			// System.out.println("Cherche compte personen par Id" +
 			// idpersonne);
@@ -337,7 +336,7 @@ public class PersonneDAO {
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
-					+ "siteweb=?,telephone=? "
+					+ "siteweb=?,telephone=?,latitudefixe=?,longitudefixe=? "
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -348,7 +347,9 @@ public class PersonneDAO {
 			preparedStatement.setString(5, commentaire);
 			preparedStatement.setString(6, siteWeb);
 			preparedStatement.setString(7, telephone);
-			preparedStatement.setInt(8, idpersonne);
+			preparedStatement.setDouble(8, latitude);
+			preparedStatement.setDouble(9, longitude);
+			preparedStatement.setInt(10, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();

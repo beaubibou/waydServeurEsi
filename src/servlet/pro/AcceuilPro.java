@@ -50,9 +50,7 @@ public class AcceuilPro extends HttpServlet {
 		return;
 		}
 		//*********************************************************
-			
-			
-			request.getRequestDispatcher("MesActivites").forward(request, response);
+		request.getRequestDispatcher("MesActivites").forward(request, response);
 		
 		
 		// TODO Auto-generated method stub

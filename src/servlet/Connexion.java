@@ -80,12 +80,6 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println("token " + request.getParameter("token"));
-		
-		String pwd=(String)request.getParameter("pwd");
-		
-		testToken(request.getParameter("token"), request, response,pwd);
-
 	}
 
 	/**
@@ -96,17 +90,15 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Do post Connexion");
-		HttpSession session = request.getSession();
 
-		session.setAttribute("profil", new ProfilBean());
+		String pwd = (String) request.getParameter("pwd");
 
-		if (true)
-			response.sendRedirect("Acceuil");
+		testToken(request.getParameter("token"), request, response, pwd);
 
 	}
 
 	public void testToken(String idtoken, HttpServletRequest request,
-			HttpServletResponse response,String pwd) {
+			HttpServletResponse response, String pwd) {
 
 		HttpSession session = request.getSession();
 
@@ -116,41 +108,44 @@ public class Connexion extends HttpServlet {
 					public void onSuccess(FirebaseToken decodedToken) {
 
 						String uid = decodedToken.getUid();
-						
-//						if (!decodedToken.isEmailVerified() && pwd!=null ){
-//							
-//							try {
-//								response.sendRedirect("/wayd/erreur/emailNonValide.jsp");
-//							} catch (IOException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							return;
-//						}
-						
+
+						// if (!decodedToken.isEmailVerified() && pwd!=null ){
+						//
+						// try {
+						// response.sendRedirect("/wayd/erreur/emailNonValide.jsp");
+						// } catch (IOException e) {
+						// // TODO Auto-generated catch block
+						// e.printStackTrace();
+						// }
+						// return;
+						// }
+
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 						System.out.println("admin" + profil);
-						
-						if (profil==null){
+
+						if (profil == null) {
 							Connection connexion = null;
-						
+
 							try {
-								System.out.println("Creation du compte" + profil);
+								System.out.println("Creation du compte"
+										+ profil);
 								connexion = CxoPool.getConnection();
 								connexion.setAutoCommit(false);
-								wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(connexion);
+								wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
+										connexion);
 								personnedao.addCompteGenerique(uid, idtoken,
 										"", "", "");
 								connexion.commit();
-								
+
 								profil = PersonneDAO.getFullProfilByUid(uid);
 								System.out.println("user cree" + profil);
-							
+
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/form_PremierProfil.html");
-							
+
 								return;
-							} catch (SQLException | NamingException | IOException e) {
+							} catch (SQLException | NamingException
+									| IOException e) {
 								// TODO Auto-generated catch block
 								try {
 									connexion.rollback();
@@ -163,18 +158,14 @@ public class Connexion extends HttpServlet {
 							finally {
 								CxoPool.closeConnection(connexion);
 							}
-							
-							
+
 						}
-						
-					
-						
+
 						if (profil != null) {
-							
+
 							session.setAttribute("profil", profil);
 
-							
-							if (profil.isPremiereconnexion()){
+							if (profil.isPremiereconnexion()) {
 								try {
 									response.sendRedirect("/wayd/auth/form_PremierProfil.html");
 									return;
@@ -182,14 +173,11 @@ public class Connexion extends HttpServlet {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								
+
 							}
-							
-							
+
 							if (profil.isAdmin()) {
 
-								
-							
 								try {
 									response.sendRedirect("Acceuil");
 									return;
@@ -203,17 +191,29 @@ public class Connexion extends HttpServlet {
 							case ProfilBean.PRO:
 								session.setAttribute("profil", profil);
 								try {
-									System.out.println("Bacule vers acueeil pro");
+									System.out
+											.println("Bacule vers acueeil pro");
 									response.sendRedirect("AcceuilPro");
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								
+
 								break;
 
 							case ProfilBean.WAYDEUR:
+								
+								session.setAttribute("profil", profil);
+								try {
+									System.out.println("Bacule vers acueeil waydeur");
+									response.sendRedirect("AcceuilWaydeur");
+									return;
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
 
 								break;
 

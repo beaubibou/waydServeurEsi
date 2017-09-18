@@ -57,7 +57,7 @@
 									<div class="form-group">
 										<label for="nom">Nom*:</label> <input type="text"
 											class="form-control" id="nom" placeholder="Nom " name="nom"
-											required value=<%out.println(profil.getPseudo());%>>
+											required value="<%out.println(profil.getPseudo());%>">
 									</div>
 								</div>
 								<div class="col-sm-4">
@@ -77,7 +77,7 @@
 								class="form-control" id="adresse"
 								placeholder="Renseigner l'adresse" name="adresse" required
 								onkeypress="initPosition()"
-								value=<%out.println(profil.getAdresse());%>>
+								value="<%out.println(profil.getAdresse());%>">
 						</div>
 
 						<div class="form-group">
