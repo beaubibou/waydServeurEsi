@@ -16,7 +16,7 @@
       
          <li><a href="/wayd/ComptePro">Mon compte</a></li>
          <li><a href="/wayd/MesActivites">Mes activites </a></li>
-         <li><a href="/wayd/AjouteActivite">ajoute actvités</a></li>
+         <li><a href="/wayd/AjouteActivitePro">Ajoute actvité</a></li>
          <li><a href="/wayd/Map">Carte</a></li>
          <li><a href="A propos">A propos</a></li>
       

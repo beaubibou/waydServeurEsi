@@ -14,13 +14,13 @@ import website.metier.ProfilBean;
 /**
  * Servlet implementation class AjouteActivite
  */
-public class AjouteActivite extends HttpServlet {
+public class AjouteActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjouteActivite() {
+    public AjouteActivitePro() {
         super();
         // TODO Auto-generated constructor stub
     }

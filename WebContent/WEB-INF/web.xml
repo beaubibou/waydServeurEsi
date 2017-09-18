@@ -235,12 +235,12 @@
   <servlet>
     <description></description>
     <display-name>AjouteActivite</display-name>
-    <servlet-name>AjouteActivite</servlet-name>
-    <servlet-class>servlet.pro.AjouteActivite</servlet-class>
+    <servlet-name>AjouteActivitePro</servlet-name>
+    <servlet-class>servlet.pro.AjouteActivitePro</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AjouteActivite</servlet-name>
-    <url-pattern>/AjouteActivite</url-pattern>
+    <servlet-name>AjouteActivitePro</servlet-name>
+    <url-pattern>/AjouteActivitePro</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -291,5 +291,65 @@
   <servlet-mapping>
     <servlet-name>Map</servlet-name>
     <url-pattern>/Map</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AcceuilWaydeur</display-name>
+    <servlet-name>AcceuilWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.AcceuilWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AcceuilWaydeur</servlet-name>
+    <url-pattern>/AcceuilWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjouteActiviteWaydeur</display-name>
+    <servlet-name>AjouteActiviteWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.AjouteActiviteWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouteActiviteWaydeur</servlet-name>
+    <url-pattern>/AjouteActiviteWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CompteWaydeur</display-name>
+    <servlet-name>CompteWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.CompteWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompteWaydeur</servlet-name>
+    <url-pattern>/CompteWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapWaydeur</display-name>
+    <servlet-name>MapWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.MapWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapWaydeur</servlet-name>
+    <url-pattern>/MapWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MesActivitesWaydeur</display-name>
+    <servlet-name>MesActivitesWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.MesActivitesWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MesActivitesWaydeur</servlet-name>
+    <url-pattern>/MesActivitesWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SupprimeActiviteWaydeur</display-name>
+    <servlet-name>SupprimeActiviteWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.SupprimeActiviteWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimeActiviteWaydeur</servlet-name>
+    <url-pattern>/SupprimeActiviteWaydeur</url-pattern>
   </servlet-mapping>
 </web-app>

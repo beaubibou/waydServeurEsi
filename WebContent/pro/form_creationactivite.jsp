@@ -116,11 +116,11 @@ System.out.println(profil.getAdresse());
     
      <div class="form-group">
  
-      <input type="text" class="form-control" id="latitude" placeholder="latitude" name="latitude" value=<%=profil.getLatitudeFixe() %>>
+      <input type="text" class="form-control" id="latitude" placeholder="latitude" name="latitude" value=<%=profil.getLatitudeFixe()%>>
     </div>
      <div class="form-group">
      
-      <input type="text" class="form-control" id="longitude" placeholder="longitude" name="longitude" value=<%=profil.getLongitudeFixe() %>>
+      <input type="text" class="form-control" id="longitude" placeholder="longitude" name="longitude" value=<%=profil.getLongitudeFixe()%>>
     </div>
     
    <div class="form-group">
