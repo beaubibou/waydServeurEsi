@@ -60,6 +60,7 @@ public class ProfilBean {
 	private String siteWeb;
 	private String telephone;
 
+	private Date dateNaissance;
 	
 	public String getSiteWeb() {
 		return siteWeb;
@@ -70,6 +71,14 @@ public class ProfilBean {
 	}
 	
 	
+
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
 
 	public String getTelephone() {
 		return telephone;
@@ -198,6 +207,7 @@ public class ProfilBean {
 		this.age = getAgeStr(datenaissance, afficheage);
 		if (affichesexe)
 			this.sexe = 3;
+		this.dateNaissance=datenaissance;
 		this.commentaire = commentaire;
 		this.admin=admin;
 		this.typeuser=typeuser;

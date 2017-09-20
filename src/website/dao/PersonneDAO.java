@@ -10,11 +10,16 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
+import sun.util.locale.provider.LocaleServiceProviderPool.LocalizedObjectGetter;
+import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import wayde.bean.Parametres;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
 	public static ArrayList<ProfilBean> getListProfil() {
 
@@ -62,19 +67,20 @@ public class PersonneDAO {
 				boolean admin = rs.getBoolean("admin");
 				int typeuser = rs.getInt("typeuser");
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
-				double latitude=rs.getDouble("latitude");
-				double longitude=rs.getDouble("longitude");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-				
-				String telephone=rs.getString("telephone");	
-				String siteWeb=rs.getString("siteweb");
-				double latitudeFixe=rs.getDouble("latitudefixe");
-				double longitudeFixe=rs.getDouble("longitudefixe");
+
+				String telephone = rs.getString("telephone");
+				String siteWeb = rs.getString("siteweb");
+				double latitudeFixe = rs.getDouble("latitudefixe");
+				double longitudeFixe = rs.getDouble("longitudefixe");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone,latitudeFixe,longitudeFixe);
+						premiereconnexion, latitude, longitude, adresse,
+						siteWeb, telephone, latitudeFixe, longitudeFixe);
 
 				retour.add(profil);
 
@@ -142,18 +148,19 @@ public class PersonneDAO {
 				int typeuser = rs.getInt("typeuser");
 				// System.out.println("Note" + note);
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
-				double latitude=rs.getDouble("latitude");
-				double longitude=rs.getDouble("longitude");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-				String telephone=rs.getString("telephone");	
-				String siteWeb=rs.getString("siteweb");
-				double latitudeFixe=rs.getDouble("latitudefixe");
-				double longitudeFixe=rs.getDouble("longitudefixe");
+				String telephone = rs.getString("telephone");
+				String siteWeb = rs.getString("siteweb");
+				double latitudeFixe = rs.getDouble("latitudefixe");
+				double longitudeFixe = rs.getDouble("longitudefixe");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone,latitudeFixe,longitudeFixe);
+						premiereconnexion, latitude, longitude, adresse,
+						siteWeb, telephone, latitudeFixe, longitudeFixe);
 
 			}
 			return profil;
@@ -218,18 +225,19 @@ public class PersonneDAO {
 				int typeuser = rs.getInt("typeuser");
 				double note = rs.getDouble("note");
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
-				double latitude=rs.getDouble("latitude");
-				double longitude=rs.getDouble("longitude");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-				String telephone=rs.getString("telephone");	
-				String siteWeb=rs.getString("siteweb");
-				double latitudeFixe=rs.getDouble("latitudefixe");
-				double longitudeFixe=rs.getDouble("longitudefixe");
+				String telephone = rs.getString("telephone");
+				String siteWeb = rs.getString("siteweb");
+				double latitudeFixe = rs.getDouble("latitudefixe");
+				double longitudeFixe = rs.getDouble("longitudefixe");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion,latitude,longitude,adresse,siteWeb,telephone,latitudeFixe,longitudeFixe);
+						premiereconnexion, latitude, longitude, adresse,
+						siteWeb, telephone, latitudeFixe, longitudeFixe);
 
 			}
 
@@ -277,7 +285,7 @@ public class PersonneDAO {
 	}
 
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
-			double longitude, int typeuser, String commentaire,int idpersonne) {
+			double longitude, int typeuser, String commentaire, int idpersonne) {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
@@ -301,7 +309,7 @@ public class PersonneDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
-			
+
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			try {
@@ -311,7 +319,7 @@ public class PersonneDAO {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		
+
 		} finally {
 
 			try {
@@ -324,10 +332,10 @@ public class PersonneDAO {
 		return true;
 
 	}
-	
-	
-	public boolean updateProfilProFull(String nom, String adresse, double latitude,
-			double longitude,  String commentaire,int idpersonne,String siteWeb,String telephone) {
+
+	public boolean updateProfilProFull(String nom, String adresse,
+			double latitude, double longitude, String commentaire,
+			int idpersonne, String siteWeb, String telephone) {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
@@ -353,8 +361,7 @@ public class PersonneDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
-		
-			
+
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			try {
@@ -364,7 +371,7 @@ public class PersonneDAO {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
-		
+
 		} finally {
 
 			try {
@@ -377,8 +384,6 @@ public class PersonneDAO {
 		return true;
 
 	}
-	
-	
 
 	public void updateProfilAssociation(String nom, String adresse,
 			double latitude, double longitude, int typeuser) {
@@ -390,6 +395,51 @@ public class PersonneDAO {
 			double latitude, double longitude, int typeuser) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public boolean updateProfilProFullWaydeur(String nom,String  adresse,
+			String commentaire,int  sexe,boolean afficheSexe,boolean afficheAge,Date datenaissance,int idpersonne ) {
+		Connection connexion = null;
+		LOG.info("updateProfilProFullWaydeur");
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			System.out.println("uopdate user");
+			String requete = "UPDATE  personne set prenom=?, adresse=?,commentaire=?,datenaissance=? ,affichesexe=?,afficheage=?"
+					+ " WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setString(1, nom);
+			preparedStatement.setString(2, adresse);
+			preparedStatement.setString(3, commentaire);
+			preparedStatement.setTimestamp(4,new java.sql.Timestamp(datenaissance.getTime()));
+			preparedStatement.setBoolean(5, afficheSexe);
+			preparedStatement.setBoolean(6, afficheAge);
+			preparedStatement.setInt(7, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 
 }

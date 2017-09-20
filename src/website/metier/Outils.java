@@ -9,27 +9,33 @@ import java.util.Date;
 
 public class Outils {
 
-	public static int nbrLigneParPage=6;
-	public static int nbrMaxPagination=8;
+	public static int nbrLigneParPage = 6;
+	public static int nbrMaxPagination = 8;
 
-	public static Date getDateFromString(String datestr) throws ParseException{
-	
+	public static Date getDateFromString(String datestr) throws ParseException {
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Date d = sdf.parse(datestr);
 		Calendar caldate = Calendar.getInstance();
 		caldate.setTime(d);
 		System.out.println(datestr);
 		System.out.println(d);
-		
+
 		return caldate.getTime();
 	}
-	
+
 	public static String getStringWsFromDate(Date date) {
 		if (date == null)
 			return "Pas de date";
 		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy HH:mm");
 		String datestr = formater.format(date);
 		return datestr;
+	}
+
+	public static boolean getBooleanValueOf(Object object) {
+		if (object == null)
+			return false;
+		return true;
 	}
 
 	public static String convertStatistiqueBeanToString(

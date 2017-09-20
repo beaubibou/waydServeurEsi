@@ -55,7 +55,8 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="nom">Nom*:</label> <input type="text"
+										<label for="nom">Nom*:</label>
+										 <input type="text"
 											class="form-control" id="nom" placeholder="Nom " name="nom"
 											required value="<%out.println(profil.getPseudo());%>">
 									</div>
