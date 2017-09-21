@@ -1,4 +1,4 @@
-package servlet.pro;
+package servlet.waydeur;
 
 import java.io.IOException;
 
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpSession;
 import website.metier.ProfilBean;
 
 /**
- * Servlet implementation class Deconnexion
+ * Servlet implementation class AcceuilWaydeur
  */
-public class Deconnexion extends HttpServlet {
+public class AcceuilWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Deconnexion() {
+    public AcceuilWaydeur() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,26 +29,32 @@ public class Deconnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+HttpSession session = request.getSession();
 		
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		System.out.println("Profil dans acceuil pro" + profil);
-		if (profil == null) {
-			session.invalidate();
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
-			session.invalidate();
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
+		//*********  Regle d'authentification*********************
 		
-		session.invalidate();
+		ProfilBean profil=(ProfilBean)session.getAttribute("profil");
+		
+		System.out.println("Profil dans acceuil waydeur"+profil);
+		if (profil==null){
+			response.sendRedirect("auth/login.jsp");
+		    return;
+		}
+						
+		if (profil.getTypeuser()!=ProfilBean.WAYDEUR ||profil.isPremiereconnexion())
+		{
 		response.sendRedirect("auth/login.jsp");
+		return;
+		}
+		//*********************************************************
+			
+			
+		request.getRequestDispatcher("MesActivitesWaydeur").forward(request, response);
+		
+		
+		// TODO Auto-generated method stub
+	
+	
 	}
 
 	/**

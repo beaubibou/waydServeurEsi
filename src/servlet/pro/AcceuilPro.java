@@ -40,13 +40,13 @@ public class AcceuilPro extends HttpServlet {
 		
 		System.out.println("Profil dans acceuil pro"+profil);
 		if (profil==null){
-			response.sendRedirect("/auth/login.jsp");
+			response.sendRedirect("auth/login.jsp");
 		    return;
 		}
 						
 		if (profil.getTypeuser()!=ProfilBean.PRO ||profil.isPremiereconnexion())
 		{
-		response.sendRedirect("/auth/login.jsp");
+		response.sendRedirect("auth/login.jsp");
 		return;
 		}
 		//*********************************************************

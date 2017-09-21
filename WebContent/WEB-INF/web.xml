@@ -3,7 +3,6 @@
   <display-name>wayd</display-name>
   <welcome-file-list>
     <welcome-file>/auth/login.jsp</welcome-file>
-   
   </welcome-file-list>
   <servlet>
     <display-name>Apache-Axis Servlet</display-name>
@@ -347,5 +346,15 @@
   <servlet-mapping>
     <servlet-name>SupprimeActiviteWaydeur</servlet-name>
     <url-pattern>/SupprimeActiviteWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeconnexionWaydeur</display-name>
+    <servlet-name>DeconnexionWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.DeconnexionWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeconnexionWaydeur</servlet-name>
+    <url-pattern>/DeconnexionWaydeur</url-pattern>
   </servlet-mapping>
 </web-app>
