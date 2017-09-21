@@ -12,6 +12,22 @@ public class Outils {
 	public static int nbrLigneParPage = 6;
 	public static int nbrMaxPagination = 8;
 
+
+	public static String jspAdapterCheked(boolean value){
+		
+		if (value)return "checked";
+		return "";
+		
+	}
+	
+public static String jspAdapterListSelected(int selectedValue,int value){
+		
+		if (value==selectedValue)return "selected";
+		return "";
+		
+	}
+	
+	
 	public static Date getDateFromString(String datestr) throws ParseException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
