@@ -43,13 +43,8 @@ public class AjouteActivitePro extends HttpServlet {
 			response.sendRedirect("auth/login.jsp");
 			return;
 		}
-
-		
-		
-			
 		
 		response.sendRedirect("pro/form_creationactivite.jsp");
-	
 	
 	}
 

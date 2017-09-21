@@ -11,6 +11,8 @@ public class ActiviteBean {
 
 	int id;
 
+	public static int GRATUIT=1;
+	public static int PAYANT=2;
 
 	String titre;
 

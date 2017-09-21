@@ -57,7 +57,7 @@ public class ConfirmDialog extends HttpServlet {
 			request.setAttribute("lienAction", "/wayd/SupprimeActivite?idactivite=" + idActivite);
 			request.setAttribute("lienRetour", from);
 			request.setAttribute("message", "Effacer l'activité");
-			request.getRequestDispatcher("pro/confirmdialog.jsp").forward(request, response);
+			request.getRequestDispatcher("/pro/confirmdialog.jsp").forward(request, response);
 			
 			break;
 			

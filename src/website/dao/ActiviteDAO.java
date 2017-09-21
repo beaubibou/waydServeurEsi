@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.naming.NamingException;
@@ -13,9 +14,11 @@ import javax.naming.NamingException;
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
+import wayde.bean.Personne;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
+import website.metier.ProfilBean;
 
 public class ActiviteDAO {
 
@@ -72,7 +75,7 @@ public class ActiviteDAO {
 		ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
 
 		if (!activite.isActive()) {
-			
+
 			return new MessageBean("L'activité n'est plus active");
 		}
 
@@ -765,6 +768,59 @@ public class ActiviteDAO {
 
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
+	}
+
+	public void addActiviteWaydeur(int idpersonne, String titre,
+			String commentaire, String adresse,
+			double latitude, double longitude, int idtypeactivite,
+			int maxwaydeur, int duree, int compteWaydeur) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		Date dateDebut=new Date();
+		Calendar calFinActivite = Calendar.getInstance();
+		calFinActivite.setTime(dateDebut);
+		calFinActivite.add(Calendar.MINUTE, duree);
+		Date datefinActivite = calFinActivite.getTime();
+
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "INSERT INTO activite("
+					+ "idpersonne, titre, libelle,datedebut,"
+					+ " datefin, adresse, latitude, longitude, actif,"
+					+ " idtypeactivite,datecreation,typeuser,typeacces,nbmaxwayd )"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			PreparedStatement preparedStatement = connexion.prepareStatement(
+					requete, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setString(2, titre);
+			preparedStatement.setString(3, commentaire);
+			preparedStatement.setTimestamp(4,
+					new java.sql.Timestamp(dateDebut.getTime()));
+			preparedStatement.setTimestamp(5, new java.sql.Timestamp(
+					datefinActivite.getTime()));
+			preparedStatement.setString(6, adresse);
+			preparedStatement.setDouble(7, latitude);
+			preparedStatement.setDouble(8, longitude);
+			preparedStatement.setBoolean(9, true);
+			preparedStatement.setInt(10, idtypeactivite);
+			preparedStatement.setTimestamp(11, new java.sql.Timestamp(
+					new Date().getTime()));
+			preparedStatement.setInt(12, ProfilBean.WAYDEUR);
+			preparedStatement.setInt(13, ActiviteBean.GRATUIT);
+			preparedStatement.setInt(14, maxwaydeur);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Creation activite user");
+
 	}
 
 }

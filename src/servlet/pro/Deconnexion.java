@@ -36,19 +36,19 @@ public class Deconnexion extends HttpServlet {
 		System.out.println("Profil dans acceuil pro" + profil);
 		if (profil == null) {
 			session.invalidate();
-			response.sendRedirect("/wayd/auth/login.jsp");
+			response.sendRedirect("/auth/login.jsp");
 			return;
 		}
 
 		if (profil.getTypeuser() != ProfilBean.PRO
 				|| profil.isPremiereconnexion()) {
 			session.invalidate();
-			response.sendRedirect("/wayd/auth/login.jsp");
+			response.sendRedirect("/auth/login.jsp");
 			return;
 		}
 		
 		session.invalidate();
-		response.sendRedirect("/wayd/auth/login.jsp");
+		response.sendRedirect("/auth/login.jsp");
 	}
 
 	/**
