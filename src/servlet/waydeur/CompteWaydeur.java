@@ -15,7 +15,8 @@ import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
-import website.dao.SexeDAO;
+import website.dao.CacheValueDAO;
+
 import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.SexeBean;
@@ -58,7 +59,7 @@ public class CompteWaydeur extends HttpServlet {
 			return;
 		}
 		
-		ArrayList<SexeBean> listSexe=new SexeDAO().getListSexe();
+		ArrayList<SexeBean> listSexe=new CacheValueDAO().getListSexe();
 		request.setAttribute("listSexe", listSexe);
 		request.getRequestDispatcher("waydeur/form_fullprofilWayd.jsp").forward(request, response);
 		
