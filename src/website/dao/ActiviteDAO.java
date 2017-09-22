@@ -822,5 +822,192 @@ public class ActiviteDAO {
 		System.out.println("Creation activite user");
 
 	}
+	
+	public ArrayList<Activite> getListActivites(Double malatitude,
+			Double malongitude, int rayonmetre, int idtypeactivite_,
+			String motcle, long debutActivite, long finActivite, int typeUser,
+			int typeacces, int commenceDans){
+
+		Connection connexion = null;
+		ArrayList<Activite> retour = new ArrayList<Activite>();
+		PreparedStatement preparedStatement=null;
+		ResultSet rs = null;
+		
+		try {
+			connexion = CxoPool.getConnection();
+			double coef = rayonmetre * 0.007 / 700;
+			double latMin = malatitude - coef;
+			double latMax = malatitude + coef;
+			double longMin = malongitude - coef;
+			double longMax = malongitude + coef;
+			Activite activite = null;
+			
+			Calendar calendrierDebut = Calendar.getInstance();
+			commenceDans = (commenceDans ) * 60;
+			calendrierDebut.add(Calendar.MINUTE, commenceDans);
+			Date dateRechercheDebut = calendrierDebut.getTime();
+			
+			Calendar calendrierFin = Calendar.getInstance();
+			int finiDans = (commenceDans) * 60 + 60;
+			calendrierFin.add(Calendar.MINUTE, finiDans);
+			Date dateRechercheFin = calendrierFin.getTime();
+
+			// on remonte les activités dont le debut est comprise entre l'heure actuelle + commenceDans et l'heure actuelle + commenceDans+1 heure
+		
+
+			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+					+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+					+ "personne.note,personne.nbravis as totalavis,personne.photo,"
+					+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
+					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
+					+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
+					+ "and datedebut between ? and ? "
+					+ " and activite.latitude between ? and ?"
+					+ " and activite.longitude between ? and ?";
+
+			if (idtypeactivite_ != 0) {
+
+				requete = requete + " and activite.idtypeactivite=?";
+
+			}
+
+			if (motcle != null) {
+
+				requete = requete
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )";
+
+			}
+
+			if (typeUser != 0) {
+
+				requete = requete + " and activite.typeuser=?";
+
+			}
+
+			if (typeacces != 0) {
+				requete = requete + " and activite.typeacces=?";
+
+			}
+
+			preparedStatement = connexion
+					.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+			preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+					dateRechercheFin.getTime()));
+
+			preparedStatement.setDouble(3, latMin);
+			preparedStatement.setDouble(4, latMax);
+			preparedStatement.setDouble(5, longMin);
+			preparedStatement.setDouble(6, longMax);
+
+			int index = 6;
+
+			if (idtypeactivite_ != 0) {
+
+				index++;
+				preparedStatement.setInt(index, idtypeactivite_);
+
+			}
+
+			if (motcle != null) {
+
+				index++;
+				String test = "%" + motcle + "%";
+				preparedStatement.setString(index, test);
+				index++;
+				preparedStatement.setString(index, test);
+
+			}
+
+			if (typeUser != 0) {
+
+				index++;
+				preparedStatement.setInt(index, typeUser);
+
+			}
+
+			if (typeacces!=0) {
+				index++;
+				preparedStatement.setInt(index, typeacces);
+
+			}
+
+			//
+
+			requete = requete + " ORDER BY datedebut asc;";
+
+			 rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				double distance = ServeurMethodes.getDistance(malatitude, latitude,
+						malongitude, longitude);
+				if (distance >= rayonmetre)
+					continue;
+
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int sexe = rs.getInt("sexe");
+				int nbmaxwayd = rs.getInt("nbmaxwayd");
+				int nbrparticipant = rs.getInt("nbrparticipant");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Date datefin = rs.getTimestamp("datefin");
+				String adresse = rs.getString("adresse");
+				double note = rs.getDouble("note");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				// Date datefinactivite = rs.getTimestamp("d_finactivite");
+
+				if (prenom == null)
+					prenom = "";
+				String photo = rs.getString("photo");
+				int role = rs.getInt("role");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				boolean archive = false;
+				int totalavis = rs.getInt("totalavis");
+				activite = new Activite(id, titre, libelle, idorganisateur,
+						datedebut, datefin, idtypeactivite, latitude, longitude,
+						adresse, nom, prenom, photo, note, role, archive,
+						totalavis, datenaissance, sexe, nbrparticipant, true, true,
+						nbmaxwayd);
+				retour.add(activite);
+
+			}
+
+			rs.close();
+			preparedStatement.close();
+			// System.out.println("Activite total:" + total);
+			return retour;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return retour;
+		}
+		finally{
+			try {
+			if (connexion!=null)	connexion.close();
+			if (rs!=null)rs.close();
+			if (preparedStatement!=null)rs.close();
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+	}
 
 }
+
+	
+
+

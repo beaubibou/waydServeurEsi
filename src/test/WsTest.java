@@ -1,38 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Date;
-
-import javax.naming.NamingException;
-
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import wayd.ws.WBservices;
-import wayde.bean.Activite;
-import wayde.bean.Ami;
-import wayde.bean.Avis;
-import wayde.bean.CxoPool;
-import wayde.bean.Discussion;
-import wayde.bean.InfoNotation;
-import wayde.bean.Message;
-import wayde.bean.MessageServeur;
-import wayde.bean.Notification;
-import wayde.bean.Participant;
-import wayde.bean.Personne;
-import wayde.bean.Preference;
-import wayde.bean.Profil;
-import wayde.bean.RetourMessage;
-import wayde.bean.TableauBord;
-import wayde.bean.TypeActivite;
-import wayde.dao.ActiviteDAO;
-import wayde.dao.PersonneDAO;
 
 public class WsTest {
 

@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
-import wayd.ws.WBservices;
 import wayde.bean.Activite;
 import wayde.bean.Personne;
 
