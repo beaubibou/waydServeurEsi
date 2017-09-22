@@ -13,8 +13,10 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
+import website.dao.TypeActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
+import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class MesActivitesWaydeur
@@ -52,6 +54,10 @@ public class MesActivitesWaydeur extends HttpServlet {
 			return;
 		}
 
+		
+		ArrayList<TypeActiviteBean> listTypeActivite=new TypeActiviteDAO().getListTypeActivite();
+		
+		
 		ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
 		if (listMesActivite.size()==0){
 		
@@ -62,8 +68,11 @@ public class MesActivitesWaydeur extends HttpServlet {
 		}else
 		{
 			request.setAttribute("listMesActivite", listMesActivite);
+			request.setAttribute("listTypeActivite", listTypeActivite);
+			
 			request.getRequestDispatcher("/waydeur/mesActiviteWaydeur.jsp").forward(request, response);
-					
+			
+			
 		}
 		
 		

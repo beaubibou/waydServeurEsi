@@ -2,6 +2,7 @@ package servlet.waydeur;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -14,8 +15,10 @@ import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
+import website.dao.SexeDAO;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+import website.metier.SexeBean;
 
 /**
  * Servlet implementation class CompteWaydeur
@@ -54,8 +57,11 @@ public class CompteWaydeur extends HttpServlet {
 			response.sendRedirect("auth/login.jsp");
 			return;
 		}
-
-		response.sendRedirect("waydeur/form_fullprofilWayd.jsp");
+		
+		ArrayList<SexeBean> listSexe=new SexeDAO().getListSexe();
+		request.setAttribute("listSexe", listSexe);
+		request.getRequestDispatcher("waydeur/form_fullprofilWayd.jsp").forward(request, response);
+		
 
 	}
 
@@ -66,7 +72,6 @@ public class CompteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
@@ -81,6 +86,7 @@ public class CompteWaydeur extends HttpServlet {
 		
 		int sexe=Integer.parseInt(request.getParameter("sexe"));
 	
+		
 		boolean afficheSexe=Outils.getBooleanValueOf(request.getParameter("afficheSexe"));
 		boolean afficheAge=Outils.getBooleanValueOf(request.getParameter("afficheAge"));;
 	
@@ -95,7 +101,7 @@ public class CompteWaydeur extends HttpServlet {
 			profil.setAdresse(adresse);
 			profil.setCommentaire(commentaire);
 			profil.setDateNaissance( datenaissance);
-
+			profil.setSexe(sexe);
 			profil.setPremiereconnexion(false);
 			response.sendRedirect("AcceuilWaydeur");
 			

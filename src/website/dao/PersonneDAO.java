@@ -405,7 +405,7 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
-			String requete = "UPDATE  personne set prenom=?, adresse=?,commentaire=?,datenaissance=? ,affichesexe=?,afficheage=?"
+			String requete = "UPDATE  personne set prenom=?, adresse=?,commentaire=?,datenaissance=? ,affichesexe=?,afficheage=?,sexe=?"
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -415,7 +415,8 @@ public class PersonneDAO {
 			preparedStatement.setTimestamp(4,new java.sql.Timestamp(datenaissance.getTime()));
 			preparedStatement.setBoolean(5, afficheSexe);
 			preparedStatement.setBoolean(6, afficheAge);
-			preparedStatement.setInt(7, idpersonne);
+			preparedStatement.setInt(7, sexe);
+			preparedStatement.setInt(8, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
