@@ -97,7 +97,7 @@ public class CompteWaydeur extends HttpServlet {
 			personneDAO.updateProfilProFullWaydeur(nom, adresse,
 					 commentaire, sexe,afficheSexe,afficheAge,datenaissance,profil.getId() );
 		
-			
+		
 			profil.setPseudo(nom);
 			profil.setAdresse(adresse);
 			profil.setCommentaire(commentaire);

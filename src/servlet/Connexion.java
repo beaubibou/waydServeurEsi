@@ -141,7 +141,7 @@ public class Connexion extends HttpServlet {
 								System.out.println("user cree" + profil);
 
 								session.setAttribute("profil", profil);
-								response.sendRedirect("/wayd/auth/form_PremierProfil.html");
+								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
 
 								return;
 							} catch (SQLException | NamingException
@@ -167,7 +167,7 @@ public class Connexion extends HttpServlet {
 
 							if (profil.isPremiereconnexion()) {
 								try {
-									response.sendRedirect("/wayd/auth/form_PremierProfil.html");
+									response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
