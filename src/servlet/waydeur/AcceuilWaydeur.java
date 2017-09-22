@@ -29,7 +29,7 @@ public class AcceuilWaydeur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		
 		//*********  Regle d'authentification*********************
 		

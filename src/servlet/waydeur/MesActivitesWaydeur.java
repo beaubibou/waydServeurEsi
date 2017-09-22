@@ -43,6 +43,7 @@ public class MesActivitesWaydeur extends HttpServlet {
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
+		
 		if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return;
@@ -56,9 +57,11 @@ public class MesActivitesWaydeur extends HttpServlet {
 
 		
 		ArrayList<TypeActiviteBean> listTypeActivite=new TypeActiviteDAO().getListTypeActivite();
-		
+		request.setAttribute("listTypeActivite", listTypeActivite);
+		LOG.info("taille"+listTypeActivite.size());
 		
 		ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
+	
 		if (listMesActivite.size()==0){
 		
 			request.setAttribute("titre", "Conseil");
@@ -68,7 +71,6 @@ public class MesActivitesWaydeur extends HttpServlet {
 		}else
 		{
 			request.setAttribute("listMesActivite", listMesActivite);
-			request.setAttribute("listTypeActivite", listTypeActivite);
 			
 			request.getRequestDispatcher("/waydeur/mesActiviteWaydeur.jsp").forward(request, response);
 			
