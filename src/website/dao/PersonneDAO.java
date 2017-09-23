@@ -302,7 +302,7 @@ public class PersonneDAO {
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
 			preparedStatement.setString(5, commentaire);
-			preparedStatement.setInt(6, typeuser);
+			preparedStatement.setInt(6, ProfilBean.PRO);
 			preparedStatement.setDouble(7, latitude);
 			preparedStatement.setDouble(8, longitude);
 			preparedStatement.setInt(9, idpersonne);
@@ -391,9 +391,53 @@ public class PersonneDAO {
 
 	}
 
-	public void updateProfilWaydeur(String nom, String adresse,
-			double latitude, double longitude, int typeuser) {
-		// TODO Auto-generated method stub
+	public boolean updateProfilWaydeur(String nom,int sexe,String commentaire,int idpersonne)
+			 {
+		Connection connexion = null;
+		LOG.info("updateProfilProFullWaydeur");
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			System.out.println("uopdate user");
+			String requete = "UPDATE  personne set prenom=?, commentaire=?,sexe=?,typeuser=?,premiereconnexion=false"
+					+ " WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setString(1, nom);
+		    preparedStatement.setString(2, commentaire);
+			preparedStatement.setInt(3, sexe);
+			preparedStatement.setInt(4, ProfilBean.WAYDEUR);
+			preparedStatement.setInt(5, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return false;
+			
+
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	
+		
+
 
 	}
 

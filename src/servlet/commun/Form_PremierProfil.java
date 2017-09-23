@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import wayde.bean.Profil;
 import wayde.dao.PersonneDAO;
 import website.metier.ProfilBean;
@@ -19,6 +22,7 @@ import website.metier.ProfilBean;
  */
 public class Form_PremierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -41,13 +45,20 @@ public class Form_PremierProfil extends HttpServlet {
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
 		int typeuser = Integer.parseInt(request.getParameter("typeuser"));
-		double latitude = Double.parseDouble(request.getParameter("latitude"));
-		double longitude = Double
-				.parseDouble(request.getParameter("longitude"));
-		System.out.println(nom + " " + adresse + "typeuse " + typeuser +" lat:"+ latitude
-				+ "  " + longitude);
+		double latitude = 0;
+		double longitude = 0;
+		int sexe = 1;
 
-		System.out.println(session.getAttribute("profil"));
+		if (request.getParameter("latitude") != null)
+		
+		 latitude = Double.parseDouble(request.getParameter("latitude"));
+
+		if (request.getParameter("longitude") != null)
+			 longitude =Double.parseDouble(request.getParameter("longitude"));
+
+			if (request.getParameter("sexe") != null)
+				sexe = Integer.parseInt(request.getParameter("sexe"));
+
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
 		if (profil != null) {
@@ -57,21 +68,18 @@ public class Form_PremierProfil extends HttpServlet {
 
 			case ProfilBean.PRO:
 
-					personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
-							typeuser,commentaire,profil.getId());
-					profil.setPseudo(nom);
-					profil.setAdresse(adresse);
-					profil.setCommentaire(commentaire);
-					profil.setTypeuser(typeuser);
-					profil.setLatitude(latitude);
-					profil.setLongitude(longitude);
-				
-					profil.setLatitudeFixe(latitude);
-					profil.setLongitudeFixe(longitude);
-							
-					
-					profil.setPremiereconnexion(false);
-					response.sendRedirect("AcceuilPro");
+				personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
+						typeuser, commentaire, profil.getId());
+				profil.setPseudo(nom);
+				profil.setAdresse(adresse);
+				profil.setCommentaire(commentaire);
+				profil.setTypeuser(typeuser);
+				profil.setLatitude(latitude);
+				profil.setLongitude(longitude);
+				profil.setLatitudeFixe(latitude);
+				profil.setLongitudeFixe(longitude);
+				profil.setPremiereconnexion(false);
+				response.sendRedirect("AcceuilPro");
 
 				break;
 
@@ -79,18 +87,25 @@ public class Form_PremierProfil extends HttpServlet {
 
 				personneDAO.updateProfilAssociation(nom, adresse, latitude,
 						longitude, typeuser);
+				
 
 				break;
 
 			case ProfilBean.WAYDEUR:
-				personneDAO.updateProfilWaydeur(nom, adresse, latitude,
-						longitude, typeuser);
+				personneDAO.updateProfilWaydeur(nom, sexe, commentaire,
+						profil.getId());
+				profil.setPseudo(nom);
+				profil.setCommentaire(commentaire);
+				profil.setTypeuser(typeuser);
+				profil.setPremiereconnexion(false);
+				response.sendRedirect("AcceuilWaydeur");
+			
 
 				break;
-				
-				default:
-					
-					response.sendRedirect("auth/login.jsp");
+
+			default:
+
+				response.sendRedirect("auth/login.jsp");
 			}
 
 		} else {

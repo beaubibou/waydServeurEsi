@@ -72,6 +72,17 @@ ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getA
 			title:"Venice"});
 	      var_marker.setMap(var_map);	
 	     
+	      var info=getInfoWindow("titre","contenu","lien","cree");
+			
+			//	  var info = new google.maps.InfoWindow({
+			//content: contentString
+		//});
+		
+		var_marker.addListener('click', function() {
+	    info.open(var_map, var_marker);
+		});
+	      
+	      
 	      <%}%>
 	       	
 	    
@@ -83,6 +94,35 @@ ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getA
     </script>
       <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&callback=initMap">
+    </script>
+    
+    <script>
+		function getInfoWindow( titre,contenu,lien,cree){
+	
+		var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">'+titre+'</h1>'+
+      '<div id="bodyContent">'+
+      '<p>'+contenu+'</p>'+
+      '<p><a href='+lien+'>'+
+      'Consulter</a> '+
+      '(crée le '+cree+' ).</p>'+
+      '</div>'+
+      '</div>';
+	
+			
+		var infowindow = new google.maps.InfoWindow({
+		content: contentString
+		
+		
+		});
+		
+		return infowindow;
+		}
+		
+		
+    
     </script>
 </body>
 </html>
