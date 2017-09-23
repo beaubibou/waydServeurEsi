@@ -46,12 +46,12 @@
 
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-			ArrayList<SexeBean> listSexe = (ArrayList<SexeBean>) request.getAttribute("listSexe");
+		ArrayList<SexeBean> listSexe = (ArrayList<SexeBean>) request.getAttribute("listSexe");
 		  
-		
-			if (profil == null) {
+			
+		if (profil == null) {
 
-			}
+		}
 	%>
 	<%@ include file="menuWaydeur.jsp"%>
 
@@ -63,12 +63,29 @@
 					<div class="panel-title">Mon profil</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
-
-
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-2">
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									class="img-circle" />
+							</div>
+							
+							<div class="col-sm-8">
+							
+							<form action="/wayd/ChargePhotoWaydeur" method="post"
+							enctype="multipart/form-data">
+							<input type="file" name="file" size="50" /> 
+							<input
+								type="submit" value="Envoyer" class="btn btn-info" />
+						</form>	
+							</div>
+							
+						</div>
+						
+					</div>
 					<form action="/wayd/CompteWaydeur" method="post"
 						onsubmit="return valideFormulaire()">
-
-
 						<div class="row">
 							<div class="col-sm-2">
 								<label for="nom">Pseudo*:</label>
@@ -87,10 +104,10 @@
 									<%
 										for (SexeBean sexebean:listSexe){
 									%>
-									<option value=<%=sexebean.getId() %> 
-									<%=Outils.jspAdapterListSelected(profil.getSexe(), sexebean.getId()) %> >
-									<%=sexebean.getLibelle() %></option>
-									
+									<option value=<%=sexebean.getId()%>
+										<%=Outils.jspAdapterListSelected(profil.getSexe(), sexebean.getId())%>>
+										<%=sexebean.getLibelle()%></option>
+
 									<%
 										};
 									%>

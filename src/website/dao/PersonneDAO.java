@@ -391,8 +391,8 @@ public class PersonneDAO {
 
 	}
 
-	public boolean updateProfilWaydeur(String nom,int sexe,String commentaire,int idpersonne)
-			 {
+	public boolean updateProfilWaydeur(String nom, int sexe,
+			String commentaire, int idpersonne) {
 		Connection connexion = null;
 		LOG.info("updateProfilProFullWaydeur");
 		try {
@@ -404,7 +404,7 @@ public class PersonneDAO {
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, nom);
-		    preparedStatement.setString(2, commentaire);
+			preparedStatement.setString(2, commentaire);
 			preparedStatement.setInt(3, sexe);
 			preparedStatement.setInt(4, ProfilBean.WAYDEUR);
 			preparedStatement.setInt(5, idpersonne);
@@ -416,14 +416,13 @@ public class PersonneDAO {
 			// TODO Auto-generated catch block
 			try {
 				connexion.rollback();
-				
+
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
 			return false;
-			
 
 		} finally {
 
@@ -435,14 +434,54 @@ public class PersonneDAO {
 			}
 		}
 		return true;
-	
-		
-
 
 	}
 
-	public boolean updateProfilProFullWaydeur(String nom,String  adresse,
-			String commentaire,int  sexe,boolean afficheSexe,boolean afficheAge,Date datenaissance,int idpersonne ) {
+	public boolean updatePhoto(String photo, int idpersonne) {
+		Connection connexion = null;
+		LOG.info("updatePhoto");
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			System.out.println("uopdate user");
+			String requete = "UPDATE  personne set photo=?"
+					+ " WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setString(1, photo);
+			preparedStatement.setInt(2, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return false;
+
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+
+	}
+
+	public boolean updateProfilProFullWaydeur(String nom, String adresse,
+			String commentaire, int sexe, boolean afficheSexe,
+			boolean afficheAge, Date datenaissance, int idpersonne) {
 		Connection connexion = null;
 		LOG.info("updateProfilProFullWaydeur");
 		try {
@@ -456,7 +495,8 @@ public class PersonneDAO {
 			preparedStatement.setString(1, nom);
 			preparedStatement.setString(2, adresse);
 			preparedStatement.setString(3, commentaire);
-			preparedStatement.setTimestamp(4,new java.sql.Timestamp(datenaissance.getTime()));
+			preparedStatement.setTimestamp(4, new java.sql.Timestamp(
+					datenaissance.getTime()));
 			preparedStatement.setBoolean(5, afficheSexe);
 			preparedStatement.setBoolean(6, afficheAge);
 			preparedStatement.setInt(7, sexe);

@@ -1,4 +1,5 @@
 <%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.Outils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -48,15 +49,32 @@
 					<div class="panel-title">Mon compte</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
+					
+							<div class="form-group">
+							<div class="row">
+								<div class="col-sm-8">
+									<img height="80" width="80"
+										src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+										class="img-circle" />
+								</div>
+							</div>
+							<form action="/wayd/ChargePhotoPro" method="post"
+								enctype="multipart/form-data">
+								<input type="file" name="file" size="50" /> <br /> <input
+									type="submit" value="Upload File" />
+							</form>
+
+						</div>
+					
 					<form action="../ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
 
+				
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="nom">Nom*:</label>
-										 <input type="text"
+										<label for="nom">Nom*:</label> <input type="text"
 											class="form-control" id="nom" placeholder="Nom " name="nom"
 											required value="<%out.println(profil.getPseudo());%>">
 									</div>

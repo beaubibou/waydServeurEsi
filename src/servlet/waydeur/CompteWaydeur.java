@@ -71,8 +71,28 @@ public class CompteWaydeur extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		
+		
 		HttpSession session = request.getSession();
+		
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		
+		
+		LOG.info("doPost");
+		if (profil == null) {
+			response.sendRedirect("auth/login.jsp");
+			return;
+		}
+
+		if (profil.getTypeuser() != ProfilBean.WAYDEUR
+				|| profil.isPremiereconnexion()) {
+			response.sendRedirect("auth/login.jsp");
+			return;
+		}
+		
+		
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");

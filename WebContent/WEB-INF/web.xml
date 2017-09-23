@@ -357,4 +357,24 @@
     <servlet-name>DeconnexionWaydeur</servlet-name>
     <url-pattern>/DeconnexionWaydeur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChargePhotoWaydeur</display-name>
+    <servlet-name>ChargePhotoWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.ChargePhotoWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChargePhotoWaydeur</servlet-name>
+    <url-pattern>/ChargePhotoWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChargePhotoPro</display-name>
+    <servlet-name>ChargePhotoPro</servlet-name>
+    <servlet-class>servlet.pro.ChargePhotoPro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChargePhotoPro</servlet-name>
+    <url-pattern>/ChargePhotoPro</url-pattern>
+  </servlet-mapping>
 </web-app>

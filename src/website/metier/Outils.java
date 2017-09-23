@@ -1,11 +1,20 @@
 package website.metier;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
+
+import org.apache.axis.encoding.Base64;
+
+import sun.misc.BASE64Encoder;
 
 public class Outils {
 
@@ -84,4 +93,32 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 		System.out.println(retour.toString());
 		return retour.toString();
 	}
+	
+	public static String getUrlPhoto(String photo) {
+
+		if (photo==null)photo="";
+		byte[] bytes = Base64.decode(photo);
+		String urlPhoto = "data:image/jpeg;base64," + Base64.encode(bytes);
+
+		return urlPhoto;
+	}
+	
+	public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ 
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+ 
+            BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);
+ 
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
+    }
+	
 }
