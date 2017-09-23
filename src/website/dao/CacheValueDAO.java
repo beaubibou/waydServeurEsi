@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
+import website.metier.DureeBean;
+import website.metier.QuantiteWaydeurBean;
 import website.metier.SexeBean;
 import website.metier.TypeAccess;
+import website.metier.TypeActiviteBean;
 import website.metier.TypeUser;
-
-
 
 public class CacheValueDAO {
 
-	
 	public static ArrayList<TypeUser> getListTypeUser() {
 
 		Connection connexion = null;
@@ -30,13 +30,13 @@ public class CacheValueDAO {
 
 			String requete = " SELECT  id,libelle from typeuser ";
 			preparedStatement = connexion.prepareStatement(requete);
-			
+
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
-				retour.add(new TypeUser(id,libelle));
+				retour.add(new TypeUser(id, libelle));
 			}
 
 			return retour;
@@ -51,7 +51,7 @@ public class CacheValueDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
-	
+
 	public static ArrayList<TypeAccess> getListTypeAccess() {
 
 		Connection connexion = null;
@@ -64,13 +64,13 @@ public class CacheValueDAO {
 
 			String requete = " SELECT  id,libelle from typeacces ";
 			preparedStatement = connexion.prepareStatement(requete);
-			
+
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
-				retour.add(new TypeAccess(id,libelle));
+				retour.add(new TypeAccess(id, libelle));
 			}
 
 			return retour;
@@ -87,36 +87,158 @@ public class CacheValueDAO {
 	}
 
 	public static ArrayList<SexeBean> getListSexe() {
-	
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		ArrayList<SexeBean> retour = new ArrayList<SexeBean>();
-	
+
 		try {
 			connexion = CxoPool.getConnection();
-	
+
 			String requete = " SELECT  sexe.id,sexe.libelle from sexe ";
 			preparedStatement = connexion.prepareStatement(requete);
-			
+
 			rs = preparedStatement.executeQuery();
-	
+
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
-				retour.add(new SexeBean(id,libelle));
+				retour.add(new SexeBean(id, libelle));
 			}
-	
+
 			return retour;
-	
+
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
-	
+
 			e.printStackTrace();
 			return retour;
 		} finally {
-	
+
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
+	}
+
+	public static ArrayList<TypeActiviteBean> getListTypeActivitePro() {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite order by ordre asc";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idtypeactivite");
+				String libelle = rs.getString("libelle");
+				retour.add(new TypeActiviteBean(id, libelle));
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
+	public static ArrayList<TypeActiviteBean> getListTypeActiviteWaydeur() {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite order by ordre asc";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idtypeactivite");
+				String libelle = rs.getString("libelle");
+				retour.add(new TypeActiviteBean(id, libelle));
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
+	public static ArrayList<TypeActiviteBean> getListTypeActiviteToutes() {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite order by ordre asc";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idtypeactivite");
+				String libelle = rs.getString("libelle");
+				retour.add(new TypeActiviteBean(id, libelle));
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
+	public ArrayList<DureeBean> getListDuree() {
+		// TODO Auto-generated method stub
+		ArrayList<DureeBean> listDuree = new ArrayList<DureeBean>();
+		for (int f = 1; f < 3; f++) {
+			listDuree.add(new DureeBean(f*60, f + " Heure"));
+
+		}
+		return listDuree;
+	}
+
+	public ArrayList<QuantiteWaydeurBean> getListQuantiteWaydeur() {
+		// TODO Auto-generated method stub
+
+		ArrayList<QuantiteWaydeurBean> listQuantite = new ArrayList<QuantiteWaydeurBean>();
+		for (int f = 1; f < 9; f++) {
+			listQuantite.add(new QuantiteWaydeurBean(f, f + " Waydeur"));
+		}
+		return listQuantite;
 	}
 }

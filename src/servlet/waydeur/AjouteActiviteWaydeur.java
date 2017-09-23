@@ -2,6 +2,7 @@ package servlet.waydeur;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -13,8 +14,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
+import website.dao.CacheValueDAO;
+import website.metier.DureeBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+import website.metier.QuantiteWaydeurBean;
+import website.metier.SexeBean;
+import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class AjouteActiviteWaydeur
@@ -54,7 +60,21 @@ public class AjouteActiviteWaydeur extends HttpServlet {
 			return;
 		}
 
-		response.sendRedirect("/wayd/waydeur/form_creationactiviteWaydeur.jsp");
+		
+		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActiviteWaydeur();
+		ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
+		ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=new CacheValueDAO().getListQuantiteWaydeur();
+		
+		request.setAttribute("listTypeActivite", listTypeActivite);
+		request.setAttribute("listDuree", listDuree);
+		
+		request.setAttribute("listQuantiteWaydeur", listQuantiteWaydeur);
+		
+	
+		request.getRequestDispatcher("waydeur/form_creationactiviteWaydeur.jsp").forward(request, response);
+		
+		
+	
 
 	}
 

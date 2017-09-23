@@ -9,12 +9,11 @@
 <html lang="fr">
 <head>
 <title>Mon profil</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<link
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <script
@@ -26,14 +25,11 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-
-
+ 
 <script src="js/moment.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
 <script>
@@ -130,7 +126,7 @@
 									<div class='input-group date' id='iddateanniversaire'>
 
 										<input type='text' class="form-control"
-											id="iddateanniversaire" name="datenaissance" /> <span
+											id="dateanniversaire" name="datenaissance" /> <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-calendar"></span>
 										</span>

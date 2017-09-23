@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
-	<%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.TypeActiviteBean"%>
+<%@page import="website.metier.QuantiteWaydeurBean"%>
+<%@page import="website.metier.DureeBean"%>
+<%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 
 <html lang="fr">
 <head>
-  <title>>Création activité </title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
-  <link
+<title>>Création activité</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <script
@@ -24,108 +29,125 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
- 
+
 <script src="js/moment.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<%@ include file="menuWaydeur.jsp"%>
+	<%@ include file="menuWaydeur.jsp"%>
+
+
+	<%
+		ArrayList<TypeActiviteBean> listTypeActivite=(ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
+	ArrayList<DureeBean> listDuree=(ArrayList<DureeBean>) request.getAttribute("listDuree");
+	ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=(ArrayList<QuantiteWaydeurBean>) request.getAttribute("listQuantiteWaydeur");
+	%>
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" >
-				<div class="panel panel-default">
+			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-		
+
 					<div class="panel-title">Création activité</div>
-				
+
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 
-  <form action="/wayd/AjouteActiviteWaydeur" method="post" onsubmit="return valideFormulaire()">
-    <div class="form-group">
-      <label for="titre">Titre:</label>
-      <input type="text" class="form-control" id="titre" placeholder="Titre de l'activité " name="titre" required>
-    </div>
-    <div class="form-group">
-      <label for="adresse">Adresse:</label>
-      <input type="text" class="form-control" id="adresse" placeholder="Renseigner l'adresse" name="adresse" required>
-    </div>
-    
-     <div class="form-group">
-      <label for="description">Description:</label>
-       <textarea class="form-control" rows="5" id="description" name="description"></textarea>
-    </div>
-    
-        <div class="form-group"> 
-   <label for="typeactivite">Type d'activité:</label>
-    
-      <select class="form-control" id="typeactivite" name="typeactivite">
-        <option value="1">Sport</option>
-        <option value="2">Tennis</option>
-      
-       </select>
-  </div>
-   
-   
-   
-   <div class="form-group">
-    <div class="row">
-		  <div class='col-sm-6'>
-            <div class="form-group">
-			 <label for="acces">Nbr max de waydeur</label>
-    
-      <select class="form-control" id="maxwaydeur" name="maxwaydeur">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        </select>
-            </div>
-        </div>
-    
-         <div class='col-sm-6'>
-		<div class="form-group">
-		
-		<label for="duree">Durée:</label>
-    	<select class="form-control" id="typeactivite" name="duree">
-        <option value="60">1heure</option>
-        <option value="120">2heure</option>
-      	</select>       
-        </div>
-    </div>
-     
-   </div>
-</div>
-   
-   
-   
-    <button type="submit" class="btn btn-default">Enregistrer</button>
-    
-     <div class="form-group">
-   
-      <input type="hidden" class="form-control" id="latitude" placeholder="Renseigner l'adresse" name="latitude">
-    </div>
-     <div class="form-group">
+					<form action="/wayd/AjouteActiviteWaydeur" method="post"
+						onsubmit="return valideFormulaire()">
+						<div class="form-group">
+							<label for="titre">Titre:</label> <input type="text"
+								class="form-control" id="titre"
+								placeholder="Titre de l'activité " name="titre" required>
+						</div>
+						<div class="form-group">
+							<label for="adresse">Adresse:</label> <input type="text"
+								class="form-control" id="adresse"
+								placeholder="Renseigner l'adresse" name="adresse" required>
+						</div>
 
-      <input type="hidden" class="form-control" id="longitude" placeholder="Renseigner l'adresse" name="longitude">
-    </div>
-    
- 
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea class="form-control" rows="5" id="description"
+								name="description"></textarea>
+						</div>
 
-  
-  </form>
-  
-  
+						<div class="form-group">
+							<label for="typeactivite">Type d'activité:</label> <select
+								class="form-control" id="typeactivite" name="typeactivite">
+								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
+								<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
+							<%} %>
+
+							</select>
+						</div>
+
+
+
+						<div class="form-group">
+							<div class="row">
+								<div class='col-sm-6'>
+									<div class="form-group">
+										<label for="acces">Nbr max de waydeur</label> <select
+											class="form-control" id="maxwaydeur" name="maxwaydeur">
+												<%for (QuantiteWaydeurBean quantitewaydeur:listQuantiteWaydeur) {%>
+								<option value="<%=quantitewaydeur.getValue()%>"><%=quantitewaydeur.getLibelle()%></option>
+							<%} %>
+										</select>
+									</div>
+								</div>
+
+								<div class='col-sm-6'>
+									<div class="form-group">
+
+										<label for="duree">Durée:</label> <select class="form-control"
+											id="typeactivite" name="duree">
+												<%for (DureeBean duree:listDuree) {%>
+								<option value="<%=duree.getValue()%>"><%=duree.getLibelle()%></option>
+							<%} %>
+										</select>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+
+						<button type="submit" class="btn btn-default">Enregistrer</button>
+
+						<div class="form-group">
+
+							<input type="hidden" class="form-control" id="latitude"
+								placeholder="Renseigner l'adresse" name="latitude">
+						</div>
+						<div class="form-group">
+
+							<input type="hidden" class="form-control" id="longitude"
+								placeholder="Renseigner l'adresse" name="longitude">
+						</div>
+
+
+
+
+					</form>
+
+
 				</div>
 			</div>
 		</div>
 
-   
-</div>
 
-<script>
+	</div>
+
+	<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
 			street_number : 'short_name',
@@ -172,83 +194,78 @@
 				});
 			}
 		}
-</script>
+	</script>
 
-<script
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
-async defer></script>
-<script>
-	$(function () {
-	
-	
-  $('#datedebut').datetimepicker({
-     defaultDate: new Date,
-    format: 'D/MM/YYYY HH:mm'
-	
-   
-  });
-  
-   $('#datefin').datetimepicker({
-    defaultDate: new Date,
-    format: 'D/MM/YYYY HH:mm'
-   
-   
-  });
-  
-  
-});</script>
-<script>
-	
-function dateDiff(date1, date2){
-    var diff = {}                           // Initialisation du retour
-    var tmp = date2 - date1;
- 
-    tmp = Math.floor(tmp/1000);             // Nombre de secondes entre les 2 dates
-    diff.sec = tmp % 60;                    // Extraction du nombre de secondes
- 
-    tmp = Math.floor((tmp-diff.sec)/60);    // Nombre de minutes (partie entiÃ¨re)
-    diff.min = tmp % 60;                    // Extraction du nombre de minutes
- 
-    tmp = Math.floor((tmp-diff.min)/60);    // Nombre d'heures (entiÃ¨res)
-    diff.hour = tmp % 24;                   // Extraction du nombre d'heures
-     
-    tmp = Math.floor((tmp-diff.hour)/24);   // Nombre de jours restants
-    diff.day = tmp;
-     
-    return diff;
-}	
-	
-function heureDiff(date1, date2){
-           
-    var tmp = date2 - date1;
- 
-    tmp = Math.floor(tmp/1000)/3600;            
-    
-    return tmp;
- 
-}
-	
-function valideFormulaire(){
-	
-	var datedebut=$('#datedebut').data('DateTimePicker').date();
-	var datefin=$('#datefin').data('DateTimePicker').date();
-	
-	if (datedebut>datefin)
-	{alert("date debut>datefin");
-		return false;
-	} 
-	if (datefin<new Date() ){
-		alert("date fin avant maientnant");
-		return false;
-	}
-	
-	
-	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
-	// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
-	
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
+		async defer></script>
+	<script>
+		$(function() {
 
-return true;
-}
-</script>
+			$('#datedebut').datetimepicker({
+				defaultDate : new Date,
+				format : 'D/MM/YYYY HH:mm'
+
+			});
+
+			$('#datefin').datetimepicker({
+				defaultDate : new Date,
+				format : 'D/MM/YYYY HH:mm'
+
+			});
+
+		});
+	</script>
+	<script>
+		function dateDiff(date1, date2) {
+			var diff = {} // Initialisation du retour
+			var tmp = date2 - date1;
+
+			tmp = Math.floor(tmp / 1000); // Nombre de secondes entre les 2 dates
+			diff.sec = tmp % 60; // Extraction du nombre de secondes
+
+			tmp = Math.floor((tmp - diff.sec) / 60); // Nombre de minutes (partie entiÃ¨re)
+			diff.min = tmp % 60; // Extraction du nombre de minutes
+
+			tmp = Math.floor((tmp - diff.min) / 60); // Nombre d'heures (entiÃ¨res)
+			diff.hour = tmp % 24; // Extraction du nombre d'heures
+
+			tmp = Math.floor((tmp - diff.hour) / 24); // Nombre de jours restants
+			diff.day = tmp;
+
+			return diff;
+		}
+
+		function heureDiff(date1, date2) {
+
+			var tmp = date2 - date1;
+
+			tmp = Math.floor(tmp / 1000) / 3600;
+
+			return tmp;
+
+		}
+
+		function valideFormulaire() {
+
+			var datedebut = $('#datedebut').data('DateTimePicker').date();
+			var datefin = $('#datefin').data('DateTimePicker').date();
+
+			if (datedebut > datefin) {
+				alert("date debut>datefin");
+				return false;
+			}
+			if (datefin < new Date()) {
+				alert("date fin avant maientnant");
+				return false;
+			}
+
+			diffHeure = heureDiff(new Date(datedebut).getTime(), new Date(
+					datefin).getTime());
+			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
+
+			return true;
+		}
+	</script>
 </body>
 </html>
