@@ -2,14 +2,22 @@ package servlet.pro;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import website.dao.CacheValueDAO;
+import website.metier.DureeBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+import website.metier.QuantiteWaydeurBean;
+import website.metier.TypeAccess;
+import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class AjouteActivite
@@ -44,7 +52,16 @@ public class AjouteActivitePro extends HttpServlet {
 			return;
 		}
 		
-		response.sendRedirect("pro/form_creationactivite.jsp");
+		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActivitePro();
+		ArrayList<TypeAccess> listTypeAccess=new CacheValueDAO().getListTypeAccess();
+		
+		
+		request.setAttribute("listTypeActivite", listTypeActivite);
+		request.setAttribute("listTypeAccess", listTypeAccess);
+		
+	
+		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(request, response);
+		
 	
 	}
 

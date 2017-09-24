@@ -59,6 +59,8 @@ public class ProfilBean {
 	private String adresse;
 	private String siteWeb;
 	private String telephone;
+	private  boolean afficheAge;
+	private boolean afficeSexe;
 
 	private Date dateNaissance;
 	
@@ -220,6 +222,24 @@ public class ProfilBean {
 		this.telephone=telephone;
 		this.latitudeFixe=latitudeFixe;
 		this.longitudeFixe=longitudeFixe;
+		this.afficeSexe=affichesexe;
+		this.afficheAge=afficheage;
+	}
+
+	public boolean isAfficheAge() {
+		return afficheAge;
+	}
+
+	public void setAfficheAge(boolean afficheAge) {
+		this.afficheAge = afficheAge;
+	}
+
+	public boolean isAfficeSexe() {
+		return afficeSexe;
+	}
+
+	public void setAfficeSexe(boolean afficeSexe) {
+		this.afficeSexe = afficeSexe;
 	}
 
 	public boolean isAdmin() {

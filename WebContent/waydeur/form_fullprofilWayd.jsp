@@ -9,11 +9,12 @@
 <html lang="fr">
 <head>
 <title>Mon profil</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
-  <link
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <script
@@ -25,11 +26,14 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
- 
-<script src="js/moment.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
+
+<script src="js/moment.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
 <script>
@@ -45,9 +49,7 @@
 		ArrayList<SexeBean> listSexe = (ArrayList<SexeBean>) request.getAttribute("listSexe");
 		  
 			
-		if (profil == null) {
-
-		}
+		
 	%>
 	<%@ include file="menuWaydeur.jsp"%>
 
@@ -111,7 +113,8 @@
 							</div>
 							<div class="col-sm-2">
 								<div class="checkbox">
-									<label><input name="afficheSexe" type="checkbox">Afficher</label>
+									<label><input name="afficheSexe" type="checkbox"
+									 <%=Outils.jspAdapterCheked(profil.isAfficheAge()) %>>Afficher</label>
 								</div>
 							</div>
 						</div>
@@ -123,10 +126,10 @@
 							</div>
 							<div class='col-sm-4'>
 								<div class="form-group">
-									<div class='input-group date' id='iddateanniversaire'>
+									<div class='input-group date' id='dateanniversaire'>
 
 										<input type='text' class="form-control"
-											id="dateanniversaire" name="datenaissance" /> <span
+											id="iddateanniversaire" name="datenaissance" /> <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-calendar"></span>
 										</span>
@@ -136,7 +139,8 @@
 
 							<div class="col-sm-2">
 								<div class="checkbox">
-									<label><input type="checkbox" name="afficheAge">Afficher</label>
+									<label><input type="checkbox" name="afficheAge" <%=Outils.jspAdapterCheked(profil.isAfficheAge()) %>
+									>Afficher</label>
 								</div>
 							</div>
 						</div>
@@ -179,7 +183,8 @@
 		<script>
 			$(function() {
 
-				$('#iddateanniversaire').datetimepicker({
+			
+				$('#dateanniversaire').datetimepicker({
 					defaultDate : new Date,
 					format : 'DD/MM/YYYY HH:mm'
 

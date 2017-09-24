@@ -121,4 +121,14 @@ public static String jspAdapterListSelected(int selectedValue,int value){
         return imageString;
     }
 	
+	public String jspAdapterCheked(Boolean value){
+		if (value==null)return "";
+		
+		if (value.booleanValue()==false)
+			return "";
+		
+		return "checked";
+		
+	}
+	
 }

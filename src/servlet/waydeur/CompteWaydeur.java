@@ -124,6 +124,8 @@ public class CompteWaydeur extends HttpServlet {
 			profil.setDateNaissance( datenaissance);
 			profil.setSexe(sexe);
 			profil.setPremiereconnexion(false);
+			profil.setAfficeSexe(afficheSexe);
+			profil.setAfficheAge(afficheAge);
 			response.sendRedirect("AcceuilWaydeur");
 			
 

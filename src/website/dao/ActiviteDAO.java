@@ -823,13 +823,13 @@ public class ActiviteDAO {
 
 	}
 	
-	public ArrayList<Activite> getListActivites(Double malatitude,
+	public ArrayList<ActiviteBean> getListActivites(Double malatitude,
 			Double malongitude, int rayonmetre, int idtypeactivite_,
-			String motcle, long debutActivite, long finActivite, int typeUser,
+			String motcle,  int typeUser,
 			int typeacces, int commenceDans){
 
 		Connection connexion = null;
-		ArrayList<Activite> retour = new ArrayList<Activite>();
+		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
 		PreparedStatement preparedStatement=null;
 		ResultSet rs = null;
 		
@@ -840,7 +840,7 @@ public class ActiviteDAO {
 			double latMax = malatitude + coef;
 			double longMin = malongitude - coef;
 			double longMax = malongitude + coef;
-			Activite activite = null;
+			ActiviteBean activite = null;
 			
 			Calendar calendrierDebut = Calendar.getInstance();
 			commenceDans = (commenceDans ) * 60;
@@ -851,7 +851,8 @@ public class ActiviteDAO {
 			int finiDans = (commenceDans) * 60 + 60;
 			calendrierFin.add(Calendar.MINUTE, finiDans);
 			Date dateRechercheFin = calendrierFin.getTime();
-
+			System.out.println("debut:"+dateRechercheDebut);
+			System.out.println("fin"+dateRechercheFin);
 			// on remonte les activités dont le debut est comprise entre l'heure actuelle + commenceDans et l'heure actuelle + commenceDans+1 heure
 		
 
@@ -861,7 +862,7 @@ public class ActiviteDAO {
 					+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
 					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
 					+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
-					+ "and datedebut between ? and ? "
+					+ "and (datedebut between ? and ? or datefin between ? and ? or (datedebut<=? and datefin>=?))"
 					+ " and activite.latitude between ? and ?"
 					+ " and activite.longitude between ? and ?";
 
@@ -873,8 +874,9 @@ public class ActiviteDAO {
 
 			if (motcle != null) {
 
+				if (!motcle.equals(""))
 				requete = requete
-						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )";
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
 
 			}
 
@@ -889,6 +891,9 @@ public class ActiviteDAO {
 
 			}
 
+			
+			requete = requete + " ORDER BY datedebut asc;";
+			
 			preparedStatement = connexion
 					.prepareStatement(requete);
 
@@ -896,29 +901,36 @@ public class ActiviteDAO {
 					dateRechercheDebut.getTime()));
 			preparedStatement.setTimestamp(2, new java.sql.Timestamp(
 					dateRechercheFin.getTime()));
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+			preparedStatement.setTimestamp(4, new java.sql.Timestamp(
+					dateRechercheFin.getTime()));
+			preparedStatement.setTimestamp(5, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+			preparedStatement.setTimestamp(6, new java.sql.Timestamp(
+					dateRechercheFin.getTime()));
 
-			preparedStatement.setDouble(3, latMin);
-			preparedStatement.setDouble(4, latMax);
-			preparedStatement.setDouble(5, longMin);
-			preparedStatement.setDouble(6, longMax);
+			preparedStatement.setDouble(7, latMin);
+			preparedStatement.setDouble(8, latMax);
+			preparedStatement.setDouble(9, longMin);
+			preparedStatement.setDouble(10, longMax);
 
-			int index = 6;
+			int index = 10;
 
 			if (idtypeactivite_ != 0) {
-
 				index++;
 				preparedStatement.setInt(index, idtypeactivite_);
 
 			}
 
 			if (motcle != null) {
-
+				if (!motcle.equals("")){
 				index++;
 				String test = "%" + motcle + "%";
 				preparedStatement.setString(index, test);
 				index++;
 				preparedStatement.setString(index, test);
-
+				}
 			}
 
 			if (typeUser != 0) {
@@ -936,12 +948,16 @@ public class ActiviteDAO {
 
 			//
 
-			requete = requete + " ORDER BY datedebut asc;";
+		
 
-			 rs = preparedStatement.executeQuery();
-
+			System.out.println(requete);
+			
+			
+			rs = preparedStatement.executeQuery();
+			
 			while (rs.next()) {
-
+				System.out.println("joaut");
+				
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
 				double distance = ServeurMethodes.getDistance(malatitude, latitude,
@@ -972,7 +988,7 @@ public class ActiviteDAO {
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				boolean archive = false;
 				int totalavis = rs.getInt("totalavis");
-				activite = new Activite(id, titre, libelle, idorganisateur,
+				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude, longitude,
 						adresse, nom, prenom, photo, note, role, archive,
 						totalavis, datenaissance, sexe, nbrparticipant, true, true,
@@ -984,6 +1000,7 @@ public class ActiviteDAO {
 			rs.close();
 			preparedStatement.close();
 			// System.out.println("Activite total:" + total);
+			System.out.println(retour.size());
 			return retour;
 
 		} catch (NamingException | SQLException e) {

@@ -377,4 +377,14 @@
     <servlet-name>ChargePhotoPro</servlet-name>
     <url-pattern>/ChargePhotoPro</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RechercheWaydeur</display-name>
+    <servlet-name>RechercheWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.RechercheWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RechercheWaydeur</servlet-name>
+    <url-pattern>/RechercheWaydeur</url-pattern>
+  </servlet-mapping>
 </web-app>
