@@ -35,7 +35,6 @@
 </head>
 <body>
 
-	
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -55,22 +54,19 @@
 								class="form-control" id="nom" placeholder="Nom " name="nom"
 								required>
 						</div>
-						
+
 						<div class="form-group">
-							<label for="nom">Numéro SIRET*:</label> <input type="text"
-								class="form-control" id="nom" placeholder="numero siret " name="siret"
-								required>
-						</div>
-						
-							<div class="form-group">
-							<label for="nom">Tél*:</label> <input type="text"
-								class="form-control" id="nom" placeholder="numero siret " name="siret"
-								required>
+							<label for="nom">Num�ro SIRET*:</label> <input type="text"
+								class="form-control" id="nom" placeholder="numero siret "
+								name="siret" required>
 						</div>
 
-						
+					
+						<input type="hidden" class="form-control" id="typeuser"
+							placeholder="typeuser" name="typeuser" required value="1">
 
-						
+
+
 						<div class="form-group">
 							<label for="adresse">Adresse*:</label> <input type="text"
 								class="form-control" id="adresse"
@@ -179,7 +175,5 @@
 
 			}
 		</script>
-
-		
 </body>
 </html>
