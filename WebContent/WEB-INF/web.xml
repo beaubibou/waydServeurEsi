@@ -387,4 +387,34 @@
     <servlet-name>RechercheWaydeur</servlet-name>
     <url-pattern>/RechercheWaydeur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CrationComptePro</display-name>
+    <servlet-name>CrationComptePro</servlet-name>
+    <servlet-class>servlet.pro.CrationComptePro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CrationComptePro</servlet-name>
+    <url-pattern>/CrationComptePro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreationComptePro</display-name>
+    <servlet-name>CreationComptePro</servlet-name>
+    <servlet-class>servlet.pro.CreationComptePro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreationComptePro</servlet-name>
+    <url-pattern>/CreationComptePro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreationCompteWaydeur</display-name>
+    <servlet-name>CreationCompteWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.CreationCompteWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreationCompteWaydeur</servlet-name>
+    <url-pattern>/CreationCompteWaydeur</url-pattern>
+  </servlet-mapping>
 </web-app>

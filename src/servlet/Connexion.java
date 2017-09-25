@@ -253,11 +253,8 @@ public class Connexion extends HttpServlet {
 				if (success){
 					
 					temps=101;
-					
-					
-					
 				}
-				
+			
 				
 			}
 			
