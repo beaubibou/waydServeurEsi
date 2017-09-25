@@ -41,7 +41,7 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,"
-					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe FROM personne";
+					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret FROM personne";
 
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
@@ -75,12 +75,13 @@ public class PersonneDAO {
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
+				String siret = rs.getString("siret");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe);
+						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
 
 				retour.add(profil);
 
@@ -118,7 +119,7 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse"
-					+ ",siteweb,telephone,latitudefixe,longitudefixe "
+					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret "
 					+ " FROM personne where idpersonne=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
@@ -155,12 +156,13 @@ public class PersonneDAO {
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
+				String siret = rs.getString("siret");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe);
+						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
 
 			}
 			return profil;
@@ -197,7 +199,7 @@ public class PersonneDAO {
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire,"
 					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse"
-					+ ",siteweb,telephone,latitudefixe,longitudefixe FROM personne where login=?";
+					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret FROM personne where login=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -232,12 +234,13 @@ public class PersonneDAO {
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
+				String siret = rs.getString("siret");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe);
+						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
 
 			}
 
@@ -285,7 +288,7 @@ public class PersonneDAO {
 	}
 
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
-			double longitude, int typeuser, String commentaire, int idpersonne) {
+			double longitude,  String commentaire, String siret,String telephonne,int idpersonne) {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
@@ -293,7 +296,8 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
-			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=? "
+			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
+					+ "premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=?, siret=?,telephone=?"
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -305,7 +309,10 @@ public class PersonneDAO {
 			preparedStatement.setInt(6, ProfilBean.PRO);
 			preparedStatement.setDouble(7, latitude);
 			preparedStatement.setDouble(8, longitude);
-			preparedStatement.setInt(9, idpersonne);
+			preparedStatement.setString(9, siret);
+			preparedStatement.setString(10, telephonne);
+		
+			preparedStatement.setInt(11, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();

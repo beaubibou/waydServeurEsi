@@ -61,6 +61,7 @@ public class ProfilBean {
 	private String telephone;
 	private  boolean afficheAge;
 	private boolean afficeSexe;
+	private String siret;
 
 	private Date dateNaissance;
 	
@@ -193,7 +194,7 @@ public class ProfilBean {
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
 			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse,String siteWeb,
-			String telephone,double latitudeFixe,double longitudeFixe) {
+			String telephone,double latitudeFixe,double longitudeFixe,String siret) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -224,6 +225,15 @@ public class ProfilBean {
 		this.longitudeFixe=longitudeFixe;
 		this.afficeSexe=affichesexe;
 		this.afficheAge=afficheage;
+		this.siret=siret;
+	}
+
+	public String getSiret() {
+		return siret;
+	}
+
+	public void setSiret(String siret) {
+		this.siret = siret;
 	}
 
 	public boolean isAfficheAge() {
