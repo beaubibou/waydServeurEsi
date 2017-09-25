@@ -29,6 +29,7 @@ import com.google.firebase.tasks.OnSuccessListener;
  */
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	protected boolean success;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -99,7 +100,7 @@ public class Connexion extends HttpServlet {
 
 	public void testToken(String idtoken, HttpServletRequest request,
 			HttpServletResponse response, String pwd) {
-
+ 
 		HttpSession session = request.getSession();
 
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
@@ -142,7 +143,7 @@ public class Connexion extends HttpServlet {
 
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
-
+								success=true;
 								return;
 							} catch (SQLException | NamingException
 									| IOException e) {
@@ -168,6 +169,7 @@ public class Connexion extends HttpServlet {
 							if (profil.isPremiereconnexion()) {
 								try {
 									response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
+									success=true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -180,6 +182,7 @@ public class Connexion extends HttpServlet {
 
 								try {
 									response.sendRedirect("Acceuil");
+									success=true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -194,6 +197,7 @@ public class Connexion extends HttpServlet {
 									System.out
 											.println("Bacule vers acueeil pro");
 									response.sendRedirect("AcceuilPro");
+									success=true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -208,6 +212,7 @@ public class Connexion extends HttpServlet {
 								try {
 									System.out.println("Bacule vers acueeil waydeur");
 									response.sendRedirect("AcceuilWaydeur");
+									success=true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -241,7 +246,23 @@ public class Connexion extends HttpServlet {
 				});
 
 		try {
-			Thread.sleep(5000);
+			int temps=0;
+			while (temps<100){
+				Thread.sleep(30);	
+				temps++;
+				if (success){
+					
+					temps=101;
+					
+					
+					
+				}
+				
+				
+			}
+			
+			
+			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
