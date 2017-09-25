@@ -41,6 +41,7 @@ public void setId(String id) {
 }
 public Date getDatecreation() {
 	return datecreation;
+	//
 }
 public void setDatecreation(Date datecreation) {
 	this.datecreation = datecreation;
