@@ -28,7 +28,7 @@ public class PersonneDAO {
 		ResultSet rs = null;
 		ProfilBean profil = null;
 		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
-
+//
 		try {
 			connexion = CxoPool.getConnection();
 			Statement stmt = connexion.createStatement();
