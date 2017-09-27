@@ -263,7 +263,7 @@
 									for (ActiviteBean activite : listActivite) {
 									String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
 									String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-									String lienDetail = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
@@ -274,7 +274,7 @@
 									<td><span class="badge">10</span></td>
 									<td><%=activite.getEtat()%></td>
 
-									<td><a href="#" class="btn btn-success btn-sm"> <span
+									<td><a href=" <%=lienDetail%>>" class="btn btn-success btn-sm"> <span
 											class="glyphicon glyphicon-search"></span>
 									</a> <a href="#" class="btn btn-info btn-sm"> <span
 											class="glyphicon glyphicon-edit"></span>

@@ -57,6 +57,27 @@ public class ActiviteBean {
 	private int sexe;
 
 	private String urlPhoto;
+	
+	private int typeUser;
+	
+	private int typeAccess;
+	
+
+	public int getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
+
+	public int getTypeAccess() {
+		return typeAccess;
+	}
+
+	public void setTypeAccess(int typeAccess) {
+		this.typeAccess = typeAccess;
+	}
 
 	public String getUrlPhoto() {
 
@@ -213,7 +234,7 @@ public class ActiviteBean {
 			int idorganisateur, Date datedebut, Date datefin,
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
-			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd
+			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,int typeUser,int typeAcces
 			) {
 		this.id = id;
 		this.titre = titre;
@@ -234,6 +255,8 @@ public class ActiviteBean {
 		this.nbrparticipant = nbrparticipant;
 		this.typeactivite = idtypeactivite;
 		this.nbmaxwaydeur = nbmaxwayd;
+		this.typeAccess=typeAcces;
+		this.typeUser=typeUser;
 
 		// TODO Auto-generated constructor stub
 

@@ -417,4 +417,24 @@
     <servlet-name>CreationCompteWaydeur</servlet-name>
     <url-pattern>/CreationCompteWaydeur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DetailActiviteSite</display-name>
+    <servlet-name>DetailActiviteSite</servlet-name>
+    <servlet-class>servlet.commun.DetailActiviteSite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DetailActiviteSite</servlet-name>
+    <url-pattern>/DetailActiviteSite</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SignalerActivite</display-name>
+    <servlet-name>SignalerActivite</servlet-name>
+    <servlet-class>servlet.commun.SignalerActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignalerActivite</servlet-name>
+    <url-pattern>/SignalerActivite</url-pattern>
+  </servlet-mapping>
 </web-app>
