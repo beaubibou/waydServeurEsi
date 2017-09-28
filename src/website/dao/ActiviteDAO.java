@@ -11,16 +11,25 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
+import wayd.ws.WBservices;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
+import wayde.bean.LibelleMessage;
+import wayde.bean.MessageServeur;
 import wayde.bean.Personne;
+import wayde.dao.PersonneDAO;
+import wayde.dao.SignalementDAO;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 
 public class ActiviteDAO {
+
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
 	public void addActivitePro(int idpersonne, String titre,
 			String commentaire, Date datedebut, Date datefin, String adresse,
@@ -1042,6 +1051,56 @@ public class ActiviteDAO {
 			}
 		}
 	
+	}
+	
+	
+	public MessageServeur signalerActivite(int idpersonne, int idactivite,
+			int idmotif, String motif, String titre, String libelle
+			) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		try {
+
+			connexion = CxoPool.getConnection();
+
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			
+
+			SignalementDAO signalementdao = new SignalementDAO(connexion);
+
+			// Verfiie que le signalement est unique
+			if (signalementdao.isSignalerActvite(idpersonne, idactivite))
+				return new MessageServeur(false,
+						LibelleMessage.activiteDejaSignale);
+
+			connexion.setAutoCommit(false);
+			signalementdao.signalerActivite(idpersonne, idactivite, idmotif,
+					motif, titre, libelle);
+			connexion.commit();
+
+			String loginfo = "signalerActivite - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+
+			return new MessageServeur(true, LibelleMessage.activiteSignale);
+
+		} catch (SQLException | NamingException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return new MessageServeur(false, e.getMessage());
+
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+
 	}
 
 }

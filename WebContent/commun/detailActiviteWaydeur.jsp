@@ -71,7 +71,7 @@ ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-danger" href="SignalerActivite" role="button">Signaler</a>
+							<a class="btn btn-danger" href="SignalerActivite?idActivite=<%=activite.getId() %>" role="button">Signaler</a>
 							<a class="btn btn-info" href="SignalerActivite" role="participer">Participer</a>
 
 						</div>
