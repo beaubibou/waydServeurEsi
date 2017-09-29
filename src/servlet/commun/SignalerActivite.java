@@ -78,10 +78,10 @@ public class SignalerActivite extends HttpServlet {
 			} else {
 
 				LOG.info(message.getMessage());
-
-				response.sendRedirect("waydeur/MessageInfo.jsp");
 				request.setAttribute("message",
 						"Tu as deja signalé cette activité");
+				request.getRequestDispatcher("waydeur/MessageInfo.jsp").forward(request, response);
+				
 				return;
 			}
 		}

@@ -14,12 +14,19 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;
+import gcmnotification.AddParticipationGcm;
+import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.LibelleMessage;
+import wayde.bean.Message;
 import wayde.bean.MessageServeur;
+import wayde.bean.Participation;
 import wayde.bean.Personne;
+
+import wayde.dao.MessageDAO;
+import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
 import website.metier.ActiviteBean;
@@ -30,7 +37,47 @@ import website.metier.ProfilBean;
 public class ActiviteDAO {
 
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	Connection connexion;
+	public ActiviteDAO(Connection connexion) {
+		this.connexion = connexion;
+	}
+	
+	
+	public ActiviteDAO(){
+	
+	}
+	public boolean isInscrit(ActiviteBean activite, int idpersonne) {
+		String requete = "SELECT  idpersonne FROM public.participer "
+				+ "where( idpersonne=? and idactivite=?);";
+		PreparedStatement preparedStatement;
+		try {
+			
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, activite.getId());
+			ResultSet rs = preparedStatement.executeQuery();
+				
+			if (rs.next()) {
+				
+				preparedStatement.close();
+				return true;
+			} else {
+				preparedStatement.close();
+				return false;
 
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+
+		// TODO Auto-generated method stub
+
+	}
+	
 	public void addActivitePro(int idpersonne, String titre,
 			String commentaire, Date datedebut, Date datefin, String adresse,
 			double latitude, double longitude, int idtypeactivite,
@@ -1053,6 +1100,97 @@ public class ActiviteDAO {
 	
 	}
 	
+	public MessageServeur addParticipation(int iddemandeur, int idorganisateur,
+			int idactivite) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		try {
+
+			if (iddemandeur == idorganisateur)
+				return new MessageServeur(false,
+						LibelleMessage.infoParticpationActivite);
+
+			connexion = CxoPool.getConnection();
+
+			//Limite le nombre de participation a 2
+//			ParticipationDAO participationDAO=new ParticipationDAO(connexion);
+//			if (participationDAO.getNbrParticipation(iddemandeur)==2)
+//			{
+//				LOG.info("activite pleine");
+//				return  new MessageServeur(false, LibelleMessage.activiteFinie);
+//			}
+//			
+//				
+			
+			ActiviteBean activite =  ActiviteDAO.getActivite(idactivite);
+			
+			ArrayList<ParticipantBean> listParticipantBeans=ParticipantDAO.getListPaticipant(idactivite);
+			
+			
+			
+			if (activite == null)
+				return new MessageServeur(false, LibelleMessage.activiteFinie);
+
+			if (activite.isTerminee())
+				return new MessageServeur(false, "Activité terminéee");
+
+			if (activite.isComplete())
+				return new MessageServeur(false,
+						LibelleMessage.activiteComplete);
+
+			if (this.isInscrit(activite, iddemandeur)) {
+				return new MessageServeur(false,
+						LibelleMessage.activiteDejaInscrit);
+			}
+
+			connexion.setAutoCommit(false);
+			Participation participation = new Participation(iddemandeur,
+					idorganisateur, idactivite);
+			ParticipationDAO participationdao = new ParticipationDAO(connexion);
+			participationdao.addParticipation(participation);
+			this.updateChampCalcule(idactivite);
+			participationdao.addNotation(participation);
+			participationdao.addDemandeAmi(participation);
+			MessageDAO messagedao = new MessageDAO(connexion);
+			ArrayList<Personne> listparticipant = participationdao
+					.getListPartipantActivite(idactivite);
+			Personne personne = new PersonneDAO(connexion)
+					.getPersonneId(iddemandeur);
+
+			Message message = new Message(iddemandeur, personne.getPrenom()
+					+ " participe", idactivite, 0);
+
+			messagedao.addMessageByAct(message, listparticipant);
+
+			connexion.commit();
+
+			// new AddParticipationGcm(listparticipant, idactivite).start();
+
+			PoolThreadGCM.poolThread.execute(new AddParticipationGcm(					listparticipant, idactivite));
+
+			String loginfo = "addParticipation - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+
+			return new MessageServeur(true, LibelleMessage.activiteInscription);
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return new MessageServeur(false,
+					"ERREUR SURVENUE DANS METHODE addparticipation");
+
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+
+	}
+	
 	
 	public MessageServeur signalerActivite(int idpersonne, int idactivite,
 			int idmotif, String motif, String titre, String libelle
@@ -1103,6 +1241,19 @@ public class ActiviteDAO {
 
 	}
 
+	public void updateChampCalcule(int idactivite) throws SQLException {
+		// Met aj our le nbr participant dans activite
+
+		String requete = "UPDATE activite SET nbrwaydeur=(select  count(idpersonne)+1 "
+				+ " from participer where  idactivite=?) WHERE idactivite=?";
+
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setInt(1, idactivite);
+		preparedStatement.setInt(2, idactivite);
+		preparedStatement.execute();
+
+	}
 }
 
 	

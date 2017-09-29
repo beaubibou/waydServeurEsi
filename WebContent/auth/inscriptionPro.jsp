@@ -61,7 +61,12 @@
 								name="siret" required>
 						</div>
 
-					
+						<div class="form-group">
+							<label for="nom">Téléphone:</label> <input type="text"
+								class="form-control" id="nom" placeholder="téléphone"
+								name="telephone" required>
+						</div>
+
 						<input type="hidden" class="form-control" id="typeuser"
 							placeholder="typeuser" name="typeuser" required value="1">
 

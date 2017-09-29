@@ -437,4 +437,14 @@
     <servlet-name>SignalerActivite</servlet-name>
     <url-pattern>/SignalerActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ParticiperActivite</display-name>
+    <servlet-name>ParticiperActivite</servlet-name>
+    <servlet-class>servlet.waydeur.ParticiperActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ParticiperActivite</servlet-name>
+    <url-pattern>/ParticiperActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

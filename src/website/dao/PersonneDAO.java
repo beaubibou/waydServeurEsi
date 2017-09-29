@@ -311,7 +311,6 @@ public class PersonneDAO {
 			preparedStatement.setDouble(8, longitude);
 			preparedStatement.setString(9, siret);
 			preparedStatement.setString(10, telephonne);
-		
 			preparedStatement.setInt(11, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();

@@ -44,6 +44,8 @@ public class Form_PremierProfil extends HttpServlet {
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
+		String siret = request.getParameter("siret");
+		String telephone = request.getParameter("telephone");
 		int typeuser = Integer.parseInt(request.getParameter("typeuser"));
 		double latitude = 0;
 		double longitude = 0;
@@ -68,18 +70,21 @@ public class Form_PremierProfil extends HttpServlet {
 
 			case ProfilBean.PRO:
 
-//				personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
-//						typeuser, commentaire, profil.getId());
-//				profil.setPseudo(nom);
-//				profil.setAdresse(adresse);
-//				profil.setCommentaire(commentaire);
-//				profil.setTypeuser(typeuser);
-//				profil.setLatitude(latitude);
-//				profil.setLongitude(longitude);
-//				profil.setLatitudeFixe(latitude);
-//				profil.setLongitudeFixe(longitude);
-//				profil.setPremiereconnexion(false);
-//				response.sendRedirect("AcceuilPro");
+				personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
+						 commentaire,   siret, telephone,profil.getId());
+				profil.setPseudo(nom);
+				profil.setAdresse(adresse);
+				profil.setCommentaire(commentaire);
+				profil.setTypeuser(typeuser);
+				profil.setLatitude(latitude);
+				profil.setLongitude(longitude);
+				profil.setLatitudeFixe(latitude);
+				profil.setLongitudeFixe(longitude);
+				profil.setSiret(siret);
+				profil.setTelephone(telephone);
+				
+				profil.setPremiereconnexion(false);
+				response.sendRedirect("AcceuilPro");
 
 				break;
 
