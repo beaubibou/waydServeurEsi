@@ -86,6 +86,7 @@ import wayde.dao.PreferenceDAO;
 import wayde.dao.SignalementDAO;
 import wayde.dao.SuggestionDAO;
 import wayde.dao.TypeActiviteDAO;
+import website.metier.ProfilBean;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -1250,7 +1251,7 @@ public class WBservices {
 
 			Activite activite = new Activite(titre, libelle, idorganisateur,
 					datedebut,  idtypeactivite, latitude, longitude,
-					adresse, true, nbmaxwaydeur, datefinActivite);
+					adresse, true, nbmaxwaydeur, datefinActivite,ProfilBean.WAYDEUR);
 
 			// ****************Ajoute l'activite*****************************
 
@@ -1286,13 +1287,13 @@ public class WBservices {
 	}
 	
 	public MessageServeur addActivitePro(String titre, String libelle,
-			int idorganisateur,int idtypeactivite,
-			String latitudestr, String longitudestr, String adresse,Long debut,Long fin,
-			 String jeton)
+			int idorganisateur,  int idtypeactivite,
+			String latitudestr, String longitudestr, String adresse,
+			Long dateDebut,Long DateFin,String jeton)
 			throws ParseException {
 
-		long temps = System.currentTimeMillis();
-
+		long debut = System.currentTimeMillis();
+		LOG.info("datedebur "+dateDebut);
 		Connection connexion = null;
 
 		try {
@@ -1310,13 +1311,9 @@ public class WBservices {
 
 			double latitude = Double.parseDouble(latitudestr);
 			double longitude = Double.parseDouble(longitudestr);
-			Date datedebut, datebalise, datefinActivite;
-			datedebut = new Date();
-		//	Calendar calBalise = Calendar.getInstance();
-		//	calBalise.setTime(datedebut);
-		//	calBalise.add(Calendar.MINUTE, dureebalise);
-		//	datebalise = calBalise.getTime();
-			
+			Date datedebut,  datefinActivite;
+			datedebut = new Date(dateDebut);
+			datefinActivite=new Date(DateFin);
 			
 
 			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
@@ -1324,13 +1321,13 @@ public class WBservices {
 						LibelleMessage.activiteOrganisee);
 			}
 
-			
+			Activite activite = new Activite(titre, libelle, idorganisateur,
+					datedebut,  idtypeactivite, latitude, longitude,
+					adresse, true, 0, datefinActivite,ProfilBean.PRO);
+
 			// ****************Ajoute l'activite*****************************
 
-			Activite activite=new Activite();
-			activitedao.addActivitePro( titre,  libelle,
-					 idorganisateur, idtypeactivite,
-					 latitudestr,  longitudestr,  adresse, debut, fin);
+			activitedao.addActivite(activite);
 			connexion.commit();
 
 			// new AddActiviteGcm(activite, idorganisateur).start();
@@ -1338,7 +1335,7 @@ public class WBservices {
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,					idorganisateur));
 		
 			String loginfo = "Addactivite - "
-					+ (System.currentTimeMillis() - temps) + "ms";
+					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 			return new MessageServeur(true, Integer.toString(activite.getId()));
 
@@ -1360,7 +1357,6 @@ public class WBservices {
 		}
 
 	}
-
 	public MessageServeur addSuggestion(String suggestion, int idpersonne,
 			String jeton) throws ParseException {
 		long debut = System.currentTimeMillis();

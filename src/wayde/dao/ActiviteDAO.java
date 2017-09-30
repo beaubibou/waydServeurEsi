@@ -173,8 +173,8 @@ public class ActiviteDAO {
 		String requete = "INSERT INTO activite("
 				+ "   titre, libelle,datedebut, "
 				+ " datefin, adresse, latitude, longitude, actif,"
-				+ "idtypeactivite,idpersonne,datecreation,nbmaxwayd,nbrwaydeur)"
-				+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "idtypeactivite,idpersonne,datecreation,nbmaxwayd,nbrwaydeur,typeuser)"
+				+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
@@ -194,6 +194,7 @@ public class ActiviteDAO {
 				new java.sql.Timestamp(new Date().getTime()));
 		preparedStatement.setInt(12, activite.getNbmaxwaydeur());
 		preparedStatement.setInt(13, activite.getNbrparticipant());
+		preparedStatement.setInt(14, activite.getTypeUser());
 		
 		preparedStatement.execute();
 		ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -264,9 +265,7 @@ public class ActiviteDAO {
 		preparedStatement.setString(7, test);
 		preparedStatement.setString(8, test);
 		//
-
 		ResultSet rs = preparedStatement.executeQuery();
-
 		while (rs.next()) {
 
 			double latitude = rs.getDouble("latitude");

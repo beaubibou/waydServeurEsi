@@ -133,7 +133,7 @@ public class Activite {
 	}
 
 	public Activite(String titre, String libelle, int idorganisateur, Date datedebut,
-	        int idtypeactivite, double latitude, double longitude,String adresse,boolean actif,int nbmaxwaydeur,Date finactivite)
+	        int idtypeactivite, double latitude, double longitude,String adresse,boolean actif,int nbmaxwaydeur,Date finactivite,int typeUser)
 	    {
 	        super();
 	        this.titre = titre;
@@ -142,7 +142,6 @@ public class Activite {
 	        this.datedebut = datedebut;
 	        this.latitude = latitude;
 	        this.longitude=longitude;
-	        
 	        this.adresse=adresse;
 	        this.datecreation = new Date();
 	        this.typeactivite=idtypeactivite;
@@ -151,6 +150,7 @@ public class Activite {
 	        this.nbrparticipant=1;
 	        this.datefinactivite=finactivite;
 	        this.finidans=getSeTermine(finactivite);
+	        this.typeUser=typeUser;
 	        
 	    }
 	
