@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
+import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
@@ -54,7 +55,7 @@ public class SignalerActivite extends HttpServlet {
 		}
 
 		int idActivite = Integer.parseInt(request.getParameter("idActivite"));
-		ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
+		ActiviteBean activite = new Coordination().getActivite(idActivite);
 		request.setAttribute("activite", activite);
 
 		if (request.getParameter("idmotif") == null) {
@@ -73,7 +74,7 @@ public class SignalerActivite extends HttpServlet {
 
 			if (message.isReponse()) {
 
-				response.sendRedirect("waydeur/mesActivitesWaydeur.jsp");
+				response.sendRedirect("waydeur/mesActiviteWaydeur.jsp");
 				return;
 			} else {
 

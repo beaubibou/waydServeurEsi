@@ -82,6 +82,7 @@ public class Personne {
 	private boolean admin;
 	private double latitude;
 	private double longitude;
+	private int typeUser;
 	public Personne() {
 
 	}
@@ -168,7 +169,8 @@ public class Personne {
 			int nbrecheccnx, Date datecreation, Date datenaissance,
 			 String photo,  int sexe,String mail, String cleactivation,double note,
 			 int totalavis,String commentaire,boolean afficheage,boolean affichesexe,
-			boolean premiereconnexion,int rayon,boolean admin,double latitude,double longitude,boolean notification) {
+			boolean premiereconnexion,int rayon,
+			boolean admin,double latitude,double longitude,boolean notification,int typeUser) {
 		super();
 		this.id = id;
 		this.login =login;
@@ -196,11 +198,24 @@ public class Personne {
 		this.latitude=latitude;
 		this.longitude=longitude;
 		this.notification=notification;
+		this.typeUser=typeUser;
 	}
 
 	
 	
 	
+	public int getTypeUser() {
+		return typeUser;
+	}
+
+
+
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
+
+
+
 	public Personne(String nom, String prenom, String login, String mdp,
 			Date datenaissance, int sexe, String mail,
 			Boolean verrouille, Boolean actif) {

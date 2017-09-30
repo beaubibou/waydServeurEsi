@@ -1,7 +1,9 @@
 
+<%@page import="website.metier.ParticipantBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.ActiviteBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,7 +37,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 <style>
 .vcenter {
 	display: inline-block;
@@ -51,12 +53,13 @@
 
 </head>
 <body>
-<%@ include file="/waydeur/menuWaydeur.jsp"%>
-<% 	
-
-ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
-
- %>
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		ActiviteBean activite = (ActiviteBean) request
+				.getAttribute("activite");
+		ArrayList<ParticipantBean> listParticipant = activite
+				.getListParticipant();
+	%>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -71,8 +74,11 @@ ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-danger" href="SignalerActivite?idActivite=<%=activite.getId() %>" role="button">Signaler</a>
-							<a class="btn btn-info" href="ParticiperActivite?idActivite=<%=activite.getId()%>" role="participer">Participer</a>
+							<a class="btn btn-danger"
+								href="SignalerActivite?idActivite=<%=activite.getId()%>"
+								role="button">Signaler</a> <a class="btn btn-info"
+								href="ParticiperActivite?idActivite=<%=activite.getId()%>"
+								role="participer">Participer</a>
 
 						</div>
 					</div>
@@ -89,9 +95,9 @@ ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left: 15px"><%=activite.getPseudo() %></h3>
+								<h3 style="padding-left: 15px"><%=activite.getPseudo()%></h3>
 
-								<h4 style="padding-left: 15px"><%=activite.getTitre() %></h4>
+								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
 
 								<h5 style="padding-left: 15px">adresse</h5>
 
@@ -104,19 +110,17 @@ ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
 
 						<div class="form-group">
 							</br>
-							<h4>Type d'activité: Sport</h4>
-							<h4>Se termine dans 1 heure</h4>
-							<h4>Nbr inscrit 3/4</h4>
+							<h4><%=activite.getLibelleActivite()%></h4>
+							<h4><%=activite.getTempsRestant()%></h4>
+							<h4><%=activite.getBilanParticipation()%></h4>
 
 						</div>
-
-
 
 
 						<div class="form-group">
 							<label for="description">Description:</label>
 							<textarea disabled class="form-control" rows="5" id="description"
-								name="description"><%=activite.getLibelle() %></textarea>
+								name="description"><%=activite.getLibelle()%></textarea>
 						</div>
 
 
@@ -132,38 +136,23 @@ ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
 												</tr>
 											</thead>
 											<tbody>
+												<%
+													for (ParticipantBean participantBean : listParticipant) {
+												%>
 												<tr>
-													<td>John</td>
+													<td><%=participantBean.getPseudo() %></td>
 													<td>
 														<p>
 															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														</p>
-													</td>
-												</tr>
-												<tr>
-													<td>John</td>
-													<td>
-														<p>
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														</p>
-													</td>
-												</tr>
-												<tr>
-													<td>John</td>
-													<td>
-														<p>
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
+																id="rating-readonly" value="<%=participantBean.getNote() %>" class="rating"
 																data-clearable="remove" data-readonly />
 														</p>
 													</td>
 												</tr>
 
-
+												<%
+													}
+												%>
 											</tbody>
 										</table>
 

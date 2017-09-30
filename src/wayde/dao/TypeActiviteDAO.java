@@ -25,8 +25,9 @@ public class TypeActiviteDAO {
 			while (rs.next()) {
 				long id = rs.getLong("idtypeactivite");
 				long idcategorie = rs.getLong("idcategorieactivite");
+				int typeusuer=rs.getInt("typeuser");
 				String nom = rs.getString("nom");
-				typeactivitedb = new TypeActiviteDb( id,  idcategorie,  nom);
+				typeactivitedb = new TypeActiviteDb( id,  idcategorie,  nom,typeusuer);
 				retour.add(typeactivitedb);
 				
 			}

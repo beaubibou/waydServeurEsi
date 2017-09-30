@@ -56,7 +56,7 @@ public class MesActivitesWaydeur extends HttpServlet {
 		}
 
 		
-		ArrayList<TypeActiviteBean> listTypeActivite=new TypeActiviteDAO().getListTypeActivite();
+		ArrayList<TypeActiviteBean> listTypeActivite= TypeActiviteDAO.getListTypeActivite();
 		request.setAttribute("listTypeActivite", listTypeActivite);
 		LOG.info("taille"+listTypeActivite.size());
 		

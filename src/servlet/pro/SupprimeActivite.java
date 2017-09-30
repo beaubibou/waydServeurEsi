@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
@@ -50,11 +51,11 @@ public class SupprimeActivite extends HttpServlet {
 	
 	int idActivite=Integer.parseInt(request.getParameter("idactivite"));
 
-	ActiviteBean activite=ActiviteDAO.getActivite(idActivite);
+	ActiviteBean activite= new Coordination().getActivite(idActivite);
 	System.out.println("activite à efface "+idActivite);
 	
 	if (activite.getIdorganisateur()==profil.getId()){
-		ActiviteDAO.effaceActivite(idActivite);
+		 new Coordination().effaceActivite(idActivite);
 		System.out.println("activite  effacée "+idActivite);
 		response.sendRedirect("MesActivites");
 	}

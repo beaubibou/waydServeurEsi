@@ -11,12 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
-
 import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.SexeBean;

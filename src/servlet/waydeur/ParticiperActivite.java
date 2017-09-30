@@ -11,8 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
-import wayde.bean.MessageServeur;
-import website.dao.ActiviteDAO;
+import website.coordination.Coordination;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 
@@ -52,7 +51,9 @@ public class ParticiperActivite extends HttpServlet {
 		}
 
 		int idActivite = Integer.parseInt(request.getParameter("idActivite"));
-		ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
+	
+		ActiviteBean activite =  new Coordination().getActivite(idActivite);
+	
 		request.setAttribute("activite", activite);
 
 		

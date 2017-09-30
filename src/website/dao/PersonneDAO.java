@@ -12,10 +12,8 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
-import sun.util.locale.provider.LocaleServiceProviderPool.LocalizedObjectGetter;
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
-import wayde.bean.Parametres;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {

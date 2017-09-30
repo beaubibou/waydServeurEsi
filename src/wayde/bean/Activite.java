@@ -63,6 +63,28 @@ public class Activite {
 	public long finidans;
 
 	private int nbmaxwaydeur;
+
+
+	public int getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
+
+	public int getTypeAcces() {
+		return typeAcces;
+	}
+
+	public void setTypeAcces(int typeAcces) {
+		this.typeAcces = typeAcces;
+	}
+
+	private int typeUser;
+
+
+	private int typeAcces;
 	
 	
 	
@@ -138,7 +160,7 @@ public class Activite {
 	            Date datefin, int idtypeactivite, double latitude, double longitude,String adresse,
 	            String nom,String prenom,String photo,double note,
 	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
-	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur )
+	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,int typeUser,int typeAcces )
 	        {
 	            super();
 	        	this.id=id;
@@ -168,6 +190,8 @@ public class Activite {
 	    		this.age=getAgeStr(datenaissance,afficheage);
 	    		if (affichesexe)this.sexe=3;
 	    		this.role=role;
+	    		this.typeUser=typeUser;
+	    		this.typeAcces=typeAcces;
 	    		this.nbmaxwaydeur=nbmaxwaydeur;
 	    		if (this.titre.equals(""))this.titre=" ";
 	    			

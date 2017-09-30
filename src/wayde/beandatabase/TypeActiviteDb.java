@@ -4,12 +4,20 @@ public class TypeActiviteDb {
 	long id;
 	long idcategorie;
 	String nom;
+	int typeUser;
 	
-	public TypeActiviteDb(long id, long idcategorie, String nom) {
+	public int getTypeUser() {
+		return typeUser;
+	}
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
+	public TypeActiviteDb(long id, long idcategorie, String nom,int typeUser) {
 		super();
 		this.id = id;
 		this.idcategorie = idcategorie;
 		this.nom = nom;
+		this.typeUser=typeUser;
 	}
 	public long getId() {
 		return id;

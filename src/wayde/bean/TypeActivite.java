@@ -9,6 +9,7 @@ public class TypeActivite {
 	long idcategorie;
 	String nom;
 	private boolean ischecked;
+	private int typeUser;
 	  
 	public TypeActivite(long id, long idcategorie, String nom) {
 		super();
@@ -31,11 +32,19 @@ public class TypeActivite {
 		super();
 		
 	}
+	
+	public int getTypeUser() {
+		return typeUser;
+	}
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
 	public TypeActivite(TypeActiviteDb souscategoriedb) {
 		super();
 		this.id =souscategoriedb.getId();
 		this.idcategorie = souscategoriedb.getIdcategorie();
 		this.nom = souscategoriedb.getNom();// TODO Auto-generated constructor stub
+		this.typeUser=souscategoriedb.getTypeUser();
 	}
 	public long getId() {
 		return id;

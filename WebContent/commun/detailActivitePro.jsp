@@ -35,7 +35,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
 
 <style>

@@ -37,7 +37,9 @@ public class ActiviteDAO {
 							+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,"
 							+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
 							+ "personne.nbravis as totalavis,    personne.photo,1 as role,"
-							+ "activite.idactivite,    activite.libelle,    activite.titre,activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite   FROM personne,"
+							+ "activite.idactivite,    activite.libelle,    activite.titre,"
+							+ "activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite"
+							+ ",activite.typeuser,activite.typeacces   FROM personne,"
 							+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite="
 							+ idactivite_ + ";");
 
@@ -77,11 +79,15 @@ public class ActiviteDAO {
 					archive = true;
 
 				int totalavis = rs.getInt("totalavis");
+				
+				int typeUser = rs.getInt("typeuser");
+				int typeAcces = rs.getInt("typeacces");
+			
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
 						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, afficheage, affichesexe, nbmaxwayd
+						nbrparticipant, afficheage, affichesexe, nbmaxwayd,typeUser,typeAcces
 						);
 
 			}
@@ -237,7 +243,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd   FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeuser,activite.typeacces   FROM personne,"
 				+ "activite  WHERE (personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
 				+ "and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
@@ -293,11 +299,17 @@ public class ActiviteDAO {
 			Date datenaissance = rs.getTimestamp("datenaissance");
 			boolean archive = false;
 			int totalavis = rs.getInt("totalavis");
+			
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
+		
+
+
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd);
+					nbmaxwayd,typeUser,typeAcces);
 			retour.add(activite);
 
 		}
@@ -334,7 +346,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,personne.datenaissance  ,    personne.idpersonne,    "
 				+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd  FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
 				+ "activite  WHERE (personne.idpersonne = activite.idpersonne  "
 				+ "and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
@@ -391,11 +403,16 @@ public class ActiviteDAO {
 			//Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 			int totalavis = rs.getInt("totalavis");
+			
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
+		
+			
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd);
+					nbmaxwayd,typeUser,typeAcces);
 
 			retour.add(activite);
 
@@ -427,7 +444,7 @@ public class ActiviteDAO {
 		try {
 
 			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
-					+ "activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,personne.datenaissance,  "
+					+ "activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,personne.datenaissance,active.typeuser,activite.typeacces  "
 					+ "personne.note,personne.nbravis as totalavis,"
 					+ "activite.nbrwaydeur as nbrparticipant,activite.nbmaxwayd,"
 					+ "personne.prenom,personne.sexe,personne.nom,personne.idpersonne "
@@ -496,11 +513,14 @@ public class ActiviteDAO {
 				int totalavis = rs.getInt("totalavis");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
 				//Date datefinactivite = rs.getTimestamp("d_finactivite");
+				int typeUser = rs.getInt("typeuser");
+				int typeAcces = rs.getInt("typeacces");
+			
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
 						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, true, true, nbmaxwayd);
+						nbrparticipant, true, true, nbmaxwayd,typeUser,typeAcces);
 
 				retour.add(activite);
 
@@ -532,7 +552,7 @@ public class ActiviteDAO {
 				+ "personne.note,0 as role,"
 				+ "personne.nbravis as totalavis,"
 				+ "activite.nbrwaydeur as nbrparticipant,    personne.photo, personne.photo,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
 				+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
 				+ "activite.idactivite = participer.idactivite "
 				+ " and participer.idpersonne=? and activite.datefin>? ) ORDER BY datedebut DESC";
@@ -570,12 +590,14 @@ public class ActiviteDAO {
 			int sexe = rs.getInt("sexe");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 			//Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
+		
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd);
+					nbmaxwayd,typeUser,typeAcces);
 			retour.add(activite);
 
 		}
@@ -588,7 +610,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom,  personne.datenaissance,  personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ " personne.note,personne.nbravis as totalavis ,"
 				+ "activite.nbrwaydeur as nbrparticipant,   personne.photo,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd   FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeuser,activite.typeacces   FROM personne,"
 				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=?"
 				+ "and  activite.datefin>?";
 
@@ -623,12 +645,14 @@ public class ActiviteDAO {
 			int totalavis = rs.getInt("totalavis");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 			//Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
+		
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd
-					);
+					,typeUser,typeAcces);
 
 			retour.add(activite);
 
@@ -688,7 +712,7 @@ public class ActiviteDAO {
 				+ "personne.note,0 as role,"
 				+ "personne.nbravis as totalavis,"
 				+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
-				+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+				+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
 				+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
 				+ "activite.idactivite = participer.idactivite "
 				+ " and participer.idpersonne=? and activite.datefin<? ) ORDER BY datedebut DESC";
@@ -727,11 +751,14 @@ public class ActiviteDAO {
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 			//Date datefinactivite = rs.getTimestamp("d_finactivite");
 		//	System.out.println(datefinactivite);
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
+		
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd);
+					nbmaxwayd,typeUser,typeAcces);
 			retour.add(activite);
 
 		}
@@ -744,7 +771,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
 				+ "personne.note,personne.nbravis as totalavis,"
 				+ "activite.nbrwaydeur as nbrparticipant"
-				+ ",personne.photo,activite.idactivite,    activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd   FROM personne,"
+				+ ",personne.photo,activite.idactivite,    activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
 				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=?"
 				+ "and  activite.datefin<?";
 
@@ -778,12 +805,13 @@ public class ActiviteDAO {
 			int totalavis = rs.getInt("totalavis");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 		//	Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+			int typeUser = rs.getInt("typeuser");
+			int typeAcces = rs.getInt("typeacces");
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
-					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd
-					);
+					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
+					typeUser,typeAcces);
 			retour.add(activite);
 
 		}
@@ -1350,7 +1378,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd   FROM personne,"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser   FROM personne,"
 				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
 				+ "and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
@@ -1441,11 +1469,13 @@ public class ActiviteDAO {
 			Date datenaissance = rs.getTimestamp("datenaissance");
 			boolean archive = false;
 			int totalavis = rs.getInt("totalavis");
+			int typeAcces = rs.getInt("typeacces");
+		
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd);
+					nbmaxwayd,typeUser,typeAcces);
 			retour.add(activite);
 
 		}
@@ -1457,6 +1487,14 @@ public class ActiviteDAO {
 
 		
 		
+		
+	}
+
+	public void addActivitePro(String titre, String libelle,
+			int idorganisateur, int idtypeactivite, String latitudestr,
+			String longitudestr, String adresse, Long debut, Long fin) {
+		
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -62,9 +62,34 @@ public class ActiviteBean {
 	
 	private int typeAccess;
 	
+	private String libelleActivite;
 
 	public int getTypeUser() {
 		return typeUser;
+	}
+
+	public String getNomorganisateur() {
+		return nomorganisateur;
+	}
+
+	public void setNomorganisateur(String nomorganisateur) {
+		this.nomorganisateur = nomorganisateur;
+	}
+
+	public long getFinidans() {
+		return finidans;
+	}
+
+	public void setFinidans(long finidans) {
+		this.finidans = finidans;
+	}
+
+	public String getLibelleActivite() {
+		return libelleActivite;
+	}
+
+	public void setLibelleActivite(String libelleActivite) {
+		this.libelleActivite = libelleActivite;
 	}
 
 	public void setTypeUser(int typeUser) {
@@ -219,6 +244,7 @@ public class ActiviteBean {
 		this.typeactivite = idtypeactivite;
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
+		this.adresse=adresse;
 
 	}
 
@@ -234,7 +260,7 @@ public class ActiviteBean {
 			int idorganisateur, Date datedebut, Date datefin,
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
-			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,int typeUser,int typeAcces
+			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,int typeUser,int typeAcces,String libelleActivite
 			) {
 		this.id = id;
 		this.titre = titre;
@@ -257,6 +283,7 @@ public class ActiviteBean {
 		this.nbmaxwaydeur = nbmaxwayd;
 		this.typeAccess=typeAcces;
 		this.typeUser=typeUser;
+		this.libelleActivite=libelleActivite;
 
 		// TODO Auto-generated constructor stub
 
@@ -313,6 +340,29 @@ public class ActiviteBean {
 
 	}
 	
+	public String getTempsRestant() {
+
+		
+		if (datefin == null)
+			return "Terminée";
+		if (new Date().after(datefin))
+			return "Activité passée";
+		else {
+
+			long diff = datefin.getTime() - new Date().getTime();
+			// long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			// long diffDays = diff / (24 * 60 * 60 * 1000);
+			if (diff < 0)
+				return "Terminée";
+
+			return "Se termine dans "+ diffHours + ":" + String.format("%02d", diffMinutes);
+
+		}
+
+	}
+	
 	public String getEtat(){
 		
 		if (isActive())return "En cours";
@@ -354,7 +404,9 @@ public class ActiviteBean {
 
 	public void setId(int id) {
 		this.id = id;
+	
 	}
+	
 
 	public void setTitre(String titre) {
 		this.titre = titre;
@@ -414,4 +466,21 @@ public class ActiviteBean {
 		return listParticipant;
 	}
 
+	public String getBilanParticipation(){
+		
+		return "Nombre d'inscrit:"+listParticipant.size()+"/"+nbmaxwaydeur;
+	}
+	public boolean isInscrit(int iddemandeur) {
+		// TODO Auto-generated method stub
+		for (ParticipantBean participantBean:listParticipant)
+		if (participantBean.getId()==iddemandeur)return true;
+			
+		return false;
+	}
+	public String getAdresse(){
+		
+		return adresse;
+	}
+
+	
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 
@@ -43,7 +44,7 @@ public class DetailActivite extends HttpServlet {
 				int idActivite = Integer.parseInt(request
 						.getParameter("idactivite"));
 				System.out.println("Detail activite id=" + idActivite);
-				ActiviteBean activite = ActiviteDAO.getActivite(idActivite);
+				ActiviteBean activite = new Coordination().getActivite(idActivite);
 				request.setAttribute("activite", activite);
 				request.getRequestDispatcher("admin/detailactivite.jsp").forward(
 						request, response);

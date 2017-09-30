@@ -11,11 +11,11 @@
 			<a class="navbar-brand" href="#">WaydUser</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav" id="toto">
 			
-				<li class="active"><a href="/wayd/RechercheWaydeur">Recherche</a></li>
+				<li ><a href="/wayd/RechercheWaydeur">Recherche</a></li>
 				<li><a href="/wayd/MesActivitesWaydeur">Mes activites </a></li>
-				<li><a href="/wayd/AjouteActiviteWaydeur">Ajoute actvité</a></li>
+				<li ><a href="/wayd/AjouteActiviteWaydeur">Ajoute actvité</a></li>
 				<li><a href="/wayd/MapWaydeur">Carte</a></li>
 				<li><a href="/wayd/CompteWaydeur">Mon compte</a></li>
 				<li><a href="A propos">A propos</a></li>
@@ -30,4 +30,6 @@
 		</div>
 	</div>
 </nav>
+
+</script>
 

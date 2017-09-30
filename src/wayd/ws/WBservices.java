@@ -1284,6 +1284,82 @@ public class WBservices {
 		}
 
 	}
+	
+	public MessageServeur addActivitePro(String titre, String libelle,
+			int idorganisateur,int idtypeactivite,
+			String latitudestr, String longitudestr, String adresse,Long debut,Long fin,
+			 String jeton)
+			throws ParseException {
+
+		long temps = System.currentTimeMillis();
+
+		Connection connexion = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					idorganisateur, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+
+			connexion.setAutoCommit(false);
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+
+			double latitude = Double.parseDouble(latitudestr);
+			double longitude = Double.parseDouble(longitudestr);
+			Date datedebut, datebalise, datefinActivite;
+			datedebut = new Date();
+		//	Calendar calBalise = Calendar.getInstance();
+		//	calBalise.setTime(datedebut);
+		//	calBalise.add(Calendar.MINUTE, dureebalise);
+		//	datebalise = calBalise.getTime();
+			
+			
+
+			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
+				return new MessageServeur(false,
+						LibelleMessage.activiteOrganisee);
+			}
+
+			
+			// ****************Ajoute l'activite*****************************
+
+			Activite activite=new Activite();
+			activitedao.addActivitePro( titre,  libelle,
+					 idorganisateur, idtypeactivite,
+					 latitudestr,  longitudestr,  adresse, debut, fin);
+			connexion.commit();
+
+			// new AddActiviteGcm(activite, idorganisateur).start();
+
+			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,					idorganisateur));
+		
+			String loginfo = "Addactivite - "
+					+ (System.currentTimeMillis() - temps) + "ms";
+			LOG.info(loginfo);
+			return new MessageServeur(true, Integer.toString(activite.getId()));
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return new MessageServeur(false, e.getMessage());
+
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+		}
+
+	}
 
 	public MessageServeur addSuggestion(String suggestion, int idpersonne,
 			String jeton) throws ParseException {

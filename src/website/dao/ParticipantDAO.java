@@ -14,17 +14,22 @@ import website.metier.ParticipantBean;
 
 public class ParticipantDAO {
 
-	public static ArrayList<ParticipantBean> getListPaticipant(int idactivite)
+	Connection connexion;
+	
+	public ParticipantDAO(Connection connexion){
+		this.connexion
+		=connexion;
+		
+	}
+	public  ArrayList<ParticipantBean> getListPaticipant(int idactivite)
 			throws SQLException {
 		ParticipantBean participant = null;
 		ArrayList<ParticipantBean> retour = new ArrayList<ParticipantBean>();
-		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 
 		try {
-			connexion = CxoPool.getConnection();
-
+		
 			String requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,personne.nbravis,personne.sexe,personne.note,"
 					+ "personne.datenaissance,personne.afficheage,personne.affichesexe from personne,participer where personne.idpersonne=participer.idpersonne"
 					+ " and participer.idactivite=?  ";
@@ -80,15 +85,15 @@ public class ParticipantDAO {
 			}
 			return retour;
 
-		} catch (SQLException | NamingException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
 			return retour;
 		} finally {
 
-			CxoPool.close(connexion, preparedStatement, rs);
-		}
+			 preparedStatement.close();
+			 rs.close();}
 
 	}
 

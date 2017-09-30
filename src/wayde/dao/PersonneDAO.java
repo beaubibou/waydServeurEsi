@@ -246,7 +246,7 @@ public class PersonneDAO {
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
-				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,rayon,admin FROM personne where jeton=?";
+				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,rayon,admin,typeuser FROM personne where jeton=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setString(1, idtoken);
@@ -286,13 +286,14 @@ public class PersonneDAO {
 			double latitude = rs.getDouble("latitude");
 			double longitude = rs.getDouble("longitude");
 			boolean notification = rs.getBoolean("notification");
+			int typeUser = rs.getInt("typeuser");
 
 			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
-					rayonrecherche, admin, latitude, longitude, notification);
+					rayonrecherche, admin, latitude, longitude, notification,typeUser);
 			// System.out.println("Trouvé");
 			rs.close();
 			return personne;
@@ -334,12 +335,13 @@ public class PersonneDAO {
 			double longitude = rs.getDouble("longitude");
 
 			int totalavis = rs.getInt("nbravis");
+			int typeUser = rs.getInt("typeuser");
 			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
 					afficheage, affichesexe, premiereconnexion, rayonrecherche,
-					admin, latitude, longitude, notification);
+					admin, latitude, longitude, notification,typeUser);
 
 			rs.close();
 			return personne;
