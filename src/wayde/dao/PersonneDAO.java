@@ -246,7 +246,8 @@ public class PersonneDAO {
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
-				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,rayon,admin,typeuser FROM personne where jeton=?";
+				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,"
+				+ "rayon,admin,typeuser,siteweb,telephone,siret FROM personne where jeton=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setString(1, idtoken);
@@ -287,13 +288,16 @@ public class PersonneDAO {
 			double longitude = rs.getDouble("longitude");
 			boolean notification = rs.getBoolean("notification");
 			int typeUser = rs.getInt("typeuser");
+			String siteWeb = rs.getString("siteweb");
+			String siret = rs.getString("siret");
+			String tel = rs.getString("telephone");
 
 			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
-					rayonrecherche, admin, latitude, longitude, notification,typeUser);
+					rayonrecherche, admin, latitude, longitude, notification,typeUser,siteWeb,siret,tel);
 			// System.out.println("Trouvé");
 			rs.close();
 			return personne;
@@ -336,12 +340,18 @@ public class PersonneDAO {
 
 			int totalavis = rs.getInt("nbravis");
 			int typeUser = rs.getInt("typeuser");
+			String siteWeb = rs.getString("siteweb");
+			String siret = rs.getString("siret");
+			String tel = rs.getString("telephone");
+
 			// System.out.println("Note" + note);
+			
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
 					afficheage, affichesexe, premiereconnexion, rayonrecherche,
-					admin, latitude, longitude, notification,typeUser);
+					admin, latitude, longitude, notification,typeUser,
+					 siteWeb, siret, tel);
 
 			rs.close();
 			return personne;
@@ -721,7 +731,42 @@ public class PersonneDAO {
 		preparedStatement.close();
 
 	}
+	public void updateProfilWaydPro(String photostr, 
+			String pseudo,	String commentaire, int idpersonne, String tel,String siret,String siteweb)
+			throws SQLException, ParseException {
+		String requete = "UPDATE  personne set photo=?, prenom=?,commentaire=?, siret=?,telephone=?,siteweb=? "
+				+ " WHERE idpersonne=?";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setString(1, photostr);
+		preparedStatement.setString(2, pseudo);
+				
+		if (commentaire.equals(""))
+			preparedStatement.setString(3, null);
+		else
+			preparedStatement.setString(3, commentaire);
+		
+		if (siret.equals(""))
+			preparedStatement.setString(4, null);
+		else
+			preparedStatement.setString(4, siret);
+		
+		if (tel.equals(""))
+			preparedStatement.setString(5, null);
+		else
+			preparedStatement.setString(5, tel);
+		
+		if (siteweb.equals(""))
+			preparedStatement.setString(6, null);
+		else
+			preparedStatement.setString(6, siteweb);
+		
+		preparedStatement.setInt(7, idpersonne);
+		
+		preparedStatement.execute();
+		preparedStatement.close();
 
+	}
 	public void updateNotificationPref(int idpersonne, boolean notification)
 			throws SQLException {
 

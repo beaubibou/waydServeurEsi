@@ -83,6 +83,9 @@ public class Personne {
 	private double latitude;
 	private double longitude;
 	private int typeUser;
+	private String siteWeb;
+	private String siret;
+	private String telephone;
 	public Personne() {
 
 	}
@@ -170,7 +173,8 @@ public class Personne {
 			 String photo,  int sexe,String mail, String cleactivation,double note,
 			 int totalavis,String commentaire,boolean afficheage,boolean affichesexe,
 			boolean premiereconnexion,int rayon,
-			boolean admin,double latitude,double longitude,boolean notification,int typeUser) {
+			boolean admin,double latitude,double longitude,
+			boolean notification,int typeUser,String siteWeb,String siret,String telephone) {
 		super();
 		this.id = id;
 		this.login =login;
@@ -199,11 +203,52 @@ public class Personne {
 		this.longitude=longitude;
 		this.notification=notification;
 		this.typeUser=typeUser;
+		this.siteWeb=siteWeb;
+		this.siret=siret;
+		this.telephone=telephone;
+				
+				
 	}
 
 	
 	
 	
+	public String getSiteWeb() {
+		return siteWeb;
+	}
+
+
+
+	public void setSiteWeb(String siteWeb) {
+		this.siteWeb = siteWeb;
+	}
+
+
+
+	public String getSiret() {
+		return siret;
+	}
+
+
+
+	public void setSiret(String siret) {
+		this.siret = siret;
+	}
+
+
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+
+
 	public int getTypeUser() {
 		return typeUser;
 	}

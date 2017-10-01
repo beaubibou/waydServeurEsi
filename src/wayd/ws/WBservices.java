@@ -2587,6 +2587,52 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 		}
 
 	}
+	
+	public MessageServeur updateProfilPro(String photostr, 
+			String pseudo,	String commentaire, int idpersonne, String tel,String siret,String siteweb,
+			 String jeton) {
+		
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		try {
+
+			connexion = CxoPool.getConnection();
+			// SECURITE*************************************
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+
+			// ******************************************************
+
+			connexion.setAutoCommit(false);
+			personnedao.updateProfilWaydPro( photostr, 
+					 pseudo,	 commentaire,  idpersonne,  tel, siret, siteweb);
+			connexion.commit();
+			String loginfo = "updateProfilWayd - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+
+			return new MessageServeur(true, LibelleMessage.profilMisAjour);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return new MessageServeur(false, e.getMessage());
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+
+	}
 
 	public MessageServeur updateProfilWayd(String photostr, String nom,
 			String prenom, String datenaissancestr, int sexe,
