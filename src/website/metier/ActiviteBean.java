@@ -483,4 +483,9 @@ public class ActiviteBean {
 	}
 
 	
+	public String getHoraire(){
+		
+		return "De "+ datedebutStr +" à "+ datefinStr;
+	}
+	
 }

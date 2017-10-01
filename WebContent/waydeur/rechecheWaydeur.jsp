@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Mes activités</title>
+<title>Recherche activités</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -39,10 +39,10 @@
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-			  
-			ArrayList<TypeActiviteBean> listTypeActivite= (ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
-			ArrayList<TypeAccess> listTypeAccess= (ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
-			ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
+		  
+		ArrayList<TypeActiviteBean> listTypeActivite= (ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
+		ArrayList<TypeAccess> listTypeAccess= (ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
+		ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
 	%>
 	<div class="container">
 
@@ -258,32 +258,26 @@
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-																																    
-									if (listActivite!=null)
-									for (ActiviteBean activite : listActivite) {
-									String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-									String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-									String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																																						    
+															if (listActivite!=null)
+															for (ActiviteBean activite : listActivite) {
+															String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+															String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+															String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
-									<td>John</td>
+									<td><%=activite.getTitre()%></td>
 									<td><textarea class="form-control" disabled rows="2"
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
 									<td><span class="badge">10</span></td>
 									<td><%=activite.getEtat()%></td>
 
-									<td><a href=" <%=lienDetail%>>" class="btn btn-success btn-sm"> <span
+									<td><a href=" <%=lienDetail%>>"
+										class="btn btn-success btn-sm"> <span
 											class="glyphicon glyphicon-search"></span>
-									</a> <a href="#" class="btn btn-info btn-sm"> <span
-											class="glyphicon glyphicon-edit"></span>
-									</a>
-
-										<button id=<%out.println(lienEfface);%> name="supprimer"
-											type="button" class="btn btn-primary btn-sm">
-											<span class="glyphicon glyphicon-remove"></span>
-										</button></td>
+									</a></td>
 
 								</tr>
 								<%

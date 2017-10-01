@@ -57,6 +57,7 @@
 									<th>Description</th>
 									<th>Vues</th>
 									<th>Etat</th>
+									<th>Horaire</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -73,21 +74,20 @@
 								%>
 
 								<tr>
-									<td>John</td>
+									<td><%=activite.getTitre()%></td>
 									<td><textarea class="form-control" disabled rows="2"
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
 									<td><span class="badge">10</span></td>
 									<td><%=activite.getEtat()%></td>
+									<td><%=activite.getHoraire()%></td>
 
-									<td><a href="<%=lienDetail%>" class="btn btn-success btn-sm"> <span
+									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm"> <span
 											class="glyphicon glyphicon-search"></span>
-									</a> <a href="#" class="btn btn-info btn-sm"> <span
-											class="glyphicon glyphicon-edit"></span>
-									</a>
+									</a> 
 
 										<button id=<%out.println(lienEfface);%> name="supprimer"
-											type="button" class="btn btn-primary btn-sm">
+											type="button" class="btn btn-danger btn-sm">
 											<span class="glyphicon glyphicon-remove"></span>
 										</button></td>
 

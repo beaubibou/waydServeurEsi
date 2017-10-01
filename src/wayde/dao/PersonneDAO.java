@@ -80,7 +80,8 @@ public class PersonneDAO {
 				+ "personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation,  datenaissance, sexe,admin,rayon,latitude,longitude,"
-				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,nbravis,note FROM personne where idpersonne=?";
+				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,nbravis,note,typeuser,siteweb,telephone,siret"
+				+ " FROM personne where idpersonne=?";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
