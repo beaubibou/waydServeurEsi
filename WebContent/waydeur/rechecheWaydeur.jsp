@@ -1,12 +1,16 @@
 
+<%@page import="website.metier.QuandBean"%>
+<%@page import="website.metier.FiltreRecherche"%>
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.RayonBean"%>
 <%@page import="website.metier.Pagination"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.Outils"%>
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -39,10 +43,15 @@
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		FiltreRecherche filtre=(FiltreRecherche)session.getAttribute("filtreRecherche");
 		  
 		ArrayList<TypeActiviteBean> listTypeActivite= (ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
 		ArrayList<TypeAccess> listTypeAccess= (ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
 		ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
+		ArrayList<QuandBean> listQuand= (ArrayList<QuandBean>) request.getAttribute("listQuand");
+		ArrayList<RayonBean> listRayon= (ArrayList<RayonBean>) request.getAttribute("listRayon");
+
+	
 	%>
 	<div class="container">
 
@@ -56,8 +65,9 @@
 					<div class="form-group">
 						<label for="adresse">Adresse:</label> <input type="text"
 							class="form-control" id="adresse"
-							placeholder="Renseigner l'adresse" name="adresse" required>
+							placeholder="Renseigner l'adresse" name="adresse" required value="<%=filtre.getAdresse()%>">
 					</div>
+
 
 					<div class="form-group">
 						<div class="row">
@@ -74,8 +84,7 @@
 									<label for="acces">Acces</label> <select class="form-control"
 										id="idtypeaccess" name="typeaccess">
 
-										<option value="0">Tous</option>
-										<%
+																				<%
 											for (TypeAccess typeaccess:listTypeAccess) {
 										%>
 										<option value="<%=typeaccess.getId()%>"><%=typeaccess.getLibelle()%></option>
@@ -91,7 +100,7 @@
 								<div class="form-group">
 									<label for="duree">Type:</label> <select class="form-control"
 										id="typeactivite" name="typeactivite">
-										<option value="0">Tous</option>
+									
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite){
 										%>
@@ -109,11 +118,13 @@
 									<label for="duree">Propsé par:</label> <select
 										class="form-control" id="idtypeuser" name="typeuser">
 
-										<option value="0">Tous</option>
+									
 										<%
 											for (TypeUser typeUser:listTypeUser){
 										%>
-										<option value="<%=typeUser.getId()%>"><%=typeUser.getLibelle()%></option>
+										<option value="<%=typeUser.getId()%>" 
+										 <%=Outils.jspAdapterListSelected(typeUser.getId(), filtre.getTyperUser())%>>
+										<%=typeUser.getLibelle()%></option>
 										<%
 											}
 										%>
@@ -126,11 +137,16 @@
 								<div class="form-group">
 									<label for="duree">Quand</label> <select class="form-control"
 										id="idquand" name="commence">
-										<option value="0">Maintenant</option>
-										<option value="1">1heure</option>
-										<option value="2">2Heurs</option>
-										<option value="3">3heure</option>
-										<option value="4">4Heurs</option>
+										<%
+											for (QuandBean quand:listQuand){
+										%>
+										<option value="<%=quand.getValue()%>" 
+										<%=Outils.jspAdapterListSelected(quand.getValue(), filtre.getQuand())%>>
+										<%=quand.getLibelle()%></option>
+										
+										<%} %>
+									
+										
 
 									</select>
 								</div>
@@ -141,10 +157,13 @@
 								<div class="form-group">
 									<label for="duree">Rayon</label> <select class="form-control"
 										id="idrayon" name="rayon">
-										<option value="1">1Km</option>
-										<option value="2">2Km</option>
-										<option value="3">3km</option>
-										<option value="4">4km</option>
+										<%
+											for (RayonBean rayon:listRayon){
+										%>
+										<option value="<%=rayon.getValue()%>" 
+										<%=Outils.jspAdapterListSelected(rayon.getValue(), filtre.getRayon())%>>
+										<%=rayon.getLibelle()%></option>
+										<%} %>
 									</select>
 								</div>
 
@@ -158,13 +177,12 @@
 
 					<div class="form-group">
 
-						<input type="hidden" class="form-control" id="latitude"
-							placeholder="Renseigner l'adresse" name="latitude">
+						<input type="text" class="form-control" id="latitude"
+							 name="latitude" value="<%=filtre.getLatitude() %>">
 					</div>
 					<div class="form-group">
-
-						<input type="hidden" class="form-control" id="longitude"
-							placeholder="Renseigner l'adresse" name="longitude">
+						<input type="text" class="form-control" id="longitude"
+							 name="longitude" value="<%=filtre.getLongitude() %>">
 					</div>
 
 

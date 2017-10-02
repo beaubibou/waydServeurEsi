@@ -10,7 +10,9 @@ import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
 import website.metier.DureeBean;
+import website.metier.QuandBean;
 import website.metier.QuantiteWaydeurBean;
+import website.metier.RayonBean;
 import website.metier.SexeBean;
 import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
@@ -30,9 +32,9 @@ public class CacheValueDAO {
 
 			String requete = " SELECT  id,libelle from typeuser ";
 			preparedStatement = connexion.prepareStatement(requete);
-
 			rs = preparedStatement.executeQuery();
-
+			
+			retour.add(new TypeUser(0, "Tous"));
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
@@ -202,7 +204,7 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 
 			rs = preparedStatement.executeQuery();
-
+			retour.add(new TypeActiviteBean(0, "Tous"));
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
@@ -241,4 +243,27 @@ public class CacheValueDAO {
 		}
 		return listQuantite;
 	}
+
+		public static ArrayList<QuandBean> getListQuand() {
+		// TODO Auto-generated method stub
+	
+		ArrayList<QuandBean> listQuand = new ArrayList<QuandBean>();
+		listQuand.add(new QuandBean(0, "Tous"));
+		for (int f = 1; f < 9; f++) {
+			listQuand.add(new QuandBean(f,"Dans "+f +" heures"));
+		}
+		return listQuand;
+		
+		
+	}
+
+		public static ArrayList<RayonBean> getListRayon() {
+			// TODO Auto-generated method stub
+			ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
+			
+			for (int f = 1; f < 9; f++) {
+				listRayon.add(new RayonBean(f,""+f +" Km"));
+			}
+			return listRayon;
+		}
 }
