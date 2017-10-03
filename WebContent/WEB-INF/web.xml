@@ -447,4 +447,14 @@
     <servlet-name>ParticiperActivite</servlet-name>
     <url-pattern>/ParticiperActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RechercherPro</display-name>
+    <servlet-name>RechercherPro</servlet-name>
+    <servlet-class>servlet.pro.RechercherPro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RechercherPro</servlet-name>
+    <url-pattern>/RechercherPro</url-pattern>
+  </servlet-mapping>
 </web-app>
