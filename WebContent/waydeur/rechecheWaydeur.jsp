@@ -87,7 +87,9 @@
 																				<%
 											for (TypeAccess typeaccess:listTypeAccess) {
 										%>
-										<option value="<%=typeaccess.getId()%>"><%=typeaccess.getLibelle()%></option>
+										<option value="<%=typeaccess.getId()%>"
+										 <%=Outils.jspAdapterListSelected(typeaccess.getId(), filtre.getTypeAcces())%>>
+										 <%=typeaccess.getLibelle()%></option>
 										<%
 											}
 										%>

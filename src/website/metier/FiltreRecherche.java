@@ -6,11 +6,20 @@ public class FiltreRecherche {
 	int typeActivite=3;
 	double latitude=48.85661400000001,longitude=2.3522219000000177;
 	int rayon=2;
+	int typeAcces=0;
 	String adresse="Paris";
 	
 	public FiltreRecherche(){
 		
 		
+	}
+
+	public int getTypeAcces() {
+		return typeAcces;
+	}
+
+	public void setTypeAcces(int typeAcces) {
+		this.typeAcces = typeAcces;
 	}
 
 	public int getQuand() {

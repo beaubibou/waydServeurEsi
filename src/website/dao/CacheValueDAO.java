@@ -68,7 +68,8 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 
 			rs = preparedStatement.executeQuery();
-
+			retour.add(new TypeAccess(0, "Tous"));
+			
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
