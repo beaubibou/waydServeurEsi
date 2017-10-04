@@ -1,4 +1,6 @@
 
+<%@page import="website.enumeration.AlertJsp"%>
+<%@page import="website.html.AlertInfoJsp"%>
 <%@page import="website.metier.QuandBean"%>
 <%@page import="website.metier.FiltreRecherche"%>
 <%@page import="website.metier.FiltreJSP"%>
@@ -50,9 +52,13 @@
 		ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
 		ArrayList<QuandBean> listQuand= (ArrayList<QuandBean>) request.getAttribute("listQuand");
 		ArrayList<RayonBean> listRayon= (ArrayList<RayonBean>) request.getAttribute("listRayon");
-
-	
+		
+		AlertInfoJsp test=new AlertInfoJsp("cfmslkf",AlertJsp.Alert);
+		out.print(test.getHtml());
+		System.out.println(test.getHtml());
 	%>
+	
+	
 	<div class="container">
 
 		<button type="button" class="btn btn-info" data-toggle="collapse"
@@ -106,7 +112,8 @@
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite){
 										%>
-										<option value="<%=typeactivite.id%>"><%=typeactivite.getLibelle()%></option>
+										<option value="<%=typeactivite.id%>"
+										 <%=Outils.jspAdapterListSelected(typeactivite.getId(), filtre.getTypeActivite())%>><%=typeactivite.getLibelle()%></option>
 										<%
 											}
 										%>

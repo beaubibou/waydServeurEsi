@@ -34,8 +34,7 @@ public class AcceuilWaydeur extends HttpServlet {
 		//*********  Regle d'authentification*********************
 		
 		ProfilBean profil=(ProfilBean)session.getAttribute("profil");
-		
-		System.out.println("Profil dans acceuil waydeur"+profil);
+				System.out.println("Profil dans acceuil waydeur"+profil);
 		if (profil==null){
 			response.sendRedirect("auth/login.jsp");
 		    return;

@@ -8,7 +8,16 @@ public class FiltreRecherche {
 	int rayon=2;
 	int typeAcces=0;
 	String adresse="Paris";
+	int typeEtatActivite=TypeEtatActivite.TOUTES;
 	
+	public int getTypeEtatActivite() {
+		return typeEtatActivite;
+	}
+
+	public void setTypeEtatActivite(int typeEtatActivite) {
+		this.typeEtatActivite = typeEtatActivite;
+	}
+
 	public FiltreRecherche(){
 		
 		

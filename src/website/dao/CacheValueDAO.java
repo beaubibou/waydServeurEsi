@@ -16,6 +16,7 @@ import website.metier.RayonBean;
 import website.metier.SexeBean;
 import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
+import website.metier.TypeEtatActivite;
 import website.metier.TypeUser;
 
 public class CacheValueDAO {
@@ -243,6 +244,18 @@ public class CacheValueDAO {
 			listQuantite.add(new QuantiteWaydeurBean(f, f + " Waydeur"));
 		}
 		return listQuantite;
+	}
+	
+	
+	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatActivite> retour = new ArrayList<TypeEtatActivite>();
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES,"Toutes"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE,"Termines"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS,"En cours"));
+	
+		return retour;
 	}
 
 		public static ArrayList<QuandBean> getListQuand() {

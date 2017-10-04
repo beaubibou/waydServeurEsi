@@ -3,6 +3,9 @@
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.Pagination"%>
+<%@page import="website.metier.TypeEtatActivite"%>
+<%@page import="website.metier.FiltreRecherche"%>
+<%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -34,10 +37,68 @@
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		ArrayList<TypeActiviteBean>  listTypeActivite =(ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
+	
+	FiltreRecherche filtre=(FiltreRecherche)session.getAttribute("filtreRecherche");
+	ArrayList<TypeEtatActivite> listEtatActivite= (ArrayList<TypeEtatActivite>) request.getAttribute("listEtatActivite");
+
+	System.out.println("lst etat"+listEtatActivite.size());
+	
 	%>
 	<div class="container">
 
 		
+<div class="container">
+
+		<button type="button" class="btn btn-info" data-toggle="collapse"
+			data-target="#demo">Critéres</button>
+		<div id="demo" class="collapse">
+
+			<div class="container">
+				<form action="MesActivitesWaydeur" method="post">
+
+					<div class="form-group">
+						<div class="row">
+
+							
+							<div class='col-sm-2'>
+								<div class="form-group">
+									<label for="acces">Etat</label> <select class="form-control"
+										id="idtypeaccess" name="etatActivite">
+
+																				<%
+											for (TypeEtatActivite etatActivite:listEtatActivite) {
+										%>
+										<option value="<%=etatActivite.getId()%>"
+										 <%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+										 <%=etatActivite.getLibelle()%></option>
+										<%
+											}
+										%>
+
+									</select>
+								</div>
+							</div>
+
+					
+
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-default">Enregistrer</button>
+
+					
+					
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+
+
+
 
 
 	<div class="container">

@@ -24,15 +24,16 @@ import wayde.bean.Message;
 import wayde.bean.MessageServeur;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
-
 import wayde.dao.MessageDAO;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
+import website.enumeration.EtatActivite;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
+import website.metier.TypeEtatActivite;
 
 public class ActiviteDAO {
 
@@ -413,6 +414,203 @@ public class ActiviteDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int nbrparticipant = rs.getInt("nbrparticipant");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Date datefin = rs.getTimestamp("datefin");
+				String adresse = rs.getString("adresse");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				double note = rs.getDouble("note");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				String photo = rs.getString("photo");
+				boolean archive = true;
+				int sexe = rs.getInt("sexe");
+				int totalavis = rs.getInt("totalavis");
+				int nbmaxwayd = rs.getInt("nbmaxwayd");
+				// Date datefinactivite = rs.getTimestamp("d_finactivite");
+
+				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
+						datedebut, datefin, idtypeactivite, latitude,
+						longitude, adresse, nom, prenom, photo, note, 1,
+						archive, totalavis, datenaissance, sexe,
+						nbrparticipant, true, true, nbmaxwayd);
+				retour.add(activite);
+			}
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return retour;
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+		return retour;
+
+	}
+
+	public static ArrayList<ActiviteBean> getMesActivite(int idpersonne,
+			int etatActivite) {
+		ActiviteBean activite = null;
+		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = "";
+			switch (etatActivite)
+
+			{
+			case TypeEtatActivite.ENCOURS:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=? and datefin>?  ) ORDER BY datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+				System.out.println("encours");
+				break;
+			case TypeEtatActivite.TERMINEE:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=? and datefin<? ) ORDER BY datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+				System.out.println("encours");
+				break;
+
+			case TypeEtatActivite.TOUTES:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=?  ) ORDER BY datedebut DESC";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				rs = preparedStatement.executeQuery();
+
+			}
+
+			while (rs.next()) {
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int nbrparticipant = rs.getInt("nbrparticipant");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Date datefin = rs.getTimestamp("datefin");
+				String adresse = rs.getString("adresse");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				double note = rs.getDouble("note");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				String photo = rs.getString("photo");
+				boolean archive = true;
+				int totalavis = rs.getInt("totalavis");
+				int role = rs.getInt("role");
+				int sexe = rs.getInt("sexe");
+				int nbmaxwayd = rs.getInt("nbmaxwayd");
+				// Date datefinactivite = rs.getTimestamp("d_finactivite");
+				// System.out.println(datefinactivite);
+				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
+						datedebut, datefin, idtypeactivite, latitude,
+						longitude, adresse, nom, prenom, photo, note, role,
+						archive, totalavis, datenaissance, sexe,
+						nbrparticipant, true, true, nbmaxwayd);
+				retour.add(activite);
+
+			}
+
+			preparedStatement.close();
+			rs.close();
+			// Cherche dans les activite
+
+			switch (etatActivite)
+
+			{
+			case TypeEtatActivite.ENCOURS:
+				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
+						+ "personne.note,personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant"
+						+ ",personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
+						+ "   FROM personne,activite"
+						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=? and datefin>? order by datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+				System.out.println("encours");
+				break;
+			case TypeEtatActivite.TERMINEE:
+				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
+						+ "personne.note,personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant"
+						+ ",personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
+						+ " FROM personne,activite "
+						+ " WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=? and datefin<? order by datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+				System.out.println("encours");
+				break;
+
+			case TypeEtatActivite.TOUTES:
+				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
+						+ "personne.note,personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
+						+ " FROM personne,"
+						+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=? order by datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				rs = preparedStatement.executeQuery();
+
+			}
 
 			while (rs.next()) {
 				int id = rs.getInt("idactivite");
