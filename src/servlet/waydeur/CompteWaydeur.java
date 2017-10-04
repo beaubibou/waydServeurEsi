@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
+import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.SexeBean;
@@ -42,23 +43,13 @@ public class CompteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 	
 		// ********* Regle d'authentification*********************
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		LOG.info("doget");
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieWaydeur())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
 		
-		ArrayList<SexeBean> listSexe=new CacheValueDAO().getListSexe();
-		request.setAttribute("listSexe", listSexe);
+	
+		
 		request.getRequestDispatcher("waydeur/form_fullprofilWayd.jsp").forward(request, response);
 		
 

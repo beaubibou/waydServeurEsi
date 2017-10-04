@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 /**
@@ -36,20 +37,15 @@ public class SupprimeActiviteWaydeur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	LOG.info("doGet-SupprimeActiviteWaydeur");
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
 		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieWaydeur())
+			return;
+		
+		ProfilBean profil=authentification.getProfil();
+		
+	
 		int idActivite=Integer.parseInt(request.getParameter("idactivite"));
 
 		ActiviteBean activite= new Coordination().getActivite(idActivite);

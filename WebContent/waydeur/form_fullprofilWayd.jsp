@@ -3,7 +3,9 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.SexeBean"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.dao.CacheValueDAO"%>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -45,9 +47,14 @@
 <body>
 
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		ArrayList<SexeBean> listSexe = (ArrayList<SexeBean>) request.getAttribute("listSexe");
-		  
+	
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+	if (!authentification.isAuthentifieWaydeur())
+		return;
+	
+	ProfilBean profil=authentification.getProfil();
+	ArrayList<SexeBean> listSexe=new CacheValueDAO().getListSexe();	  
 			
 		
 	%>

@@ -51,10 +51,6 @@ public class MapWaydeur extends HttpServlet {
 		System.out.println(listMesActivite.size());
 		request.setAttribute("listMesActivite", listMesActivite);
 		request.getRequestDispatcher("/waydeur/mapfullscreen.jsp").forward(request, response);
-		
-	
-	
-	
 	
 	}
 

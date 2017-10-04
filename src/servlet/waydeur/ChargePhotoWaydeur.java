@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.PersonneDAO;
+import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
 
@@ -56,21 +57,11 @@ public class ChargePhotoWaydeur extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		HttpSession session = request.getSession();
-
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		LOG.info("doPost");
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieWaydeur())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
+			
 
 		File file;
 		int maxFileSize = 5000 * 1024;
@@ -104,8 +95,8 @@ public class ChargePhotoWaydeur extends HttpServlet {
 
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
-						new PersonneDAO().updatePhoto(stringPhoto, profil.getId());
-						profil.setPhotostr(stringPhoto);
+						new PersonneDAO().updatePhoto(stringPhoto, authentification.getProfil().getId());
+						authentification.getProfil().setPhotostr(stringPhoto);
 						response.sendRedirect("CompteWaydeur");
 					}
 				}
