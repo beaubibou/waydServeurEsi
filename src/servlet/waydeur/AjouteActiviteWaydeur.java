@@ -1,9 +1,7 @@
 package servlet.waydeur;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +13,10 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
+import website.metier.AuthentificationSite;
 import website.metier.DureeBean;
-import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.QuantiteWaydeurBean;
-import website.metier.SexeBean;
 import website.metier.TypeActiviteBean;
 
 /**
@@ -45,31 +42,12 @@ public class AjouteActiviteWaydeur extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		LOG.info("doget");
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+	
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieWaydeur())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-
-		
-		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActiviteWaydeur();
-		ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
-		ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=new CacheValueDAO().getListQuantiteWaydeur();
-		
-		request.setAttribute("listTypeActivite", listTypeActivite);
-		request.setAttribute("listDuree", listDuree);
-		
-		request.setAttribute("listQuantiteWaydeur", listQuantiteWaydeur);
-		
+			
 	
 		request.getRequestDispatcher("waydeur/form_creationactiviteWaydeur.jsp").forward(request, response);
 		

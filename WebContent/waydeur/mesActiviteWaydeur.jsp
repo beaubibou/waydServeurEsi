@@ -5,7 +5,9 @@
 <%@page import="website.metier.Pagination"%>
 <%@page import="website.metier.TypeEtatActivite"%>
 <%@page import="website.metier.FiltreRecherche"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -36,64 +38,63 @@
 <body>
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
-		ArrayList<TypeActiviteBean>  listTypeActivite =(ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
+	AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	if (!authentification.isAuthentifieWaydeur())
+		return;
 	
-	FiltreRecherche filtre=(FiltreRecherche)session.getAttribute("filtreRecherche");
-	ArrayList<TypeEtatActivite> listEtatActivite= (ArrayList<TypeEtatActivite>) request.getAttribute("listEtatActivite");
-
-	System.out.println("lst etat"+listEtatActivite.size());
-	
+	FiltreRecherche filtre=authentification.getFiltre();
+		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 	%>
 	<div class="container">
 
-		
-<div class="container">
 
-		<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#demo">Critéres</button>
-		<div id="demo" class="collapse">
+		<div class="container">
 
-			<div class="container">
-				<form action="MesActivitesWaydeur" method="post">
+			<button type="button" class="btn btn-info" data-toggle="collapse"
+				data-target="#demo">Critéres</button>
+			<div id="demo" class="collapse">
 
-					<div class="form-group">
-						<div class="row">
+				<div class="container">
+					<form action="MesActivitesWaydeur" method="post">
 
-							
-							<div class='col-sm-2'>
-								<div class="form-group">
-									<label for="acces">Etat</label> <select class="form-control"
-										id="idtypeaccess" name="etatActivite">
+						<div class="form-group">
+							<div class="row">
 
-																				<%
-											for (TypeEtatActivite etatActivite:listEtatActivite) {
-										%>
-										<option value="<%=etatActivite.getId()%>"
-										 <%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-										 <%=etatActivite.getLibelle()%></option>
-										<%
-											}
-										%>
 
-									</select>
+								<div class='col-sm-2'>
+									<div class="form-group">
+										<label for="acces">Etat</label> <select class="form-control"
+											id="idtypeaccess" name="etatActivite">
+
+											<%
+												for (TypeEtatActivite etatActivite:listEtatActivite) {
+											%>
+											<option value="<%=etatActivite.getId()%>"
+												<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+												<%=etatActivite.getLibelle()%></option>
+											<%
+												}
+											%>
+
+										</select>
+									</div>
 								</div>
+
+
+
 							</div>
-
-					
-
 						</div>
-					</div>
 
-					<button type="submit" class="btn btn-default">Enregistrer</button>
-
-					
-					
+						<button type="submit" class="btn btn-default">Enregistrer</button>
 
 
-				</form>
+
+
+
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	</div>
 
@@ -126,12 +127,12 @@
 
 								<%
 									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-														    
-														     if (listMesActivite!=null)
-															for (ActiviteBean activite : listMesActivite) {
-																String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																				    
+																				     if (listMesActivite!=null)
+																					for (ActiviteBean activite : listMesActivite) {
+																						String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																						String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																						String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
@@ -143,14 +144,19 @@
 									<td><%=activite.getEtat()%></td>
 									<td><%=activite.getHoraire()%></td>
 
-									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm"> <span
-											class="glyphicon glyphicon-search"></span>
-									</a> 
-
+									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
+											<span class="glyphicon glyphicon-search"></span>
+									</a>
+									
+<!-- 									Affiche le bouton effacer si pas terminée -->
+ 									
+ 										<%if (!activite.isTerminee()){ %> 
 										<button id=<%out.println(lienEfface);%> name="supprimer"
 											type="button" class="btn btn-danger btn-sm">
 											<span class="glyphicon glyphicon-remove"></span>
-										</button></td>
+										</button>
+										<%} %>
+										</td>
 
 								</tr>
 								<%

@@ -262,7 +262,7 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 	
 		ArrayList<QuandBean> listQuand = new ArrayList<QuandBean>();
-		listQuand.add(new QuandBean(0, "Tous"));
+		listQuand.add(new QuandBean(0, "Maintenant"));
 		for (int f = 1; f < 9; f++) {
 			listQuand.add(new QuandBean(f,"Dans "+f +" heures"));
 		}

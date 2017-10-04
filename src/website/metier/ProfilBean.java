@@ -62,6 +62,15 @@ public class ProfilBean {
 	private  boolean afficheAge;
 	private boolean afficeSexe;
 	private String siret;
+	private FiltreRecherche filtreRecherche;
+
+	public FiltreRecherche getFiltreRecherche() {
+		return filtreRecherche;
+	}
+
+	public void setFiltreRecherche(FiltreRecherche filtreRecherche) {
+		this.filtreRecherche = filtreRecherche;
+	}
 
 	private Date dateNaissance;
 	
@@ -226,6 +235,7 @@ public class ProfilBean {
 		this.afficeSexe=affichesexe;
 		this.afficheAge=afficheage;
 		this.siret=siret;
+		filtreRecherche=new FiltreRecherche();
 	}
 
 	public String getSiret() {

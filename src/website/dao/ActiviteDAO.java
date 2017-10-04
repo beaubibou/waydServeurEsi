@@ -1054,7 +1054,7 @@ public class ActiviteDAO {
 
 	public ArrayList<ActiviteBean> getListActivites(Double malatitude,
 			Double malongitude, int rayonmetre, int idtypeactivite_,
-			String motcle, int typeUser, int typeacces, int commenceDans) {
+			String motcle, int typeUser, int commenceDans) {
 
 		Connection connexion = null;
 		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
@@ -1115,10 +1115,7 @@ public class ActiviteDAO {
 
 			}
 
-			if (typeacces != 0) {
-				requete = requete + " and activite.typeacces=?";
-
-			}
+			
 
 			requete = requete + " ORDER BY datedebut asc;";
 
@@ -1167,11 +1164,7 @@ public class ActiviteDAO {
 
 			}
 
-			if (typeacces != 0) {
-				index++;
-				preparedStatement.setInt(index, typeacces);
-
-			}
+			
 
 			//
 

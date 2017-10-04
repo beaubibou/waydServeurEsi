@@ -4,6 +4,7 @@
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.QuantiteWaydeurBean"%>
 <%@page import="website.metier.DureeBean"%>
+<%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
@@ -43,9 +44,9 @@
 
 
 	<%
-		ArrayList<TypeActiviteBean> listTypeActivite=(ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
-	ArrayList<DureeBean> listDuree=(ArrayList<DureeBean>) request.getAttribute("listDuree");
-	ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=(ArrayList<QuantiteWaydeurBean>) request.getAttribute("listQuantiteWaydeur");
+		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActiviteWaydeur();
+			ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
+			ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=new CacheValueDAO().getListQuantiteWaydeur();
 	%>
 
 	<div class="container">
@@ -70,7 +71,8 @@
 						<div class="form-group">
 							<label for="adresse">Adresse:</label> <input type="text"
 								class="form-control" id="adresse"
-								placeholder="Renseigner l'adresse" name="adresse" required>
+								placeholder="Renseigner l'adresse" name="adresse"
+								onkeypress="initPosition()" required>
 						</div>
 
 						<div class="form-group">
@@ -82,9 +84,13 @@
 						<div class="form-group">
 							<label for="typeactivite">Type d'activité:</label> <select
 								class="form-control" id="typeactivite" name="typeactivite">
-								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
+								<%
+									for (TypeActiviteBean typeactivite:listTypeActivite) {
+								%>
 								<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
-							<%} %>
+								<%
+									}
+								%>
 
 							</select>
 						</div>
@@ -97,9 +103,13 @@
 									<div class="form-group">
 										<label for="acces">Nbr max de waydeur</label> <select
 											class="form-control" id="maxwaydeur" name="maxwaydeur">
-												<%for (QuantiteWaydeurBean quantitewaydeur:listQuantiteWaydeur) {%>
-								<option value="<%=quantitewaydeur.getValue()%>"><%=quantitewaydeur.getLibelle()%></option>
-							<%} %>
+											<%
+												for (QuantiteWaydeurBean quantitewaydeur:listQuantiteWaydeur) {
+											%>
+											<option value="<%=quantitewaydeur.getValue()%>"><%=quantitewaydeur.getLibelle()%></option>
+											<%
+												}
+											%>
 										</select>
 									</div>
 								</div>
@@ -109,9 +119,13 @@
 
 										<label for="duree">Durée:</label> <select class="form-control"
 											id="typeactivite" name="duree">
-												<%for (DureeBean duree:listDuree) {%>
-								<option value="<%=duree.getValue()%>"><%=duree.getLibelle()%></option>
-							<%} %>
+											<%
+												for (DureeBean duree:listDuree) {
+											%>
+											<option value="<%=duree.getValue()%>"><%=duree.getLibelle()%></option>
+											<%
+												}
+											%>
 										</select>
 									</div>
 								</div>
@@ -125,13 +139,13 @@
 
 						<div class="form-group">
 
-							<input type="hidden" class="form-control" id="latitude"
-								placeholder="Renseigner l'adresse" name="latitude">
+							<input type="text" class="form-control" id="latitude"
+								placeholder="Renseigner l'adresse" name="latitude" value="0">
 						</div>
 						<div class="form-group">
 
-							<input type="hidden" class="form-control" id="longitude"
-								placeholder="Renseigner l'adresse" name="longitude">
+							<input type="text" class="form-control" id="longitude"
+								placeholder="Renseigner l'adresse" name="longitude" value="0">
 						</div>
 
 
@@ -248,15 +262,12 @@
 
 		function valideFormulaire() {
 
-			var datedebut = $('#datedebut').data('DateTimePicker').date();
-			var datefin = $('#datefin').data('DateTimePicker').date();
+			var latitude = document.getElementById("latitude").value;
+			var longitude = document.getElementById("longitude").value;
 
-			if (datedebut > datefin) {
-				alert("date debut>datefin");
-				return false;
-			}
-			if (datefin < new Date()) {
-				alert("date fin avant maientnant");
+			if ((latitude == 0 || longitude == 0)) {
+				BootstrapDialog
+						.alert('La position n\'est pas correcte. Veuillez ressaisir votre adresse');
 				return false;
 			}
 
@@ -265,6 +276,12 @@
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			return true;
+		}
+
+		function initPosition() {
+			document.getElementById("latitude").value = 0;
+			document.getElementById("longitude").value = 0;
+
 		}
 	</script>
 </body>

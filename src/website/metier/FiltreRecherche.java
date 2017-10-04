@@ -1,13 +1,17 @@
 package website.metier;
 
 public class FiltreRecherche {
-	int quand=3;
-	int typerUser=1;
-	int typeActivite=3;
-	double latitude=48.85661400000001,longitude=2.3522219000000177;
+	int quand=0;
+	int typerUser=0;
+	int typeActivite=0;
+	double latitude=48.8566;
+	double longitude=2.3522;
 	int rayon=2;
 	int typeAcces=0;
 	String adresse="Paris";
+	private String motCle="";
+	
+	
 	int typeEtatActivite=TypeEtatActivite.TOUTES;
 	
 	public int getTypeEtatActivite() {
@@ -86,5 +90,15 @@ public class FiltreRecherche {
 	public void setRayon(int rayon) {
 		this.rayon = rayon;
 	}
+
+	public String getMotCle() {
+		return motCle;
+	}
+
+	public void setMotCle(String motCle) {
+		this.motCle = motCle;
+	}
+
+	
 	
 }
