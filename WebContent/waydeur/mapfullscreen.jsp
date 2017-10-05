@@ -1,4 +1,4 @@
-<%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.ActiviteAjax"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -35,7 +35,8 @@
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
 	
-	ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+	ArrayList<ActiviteAjax> listMesActivite = (ArrayList<ActiviteAjax>) request.getAttribute("listMesActivite");
+	System.out.println("nbr actié"+listMesActivite.size());
 	%>
 
 
@@ -69,7 +70,7 @@
 			var var_map = new google.maps.Map(document
 					.getElementById("map-container"), var_mapoptions);
 	
-	<%for (ActiviteBean activite : listMesActivite) {%>
+	<%for (ActiviteAjax activite : listMesActivite) {%>
 		positionItem = new google.maps.LatLng(
 	<%=activite.getLatitude()%>
 		,

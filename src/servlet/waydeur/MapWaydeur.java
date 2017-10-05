@@ -1,6 +1,7 @@
 package servlet.waydeur;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
+import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 /**
@@ -33,23 +36,25 @@ public class MapWaydeur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		if (!authentification.isAuthentifieWaydeur())
 			return;
-		}
 
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
+		
+	
+		try {
+			ArrayList<ActiviteAjax> listMesActivite;
+			listMesActivite = new ActiviteDAO().getListActiviteEncoursAjax(45,2);
+			System.out.println(listMesActivite.size());
+			request.setAttribute("listMesActivite", listMesActivite);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
-		System.out.println(listMesActivite.size());
-		request.setAttribute("listMesActivite", listMesActivite);
+	
+		
 		request.getRequestDispatcher("/waydeur/mapfullscreen.jsp").forward(request, response);
 	
 	}
