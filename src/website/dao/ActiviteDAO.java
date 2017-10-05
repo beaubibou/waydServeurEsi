@@ -29,6 +29,7 @@ import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
 import website.enumeration.EtatActivite;
+import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
@@ -45,6 +46,69 @@ public class ActiviteDAO {
 	}
 
 	public ActiviteDAO() {
+
+	}
+
+	public ArrayList<ActiviteAjax> getListActiviteEncoursAjax(
+			double centreLatitude, double centreLongitude) throws SQLException {
+
+		ActiviteAjax activite = null;
+		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+					+ " activite.longitude,    personne.prenom,  personne.datenaissance,  personne.sexe,    personne.nom,    personne.idpersonne,"
+					+ "personne.photo,"
+					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.typeuser   FROM personne,"
+					+ "activite  WHERE personne.idpersonne = activite.idpersonne "
+					+ "and  activite.datefin>?";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(new Date().getTime()));
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				String nom = rs.getString("nom");
+				String pseudo = rs.getString("prenom");
+				if (pseudo == null)
+					pseudo = "";
+				String photo = rs.getString("photo");
+				int typeUser = rs.getInt("typeuser");
+				activite = new ActiviteAjax(id, titre, libelle, idorganisateur,
+						latitude, longitude, photo, nom, pseudo, typeUser,
+						idtypeactivite);
+				retour.add(activite);
+			}
+
+			
+
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return retour;
+		}
+		finally{
+			rs.close();
+			preparedStatement.close();
+			connexion.close();
+			
+		}
+
+		return retour;
+		
+		// Cherche dans les activite
 
 	}
 
@@ -1115,8 +1179,6 @@ public class ActiviteDAO {
 
 			}
 
-			
-
 			requete = requete + " ORDER BY datedebut asc;";
 
 			preparedStatement = connexion.prepareStatement(requete);
@@ -1163,8 +1225,6 @@ public class ActiviteDAO {
 				preparedStatement.setInt(index, typeUser);
 
 			}
-
-			
 
 			//
 

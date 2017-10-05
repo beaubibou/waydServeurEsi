@@ -18,6 +18,7 @@ import wayde.bean.IndicateurWayd;
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
+import website.metier.ActiviteAjax;
 
 public class ActiviteDAO {
 	Connection connexion;
@@ -539,7 +540,11 @@ public class ActiviteDAO {
 		return null;
 
 	}
+	
 
+	
+	
+	
 	public ArrayList<Activite> getMesActiviteEncours(int idpersonne)
 			throws SQLException {
 

@@ -457,4 +457,14 @@
     <servlet-name>RechercherPro</servlet-name>
     <url-pattern>/RechercherPro</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListMapActivite</display-name>
+    <servlet-name>ListMapActivite</servlet-name>
+    <servlet-class>servlet.commun.ListMapActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListMapActivite</servlet-name>
+    <url-pattern>/ListMapActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="background-color:#ffd740;">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
