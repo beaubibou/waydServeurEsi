@@ -1,5 +1,5 @@
 package website.dao;
-
+//totobebe
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -195,7 +195,7 @@ public class ActiviteDAO {
 
 			int nbrTotalactivite = 0, nbrTotalparticipation = 0, nbrTotalInscrit = 0, nbrTotalMessage = 0, nbrTotalMessageByAct = 0;
 
-			// ************Calcul le nbr total d'activité
+			// ************Calcul le nbr total d'activitÃ©
 
 			String requete = "Select count(idactivite) as nbractivite  FROM activite";
 			PreparedStatement preparedStatement = connexion
@@ -331,7 +331,7 @@ public class ActiviteDAO {
 
 	}
 
-	// Renvoi une activité avec la liste des participants
+	// Renvoi une activitÃ© avec la liste des participants
 	//
 	public ActiviteBean getActivite(int idActivite) {
 
@@ -737,7 +737,7 @@ public class ActiviteDAO {
 		try {
 
 			connexion = CxoPool.getConnection();
-			if (typeactivite != -1) {// on trie sur l'activité
+			if (typeactivite != -1) {// on trie sur l'activitÃ©
 				System.out.println("tire sur l'activite");
 				String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
@@ -854,7 +854,7 @@ public class ActiviteDAO {
 
 			connexion = CxoPool.getConnection();
 
-			if (typeactivite != -1) {// on trie sur l'activité
+			if (typeactivite != -1) {// on trie sur l'activitÃ©
 				System.out.println("tire sur l'activite");
 				String requete = " SELECT count(idactivite) as nbr "
 						+ " FROM personne, activite"
@@ -1145,7 +1145,7 @@ public class ActiviteDAO {
 			Date dateRechercheFin = calendrierFin.getTime();
 			System.out.println("debut:" + dateRechercheDebut);
 			System.out.println("fin" + dateRechercheFin);
-			// on remonte les activités dont le debut est comprise entre l'heure
+			// on remonte les activitÃ©s dont le debut est comprise entre l'heure
 			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
 			// heure
 
