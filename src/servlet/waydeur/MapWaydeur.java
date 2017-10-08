@@ -42,8 +42,6 @@ public class MapWaydeur extends HttpServlet {
 		if (!authentification.isAuthentifieWaydeur())
 			return;
 
-		
-	
 		try {
 			ArrayList<ActiviteAjax> listMesActivite;
 			listMesActivite = new ActiviteDAO().getListActiviteEncoursAjax(45,2);
@@ -53,8 +51,7 @@ public class MapWaydeur extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
+			
 		request.getRequestDispatcher("/waydeur/mapfullscreen.jsp").forward(request, response);
 	
 	}

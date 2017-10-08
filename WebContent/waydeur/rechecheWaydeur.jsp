@@ -177,11 +177,11 @@
 
 					<div class="form-group">
 
-						<input type="text" class="form-control" id="latitude"
+						<input type="hidden" class="form-control" id="latitude"
 							name="latitude" value="<%=filtre.getLatitude()%>">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="longitude"
+						<input type="hidden" class="form-control" id="longitude"
 							name="longitude" value="<%=filtre.getLongitude()%>">
 					</div>
 

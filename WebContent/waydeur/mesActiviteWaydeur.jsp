@@ -85,10 +85,7 @@
 							</div>
 						</div>
 
-						<button type="submit" class="btn btn-default">Enregistrer</button>
-
-
-
+						<button type="submit" class="btn btn-default">Cherchez</button>
 
 
 					</form>
