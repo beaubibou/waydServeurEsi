@@ -92,7 +92,7 @@
 
 							<div class='col-sm-6' class="text-center">
 
-								<a href="DetailProfil?idprofil=<%=activite.getIdorganisateur()%>"> <h3 style="padding-left: 15px;color:blue;"><%=activite.getPseudo()%></h3></a>
+								<a href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>"> <h3 style="padding-left: 15px;color:blue;"><%=activite.getPseudo()%></h3></a>
 
 								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
 

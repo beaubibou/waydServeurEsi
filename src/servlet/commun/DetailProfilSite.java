@@ -1,10 +1,18 @@
 package servlet.commun;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import website.coordination.Coordination;
+import website.dao.PersonneDAO;
+import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
+import website.metier.ProfilBean;
 
 /**
  * Servlet implementation class DetailProfilSite
@@ -25,6 +33,40 @@ public class DetailProfilSite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifie())
+			return;
+		
+		int idprofil = Integer.parseInt(request.getParameter("idprofil"));
+		ProfilBean profil =  PersonneDAO.getFullProfil(idprofil);
+		
+		request.setAttribute("profil", profil);
+		
+		
+
+		switch (profil.getTypeuser()) {
+		case ProfilBean.PRO:
+			
+			request.getRequestDispatcher("/commun/detailProfilPro.jsp").forward(request, response);
+			
+			break;
+
+		case ProfilBean.WAYDEUR:
+
+		
+			request.getRequestDispatcher("/commun/detailProfilWaydeur.jsp").forward(request, response);
+			
+			break;
+
+		default:
+
+			break;
+		}
+
+	
+	
 	}
 
 	/**
