@@ -52,12 +52,8 @@ public class AjouteActivitePro extends HttpServlet {
 			return;
 		}
 		
-		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActivitePro();
-		ArrayList<TypeAccess> listTypeAccess=new CacheValueDAO().getListTypeAccess();
 		
 		
-		request.setAttribute("listTypeActivite", listTypeActivite);
-		request.setAttribute("listTypeAccess", listTypeAccess);
 		
 	
 		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(request, response);

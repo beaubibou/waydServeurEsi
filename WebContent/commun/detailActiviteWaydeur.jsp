@@ -111,7 +111,6 @@
 
 						</div>
 
-
 						<div class="form-group">
 							<label for="description">Description:</label>
 							<textarea disabled class="form-control" rows="5" id="description"

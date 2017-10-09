@@ -1,28 +1,28 @@
 package servlet.pro;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
-import website.metier.ActiviteBean;
-import website.metier.ProfilBean;
+import website.metier.ActiviteAjax;
+import website.metier.AuthentificationSite;
 
 /**
- * Servlet implementation class Map
+ * Servlet implementation class MapPro
  */
-public class Map extends HttpServlet {
+public class MapPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Map() {
+    public MapPro() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,38 +31,18 @@ public class Map extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
-	
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		if (!authentification.isAuthentifiePro())
 			return;
-		}
 
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-
-		ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
-		System.out.println(listMesActivite.size());
-		request.setAttribute("listMesActivite", listMesActivite);
-		request.getRequestDispatcher("pro/mapfullscreen.jsp").forward(request, response);
+					
+		request.getRequestDispatcher("/pro/mapfullscreen.jsp").forward(request, response);
+	
 		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		// TODO Auto-generated method stub
 	}
 
 	/**

@@ -135,15 +135,13 @@ public class CacheValueDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT idtypeactivite,nom,typeuser as libelle FROM type_activite where typeuser=1 order by ordre asc";
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=1 order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
-
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
-					
 				retour.add(new TypeActiviteBean(id, libelle));
 			}
 

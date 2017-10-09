@@ -42,16 +42,7 @@ public class MapWaydeur extends HttpServlet {
 		if (!authentification.isAuthentifieWaydeur())
 			return;
 
-		try {
-			ArrayList<ActiviteAjax> listMesActivite;
-			listMesActivite = new ActiviteDAO().getListActiviteEncoursAjax(45,2);
-			System.out.println(listMesActivite.size());
-			request.setAttribute("listMesActivite", listMesActivite);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
+					
 		request.getRequestDispatcher("/waydeur/mapfullscreen.jsp").forward(request, response);
 	
 	}

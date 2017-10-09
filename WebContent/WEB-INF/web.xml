@@ -477,4 +477,14 @@
     <servlet-name>DetailProfilSite</servlet-name>
     <url-pattern>/DetailProfilSite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapPro</display-name>
+    <servlet-name>MapPro</servlet-name>
+    <servlet-class>servlet.pro.MapPro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapPro</servlet-name>
+    <url-pattern>/MapPro</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -3,6 +3,7 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.TypeAccess"%>
+<%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +42,10 @@
 
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-	ArrayList<TypeActiviteBean> listTypeActivite=(ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
-	ArrayList<TypeAccess> listTypeAccess=(ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
+	
+	ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+	//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
+	
 	
 	%>
 	<div class="container">
@@ -72,20 +75,12 @@
 							<textarea class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
-						<div class="form-group">
-							<label for="acces">Acces à l'activitée:</label> <select
-								class="form-control" id="type" name="typeaccess">
-								<%for (TypeAccess typeaccess:listTypeAccess) {%>
-								<option value="<%=typeaccess.getId()%>"><%=typeaccess.getLibelle()%></option>
-							<%} %>
-
-							</select>
-						</div>
+						
 						<div class="form-group">
 							<label for="typeactivite">Type d'activitée:</label> <select
 								class="form-control" id="type" name="typeactivite">
 								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
-								<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
+							<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
 							<%} %>	
 							</select>
 						</div>
