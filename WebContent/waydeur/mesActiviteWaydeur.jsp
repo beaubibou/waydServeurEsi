@@ -35,65 +35,64 @@
 
 
 </head>
-<body>
+<body >
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
-	AuthentificationSite authentification=	new AuthentificationSite(request, response);
-	if (!authentification.isAuthentifieWaydeur())
-		return;
-	
-	FiltreRecherche filtre=authentification.getFiltre();
-		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+		if (!authentification.isAuthentifieWaydeur())
+			return;
+		
+		FiltreRecherche filtre=authentification.getFiltre();
+			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 	%>
 	<div class="container">
 
 
-		<div class="container">
-
-			<button type="button" class="btn btn-info" data-toggle="collapse"
-				data-target="#demo">Critéres</button>
-			<div id="demo" class="collapse">
-
-				<div class="container">
-					<form action="MesActivitesWaydeur" method="post">
-
-						<div class="form-group">
-							<div class="row">
+		<form action="MesActivitesWaydeur" method="post">
 
 
-								<div class='col-sm-2'>
-									<div class="form-group">
-										<label for="acces">Etat</label> <select class="form-control"
-											id="idtypeaccess" name="etatActivite">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
 
-											<%
-												for (TypeEtatActivite etatActivite:listEtatActivite) {
-											%>
-											<option value="<%=etatActivite.getId()%>"
-												<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-												<%=etatActivite.getLibelle()%></option>
-											<%
-												}
-											%>
+						<div class='col-sm-2'>
+							<div class="form-group">
+								<select class="form-control" id="idtypeaccess"
+									name="etatActivite">
 
-										</select>
-									</div>
-								</div>
+									<%
+										for (TypeEtatActivite etatActivite:listEtatActivite) {
+									%>
+									<option value="<%=etatActivite.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+										<%=etatActivite.getLibelle()%></option>
+									<%
+										}
+									%>
 
-
-
+								</select>
 							</div>
 						</div>
 
-						<button type="submit" class="btn btn-default">Cherchez</button>
+						<div class='col-sm-2'>
+
+							<button type="submit" class="btn btn-info">Cherchez</button>
+						</div>
 
 
-					</form>
+					</div>
+
 				</div>
 			</div>
-		</div>
+
+
+
+
+		</form>
 	</div>
-	</div>
+
+
+
 
 
 
@@ -124,12 +123,12 @@
 
 								<%
 									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																				    
-																				     if (listMesActivite!=null)
-																					for (ActiviteBean activite : listMesActivite) {
-																						String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																						String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																						String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																																						    
+																																						     if (listMesActivite!=null)
+																																							for (ActiviteBean activite : listMesActivite) {
+																																								String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																																								String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																																								String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
@@ -143,17 +142,15 @@
 
 									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
 											<span class="glyphicon glyphicon-search"></span>
-									</a>
-									
-<!-- 									Affiche le bouton effacer si pas terminée -->
- 									
- 										<%if (!activite.isTerminee()){ %> 
+									</a> <!-- 									Affiche le bouton effacer si pas terminée --> <%
+ 	if (!activite.isTerminee()){
+ %>
 										<button id=<%out.println(lienEfface);%> name="supprimer"
 											type="button" class="btn btn-danger btn-sm">
 											<span class="glyphicon glyphicon-remove"></span>
-										</button>
-										<%} %>
-										</td>
+										</button> <%
+ 	}
+ %></td>
 
 								</tr>
 								<%

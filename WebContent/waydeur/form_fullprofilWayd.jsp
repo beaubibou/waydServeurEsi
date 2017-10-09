@@ -47,16 +47,13 @@
 <body>
 
 	<%
-	
-	AuthentificationSite authentification = new AuthentificationSite(
+		AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
-	if (!authentification.isAuthentifieWaydeur())
+			if (!authentification.isAuthentifieWaydeur())
 		return;
-	
-	ProfilBean profil=authentification.getProfil();
-	ArrayList<SexeBean> listSexe=new CacheValueDAO().getListSexe();	  
 			
-		
+			ProfilBean profil=authentification.getProfil();
+			ArrayList<SexeBean> listSexe= CacheValueDAO.getListSexe();
 	%>
 	<%@ include file="menuWaydeur.jsp"%>
 
@@ -75,19 +72,18 @@
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
 									class="img-circle" />
 							</div>
-							
+
 							<div class="col-sm-8">
-							
-							<form action="/wayd/ChargePhotoWaydeur" method="post"
-							enctype="multipart/form-data">
-							<input type="file" name="file" size="50" /> 
-							<input
-								type="submit" value="Envoyer" class="btn btn-info" />
-						</form>	
+
+								<form action="/wayd/ChargePhotoWaydeur" method="post"
+									enctype="multipart/form-data">
+									<input type="file" name="file" size="50" /> <input
+										type="submit" value="Envoyer" class="btn btn-info" />
+								</form>
 							</div>
-							
+
 						</div>
-						
+
 					</div>
 					<form action="/wayd/CompteWaydeur" method="post"
 						onsubmit="return valideFormulaire()">
@@ -121,7 +117,7 @@
 							<div class="col-sm-2">
 								<div class="checkbox">
 									<label><input name="afficheSexe" type="checkbox"
-									 <%=Outils.jspAdapterCheked(profil.isAfficheAge()) %>>Afficher</label>
+										<%=Outils.jspAdapterCheked(profil.isAfficheAge())%>>Afficher</label>
 								</div>
 							</div>
 						</div>
@@ -146,8 +142,8 @@
 
 							<div class="col-sm-2">
 								<div class="checkbox">
-									<label><input type="checkbox" name="afficheAge" <%=Outils.jspAdapterCheked(profil.isAfficheAge()) %>
-									>Afficher</label>
+									<label><input type="checkbox" name="afficheAge"
+										<%=Outils.jspAdapterCheked(profil.isAfficheAge())%>>Afficher</label>
 								</div>
 							</div>
 						</div>
@@ -162,42 +158,35 @@
 
 						</div>
 
-
-
 						<div class="form-group">
 
 							<button type="submit" class="btn btn-info">Modifier</button>
 						</div>
-
-
 					</form>
-
-
 				</div>
 			</div>
 		</div>
 
+	</div>
 
 
+	<script>
+		function valideFormulaire() {
+			return true;
 
-		<script>
-			function valideFormulaire() {
-				return true;
+		}
+	</script>
 
-			}
-		</script>
+	<script>
+		$(function() {
 
-		<script>
-			$(function() {
-
-			
-				$('#dateanniversaire').datetimepicker({
-					defaultDate : new Date,
-					format : 'DD/MM/YYYY HH:mm'
-
-				});
+			$('#dateanniversaire').datetimepicker({
+				defaultDate : new Date,
+				format : 'DD/MM/YYYY HH:mm'
 
 			});
-		</script>
+
+		});
+	</script>
 </body>
 </html>

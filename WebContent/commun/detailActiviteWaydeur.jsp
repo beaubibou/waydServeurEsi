@@ -76,10 +76,7 @@
 						<div class="btn-group">
 							<a class="btn btn-danger"
 								href="SignalerActivite?idActivite=<%=activite.getId()%>"
-								role="button">Signaler</a> <a class="btn btn-info"
-								href="ParticiperActivite?idActivite=<%=activite.getId()%>"
-								role="participer">Participer</a>
-
+								role="button">Signaler</a> 
 						</div>
 					</div>
 
@@ -89,7 +86,8 @@
 						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-								<img height="80" width="80" src="image.jpeg" class="img-circle"
+
+								<img height="80" width="80" src="<%=activite.getPhoto() %>" class="img-circle"
 									class="text-center" />
 							</div>
 

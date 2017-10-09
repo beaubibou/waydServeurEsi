@@ -1,5 +1,5 @@
 package website.dao;
-//totobebe
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,33 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.naming.NamingException;
-
 import org.apache.log4j.Logger;
-
-import fcm.ServeurMethodes;
-import gcmnotification.AddParticipationGcm;
-import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
-import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.LibelleMessage;
-import wayde.bean.Message;
 import wayde.bean.MessageServeur;
-import wayde.bean.Participation;
-import wayde.bean.Personne;
-import wayde.dao.MessageDAO;
-import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
-import website.enumeration.EtatActivite;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeEtatActivite;
+import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
 
@@ -47,6 +35,95 @@ public class ActiviteDAO {
 
 	public ActiviteDAO() {
 
+	}
+
+	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
+			double malongitude, double NELat, double NELon, double SWLat,
+			double SWlon) {
+		// System.out.println("motcle:" + motcle);
+		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			double latMin = SWLat;
+			double latMax = NELat;
+			double longMin = SWlon;
+			double longMax = NELon;
+			// System.out.println(latMin + "," + latMax + "coef:" + coef);
+			ActiviteAjax activite = null;
+		
+			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+					+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+					+ "personne.note,personne.nbravis as totalavis,personne.photo,activite.nbrwaydeur as nbrparticipant,1 as role,"
+					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,"
+					+ "activite.nbmaxwayd,activite.typeuser   FROM personne,"
+					+ "activite  WHERE personne.idpersonne = activite.idpersonne   "
+					+ "and  datefin>? "
+					+ " and activite.latitude between ? and ?"
+					+ " and activite.longitude between ? and ? FETCH FIRST 40 ROWS ONLY;";
+
+			 preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.setDouble(2, latMin);
+			preparedStatement.setDouble(3, latMax);
+			preparedStatement.setDouble(4, longMin);
+			preparedStatement.setDouble(5, longMax);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int typeUser = rs.getInt("typeuser");
+				String nom = rs.getString("nom");
+				String pseudo = rs.getString("prenom");
+
+				if (pseudo == null)
+					pseudo = "";
+				String photo = rs.getString("photo");
+
+				activite = new ActiviteAjax(id, titre, libelle, idorganisateur,
+						latitude, longitude, photo, nom, pseudo, typeUser,
+						idtypeactivite);
+				retour.add(activite);
+
+			}
+
+			
+			// System.out.println("Activite total:" + total);
+			
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			finally{
+			
+				try {
+					rs.close();
+					preparedStatement.close();
+					connexion.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+						
+			}
+
+		return retour;
 	}
 
 	public ArrayList<ActiviteAjax> getListActiviteEncoursAjax(
@@ -64,7 +141,7 @@ public class ActiviteDAO {
 					+ "personne.photo,"
 					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.typeuser   FROM personne,"
 					+ "activite  WHERE personne.idpersonne = activite.idpersonne "
-					+ "and  activite.datefin>?";
+					+ "and  activite.datefin>?  ";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -92,22 +169,19 @@ public class ActiviteDAO {
 				retour.add(activite);
 			}
 
-			
-
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return retour;
-		}
-		finally{
+		} finally {
 			rs.close();
 			preparedStatement.close();
 			connexion.close();
-			
+
 		}
 
 		return retour;
-		
+
 		// Cherche dans les activite
 
 	}
@@ -1145,7 +1219,8 @@ public class ActiviteDAO {
 			Date dateRechercheFin = calendrierFin.getTime();
 			System.out.println("debut:" + dateRechercheDebut);
 			System.out.println("fin" + dateRechercheFin);
-			// on remonte les activités dont le debut est comprise entre l'heure
+			// on remonte les activités dont le debut est comprise entre
+			// l'heure
 			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
 			// heure
 

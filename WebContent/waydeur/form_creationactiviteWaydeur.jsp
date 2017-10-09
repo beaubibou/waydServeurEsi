@@ -139,12 +139,12 @@
 
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="latitude"
+							<input type="hidden" class="form-control" id="latitude"
 								placeholder="Renseigner l'adresse" name="latitude" value="0">
 						</div>
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="longitude"
+							<input type="hidden" class="form-control" id="longitude"
 								placeholder="Renseigner l'adresse" name="longitude" value="0">
 						</div>
 

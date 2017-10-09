@@ -38,6 +38,7 @@
 
 </head>
 <body>
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
 	<%
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");

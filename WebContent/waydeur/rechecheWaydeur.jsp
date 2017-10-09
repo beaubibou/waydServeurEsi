@@ -64,12 +64,12 @@
 
 	<div class="container">
 
-		<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#demo">Critéres</button>
-		<div id="demo" class="collapse">
 
-			<div class="container">
-				<form action="RechercheWaydeur" method="post"">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+
+
+				<form action="RechercheWaydeur" method="post">
 
 					<div class="form-group">
 						<label for="adresse">Adresse:</label> <input type="text"
@@ -86,10 +86,10 @@
 								<div class="form-group">
 									<label for="Mot clés">Titre:</label> <input type="text"
 										class="form-control" id="motcle" placeholder="motcle"
-										name="motcle" value=<%=filtre.getMotCle() %>>
+										name="motcle" value=<%=filtre.getMotCle()%>>
 								</div>
 							</div>
-							
+
 
 							<div class='col-sm-2'>
 								<div class="form-group">
@@ -173,7 +173,7 @@
 						</div>
 					</div>
 
-					<button type="submit" class="btn btn-default">Enregistrer</button>
+					<button type="submit" class="btn btn-default">Rechercher</button>
 
 					<div class="form-group">
 
@@ -189,8 +189,6 @@
 				</form>
 			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 
 	<script>
@@ -276,12 +274,12 @@
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-																																																		    
-																											if (listActivite!=null)
-																											for (ActiviteBean activite : listActivite) {
-																											String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																											String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																											String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																																																														    
+																																							if (listActivite!=null)
+																																							for (ActiviteBean activite : listActivite) {
+																																							String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																																							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																																							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
