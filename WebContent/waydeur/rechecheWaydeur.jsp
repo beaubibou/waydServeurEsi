@@ -47,18 +47,18 @@
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifieWaydeur())
-			return;
-		
-		FiltreRecherche filtre=authentification.getFiltre();
+			if (!authentification.isAuthentifieWaydeur())
+		return;
 			
-			ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
-		.getListTypeActiviteToutes();
-		ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
-		.getListTypeAccess();
-		ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
-		ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
-		ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
+			FiltreRecherche filtre=authentification.getFiltre();
+		
+		ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
+			.getListTypeActiviteToutes();
+			ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
+			.getListTypeAccess();
+			ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
+			ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
+			ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
 	%>
 
 
@@ -274,12 +274,10 @@
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-																																																														    
-																																							if (listActivite!=null)
-																																							for (ActiviteBean activite : listActivite) {
-																																							String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																																							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																																							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									for (ActiviteBean activite : listActivite) {
+									String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+									String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+									String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>

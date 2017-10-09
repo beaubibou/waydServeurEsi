@@ -62,20 +62,18 @@
 		);
 
 			var var_mapoptions = {
-				
+
 				zoom : 5
 			};
 
 			var_map = new google.maps.Map(document
 					.getElementById("map-container"), var_mapoptions);
-	
-		var_map.addListener('center_changed', function() {
+			var_map.addListener('center_changed', function() {
 				// 3 seconds after the center of the map has changed, pan back to the
 				// marker.
 
 				if (encours == 0) {
 					encours = 1;
-
 					window.setTimeout(function() {
 
 						var centre = var_map.getCenter();
@@ -96,14 +94,13 @@
 									encours = 0;
 									afficheMarker(responseJson);
 								});
-
 					}, 1000);
 
 				}
 			});
 
-// 		On  à poser un listener sur le changement de centrer - CE changement le déclence
-		 var_map.setCenter(var_location);
+			// 		On  à poser un listener sur le changement de centrer - CE changement le déclence
+			var_map.setCenter(var_location);
 
 		}
 
@@ -112,8 +109,8 @@
 			positionItem = new google.maps.LatLng(latitude, longitude);
 			var var_marker = new google.maps.Marker({
 				position : positionItem,
-				map : var_map,
-				title : "Venice"
+				map : var_map
+			//	,title : "Venice"
 			});
 			var_marker.setMap(var_map);
 			markersMap.push(var_marker);
@@ -138,15 +135,16 @@
 						activite.longitude);
 				var var_marker = new google.maps.Marker({
 					position : positionItem,
-					map : var_map,
-					title : "Venice"
+					map : var_map
+					,title : activite.titre
 				});
 				var_marker.setMap(var_map);
 				markersMap.push(var_marker);
 
-				//	var info = getInfoWindow("titre", "contenu", "lien", "cree");
-
-				var contentString = getContent(activite.titre,activite.libelle, "lien", "cree");
+				//	var info = getInfoWindow("titre", "contenu", "lien", "");
+				var lien="DetailActiviteSite?idactivite="+activite.id;
+				var contentString = getContent(activite.titre,
+						activite.libelle, lien, "");
 				var info = new google.maps.InfoWindow({
 					content : contentString
 				});
@@ -173,15 +171,13 @@
 	</script>
 
 	<script>
-		
-
 		function getContent(titre, contenu, lien, cree) {
 
 			var contentString = '<div id="content">' + '<div id="siteNotice">'
 					+ '</div>' + '<h1 id="firstHeading" class="firstHeading">'
 					+ titre + '</h1>' + '<div id="bodyContent">' + '<p>'
 					+ contenu + '</p>' + '<p><a href='+lien+'>'
-					+ 'Consulter</a> ' + '(crée le ' + cree + ' ).</p>'
+					+ 'Consulter</a> ' + '' + cree + '</p>'
 					+ '</div>' + '</div>';
 
 			return contentString;

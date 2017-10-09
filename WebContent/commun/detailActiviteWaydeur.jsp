@@ -1,5 +1,6 @@
 
 <%@page import="website.metier.ParticipantBean"%>
+<%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -65,9 +66,7 @@
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-
 					<div class="panel-title">Détail activité</div>
-
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -87,17 +86,15 @@
 							<div class='col-sm-2'>
 
 
-								<img height="80" width="80" src="<%=activite.getPhoto() %>" class="img-circle"
+								<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%> class="img-circle"
 									class="text-center" />
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left: 15px"><%=activite.getPseudo()%></h3>
+								<a href="DetailProfil?idprofil=<%=activite.getIdorganisateur()%>"> <h3 style="padding-left: 15px;color:blue;"><%=activite.getPseudo()%></h3></a>
 
 								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-
-								<h5 style="padding-left: 15px">adresse</h5>
 
 								<h5 style="padding-left: 15px">distance</h5>
 
@@ -108,7 +105,7 @@
 
 						<div class="form-group">
 							</br>
-							<h4><%=activite.getLibelleActivite()%></h4>
+							<h4>Catégorie:<%=activite.getLibelleActivite()%></h4>
 							<h4><%=activite.getTempsRestant()%></h4>
 							<h4><%=activite.getBilanParticipation()%></h4>
 

@@ -357,7 +357,7 @@ public class ActiviteBean {
 			if (diff < 0)
 				return "Terminée";
 
-			return "Se termine dans "+ diffHours + ":" + String.format("%02d", diffMinutes);
+			return "Se termine dans "+ diffHours + "Heure " + String.format("%02d", diffMinutes) + " minutes";
 
 		}
 

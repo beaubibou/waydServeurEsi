@@ -467,4 +467,14 @@
     <servlet-name>ListMapActivite</servlet-name>
     <url-pattern>/ListMapActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DetailProfilSite</display-name>
+    <servlet-name>DetailProfilSite</servlet-name>
+    <servlet-class>servlet.commun.DetailProfilSite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DetailProfilSite</servlet-name>
+    <url-pattern>/DetailProfilSite</url-pattern>
+  </servlet-mapping>
 </web-app>
