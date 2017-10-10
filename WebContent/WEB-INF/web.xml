@@ -487,4 +487,14 @@
     <servlet-name>MapPro</servlet-name>
     <url-pattern>/MapPro</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SignalerProfil</display-name>
+    <servlet-name>SignalerProfil</servlet-name>
+    <servlet-class>servlet.commun.SignalerProfil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignalerProfil</servlet-name>
+    <url-pattern>/SignalerProfil</url-pattern>
+  </servlet-mapping>
 </web-app>

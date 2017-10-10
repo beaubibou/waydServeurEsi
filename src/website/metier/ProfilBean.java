@@ -448,4 +448,16 @@ public class ProfilBean {
 				+ adresse + "]";
 	}
 
+	public boolean isPro() {
+		// TODO Auto-generated method stub
+		if (typeuser==ProfilBean.PRO)return true;
+		return false;
+	}
+
+	public boolean isWaydeur() {
+		// TODO Auto-generated method stub
+		if (typeuser==ProfilBean.WAYDEUR)return true;
+		return false;
+	}
+
 }

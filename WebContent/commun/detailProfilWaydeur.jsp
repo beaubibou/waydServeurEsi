@@ -1,5 +1,10 @@
+<%@page import="website.metier.AvisBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.Outils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,7 +52,34 @@
 </style>
 </head>
 <body>
+
+
+	<%
+	
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+	if (!authentification.isAuthentifie())
+		return;
+	
+	ProfilBean profil = (ProfilBean) request.getAttribute("profil");
+		ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
+				.getAttribute("listAvis");
+		
+	%>
+
+	<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
 	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
+	%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -74,18 +106,35 @@
 						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-								<img height="80" width="80" src="image.jpeg" class="img-circle"
+									<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%> class="img-circle"
 									class="text-center" />
+					
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left: 15px">Pseudo:</h3>
+								<h4 style="padding-left: 15px"><%=profil.getPseudo()%></h4>
 
-								<h4 style="padding-left: 15px">
+								<%
+									if (!profil.isAfficheAge()) {
+								%>
+								<h5 style="padding-left: 15px"><%=profil.getAge()%></h5>
+								<%
+									}
+								%>
+
+								<%
+									if (!profil.isAfficeSexe()) {
+								%>
+								<h5 style="padding-left: 15px"><%=profil.getSexe()%></h5>
+								<%
+									}
+								%>
+								<h5 style="padding-left: 15px">
 									<input type="number" name="rating" id="rating-readonly"
-										value="2" class="rating" data-clearable="remove" data-readonly />
-								</h4>
+										value="<%=(int) profil.getNote()%>" class="rating"
+										data-clearable="remove" data-readonly />
+								</h5>
 
 
 
@@ -97,7 +146,7 @@
 					<div class="form-group">
 						<label for="description">Description:</label>
 						<textarea disabled class="form-control" rows="5" id="description"
-							name="description"></textarea>
+							name="description"><%=profil.getCommentaireStr()%></textarea>
 					</div>
 
 					<div class="form-group">
@@ -105,38 +154,28 @@
 							<div class='col-sm-12'>
 
 								<div class="table-responsive">
-									<table class="table table-condensed">
+									<table class="table table-striped">
 										<thead>
 											<tr>
 												<th>Avis</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
+										<%for (AvisBean avis:listAvis){ %>
+											
+											<tr onclick="document.location='lien.html'">
+												<td><%=avis.getNomnotateur() %>
+												 <input type="number" name="rating"
+													id="rating-readonly" value="<%=(int)avis.getNote() %>" class="rating"
 													data-clearable="remove" data-readonly />
 
 												</td>
-											</tr>
-											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
-													data-clearable="remove" data-readonly />
-
+												<td>
+												<p ><%=avis.getLibelle() %></p>
 												</td>
 											</tr>
-											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
-													data-clearable="remove" data-readonly />
-
-												</td>
-											</tr>
-
+											
+										<%} %>
 										</tbody>
 									</table>
 

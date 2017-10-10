@@ -1,6 +1,7 @@
 <%@page import="website.metier.ActiviteBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,10 +39,26 @@
 
 </head>
 <body>
-	<%@ include file="/waydeur/menuWaydeur.jsp"%>
 	<%
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+	if (!authentification.isAuthentifie())
+		return;
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
+	%>
+	<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
 	%>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -56,7 +73,7 @@
 
 					<div class="row">
 
-						<div class='col-sm-5'>
+						<div class='col-sm-5 col-sm-offset-1 '>
 							
 							<h3>Que se passe-t-il ?</h3>
 
@@ -70,9 +87,9 @@
 
 						<div class="row">
 
-							<div class='col-sm-12 '>
+							<div class='col-sm-10 col-md-offset-1 '>
 
-								<a class="btn btn-info"
+								<a style="width:100%" class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=0"
 									role="button">Ce profil me harcèle</a>
 
@@ -86,9 +103,9 @@
 
 						<div class="row">
 
-							<div class='col-sm-12 '>
+							<div class='col-sm-10 col-md-offset-1 '>
 
-								<a class="btn btn-info"
+								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=1"
 									role="button">Dangereuse</a>
 
@@ -100,9 +117,9 @@
 
 						<div class="row">
 
-							<div class='col-sm-12 '>
-
-								<a class="btn btn-info"
+							<div class='col-sm-10 col-md-offset-1 '>
+							
+								<a style="width:100%" class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=2"
 									role="button">Illicite</a>
 
@@ -117,9 +134,9 @@
 
 						<div class="row">
 
-							<div class='col-sm-12 '>
+							<div class='col-sm-10 col-md-offset-1 '>
 
-								<a class="btn btn-info"
+								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=3"
 									role="button">Gratuite mais payante</a>
 
@@ -133,9 +150,9 @@
 
 						<div class="row">
 
-							<div class='col-sm-12 '>
+								<div class='col-sm-10 col-md-offset-1 '>
 
-								<a class="btn btn-info"
+								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=4"
 									role="button">Autre</a>
 

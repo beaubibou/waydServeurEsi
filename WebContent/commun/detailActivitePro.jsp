@@ -1,9 +1,11 @@
+<%@page import="website.metier.ProfilBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@page import="website.metier.ParticipantBean"%>
+<%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -56,21 +58,40 @@
 </head>
 <body>
 
-	<%@ include file="/pro/menu.jsp"%>
-<%
+
+	<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieWaydeur())
+			return;
+
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
 	%>
 
+	<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
+	%>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Détail activité</div>
+					<div style="text-align: center;" class="panel-title ">Détail
+						activité professionelle</div>
 
 				</div>
 
@@ -81,9 +102,9 @@
 
 						<div class="row">
 							<div class='col-sm-9'>
-							<a class="btn btn-danger"
-								href="SignalerActivite?idActivite=<%=activite.getId()%>"
-								role="button">Signaler</a> 
+								<a class="btn btn-danger"
+									href="SignalerActivite?idActivite=<%=activite.getId()%>"
+									role="button">Signaler</a>
 							</div>
 
 							<div class='col-sm-2  ' class="text-center">
@@ -97,11 +118,13 @@
 					</div>
 					<div class="form-group">
 
-						<div class="row vertical-align" style="border: 1px solid">
+						<div class="row vertical-align">
 							<div class='col-sm-3'>
 
-								<img height="80" width="80" src="image.jpeg" class="img-circle"
-									class="text-center" />
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+									class="img-circle" class="text-center" />
+
 							</div>
 
 							<div class='col-sm-6' class="text-center">
@@ -111,7 +134,7 @@
 									<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
 								</a>
 
-								<h4 style="padding-left: 15px">Titre:</h4>
+								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
 
 								<h5 style="padding-left: 15px">Adresse:</h5>
 

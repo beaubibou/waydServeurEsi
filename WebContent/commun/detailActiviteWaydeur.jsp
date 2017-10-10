@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -54,12 +55,30 @@
 
 </head>
 <body>
-	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	
 	<%
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+	if (!authentification.isAuthentifie())
+		return;
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
+	%>
+	
+		<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
 	%>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"

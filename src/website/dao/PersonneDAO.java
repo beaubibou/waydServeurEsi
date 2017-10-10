@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
+import website.metier.AvisBean;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
@@ -529,6 +530,68 @@ public class PersonneDAO {
 			}
 		}
 		return true;
+	}
+	public static ArrayList<AvisBean> getListAvis(int idpersonnenotee) {
+		AvisBean avis = null;
+		ArrayList<AvisBean> retour = new ArrayList<AvisBean>();
+		Connection connexion=null;
+		ResultSet rs=null;
+		PreparedStatement preparedStatement=null;
+		try {
+			 connexion = CxoPool.getConnection();
+			
+			String requete = " SELECT   activite.titre as titreactivite,personne.prenom,      personne.nom,    personne.photo,"
+					+ "noter.idactivite,  noter.idpersonnenotateur,noter.idpersonnenotee,noter.idnoter,noter.titre,"
+					+ "noter.libelle,noter.note,noter.datenotation"
+					+ "  FROM personne,noter,activite "
+					+ "  WHERE personne.idpersonne = noter.idpersonnenotateur  "
+					+ "and  noter.idpersonnenotee=? and noter.fait=true and noter.idactivite=activite.idactivite order by noter.datenotation desc";
+
+			 preparedStatement = connexion
+					.prepareStatement(requete);
+
+			preparedStatement.setInt(1, idpersonnenotee);
+			 rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int idactivite = rs.getInt("idactivite");
+				int idnoter = rs.getInt("idnoter");
+				String titreactivite = rs.getString("titreactivite");
+				String avistitre = rs.getString("titre");
+				String avislibelle = rs.getString("libelle");
+				int idpersonnenotateur = rs.getInt("idpersonnenotateur");
+				Date datenotation = rs.getTimestamp("datenotation");
+				double note = rs.getDouble("note");
+				String nomnotateur = rs.getString("nom");
+				String prenomnotateur = rs.getString("prenom");
+				String photonotateur = rs.getString("photo");
+				avis = new AvisBean(idnoter, idactivite, idpersonnenotee,
+						idpersonnenotateur, avistitre, avislibelle,
+						datenotation, note, nomnotateur, prenomnotateur,
+						photonotateur,titreactivite);
+				retour.add(avis);
+
+			}
+			
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		}
+		finally{
+			try {
+				connexion.close();
+				rs.close();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		}
+		return retour;
 	}
 
 }

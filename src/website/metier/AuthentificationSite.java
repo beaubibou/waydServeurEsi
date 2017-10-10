@@ -27,6 +27,15 @@ public class AuthentificationSite {
 		return profil;
 	}
 
+	public boolean isPro(){
+		
+		return profil.isPro();
+	}
+	
+public boolean isWaydeur(){
+		
+		return profil.isWaydeur();
+	}
 	public void setProfil(ProfilBean profil) {
 		this.profil = profil;
 	}

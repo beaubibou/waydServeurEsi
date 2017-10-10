@@ -35,15 +35,15 @@
 
 
 </head>
-<body >
+<body>
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifieWaydeur())
-			return;
-		
-		FiltreRecherche filtre=authentification.getFiltre();
-			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+			if (!authentification.isAuthentifieWaydeur())
+		return;
+			
+			FiltreRecherche filtre=authentification.getFiltre();
+		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 	%>
 	<div class="container">
 
@@ -123,15 +123,14 @@
 
 								<%
 									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																						    
-																																						     if (listMesActivite!=null)
-																																							for (ActiviteBean activite : listMesActivite) {
-																																								String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																																								String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																																								String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+														if (listMesActivite!=null)
+														for (ActiviteBean activite : listMesActivite) {
+														String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+														String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+														String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
-								<tr>
+								<tr onclick="document.location='<%=lienDetail%>'">
 									<td><%=activite.getTitre()%></td>
 									<td><textarea class="form-control" disabled rows="2"
 											id="comment"><%=activite.getLibelle()%></textarea></td>

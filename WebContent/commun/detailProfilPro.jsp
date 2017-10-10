@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.AvisBean"%>
+<%@page import="website.metier.Outils"%>
+<%@page import="java.util.ArrayList"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,19 +41,42 @@
 <link href="style.css" rel="stylesheet" type="text/css">
 <style>
 .vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-.vertical-align {
-    display: flex;
-    align-items: center;
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
 }
 
+.vertical-align {
+	display: flex;
+	align-items: center;
+}
 </style>
 </head>
 <body>
-<%@ include file="/pro/menu.jsp"%>
+	<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifie())
+			return;
+		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
+		ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
+				.getAttribute("listAvis");
+	%>
+
+
+	<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
+	%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -55,126 +84,121 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Profil</div>
+					<div class="panel-title">Détail professionel</div>
 
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 
-			<div class="form-group">
-					
-						<div class="row" >
+					<div class="form-group">
+
+						<div class="row">
 							<div class='col-sm-9'>
-  <a class="btn btn-danger" href="SignalerActivite" role="button">Signaler</a>					 	
+								<a class="btn btn-danger" href="SignalerProfil?idProfil=<%=profil.getId() %>" role="button">Signaler</a>
 							</div>
 
 							<div class='col-sm-2  ' class="text-center">
- <a class="btn btn-info" href="SignalerActivite" role="button">Signaler</a>					 	
-	
+								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>" role="button">Site Web</a>
+
 
 							</div>
 
 						</div>
-					
+
 					</div>
-					
-					
+
+
 					<div class="form-group">
-					
-						<div class="row vertical-align" >
+
+						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-					 			<img height="80" width="80"
-					 src="image.jpeg" class="img-circle" class="text-center"  />
+							<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%> class="img-circle"
+									class="text-center" />
+					
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left:15px">Pseudo:</h3> 
-								
-							<h4 style="padding-left:15px">
-								 <input type="number" name="rating" 
-										id="rating-readonly" value="2" class="rating"	data-clearable="remove" data-readonly />
-														</h4>
-								
-							
+								<h3 style="padding-left: 15px">Pseudo:</h3>
+
+								<h4 style="padding-left: 15px">
+									<input type="number" name="rating" id="rating-readonly"
+										value="2" class="rating" data-clearable="remove" data-readonly />
+								</h4>
+
+
 
 							</div>
-							
-							
+
+
 
 						</div>
-					
-			</div>
+
+					</div>
 					<div class="form-group">
 						<label for="description">Description:</label>
 						<textarea disabled class="form-control" rows="5" id="description"
 							name="description"></textarea>
 					</div>
-								
-						<div class="form-group">
-							<div class="row">
-								<div class='col-sm-12'>
 
-									<div class="table-responsive">
-										<table class="table table-condensed">
-											<thead>
-												<tr>
-													<th>Avis</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>John</td>
-														<td>
-														
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
-													<tr>
-													<td>John</td>
-													<td>
-														
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
-													<tr>
-													<td>John</td>
-													<td>
-														
-															Note: <input type="number" name="rating" 
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
+					<div class="form-group">
+						<div class="row">
+							<div class='col-sm-12'>
 
-											
-											</tbody>
-										</table>
+								<div class="table-responsive">
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th>Avis</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
 
-									</div>
+												</td>
+											</tr>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
+
+												</td>
+											</tr>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
+
+												</td>
+											</tr>
+
+
+										</tbody>
+									</table>
 
 								</div>
 
 							</div>
 
 						</div>
+
 					</div>
 				</div>
 			</div>
-
 		</div>
 
+	</div>
 
 
-	
+
+
 
 </body>
 </html>

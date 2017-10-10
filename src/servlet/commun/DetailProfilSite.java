@@ -1,17 +1,16 @@
 package servlet.commun;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import website.coordination.Coordination;
 import website.dao.PersonneDAO;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
+import website.metier.AvisBean;
 import website.metier.ProfilBean;
 
 /**
@@ -41,8 +40,10 @@ public class DetailProfilSite extends HttpServlet {
 		
 		int idprofil = Integer.parseInt(request.getParameter("idprofil"));
 		ProfilBean profil =  PersonneDAO.getFullProfil(idprofil);
+		ArrayList<AvisBean> listAvis= PersonneDAO.getListAvis(profil.getId());
 		
 		request.setAttribute("profil", profil);
+		request.setAttribute("listAvis", listAvis);
 		
 		
 
