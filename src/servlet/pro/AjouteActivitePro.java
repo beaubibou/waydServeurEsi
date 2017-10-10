@@ -80,7 +80,7 @@ public class AjouteActivitePro extends HttpServlet {
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
-		int typeaccess = Integer.parseInt(request.getParameter("typeaccess"));
+		//int typeaccess = Integer.parseInt(request.getParameter("typeaccess"));
 		int typeactivite = Integer.parseInt(request.getParameter("typeactivite"));
 		
 		String datedebut=request.getParameter("debut");
@@ -104,7 +104,7 @@ public class AjouteActivitePro extends HttpServlet {
 			website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
 
 			activiteDAO.addActivitePro(profil.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
-					longitude, typeactivite, ProfilBean.PRO, typeaccess);
+					longitude, typeactivite, ProfilBean.PRO, 2);
 			
 			response.sendRedirect("AcceuilPro");
 			

@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+	<%@page import="website.metier.ParticipantBean"%>
+<%@page import="website.metier.Outils"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.ActiviteBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail activité</title>
+<title>>Détail activité pro</title>
 <meta charset="utf-8">
-
 
 
 
@@ -40,20 +43,27 @@
 
 <style>
 .vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-.vertical-align {
-    display: flex;
-    align-items: center;
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
 }
 
+.vertical-align {
+	display: flex;
+	align-items: center;
+}
 </style>
 </head>
 <body>
 
-<% %>
+	<%@ include file="/pro/menu.jsp"%>
+<%
+		ActiviteBean activite = (ActiviteBean) request
+				.getAttribute("activite");
+		ArrayList<ParticipantBean> listParticipant = activite
+				.getListParticipant();
+	%>
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -66,69 +76,73 @@
 
 				<div style="padding-top: 30px" class="panel-body">
 
-				
-				<div class="form-group">
-					
-						<div class="row" >
+
+					<div class="form-group">
+
+						<div class="row">
 							<div class='col-sm-9'>
-   <a class="btn btn-danger" href="SignalerActivite" role="button">Signaler</a>	
-					 	
+								<a class="btn btn-danger" href="SignalerActivite" role="button">Signaler</a>
+
 							</div>
 
 							<div class='col-sm-2  ' class="text-center">
-   <a class="btn btn-info" href="SiteWeb" role="button">Site Web</a>	
+								<a class="btn btn-info" href="SiteWeb" role="button">Site
+									Web</a>
 
 							</div>
 
 						</div>
-					
-					</div>
-					<div class="form-group" >
-					
-						<div class="row vertical-align" style="border: 1px solid">
-							<div class='col-sm-3' >
 
-					 			<img height="80" width="80"
-					 src="image.jpeg" class="img-circle" class="text-center"  />
+					</div>
+					<div class="form-group">
+
+						<div class="row vertical-align" style="border: 1px solid">
+							<div class='col-sm-3'>
+
+								<img height="80" width="80" src="image.jpeg" class="img-circle"
+									class="text-center" />
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left:15px">Pseudo:</h3> 
-								
-								<h4 style="padding-left:15px">Titre:</h4> 
-								
-								<h5 style="padding-left:15px">Adresse:</h5> 
-													
+								<a
+									href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
+									<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
+								</a>
+
+								<h4 style="padding-left: 15px">Titre:</h4>
+
+								<h5 style="padding-left: 15px">Adresse:</h5>
+
 
 							</div>
 
 						</div>
-					
-					
-							<div class="form-group">
-						</br>
-						<h4 >Type d'activité: Sport</h4> 
-						<h4 >De 8h00 à 10H00 à 1km</h4> 
-					
-					</div>
-						
-			
-					<div class="form-group">
-						<label for="description">Description:</label>
-						<textarea  class="form-control" rows="5" id="description"
-							name="description"  ></textarea>
-					</div>
 
-			</div>
-			</div>
-			</div>
-			</div>
+
+						<div class="form-group">
+							</br>
+							<h4>Type d'activité: Sport</h4>
+							<h4>De 8h00 à 10H00 à 1km</h4>
+
+						</div>
+
+
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea class="form-control" rows="5" id="description"
+								name="description"></textarea>
+						</div>
+
+					</div>
 				</div>
-				
+			</div>
+		</div>
+	</div>
 
 
-					
+
+
 
 </body>
 </html>

@@ -14,6 +14,7 @@ import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 /**
@@ -37,22 +38,12 @@ public class DetailActiviteSite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
 		
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
+		if (!authentification.isAuthentifie())
 			return;
-		}
 		
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 		ActiviteBean activite =  new Coordination().getActivite(idActivite);

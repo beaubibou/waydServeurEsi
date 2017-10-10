@@ -3,6 +3,11 @@
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.Pagination"%>
+<%@page import="website.metier.TypeEtatActivite"%>
+<%@page import="website.metier.FiltreRecherche"%>
+<%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.Outils"%>
+<%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -30,8 +35,69 @@
 
 
 </head>
-<body>
+<body >
 	<%@ include file="menu.jsp"%>
+	<%
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
+		
+		FiltreRecherche filtre=authentification.getFiltre();
+			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+	%>
+	<div class="container">
+
+
+		<form action="MesActivitesWaydeur" method="post">
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+
+						<div class='col-sm-2'>
+							<div class="form-group">
+								<select class="form-control" id="idtypeaccess"
+									name="etatActivite">
+
+									<%
+										for (TypeEtatActivite etatActivite:listEtatActivite) {
+									%>
+									<option value="<%=etatActivite.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+										<%=etatActivite.getLibelle()%></option>
+									<%
+										}
+									%>
+
+								</select>
+							</div>
+						</div>
+
+						<div class='col-sm-2'>
+
+							<button type="submit" class="btn btn-info">Cherchez</button>
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+		</form>
+	</div>
+
+
+
+
+
+
+
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-12  col-sm-8">
@@ -49,6 +115,7 @@
 									<th>Description</th>
 									<th>Vues</th>
 									<th>Etat</th>
+									<th>Horaire</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -56,40 +123,34 @@
 
 								<%
 									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-								    
-								     if (listMesActivite!=null)
-									for (ActiviteBean activite : listMesActivite) {
-										String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-										String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-										String lienDetail = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																																						    
+																																						     if (listMesActivite!=null)
+																																							for (ActiviteBean activite : listMesActivite) {
+																																								String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																																								String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																																								String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
-									<td>John</td>
+									<td><%=activite.getTitre()%></td>
 									<td><textarea class="form-control" disabled rows="2"
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
 									<td><span class="badge">10</span></td>
 									<td><%=activite.getEtat()%></td>
+									<td><%=activite.getHoraire()%></td>
 
-									<td><a href="#" class="btn btn-success btn-sm"> <span
-											class="glyphicon glyphicon-search"></span>
-									</a> 
-									
-									<a href="#" class="btn btn-info btn-sm"> <span
-											class="glyphicon glyphicon-edit"></span>
-									</a> 
-									
-									<button  id=<%out.println(lienEfface);%> name="supprimer" type="button" class="btn btn-primary btn-sm">
-									<span class="glyphicon glyphicon-remove"></span> 
-									</button>
-		
-									
-									
-									
-									
-									
-									</td>
+									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
+											<span class="glyphicon glyphicon-search"></span>
+									</a> <!-- 									Affiche le bouton effacer si pas terminée --> <%
+ 	if (!activite.isTerminee()){
+ %>
+										<button id=<%out.println(lienEfface);%> name="supprimer"
+											type="button" class="btn btn-danger btn-sm">
+											<span class="glyphicon glyphicon-remove"></span>
+										</button> <%
+ 	}
+ %></td>
 
 								</tr>
 								<%
@@ -111,7 +172,7 @@
 		$(function() {
 
 			$('button').click(function() {
-			
+
 				var lien = $(this).attr('id');
 				var action = $(this).attr('name')
 				if (action == 'supprimer')
@@ -144,7 +205,7 @@
 		}
 
 		function effaceActivite(lien) {
-			location.href=lien;
+			location.href = lien;
 		}
 	</script>
 
