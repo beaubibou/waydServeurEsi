@@ -15,6 +15,7 @@ import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 /**
@@ -40,19 +41,11 @@ public class SignalerActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		
+		if (!authentification.isAuthentifie())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.WAYDEUR
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
 
 		int idActivite = Integer.parseInt(request.getParameter("idActivite"));
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
@@ -69,7 +62,7 @@ public class SignalerActivite extends HttpServlet {
 			int idMotif = Integer.parseInt(request.getParameter("idmotif"));
 
 			MessageServeur message = new ActiviteDAO().signalerActivite(
-					profil.getId(), activite.getId(), idMotif, "",
+					authentification.getProfil().getId(), activite.getId(), idMotif, "",
 					activite.getTitre(), activite.getLibelle());
 
 			if (message.isReponse()) {

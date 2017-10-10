@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>>Détail professionnel</title>
-<meta charset="utf-8">
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -47,6 +47,7 @@
 </style>
 </head>
 <body>
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -60,103 +61,97 @@
 
 				<div style="padding-top: 30px" class="panel-body">
 
-<div class="form-group">
-						 <div class="btn-group">
-     <a class="btn btn-info" href="SignalerActivite" role="button">Signaler</a>	
-     
-  </div>
-					</div>
-					
-					
 					<div class="form-group">
-					
-						<div class="row vertical-align" >
+						<div class="btn-group">
+							<a class="btn btn-info" href="SignalerActivite" role="button">Signaler</a>
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+
+						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-					 			<img height="80" width="80"
-					 src="image.jpeg" class="img-circle" class="text-center"  />
+								<img height="80" width="80" src="image.jpeg" class="img-circle"
+									class="text-center" />
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left:15px">Pseudo:</h3> 
-								
-							<h4 style="padding-left:15px">
-								 <input type="number" name="rating" 
-										id="rating-readonly" value="2" class="rating"	data-clearable="remove" data-readonly />
-														</h4>
-								
-							
+								<h3 style="padding-left: 15px">Pseudo:</h3>
+
+								<h4 style="padding-left: 15px">
+									<input type="number" name="rating" id="rating-readonly"
+										value="2" class="rating" data-clearable="remove" data-readonly />
+								</h4>
+
+
 
 							</div>
 
 						</div>
-					
-			</div>
+
+					</div>
 					<div class="form-group">
 						<label for="description">Description:</label>
 						<textarea disabled class="form-control" rows="5" id="description"
 							name="description"></textarea>
 					</div>
-								
-						<div class="form-group">
-							<div class="row">
-								<div class='col-sm-12'>
 
-									<div class="table-responsive">
-										<table class="table table-condensed">
-											<thead>
-												<tr>
-													<th>Avis</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>John</td>
-														<td>
-														
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
-													<tr>
-													<td>John</td>
-													<td>
-														
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
-													<tr>
-													<td>John</td>
-													<td>
-														
-															Note: <input type="number" name="rating" 
-																id="rating-readonly" value="2" class="rating"
-																data-clearable="remove" data-readonly />
-														
-													</td>
-												</tr>
+					<div class="form-group">
+						<div class="row">
+							<div class='col-sm-12'>
 
-											</tbody>
-										</table>
+								<div class="table-responsive">
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th>Avis</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
 
-									</div>
+												</td>
+											</tr>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
+
+												</td>
+											</tr>
+											<tr>
+												<td>John</td>
+												<td>Note: <input type="number" name="rating"
+													id="rating-readonly" value="2" class="rating"
+													data-clearable="remove" data-readonly />
+
+												</td>
+											</tr>
+
+										</tbody>
+									</table>
 
 								</div>
 
 							</div>
 
 						</div>
+
 					</div>
 				</div>
 			</div>
-
 		</div>
+
+	</div>
 
 
 </body>

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
+import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
 
 /**
@@ -35,37 +37,34 @@ public class MesActivites extends HttpServlet {
 		// TODO Auto-generated method stub
 
 				// ********* Regle d'authentification*********************
-				HttpSession session = request.getSession();
-				ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		System.out.println("mes activite ************");
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		
+		if (!authentification.isAuthentifiePro())
+			return;
+		System.out.println("mes activite ************");
+		
+		FiltreRecherche filtre =authentification.getFiltre();
 
-				if (profil == null) {
-					response.sendRedirect("auth/login.jsp");
-					return;
-				}
+		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
+				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
-				if (profil.getTypeuser() != ProfilBean.PRO
-						|| profil.isPremiereconnexion()) {
-					response.sendRedirect("auth/login.jsp");
-					return;
-				}
+		if (listMesActivite.size() == 0) {
 
-				ArrayList<ActiviteBean> listMesActivite=ActiviteDAO.getListActivite(profil.getId());
-				if (listMesActivite.size()==0){
-				
-					request.setAttribute("titre", "Conseil");
-					request.setAttribute("message", "il faut ajouter une activité");
-					request.getRequestDispatcher("pro/MessageInfo.jsp").forward(request, response);
-					
-				}else
-				{
-					request.setAttribute("listMesActivite", listMesActivite);
-					request.getRequestDispatcher("pro/mesActivite.jsp").forward(request, response);
-				
-					
-				}
-				
-				
+			request.setAttribute("titre", "Conseil");
+			request.setAttribute("message", "il faut ajouter une activité");
 
+			request.getRequestDispatcher("/pro/MessageInfo.jsp").forward(
+					request, response);
+
+		} else {
+			request.setAttribute("listMesActivite", listMesActivite);
+			request.getRequestDispatcher("/pro/mesActivite.jsp")
+					.forward(request, response);
+
+		}
 	
 	
 	}
@@ -74,7 +73,40 @@ public class MesActivites extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+	
+		if (!authentification.isAuthentifiePro())
+			return;
+
+		FiltreRecherche filtre =authentification.getFiltre();
+
+		
+		int etatActivite = Integer.parseInt(request
+				.getParameter("etatActivite"));
+
+		filtre.setTypeEtatActivite(etatActivite);
+
+		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
+				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
+
+			if (listMesActivite.size() == 0) {
+
+			request.setAttribute("titre", "Conseil");
+			request.setAttribute("message", "il faut ajouter une activité");
+
+			request.getRequestDispatcher("/pro/MessageInfo.jsp").forward(
+					request, response);
+
+		} else {
+			
+			request.setAttribute("listMesActivite", listMesActivite);
+			request.getRequestDispatcher("/pro/mesActivite.jsp")
+					.forward(request, response);
+
+		}
+
 	}
 
 }

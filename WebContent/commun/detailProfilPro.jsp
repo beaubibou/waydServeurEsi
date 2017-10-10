@@ -47,7 +47,7 @@
 </style>
 </head>
 <body>
-
+<%@ include file="/pro/menu.jsp"%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"

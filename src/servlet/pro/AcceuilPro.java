@@ -39,6 +39,7 @@ public class AcceuilPro extends HttpServlet {
 		ProfilBean profil=(ProfilBean)session.getAttribute("profil");
 		
 		System.out.println("Profil dans acceuil pro"+profil);
+		
 		if (profil==null){
 			response.sendRedirect("auth/login.jsp");
 		    return;

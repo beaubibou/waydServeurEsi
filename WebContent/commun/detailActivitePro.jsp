@@ -81,8 +81,9 @@
 
 						<div class="row">
 							<div class='col-sm-9'>
-								<a class="btn btn-danger" href="SignalerActivite" role="button">Signaler</a>
-
+							<a class="btn btn-danger"
+								href="SignalerActivite?idActivite=<%=activite.getId()%>"
+								role="button">Signaler</a> 
 							</div>
 
 							<div class='col-sm-2  ' class="text-center">
