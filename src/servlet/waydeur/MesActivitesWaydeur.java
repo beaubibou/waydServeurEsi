@@ -7,21 +7,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
-import website.dao.CacheValueDAO;
-import website.dao.TypeActiviteDAO;
 import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
-import website.metier.ProfilBean;
-import website.metier.TypeActiviteBean;
-import website.metier.TypeEtatActivite;
 
 /**
  * Servlet implementation class MesActivitesWaydeur
@@ -56,20 +50,18 @@ public class MesActivitesWaydeur extends HttpServlet {
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
+	//	listMesActivite = new ArrayList<ActiviteBean>();
 		if (listMesActivite.size() == 0) {
+
+			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
+				request.setAttribute("jumbotron", jumbotron);
 		
-			request.setAttribute("titre", "Conseil");
-			request.setAttribute("message", "il faut ajouter une activité");
 
-			request.getRequestDispatcher("/waydeur/MessageInfo.jsp").forward(
-					request, response);
-
-		} else {
-			request.setAttribute("listMesActivite", listMesActivite);
-			request.getRequestDispatcher("/waydeur/mesActiviteWaydeur.jsp")
-					.forward(request, response);
-
-		}
+		} 
+		
+		request.setAttribute("listMesActivite", listMesActivite);
+		request.getRequestDispatcher("/waydeur/mesActiviteWaydeur.jsp")
+				.forward(request, response);
 
 	}
 
@@ -97,21 +89,18 @@ public class MesActivitesWaydeur extends HttpServlet {
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
-			if (listMesActivite.size() == 0) {
+		if (listMesActivite.size() == 0) {
 
-			request.setAttribute("titre", "Conseil");
-			request.setAttribute("message", "il faut ajouter une activité");
+			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
+				request.setAttribute("jumbotron", jumbotron);
+		
 
-			request.getRequestDispatcher("/waydeur/MessageInfo.jsp").forward(
-					request, response);
-
-		} else {
-			
+		} 
 			request.setAttribute("listMesActivite", listMesActivite);
 			request.getRequestDispatcher("/waydeur/mesActiviteWaydeur.jsp")
 					.forward(request, response);
 
-		}
+		
 
 	}
 

@@ -75,7 +75,7 @@ public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 }
 	}
 
-public boolean updatePhotoTypeActivite(int id, String photo) {
+public static boolean updatePhotoTypeActivite(int id, String photo) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		try {

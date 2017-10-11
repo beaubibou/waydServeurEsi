@@ -100,7 +100,7 @@ public class ChargePhotoActivite extends HttpServlet {
 								"jpeg");
 						
 						CacheValueDAO.updateCachePhoto(id, stringPhoto, libelle);
-					//	CacheValueDAO.updateDAOPhotoTypeActivite(id, stringPhoto);
+						CacheValueDAO.updatePhotoTypeActivite(id, stringPhoto);
 						response.sendRedirect("ChargePhotoActivite");
 
 					}

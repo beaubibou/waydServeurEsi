@@ -1,4 +1,5 @@
 
+<%@page import="website.html.JumbotronJsp"%>
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
@@ -45,6 +46,8 @@
 			FiltreRecherche filtre=authentification.getFiltre();
 		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 	%>
+
+
 	<div class="container">
 
 
@@ -89,6 +92,11 @@
 
 
 		</form>
+
+		<%
+			JumbotronJsp jumbotron=(JumbotronJsp)request.getAttribute("jumbotron");
+			if (jumbotron!=null) out.println(jumbotron.getHtml());
+		%>
 	</div>
 
 
@@ -101,12 +109,18 @@
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-12  col-sm-8">
+		<%
+					ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+				if (listMesActivite!=null)
+					if (listMesActivite.size()!=0){
+				%>
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 					<div class="panel-title">Liste de vos activités</div>
 				</div>
-				<div style="padding-top: 30px" class="panel-body">
+				
 
+				<div style="padding-top: 30px" class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-condensed">
 							<thead>
@@ -122,12 +136,11 @@
 							<tbody>
 
 								<%
-									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-														if (listMesActivite!=null)
-														for (ActiviteBean activite : listMesActivite) {
-														String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-														String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-														String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									
+for (ActiviteBean activite : listMesActivite) {
+String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr onclick="document.location='<%=lienDetail%>'">
@@ -164,6 +177,7 @@
 
 				</div>
 			</div>
+			<%} %>
 		</div>
 	</div>
 
