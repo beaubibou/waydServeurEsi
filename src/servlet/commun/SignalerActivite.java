@@ -66,8 +66,20 @@ public class SignalerActivite extends HttpServlet {
 					activite.getTitre(), activite.getLibelle());
 
 			if (message.isReponse()) {
-
-				response.sendRedirect("waydeur/mesActiviteWaydeur.jsp");
+				
+				switch(authentification.getProfil().getTypeuser()){
+				
+				case ProfilBean.WAYDEUR:
+					response.sendRedirect("MesActivitesWaydeur");
+					break;
+				case ProfilBean.PRO:
+					response.sendRedirect("MesActivites");
+					break;
+			
+				}
+				
+				
+				
 				return;
 			} else {
 

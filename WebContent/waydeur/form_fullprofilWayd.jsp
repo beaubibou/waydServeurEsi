@@ -149,13 +149,11 @@
 						</div>
 
 
-
 						<div class="form-group">
+						
 							<label for="renseignement">Renseignements:</label>
 							<textarea class="form-control" rows="5" id="commentaire"
-								name="commentaire">	<%=profil.getCommentaireStr().trim()%>				
-							</textarea>
-
+								name="commentaire"><%=profil.getCommentaireStr()%></textarea>
 						</div>
 
 						<div class="form-group">

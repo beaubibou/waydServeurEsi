@@ -62,7 +62,7 @@
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-		if (!authentification.isAuthentifieWaydeur())
+		if (!authentification.isAuthentifie())
 			return;
 
 		ActiviteBean activite = (ActiviteBean) request
