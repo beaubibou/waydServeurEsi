@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-inverse" style="background-color:#ffd740;">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#ffd740;">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -29,6 +29,6 @@
 		</div>
 	</div>
 </nav>
-
+<div class="container" style="margin-top:100px">
 </script>
 

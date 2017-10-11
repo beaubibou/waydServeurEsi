@@ -497,4 +497,24 @@
     <servlet-name>SignalerProfil</servlet-name>
     <url-pattern>/SignalerProfil</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Noter</display-name>
+    <servlet-name>Noter</servlet-name>
+    <servlet-class>servlet.commun.Noter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Noter</servlet-name>
+    <url-pattern>/Noter</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChargePhotoActivite</display-name>
+    <servlet-name>ChargePhotoActivite</servlet-name>
+    <servlet-class>servlet.ChargePhotoActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChargePhotoActivite</servlet-name>
+    <url-pattern>/ChargePhotoActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

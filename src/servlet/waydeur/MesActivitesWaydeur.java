@@ -15,6 +15,7 @@ import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.dao.CacheValueDAO;
 import website.dao.TypeActiviteDAO;
+import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
@@ -56,7 +57,7 @@ public class MesActivitesWaydeur extends HttpServlet {
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
 		if (listMesActivite.size() == 0) {
-
+		
 			request.setAttribute("titre", "Conseil");
 			request.setAttribute("message", "il faut ajouter une activité");
 

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.NamingException;
 
@@ -22,6 +24,102 @@ import website.metier.TypeUser;
 
 public class CacheValueDAO {
 
+	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
+
+	static {
+
+		initMapPhotoActivite();
+
+	}
+	private static void initMapPhotoActivite() {
+		// TODO Auto-generated method stub
+		for (TypeActiviteBean typeActivite:getListTypeActiviteBeanFull())
+		mapTypeActivite.put(typeActivite.id, typeActivite);
+	
+	}
+
+
+
+public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
+	
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT idtypeactivite,nom as libelle,photo FROM type_activite order by ordre asc";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			rs = preparedStatement.executeQuery();
+			retour.add(new TypeActiviteBean(0, "Tous"));
+			while (rs.next()) {
+				int id = rs.getInt("idtypeactivite");
+				String libelle = rs.getString("libelle");
+				String photo = rs.getString("photo");
+				retour.add(new TypeActiviteBean(id, libelle,photo));
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+}
+	}
+
+public boolean updatePhotoTypeActivite(int id, String photo) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE  type_activite set photo=? "
+					+ " WHERE id=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, photo);
+			preparedStatement.setInt(2, id);
+
+			preparedStatement.execute();
+
+			connexion.commit();
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				preparedStatement.close();
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+
+	}
+
+	
+	
 	public static ArrayList<TypeUser> getListTypeUser() {
 
 		Connection connexion = null;
@@ -279,5 +377,12 @@ public class CacheValueDAO {
 				listRayon.add(new RayonBean(f,""+f +" Km"));
 			}
 			return listRayon;
+		}
+
+
+		public static void updateCachePhoto(int id, String stringPhoto,
+				String libelle) {
+		mapTypeActivite.put(id, new TypeActiviteBean(id, libelle,stringPhoto));
+			
 		}
 }
