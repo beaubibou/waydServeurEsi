@@ -59,6 +59,7 @@ public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
 				String photo = rs.getString("photo");
+				System.out.println(photo);
 				retour.add(new TypeActiviteBean(id, libelle,photo));
 			}
 
@@ -78,17 +79,16 @@ public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 public static boolean updatePhotoTypeActivite(int id, String photo) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
+		System.out.println("id mis a jou"+id);
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  type_activite set photo=? "
-					+ " WHERE id=?";
+					+ " WHERE idtypeactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, photo);
 			preparedStatement.setInt(2, id);
-
 			preparedStatement.execute();
-
 			connexion.commit();
 
 			return true;

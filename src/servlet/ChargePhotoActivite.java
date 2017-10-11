@@ -98,6 +98,7 @@ public class ChargePhotoActivite extends HttpServlet {
 
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
+						//System.out.println(stringPhoto);
 						
 						CacheValueDAO.updateCachePhoto(id, stringPhoto, libelle);
 						CacheValueDAO.updatePhotoTypeActivite(id, stringPhoto);

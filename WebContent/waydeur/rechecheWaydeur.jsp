@@ -41,24 +41,44 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
+<style type="text/css">
+.gap-right {
+	margin-right: 20px;
+}
 
+.titre {
+	color: blue;
+	font-size: 200%;
+	text-align: left;
+}
+
+.dateactivite {
+	color: blue;
+	font-size: 80%;
+	text-align: right;
+}
+
+tr.border_bottom td {
+	border-bottom: 1pt solid black;
+}
+</style>
 </head>
 <body>
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-			if (!authentification.isAuthentifieWaydeur())
-		return;
-			
-			FiltreRecherche filtre=authentification.getFiltre();
+		if (!authentification.isAuthentifieWaydeur())
+			return;
 		
-		ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
-			.getListTypeActiviteToutes();
-			ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
-			.getListTypeAccess();
-			ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
-			ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
-			ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
+		FiltreRecherche filtre=authentification.getFiltre();
+			
+			ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
+		.getListTypeActiviteToutes();
+		ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
+		.getListTypeAccess();
+		ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
+		ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
+		ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
 	%>
 
 
@@ -143,8 +163,6 @@
 										<%
 											}
 										%>
-
-
 
 									</select>
 								</div>
@@ -244,60 +262,47 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
 		async defer></script>
 
-
-
-
-
-
-
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-12  col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Liste de vos activités</div>
+					<div style="text-align:center;" "class="panel-title">Résultats</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="table-responsive">
-						<table class="table table-condensed">
-							<thead>
-								<tr>
-									<th>Titre</th>
-									<th>Description</th>
-									<th>Vues</th>
-									<th>Etat</th>
-									<th>Action</th>
-								</tr>
-							</thead>
+						<table class="table table-condensed table table-striped">
 							<tbody>
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-									for (ActiviteBean activite : listActivite) {
-									String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-									String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-									String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+															for (ActiviteBean activite : listActivite) {
+															String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+															String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+															String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
-								<tr>
-									<td><%=activite.getTitre()%></td>
-									<td><textarea class="form-control" disabled rows="2"
-											id="comment"><%=activite.getLibelle()%></textarea></td>
-
-									<td><span class="badge">10</span></td>
-									<td><%=activite.getEtat()%></td>
-
-									<td><a href=" <%=lienDetail%>>"
-										class="btn btn-success btn-sm"> <span
-											class="glyphicon glyphicon-search"></span>
-									</a></td>
+								<tr onclick="document.location='<%=lienDetail%>'">
+									<td>
+										<div class="clearfix">
+											<img src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%> alt="..."
+												class="img-thumbnail pull-left gap-right img-responsive" width="150"
+												height="150">
+											<p class="titre"><%=activite.getTitre()%>
+											<img align="right" src="image.jpeg" alt="..."
+												class="img-thumbnail img-responsive" width="40"
+												height="40"></p>
+											<h4 style="text-overflow: ellipsis;width:50%;"><%=activite.getLibelle() %></h4>
+											<h5 class="dateactivite"><%=activite.getHoraire() %></h5>
+											
+										</div>
+									</td>
 
 								</tr>
 								<%
 									}
 								%>
-
 
 							</tbody>
 						</table>
