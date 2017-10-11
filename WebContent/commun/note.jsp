@@ -4,6 +4,7 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,8 +46,27 @@
 </head>
 <body>
 
-	<%@ include file="/pro/menu.jsp"%>
 
+	<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifie())
+			return;
+	%>
+
+	<%
+		if (authentification.isPro()) {
+	%>
+
+	<%@ include file="/pro/menu.jsp"%>
+	<%
+		} else {
+	%>
+
+	<%@ include file="/waydeur/menuWaydeur.jsp"%>
+	<%
+		}
+	%>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -90,12 +110,12 @@
 						</div>
 
 						<div class="form-group">
-							<label for="description" >Description:</label>
-							<textarea maxlength="200" class="form-control" rows="5" id="description"
-								name="description"></textarea>
+							<label for="description">Description:</label>
+							<textarea maxlength="200" class="form-control" rows="5"
+								id="description" name="description"></textarea>
 						</div>
 
-						<h5 style="text-align:right;" id="nbr">0 Caractére sur 200</h5>
+						<h5 style="text-align: right;" id="nbr">0 Caractére sur 200</h5>
 						<div class="form-group">
 
 							<button type="submit" class="btn btn-info">Valider</button>
@@ -108,23 +128,23 @@
 		</div>
 	</div>
 
-<script>
-$(document).ready(function(e) {
- 
-  $('#description').keyup(function() {
+	<script>
+		$(document).ready(function(e) {
 
-	  var nombreCaractere = $(this).val().length;
-	  //alert(nombreCaractere);
-  	
-  	var msg = nombreCaractere + ' Caractere(s) / 200';
-  	
-  	$('#nbr').text(msg);
-   // Le script qui devra calculer et afficher le nombre de mots et de caractères
- 
-  })
- 
-});
-</script>
+			$('#description').keyup(function() {
+
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
+
+				var msg = nombreCaractere + ' Caractere(s) / 200';
+
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+
+			})
+
+		});
+	</script>
 
 
 
