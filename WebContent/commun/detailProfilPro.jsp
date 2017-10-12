@@ -38,7 +38,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 <style>
 .vcenter {
 	display: inline-block;
@@ -91,18 +91,26 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="form-group">
-
 						<div class="row">
+							<%
+								if (profil.getId() != authentification.getProfil().getId()) {
+							%>
+
 							<div class='col-sm-9'>
-								<a class="btn btn-danger" href="SignalerProfil?idProfil=<%=profil.getId() %>" role="button">Signaler</a>
+								<a class="btn btn-danger"
+									href="SignalerProfil?idProfil=<%=profil.getId()%>"
+									role="button">Signaler</a>
 							</div>
-
+							<%
+								}
+							%>
 							<div class='col-sm-2  ' class="text-center">
-								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>" role="button">Site Web</a>
-
-
+								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>"
+									role="button">Site Web</a>
 							</div>
-
+							
+							
+						
 						</div>
 
 					</div>
@@ -113,9 +121,10 @@
 						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-							<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%> class="img-circle"
-									class="text-center" />
-					
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									class="img-circle" class="text-center" />
+
 							</div>
 
 							<div class='col-sm-6' class="text-center">

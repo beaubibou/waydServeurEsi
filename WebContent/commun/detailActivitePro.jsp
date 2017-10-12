@@ -1,3 +1,4 @@
+<%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -101,12 +102,15 @@
 					<div class="form-group">
 
 						<div class="row">
+						
+						<%if (!activite.isOrganisteur(authentification.getProfil().getId())) { %>
 							<div class='col-sm-9'>
 								<a class="btn btn-danger"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>"
 									role="button">Signaler</a>
 							</div>
 
+<%} %>
 							<div class='col-sm-2  ' class="text-center">
 								<a class="btn btn-info" href="SiteWeb" role="button">Site
 									Web</a>
@@ -135,8 +139,7 @@
 								</a>
 
 								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-
-								<h5 style="padding-left: 15px">Adresse:</h5>
+								<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
 
 
 							</div>
@@ -146,15 +149,15 @@
 
 						<div class="form-group">
 							</br>
-							<h4>Type d'activité: Sport</h4>
-							<h4>De 8h00 à 10H00 à 1km</h4>
+							<h5>Type d'activité: <%=CacheValueDAO.geLibelleTypeActivite(activite.getTypeactivite()) %></h5>
+							<h5><%=activite.getHoraireLeAHorizontal() %></h5>
 
 						</div>
 
 
 						<div class="form-group">
 							<label for="description">Description:</label>
-							<textarea class="form-control" rows="5" id="description"
+							<textarea disabled class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
 

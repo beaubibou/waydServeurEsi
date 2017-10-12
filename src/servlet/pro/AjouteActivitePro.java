@@ -76,7 +76,7 @@ public class AjouteActivitePro extends HttpServlet {
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
 		
-		
+		System.out.println("aderess"+adresse);
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));

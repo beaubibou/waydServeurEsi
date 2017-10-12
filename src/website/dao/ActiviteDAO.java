@@ -8,8 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.naming.NamingException;
+
 import org.apache.log4j.Logger;
+
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import wayde.bean.LibelleMessage;
@@ -348,7 +351,7 @@ public class ActiviteDAO {
 					+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
 					+ "activite.nbrwaydeur as nbrparticipant,"
 					+ "activite.idactivite,    activite.libelle, activite.titre,"
-					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite  FROM personne,"
+					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite,activite.adresse  FROM personne,"
 					+ "activite,type_activite  WHERE personne.idpersonne = activite.idpersonne and type_activite.idtypeactivite=activite.idtypeactivite  "
 					+ " ORDER BY datedebut desc";
 
@@ -362,6 +365,7 @@ public class ActiviteDAO {
 				int id = rs.getInt("idactivite");
 				String libelle = rs.getString("libelle");
 				String titre = rs.getString("titre");
+				String adresse = rs.getString("adresse");
 				int idorganisateur = rs.getInt("idpersonne");
 				int idtypeactivite = rs.getInt("idtypeactivite");
 				int sexe = rs.getInt("sexe");
@@ -387,7 +391,7 @@ public class ActiviteDAO {
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite);
+						typeUser, typeAcces, libelleActivite,adresse);
 
 				retour.add(activite);
 
@@ -418,7 +422,7 @@ public class ActiviteDAO {
 				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
 				+ "activite.titre,activite.nbrwaydeur as nbrparticipant ,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite,"
-				+ "activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite   FROM personne,"
+				+ "activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite,activite.adresse   FROM personne,"
 				+ "activite,type_activite  WHERE activite.idtypeactivite=type_activite.idtypeactivite and personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
 
 		try {
@@ -446,6 +450,7 @@ public class ActiviteDAO {
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
+				String adresse=rs.getString("adresse");
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				int totalavis = rs.getInt("totalavis");
@@ -455,7 +460,11 @@ public class ActiviteDAO {
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite);
+						typeUser, typeAcces, libelleActivite,adresse);
+				
+				
+				
+				
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
 						connexion).getListPaticipant(idActivite);
@@ -626,7 +635,7 @@ public class ActiviteDAO {
 				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
 						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-				System.out.println("encours");
+				
 				break;
 			case TypeEtatActivite.TERMINEE:
 				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
@@ -840,7 +849,7 @@ public class ActiviteDAO {
 				String requete = " SELECT activite.datedebut,activite.adresse,activite.latitude,activite.longitude,personne.prenom,"
 						+ "personne.sexe,personne.nom,personne.idpersonne,personne.datenaissance,personne.note,personne.nbravis as totalavis,personne.photo,"
 						+ "activite.nbrwaydeur as nbrparticipant,activite.idactivite,activite.libelle,activite.titre,"
-						+ "activite.datefin,activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite "
+						+ "activite.datefin,activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite,activite.adresse "
 						+ "FROM personne, activite,type_activite "
 						+ " WHERE type_activite.idtypactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne    "
 						+ " and activite.latitude between ? and ?"
@@ -887,12 +896,12 @@ public class ActiviteDAO {
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				String libelleActivite = rs.getString("libelleActivite");
-
+				String adresse = rs.getString("adresse");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite);
+						typeUser, typeAcces, libelleActivite,adresse);
 
 				retour.add(activite);
 
@@ -1079,7 +1088,7 @@ public class ActiviteDAO {
 					+ "personne.datenaissance  ,    personne.idpersonne, "
 					+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
 					+ "activite.nbrwaydeur as nbrparticipant,"
-					+ "activite.idactivite,  activite.libelle, activite.titre,"
+					+ "activite.idactivite,  activite.libelle,activite.adresse, activite.titre,"
 					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite "
 					+ " FROM personne,activite,signaler_activite,type_activite  "
 					+ "  WHERE type_activite.idtypeactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne and signaler_activite.idactivite=activite.idactivite"
@@ -1115,12 +1124,12 @@ public class ActiviteDAO {
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				String libelleActivite = rs.getString("libelleActivite");
-
+				String adresse = rs.getString("adresse");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite);
+						typeUser, typeAcces, libelleActivite,adresse);
 
 				retour.add(activite);
 

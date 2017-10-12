@@ -21,8 +21,9 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 
 <script>
 	var latitude = 0;
@@ -142,6 +143,7 @@
 							<textarea class="form-control" rows="5" id="description"
 								name="description"><%=profil.getCommentaireStr()%></textarea>
 						</div>
+						
 						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
 						
 						<button type="submit" class="btn btn-info">Modifier</button>

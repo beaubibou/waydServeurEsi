@@ -12,8 +12,8 @@ public class ActiviteBean {
 
 	int id;
 
-	public static int GRATUIT=1;
-	public static int PAYANT=2;
+	public static int GRATUIT = 1;
+	public static int PAYANT = 2;
 
 	String titre;
 
@@ -58,11 +58,11 @@ public class ActiviteBean {
 	private int sexe;
 
 	private String urlPhoto;
-	
+
 	private int typeUser;
-	
+
 	private int typeAccess;
-	
+
 	private String libelleActivite;
 
 	public int getTypeUser() {
@@ -79,6 +79,14 @@ public class ActiviteBean {
 
 	public long getFinidans() {
 		return finidans;
+	}
+
+	public boolean isOrganisteur(int idpersonne) {
+
+		if (idpersonne == idorganisateur)
+			return true;
+		return false;
+
 	}
 
 	public void setFinidans(long finidans) {
@@ -107,7 +115,8 @@ public class ActiviteBean {
 
 	public String getUrlPhoto() {
 
-		if (photo==null)photo="";
+		if (photo == null)
+			photo = "";
 		byte[] bytes = Base64.decode(photo);
 		urlPhoto = "data:image/jpeg;base64," + Base64.encode(bytes);
 
@@ -182,8 +191,7 @@ public class ActiviteBean {
 
 	public ActiviteBean(String titre, String libelle, int idorganisateur,
 			Date datedebut, Date datefin, int idtypeactivite, double latitude,
-			double longitude, String adresse, boolean actif, int nbmaxwaydeur
-			) {
+			double longitude, String adresse, boolean actif, int nbmaxwaydeur) {
 		super();
 		this.titre = titre;
 		this.libelle = libelle;
@@ -221,8 +229,7 @@ public class ActiviteBean {
 			String adresse, String nom, String pseudo, String photo,
 			double note, int role, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
-			boolean afficheage, boolean affichesexe, int nbmaxwaydeur
-			) {
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur) {
 
 		super();
 		this.id = id;
@@ -245,7 +252,8 @@ public class ActiviteBean {
 		this.typeactivite = idtypeactivite;
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
-		this.adresse=adresse;
+		this.adresse = adresse;
+		System.out.println("**********adresse*"+adresse);
 
 	}
 
@@ -261,8 +269,8 @@ public class ActiviteBean {
 			int idorganisateur, Date datedebut, Date datefin,
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
-			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,int typeUser,int typeAcces,String libelleActivite
-			) {
+			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
+			int typeUser, int typeAcces, String libelleActivite,String adresse) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -282,9 +290,10 @@ public class ActiviteBean {
 		this.nbrparticipant = nbrparticipant;
 		this.typeactivite = idtypeactivite;
 		this.nbmaxwaydeur = nbmaxwayd;
-		this.typeAccess=typeAcces;
-		this.typeUser=typeUser;
-		this.libelleActivite=libelleActivite;
+		this.typeAccess = typeAcces;
+		this.typeUser = typeUser;
+		this.libelleActivite = libelleActivite;
+		this.adresse=adresse;
 
 		// TODO Auto-generated constructor stub
 
@@ -340,10 +349,9 @@ public class ActiviteBean {
 		}
 
 	}
-	
+
 	public String getTempsRestant() {
 
-		
 		if (datefin == null)
 			return "Terminée";
 		if (new Date().after(datefin))
@@ -358,19 +366,21 @@ public class ActiviteBean {
 			if (diff < 0)
 				return "Terminée";
 
-			return "Se termine dans "+ diffHours + ":" + String.format("%02d", diffMinutes);
+			return "Se termine dans " + diffHours + ":"
+					+ String.format("%02d", diffMinutes);
 
 		}
 
 	}
-	
-	public String getEtat(){
-		
-		if (isActive())return "En cours";
-	
+
+	public String getEtat() {
+
+		if (isActive())
+			return "En cours";
+
 		return "Terminée";
 	}
-	
+
 	public int getTypeactivite() {
 		return typeactivite;
 	}
@@ -401,13 +411,10 @@ public class ActiviteBean {
 
 	}
 
-	
-
 	public void setId(int id) {
 		this.id = id;
-	
+
 	}
-	
 
 	public void setTitre(String titre) {
 		this.titre = titre;
@@ -467,36 +474,52 @@ public class ActiviteBean {
 		return listParticipant;
 	}
 
-	public String getBilanParticipation(){
-		
-		return "Nombre d'inscrit:"+listParticipant.size()+"/"+nbmaxwaydeur;
+	public String getBilanParticipation() {
+
+		return "Nombre d'inscrit:" + listParticipant.size() + "/"
+				+ nbmaxwaydeur;
 	}
+
 	public boolean isInscrit(int iddemandeur) {
 		// TODO Auto-generated method stub
-		for (ParticipantBean participantBean:listParticipant)
-		if (participantBean.getId()==iddemandeur)return true;
-			
+		for (ParticipantBean participantBean : listParticipant)
+			if (participantBean.getId() == iddemandeur)
+				return true;
+
 		return false;
 	}
-	public String getAdresse(){
-		
+
+	public String getAdresse() {
+
 		return adresse;
 	}
 
-	
-	public String getHoraire(){
-		
-		return "De "+ datedebutStr +" à "+ datefinStr;
+	public String getHoraire() {
+
+		return "De " + datedebutStr + " à " + datefinStr;
 	}
-	
-	public String getHoraireLeA(){
-		
+
+	public String getHoraireLeA() {
+
 		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");
 		String datestrdebut = jour.format(datedebut);
 		SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm");
 		String heuredebutstr = formatHeure.format(datedebut);
 		String heurefinstr = formatHeure.format(datefin);
-		
-		return "Le " + datestrdebut +" </br> de " +heuredebutstr +" à "+ heurefinstr;
+
+		return "Le " + datestrdebut + " </br> de " + heuredebutstr + " à "
+				+ heurefinstr;
+	}
+	
+	public String getHoraireLeAHorizontal() {
+
+		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");
+		String datestrdebut = jour.format(datedebut);
+		SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm");
+		String heuredebutstr = formatHeure.format(datedebut);
+		String heurefinstr = formatHeure.format(datefin);
+
+		return "Le " + datestrdebut + " de " + heuredebutstr + " à "
+				+ heurefinstr;
 	}
 }

@@ -31,17 +31,16 @@ public class CacheValueDAO {
 		initMapPhotoActivite();
 
 	}
+
 	private static void initMapPhotoActivite() {
 		// TODO Auto-generated method stub
-		for (TypeActiviteBean typeActivite:getListTypeActiviteBeanFull())
-		mapTypeActivite.put(typeActivite.id, typeActivite);
-	
+		for (TypeActiviteBean typeActivite : getListTypeActiviteBeanFull())
+			mapTypeActivite.put(typeActivite.id, typeActivite);
+
 	}
 
+	public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 
-
-public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
-	
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -60,7 +59,7 @@ public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 				String libelle = rs.getString("libelle");
 				String photo = rs.getString("photo");
 				System.out.println(photo);
-				retour.add(new TypeActiviteBean(id, libelle,photo));
+				retour.add(new TypeActiviteBean(id, libelle, photo));
 			}
 
 			return retour;
@@ -73,13 +72,13 @@ public static ArrayList<TypeActiviteBean> getListTypeActiviteBeanFull() {
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);
-}
+		}
 	}
 
-public static boolean updatePhotoTypeActivite(int id, String photo) {
+	public static boolean updatePhotoTypeActivite(int id, String photo) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		System.out.println("id mis a jou"+id);
+		System.out.println("id mis a jou" + id);
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -118,8 +117,6 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 
 	}
 
-	
-	
 	public static ArrayList<TypeUser> getListTypeUser() {
 
 		Connection connexion = null;
@@ -133,7 +130,7 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 			String requete = " SELECT  id,libelle from typeuser ";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
-			
+
 			retour.add(new TypeUser(0, "Tous"));
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -169,7 +166,7 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 
 			rs = preparedStatement.executeQuery();
 			retour.add(new TypeAccess(0, "Tous"));
-			
+
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
@@ -265,10 +262,8 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 
 		try {
 			connexion = CxoPool.getConnection();
-
 			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=3 order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
-
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -328,7 +323,7 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 		// TODO Auto-generated method stub
 		ArrayList<DureeBean> listDuree = new ArrayList<DureeBean>();
 		for (int f = 1; f < 3; f++) {
-			listDuree.add(new DureeBean(f*60, f + " Heure"));
+			listDuree.add(new DureeBean(f * 60, f + " Heure"));
 
 		}
 		return listDuree;
@@ -343,46 +338,63 @@ public static boolean updatePhotoTypeActivite(int id, String photo) {
 		}
 		return listQuantite;
 	}
-	
-	
+
 	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
 		// TODO Auto-generated method stub
 
 		ArrayList<TypeEtatActivite> retour = new ArrayList<TypeEtatActivite>();
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES,"Toutes"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE,"Termines"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS,"En cours"));
-	
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Termines"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
+
 		return retour;
 	}
 
-		public static ArrayList<QuandBean> getListQuand() {
+	public static ArrayList<QuandBean> getListQuand() {
 		// TODO Auto-generated method stub
-	
+
 		ArrayList<QuandBean> listQuand = new ArrayList<QuandBean>();
 		listQuand.add(new QuandBean(0, "Maintenant"));
 		for (int f = 1; f < 9; f++) {
-			listQuand.add(new QuandBean(f,"Dans "+f +" heures"));
+			listQuand.add(new QuandBean(f, "Dans " + f + " heures"));
 		}
 		return listQuand;
-		
-		
+
 	}
 
-		public static ArrayList<RayonBean> getListRayon() {
-			// TODO Auto-generated method stub
-			ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
-			
-			for (int f = 1; f < 9; f++) {
-				listRayon.add(new RayonBean(f,""+f +" Km"));
-			}
-			return listRayon;
-		}
+	public static String gePhotoTypeActivite(Integer idType) {
 
+		TypeActiviteBean typeActiviteBean = mapTypeActivite.get(idType);
 
-		public static void updateCachePhoto(int id, String stringPhoto,
-				String libelle) {
-		mapTypeActivite.put(id, new TypeActiviteBean(id, libelle,stringPhoto));
-			
+		if (typeActiviteBean == null)
+			return "";
+		return typeActiviteBean.getPhoto();
+
+	}
+
+	public static String geLibelleTypeActivite(Integer idType) {
+
+		TypeActiviteBean typeActiviteBean = mapTypeActivite.get(idType);
+
+		if (typeActiviteBean == null)
+			return "Libelle inconnu";
+		return typeActiviteBean.getLibelle();
+
+	}
+
+	public static ArrayList<RayonBean> getListRayon() {
+		// TODO Auto-generated method stub
+		ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
+
+		for (int f = 1; f < 9; f++) {
+			listRayon.add(new RayonBean(f, "" + f + " Km"));
 		}
+		return listRayon;
+	}
+
+	public static void updateCachePhoto(int id, String stringPhoto,
+			String libelle) {
+		mapTypeActivite.put(id, new TypeActiviteBean(id, libelle, stringPhoto));
+
+	}
 }
