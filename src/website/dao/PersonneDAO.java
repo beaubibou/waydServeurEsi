@@ -594,4 +594,9 @@ public class PersonneDAO {
 		return retour;
 	}
 
+	public static ArrayList<AvisBean> getListAvisAfter(int id, int lastIndex) {
+		// TODO Auto-generated method stub
+		return new ArrayList<AvisBean>();
+	}
+
 }

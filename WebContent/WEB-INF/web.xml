@@ -517,4 +517,14 @@
     <servlet-name>ChargePhotoActivite</servlet-name>
     <url-pattern>/ChargePhotoActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PlusAvis</display-name>
+    <servlet-name>PlusAvis</servlet-name>
+    <servlet-class>servlet.commun.PlusAvis</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PlusAvis</servlet-name>
+    <url-pattern>/PlusAvis</url-pattern>
+  </servlet-mapping>
 </web-app>

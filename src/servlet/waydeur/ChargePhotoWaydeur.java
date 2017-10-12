@@ -59,9 +59,8 @@ public class ChargePhotoWaydeur extends HttpServlet {
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-		if (!authentification.isAuthentifieWaydeur())
+		if (!authentification.isAuthentifie())
 			return;
-			
 
 		File file;
 		int maxFileSize = 5000 * 1024;
@@ -95,9 +94,26 @@ public class ChargePhotoWaydeur extends HttpServlet {
 
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
-						new PersonneDAO().updatePhoto(stringPhoto, authentification.getProfil().getId());
+						new PersonneDAO().updatePhoto(stringPhoto,
+								authentification.getProfil().getId());
 						authentification.getProfil().setPhotostr(stringPhoto);
-						response.sendRedirect("CompteWaydeur");
+						
+						
+						switch( authentification.getProfil().getTypeuser()){
+						
+				
+						case ProfilBean.PRO:
+							response.sendRedirect("ComptePro");
+							break;
+							
+						case ProfilBean.WAYDEUR:
+							response.sendRedirect("CompteWaydeur");
+							break;
+						
+						}
+						
+					
+
 					}
 				}
 

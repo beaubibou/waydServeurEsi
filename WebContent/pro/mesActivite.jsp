@@ -47,9 +47,7 @@
 	%>
 	<div class="container">
 
-
-		<form action="MesActivitesWaydeur" method="post">
-
+		<form action="MesActivites" method="post">
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -92,12 +90,6 @@
 	</div>
 
 
-
-
-
-
-
-
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-12  col-sm-8">
@@ -137,12 +129,23 @@
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
 									<td><span class="badge">10</span></td>
-									<td><%=activite.getEtat()%></td>
-									<td><%=activite.getHoraire()%></td>
+									
+							 <%
+ 	if (!activite.isTerminee()){
+ %>		
+		<td><span class="label label-pill label-success"> </span></td>
+									
+			<%}
+ 	else{ %>		
+			
+				<td><span class="label label-pill label-danger"> </span></td>
+	<%}%>				
+									<td><%=activite.getHoraireLeA()%></td>
 
 									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
 											<span class="glyphicon glyphicon-search"></span>
-									</a> <!-- 									Affiche le bouton effacer si pas terminée --> <%
+									</a> <!-- Affiche le bouton effacer si pas terminée -->
+									 <%
  	if (!activite.isTerminee()){
  %>
 										<button id=<%out.println(lienEfface);%> name="supprimer"

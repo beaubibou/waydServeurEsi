@@ -1,3 +1,9 @@
+.nbrcaracteremax{
+	color:#0000FF;
+	text-align:right;
+	
+}
+
 .table-responsive>.table>tbody>tr>td{
     vertical-align: middle;
    

@@ -4,7 +4,7 @@
 <%@page import="website.metier.Outils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,10 +34,12 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
 <link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+	var lastIndex = 0;
+</script>
 <style>
 .vcenter {
 	display: inline-block;
@@ -55,16 +57,14 @@
 
 
 	<%
-	
-	AuthentificationSite authentification = new AuthentificationSite(
+		AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
-	if (!authentification.isAuthentifie())
+			if (!authentification.isAuthentifie())
 		return;
-	
-	ProfilBean profil = (ProfilBean) request.getAttribute("profil");
-		ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
-				.getAttribute("listAvis");
-		
+
+			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
+			ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
+			.getAttribute("listAvis");
 	%>
 
 	<%
@@ -106,9 +106,10 @@
 						<div class="row vertical-align">
 							<div class='col-sm-2'>
 
-									<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%> class="img-circle"
-									class="text-center" />
-					
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									class="img-circle" class="text-center" />
+
 							</div>
 
 							<div class='col-sm-6' class="text-center">
@@ -135,9 +136,6 @@
 										value="<%=(int) profil.getNote()%>" class="rating"
 										data-clearable="remove" data-readonly />
 								</h5>
-
-
-
 							</div>
 
 						</div>
@@ -153,34 +151,42 @@
 						<div class="row">
 							<div class='col-sm-12'>
 
-								<div class="table-responsive">
-									<table class="table table-striped">
+								<div class="table-responsive" id="listAvis">
+									<table class="table table-striped" id="list">
 										<thead>
 											<tr>
 												<th>Avis</th>
 											</tr>
 										</thead>
 										<tbody>
-										<%for (AvisBean avis:listAvis){ %>
-											
-											<tr onclick="document.location='lien.html'">
-												<td><%=avis.getNomnotateur() %>
-												 <input type="number" name="rating"
-													id="rating-readonly" value="<%=(int)avis.getNote() %>" class="rating"
-													data-clearable="remove" data-readonly />
+											<%
+												for (AvisBean avis : listAvis) {
+											%>
 
-												</td>
-												<td>
-												<p ><%=avis.getLibelle() %></p>
-												</td>
+											<tr onclick="document.location='lien.html'">
+												<td><h4>
+														Note:
+														<%=(int) avis.getNote()%>/5
+													</h4>
+
+													<p><%=avis.getLibelle()%></p></td>
+									<script>
+										lastIndex=<%=avis.getIdnoter()%>;
+										</script>				
 											</tr>
-											
-										<%} %>
+
+											<%
+												}
+											%>
 										</tbody>
 									</table>
 
 								</div>
-
+								<div class="form-group">
+									<div class="btn-group">
+										<a class="btn btn-info" id="plusavis" role="button">+</a>
+									</div>
+								</div>
 							</div>
 
 						</div>
@@ -191,7 +197,33 @@
 		</div>
 
 	</div>
+	<script>
+		$(document).on("click", "#plusavis", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+			$.get("PlusAvis?lastIndex="+lastIndex, function(responseJson) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 
+				//       $select.find("tr").remove();    
+				//  	alert("klk");                      // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+			alert(lastIndex);
+			
+				ajouteLigneTable(responseJson);
+			});
+		});
+
+		function ajouteLigneTable(responseJson) {
+			$.each(responseJson, function(index, avis) { // Iterate over the JSON array.
+
+				var table = document.getElementById('list');
+				var newRow = table.insertRow(-1);
+				var rowNumber = table.childNodes.length;
+				var newCell = newRow.insertCell(-1);
+				var ligne = '<h4>Note: ' + avis.note + '/5</h4>	<p>'
+						+ avis.libelle + '</p>';
+				newCell.innerHTML = ligne;
+				lastIndex=avis.idnoter;
+
+			});
+		}
+	</script>
 
 </body>
 </html>

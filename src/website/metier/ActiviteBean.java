@@ -1,5 +1,6 @@
 package website.metier;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -357,7 +358,7 @@ public class ActiviteBean {
 			if (diff < 0)
 				return "Terminée";
 
-			return "Se termine dans "+ diffHours + "Heure " + String.format("%02d", diffMinutes) + " minutes";
+			return "Se termine dans "+ diffHours + ":" + String.format("%02d", diffMinutes);
 
 		}
 
@@ -369,7 +370,7 @@ public class ActiviteBean {
 	
 		return "Terminée";
 	}
-
+	
 	public int getTypeactivite() {
 		return typeactivite;
 	}
@@ -488,4 +489,14 @@ public class ActiviteBean {
 		return "De "+ datedebutStr +" à "+ datefinStr;
 	}
 	
+	public String getHoraireLeA(){
+		
+		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");
+		String datestrdebut = jour.format(datedebut);
+		SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm");
+		String heuredebutstr = formatHeure.format(datedebut);
+		String heurefinstr = formatHeure.format(datefin);
+		
+		return "Le " + datestrdebut +" </br> de " +heuredebutstr +" à "+ heurefinstr;
+	}
 }

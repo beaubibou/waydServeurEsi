@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
+import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
@@ -29,54 +30,45 @@ public class MesActivites extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-
-				// ********* Regle d'authentification*********************
-		System.out.println("mes activite ************");
-		
+		// ********* Regle d'authentification*********************
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-		
 		if (!authentification.isAuthentifiePro())
 			return;
-		System.out.println("mes activite ************");
-		
+
 		FiltreRecherche filtre =authentification.getFiltre();
 
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
+	//	listMesActivite = new ArrayList<ActiviteBean>();
 		if (listMesActivite.size() == 0) {
 
-			request.setAttribute("titre", "Conseil");
-			request.setAttribute("message", "il faut ajouter une activité");
+			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
+				request.setAttribute("jumbotron", jumbotron);
+		
 
-			request.getRequestDispatcher("/pro/MessageInfo.jsp").forward(
-					request, response);
+		} 
+		
+		request.setAttribute("listMesActivite", listMesActivite);
+		request.getRequestDispatcher("/pro/mesActivite.jsp")
+				.forward(request, response);
 
-		} else {
-			request.setAttribute("listMesActivite", listMesActivite);
-			request.getRequestDispatcher("/pro/mesActivite.jsp")
-					.forward(request, response);
-
-		}
-	
-	
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-	
 		if (!authentification.isAuthentifiePro())
 			return;
 
@@ -91,22 +83,18 @@ public class MesActivites extends HttpServlet {
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
-			if (listMesActivite.size() == 0) {
+		if (listMesActivite.size() == 0) {
 
-			request.setAttribute("titre", "Conseil");
-			request.setAttribute("message", "il faut ajouter une activité");
+			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
+				request.setAttribute("jumbotron", jumbotron);
+		
 
-			request.getRequestDispatcher("/pro/MessageInfo.jsp").forward(
-					request, response);
-
-		} else {
-			
+		} 
 			request.setAttribute("listMesActivite", listMesActivite);
 			request.getRequestDispatcher("/pro/mesActivite.jsp")
 					.forward(request, response);
 
-		}
+		
 
 	}
-
 }

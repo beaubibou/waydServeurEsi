@@ -42,11 +42,9 @@
 
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-	
-	ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-	//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
-	
-	
+		
+		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -60,9 +58,50 @@
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
-								class="form-control" id="titre" required placeholder="Nom "
+								maxlength="50" class="form-control" id="titre" required placeholder="Nom "
 								name="titre">
 						</div>
+
+
+						<div class="form-group">
+							<div class="row">
+
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="iddatedebut">Date debut</label>
+										<div class='input-group date' id='datedebut'>
+											<input type='text' class="form-control" id="iddatedebut"
+												name="debut" /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="iddatefin">Date fin</label>
+										<div class='input-group date' id="datefin">
+											<input type='text' class="form-control" id="iddatefin"
+												name="fin" /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+							<div class='col-sm-4'>	
+										<label for="typeactivite">Type d'activitée:</label> <select
+								class="form-control" id="type" name="typeactivite">
+								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
+							<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
+							<%} %>	
+							</select>
+								
+								</div>
+							</div>
+
+						</div>
+
 						<div class="form-group">
 							<label for="adresse">Adresse:</label> <input type="text"
 								class="form-control" id="adresse" required
@@ -72,51 +111,11 @@
 
 						<div class="form-group">
 							<label for="description">Description:</label>
-							<textarea class="form-control" rows="5" id="description"
+							<textarea maxlength="200" class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
-						
-						<div class="form-group">
-							<label for="typeactivite">Type d'activitée:</label> <select
-								class="form-control" id="type" name="typeactivite">
-								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
-							<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
-							<%} %>	
-							</select>
-						</div>
-						<div class="form-group">
-							<div class="row">
-								<div class='col-sm-2'>
-									<label for="iddatedebut">Date debut</label>
-								</div>
-								<div class='col-sm-4'>
-									<div class="form-group">
-										<div class='input-group date' id='datedebut'>
+						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
 
-											<input type='text' class="form-control" id="iddatedebut"
-												name="debut" /> <span class="input-group-addon"> <span
-												class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
-									</div>
-								</div>
-								<div class='col-sm-2'>
-									<label for="iddatefin">Date fin</label>
-								</div>
-								<div class='col-sm-4'>
-									<div class="form-group">
-										<div class='input-group date' id='datefin'>
-
-											<input type='text' class="form-control" id="iddatefin"
-												name="fin" /> <span class="input-group-addon"> <span
-												class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
 
 
 						<button type="submit" class="btn btn-info">Enregistrer</button>
@@ -206,11 +205,15 @@
 
 			});
 
-			$('#datefin').datetimepicker({
-				defaultDate : new Date,
-				format : 'DD/MM/YYYY HH:mm'
+			var heure = new Date().getHours() + 3;
 
-			});
+			$('#datefin').datetimepicker(
+					{
+						defaultDate : moment(new Date()).hours(heure)
+								.minutes(0).seconds(0).milliseconds(0),
+						format : 'DD/MM/YYYY HH:mm'
+
+					});
 
 		});
 	</script>
@@ -260,18 +263,23 @@
 				return false;
 			}
 
-			//if (datedebut>datefin)
-			//{alert("date debut>datefin");
-			//	return false;
-			//} 
-			//if (datefin<new Date() ){
-			//	alert("date fin avant maientnant");
-			//	return false;
-			//}
+			if (datedebut > datefin) {
+				alert("date debut>datefin");
+				return false;
+			}
+			if (datefin < new Date()) {
+				alert("date fin avant maientnant");
+				return false;
+			}
 
-			//	diffHeure=heureDiff(new Date(datedebut).getTime(),new Date(datefin).getTime());
+			diffHeure = heureDiff(new Date(datedebut).getTime(), new Date(
+					datefin).getTime());
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
+			if (diffHeure > 8) {
+				alert("La durée ne peut pas exéder 8 heures");
+				return false;
+			}
 			return true;
 		}
 
@@ -282,6 +290,29 @@
 			longitude = document.getElementById("longitude").value = 0;
 
 		}
+	</script>
+
+	<script>
+		$(document).ready(function(e) {
+
+			$('#description').keyup(function() {
+
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
+
+				var msg = nombreCaractere + ' Caractere(s) / 200';
+
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+
+			})
+
+		});
+
+		// Init le nombre de caraterces	
+		var nombreCaractere = $('#description').val().length;
+		var msg = nombreCaractere + ' Caractere(s) / 200';
+		$('#nbr').text(msg);
 	</script>
 </body>
 </html>

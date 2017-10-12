@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Renseignements</title>
+<title>Mon compte</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -49,27 +49,28 @@
 					<div class="panel-title">Mon compte</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
-					
-							<div class="form-group">
-							<div class="row">
-								<div class="col-sm-8">
-									<img height="80" width="80"
-										src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-										class="img-circle" />
-								</div>
-							</div>
-							<form action="/wayd/ChargePhotoPro" method="post"
-								enctype="multipart/form-data">
-								<input type="file" name="file" size="50" /> <br /> <input
-									type="submit" value="Upload File" />
-							</form>
 
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-2">
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									class="img-circle" />
+							</div>
+
+							<div class="col-sm-8">
+								<form action="/wayd/ChargePhotoWaydeur" method="post"
+									enctype="multipart/form-data">
+									<input type="file" name="file" size="50" /> <input
+										type="submit" value="Envoyer" class="btn btn-info" />
+								</form>
+							</div>
 						</div>
-					
+					</div>
 					<form action="../ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
 
-				
+
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
@@ -89,28 +90,7 @@
 
 							</div>
 						</div>
-
-
-						<div class="form-group">
-							<label for="adresse">Adresse*:</label> <input type="text"
-								class="form-control" id="adresse"
-								placeholder="Renseigner l'adresse" name="adresse" required
-								onkeypress="initPosition()"
-								value="<%out.println(profil.getAdresse());%>">
-						</div>
-
-						<div class="form-group">
-							<label for="commentaire">Renseignements:</label>
-							<textarea class="form-control" rows="5" id="commentaire"
-								name="commentaire">
-								<%
-									out.println(profil.getCommentaireStr());
-								%>
-							</textarea>
-						</div>
-
-
-						<div class="form-group">
+<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
@@ -120,6 +100,7 @@
 										placeholder="http://monsite.fr" name="siteweb"
 										value=<%out.println(profil.getSiteWebStr());%>>
 								</div>
+
 
 								<div class="col-sm-4">
 									<div class="form-group">
@@ -133,6 +114,36 @@
 							</div>
 						</div>
 
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-8">
+									<div class="form-group">
+										<label for="siret">Siret</label>
+									</div>
+									<input type="text" class="form-control" id="siret"
+										placeholder="Numero Siret" name="siret"
+										value=<%out.println(profil.getSiret());%>>
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="adresse">Adresse*:</label> <input type="text"
+								class="form-control" id="adresse"
+								placeholder="Renseigner l'adresse" name="adresse" required
+								onkeypress="initPosition()"
+								value="<%out.println(profil.getAdresse());%>">
+						</div>
+
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea class="form-control" rows="5" id="description"
+								name="description"><%=profil.getCommentaireStr()%></textarea>
+						</div>
+						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
+						
 						<button type="submit" class="btn btn-info">Modifier</button>
 
 						<div class="form-group">
@@ -231,6 +242,29 @@
 			longitude = document.getElementById("longitude").value = 0;
 
 		}
+	</script>
+
+	<script>
+		$(document).ready(function(e) {
+
+			$('#description').keyup(function() {
+
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
+
+				var msg = nombreCaractere + ' Caractere(s) / 200';
+
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+
+			})
+
+		});
+
+		// Init le nombre de caraterces	
+		var nombreCaractere = $('#description').val().length;
+		var msg = nombreCaractere + ' Caractere(s) / 200';
+		$('#nbr').text(msg);
 	</script>
 </body>
 </html>

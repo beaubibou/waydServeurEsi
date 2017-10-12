@@ -6,12 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import website.dao.ActiviteDAO;
-import website.dao.StatDAO;
-import website.metier.IndicateurWayd;
-import website.metier.ProfilBean;
+import website.metier.AuthentificationSite;
 
 /**
  * Servlet implementation class AcceuilPro
@@ -32,24 +27,14 @@ public class AcceuilPro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		HttpSession session = request.getSession();
 		
 		//*********  Regle d'authentification*********************
 		
-		ProfilBean profil=(ProfilBean)session.getAttribute("profil");
-		
-		System.out.println("Profil dans acceuil pro"+profil);
-		
-		if (profil==null){
-			response.sendRedirect("auth/login.jsp");
-		    return;
-		}
-						
-		if (profil.getTypeuser()!=ProfilBean.PRO ||profil.isPremiereconnexion())
-		{
-		response.sendRedirect("auth/login.jsp");
-		return;
-		}
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+
+		if (!authentification.isAuthentifiePro())
+			return;
 		//*********************************************************
 		request.getRequestDispatcher("MesActivites").forward(request, response);
 		
