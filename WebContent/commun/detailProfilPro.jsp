@@ -1,3 +1,4 @@
+<%@page import="website.html.Etoile"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.AuthentificationSite"%>
@@ -24,7 +25,7 @@
 	rel="stylesheet">
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<!-- <script src="src/bootstrap-rating-input.js"></script> -->
+<script src="src/bootstrap-rating-input.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
@@ -39,6 +40,10 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+	var lastIndex = 0;
+</script>
 <style>
 .vcenter {
 	display: inline-block;
@@ -55,12 +60,12 @@
 <body>
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
+		request, response);
 		if (!authentification.isAuthentifie())
 			return;
 		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 		ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
-				.getAttribute("listAvis");
+		.getAttribute("listAvis");
 	%>
 
 
@@ -96,7 +101,7 @@
 								if (profil.getId() != authentification.getProfil().getId()) {
 							%>
 
-							<div class='col-sm-9'>
+							<div class='col-sm-8'>
 								<a class="btn btn-danger"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>"
 									role="button">Signaler</a>
@@ -108,7 +113,7 @@
 								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>"
 									role="button">Site Web</a>
 							</div>
-							
+
 						</div>
 
 					</div>
@@ -127,11 +132,10 @@
 
 							<div class='col-sm-6' class="text-center">
 
-								<h3 style="padding-left: 15px">Pseudo:</h3>
+								<h3 style="padding-left: 15px"><%=profil.getPseudo()%></h3>
 
 								<h4 style="padding-left: 15px">
-									<input type="number" name="rating" id="rating-readonly"
-										value="2" class="rating" data-clearable="remove" data-readonly />
+									<%=Etoile.getNbrEtoiles(profil.getNote())%>
 								</h4>
 
 
@@ -153,45 +157,38 @@
 						<div class="row">
 							<div class='col-sm-12'>
 
-								<div class="table-responsive">
-									<table class="table table-condensed">
+								<div class="table-responsive" id="listAvis">
+									<table class="table table-condensed" id="list">
 										<thead>
 											<tr>
 												<th>Avis</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
-													data-clearable="remove" data-readonly />
 
-												</td>
-											</tr>
+											<%
+												for (AvisBean avisBean:listAvis){
+											%>
 											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
-													data-clearable="remove" data-readonly />
-
+												<td><%=Etoile.getNbrEtoiles(avisBean.getNote())%> 
+												<strong><%=avisBean.getPrenomnotateur()%></strong>
 												</td>
-											</tr>
-											<tr>
-												<td>John</td>
-												<td>Note: <input type="number" name="rating"
-													id="rating-readonly" value="2" class="rating"
-													data-clearable="remove" data-readonly />
+												<td><%=avisBean.getLibelle()%></td>
 
-												</td>
 											</tr>
 
-
+											<%
+												}
+											%>
 										</tbody>
 									</table>
 
 								</div>
-
+								<div class="form-group">
+									<div class="btn-group">
+										<a class="btn btn-info" id="plusavis" role="button">+</a>
+									</div>
+								</div>
 							</div>
 
 						</div>
@@ -202,7 +199,62 @@
 		</div>
 
 	</div>
+	<script>
+		$(document).on("click", "#plusavis", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+			$.get("PlusAvis?lastIndex=" + lastIndex, function(responseJson) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 
+				//       $select.find("tr").remove();    
+				//  	alert("klk");                      // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+
+				ajouteLigneTable(responseJson);
+			});
+		});
+
+		function ajouteLigneTable(responseJson) {
+
+			$.each(responseJson, function(index, avis) { // Iterate over the JSON array.
+
+				var table = document.getElementById('list');
+				var newRow = table.insertRow(-1);
+				var rowNumber = table.childNodes.length;
+
+				var note = newRow.insertCell(-1);
+				var ligne = getNbrEtoile(avis.note) + '<strong >'
+						+ avis.prenomnotateur + '</strong>';
+				note.innerHTML = ligne;
+
+				var commentaire = newRow.insertCell(-1);
+				var pseudotext = '<p>' + avis.libelle + '</p>';
+				commentaire.innerHTML = pseudotext;
+
+				lastIndex = avis.idnoter;
+
+			});
+		}
+
+		function getNbrEtoile(nbr) {
+
+			nbr = Math.ceil(nbr);
+
+			if (nbr == 0) {
+
+				return '<p><span  style="color: #FF0000;" class="glyphicon glyphicon-thumbs-down"></span></p> ';
+
+			}
+
+			var retour = '<p>';
+			for (var iter = 0; iter < nbr; iter++) {
+
+				retour = retour
+						+ '<span class="glyphicon glyphicon-thumbs-up"></span> ';
+
+			}
+
+			retour = retour + '</p>';
+			return retour;
+
+		}
+	</script>
 
 
 

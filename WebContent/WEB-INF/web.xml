@@ -527,4 +527,24 @@
     <servlet-name>PlusAvis</servlet-name>
     <url-pattern>/PlusAvis</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateActivitePro</display-name>
+    <servlet-name>UpdateActivitePro</servlet-name>
+    <servlet-class>servlet.pro.UpdateActivitePro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateActivitePro</servlet-name>
+    <url-pattern>/UpdateActivitePro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ModifierActivite</display-name>
+    <servlet-name>ModifierActivite</servlet-name>
+    <servlet-class>servlet.commun.ModifierActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifierActivite</servlet-name>
+    <url-pattern>/ModifierActivite</url-pattern>
+  </servlet-mapping>
 </web-app>
