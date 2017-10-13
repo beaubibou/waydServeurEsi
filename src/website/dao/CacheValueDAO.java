@@ -362,7 +362,7 @@ public class CacheValueDAO {
 
 	}
 
-	public static String gePhotoTypeActivite(Integer idType) {
+	public static String getPhotoTypeActivite(Integer idType) {
 
 		TypeActiviteBean typeActiviteBean = mapTypeActivite.get(idType);
 

@@ -6,6 +6,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.dao.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,19 +56,19 @@
 
 </head>
 <body>
-	
+
 	<%
-	AuthentificationSite authentification = new AuthentificationSite(
-			request, response);
-	if (!authentification.isAuthentifie())
-		return;
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifie())
+			return;
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
 	%>
-	
-		<%
+
+	<%
 		if (authentification.isPro()) {
 	%>
 
@@ -91,96 +92,111 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="form-group">
-						<div class="btn-group">
-							<a class="btn btn-danger"
-								href="SignalerActivite?idActivite=<%=activite.getId()%>"
-								role="button">Signaler</a> 
+
+						<div class="row">
+
+							<div class='col-sm-1  ' class="text-center">
+								<img height="30" width="30"
+									src=<%out.println(Outils.getUrlPhoto(CacheValueDAO
+					.getPhotoTypeActivite(activite.getTypeactivite())));%>
+									class="img-circle" class="text-center" />
+							</div>
+							
+						<div class='col-sm-2'>
+								<a class="btn btn-danger"
+									href="SignalerActivite?idActivite=<%=activite.getId()%>"
+									role="button">Signaler</a>
+							</div>
 						</div>
-					</div>
 
+</div>
 
-					<div class="form-group">
+						<div class="form-group">
 
-						<div class="row vertical-align">
-							<div class='col-sm-2'>
+							<div class="row vertical-align">
+								<div class='col-sm-2'>
 
+									<img height="80" width="80"
+										src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+										class="img-circle" class="text-center" />
+								</div>
 
-								<img height="80" width="80" src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%> class="img-circle"
-									class="text-center" />
+								<div class='col-sm-6' class="text-center">
+
+									<a
+										href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
+										<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
+									</a>
+
+									<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
+
+									<h5 style="padding-left: 15px">distance</h5>
+
+								</div>
+
 							</div>
 
-							<div class='col-sm-6' class="text-center">
 
-								<a href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>"> <h3 style="padding-left: 15px;color:blue;"><%=activite.getPseudo()%></h3></a>
-
-								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-
-								<h5 style="padding-left: 15px">distance</h5>
+							<div class="form-group">
+								</br>
+								<h5>Catégorie:<%=activite.getLibelleActivite()%></h5>
+								<h5><%=activite.getTempsRestant()%></h5>
+								<h5><%=activite.getBilanParticipation()%></h5>
 
 							</div>
 
-						</div>
+							<div class="form-group">
+								<label for="description">Description:</label>
+								<textarea disabled class="form-control" rows="5"
+									id="description" name="description"><%=activite.getLibelle()%></textarea>
+							</div>
 
 
-						<div class="form-group">
-							</br>
-							<h4>Catégorie:<%=activite.getLibelleActivite()%></h4>
-							<h4><%=activite.getTempsRestant()%></h4>
-							<h4><%=activite.getBilanParticipation()%></h4>
+							<div class="form-group">
+								<div class="row">
+									<div class='col-sm-12'>
 
-						</div>
+										<div class="table-responsive">
+											<table class="table table-condensed">
+												<thead>
+													<tr>
+														<th>Participant</th>
+													</tr>
+												</thead>
+												<tbody>
+													<%
+														for (ParticipantBean participantBean : listParticipant) {
+													%>
+													<tr>
+														<td><%=participantBean.getPseudo()%></td>
+														<td>
+															<p>
+																Note: <input type="number" name="rating"
+																	id="rating-readonly"
+																	value="<%=participantBean.getNote()%>" class="rating"
+																	data-clearable="remove" data-readonly />
+															</p>
+														</td>
+													</tr>
 
-						<div class="form-group">
-							<label for="description">Description:</label>
-							<textarea disabled class="form-control" rows="5" id="description"
-								name="description"><%=activite.getLibelle()%></textarea>
-						</div>
+													<%
+														}
+													%>
+												</tbody>
+											</table>
 
-
-						<div class="form-group">
-							<div class="row">
-								<div class='col-sm-12'>
-
-									<div class="table-responsive">
-										<table class="table table-condensed">
-											<thead>
-												<tr>
-													<th>Participant</th>
-												</tr>
-											</thead>
-											<tbody>
-												<%
-													for (ParticipantBean participantBean : listParticipant) {
-												%>
-												<tr>
-													<td><%=participantBean.getPseudo() %></td>
-													<td>
-														<p>
-															Note: <input type="number" name="rating"
-																id="rating-readonly" value="<%=participantBean.getNote() %>" class="rating"
-																data-clearable="remove" data-readonly />
-														</p>
-													</td>
-												</tr>
-
-												<%
-													}
-												%>
-											</tbody>
-										</table>
+										</div>
 
 									</div>
 
 								</div>
 
 							</div>
-
 						</div>
 					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
-	</div>
 </body>
 </html>

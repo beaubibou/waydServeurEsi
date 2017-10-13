@@ -95,6 +95,7 @@
 						activité professionelle</div>
 
 				</div>
+					
 
 				<div style="padding-top: 30px" class="panel-body">
 
@@ -103,6 +104,12 @@
 
 						<div class="row">
 						
+						<div class='col-sm-1  ' class="text-center">
+								<img height="30" width="30"
+									src=<%out.println(Outils.getUrlPhoto( CacheValueDAO.getPhotoTypeActivite(activite.getTypeactivite())));%>
+									class="img-circle" class="text-center" />
+
+							</div>
 						<%if (!activite.isOrganisteur(authentification.getProfil().getId())) { %>
 							<div class='col-sm-9'>
 								<a class="btn btn-danger"
@@ -149,7 +156,9 @@
 
 						<div class="form-group">
 							</br>
-							<h5>Type d'activité: <%=CacheValueDAO.geLibelleTypeActivite(activite.getTypeactivite()) %></h5>
+						<h5>Type d'activité: <%=CacheValueDAO.geLibelleTypeActivite(activite.getTypeactivite()) %></h5>
+						
+						
 							<h5><%=activite.getHoraireLeAHorizontal() %></h5>
 
 						</div>

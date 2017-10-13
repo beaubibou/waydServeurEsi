@@ -8,6 +8,8 @@ import java.util.Date;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import fcm.ServeurMethodes;
+
 public class ActiviteBean {
 
 	int id;
@@ -64,6 +66,8 @@ public class ActiviteBean {
 	private int typeAccess;
 
 	private String libelleActivite;
+	
+	private double latRef,longRef; // Coordonnée du pont de recherche 
 
 	public int getTypeUser() {
 		return typeUser;
@@ -511,6 +515,20 @@ public class ActiviteBean {
 				+ heurefinstr;
 	}
 	
+	 public void setPointRef(double latRef,double longRef){
+		 
+		 this.latRef=latRef;
+		 this.longRef=longRef;
+		 
+	 }
+	
+	 
+	 public double calculDistance(){
+		 
+		return ServeurMethodes.getDistance(latitude, latRef,
+					longitude, longRef);
+		 
+	 }
 	public String getHoraireLeAHorizontal() {
 
 		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");

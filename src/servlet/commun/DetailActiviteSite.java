@@ -53,18 +53,21 @@ public class DetailActiviteSite extends HttpServlet {
 				
 		LOG.info("DetailActiviteSite");
 
+		
+		
 		switch (activite.getTypeUser()) {
 		case ProfilBean.PRO:
-			LOG.info("DetailActivitePro");
+			
 			System.out.println("ativite dans deteal"+activite);
-		
+			
+						
 			request.getRequestDispatcher("/commun/detailActivitePro.jsp").forward(request, response);
 			
 			break;
 
 		case ProfilBean.WAYDEUR:
 
-			LOG.info("DetailActiviteWaydeur");
+			
 			System.out.println("ativite dans deteal"+activite);
 			request.getRequestDispatcher("/commun/detailActiviteWaydeur.jsp").forward(request, response);
 			
