@@ -39,6 +39,8 @@ public class DetailActiviteSite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		LOG.info("doGet");
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 
@@ -48,17 +50,10 @@ public class DetailActiviteSite extends HttpServlet {
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 		ActiviteBean activite =  new Coordination().getActivite(idActivite);
 		request.setAttribute("activite", activite);
-		
-		LOG.info(activite.getPseudo());
-				
-		LOG.info("DetailActiviteSite");
-
-		
+			
 		
 		switch (activite.getTypeUser()) {
 		case ProfilBean.PRO:
-			
-			System.out.println("ativite dans deteal"+activite);
 			
 						
 			request.getRequestDispatcher("/commun/detailActivitePro.jsp").forward(request, response);
@@ -67,8 +62,6 @@ public class DetailActiviteSite extends HttpServlet {
 
 		case ProfilBean.WAYDEUR:
 
-			
-			System.out.println("ativite dans deteal"+activite);
 			request.getRequestDispatcher("/commun/detailActiviteWaydeur.jsp").forward(request, response);
 			
 			break;

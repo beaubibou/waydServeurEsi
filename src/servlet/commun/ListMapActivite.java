@@ -13,8 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 
+import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteAjax;
 import website.metier.AuthentificationSite;
@@ -24,7 +28,7 @@ import website.metier.AuthentificationSite;
  */
 public class ListMapActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(WBservices.class); 
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,7 +43,7 @@ public class ListMapActivite extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		
+		LOG.info("doGet");
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		

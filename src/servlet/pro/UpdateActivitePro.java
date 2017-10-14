@@ -8,6 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.SendResult;
+
+import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
+
+import website.dao.ActiviteDAO;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 
@@ -60,7 +67,7 @@ public class UpdateActivitePro extends HttpServlet {
 		// Integer.parseInt(request.getParameter("typeaccess"));
 		int typeactivite = Integer.parseInt(request
 				.getParameter("typeactivite"));
-		int idActivite = Integer.parseInt(request
+		int idactivite = Integer.parseInt(request
 				.getParameter("idActivite"));
 
 		String datedebut = request.getParameter("debut");
@@ -68,7 +75,7 @@ public class UpdateActivitePro extends HttpServlet {
 
 		Date dateDebut = null;
 		Date dateFin = null;
-		System.out.println("idac"+idActivite);
+		System.out.println("idac"+idactivite);
 
 		try {
 			dateDebut = Outils.getDateFromString(datedebut);
@@ -80,7 +87,17 @@ public class UpdateActivitePro extends HttpServlet {
 			return;
 		}
 
-	
-	}
+		if (ActiviteDAO.updateActivitePro( titre,
+				 description,  dateDebut,  dateFin,  adresse,
+				 latitude,  longitude,  typeactivite,
+				 idactivite))
+			{
+			AlertInfoJsp alerte=new AlertInfoJsp("Activite mise", AlertJsp.Sucess,"MesActivites");
+			request.setAttribute("alerte", alerte);
+			request.getRequestDispatcher("commun/alert.jsp").forward(
+					request, response);
+			return;
+			};
+		}
 
 }

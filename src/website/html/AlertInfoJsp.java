@@ -1,11 +1,17 @@
 package website.html;
 
-import website.enumeration.AlertJsp;
+import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import website.enumeration.AlertJsp;
 public class AlertInfoJsp {
 
 	String message;
 	AlertJsp typeAlert;
+	private String redirection;
 
 	public String getMessage() {
 		return message;
@@ -23,10 +29,23 @@ public class AlertInfoJsp {
 		this.typeAlert = typeAlert;
 	}
 
-	public AlertInfoJsp(String message, AlertJsp typeAlert) {
+	public String getRedirectionHtml(){
+		
+		if (redirection==null)return "";
+		else
+		{System.out.println("redirection");
+			
+			return "document.location.href="+"\""+redirection+"\""+";";
+			
+		}
+			
+		
+	}
+	public AlertInfoJsp(String message, AlertJsp typeAlert,String redirection) {
 		super();
 		this.message = message;
 		this.typeAlert = typeAlert;
+		this.redirection=redirection;
 	}
 
 	public String getHtml() {
@@ -35,26 +54,27 @@ public class AlertInfoJsp {
 
 		switch (typeAlert) {
 		case Alert:
-			retour = "<div class=\"container\">"
-					+ " <div class=\"alert alert-danger alert-dismissible\">"
-					+ "<a  class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>"
-					+ message+"</div></div>";
+			retour="<div id=\"myAlert\" class=\"alert alert-danger\">"+
+			        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
+			        "<strong>"+message+"</div>";
 			break;
 
 		case Info:
-			retour = "<div class=\"container\">"
-					+ " <div class=\"alert alert-success alert-dismissible\">"
-					+ "<a  class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>"
-					+ message+"</div></div>";
+			retour="<div id=\"myAlert\" class=\"alert alert-info\">"+
+			        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
+			        "<strong>"+message+"</div>";
 	
 			break;
 		case Sucess:
-			retour = "<div class=\"container\">"
-					+ " <div class=\"alert alert-success alert-dismissible\">"
-					+ "<a  class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>"
-					+ message+"</div></div>";
+//			retour = "<div class=\"container\">"
+//					+ " <div id=\"idalert\" class=\"alert alert-success alert-dismissible\">"
+//					+ "<a   class=\"close\" data-dismiss=\"alert\" >&times;</a>"
+//					+ message+"</div></div>";
+			
+			retour="<div id=\"myAlert\" class=\"alert alert-success\">"+
+        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
+        "<strong>"+message+"</div>";
 	
-
 			break;
 
 		default:
@@ -63,5 +83,17 @@ public class AlertInfoJsp {
 		
 
 		return retour;
+	}
+
+	public void send(HttpServletRequest request,
+			HttpServletResponse response) {
+		request.setAttribute("alerte", this);
+		try {
+			request.getRequestDispatcher("commun/alert.jsp").forward(
+					request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

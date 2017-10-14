@@ -8,9 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 /**
@@ -18,6 +24,7 @@ import website.metier.ProfilBean;
  */
 public class ModifierActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -34,24 +41,38 @@ public class ModifierActivite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		LOG.info("doGet");
 
-		int idActivite = 0;// Integer.parseInt(request.getParameter("idActivite"));
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		idActivite = 3;
-		ActiviteBean activiteBean = new Coordination().getActivite(idActivite);
-		activiteBean.setTypeactivite(3);
-		Calendar cal=Calendar.getInstance();
-		
-		cal.set(Calendar.HOUR_OF_DAY, 20);
-		
-		activiteBean.setDatefin(cal.getTime());
-			
-		
-		if (activiteBean == null) {
-			System.out.println("L'activite n'exite plus");
+		if (!authentification.isAuthentifie())
 			return;
 
+		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
+
+		ActiviteBean activiteBean = new Coordination().getActivite(idActivite);
+		
+		
+		if (activiteBean==null){
+			
+		switch(authentification.getProfil().getTypeuser()){
+		
+		case ProfilBean.PRO:
+			
+				new AlertInfoJsp("L'activité n'existe plus", AlertJsp.Alert,
+						"MesActivites").send(request, response);
+				
+				return;
+			
+		case ProfilBean.WAYDEUR:
+	
+				break;
+		
 		}
+		}
+		
+		
 		switch (activiteBean.getTypeUser()) {
 
 		case ProfilBean.PRO:

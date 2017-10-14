@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.dao.PersonneDAO;
 import website.metier.ProfilBean;
@@ -29,6 +32,8 @@ import com.google.firebase.tasks.OnSuccessListener;
  */
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
+
 	protected boolean success;
 
 	/**
@@ -90,7 +95,7 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Do post Connexion");
+		LOG.info("Do post Connexion");
 
 		String pwd = (String) request.getParameter("pwd");
 
@@ -122,14 +127,12 @@ public class Connexion extends HttpServlet {
 						// }
 
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
-						System.out.println("admin" + profil);
-
+						
 						if (profil == null) {
 							Connection connexion = null;
 
 							try {
-								System.out.println("Creation du compte"
-										+ profil);
+								LOG.info("Creation du compte"+ profil);
 								connexion = CxoPool.getConnection();
 								connexion.setAutoCommit(false);
 								wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
@@ -139,8 +142,8 @@ public class Connexion extends HttpServlet {
 								connexion.commit();
 
 								profil = PersonneDAO.getFullProfilByUid(uid);
-								System.out.println("user cree" + profil);
-
+								LOG.info("User crée"+ profil);
+								
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
 								success=true;
@@ -194,8 +197,7 @@ public class Connexion extends HttpServlet {
 							case ProfilBean.PRO:
 								session.setAttribute("profil", profil);
 								try {
-									System.out
-											.println("Bacule vers acueeil pro");
+								
 									response.sendRedirect("AcceuilPro");
 									success=true;
 									return;
@@ -210,7 +212,6 @@ public class Connexion extends HttpServlet {
 								
 								session.setAttribute("profil", profil);
 								try {
-									System.out.println("Bacule vers acueeil waydeur");
 									response.sendRedirect("AcceuilWaydeur");
 									success=true;
 									return;
@@ -247,12 +248,12 @@ public class Connexion extends HttpServlet {
 
 		try {
 			int temps=0;
-			while (temps<100){
+			while (temps<1000){
 				Thread.sleep(30);	
 				temps++;
 				if (success){
 					
-					temps=101;
+					temps=1001;
 				}
 			
 				

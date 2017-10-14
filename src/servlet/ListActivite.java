@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.FiltreJSP;
@@ -20,7 +23,7 @@ import website.metier.Pagination;
  */
 public class ListActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -36,6 +39,8 @@ public class ListActivite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null) {

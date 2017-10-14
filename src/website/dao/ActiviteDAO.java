@@ -39,6 +39,8 @@ public class ActiviteDAO {
 	public ActiviteDAO() {
 
 	}
+	
+	
 
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double NELat, double NELon, double SWLat,
@@ -221,6 +223,62 @@ public class ActiviteDAO {
 
 	}
 
+	
+	public static boolean updateActivitePro(String titre,
+			String commentaire, Date datedebut, Date datefin, String adresse,
+			double latitude, double longitude, int idtypeactivite,
+			int idactivite){
+		
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			LOG.info( "Mise a jour activite");
+		
+			String requete = "UPDATE  activite set titre=?, libelle=?,  datedebut=?, datefin=?,  adresse=?,"+
+			" latitude=?,  longitude=?,  idtypeactivite=?"	+ " WHERE idactivite=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setString(1, titre);
+			preparedStatement.setString(2, commentaire);
+			preparedStatement.setTimestamp(3,
+					new java.sql.Timestamp(datedebut.getTime()));
+			preparedStatement.setTimestamp(4,
+					new java.sql.Timestamp(datefin.getTime()));
+			preparedStatement.setString(5, adresse);
+					
+			preparedStatement.setDouble(6, latitude);
+			preparedStatement.setDouble(7, longitude);
+			preparedStatement.setInt(8, idtypeactivite);
+					preparedStatement.setInt(9, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+
+	}
 	public void addActivitePro(int idpersonne, String titre,
 			String commentaire, Date datedebut, Date datefin, String adresse,
 			double latitude, double longitude, int idtypeactivite,

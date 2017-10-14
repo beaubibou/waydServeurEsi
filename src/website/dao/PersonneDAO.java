@@ -314,6 +314,7 @@ public class PersonneDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			return true;
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -334,7 +335,7 @@ public class PersonneDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
+		return false;
 
 	}
 

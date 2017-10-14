@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
@@ -17,7 +20,7 @@ import website.metier.ActiviteBean;
  */
 public class DetailActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -33,17 +36,18 @@ public class DetailActivite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		LOG.info("doGet");
+				
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null) {
 
 			String action = (String) request.getParameter("action");
-			System.out.println("ACTION=" + action);
-
+			
 			if (action == null) {// chargemetn par défaut
 				int idActivite = Integer.parseInt(request
 						.getParameter("idactivite"));
-				System.out.println("Detail activite id=" + idActivite);
 				ActiviteBean activite = new Coordination().getActivite(idActivite);
 				request.setAttribute("activite", activite);
 				request.getRequestDispatcher("admin/detailactivite.jsp").forward(

@@ -111,7 +111,7 @@
 
 							</div>
 						<%if (!activite.isOrganisteur(authentification.getProfil().getId())) { %>
-							<div class='col-sm-9'>
+							<div class='col-sm-8'>
 								<a class="btn btn-danger"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>"
 									role="button">Signaler</a>

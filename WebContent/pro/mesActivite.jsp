@@ -35,7 +35,7 @@
 
 
 </head>
-<body >
+<body>
 	<%@ include file="menu.jsp"%>
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
@@ -114,13 +114,15 @@
 							<tbody>
 
 								<%
-									ArrayList<ActiviteBean> listMesActivite = (ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																						    
-																																						     if (listMesActivite!=null)
-																																							for (ActiviteBean activite : listMesActivite) {
-																																								String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																																								String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																																								String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									ArrayList<ActiviteBean> listMesActivite =
+																					(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																		    
+																				    if (listMesActivite!=null)
+																				for (ActiviteBean activite : listMesActivite) {
+																					String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																				String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																				String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
@@ -129,25 +131,31 @@
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
 									<td><span class="badge">10</span></td>
-									
-							 <%
- 	if (!activite.isTerminee()){
- %>		
-		<td><span class="label label-pill label-success"> </span></td>
-									
-			<%}
- 	else{ %>		
-			
-				<td><span class="label label-pill label-danger"> </span></td>
-	<%}%>				
+
+									<%
+										if (!activite.isTerminee()){
+									%>
+									<td><span class="label label-pill label-success"> </span></td>
+
+									<%
+										}
+																 	else{
+									%>
+
+									<td><span class="label label-pill label-danger"> </span></td>
+									<%
+										}
+									%>
 									<td><%=activite.getHoraireLeA()%></td>
 
 									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
 											<span class="glyphicon glyphicon-search"></span>
-									</a> <!-- Affiche le bouton effacer si pas terminée -->
-									 <%
+									</a> <!-- Affiche le bouton effacer si pas terminée --> <%
  	if (!activite.isTerminee()){
- %>
+ %> <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+											class="glyphicon glyphicon-edit"></span>
+									</a>
+
 										<button id=<%out.println(lienEfface);%> name="supprimer"
 											type="button" class="btn btn-danger btn-sm">
 											<span class="glyphicon glyphicon-remove"></span>
@@ -191,18 +199,24 @@
 			BootstrapDialog.show({
 				title : 'Efface activité',
 				message : 'Confirmez',
-				buttons : [ {
+				buttons : [
+
+				{
+					label : 'Annuler',
+					action : function(dialog) {
+						dialog.close();
+					}
+				},
+
+				{
 					label : 'Oui',
 					action : function(dialog) {
 						effaceActivite(lien);
 						dialog.close();
 					}
-				}, {
-					label : 'Annuler',
-					action : function(dialog) {
-						dialog.close();
-					}
-				} ]
+				}
+
+				]
 			});
 
 		}

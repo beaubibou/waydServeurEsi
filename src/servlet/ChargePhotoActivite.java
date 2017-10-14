@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 
+import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
 import website.metier.Outils;
@@ -27,6 +29,7 @@ import website.metier.TypeActiviteBean;
  */
 public class ChargePhotoActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -44,6 +47,7 @@ public class ChargePhotoActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		LOG.info("doGet");
 		ArrayList<TypeActiviteBean> listPhotoTypeActivite=CacheValueDAO.getListTypeActiviteBeanFull();
 		
 		request.setAttribute("listPhotoTypeActivite", listPhotoTypeActivite);
@@ -62,9 +66,8 @@ public class ChargePhotoActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println(request.getParameter("idTypeActivite"));
-		System.out.println(request.getParameter("libelle"));
-
+		LOG.info("doPost");
+	
 		int id = Integer.parseInt(request
 				.getParameter("idTypeActivite"));
 		String libelle=request.getParameter("libelle");

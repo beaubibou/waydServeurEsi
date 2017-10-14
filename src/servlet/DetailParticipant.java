@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.dao.AmiDAO;
 import website.dao.PersonneDAO;
@@ -24,7 +27,7 @@ import website.metier.SignalementBean;
  */
 public class DetailParticipant extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -39,8 +42,7 @@ public class DetailParticipant extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null ) {
@@ -48,8 +50,7 @@ public class DetailParticipant extends HttpServlet {
 			if (request.getParameter("actif") != null) {// active le profil
 				int idParticipant = Integer.parseInt(request
 						.getParameter("idparticipant"));
-				System.out.println("Activite" + idParticipant);
-
+			
 				PersonneDAO.activerProfil(idParticipant, true);
 				afficheParticipant(request, response);
 				

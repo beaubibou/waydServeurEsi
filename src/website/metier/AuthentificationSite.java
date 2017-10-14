@@ -93,4 +93,9 @@ public boolean isWaydeur(){
 		return profil.getFiltreRecherche();
 	}
 
+	public int getId() {
+		// TODO Auto-generated method stub
+		return profil.getId();
+	}
+
 }
