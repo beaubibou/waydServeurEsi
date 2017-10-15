@@ -36,6 +36,7 @@
 <div id="services" class="text-center">
   
   <%@ include file="menu.jsp"%>
+  </br>
   <div class="container" style="background-color: #FFD54F;">
     <div class="col-md-10 col-md-offset-1 section-title">
       <h2>Besoin de visibilité ?</h2>

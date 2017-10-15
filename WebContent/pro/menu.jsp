@@ -14,8 +14,8 @@
       <ul class="nav navbar-nav">
         
          <li><a href="/wayd/ComptePro">Mon compte</a></li>
-         <li><a href="/wayd/MesActivites">Mes activites </a></li>
-         <li><a href="/wayd/AjouteActivitePro">Ajoute actvité</a></li>
+         <li><a href="/wayd/MesActivites">Gérer </a></li>
+         <li><a href="/wayd/AjouteActivitePro">Proposer</a></li>
          <li><a href="/wayd/MapPro">Carte</a></li>
          <li><a href="/wayd/Apropos">A propos</a></li>
            <li><a href="/wayd/Contact">Contact</a></li>
@@ -27,4 +27,4 @@
     </div>
   </div>
 </nav>
- <div class="container" style="margin-top:100px"> 
+ <div class="container" style="margin-top:30px"> 

@@ -34,34 +34,32 @@
 </head>
 <body  style="background-color: #FFD54F;"> 
 <!-- Contact Section -->
+</br>
 <div id="contact" class="text-center">
   
    <%@ include file="menu.jsp"%>
-  
+
   <div class="container" style="background-color: #FFD54F;">
     <div class="section-title center">
+      
       <h2>Contactez-nous</h2>
       <hr>
-      <p>Une question, un problème ? Vous pouvez nous contacter via le formulaire ci-dessous ou à l'adresse contact@wayd.fr</p>
+      <h4>Une question, un problème ? Vous pouvez nous contacter via le formulaire ci-dessous ou à l'adresse contact@wayd.fr</h4>
     </div>
+    </br>
     <div class="col-md-8 col-md-offset-2">
-      <form name="sentMessage" id="contactForm" novalidate>
+      <form action="/wayd/ContactMessage" method="post">
         <div class="row">
+         
           <div class="col-md-6">
             <div class="form-group">
-              <input type="text" id="name" class="form-control" placeholder="Nom" required="required">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <input type="email" id="email" class="form-control" placeholder="Adresse e-mail" required="required">
+              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse e-mail" required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+          <textarea name="message" name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
           <p class="help-block text-danger"></p>
         </div>
         <div id="success"></div>

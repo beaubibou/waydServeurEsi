@@ -567,4 +567,14 @@
     <servlet-name>Contact</servlet-name>
     <url-pattern>/Contact</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ContactMessage</display-name>
+    <servlet-name>ContactMessage</servlet-name>
+    <servlet-class>servlet.commun.ContactMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactMessage</servlet-name>
+    <url-pattern>/ContactMessage</url-pattern>
+  </servlet-mapping>
 </web-app>

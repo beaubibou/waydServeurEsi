@@ -40,7 +40,13 @@
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
-
+<div class="container" >
+  <div class="page-header"  >
+    <h1>Proposez vos activités </h1>      
+  </div>
+  <p>Proposez vos activités gratuites à la communautés. Une activité ne peut pas exéder 8 heures.</p>      
+  <p> Vous pouvez planifier jusqu à 5 activités en simultanés.</p>      
+</div>
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 		
@@ -54,8 +60,7 @@
 				<div class="panel-heading panel-heading-custom" >
 					<div class="panel-title" >Ajoute une activité</div>
 				</div>
-				
-   
+		
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
@@ -64,7 +69,6 @@
 								maxlength="50" class="form-control" id="titre" required placeholder="Nom "
 								name="titre">
 						</div>
-
 
 						<div class="form-group">
 							<div class="row">

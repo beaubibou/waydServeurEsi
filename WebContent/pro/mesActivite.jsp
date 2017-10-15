@@ -37,6 +37,8 @@
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
+	
+	
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
 		if (!authentification.isAuthentifiePro())
@@ -45,13 +47,25 @@
 		FiltreRecherche filtre=authentification.getFiltre();
 			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 	%>
+	
+		
+<div class="container">
+  <div class="page-header">
+    <h1>Gerez vos activités </h1>      
+  </div>
+  <p>Supprimez, modifiez vos activités...</p>      
+    
+</div>
+	
 	<div class="container">
-
-		<form action="MesActivites" method="post">
-
+		<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-12  col-sm-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="row">
+				<div class="panel-heading panel-heading-custom">
+					<div class="panel-title" style="text-align:center;">Liste de vos activités</div>
+				<form action="MesActivites" method="post">
+			
+				<div class="row">
 
 						<div class='col-sm-2'>
 							<div class="form-group">
@@ -70,33 +84,16 @@
 
 								</select>
 							</div>
-						</div>
-
-						<div class='col-sm-2'>
+							</div>
+							<div class='col-sm-2'>
 
 							<button type="submit" class="btn btn-info">Cherchez</button>
 						</div>
-
-
-					</div>
-
+							</div>
+							
+				</form>
 				</div>
-			</div>
-
-
-
-
-		</form>
-	</div>
-
-
-	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-12  col-sm-8">
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Liste de vos activités</div>
-				</div>
+				
 				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="table-responsive">

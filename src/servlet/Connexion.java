@@ -123,12 +123,12 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response, String pwd) {
 
 		HttpSession session = request.getSession();
-
+		LOG.info("Test token");
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
 					@Override
 					public void onSuccess(FirebaseToken decodedToken) {
-
+						LOG.info("Feed back onsuccess");
 						String uid = decodedToken.getUid();
 
 						// if (!decodedToken.isEmailVerified() && pwd!=null ){

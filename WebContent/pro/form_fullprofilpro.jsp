@@ -42,6 +42,13 @@
 	%>
 	<%@ include file="menu.jsp"%>
 
+<div class="container">
+  <div class="page-header">
+    <h1>Votre compte</h1>      
+  </div>
+  <p>Renseignez votre proifl.</p>      
+    
+</div>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
