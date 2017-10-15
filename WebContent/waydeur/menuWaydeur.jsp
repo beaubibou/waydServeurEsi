@@ -19,6 +19,7 @@
 				<li><a href="/wayd/MapWaydeur">Carte</a></li>
 				<li><a href="/wayd/CompteWaydeur">Mon compte</a></li>
 				<li><a href="/wayd/AproposWaydeur">A propos</a></li>
+				<li><a href="/wayd/ContactWaydeur">Contact</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -29,5 +30,5 @@
 		</div>
 	</div>
 </nav>
-<div class="container" style="margin-top:100px">
+<div class="container" style="margin-top:60px">
 

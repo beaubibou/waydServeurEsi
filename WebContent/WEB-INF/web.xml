@@ -587,4 +587,24 @@
     <servlet-name>AproposWaydeur</servlet-name>
     <url-pattern>/AproposWaydeur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ContactMessageWaydeur</display-name>
+    <servlet-name>ContactMessageWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.ContactMessageWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactMessageWaydeur</servlet-name>
+    <url-pattern>/ContactMessageWaydeur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ContactWaydeur</display-name>
+    <servlet-name>ContactWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.ContactWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactWaydeur</servlet-name>
+    <url-pattern>/ContactWaydeur</url-pattern>
+  </servlet-mapping>
 </web-app>

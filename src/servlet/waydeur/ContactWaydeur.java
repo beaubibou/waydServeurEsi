@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import website.metier.AuthentificationSite;
 
 /**
- * Servlet implementation class AproposWaydeur
+ * Servlet implementation class ContactPro
  */
-public class AproposWaydeur extends HttpServlet {
+public class ContactWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AproposWaydeur() {
+    public ContactWaydeur() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,12 +28,12 @@ public class AproposWaydeur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieWaydeur())
 			return;
-		response.sendRedirect("waydeur/apropos.jsp");
-		
+		response.sendRedirect("waydeur/contactWaydeur.jsp");
 	}
 
 	/**

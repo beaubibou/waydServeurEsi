@@ -67,18 +67,18 @@ tr.border_bottom td {
 	<%@ include file="menuWaydeur.jsp"%>
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifieWaydeur())
-			return;
-		
-		FiltreRecherche filtre=authentification.getFiltre();
+			if (!authentification.isAuthentifieWaydeur())
+		return;
 			
-			ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
-		.getListTypeActiviteToutes();
-		ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
-		.getListTypeAccess();
-		ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
-		ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
-		ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
+			FiltreRecherche filtre=authentification.getFiltre();
+		
+		ArrayList<TypeActiviteBean> listTypeActivite = CacheValueDAO
+			.getListTypeActiviteToutes();
+			ArrayList<TypeAccess> listTypeAccess = CacheValueDAO
+			.getListTypeAccess();
+			ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
+			ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
+			ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
 	%>
 
 
@@ -267,7 +267,7 @@ tr.border_bottom td {
 			class="mainbox col-md-12  col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div style="text-align:center;" "class="panel-title">Résultats</div>
+					<div style="text-align: center;" "class="panel-title">Résultats</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
@@ -277,25 +277,27 @@ tr.border_bottom td {
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-															for (ActiviteBean activite : listActivite) {
-															String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-															String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-															String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																					for (ActiviteBean activite : listActivite) {
+																					String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																					String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr onclick="document.location='<%=lienDetail%>'">
 									<td>
 										<div class="clearfix">
-											<img src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%> alt="..."
-												class="img-thumbnail pull-left gap-right img-responsive" width="150"
-												height="150">
+											<img
+												src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+												alt="..."
+												class="img-thumbnail pull-left gap-right img-responsive"
+												width="150" height="150">
 											<p class="titre"><%=activite.getTitre()%>
-											<img align="right" src="image.jpeg" alt="..."
-												class="img-thumbnail img-responsive" width="40"
-												height="40"></p>
-											<h4 style="text-overflow: ellipsis;width:50%;"><%=activite.getLibelle() %></h4>
-											<h5 class="dateactivite"><%=activite.getHoraire() %></h5>
-											
+												<img align="right" src="image.jpeg" alt="..."
+													class="img-thumbnail img-responsive" width="40" height="40">
+											</p>
+											<h4 style="text-overflow: ellipsis; width: 50%;"><%=activite.getLibelle()%></h4>
+											<h5 class="dateactivite"><%=activite.getHoraire()%></h5>
+
 										</div>
 									</td>
 
