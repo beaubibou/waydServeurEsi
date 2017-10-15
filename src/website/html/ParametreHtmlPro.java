@@ -2,19 +2,28 @@ package website.html;
 
 public class ParametreHtmlPro {
 
-	// v *******************COMPTE *********************
-	public static int TAILLE_PSEUDO_MAX = 12;
+	// v *******************COMPTE profil*********************
+	public static int TAILLE_PSEUDO_MAX = 20;
 	public	static int TAILLE_PSEUDO_MINI = 5;
-	public static int TAILLE_SITE_WEB = 100;
+	public static int TAILLE_SITE_WEB_MAX = 100;
 	public static int TAILLE_TELEPHONNE_MAX = 14;
 	public static int TAILLE_ADRESSE_MAX = 150;
-	public static int TAILLE_MAX_DESCRIPTION_PROFIL = 150;
+	public static int TAILLE_SIRET_MAX = 40;
+	public static int TAILLE_DESCRIPTION_PROFIL_MAX = 250;
 
 	// v *******************ACTIVITE *********************
 
 	public static int TAILLE_TITRE_ACTIVITE_MAX = 50;
 	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 250;
+	
+	// v *******************Contact *********************
 
+		public static int TAILLE_MESSAGE_CONTACT_MAX = 250;
+		public static int TAILLE_MAIL_CONTACT_MAX = 60;
+		
+	
+		
+		
 	public static String getHintTitreActivite() {
 
 		return "Titre de l'activité " + TAILLE_TITRE_ACTIVITE_MAX + 
@@ -27,4 +36,23 @@ public class ParametreHtmlPro {
 				+ " caractères maximum";
 	}
 
+	public static String getHintNomSociete() {
+
+		return "Nom de la société " + TAILLE_PSEUDO_MAX
+				+ " caractères maximum";
+	}
+	
+	public static String getHintDescriptionProfil() {
+
+		return "Décrivez votre activité " + TAILLE_DESCRIPTION_PROFIL_MAX
+				+ " caractères maximum";
+	}
+	public static String getHintDescriptionMessageContact() {
+
+		return "Laissez votre message " + TAILLE_MESSAGE_CONTACT_MAX
+				+ " caractères maximum";
+	}
+	
+	
+	
 }

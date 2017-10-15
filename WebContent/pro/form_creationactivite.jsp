@@ -67,8 +67,8 @@
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
-								maxlength="50" class="form-control" id="titre" required placeholder="<%=ParametreHtmlPro.getHintTitreActivite() %>"
-								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>  name="titre">
+								class="form-control" id="titre" required placeholder="<%=ParametreHtmlPro.getHintTitreActivite() %>"
+								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"   name="titre" required>
 						</div>
 
 						<div class="form-group">

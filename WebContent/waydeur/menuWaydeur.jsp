@@ -18,7 +18,7 @@
 				<li ><a href="/wayd/AjouteActiviteWaydeur">Ajoute actvité</a></li>
 				<li><a href="/wayd/MapWaydeur">Carte</a></li>
 				<li><a href="/wayd/CompteWaydeur">Mon compte</a></li>
-				<li><a href="A propos">A propos</a></li>
+				<li><a href="/wayd/AproposWaydeur">A propos</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

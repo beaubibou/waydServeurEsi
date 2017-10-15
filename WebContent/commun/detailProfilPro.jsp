@@ -122,18 +122,17 @@
 					<div class="form-group">
 
 						<div class="row vertical-align">
-							<div class='col-sm-2'>
+							<div class='col-sm-4'>
 
-								<img height="80" width="80"
+								<img height="300" width="300"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-									class="img-circle" class="text-center" />
+									class="img-thumbnail" class="text-center" />
 
 							</div>
 
 							<div class='col-sm-6' class="text-center">
 
 								<h3 style="padding-left: 15px"><%=profil.getPseudo()%></h3>
-
 								<h4 style="padding-left: 15px">
 									<%=Etoile.getNbrEtoiles(profil.getNote())%>
 								</h4>

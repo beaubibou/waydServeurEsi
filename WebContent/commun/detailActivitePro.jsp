@@ -130,11 +130,11 @@
 					<div class="form-group">
 
 						<div class="row vertical-align">
-							<div class='col-sm-3'>
+							<div class='col-sm-4'>
 
-								<img height="80" width="80"
+								<img height="300" width="300"
 									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
-									class="img-circle" class="text-center" />
+									class="img-thumbnail" class="text-center" />
 
 							</div>
 

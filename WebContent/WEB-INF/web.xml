@@ -577,4 +577,14 @@
     <servlet-name>ContactMessage</servlet-name>
     <url-pattern>/ContactMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AproposWaydeur</display-name>
+    <servlet-name>AproposWaydeur</servlet-name>
+    <servlet-class>servlet.waydeur.AproposWaydeur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AproposWaydeur</servlet-name>
+    <url-pattern>/AproposWaydeur</url-pattern>
+  </servlet-mapping>
 </web-app>

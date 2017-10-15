@@ -1,5 +1,6 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="website.html.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -60,10 +61,10 @@
 
 					<div class="form-group">
 						<div class="row">
-							<div class="col-sm-2">
-								<img height="80" width="80"
+							<div class="col-sm-4">
+								<img height="300" width="300"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-									class="img-circle" />
+									class="img-thumbnail" />
 							</div>
 
 							<div class="col-sm-8">
@@ -84,7 +85,7 @@
 								<div class="col-sm-8">
 									<div class="form-group">
 										<label for="nom">Nom*:</label> <input type="text"
-											class="form-control" id="nom" placeholder="Nom " name="nom"
+											class="form-control" id="nom" placeholder="<%=ParametreHtmlPro.getHintNomSociete() %>" maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>" name="nom"
 											required value="<%out.println(profil.getPseudo());%>">
 									</div>
 								</div>
@@ -105,6 +106,7 @@
 										<label for="siteweb">Site web:</label>
 									</div>
 									<input type="text" class="form-control" id="siteweb"
+									maxlength="<%=ParametreHtmlPro.TAILLE_SITE_WEB_MAX %>"
 										placeholder="http://monsite.fr" name="siteweb"
 										value=<%out.println(profil.getSiteWebStr());%>>
 								</div>
@@ -115,7 +117,8 @@
 										<label for="tel">Téléphone</label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="06-xx-xx-xx" name="telephone"
+										placeholder="xx-xx-xx-xx-xx" name="telephone"
+										maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
 										value=<%out.println(profil.getTelephoneStr());%>>
 								</div>
 
@@ -126,10 +129,11 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="siret">Siret</label>
+										<label for="siret">Numéro Siret</label>
 									</div>
 									<input type="text" class="form-control" id="siret"
-										placeholder="Numero Siret" name="siret"
+										 maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX %>"
+										placeholder="Numéro Siret" name="siret"
 										value=<%out.println(profil.getSiret());%>>
 								</div>
 
@@ -142,16 +146,20 @@
 								class="form-control" id="adresse"
 								placeholder="Renseigner l'adresse" name="adresse" required
 								onkeypress="initPosition()"
+								maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX %>"
 								value="<%out.println(profil.getAdresse());%>">
 						</div>
 
 						<div class="form-group">
 							<label for="description">Description:</label>
 							<textarea class="form-control" rows="5" id="description"
-								name="description"><%=profil.getCommentaireStr()%></textarea>
+								name="description"
+								placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX %>"
+								
+								><%=profil.getCommentaireStr()%></textarea>
 						</div>
 						
-						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
+						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur "<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>"</h5>
 						
 						<button type="submit" class="btn btn-info">Modifier</button>
 
@@ -261,7 +269,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / 200';
+				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -272,7 +280,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / 200';
+		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
 		$('#nbr').text(msg);
 	</script>
 </body>

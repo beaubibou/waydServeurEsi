@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.metier.DureeBean;
 import website.metier.Outils;
@@ -24,7 +27,8 @@ import website.metier.TypeActiviteBean;
  */
 public class AjouteActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(WBservices.class);
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -67,7 +71,7 @@ public class AjouteActivitePro extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.print("ajoute actuvute");
+		
 		
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
@@ -103,6 +107,7 @@ public class AjouteActivitePro extends HttpServlet {
 		if (profil != null) {
 			website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
 
+			LOG.info("**********ajoute actuvute"+titre);
 			activiteDAO.addActivitePro(profil.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
 					longitude, typeactivite, ProfilBean.PRO, 2);
 			

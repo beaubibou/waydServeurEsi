@@ -67,10 +67,10 @@
 				<div style="padding-top: 30px" class="panel-body">
 					<div class="form-group">
 						<div class="row">
-							<div class="col-sm-2">
-								<img height="80" width="80"
+							<div class="col-sm-4">
+								<img height="300" width="300"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-									class="img-circle" />
+									class="img-thumbnail" />
 							</div>
 
 							<div class="col-sm-8">

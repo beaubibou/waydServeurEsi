@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="website.html.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,17 +54,17 @@
          
           <div class="col-md-6">
             <div class="form-group">
-              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse e-mail" required="required">
+              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse mail" maxlength="<%=ParametreHtmlPro.TAILLE_MAIL_CONTACT_MAX %>"  required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <textarea name="message" name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+          <textarea name="message" name="message" id="message" class="form-control" rows="4" placeholder="<%=ParametreHtmlPro.getHintDescriptionMessageContact() %>" maxlength="<%=ParametreHtmlPro.TAILLE_MESSAGE_CONTACT_MAX %>" required></textarea>
           <p class="help-block text-danger"></p>
         </div>
         <div id="success"></div>
-        <button type="submit" class="btn btn-custom btn-lg">Envoyer le message</button>
+        <button type="submit" class="btn btn-info btn-lg">Envoyer le message</button>
       </form>
       <div class="social">
         <ul>
