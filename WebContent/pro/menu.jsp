@@ -18,7 +18,7 @@
          <li><a href="/wayd/MesActivites">Mes activites </a></li>
          <li><a href="/wayd/AjouteActivitePro">Ajoute actvité</a></li>
          <li><a href="/wayd/MapPro">Carte</a></li>
-         <li><a href="A propos">A propos</a></li>
+         <li><a href="Apropos">A propose</a></li>
       
       </ul>
       <ul class="nav navbar-nav navbar-right">

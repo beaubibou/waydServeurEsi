@@ -547,4 +547,14 @@
     <servlet-name>ModifierActivite</servlet-name>
     <url-pattern>/ModifierActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Apropos</display-name>
+    <servlet-name>Apropos</servlet-name>
+    <servlet-class>servlet.pro.Apropos</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Apropos</servlet-name>
+    <url-pattern>/Apropos</url-pattern>
+  </servlet-mapping>
 </web-app>
