@@ -55,9 +55,9 @@
 		function init_map() {
 			//	var var_location = new google.maps.LatLng(45.430817,12.331516);
 			var var_location = new google.maps.LatLng(
-	<%=profil.getLatitude()%>
+	<%=profil.getLatitudeFixe()%>
 		,
-	<%=profil.getLongitude()%>
+	<%=profil.getLongitudeFixe()%>
 		);
 
 			var var_mapoptions = {

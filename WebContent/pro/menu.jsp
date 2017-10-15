@@ -12,17 +12,16 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-      
+        
          <li><a href="/wayd/ComptePro">Mon compte</a></li>
          <li><a href="/wayd/MesActivites">Mes activites </a></li>
          <li><a href="/wayd/AjouteActivitePro">Ajoute actvité</a></li>
          <li><a href="/wayd/MapPro">Carte</a></li>
-         <li><a href="Apropos">A propose</a></li>
+         <li><a href="/wayd/Apropos">A propos</a></li>
+           <li><a href="/wayd/Contact">Contact</a></li>
       
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li><a href="/wayd/Deconnexion"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
       </ul>
     </div>

@@ -13,8 +13,11 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
+import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
 
 /**
@@ -38,32 +41,45 @@ public class DetailActiviteSite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		LOG.info("doGet");
-		
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 
 		if (!authentification.isAuthentifie())
 			return;
+
+		FiltreRecherche filtre = authentification.getFiltre();
 		
+		if (filtre == null) {
+			new AlertInfoJsp("Le filtre est null", AlertJsp.Alert,
+					"MesActivitesWaydeur").send(request, response);
+					return;
+		}
+
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
-		ActiviteBean activite =  new Coordination().getActivite(idActivite);
+	
+		ActiviteBean activite = new Coordination().getActivite(idActivite);
+		activite.setPositionRecherche(filtre.getLatitude(),
+				filtre.getLongitude());
 		request.setAttribute("activite", activite);
-			
-		
+
+		// recuepre les coordonnes du filtre pour le calcul de la distance
+
 		switch (activite.getTypeUser()) {
 		case ProfilBean.PRO:
-			
-						
-			request.getRequestDispatcher("/commun/detailActivitePro.jsp").forward(request, response);
-			
+
+			request.getRequestDispatcher("/commun/detailActivitePro.jsp")
+					.forward(request, response);
+
 			break;
 
 		case ProfilBean.WAYDEUR:
 
-			request.getRequestDispatcher("/commun/detailActiviteWaydeur.jsp").forward(request, response);
-			
+			request.getRequestDispatcher("/commun/detailActiviteWaydeur.jsp")
+					.forward(request, response);
+
 			break;
 
 		default:

@@ -101,102 +101,103 @@
 					.getPhotoTypeActivite(activite.getTypeactivite())));%>
 									class="img-circle" class="text-center" />
 							</div>
-							
-						<div class='col-sm-2'>
+
+							<div class='col-sm-2'>
 								<a class="btn btn-danger"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>"
 									role="button">Signaler</a>
 							</div>
 						</div>
 
-</div>
+					</div>
+
+					<div class="form-group">
+
+						<div class="row vertical-align">
+							<div class='col-sm-2'>
+
+								<img height="80" width="80"
+									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+									class="img-circle" class="text-center" />
+							</div>
+
+							<div class='col-sm-6' class="text-center">
+
+								<a
+									href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
+									<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
+								</a>
+
+								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
+
+								<h5 style="padding-left: 15px"><%=activite.calculDistance()%></h5>
+
+							</div>
+
+						</div>
+
 
 						<div class="form-group">
+							</br>
+							<h5>
+								Catégorie:<%=activite.getLibelleActivite()%></h5>
+							<h5><%=activite.getTempsRestant()%></h5>
+							<h5><%=activite.getBilanParticipation()%></h5>
 
-							<div class="row vertical-align">
-								<div class='col-sm-2'>
+						</div>
 
-									<img height="80" width="80"
-										src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
-										class="img-circle" class="text-center" />
-								</div>
-
-								<div class='col-sm-6' class="text-center">
-
-									<a
-										href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
-										<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
-									</a>
-
-									<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-
-									<h5 style="padding-left: 15px">distance</h5>
-
-								</div>
-
-							</div>
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea disabled class="form-control" rows="5" id="description"
+								name="description"><%=activite.getLibelle()%></textarea>
+						</div>
 
 
-							<div class="form-group">
-								</br>
-								<h5>Catégorie:<%=activite.getLibelleActivite()%></h5>
-								<h5><%=activite.getTempsRestant()%></h5>
-								<h5><%=activite.getBilanParticipation()%></h5>
+						<div class="form-group">
+							<div class="row">
+								<div class='col-sm-12'>
 
-							</div>
+									<div class="table-responsive">
+										<table class="table table-condensed">
+											<thead>
+												<tr>
+													<th>Participant</th>
+												</tr>
+											</thead>
+											<tbody>
+												<%
+													for (ParticipantBean participantBean : listParticipant) {
+												%>
+												<tr>
+													<td><%=participantBean.getPseudo()%></td>
+													<td>
+														<p>
+															Note: <input type="number" name="rating"
+																id="rating-readonly"
+																value="<%=participantBean.getNote()%>" class="rating"
+																data-clearable="remove" data-readonly />
+														</p>
+													</td>
+												</tr>
 
-							<div class="form-group">
-								<label for="description">Description:</label>
-								<textarea disabled class="form-control" rows="5"
-									id="description" name="description"><%=activite.getLibelle()%></textarea>
-							</div>
-
-
-							<div class="form-group">
-								<div class="row">
-									<div class='col-sm-12'>
-
-										<div class="table-responsive">
-											<table class="table table-condensed">
-												<thead>
-													<tr>
-														<th>Participant</th>
-													</tr>
-												</thead>
-												<tbody>
-													<%
-														for (ParticipantBean participantBean : listParticipant) {
-													%>
-													<tr>
-														<td><%=participantBean.getPseudo()%></td>
-														<td>
-															<p>
-																Note: <input type="number" name="rating"
-																	id="rating-readonly"
-																	value="<%=participantBean.getNote()%>" class="rating"
-																	data-clearable="remove" data-readonly />
-															</p>
-														</td>
-													</tr>
-
-													<%
-														}
-													%>
-												</tbody>
-											</table>
-
-										</div>
+												<%
+													}
+												%>
+											</tbody>
+										</table>
 
 									</div>
 
 								</div>
 
 							</div>
+
 						</div>
 					</div>
 				</div>
-
 			</div>
+
 		</div>
+	</div>
 </body>
 </html>

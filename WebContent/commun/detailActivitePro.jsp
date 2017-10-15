@@ -147,6 +147,7 @@
 
 								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
 								<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
+								<h5 style="padding-left: 15px">à <%=activite.calculDistance()%></h5>
 
 
 							</div>

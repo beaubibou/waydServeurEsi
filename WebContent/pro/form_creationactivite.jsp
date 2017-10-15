@@ -47,13 +47,15 @@
 		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
 		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
-	<div class="container">
+	<div class="container" >
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Ajoute une activité</div>
+				<div class="panel-heading panel-heading-custom" >
+					<div class="panel-title" >Ajoute une activité</div>
 				</div>
+				
+   
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
@@ -119,7 +121,7 @@
 
 
 
-						<button type="submit" class="btn btn-info">Enregistrer</button>
+						<button type="submit" class="btn btn-info">Proposer</button>
 
 						<div class="form-group">
 

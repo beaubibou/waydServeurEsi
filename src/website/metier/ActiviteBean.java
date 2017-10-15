@@ -66,8 +66,8 @@ public class ActiviteBean {
 	private int typeAccess;
 
 	private String libelleActivite;
-	
-	private double latRef,longRef; // Coordonnée du pont de recherche 
+
+	private double latRef, longRef; // Coordonnée du pont de recherche
 
 	public int getTypeUser() {
 		return typeUser;
@@ -257,7 +257,7 @@ public class ActiviteBean {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
-		System.out.println("**********adresse*"+adresse);
+		System.out.println("**********adresse*" + adresse);
 
 	}
 
@@ -274,7 +274,7 @@ public class ActiviteBean {
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
-			int typeUser, int typeAcces, String libelleActivite,String adresse) {
+			int typeUser, int typeAcces, String libelleActivite, String adresse) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -297,7 +297,7 @@ public class ActiviteBean {
 		this.typeAccess = typeAcces;
 		this.typeUser = typeUser;
 		this.libelleActivite = libelleActivite;
-		this.adresse=adresse;
+		this.adresse = adresse;
 
 		// TODO Auto-generated constructor stub
 
@@ -514,21 +514,28 @@ public class ActiviteBean {
 		return "Le " + datestrdebut + " </br> de " + heuredebutstr + " à "
 				+ heurefinstr;
 	}
-	
-	 public void setPointRef(double latRef,double longRef){
-		 
-		 this.latRef=latRef;
-		 this.longRef=longRef;
-		 
-	 }
-	
-	 
-	 public double calculDistance(){
-		 
-		return ServeurMethodes.getDistance(latitude, latRef,
-					longitude, longRef);
-		 
-	 }
+
+	public void setPositionRecherche(double latRef, double longRef) {
+
+		this.latRef = latRef;
+		this.longRef = longRef;
+
+	}
+
+	public String calculDistance() {
+
+		double distance = ServeurMethodes.getDistance(latitude, latRef,
+				longitude, longRef);
+		// return "mlooi";
+
+		if (distance < 1000)
+			return "" + distance + " métres";
+
+		else
+			return "" + (distance) / 1000 + " Km";
+
+	}
+
 	public String getHoraireLeAHorizontal() {
 
 		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");

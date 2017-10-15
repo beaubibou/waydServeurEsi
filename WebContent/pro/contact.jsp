@@ -32,36 +32,49 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: #FFD54F;">
-<div id="services" class="text-center">
+<body  style="background-color: #FFD54F;"> 
+<!-- Contact Section -->
+<div id="contact" class="text-center">
   
-  <%@ include file="menu.jsp"%>
+   <%@ include file="menu.jsp"%>
+  
   <div class="container" style="background-color: #FFD54F;">
-    <div class="col-md-10 col-md-offset-1 section-title">
-      <h2>Besoin de visibilité ?</h2>
+    <div class="section-title center">
+      <h2>Contactez-nous</h2>
       <hr>
-      <p>Wayd vous offre un moyen gratuit, simple et efficace pour valoriser votre activité.</p>
+      <p>Une question, un problème ? Vous pouvez nous contacter via le formulaire ci-dessous ou à l'adresse contact@wayd.fr</p>
     </div>
-    <div class="row">
-      <div class="col-xs-6 col-md-3"> <i class="fa fa-home"></i>
-        <h4>Gratuité</h4>
-        <p>Pour valoriser votre activité, vous organisez des activités gratuites ? Wayd vous permet, gratuitement, de communiquer dessus.</p>
-      </div>
-      <div class="col-xs-6 col-md-3"> <i class="fa fa-umbrella"></i>
-        <h4>Simplicité</h4>
-        <p>L'interface pro de Wayd vous permet de publier simplement eten  moins de 2 minutes vos activités afin d'offrir du contenu aux membres de Wayd.</p>
-      </div>
-      <div class="col-xs-6 col-md-3"> <i class="fa fa-gears"></i>
-        <h4>Efficacité</h4>
-        <p>Un concept efficace qui permet d'offrir aux Waydeurs à proximité, et qui cherche quelque-chose à faire, une vision de ce que proposez. </p>
-      </div>
-      <div class="col-xs-6 col-md-3"> <i class="fa fa-language"></i>
-        <h4>Evolutivité</h4>
-        <p>Une plateforme qui évoluera en fonction des besoins des Waydeurs et de vos besoins de communications.</p>
+    <div class="col-md-8 col-md-offset-2">
+      <form name="sentMessage" id="contactForm" novalidate>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" id="name" class="form-control" placeholder="Nom" required="required">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="email" id="email" class="form-control" placeholder="Adresse e-mail" required="required">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+          <p class="help-block text-danger"></p>
+        </div>
+        <div id="success"></div>
+        <button type="submit" class="btn btn-custom btn-lg">Envoyer le message</button>
+      </form>
+      <div class="social">
+        <ul>
+          <li><a href="https://www.facebook.com/WaydCommunity/"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="https://twitter.com/WaydCommunity"><i class="fa fa-twitter"></i></a></li>
+                 
+        </ul>
       </div>
     </div>
   </div>
-</div>
-
 </body>
 </html>

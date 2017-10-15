@@ -236,6 +236,8 @@ public class ProfilBean {
 		this.afficheAge=afficheage;
 		this.siret=siret;
 		filtreRecherche=new FiltreRecherche();
+		filtreRecherche.setLatitude(latitudeFixe);
+		filtreRecherche.setLongitude(longitudeFixe);
 	}
 
 	public String getSiret() {

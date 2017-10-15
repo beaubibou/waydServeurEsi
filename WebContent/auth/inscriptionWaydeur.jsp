@@ -51,8 +51,9 @@
 					<form action="../Form_PremierProfil"
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
-							<label for="nom">Nom*:</label> <input type="text"
-								class="form-control"  name="nom"
+							<label for="nom">Pseudo*:</label> <input type="text"
+								class="form-control"  name="nom" placeholder="Pseudo max 12 caractéres" maxlength="12"
+								
 								required>
 						</div>
 
@@ -66,13 +67,11 @@
 						
 							<input type="hidden" class="form-control" 
 							name="typeuser" required value="3">
-						
-						
-
+			
 						<div class="form-group">
 							<label for="commentaire">Renseignements:</label>
 							<textarea class="form-control" rows="5" id="commentaire"
-								name="commentaire"></textarea>
+								name="commentaire" placeholder="Décris toi en quelques mots"></textarea>
 						</div>
 
 						</br>

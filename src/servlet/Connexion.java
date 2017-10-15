@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.dao.PersonneDAO;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 import com.google.firebase.FirebaseApp;
@@ -96,16 +97,31 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
-
 		String pwd = (String) request.getParameter("pwd");
-
 		testToken(request.getParameter("token"), request, response, pwd);
+
+		try {
+			int temps = 0;
+			while (temps < 500) {
+				Thread.sleep(30);
+				temps++;
+				if (success) {
+
+					temps = 1001;
+				}
+
+			}
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
 	public void testToken(String idtoken, HttpServletRequest request,
 			HttpServletResponse response, String pwd) {
- 
+
 		HttpSession session = request.getSession();
 
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
@@ -127,12 +143,12 @@ public class Connexion extends HttpServlet {
 						// }
 
 						ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
-						
+
 						if (profil == null) {
 							Connection connexion = null;
 
 							try {
-								LOG.info("Creation du compte"+ profil);
+								LOG.info("Creation du compte" + profil);
 								connexion = CxoPool.getConnection();
 								connexion.setAutoCommit(false);
 								wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
@@ -142,11 +158,11 @@ public class Connexion extends HttpServlet {
 								connexion.commit();
 
 								profil = PersonneDAO.getFullProfilByUid(uid);
-								LOG.info("User crée"+ profil);
-								
+								LOG.info("User crée" + profil);
+
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
-								success=true;
+								success = true;
 								return;
 							} catch (SQLException | NamingException
 									| IOException e) {
@@ -161,10 +177,12 @@ public class Connexion extends HttpServlet {
 							} // ...
 							finally {
 								CxoPool.closeConnection(connexion);
+
 							}
 
 						}
 
+						LOG.info("profil not null");
 						if (profil != null) {
 
 							session.setAttribute("profil", profil);
@@ -172,7 +190,7 @@ public class Connexion extends HttpServlet {
 							if (profil.isPremiereconnexion()) {
 								try {
 									response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
-									success=true;
+									success = true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -185,7 +203,7 @@ public class Connexion extends HttpServlet {
 
 								try {
 									response.sendRedirect("Acceuil");
-									success=true;
+									success = true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -197,9 +215,9 @@ public class Connexion extends HttpServlet {
 							case ProfilBean.PRO:
 								session.setAttribute("profil", profil);
 								try {
-								
+
 									response.sendRedirect("AcceuilPro");
-									success=true;
+									success = true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
@@ -209,17 +227,16 @@ public class Connexion extends HttpServlet {
 								break;
 
 							case ProfilBean.WAYDEUR:
-								
+
 								session.setAttribute("profil", profil);
 								try {
 									response.sendRedirect("AcceuilWaydeur");
-									success=true;
+									success = true;
 									return;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-
 
 								break;
 
@@ -245,26 +262,6 @@ public class Connexion extends HttpServlet {
 					}
 
 				});
-
-		try {
-			int temps=0;
-			while (temps<1000){
-				Thread.sleep(30);	
-				temps++;
-				if (success){
-					
-					temps=1001;
-				}
-			
-				
-			}
-			
-			
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 

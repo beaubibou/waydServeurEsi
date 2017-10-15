@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.metier.AuthentificationSite;
+import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
 
 /**
@@ -59,8 +61,14 @@ public class ComptePro extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+
+
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
+		
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
@@ -73,8 +81,11 @@ public class ComptePro extends HttpServlet {
 		System.out.println("ComptePro-method post" + " " + adresse + "typeuse "
 				+  " lat:" + latitude + "  " + longitude+ siteWeb+" "+telephone);
 
-		if (profil != null) {
-			website.dao.PersonneDAO personneDAO = new website.dao.PersonneDAO();
+		
+		ProfilBean profil=authentification.getProfil();
+		FiltreRecherche filtreRecherche=authentification.getFiltre();
+		
+		website.dao.PersonneDAO personneDAO = new website.dao.PersonneDAO();
 
 			personneDAO.updateProfilProFull(nom, adresse, latitude, longitude,
 					 commentaire, profil.getId(),siteWeb, telephone);
@@ -89,10 +100,13 @@ public class ComptePro extends HttpServlet {
 			profil.setLatitudeFixe(latitude);
 			profil.setLongitudeFixe(longitude);
 			profil.setPremiereconnexion(false);
+			filtreRecherche.setLatitude(latitude);
+			filtreRecherche.setLongitude(longitude);
+
 			response.sendRedirect("AcceuilPro");
 			
-
-		}
+	
+		
 
 	}
 

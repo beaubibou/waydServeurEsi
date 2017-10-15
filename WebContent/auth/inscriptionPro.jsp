@@ -51,20 +51,21 @@
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Nom*:</label> <input type="text"
-								class="form-control" id="nom" placeholder="Nom " name="nom"
+								 maxlength="15" class="form-control" id="nom" placeholder="Nom " name="nom"
 								required>
 						</div>
 
 						<div class="form-group">
 							<label for="nom">Numéro SIRET*:</label> <input type="text"
 								class="form-control" id="nom" placeholder="numero siret "
-								name="siret" required>
+								name="siret" maxlength="20" required>
 						</div>
 
 						<div class="form-group">
 							<label for="nom">Téléphone:</label> <input type="text"
 								class="form-control" id="nom" placeholder="téléphone"
-								name="telephone" required>
+								name="telephone" required
+								>
 						</div>
 
 						<input type="hidden" class="form-control" id="typeuser"
@@ -90,12 +91,12 @@
 
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="latitude"
+							<input type="hidden" class="form-control" id="latitude"
 								name="latitude" value=0>
 						</div>
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="longitude"
+							<input type="hidden" class="form-control" id="longitude"
 								name="longitude" value=0>
 						</div>
 

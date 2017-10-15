@@ -36,9 +36,9 @@
 <body>
 
 	<%
-	ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-	if (profil==null)
-	 response.sendRedirect(	"commun/acceuil.html");
+		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		if (profil == null)
+			response.sendRedirect("commun/acceuil.html");
 	%>
 
 	<div class="container">
@@ -52,19 +52,44 @@
 
 				<div style="padding-top: 30px" class="panel-body">
 
-					<h2>Vous êtes?</h2>
-					<a href="inscriptionPro.jsp" type="button" class="btn btn-success"
-						role="button">Professionel</a> <br> <br> 
-						
-						<a
-						href="inscriptionWaydeur.jsp" type="button"
-						class="btn btn-success" role="button">Particulier</a>
+				<div class="form-group">
+					<h2>Vous êtkkes?</h2>
+					</br>
+					</div>
 
 
 
+					<div class="form-group">
 
+						<div class="row">
+
+							<div class='col-sm-10 col-md-offset-1 '>
+								<a style="width:100%" href="inscriptionPro.jsp" type="button" class="btn btn-info"
+									role="button">Professionel</a> <br>
+
+							</div>
+
+						</div>
+					</div>
+
+					<div class="form-group">
+
+						<div class="row">
+
+							<div class='col-sm-10 col-md-offset-1 '>
+
+								<a style="width:100%" href="inscriptionWaydeur.jsp" type="button"
+									class="btn btn-info" role="button">Particulier</a>
+
+							</div>
+
+
+
+						</div>
+					</div>
 				</div>
 			</div>
+
 		</div>
 </body>
 </html>
