@@ -1,3 +1,4 @@
+<%@page import="website.html.ParametreHtmlPro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
@@ -44,8 +45,8 @@
   <div class="page-header"  >
     <h1>Proposez vos activités </h1>      
   </div>
-  <p>Proposez vos activités gratuites à la communautés. Une activité ne peut pas exéder 8 heures.</p>      
-  <p> Vous pouvez planifier jusqu à 5 activités en simultanés.</p>      
+  <p>Proposez vos activités gratuites à la communauté. Une activité ne peut pas exéder 8 heures.</p>      
+  <p> Vous pouvez planifier jusqu à 5 activités  simultanément.</p>      
 </div>
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
@@ -66,8 +67,8 @@
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
-								maxlength="50" class="form-control" id="titre" required placeholder="Nom "
-								name="titre">
+								maxlength="50" class="form-control" id="titre" required placeholder="<%=ParametreHtmlPro.getHintTitreActivite() %>"
+								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>  name="titre">
 						</div>
 
 						<div class="form-group">
@@ -118,10 +119,10 @@
 
 						<div class="form-group">
 							<label for="description">Description:</label>
-							<textarea maxlength="200" class="form-control" rows="5" id="description"
+							<textarea placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>" class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
-						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
+						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %></h5>
 
 
 
@@ -307,7 +308,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / 200';
+				var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -318,7 +319,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / 200';
+		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
 		$('#nbr').text(msg);
 	</script>
 </body>
