@@ -116,7 +116,7 @@
 																																																		    
 																				    if (listMesActivite!=null)
 																				for (ActiviteBean activite : listMesActivite) {
-																					String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+																					String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
 																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
 																				String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 																				String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";

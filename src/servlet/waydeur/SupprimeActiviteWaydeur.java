@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.coordination.Coordination;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
@@ -38,24 +40,24 @@ public class SupprimeActiviteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 	LOG.info("doGet-SupprimeActiviteWaydeur");
 		
-		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
-		if (!authentification.isAuthentifieWaydeur())
-			return;
-		
-		ProfilBean profil=authentification.getProfil();
-		
-	
-		int idActivite=Integer.parseInt(request.getParameter("idactivite"));
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+	if (!authentification.isAuthentifieWaydeur())
+		return;
 
-		ActiviteBean activite= new Coordination().getActivite(idActivite);
-		System.out.println("activite à efface "+idActivite);
+	int idActivite = Integer.parseInt(request.getParameter("idactivite"));
+
+	ActiviteBean activite = new Coordination().getActivite(idActivite);
+	
+	
+	
+
+	if (activite.getIdorganisateur() == authentification.getId()) {
+		new Coordination().effaceActivite(idActivite);
+		new AlertInfoJsp("Activite supprimmée", AlertJsp.Sucess,"MesActivitesWaydeur").send(request, response);
+		return;
 		
-		if (activite.getIdorganisateur()==profil.getId()){
-			 new Coordination().effaceActivite(idActivite);
-			System.out.println("activite  effacée "+idActivite);
-			response.sendRedirect("MesActivitesWaydeur");
-		}
+	}
 		
 	}
 

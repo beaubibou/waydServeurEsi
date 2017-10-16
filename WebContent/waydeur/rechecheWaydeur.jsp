@@ -79,16 +79,71 @@ tr.border_bottom td {
 			ArrayList<TypeUser> listTypeUser = CacheValueDAO.getListTypeUser();
 			ArrayList<QuandBean> listQuand = CacheValueDAO.getListQuand();
 			ArrayList<RayonBean> listRayon = CacheValueDAO.getListRayon();
+			ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
 	%>
 
 
+
+
+	<script>
+		var placeSearch, autocomplete;
+		var componentForm = {
+			street_number : 'short_name',
+			route : 'long_name',
+			locality : 'long_name',
+			administrative_area_level_1 : 'short_name',
+			country : 'long_name',
+			postal_code : 'short_name'
+		};
+		function initAutocomplete() {
+			// Create the autocomplete object, restricting the search to geographical
+			// location types.
+			autocomplete = new google.maps.places.Autocomplete(
+			/** @type {!HTMLInputElement} */
+			(document.getElementById('adresse')), {
+				types : [ 'geocode' ]
+			});
+			// When the user selects an address from the dropdown, populate the address
+			// fields in the form.
+			autocomplete.addListener('place_changed', fillInAddress);
+		}
+		function fillInAddress() {
+			// Get the place details from the autocomplete object.
+			var place = autocomplete.getPlace();
+			document.getElementById("latitude").value = autocomplete.getPlace().geometry.location
+					.lat();
+			document.getElementById("longitude").value = autocomplete
+					.getPlace().geometry.location.lng();
+		}
+		// Bias the autocomplete object to the user's geographical location,
+		// as supplied by the browser's 'navigator.geolocation' object.
+		function geolocate() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var geolocation = {
+						lat : position.coords.latitude,
+						lng : position.coords.longitude
+					};
+					var circle = new google.maps.Circle({
+						center : geolocation,
+						radius : position.coords.accuracy
+					});
+					autocomplete.setBounds(circle.getBounds());
+				});
+			}
+		}
+	</script>
+
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
+		async defer></script>
+
 	<div class="container">
-
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
-
-
+		<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-12  col-sm-8">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-heading-custom">
+					<div style="text-align: center;" "class="panel-title">Résultats</div>
 				<form action="RechercheWaydeur" method="post">
 
 					<div class="form-group">
@@ -191,7 +246,7 @@ tr.border_bottom td {
 						</div>
 					</div>
 
-					<button type="submit" class="btn btn-default">Rechercher</button>
+					<button type="submit" class="btn btn-info">Rechercher</button>
 
 					<div class="form-group">
 
@@ -205,82 +260,25 @@ tr.border_bottom td {
 
 
 				</form>
-			</div>
-		</div>
-	</div>
-
-	<script>
-		var placeSearch, autocomplete;
-		var componentForm = {
-			street_number : 'short_name',
-			route : 'long_name',
-			locality : 'long_name',
-			administrative_area_level_1 : 'short_name',
-			country : 'long_name',
-			postal_code : 'short_name'
-		};
-		function initAutocomplete() {
-			// Create the autocomplete object, restricting the search to geographical
-			// location types.
-			autocomplete = new google.maps.places.Autocomplete(
-			/** @type {!HTMLInputElement} */
-			(document.getElementById('adresse')), {
-				types : [ 'geocode' ]
-			});
-			// When the user selects an address from the dropdown, populate the address
-			// fields in the form.
-			autocomplete.addListener('place_changed', fillInAddress);
-		}
-		function fillInAddress() {
-			// Get the place details from the autocomplete object.
-			var place = autocomplete.getPlace();
-			document.getElementById("latitude").value = autocomplete.getPlace().geometry.location
-					.lat();
-			document.getElementById("longitude").value = autocomplete
-					.getPlace().geometry.location.lng();
-		}
-		// Bias the autocomplete object to the user's geographical location,
-		// as supplied by the browser's 'navigator.geolocation' object.
-		function geolocate() {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var geolocation = {
-						lat : position.coords.latitude,
-						lng : position.coords.longitude
-					};
-					var circle = new google.maps.Circle({
-						center : geolocation,
-						radius : position.coords.accuracy
-					});
-					autocomplete.setBounds(circle.getBounds());
-				});
-			}
-		}
-	</script>
-
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
-		async defer></script>
-
-	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-12  col-sm-8">
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom">
-					<div style="text-align: center;" "class="panel-title">Résultats</div>
+				
+				
+				
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="table-responsive">
 						<table class="table table-condensed table table-striped">
+							
+							<thead><strong>Résultas(<%=listActivite.size()%>)</strong></thead>
+							
 							<tbody>
 
 								<%
-									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-																					for (ActiviteBean activite : listActivite) {
-																					String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																					String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+						
+								for (ActiviteBean activite : listActivite) {
+							String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr onclick="document.location='<%=lienDetail%>'">

@@ -76,6 +76,9 @@ public class FiltreRecherche {
 	}
 
 	public String getAdresse() {
+	
+		if (latitude==0||longitude==0)
+		return "";
 		return adresse;
 	}
 
