@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
+import wayde.bean.MessageServeur;
 import website.metier.SignalementBean;
 import website.metier.SignalementCount;
 
@@ -35,16 +36,18 @@ public class SignalementDAO {
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				int idpersonnesignalee  = rs.getInt("idpersonnesignalee");
-				int idinformateur  = rs.getInt("idinformateur");
+				int idpersonnesignalee = rs.getInt("idpersonnesignalee");
+				int idinformateur = rs.getInt("idinformateur");
 				String pseudoSignale = rs.getString("pseudoSignale");
 				String pseudoInfo = rs.getString("pseudoInfo");
-				Date d_creation=rs.getTimestamp("d_creation");
-				int idmotif  = rs.getInt("idmotif");
+				Date d_creation = rs.getTimestamp("d_creation");
+				int idmotif = rs.getInt("idmotif");
 				String motif = rs.getString("motif");
 				String libelle = rs.getString("libelle");
-						
-				retour.add(new SignalementBean(idpersonnesignalee, idinformateur, pseudoSignale, pseudoInfo, d_creation, idmotif, motif,libelle));
+
+				retour.add(new SignalementBean(idpersonnesignalee,
+						idinformateur, pseudoSignale, pseudoInfo, d_creation,
+						idmotif, motif, libelle));
 			}
 
 			return retour;
@@ -69,19 +72,18 @@ public class SignalementDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = 
-						"SELECT count(signaler_profil.idsignalement) as nbr,signaler_profil.idsignalement, personne.prenom as pseudo"
+			String requete = "SELECT count(signaler_profil.idsignalement) as nbr,signaler_profil.idsignalement, personne.prenom as pseudo"
 					+ " FROM public.signaler_profil,personne  where  personne.idpersonne=signaler_profil.idsignalement"
 					+ " group by idsignalement,personne.prenom";
 			preparedStatement = connexion.prepareStatement(requete);
-			
+
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				int idpersonnesignalee  = rs.getInt("idsignalement");
-				int nbr  = rs.getInt("nbr");
-				String pseudo=rs.getString("pseudo");
-				retour.add(new SignalementCount(idpersonnesignalee, nbr,pseudo));
+				int idpersonnesignalee = rs.getInt("idsignalement");
+				int nbr = rs.getInt("nbr");
+				String pseudo = rs.getString("pseudo");
+				retour.add(new SignalementCount(idpersonnesignalee, nbr, pseudo));
 			}
 
 			return retour;
@@ -96,45 +98,51 @@ public class SignalementDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
-	
-	public static boolean addSignalement(int idpersonne, int idsignalee,
-			int idmotif, String motif){
-		
+
+	public static MessageServeur addSignalement(int idpersonne, int idsignalee,
+			int idmotif, String motif) {
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		try {
-		connexion = CxoPool.getConnection();
-		String requete = "INSERT INTO signaler_profil(idpersonne,idsignalement,idmotif,motif,d_creation)  VALUES (?, ?, ?,?,?);";
-		connexion.setAutoCommit(false);
-		preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setInt(2, idsignalee);
-		if (motif.equals(""))motif=null;
-		preparedStatement.setInt(3, idmotif);
-		preparedStatement.setString(4, motif);
-		preparedStatement.setTimestamp(5,new java.sql.Timestamp(new Date().getTime()));
-		preparedStatement.execute();
-		connexion.commit();
-		
-		return true;
-		}catch (NamingException | SQLException e) {
+			connexion = CxoPool.getConnection();
+
+			if (new wayde.dao.SignalementDAO(connexion).isSignalerProfil(
+					idpersonne, idsignalee))
+				return new MessageServeur(false, "Profil déja signalé");
+
+			String requete = "INSERT INTO signaler_profil(idpersonne,idsignalement,idmotif,motif,d_creation)  VALUES (?, ?, ?,?,?);";
+			connexion.setAutoCommit(false);
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idsignalee);
+			// if (motif.equals(""))motif=null;
+			preparedStatement.setInt(3, idmotif);
+			preparedStatement.setString(4, motif);
+			preparedStatement.setTimestamp(5,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.execute();
+			connexion.commit();
+
+			return new MessageServeur(true, "Activité signalée");
+
+		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally{
-			
+			return new MessageServeur(false, e.getMessage());
+
+		} finally {
+
 			try {
 				connexion.close();
-				preparedStatement.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return false;
-		
-		
+
 	}
 
 }

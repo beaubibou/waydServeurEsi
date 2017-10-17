@@ -47,52 +47,68 @@ public class SignalerProfil extends HttpServlet {
 			return;
 
 		int idProfil = Integer.parseInt(request.getParameter("idProfil"));
-		
-		ProfilBean profilAsignaler =PersonneDAO.getFullProfil(idProfil);
 
+		ProfilBean profilAsignaler = PersonneDAO.getFullProfil(idProfil);
+
+		request.setAttribute("profil", profilAsignaler);
 		if (request.getParameter("idmotif") == null) {
 			// Si pas de motif issu d'un detail activité redirection vers le
 			// choix du motif
-		
-		request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
-					request, response);
 
-		} else {
+			request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
+					request, response);
+System.out.println("id motif== null");
+		}
+
+		if (request.getParameter("idmotif") != null) {
 			// Mise à jour du signalement
 			int idMotif = Integer.parseInt(request.getParameter("idmotif"));
-		
+
 			String complement = request.getParameter("complement");
-			boolean retour=SignalementDAO.addSignalement(authentification.getProfil().getId(),
-					idProfil, idMotif, complement);
+			System.out.println("id motif!= null");
+			MessageServeur messageServeur = SignalementDAO.addSignalement(
+					authentification.getProfil().getId(), idProfil, idMotif,
+					complement);
 
-			if (retour) {
-
+			if (messageServeur.isReponse()) {
+				System.out.println("message servuer ok");
 				switch (authentification.getProfil().getTypeuser()) {
 
 				case ProfilBean.WAYDEUR:
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess, "MesActivitesWaydeur").send(request, response);
-					response.sendRedirect("MesActivitesWaydeur");
-					break;
-				case ProfilBean.PRO:
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess, "MesActivites").send(request, response);
+					System.out.println("Profil waydeur");
 					
-				
-					break;
+					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+							"MesActivitesWaydeur").send(request, response);
+					return;
 
+				case ProfilBean.PRO:
+					System.out.println("Profil pro");
+					
+					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+							"MesActivites").send(request, response);
+					return;
 				}
 
-				return;
-			} else
-			{
+			}
+			if (!messageServeur.isReponse()) {
+				{
+					System.out.println("message servuer nok");
 
-				if (authentification.isAuthentifiePro())
-				new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert, "MesActivites").send(request, response);
-				
-				if (authentification.isAuthentifieWaydeur())
-					new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert, "MesActivitesWaydeur").send(request, response);
-				
-				
-				return;
+					if (authentification.isPro()) {
+						new AlertInfoJsp(messageServeur.getMessage(),
+								AlertJsp.Alert, "MesActivites").send(request,response);
+						System.out.println("not reponse pro");
+						return;
+					}
+					
+					
+					if (authentification.isWaydeur())
+						new AlertInfoJsp(messageServeur.getMessage(),
+								AlertJsp.Alert, "MesActivitesWaydeur").send(
+								request, response);
+					
+
+				}
 			}
 		}
 

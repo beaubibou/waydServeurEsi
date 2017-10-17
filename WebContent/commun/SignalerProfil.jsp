@@ -113,7 +113,7 @@
 							<div class='col-sm-10 col-md-offset-1 '>
 
 								<a style="width:100%"  class="btn btn-info"
-									href="SignalerActivite?idActivite=<%=profil.getId()%>&idmotif=1"
+									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=1"
 									role="button">Tient des propose insultants</a>
 
 							</div>
@@ -128,7 +128,7 @@
 							<div class='col-sm-10 col-md-offset-1 '>
 							
 								<a style="width:100%" class="btn btn-info"
-									href="SignalerActivite?idProfil=<%=profil.getId()%>&idmotif=2"
+									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=2"
 									role="button">C'est une entreprise</a>
 
 							</div>
@@ -145,7 +145,7 @@
 							<div class='col-sm-10 col-md-offset-1 '>
 
 								<a style="width:100%"  class="btn btn-info"
-									href="SignalerActivite?idProfil=<%=profil.getId()%>&idmotif=3"
+									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=3"
 									role="button">Autre</a>
 
 							</div>

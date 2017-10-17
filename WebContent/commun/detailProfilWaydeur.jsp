@@ -87,7 +87,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Profil</div>
+					<div class="panel-title">Profil </div>
 
 				</div>
 
@@ -95,7 +95,7 @@
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-info" href="SignalerProfil?idProfil" role="button">Signaler</a>
+							<a class="btn btn-info" href="SignalerProfil?idProfil=<%=profil.getId()%>" role="button">Signaler</a>
 
 						</div>
 					</div>
