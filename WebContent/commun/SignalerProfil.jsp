@@ -97,7 +97,7 @@
 							<div class='col-sm-10 col-md-offset-1 '>
 
 								<a style="width:100%" class="btn btn-info"
-									href="SignalerActivite?idProfil=<%=profil.getId()%>&idmotif=0"
+									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=0"
 									role="button">Il me harcèle</a>
 
 							</div>

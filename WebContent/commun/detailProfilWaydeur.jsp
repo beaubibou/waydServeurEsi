@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.html.Etoile"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,7 +27,6 @@
 <!-- <script src="src/bootstrap-rating-input.js"></script> -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
-
 
 <script src="js/moment.js"></script>
 <link
@@ -95,7 +95,7 @@
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-info" href="SignalerActivite" role="button">Signaler</a>
+							<a class="btn btn-info" href="SignalerProfil?id" role="button">Signaler</a>
 
 						</div>
 					</div>
@@ -104,11 +104,11 @@
 					<div class="form-group">
 
 						<div class="row vertical-align">
-							<div class='col-sm-4'>
+							<div class='col-sm-2'>
 
-								<img height="300" width="300"
+								<img height="80" width="80"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-									class="img-thumbnail" class="text-center" />
+									class="img-circle" class="text-center" />
 
 							</div>
 
@@ -132,9 +132,7 @@
 									}
 								%>
 								<h5 style="padding-left: 15px">
-									<input type="number" name="rating" id="rating-readonly"
-										value="<%=(int) profil.getNote()%>" class="rating"
-										data-clearable="remove" data-readonly />
+										<%=Etoile.getNbrEtoiles(profil.getNote())%>
 								</h5>
 							</div>
 
@@ -160,18 +158,17 @@
 										</thead>
 										<tbody>
 											<%
-												for (AvisBean avis : listAvis) {
+												for (AvisBean avisBean : listAvis) {
 											%>
 
-											<tr onclick="document.location='lien.html'">
-												<td><h4>
-														Note:
-														<%=(int) avis.getNote()%>/5
-													</h4>
+												<tr>
+												<td><%=Etoile.getNbrEtoiles(avisBean.getNote())%> 
+												<strong><%=avisBean.getPrenomnotateur()%></strong>
+												</td>
+												<td><%=avisBean.getLibelle()%></td>
 
-													<p><%=avis.getLibelle()%></p></td>
-									<script>
-										lastIndex=<%=avis.getIdnoter()%>;
+											</tr>
+
 										</script>				
 											</tr>
 
@@ -198,31 +195,60 @@
 
 	</div>
 	<script>
-		$(document).on("click", "#plusavis", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-			$.get("PlusAvis?lastIndex="+lastIndex, function(responseJson) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+	$(document).on("click", "#plusavis", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+		$.get("PlusAvis?lastIndex=" + lastIndex, function(responseJson) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 
-				//       $select.find("tr").remove();    
-				//  	alert("klk");                      // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
-			alert(lastIndex);
-			
-				ajouteLigneTable(responseJson);
-			});
+			//       $select.find("tr").remove();    
+			//  	alert("klk");                      // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+
+			ajouteLigneTable(responseJson);
 		});
+	});
 
-		function ajouteLigneTable(responseJson) {
-			$.each(responseJson, function(index, avis) { // Iterate over the JSON array.
+	function ajouteLigneTable(responseJson) {
 
-				var table = document.getElementById('list');
-				var newRow = table.insertRow(-1);
-				var rowNumber = table.childNodes.length;
-				var newCell = newRow.insertCell(-1);
-				var ligne = '<h4>Note: ' + avis.note + '/5</h4>	<p>'
-						+ avis.libelle + '</p>';
-				newCell.innerHTML = ligne;
-				lastIndex=avis.idnoter;
+		$.each(responseJson, function(index, avis) { // Iterate over the JSON array.
 
-			});
+			var table = document.getElementById('list');
+			var newRow = table.insertRow(-1);
+			var rowNumber = table.childNodes.length;
+
+			var note = newRow.insertCell(-1);
+			var ligne = getNbrEtoile(avis.note) + '<strong >'
+					+ avis.prenomnotateur + '</strong>';
+			note.innerHTML = ligne;
+
+			var commentaire = newRow.insertCell(-1);
+			var pseudotext = '<p>' + avis.libelle + '</p>';
+			commentaire.innerHTML = pseudotext;
+
+			lastIndex = avis.idnoter;
+
+		});
+	}
+
+	function getNbrEtoile(nbr) {
+
+		nbr = Math.ceil(nbr);
+
+		if (nbr == 0) {
+
+			return '<p><span  style="color: #FF0000;" class="glyphicon glyphicon-thumbs-down"></span></p> ';
+
 		}
+
+		var retour = '<p>';
+		for (var iter = 0; iter < nbr; iter++) {
+
+			retour = retour
+					+ '<span class="glyphicon glyphicon-thumbs-up"></span> ';
+
+		}
+
+		retour = retour + '</p>';
+		return retour;
+
+	}
 	</script>
 
 </body>

@@ -101,14 +101,14 @@
 					.getPhotoTypeActivite(activite.getTypeactivite())));%>
 									class="img-circle" class="text-center" />
 							</div>
-
-							<div class='col-sm-2'>
-								<a class="btn btn-danger"
+		<%if (!activite.isTerminee()){ %>
+				<div class='col-sm-2'>
+							<a class="btn btn-danger"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>"
 									role="button">Signaler</a>
 							</div>
 						</div>
-
+<%} %>
 					</div>
 
 					<div class="form-group">

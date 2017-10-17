@@ -96,5 +96,45 @@ public class SignalementDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
+	
+	public static boolean addSignalement(int idpersonne, int idsignalee,
+			int idmotif, String motif){
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		try {
+		connexion = CxoPool.getConnection();
+		String requete = "INSERT INTO signaler_profil(idpersonne,idsignalement,idmotif,motif,d_creation)  VALUES (?, ?, ?,?,?);";
+		connexion.setAutoCommit(false);
+		preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setInt(1, idpersonne);
+		preparedStatement.setInt(2, idsignalee);
+		if (motif.equals(""))motif=null;
+		preparedStatement.setInt(3, idmotif);
+		preparedStatement.setString(4, motif);
+		preparedStatement.setTimestamp(5,new java.sql.Timestamp(new Date().getTime()));
+		preparedStatement.execute();
+		connexion.commit();
+		
+		return true;
+		}catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			
+			try {
+				connexion.close();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+		
+		
+	}
 
 }
