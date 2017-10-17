@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
+import website.dao.PersonneDAO;
 import website.dao.SignalementDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
@@ -45,20 +46,21 @@ public class SignalerProfil extends HttpServlet {
 		if (!authentification.isAuthentifie())
 			return;
 
-	
+		int idProfil = Integer.parseInt(request.getParameter("idProfil"));
+		
+		ProfilBean profilAsignaler =PersonneDAO.getFullProfil(idProfil);
+
 		if (request.getParameter("idmotif") == null) {
 			// Si pas de motif issu d'un detail activité redirection vers le
 			// choix du motif
 		
-			
-			request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
+		request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
 					request, response);
 
 		} else {
 			// Mise à jour du signalement
 			int idMotif = Integer.parseInt(request.getParameter("idmotif"));
-			int idProfil = Integer.parseInt(request.getParameter("idProfil"));
-
+		
 			String complement = request.getParameter("complement");
 			boolean retour=SignalementDAO.addSignalement(authentification.getProfil().getId(),
 					idProfil, idMotif, complement);

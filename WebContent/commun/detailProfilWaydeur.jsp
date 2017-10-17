@@ -95,7 +95,7 @@
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-info" href="SignalerProfil?id" role="button">Signaler</a>
+							<a class="btn btn-info" href="SignalerProfil?idProfil" role="button">Signaler</a>
 
 						</div>
 					</div>
