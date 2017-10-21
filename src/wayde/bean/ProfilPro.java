@@ -11,10 +11,25 @@ public class ProfilPro {
 	private int nbractivite;
 	private String photostr;
 	private String commentaire;
+	private String siteweb;
+
+	
+
+	public ProfilPro() {
+		super();
+	}
+
+	public String getSiteweb() {
+		return siteweb;
+	}
+
+	public void setSiteweb(String siteweb) {
+		this.siteweb = siteweb;
+	}
 
 	public ProfilPro(int id, String prenom, String adresse, String siret,
 			String telephone, Long datecreation, int nbractivite,
-			String photostr, String commentaire) {
+			String photostr, String commentaire, String siteweb) {
 		super();
 		this.id = id;
 		this.prenom = prenom;
@@ -25,6 +40,7 @@ public class ProfilPro {
 		this.nbractivite = nbractivite;
 		this.photostr = photostr;
 		this.commentaire = commentaire;
+		this.siteweb = siteweb;
 	}
 
 	public int getId() {

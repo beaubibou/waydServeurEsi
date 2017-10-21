@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.metier.AvisBean;
+import website.metier.Outils;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
@@ -27,7 +28,7 @@ public class PersonneDAO {
 		ResultSet rs = null;
 		ProfilBean profil = null;
 		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
-//
+		//
 		try {
 			connexion = CxoPool.getConnection();
 			Statement stmt = connexion.createStatement();
@@ -80,7 +81,7 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
 
 				retour.add(profil);
 
@@ -161,7 +162,7 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
 
 			}
 			return profil;
@@ -239,7 +240,7 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe,siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
 
 			}
 
@@ -287,7 +288,8 @@ public class PersonneDAO {
 	}
 
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
-			double longitude,  String commentaire, String siret,String telephonne,int idpersonne) {
+			double longitude, String commentaire, String siret,
+			String telephonne, int idpersonne) {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
@@ -339,10 +341,15 @@ public class PersonneDAO {
 
 	}
 
-	public boolean updateProfilProFull(String nom, String adresse,
+	public boolean updateProfilProFull(String pseudo, String adresse,
 			double latitude, double longitude, String commentaire,
-			int idpersonne, String siteWeb, String telephone) {
+			int idpersonne, String siteWeb, String telephone,String siret) {
 		// TODO Auto-generated method stub
+
+		pseudo = pseudo.trim();
+		adresse = adresse.trim();
+		commentaire = commentaire.trim();
+		siteWeb = siteWeb.trim();
 
 		Connection connexion = null;
 		try {
@@ -350,24 +357,27 @@ public class PersonneDAO {
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
-					+ "siteweb=?,telephone=?,latitudefixe=?,longitudefixe=? "
+					+ "siteweb=?,telephone=?,latitudefixe=?,longitudefixe=?,siret=? "
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
-			preparedStatement.setString(1, nom);
-			preparedStatement.setString(2, adresse);
+			preparedStatement.setString(1, Outils.getStringStatement(pseudo));
+			preparedStatement.setString(2, Outils.getStringStatement(adresse));
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
-			preparedStatement.setString(5, commentaire);
-			preparedStatement.setString(6, siteWeb);
-			preparedStatement.setString(7, telephone);
+			preparedStatement.setString(5,
+					Outils.getStringStatement(commentaire));
+			preparedStatement.setString(6, Outils.getStringStatement(siteWeb));
+			preparedStatement
+					.setString(7, Outils.getStringStatement(telephone));
 			preparedStatement.setDouble(8, latitude);
 			preparedStatement.setDouble(9, longitude);
-			preparedStatement.setInt(10, idpersonne);
+			preparedStatement.setString(10, Outils.getStringStatement(siret));
+			preparedStatement.setInt(11, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
-
+			return true;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			try {
@@ -387,7 +397,7 @@ public class PersonneDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
+		return false;
 
 	}
 
@@ -397,9 +407,13 @@ public class PersonneDAO {
 
 	}
 
-	public boolean updateProfilWaydeur(String nom, int sexe,
+	public boolean updateProfilWaydeur(String pseudo, int sexe,
 			String commentaire, int idpersonne) {
+
+		pseudo = pseudo.trim();
+		commentaire = commentaire.trim();
 		Connection connexion = null;
+
 		LOG.info("updateProfilProFullWaydeur");
 		try {
 			connexion = CxoPool.getConnection();
@@ -409,8 +423,9 @@ public class PersonneDAO {
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
-			preparedStatement.setString(1, nom);
-			preparedStatement.setString(2, commentaire);
+			preparedStatement.setString(1, Outils.getStringStatement(pseudo));
+			preparedStatement.setString(2,
+					Outils.getStringStatement(commentaire));
 			preparedStatement.setInt(3, sexe);
 			preparedStatement.setInt(4, ProfilBean.WAYDEUR);
 			preparedStatement.setInt(5, idpersonne);
@@ -532,15 +547,16 @@ public class PersonneDAO {
 		}
 		return true;
 	}
+
 	public static ArrayList<AvisBean> getListAvis(int idpersonnenotee) {
 		AvisBean avis = null;
 		ArrayList<AvisBean> retour = new ArrayList<AvisBean>();
-		Connection connexion=null;
-		ResultSet rs=null;
-		PreparedStatement preparedStatement=null;
+		Connection connexion = null;
+		ResultSet rs = null;
+		PreparedStatement preparedStatement = null;
 		try {
-			 connexion = CxoPool.getConnection();
-			
+			connexion = CxoPool.getConnection();
+
 			String requete = " SELECT   activite.titre as titreactivite,personne.prenom,      personne.nom,    personne.photo,"
 					+ "noter.idactivite,  noter.idpersonnenotateur,noter.idpersonnenotee,noter.idnoter,noter.titre,"
 					+ "noter.libelle,noter.note,noter.datenotation"
@@ -548,11 +564,10 @@ public class PersonneDAO {
 					+ "  WHERE personne.idpersonne = noter.idpersonnenotateur  "
 					+ "and  noter.idpersonnenotee=? and noter.fait=true and noter.idactivite=activite.idactivite order by noter.datenotation desc";
 
-			 preparedStatement = connexion
-					.prepareStatement(requete);
+			preparedStatement = connexion.prepareStatement(requete);
 
 			preparedStatement.setInt(1, idpersonnenotee);
-			 rs = preparedStatement.executeQuery();
+			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				int idactivite = rs.getInt("idactivite");
@@ -569,19 +584,18 @@ public class PersonneDAO {
 				avis = new AvisBean(idnoter, idactivite, idpersonnenotee,
 						idpersonnenotateur, avistitre, avislibelle,
 						datenotation, note, nomnotateur, prenomnotateur,
-						photonotateur,titreactivite);
+						photonotateur, titreactivite);
 				retour.add(avis);
 
 			}
-			
+
 			return retour;
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
-		}
-		finally{
+		} finally {
 			try {
 				connexion.close();
 				rs.close();
@@ -590,7 +604,7 @@ public class PersonneDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
 		}
 		return retour;
 	}

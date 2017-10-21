@@ -44,9 +44,8 @@ public class PersonneDAO {
 			return new MessageServeur(false, LibelleMessage.pasReconnu);
 		}
 
-		
 		return droit.isDefautAccess();
-		
+
 	}
 
 	public boolean isAutorise(int idDemandeur, String jeton) {
@@ -159,23 +158,20 @@ public class PersonneDAO {
 		return null;
 	}
 
-	
 	public ProfilPro getFullProfilPro(int idpersonne) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par Id" + idpersonne);
-		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,"
-				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite)"
+		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,siteweb,"
+				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne)  as nbractivite"
 				+ "   FROM personne where idpersonne=?";
-
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		
+
 		if (rs.next()) {
-			
+
 			String prenom = rs.getString("prenom");
 			String telephone = rs.getString("telephone");
 			String adresse = rs.getString("adresse");
@@ -184,14 +180,15 @@ public class PersonneDAO {
 			String commentaire = rs.getString("commentaire");
 			String photo = rs.getString("photo");
 			Date datecreation = rs.getTimestamp("datecreation");
+			String siteweb = rs.getString("siteweb");
 			int nbractivite = rs.getInt("nbractivite");
-	
 			if (photo == null)
 				photo = "";
 			// System.out.println("Note" + note);
 
-			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret, telephone, datecreation.getTime(),
-					nbractivite, photo, commentaire);
+			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret,
+					telephone, datecreation.getTime(), nbractivite, photo,
+					commentaire, siteweb);
 			rs.close();
 			stmt.close();
 
@@ -340,7 +337,8 @@ public class PersonneDAO {
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
-					rayonrecherche, admin, latitude, longitude, notification,typeUser,siteWeb,siret,tel);
+					rayonrecherche, admin, latitude, longitude, notification,
+					typeUser, siteWeb, siret, tel);
 			// System.out.println("Trouvé");
 			rs.close();
 			return personne;
@@ -388,13 +386,13 @@ public class PersonneDAO {
 			String tel = rs.getString("telephone");
 
 			// System.out.println("Note" + note);
-			
+
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
 					afficheage, affichesexe, premiereconnexion, rayonrecherche,
-					admin, latitude, longitude, notification,typeUser,
-					 siteWeb, siret, tel);
+					admin, latitude, longitude, notification, typeUser,
+					siteWeb, siret, tel);
 
 			rs.close();
 			return personne;
@@ -505,8 +503,7 @@ public class PersonneDAO {
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom, String gcmToken) throws 
-			SQLException {
+			String photostr, String nom, String gcmToken) throws SQLException {
 
 		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
 		// l'utlsation de plusieurs
@@ -571,7 +568,8 @@ public class PersonneDAO {
 		return cle;
 	}
 
-	public int TestaddCompteGenerique(long jeton) throws Exception, SQLException {
+	public int TestaddCompteGenerique(long jeton) throws Exception,
+			SQLException {
 		Date datecreation = Calendar.getInstance().getTime();
 		String requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,commentaire,affichesexe,afficheage,premiereconnexion,notification,admin)"
@@ -580,8 +578,8 @@ public class PersonneDAO {
 
 		String nom = "Waydeur" + jeton;
 		String pseudo = "login" + jeton;
-		String iduser = "iduser" +jeton;
-		String idtoken = "jeton"+jeton;
+		String iduser = "iduser" + jeton;
+		String idtoken = "jeton" + jeton;
 		Random ran = new Random();
 		double te = (ran.nextInt(8000) + 42000);
 		// double te = (ran.nextInt(200) + 43700);
@@ -745,7 +743,7 @@ public class PersonneDAO {
 			}
 
 		}
-		
+
 	}
 
 	public void updateProfilWayd(int idpersonne, String photostr, String nom,
@@ -774,42 +772,44 @@ public class PersonneDAO {
 		preparedStatement.close();
 
 	}
-	public void updateProfilWaydPro(String photostr, 
-			String pseudo,	String commentaire, int idpersonne, String tel,String siret,String siteweb)
-			throws SQLException, ParseException {
+
+	public void updateProfilWaydPro(String photostr, String pseudo,
+			String commentaire, int idpersonne, String tel, String siret,
+			String siteweb) throws SQLException, ParseException {
 		String requete = "UPDATE  personne set photo=?, prenom=?,commentaire=?, siret=?,telephone=?,siteweb=? "
 				+ " WHERE idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setString(1, photostr);
 		preparedStatement.setString(2, pseudo);
-				
+
 		if (commentaire.equals(""))
 			preparedStatement.setString(3, null);
 		else
 			preparedStatement.setString(3, commentaire);
-		
+
 		if (siret.equals(""))
 			preparedStatement.setString(4, null);
 		else
 			preparedStatement.setString(4, siret);
-		
+
 		if (tel.equals(""))
 			preparedStatement.setString(5, null);
 		else
 			preparedStatement.setString(5, tel);
-		
+
 		if (siteweb.equals(""))
 			preparedStatement.setString(6, null);
 		else
 			preparedStatement.setString(6, siteweb);
-		
+
 		preparedStatement.setInt(7, idpersonne);
-		
+
 		preparedStatement.execute();
 		preparedStatement.close();
 
 	}
+
 	public void updateNotificationPref(int idpersonne, boolean notification)
 			throws SQLException {
 
@@ -988,7 +988,7 @@ public class PersonneDAO {
 
 		requete.delete(requete.length() - 1, requete.length());
 		requete.append(")");
-		
+
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete.toString());
 
@@ -1005,8 +1005,7 @@ public class PersonneDAO {
 		return retour;
 	}
 
-	public PhotoWaydeur getPhotoWaydeur(int idpersonne)
-			throws SQLException {
+	public PhotoWaydeur getPhotoWaydeur(int idpersonne) throws SQLException {
 		// TODO Auto-generated method stub
 		PhotoWaydeur retour = null;
 		String requete = "select idpersonne,photo from personne where idpersonne =?";

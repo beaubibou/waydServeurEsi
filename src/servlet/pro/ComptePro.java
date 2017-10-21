@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
@@ -38,7 +40,7 @@ public class ComptePro extends HttpServlet {
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
-	//	System.out.println("Profil dans acceuil pro" + profil);
+		// System.out.println("Profil dans acceuil pro" + profil);
 		if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return;
@@ -58,17 +60,15 @@ public class ComptePro extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
 
-
-		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-		
+
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
@@ -77,21 +77,23 @@ public class ComptePro extends HttpServlet {
 				.parseDouble(request.getParameter("longitude"));
 		String telephone = request.getParameter("telephone");
 		String siteWeb = request.getParameter("siteweb");
+		String siret = request.getParameter("siret");
 
 		System.out.println("ComptePro-method post" + " " + adresse + "typeuse "
-				+  " lat:" + latitude + "  " + longitude+ siteWeb+" "+telephone);
+				+ " lat:" + latitude + "  " + longitude + siteWeb + " "
+				+ telephone);
 
-		
-		ProfilBean profil=authentification.getProfil();
-		FiltreRecherche filtreRecherche=authentification.getFiltre();
-		
+		ProfilBean profil = authentification.getProfil();
+		FiltreRecherche filtreRecherche = authentification.getFiltre();
+
 		website.dao.PersonneDAO personneDAO = new website.dao.PersonneDAO();
 
-			personneDAO.updateProfilProFull(nom, adresse, latitude, longitude,
-					 commentaire, profil.getId(),siteWeb, telephone);
-		
+		if (personneDAO.updateProfilProFull(nom, adresse, latitude, longitude,
+				commentaire, profil.getId(), siteWeb, telephone,siret)) {
+
 			profil.setTelephone(telephone);
 			profil.setSiteWeb(siteWeb);
+			profil.setSiret(siret);
 			profil.setPseudo(nom);
 			profil.setAdresse(adresse);
 			profil.setCommentaire(commentaire);
@@ -102,11 +104,12 @@ public class ComptePro extends HttpServlet {
 			profil.setPremiereconnexion(false);
 			filtreRecherche.setLatitude(latitude);
 			filtreRecherche.setLongitude(longitude);
-
-			response.sendRedirect("AcceuilPro");
-			
-	
-		
+			new AlertInfoJsp("Compte mis à jour", AlertJsp.Sucess, "AcceuilPro")
+					.send(request, response);
+		} else {
+			new AlertInfoJsp("Un probleme est survenue", AlertJsp.Alert,
+					"AcceuilPro").send(request, response);
+		}
 
 	}
 
