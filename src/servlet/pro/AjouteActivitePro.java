@@ -27,7 +27,7 @@ import website.metier.TypeActiviteBean;
  */
 public class AjouteActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(AjouteActivitePro.class);
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -79,8 +79,6 @@ public class AjouteActivitePro extends HttpServlet {
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
-		
-		System.out.println("aderess"+adresse);
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));

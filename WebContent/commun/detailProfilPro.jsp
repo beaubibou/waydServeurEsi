@@ -102,6 +102,7 @@
 							%>
 
 							<div class='col-sm-8'>
+							
 								<a class="btn btn-danger"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>"
 									role="button">Signaler</a>
@@ -110,7 +111,7 @@
 								}
 							%>
 							<div class='col-sm-2  ' class="text-center">
-								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>"
+								<a class="btn btn-info" href="<%=profil.getSiteWebStr() %>" 
 									role="button">Site Web</a>
 							</div>
 
@@ -131,11 +132,13 @@
 							</div>
 
 							<div class='col-sm-6' class="text-center">
-
+								
 								<h3 style="padding-left: 15px"><%=profil.getPseudo()%></h3>
-								<h4 style="padding-left: 15px">
+									<h5 style="padding-left: 15px">Tel:<%=profil.getTelephoneStr()%></h5>
+										<h5 style="padding-left: 15px">Siret:<%=profil.getSiret()%></h5>
+								<h5 style="padding-left: 15px">
 									<%=Etoile.getNbrEtoiles(profil.getNote())%>
-								</h4>
+								</h5>
 
 
 

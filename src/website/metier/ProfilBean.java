@@ -7,15 +7,16 @@ import java.util.Date;
 import org.apache.axis.encoding.Base64;
 
 import wayde.bean.Parametres;
+import website.dao.CacheValueDAO;
+import website.enumeration.TypePhoto;
 
 public class ProfilBean {
 
 	int id;
-	public final static int PRO=1;
-	public final static int ASSOCIATION=2;
-	public final static int WAYDEUR=3;
-	
-	
+	public final static int PRO = 1;
+	public final static int ASSOCIATION = 2;
+	public final static int WAYDEUR = 3;
+
 	public double getLatitudeFixe() {
 		return latitudeFixe;
 	}
@@ -46,7 +47,7 @@ public class ProfilBean {
 	private String photostr;
 	private String age;
 	private String commentaire;
-	private boolean actif,admin;
+	private boolean actif, admin;
 	private int typeuser;
 	private boolean premiereconnexion;
 	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
@@ -59,7 +60,7 @@ public class ProfilBean {
 	private String adresse;
 	private String siteWeb;
 	private String telephone;
-	private  boolean afficheAge;
+	private boolean afficheAge;
 	private boolean afficeSexe;
 	private String siret;
 	private FiltreRecherche filtreRecherche;
@@ -73,7 +74,7 @@ public class ProfilBean {
 	}
 
 	private Date dateNaissance;
-	
+
 	public String getSiteWeb() {
 		return siteWeb;
 	}
@@ -81,8 +82,6 @@ public class ProfilBean {
 	public void setSiteWeb(String siteWeb) {
 		this.siteWeb = siteWeb;
 	}
-	
-	
 
 	public Date getDateNaissance() {
 		return dateNaissance;
@@ -95,18 +94,18 @@ public class ProfilBean {
 	public String getTelephone() {
 		return telephone;
 	}
-	
+
 	public String getTelephoneStr() {
-	if (telephone==null)
-		return "";
-	return telephone;
+		if (telephone == null)
+			return "";
+		return telephone;
 	}
-	
+
 	public String getSiteWebStr() {
-		if (siteWeb==null)
+		if (siteWeb == null)
 			return "";
 		return siteWeb;
-		}
+	}
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
@@ -130,7 +129,8 @@ public class ProfilBean {
 
 	public String getUrlPhoto() {
 
-		if (photostr==null)photostr="";
+		if (photostr == null)
+			photostr = "";
 		byte[] bytes = Base64.decode(photostr);
 		String urlPhoto = "data:image/jpeg;base64," + Base64.encode(bytes);
 		return urlPhoto;
@@ -148,7 +148,6 @@ public class ProfilBean {
 		this.listAmi = listAmi;
 	}
 
-	
 	public int getTypeuser() {
 		return typeuser;
 	}
@@ -172,9 +171,9 @@ public class ProfilBean {
 	public String getCommentaire() {
 		return commentaire;
 	}
-	
+
 	public String getCommentaireStr() {
-		if (commentaire==null)
+		if (commentaire == null)
 			return "";
 		return commentaire;
 	}
@@ -202,9 +201,13 @@ public class ProfilBean {
 			Date datenaissance, int nbravis, int sexe, int nbractivite,
 			int nbrparticipation, int nbrami, double note, String photostr,
 			boolean affichesexe, boolean afficheage, String commentaire,
-			boolean actif,boolean admin,int typeuser,boolean premiereconnexion,double latitude,double longitude,String adresse,String siteWeb,
-			String telephone,double latitudeFixe,double longitudeFixe,String siret) {
+			boolean actif, boolean admin, int typeuser,
+			boolean premiereconnexion, double latitude, double longitude,
+			String adresse, String siteWeb, String telephone,
+			double latitudeFixe, double longitudeFixe, String siret) {
 		super();
+		
+	
 		this.id = id;
 		this.nom = nom;
 		this.pseudo = pseudo;
@@ -219,23 +222,23 @@ public class ProfilBean {
 		this.age = getAgeStr(datenaissance, afficheage);
 		if (affichesexe)
 			this.sexe = 3;
-		this.dateNaissance=datenaissance;
+		this.dateNaissance = datenaissance;
 		this.commentaire = commentaire;
-		this.admin=admin;
-		this.typeuser=typeuser;
+		this.admin = admin;
+		this.typeuser = typeuser;
 		this.datecreationStr = Parametres.getStringWsFromDate(datecreation);
-		this.premiereconnexion=premiereconnexion;
-		this.latitude=latitude;
-		this.longitude=longitude;
-		this.adresse=adresse;
-		this.siteWeb=siteWeb;
-		this.telephone=telephone;
-		this.latitudeFixe=latitudeFixe;
-		this.longitudeFixe=longitudeFixe;
-		this.afficeSexe=affichesexe;
-		this.afficheAge=afficheage;
-		this.siret=siret;
-		filtreRecherche=new FiltreRecherche();
+		this.premiereconnexion = premiereconnexion;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.adresse = adresse;
+		this.siteWeb = siteWeb;
+		this.telephone = telephone;
+		this.latitudeFixe = latitudeFixe;
+		this.longitudeFixe = longitudeFixe;
+		this.afficeSexe = affichesexe;
+		this.afficheAge = afficheage;
+		this.siret = siret;
+		filtreRecherche = new FiltreRecherche();
 		filtreRecherche.setLatitude(latitudeFixe);
 		filtreRecherche.setLongitude(longitudeFixe);
 	}
@@ -339,6 +342,13 @@ public class ProfilBean {
 	}
 
 	public String getPhotostr() {
+		
+		if (photostr == null)
+			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+
+		if (photostr.equals("")) {
+			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+		}
 		return photostr;
 	}
 
@@ -452,13 +462,15 @@ public class ProfilBean {
 
 	public boolean isPro() {
 		// TODO Auto-generated method stub
-		if (typeuser==ProfilBean.PRO)return true;
+		if (typeuser == ProfilBean.PRO)
+			return true;
 		return false;
 	}
 
 	public boolean isWaydeur() {
 		// TODO Auto-generated method stub
-		if (typeuser==ProfilBean.WAYDEUR)return true;
+		if (typeuser == ProfilBean.WAYDEUR)
+			return true;
 		return false;
 	}
 

@@ -11,6 +11,8 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import com.google.firebase.internal.Log;
+
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
@@ -84,6 +86,9 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 			
+				if (libelle.length()==0)
+				libelle=" ";
+				
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
@@ -444,19 +449,19 @@ public class ActiviteDAO {
 		try {
 
 			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
-					+ "activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,personne.datenaissance,active.typeuser,activite.typeacces  "
-					+ "personne.note,personne.nbravis as totalavis,"
-					+ "activite.nbrwaydeur as nbrparticipant,activite.nbmaxwayd,"
-					+ "personne.prenom,personne.sexe,personne.nom,personne.idpersonne "
-					+ "FROM activite,personne "
+					+ " activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,personne.datenaissance,activite.typeuser,activite.typeacces,  "
+					+ " personne.note,personne.nbravis as totalavis,"
+					+ " activite.nbrwaydeur as nbrparticipant,activite.nbmaxwayd,"
+					+ " personne.prenom,personne.sexe,personne.nom,personne.idpersonne "
+					+ " FROM activite,personne "
 
 					+ " where exists ("
-					+ "select 1 from plage,prefere where	plage.idpersonne=? and 	plage.idpersonne=prefere.idpersonne and plage.idtypeactivite=prefere.idtypeactivite and	prefere.active=true and prefere.always=false and"
+					+ " select 1 from plage,prefere where	plage.idpersonne=? and 	plage.idpersonne=prefere.idpersonne and plage.idtypeactivite=prefere.idtypeactivite and	prefere.active=true and prefere.always=false and"
 					+ "	activite.idtypeactivite =plage.idtypeactivite and 	to_number(to_char(activite.datedebut,'HH24'),'99') between plage.heuredebut and plage.heurefin"
 					+ "	and  to_number(to_char(activite.datedebut,'d'),'99')=plage.jour"
 					+ "	union"
 					+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 "
-					+ "and prefere.always=true and prefere.active=true )"
+					+ " and prefere.always=true and prefere.active=true )"
 					+ " and personne.idpersonne = activite.idpersonne  and activite.datefin>? and activite.idpersonne!=? "
 					+ " and activite.latitude between ? and ?"
 					+ " and activite.longitude between ? and ? ORDER BY datedebut ASC;";

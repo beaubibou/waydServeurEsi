@@ -21,7 +21,7 @@ import website.metier.SuggestionBean;
  */
 public class ContactMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(ContactMessage.class);
 
        
     /**

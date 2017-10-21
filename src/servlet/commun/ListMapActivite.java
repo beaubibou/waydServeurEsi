@@ -28,7 +28,7 @@ import website.metier.AuthentificationSite;
  */
 public class ListMapActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class); 
+	private static final Logger LOG = Logger.getLogger(ListMapActivite.class); 
     /**
      * @see HttpServlet#HttpServlet()
      */

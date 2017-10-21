@@ -28,7 +28,7 @@ import website.metier.ProfilBean;
  */
 public class ChargePhotoPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(ChargePhotoPro.class);
 
     /**
      * @see HttpServlet#HttpServlet()

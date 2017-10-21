@@ -48,7 +48,14 @@
 			ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
 			ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=new CacheValueDAO().getListQuantiteWaydeur();
 	%>
-
+<div class="container">
+  <div class="page-header">
+    <h1>Créez vos activités </h1>      
+  </div>
+  <p>Proposez une nouvelle activité à la communauté. 
+  Votre activité débute au moment ou vous la validé pour la durée que vous souhaitez.</p>      
+    
+</div>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">

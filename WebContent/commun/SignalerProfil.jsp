@@ -98,7 +98,7 @@
 
 								<a style="width:100%" class="btn btn-info"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=0"
-									role="button">Il me harcèle</a>
+									role="button">Ce profil me harcèle</a>
 
 							</div>
 
@@ -114,7 +114,7 @@
 
 								<a style="width:100%"  class="btn btn-info"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=1"
-									role="button">Tient des propose insultants</a>
+									role="button">Il tient des propos insultants/racistes</a>
 
 							</div>
 
@@ -129,7 +129,7 @@
 							
 								<a style="width:100%" class="btn btn-info"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=2"
-									role="button">C'est une entreprise</a>
+									role="button">Il représente une entreprise</a>
 
 							</div>
 
@@ -139,19 +139,14 @@
 
 
 					<div class="form-group">
-
 						<div class="row">
 
 							<div class='col-sm-10 col-md-offset-1 '>
-
 								<a style="width:100%"  class="btn btn-info"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>&idmotif=3"
-									role="button">Autre</a>
-
+								role="button">Autres raisons</a>
 							</div>
-
 						</div>
-
 					</div>
 			
 

@@ -8,8 +8,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">WaydPro</a>
+      
+        <img src="/wayd/img/waydLogoLR.png" class="img-rounded" alt="Cinque Terre" width="30" height="30">
+  
+    
+     
     </div>
+   
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         

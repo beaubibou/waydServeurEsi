@@ -90,7 +90,7 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 		}
 
 		retour.delete(retour.length() - 1, retour.length());
-		System.out.println(retour.toString());
+		
 		return retour.toString();
 	}
 	
@@ -110,10 +110,8 @@ public static String jspAdapterListSelected(int selectedValue,int value){
         try {
             ImageIO.write(image, type, bos);
             byte[] imageBytes = bos.toByteArray();
- 
             BASE64Encoder encoder = new BASE64Encoder();
             imageString = encoder.encode(imageBytes);
- 
             bos.close();
         } catch (IOException e) {
             e.printStackTrace();

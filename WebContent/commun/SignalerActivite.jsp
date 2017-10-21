@@ -91,7 +91,7 @@
 
 								<a style="width:100%" class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=0"
-									role="button">Ce profil me harcèle</a>
+									role="button">Cette activité est suspecte</a>
 
 							</div>
 
@@ -107,7 +107,7 @@
 
 								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=1"
-									role="button">Dangereuse</a>
+									role="button">Elle est dangereuse</a>
 
 							</div>
 
@@ -121,7 +121,7 @@
 							
 								<a style="width:100%" class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=2"
-									role="button">Illicite</a>
+									role="button">Elle est illicite</a>
 
 							</div>
 
@@ -138,7 +138,7 @@
 
 								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=3"
-									role="button">Gratuite mais payante</a>
+									role="button">Elle est indiquée gratuite mais est payante</a>
 
 							</div>
 
@@ -154,7 +154,7 @@
 
 								<a style="width:100%"  class="btn btn-info"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>&idmotif=4"
-									role="button">Autre</a>
+									role="button">Autres raisons</a>
 
 							</div>
 

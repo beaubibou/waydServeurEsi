@@ -31,7 +31,7 @@ import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
 
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);
 	Connection connexion;
 
 	public ActiviteDAO(Connection connexion) {
@@ -45,7 +45,6 @@ public class ActiviteDAO {
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double NELat, double NELon, double SWLat,
 			double SWlon) {
-		// System.out.println("motcle:" + motcle);
 		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -56,7 +55,6 @@ public class ActiviteDAO {
 			double latMax = NELat;
 			double longMin = SWlon;
 			double longMax = NELon;
-			// System.out.println(latMin + "," + latMax + "coef:" + coef);
 			ActiviteAjax activite = null;
 
 			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
@@ -103,8 +101,7 @@ public class ActiviteDAO {
 
 			}
 
-			// System.out.println("Activite total:" + total);
-
+		
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -314,7 +311,7 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Creation activite user");
+		LOG.info("Creation activite user");
 
 	}
 
@@ -585,8 +582,6 @@ public class ActiviteDAO {
 				int role = rs.getInt("role");
 				int sexe = rs.getInt("sexe");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-				// System.out.println(datefinactivite);
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
@@ -702,7 +697,7 @@ public class ActiviteDAO {
 				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
 						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-				System.out.println("encours");
+			
 				break;
 
 			case TypeEtatActivite.TOUTES:
@@ -744,7 +739,6 @@ public class ActiviteDAO {
 				int sexe = rs.getInt("sexe");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-				// System.out.println(datefinactivite);
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
@@ -1076,7 +1070,6 @@ public class ActiviteDAO {
 
 	public static boolean supprimeActivite(int idactivite) {
 
-		// System.out.println("Effacement d'une activite");
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
@@ -1284,8 +1277,6 @@ public class ActiviteDAO {
 			int finiDans = (commenceDans) * 60 + 60;
 			calendrierFin.add(Calendar.MINUTE, finiDans);
 			Date dateRechercheFin = calendrierFin.getTime();
-			System.out.println("debut:" + dateRechercheDebut);
-			System.out.println("fin" + dateRechercheFin);
 			// on remonte les activités dont le debut est comprise entre
 			// l'heure
 			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
@@ -1370,13 +1361,10 @@ public class ActiviteDAO {
 
 			//
 
-			System.out.println(requete);
-
-			rs = preparedStatement.executeQuery();
+					rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				System.out.println("joaut");
-
+			
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
 				double distance = ServeurMethodes.getDistance(malatitude,
@@ -1418,7 +1406,6 @@ public class ActiviteDAO {
 
 			rs.close();
 			preparedStatement.close();
-			// System.out.println("Activite total:" + total);
 			System.out.println(retour.size());
 			return retour;
 

@@ -2981,6 +2981,37 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 		}
 
 	}
+	
+	public Profil getFullProfilPro(int iddemandeur, int idpersonne, String jeton) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			// ************************************Securite
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+
+			Profil profil = personneDAO.getFullProfil(idpersonne);
+			String loginfo = "getFullProfil - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+
+			return profil;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+
+	}
 
 	public ProfilNotation getProfilNotation(int notateur, int idpersonne,
 			int idactivite) {

@@ -30,7 +30,7 @@ import website.metier.ActiviteBean;
 import website.metier.ParticipantBean;
 
 public class Coordination {
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(Coordination.class);
 
 	public MessageServeur addParticipation(int iddemandeur, int idorganisateur,
 			int idactivite) {

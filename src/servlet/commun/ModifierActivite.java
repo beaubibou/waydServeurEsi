@@ -24,7 +24,7 @@ import website.metier.ProfilBean;
  */
 public class ModifierActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(ModifierActivite.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()

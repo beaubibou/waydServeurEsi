@@ -21,7 +21,7 @@ import website.metier.FiltreRecherche;
  */
 public class RechercheWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(RechercheWaydeur.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()

@@ -54,6 +54,7 @@
 		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
 		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
+	
 	<div class="container" >
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">

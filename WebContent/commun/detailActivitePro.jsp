@@ -118,10 +118,7 @@
 							</div>
 
 <%} %>
-							<div class='col-sm-2  ' class="text-center">
-								<a class="btn btn-info" href="SiteWeb" role="button">Site
-									Web</a>
-
+						
 							</div>
 
 						</div>
@@ -168,14 +165,14 @@
 						<div class="form-group">
 							<label for="description">Description:</label>
 							<textarea disabled class="form-control" rows="5" id="description"
-								name="description"></textarea>
+								name="description"><%=activite.getLibelle() %></textarea>
 						</div>
 
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	
 
 
 

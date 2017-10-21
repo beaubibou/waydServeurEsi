@@ -24,7 +24,7 @@ import website.metier.TypeActiviteBean;
  */
 public class AjouteActiviteWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(AjouteActiviteWaydeur.class);
 
 
 	/**

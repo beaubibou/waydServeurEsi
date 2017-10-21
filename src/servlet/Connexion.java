@@ -1,11 +1,14 @@
 package servlet;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
 import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,8 +21,11 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
+import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
+import website.enumeration.TypePhoto;
 import website.metier.AuthentificationSite;
+import website.metier.Outils;
 import website.metier.ProfilBean;
 
 import com.google.firebase.FirebaseApp;
@@ -33,7 +39,7 @@ import com.google.firebase.tasks.OnSuccessListener;
  */
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(Connexion.class);
 
 	protected boolean success;
 
@@ -44,6 +50,9 @@ public class Connexion extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+				
+		
+		super.init(config);
 		FirebaseOptions options;
 		if (FirebaseApp.getApps().isEmpty()) {
 
@@ -81,6 +90,20 @@ public class Connexion extends HttpServlet {
 			}
 		}
 
+	}
+
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		super.init();
+		BufferedImage img = null;
+		try {
+		   img = ImageIO.read(new File(getServletContext().getRealPath("/") + "img/inconnu.jpg"));
+		    String photoStr=Outils.encodeToString(img, "jpg");
+		    CacheValueDAO.addPhotoCache(TypePhoto.Inconnu,photoStr);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -182,7 +205,7 @@ public class Connexion extends HttpServlet {
 
 						}
 
-						LOG.info("profil not null");
+						
 						if (profil != null) {
 
 							session.setAttribute("profil", profil);

@@ -22,7 +22,7 @@ import website.metier.ProfilBean;
  */
 public class Form_PremierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(Form_PremierProfil.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()

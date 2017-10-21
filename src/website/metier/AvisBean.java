@@ -213,6 +213,10 @@ public class AvisBean implements Serializable {
 
 
 	public String getLibelle() {
+		
+		if (libelle==null)
+			return "Pas d'avis laissé";
+		else
 		return libelle;
 	}
 

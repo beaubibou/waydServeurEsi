@@ -20,7 +20,7 @@ import website.metier.ActiviteBean;
  */
 public class DetailActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(DetailActivite.class);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

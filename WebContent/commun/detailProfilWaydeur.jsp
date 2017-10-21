@@ -35,7 +35,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 	var lastIndex = 0;
@@ -95,11 +95,10 @@
 
 					<div class="form-group">
 						<div class="btn-group">
-							<a class="btn btn-info" href="SignalerProfil?idProfil=<%=profil.getId()%>" role="button">Signaler</a>
+							<a class="btn btn-danger" href="SignalerProfil?idProfil=<%=profil.getId()%>" role="button">Signaler</a>
 
 						</div>
 					</div>
-
 
 					<div class="form-group">
 
@@ -108,7 +107,7 @@
 
 								<img height="80" width="80"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
-									class="img-circle" class="text-center" />
+									class="img-circle  " class="text-center" />
 
 							</div>
 

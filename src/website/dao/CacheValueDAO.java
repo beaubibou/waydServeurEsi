@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
+import website.enumeration.TypePhoto;
 import website.metier.DureeBean;
 import website.metier.ProfilBean;
 import website.metier.QuandBean;
@@ -25,10 +26,12 @@ import website.metier.TypeUser;
 public class CacheValueDAO {
 
 	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
+	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<TypePhoto, String>();
 
 	static {
 
 		initMapPhotoActivite();
+	
 
 	}
 
@@ -58,7 +61,6 @@ public class CacheValueDAO {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
 				String photo = rs.getString("photo");
-				System.out.println(photo);
 				retour.add(new TypeActiviteBean(id, libelle, photo));
 			}
 
@@ -78,7 +80,7 @@ public class CacheValueDAO {
 	public static boolean updatePhotoTypeActivite(int id, String photo) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		System.out.println("id mis a jou" + id);
+	
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -396,5 +398,16 @@ public class CacheValueDAO {
 			String libelle) {
 		mapTypeActivite.put(id, new TypeActiviteBean(id, libelle, stringPhoto));
 
+	}
+
+	public static void addPhotoCache(TypePhoto inconnu, String photoStr) {
+		// TODO Auto-generated method stub
+		mapPhotoCache.put(inconnu, photoStr);
+
+	}
+
+	public static String getPhoto(TypePhoto typePhoto) {
+		// TODO Auto-generated method stub
+		return mapPhotoCache.get(typePhoto);
 	}
 }

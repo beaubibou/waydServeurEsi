@@ -25,7 +25,7 @@ import website.metier.SexeBean;
  */
 public class CompteWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(CompteWaydeur.class);
 
        
     /**
@@ -48,7 +48,6 @@ public class CompteWaydeur extends HttpServlet {
 		if (!authentification.isAuthentifieWaydeur())
 			return;
 		
-	
 		
 		request.getRequestDispatcher("waydeur/form_fullprofilWayd.jsp").forward(request, response);
 		

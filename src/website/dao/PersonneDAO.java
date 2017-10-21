@@ -18,7 +18,7 @@ import website.metier.AvisBean;
 import website.metier.ProfilBean;
 
 public class PersonneDAO {
-	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
 
 	public static ArrayList<ProfilBean> getListProfil() {
 

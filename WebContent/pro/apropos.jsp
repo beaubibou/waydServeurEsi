@@ -39,7 +39,8 @@
   </br>
   <div class="container" style="background-color: #FFD54F;">
     <div class="col-md-10 col-md-offset-1 section-title">
-      <h2>Besoin de visibilité ?</h2>
+      </br>
+      <h1>Besoin de visibilité ?</h1>
       <hr>
       <p>Wayd vous offre un moyen gratuit, simple et efficace pour valoriser votre activité.</p>
     </div>

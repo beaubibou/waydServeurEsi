@@ -57,7 +57,7 @@ public class SignalerProfil extends HttpServlet {
 
 			request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
 					request, response);
-System.out.println("id motif== null");
+
 		}
 
 		if (request.getParameter("idmotif") != null) {
@@ -97,16 +97,17 @@ System.out.println("id motif== null");
 					if (authentification.isPro()) {
 						new AlertInfoJsp(messageServeur.getMessage(),
 								AlertJsp.Alert, "MesActivites").send(request,response);
-						System.out.println("not reponse pro");
+					
 						return;
 					}
 					
 					
-					if (authentification.isWaydeur())
+					if (authentification.isWaydeur()){
 						new AlertInfoJsp(messageServeur.getMessage(),
 								AlertJsp.Alert, "MesActivitesWaydeur").send(
 								request, response);
-					
+						return;
+					}
 
 				}
 			}

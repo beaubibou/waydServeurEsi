@@ -7,11 +7,15 @@ import java.util.Date;
 
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
+import servlet.DetailActivite;
+import website.dao.CacheValueDAO;
+import website.enumeration.TypePhoto;
 import fcm.ServeurMethodes;
 
 public class ActiviteBean {
-
+	private static final Logger LOG = Logger.getLogger(ActiviteBean.class);
 	int id;
 
 	public static int GRATUIT = 1;
@@ -178,7 +182,16 @@ public class ActiviteBean {
 	}
 
 	public String getPhoto() {
+		
+			if (photo==null)
+		return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+		
+		if (photo.equals("")){
+				return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+		}
 		return photo;
+		
+		
 	}
 
 	public void setPhoto(String photo) {
@@ -257,7 +270,7 @@ public class ActiviteBean {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
-		System.out.println("**********adresse*" + adresse);
+		
 
 	}
 

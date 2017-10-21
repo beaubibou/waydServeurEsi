@@ -153,7 +153,7 @@
 						<div class="form-group">
 							<label for="description">Description:</label>
 							<textarea class="form-control" rows="5" id="description"
-								name="description"
+								name="commentaire"
 								placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX %>"
 								
 								><%=profil.getCommentaireStr()%></textarea>

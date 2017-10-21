@@ -38,7 +38,7 @@ public class ComptePro extends HttpServlet {
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
-		System.out.println("Profil dans acceuil pro" + profil);
+	//	System.out.println("Profil dans acceuil pro" + profil);
 		if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return;
