@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -434,11 +434,11 @@
    <ns1:parameter qname="ns141:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="acquitMessageByAct acquitMessageDiscussion addActivitePro getListTypeActivite signalerActivite test_addCompte addActivite getListPhotoWaydeur testToken getListPreferences getIndicateurs addMessage getPersonnebyToken getListActivites addSuggestion test_getNbrActiviteEncours test_GetPersonneAlea getListParticipant getListDiscussion effaceMessageRecu effaceMessageRecuByAct tesgcm effaceDiscussion test_GetToken getPhotoWaydeur getListMessageAfter addParticipation getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo updateNotificationPref addPrbConnexion effaceActivite getMesActiviteEncours effaceMessageEmis getListAmi addMessageByAct getListNotification test_init acquitNotification getTableauBord effaceAmi updateNotification acquitMessageDiscussionByAct getFullProfil updateActivite acquitMessage getListActivitePref getListAvis envoyerMail getActivite updateGCM signalerProfil test_getPremierId getMesActiviteArchive getProfilNotation getVersion getListMessageAfterByAct getListPhotoWaydeurByAct addAvis updatePosition getListNotificationAfter updateProfilPro getListActiviteAvenir updateProfilWayd getAvis test_getDernierId test_DonneAvis effaceNotificationRecu effaceMessage test_termineActivite updatePreference getDiscussion acquitAllNotification"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="WBservices"/>
-  <ns1:parameter name="className" value="wayd.ws.WBservices"/>
-  <ns1:parameter name="wsdlServicePort" value="WBservices"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://ws.wayd,http://bean.wayde"/>
+  <ns1:parameter name="wsdlServicePort" value="WBservices"/>
+  <ns1:parameter name="className" value="wayd.ws.WBservices"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://ws.wayd"/>
   <ns1:parameter name="wsdlServiceElement" value="WBservicesService"/>
   <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns142:Message" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:wayde.bean.Message" xmlns:ns142="http://bean.wayde"/>
@@ -466,11 +466,11 @@
   <ns1:operation name="inscriptionAnnulation" qname="ns162:inscriptionAnnulation" soapAction="" xmlns:ns162="http://test"/>
   <ns1:operation name="rechercheActivite" qname="ns163:rechercheActivite" soapAction="" xmlns:ns163="http://test"/>
   <ns1:parameter name="allowedMethods" value="init inscriptionNotation rechercheActivite inscriptionAnnulation"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="WsTest"/>
-  <ns1:parameter name="className" value="test.WsTest"/>
-  <ns1:parameter name="wsdlServicePort" value="WsTest"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://test"/>
+  <ns1:parameter name="wsdlServicePort" value="WsTest"/>
+  <ns1:parameter name="className" value="test.WsTest"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://test"/>
   <ns1:parameter name="wsdlServiceElement" value="WsTestService"/>
  </ns1:service>

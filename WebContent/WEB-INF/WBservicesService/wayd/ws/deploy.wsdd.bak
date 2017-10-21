@@ -197,6 +197,11 @@
       </operation>
       <operation name="test_getPremierId" qname="operNS:test_getPremierId" xmlns:operNS="http://ws.wayd" returnQName="retNS:test_getPremierIdReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
       </operation>
+      <operation name="getFullProfilPro" qname="operNS:getFullProfilPro" xmlns:operNS="http://ws.wayd" returnQName="retNS:getFullProfilProReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:anyType" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:iddemandeur" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:idpersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="getAvis" qname="operNS:getAvis" xmlns:operNS="http://ws.wayd" returnQName="retNS:getAvisReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:Avis" xmlns:rtns="http://bean.wayde" soapAction="" >
         <parameter qname="pns:idnoter" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:idactivite" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
@@ -428,8 +433,143 @@
         <parameter qname="pns:idpersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="acquitMessageByAct acquitMessageDiscussion addActivitePro getListTypeActivite signalerActivite test_addCompte addActivite getListPhotoWaydeur testToken getListPreferences getIndicateurs addMessage getPersonnebyToken getListActivites addSuggestion test_getNbrActiviteEncours test_GetPersonneAlea getListParticipant getListDiscussion effaceMessageRecu effaceMessageRecuByAct tesgcm effaceDiscussion test_GetToken getPhotoWaydeur getListMessageAfter addParticipation getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo updateNotificationPref addPrbConnexion effaceActivite getMesActiviteEncours effaceMessageEmis getListAmi addMessageByAct getListNotification test_init acquitNotification getTableauBord effaceAmi updateNotification acquitMessageDiscussionByAct getFullProfil updateActivite acquitMessage getListActivitePref getListAvis envoyerMail getActivite updateGCM signalerProfil test_getPremierId getMesActiviteArchive getProfilNotation getVersion getListMessageAfterByAct getListPhotoWaydeurByAct addAvis updatePosition getListNotificationAfter updateProfilPro getListActiviteAvenir updateProfilWayd getAvis test_getDernierId test_DonneAvis effaceNotificationRecu effaceMessage test_termineActivite updatePreference getDiscussion acquitAllNotification"/>
+      <parameter name="allowedMethods" value="acquitMessageByAct acquitMessageDiscussion addActivitePro getListTypeActivite signalerActivite test_addCompte addActivite getListPhotoWaydeur getFullProfilPro testToken getListPreferences getIndicateurs addMessage getPersonnebyToken getListActivites addSuggestion test_getNbrActiviteEncours test_GetPersonneAlea getListParticipant getListDiscussion effaceMessageRecu effaceMessageRecuByAct tesgcm effaceDiscussion test_GetToken getPhotoWaydeur getListMessageAfter addParticipation getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo updateNotificationPref addPrbConnexion effaceActivite getMesActiviteEncours effaceMessageEmis getListAmi addMessageByAct getListNotification test_init acquitNotification getTableauBord effaceAmi updateNotification acquitMessageDiscussionByAct getFullProfil updateActivite acquitMessage getListActivitePref getListAvis envoyerMail getActivite updateGCM signalerProfil test_getPremierId getMesActiviteArchive getProfilNotation getVersion getListMessageAfterByAct getListPhotoWaydeurByAct addAvis updatePosition getListNotificationAfter updateProfilPro getListActiviteAvenir updateProfilWayd getAvis test_getDernierId test_DonneAvis effaceNotificationRecu effaceMessage test_termineActivite updatePreference getDiscussion acquitAllNotification"/>
 
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePosition"
+        type="java:wayd.ws.UpdatePosition"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateProfilPro"
+        type="java:wayd.ws.UpdateProfilPro"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addSuggestion"
+        type="java:wayd.ws.AddSuggestion"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_GetToken"
+        type="java:wayd.ws.Test_GetToken"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePreference"
+        type="java:wayd.ws.UpdatePreference"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getActivite"
+        type="java:wayd.ws.GetActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePseudo"
+        type="java:wayd.ws.UpdatePseudo"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>signalerActiviteResponse"
+        type="java:wayd.ws.SignalerActiviteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListAvis"
+        type="java:wayd.ws.GetListAvis"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>envoyerMailResponse"
+        type="java:wayd.ws.EnvoyerMailResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceActiviteResponse"
+        type="java:wayd.ws.EffaceActiviteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addParticipationResponse"
+        type="java:wayd.ws.AddParticipationResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getDiscussionResponse"
+        type="java:wayde.bean.Message[]"
+        innerType="cmp-ns:Message" xmlns:cmp-ns="http://bean.wayde"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateProfilProResponse"
+        type="java:wayd.ws.UpdateProfilProResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addActiviteProResponse"
+        type="java:wayd.ws.AddActiviteProResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addAvis"
+        type="java:wayd.ws.AddAvis"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_addCompte"
+        type="java:wayd.ws.Test_addCompte"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
       <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Message"
@@ -447,9 +587,57 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceDiscussionResponse"
+        type="java:wayd.ws.EffaceDiscussionResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:TypeActivite"
         type="java:wayde.bean.TypeActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_init"
+        type="java:wayd.ws.Test_init"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getFullProfilResponse"
+        type="java:wayd.ws.GetFullProfilResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addActivitePro"
+        type="java:wayd.ws.AddActivitePro"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getTableauBordResponse"
+        type="java:wayd.ws.GetTableauBordResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateProfilWayd"
+        type="java:wayd.ws.UpdateProfilWayd"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
         encodingStyle=""
@@ -471,6 +659,22 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceMessageResponse"
+        type="java:wayd.ws.EffaceMessageResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_addCompteResponse"
+        type="java:wayd.ws.Test_addCompteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Profil"
         type="java:wayde.bean.Profil"
@@ -487,6 +691,46 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>acquitMessage"
+        type="java:wayd.ws.AcquitMessage"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addSuggestionResponse"
+        type="java:wayd.ws.AddSuggestionResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePositionResponse"
+        type="java:wayd.ws.UpdatePositionResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>tesgcm"
+        type="java:wayd.ws.Tesgcm"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>testTokenResponse"
+        type="java:wayd.ws.TestTokenResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Discussion"
         type="java:wayde.bean.Discussion"
@@ -495,9 +739,80 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePreferenceResponse"
+        type="java:wayd.ws.UpdatePreferenceResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_GetTokenResponse"
+        type="java:wayd.ws.Test_GetTokenResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addMessageByActResponse"
+        type="java:wayd.ws.AddMessageByActResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListActivites"
+        type="java:wayd.ws.GetListActivites"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getIndicateurs"
+        type="java:wayd.ws.GetIndicateurs"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getPhotoWaydeur"
+        type="java:wayd.ws.GetPhotoWaydeur"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Ami"
         type="java:wayde.bean.Ami"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListAvisResponse"
+        type="java:wayde.bean.Avis[]"
+        innerType="cmp-ns:Avis" xmlns:cmp-ns="http://bean.wayde"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addParticipation"
+        type="java:wayd.ws.AddParticipation"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getActiviteResponse"
+        type="java:wayd.ws.GetActiviteResponse"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
         encodingStyle=""
@@ -511,9 +826,88 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>signalerActivite"
+        type="java:wayd.ws.SignalerActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:RetourMessage"
         type="java:wayde.bean.RetourMessage"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListActivitesResponse"
+        type="java:wayde.bean.Activite[]"
+        innerType="cmp-ns:Activite" xmlns:cmp-ns="http://bean.wayde"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updatePseudoResponse"
+        type="java:wayd.ws.UpdatePseudoResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>envoyerMail"
+        type="java:wayd.ws.EnvoyerMail"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListAmi"
+        type="java:wayd.ws.GetListAmi"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getIndicateursResponse"
+        type="java:wayd.ws.GetIndicateursResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_initResponse"
+        type="java:wayd.ws.Test_initResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addActiviteResponse"
+        type="java:wayd.ws.AddActiviteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>testToken"
+        type="java:wayd.ws.TestToken"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getTableauBord"
+        type="java:wayd.ws.GetTableauBord"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
         encodingStyle=""
@@ -527,6 +921,46 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addMessageByAct"
+        type="java:wayd.ws.AddMessageByAct"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>signalerProfil"
+        type="java:wayd.ws.SignalerProfil"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateActivite"
+        type="java:wayd.ws.UpdateActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceAmiResponse"
+        type="java:wayd.ws.EffaceAmiResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateProfilWaydResponse"
+        type="java:wayd.ws.UpdateProfilWaydResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:PhotoWaydeur"
         type="java:wayde.bean.PhotoWaydeur"
@@ -535,9 +969,97 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addAvisResponse"
+        type="java:wayd.ws.AddAvisResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addPrbConnexionResponse"
+        type="java:wayd.ws.AddPrbConnexionResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addPrbConnexion"
+        type="java:wayd.ws.AddPrbConnexion"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getPhotoWaydeurResponse"
+        type="java:wayd.ws.GetPhotoWaydeurResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceDiscussion"
+        type="java:wayd.ws.EffaceDiscussion"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceAmi"
+        type="java:wayd.ws.EffaceAmi"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceActivite"
+        type="java:wayd.ws.EffaceActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>addActivite"
+        type="java:wayd.ws.AddActivite"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>tesgcmResponse"
+        type="java:wayd.ws.TesgcmResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_DonneAvis"
+        type="java:wayd.ws.Test_DonneAvis"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Avis"
         type="java:wayde.bean.Avis"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getAvisResponse"
+        type="java:wayd.ws.GetAvisResponse"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
         encodingStyle=""
@@ -559,6 +1081,30 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateGCM"
+        type="java:wayd.ws.UpdateGCM"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getAvis"
+        type="java:wayd.ws.GetAvis"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>test_DonneAvisResponse"
+        type="java:wayd.ws.Test_DonneAvisResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Preference"
         type="java:wayde.bean.Preference"
@@ -567,9 +1113,72 @@
         encodingStyle=""
       />
       <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateActiviteResponse"
+        type="java:wayd.ws.UpdateActiviteResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
         xmlns:ns="http://bean.wayde"
         qname="ns:Participant"
         type="java:wayde.bean.Participant"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>signalerProfilResponse"
+        type="java:wayd.ws.SignalerProfilResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>updateGCMResponse"
+        type="java:wayd.ws.UpdateGCMResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getListAmiResponse"
+        type="java:wayde.bean.Ami[]"
+        innerType="cmp-ns:Ami" xmlns:cmp-ns="http://bean.wayde"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>effaceMessage"
+        type="java:wayd.ws.EffaceMessage"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getFullProfil"
+        type="java:wayd.ws.GetFullProfil"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>getDiscussion"
+        type="java:wayd.ws.GetDiscussion"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://ws.wayd"
+        qname="ns:>acquitMessageResponse"
+        type="java:wayd.ws.AcquitMessageResponse"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
         encodingStyle=""

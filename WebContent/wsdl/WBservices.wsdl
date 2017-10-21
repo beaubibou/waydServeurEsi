@@ -578,6 +578,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="getFullProfilPro">
+    <complexType>
+     <sequence>
+      <element name="iddemandeur" type="xsd:int"/>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getFullProfilProResponse">
+    <complexType>
+     <sequence>
+      <element name="getFullProfilProReturn" type="xsd:anyType"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="getAvis">
     <complexType>
      <sequence>
@@ -1563,6 +1579,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getFullProfilProRequest">
+
+      <wsdl:part element="impl:getFullProfilPro" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getListActiviteAvenirNocritereRequest">
 
       <wsdl:part element="impl:getListActiviteAvenirNocritere" name="parameters">
@@ -1854,6 +1878,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getPersonnebyTokenRequest">
 
       <wsdl:part element="impl:getPersonnebyToken" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFullProfilProResponse">
+
+      <wsdl:part element="impl:getFullProfilProResponse" name="parameters">
 
       </wsdl:part>
 
@@ -3141,6 +3173,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="getFullProfilPro">
+
+         <wsdl:input message="impl:getFullProfilProRequest" name="getFullProfilProRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getFullProfilProResponse" name="getFullProfilProResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="getAvis">
 
          <wsdl:input message="impl:getAvisRequest" name="getAvisRequest">
@@ -4280,6 +4324,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="test_getPremierIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getFullProfilPro">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getFullProfilProRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getFullProfilProResponse">
 
             <wsdlsoap:body use="literal"/>
 

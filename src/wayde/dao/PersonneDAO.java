@@ -21,6 +21,7 @@ import wayde.bean.Personne;
 import wayde.bean.Profil;
 import wayde.bean.PhotoWaydeur;
 import wayde.bean.ProfilNotation;
+import wayde.bean.ProfilPro;
 import wayde.bean.ProprietePref;
 
 public class PersonneDAO {
@@ -159,56 +160,42 @@ public class PersonneDAO {
 	}
 
 	
-	public Profil getFullProfilPro(int idpersonne) throws SQLException {
+	public ProfilPro getFullProfilPro(int idpersonne) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par Id" + idpersonne);
-		String requete = " SELECT personne.note,personne.nbravis,"
-				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
-				+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
-				+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,"
-				+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-				+ "  mail, cleactivation,commentaire, photo FROM personne where idpersonne=?";
+		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,"
+				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite)"
+				+ "   FROM personne where idpersonne=?";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
-
+		
 		if (rs.next()) {
-			int id = rs.getInt("idpersonne");
-			int nbravis = rs.getInt("nbravis");
-			int nbractivite = rs.getInt("nbractivite");
-			int nbrparticipation = rs.getInt("nbrparticipation");
-			int nbrami = rs.getInt("nbrami");
-			String commentaire = rs.getString("commentaire");
-
-			String nom = rs.getString("nom");
+			
 			String prenom = rs.getString("prenom");
-			String ville = rs.getString("ville");
-			Date datecreation = rs.getTimestamp("datecreation");
-			Date datenaissance = rs.getTimestamp("datenaissance");
-			boolean afficheage = rs.getBoolean("afficheage");
-			boolean affichesexe = rs.getBoolean("affichesexe");
-
+			String telephone = rs.getString("telephone");
+			String adresse = rs.getString("adresse");
+			String siret = rs.getString("siret");
+			int id = rs.getInt("idpersonne");
+			String commentaire = rs.getString("commentaire");
 			String photo = rs.getString("photo");
-
+			Date datecreation = rs.getTimestamp("datecreation");
+			int nbractivite = rs.getInt("nbractivite");
+	
 			if (photo == null)
 				photo = "";
-			int sexe = rs.getInt("sexe");
-			double note = rs.getDouble("note");
-
 			// System.out.println("Note" + note);
 
-			Profil profil = new Profil(id, nom, prenom, ville, datecreation,
-					datenaissance, nbravis, sexe, nbractivite,
-					nbrparticipation, nbrami, note, photo, affichesexe,
-					afficheage, commentaire);
+			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret, telephone, datecreation.getTime(),
+					nbractivite, photo, commentaire);
 			rs.close();
-			return profil;
+			stmt.close();
+
+			return profilPro;
 		}
 		return null;
 	}

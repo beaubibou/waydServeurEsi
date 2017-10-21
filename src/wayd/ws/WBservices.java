@@ -66,6 +66,7 @@ import wayde.bean.Preference;
 import wayde.bean.Profil;
 import wayde.bean.PhotoWaydeur;
 import wayde.bean.ProfilNotation;
+import wayde.bean.ProfilPro;
 import wayde.bean.RetourMessage;
 import wayde.bean.TableauBord;
 import wayde.bean.TypeActivite;
@@ -2982,7 +2983,7 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 
 	}
 	
-	public Profil getFullProfilPro(int iddemandeur, int idpersonne, String jeton) {
+	public ProfilPro getFullProfilPro(int iddemandeur, int idpersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -2996,12 +2997,12 @@ PoolThreadGCM.poolThread.execute(	new AcquitMessageDiscussionByActGcm(iddestinat
 
 			// ************************************
 
-			Profil profil = personneDAO.getFullProfil(idpersonne);
+			ProfilPro profilpro = personneDAO.getFullProfilPro(idpersonne);
 			String loginfo = "getFullProfil - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return profil;
+			return profilpro;
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
