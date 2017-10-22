@@ -127,6 +127,7 @@ public class Connexion extends HttpServlet {
 			int temps = 0;
 			while (temps < 500) {
 				Thread.sleep(30);
+				LOG.info("wait");
 				temps++;
 				if (success) {
 
@@ -139,6 +140,7 @@ public class Connexion extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		LOG.info("************Sortie");
 
 	}
 

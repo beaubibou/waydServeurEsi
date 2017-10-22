@@ -360,6 +360,7 @@ public class CacheValueDAO {
 		for (int f = 1; f < 9; f++) {
 			listQuand.add(new QuandBean(f, "Dans " + f + " heures"));
 		}
+		listQuand.add(new QuandBean(-1, "Toutes"));
 		return listQuand;
 
 	}

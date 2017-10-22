@@ -95,7 +95,7 @@
 						activité professionelle</div>
 
 				</div>
-					
+
 
 				<div style="padding-top: 30px" class="panel-body">
 
@@ -103,78 +103,89 @@
 					<div class="form-group">
 
 						<div class="row">
-						
-						<div class='col-sm-1  ' class="text-center">
+
+							<div class='col-sm-1  ' class="text-center">
 								<img height="30" width="30"
-									src=<%out.println(Outils.getUrlPhoto( CacheValueDAO.getPhotoTypeActivite(activite.getTypeactivite())));%>
+									src=<%out.println(Outils.getUrlPhoto(CacheValueDAO
+					.getPhotoTypeActivite(activite.getTypeactivite())));%>
 									class="img-circle" class="text-center" />
 
 							</div>
-						<%if (!activite.isOrganisteur(authentification.getProfil().getId())) { %>
+							<%
+								if (!activite.isOrganisteur(authentification.getProfil().getId())) {
+							%>
 							<div class='col-sm-8'>
 								<a class="btn btn-danger"
 									href="SignalerActivite?idActivite=<%=activite.getId()%>"
 									role="button">Signaler</a>
 							</div>
 
-<%} %>
 						
-							</div>
+
+					
+							<%
+								}
+							%>
+
+					</div>
+
+				</div>
+				<div class="form-group">
+
+					<div class="row vertical-align">
+						<div class='col-sm-4'>
+
+							<img height="300" width="300"
+								src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+								class="img-thumbnail" class="text-center" />
+
+						</div>
+
+						<div class='col-sm-6' class="text-center">
+
+							<a
+								href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
+								<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
+							</a>
+
+							<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
+							<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
+							<h5 style="padding-left: 15px">
+								à
+								<%=activite.calculDistance()%></h5>
+
 
 						</div>
 
 					</div>
+
+
 					<div class="form-group">
-
-						<div class="row vertical-align">
-							<div class='col-sm-4'>
-
-								<img height="300" width="300"
-									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
-									class="img-thumbnail" class="text-center" />
-
-							</div>
-
-							<div class='col-sm-6' class="text-center">
-
-								<a
-									href="DetailProfilSite?idprofil=<%=activite.getIdorganisateur()%>">
-									<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
-								</a>
-
-								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-								<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
-								<h5 style="padding-left: 15px">à <%=activite.calculDistance()%></h5>
+						</br>
+						<h5>
+							Type d'activité:
+							<%=CacheValueDAO.geLibelleTypeActivite(activite
+					.getTypeactivite())%></h5>
 
 
-							</div>
-
-						</div>
-
-
-						<div class="form-group">
-							</br>
-						<h5>Type d'activité: <%=CacheValueDAO.geLibelleTypeActivite(activite.getTypeactivite()) %></h5>
-						
-						
-							<h5><%=activite.getHoraireLeAHorizontal() %></h5>
-
-						</div>
-
-
-						<div class="form-group">
-							<label for="description">Description:</label>
-							<textarea disabled class="form-control" rows="5" id="description"
-								name="description"><%=activite.getLibelle() %></textarea>
-						</div>
+						<h5><%=activite.getHoraireLeAHorizontal()%></h5>
 
 					</div>
+
+
+					<div class="form-group">
+						<label for="description">Description:</label>
+						<textarea disabled class="form-control" rows="5" id="description"
+							name="description"><%=activite.getLibelle()%></textarea>
+					</div>
+
 				</div>
 			</div>
 		</div>
-	
+	</div>
 
 
+</div>
 
 
 

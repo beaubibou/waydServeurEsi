@@ -1,5 +1,8 @@
 package website.metier;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -542,10 +545,17 @@ public class ActiviteBean {
 		// return "mlooi";
 
 		if (distance < 1000)
-			return "" + distance + " métres";
+			return "" + Math.round(distance) + " métres";
 
-		else
-			return "" + (distance) / 1000 + " Km";
+		else{
+			
+			distance=distance/1000;
+		String pattern="##.##";
+		DecimalFormat myFormatter = new DecimalFormat(pattern);
+				
+			return "" + myFormatter.format(distance) + " Km";
+		}
+		
 
 	}
 

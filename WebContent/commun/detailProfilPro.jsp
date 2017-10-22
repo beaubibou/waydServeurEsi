@@ -60,12 +60,12 @@
 <body>
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
-		request, response);
-		if (!authentification.isAuthentifie())
-			return;
-		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
-		ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
-		.getAttribute("listAvis");
+			request, response);
+			if (!authentification.isAuthentifie())
+		return;
+			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
+			ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
+			.getAttribute("listAvis");
 	%>
 
 
@@ -102,7 +102,7 @@
 							%>
 
 							<div class='col-sm-8'>
-							
+
 								<a class="btn btn-danger"
 									href="SignalerProfil?idProfil=<%=profil.getId()%>"
 									role="button">Signaler</a>
@@ -111,14 +111,13 @@
 								}
 							%>
 							<div class='col-sm-2  ' class="text-center">
-								<a class="btn btn-info" href="<%=profil.getSiteWebStr() %>" 
+								<a class="btn btn-info" href="<%=profil.getSiteWebStr()%>"
 									role="button">Site Web</a>
 							</div>
 
 						</div>
 
 					</div>
-
 
 					<div class="form-group">
 
@@ -132,15 +131,15 @@
 							</div>
 
 							<div class='col-sm-6' class="text-center">
-								
+
 								<h3 style="padding-left: 15px"><%=profil.getPseudo()%></h3>
-									<h5 style="padding-left: 15px">Tel:<%=profil.getTelephoneStr()%></h5>
-										<h5 style="padding-left: 15px">Siret:<%=profil.getSiret()%></h5>
+								<h5 style="padding-left: 15px">
+									Tel:<%=profil.getTelephoneStr()%></h5>
+								<h5 style="padding-left: 15px">
+									Siret:<%=profil.getSiret()%></h5>
 								<h5 style="padding-left: 15px">
 									<%=Etoile.getNbrEtoiles(profil.getNote())%>
 								</h5>
-
-
 
 							</div>
 
@@ -172,8 +171,7 @@
 												for (AvisBean avisBean:listAvis){
 											%>
 											<tr>
-												<td><%=Etoile.getNbrEtoiles(avisBean.getNote())%> 
-												<strong><%=avisBean.getPrenomnotateur()%></strong>
+												<td><%=Etoile.getNbrEtoiles(avisBean.getNote())%> <strong><%=avisBean.getPrenomnotateur()%></strong>
 												</td>
 												<td><%=avisBean.getLibelle()%></td>
 

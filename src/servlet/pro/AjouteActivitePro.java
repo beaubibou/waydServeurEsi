@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
+import website.metier.AuthentificationSite;
 import website.metier.DureeBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
@@ -42,23 +43,10 @@ public class AjouteActivitePro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifiePro())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-		
-		
-		
-		
 	
 		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(request, response);
 		
@@ -73,9 +61,13 @@ public class AjouteActivitePro extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
+		
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
+		
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
@@ -102,17 +94,15 @@ public class AjouteActivitePro extends HttpServlet {
 			return;
 		}
 			
-		if (profil != null) {
+		
 			website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
-
-			LOG.info("**********ajoute actuvute"+titre);
-			activiteDAO.addActivitePro(profil.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
+			activiteDAO.addActivitePro(authentification.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
 					longitude, typeactivite, ProfilBean.PRO, 2);
 			
 			response.sendRedirect("AcceuilPro");
 			
 
-		}
+		
 
 	}
 	
