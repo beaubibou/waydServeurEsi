@@ -31,6 +31,19 @@
 </head>
 <body>
 
+<div class="container">
+		<div class="page-header">
+			
+			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
+				alt="Cinque Terre" width="100" height="100">Connectez vous</h1>
+		</div>
+		<p>blablal......</p>
+		
+	
+	</div>
+	
+	
+	
 	<form id="formmasque" action="/wayd/Connexion" method="post">
 		<input id="token" type="hidden" class="form-control" name="token">
 		<input id="pwd" type="hidden" class="form-control" name="pwd">
@@ -42,7 +55,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Sign In</div>
+					<div class="panel-title">Connectez vous</div>
 					<div
 						style="float: right; font-size: 80%; position: relative; top: -10px">
 						<a href="form_forget_password.html">Mot de passe oublié?</a>
@@ -70,7 +83,7 @@
 								placeholder="password">
 						</div>
 
-
+<!-- 
 						<div class="input-group">
 							<div class="checkbox">
 								<label> <input id="login-remember" type="checkbox"
@@ -79,7 +92,7 @@
 							</div>
 						</div>
 
-
+ -->
 						<div style="margin-top: 10px" class="form-group">
 							<!-- Button -->
 

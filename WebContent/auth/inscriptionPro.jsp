@@ -34,7 +34,16 @@
 
 </head>
 <body>
-
+<div class="container">
+		<div class="page-header">
+			
+			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
+				alt="Cinque Terre" width="100" height="100">Décris ton activité </h1>
+		</div>
+		<p>blablal......</p>
+			<p>blablal......</p>
+	
+	</div>
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -87,8 +96,7 @@
 						</div>
 						
 						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %></h5>
-						
-						</br>
+				
 						<button type="submit" class="btn btn-info">Enregistrer</button>
 
 						<div class="form-group">
@@ -108,7 +116,7 @@
 				</div>
 			</div>
 		</div>
-
+</div>
 
 		<script>
 			var placeSearch, autocomplete;

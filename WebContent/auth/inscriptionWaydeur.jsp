@@ -40,6 +40,17 @@
 	ArrayList<SexeBean> listSexe= CacheValueDAO.getListSexe();
 	%>
 
+<div class="container">
+		<div class="page-header">
+			
+			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
+				alt="Cinque Terre" width="100" height="100">Décrivez vous</h1>
+		</div>
+		<p>blablal......</p>
+			<p>blablal......</p>
+	
+	</div>
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">

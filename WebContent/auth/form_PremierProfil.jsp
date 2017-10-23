@@ -41,6 +41,20 @@
 			response.sendRedirect("commun/acceuil.html");
 	%>
 
+
+<div class="container">
+		<div class="page-header">
+			
+			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
+				alt="Cinque Terre" width="100" height="100">Bienvenue. Suivez les étapes pour intégrer la communauté</h1>
+		</div>
+		<p>blablal......</p>
+			<p>blablal......</p>
+	
+	</div>
+
+
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -53,7 +67,7 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 				<div class="form-group">
-					<h2>Vous êtkkes?</h2>
+					<h2>Vous êtes?</h2>
 					</br>
 					</div>
 
