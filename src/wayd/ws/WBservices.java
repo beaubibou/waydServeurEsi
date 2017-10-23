@@ -733,6 +733,10 @@ public class WBservices {
 
 			}
 
+			// Ajoute le nbr de vu pour chaque vu de l'activité
+			website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,activite.getIdorganisateur());
+			
+			
 			String loginfo = "getActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);

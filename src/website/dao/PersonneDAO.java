@@ -294,11 +294,13 @@ public class PersonneDAO {
 
 		Connection connexion = null;
 		try {
+			
+			// on met le sexe à autre
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
-					+ "premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=?, siret=?,telephone=?"
+					+ "premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=?, siret=?,telephone=?,sexe=2 "
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -414,7 +416,7 @@ public class PersonneDAO {
 		commentaire = commentaire.trim();
 		Connection connexion = null;
 
-		LOG.info("updateProfilProFullWaydeur");
+		LOG.info("updateProfilProFullWaydeur sexe " +sexe);
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);

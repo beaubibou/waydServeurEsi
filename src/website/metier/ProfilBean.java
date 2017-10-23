@@ -206,8 +206,7 @@ public class ProfilBean {
 			String adresse, String siteWeb, String telephone,
 			double latitudeFixe, double longitudeFixe, String siret) {
 		super();
-		
-	
+			
 		this.id = id;
 		this.nom = nom;
 		this.pseudo = pseudo;
@@ -220,8 +219,6 @@ public class ProfilBean {
 		this.note = note;
 		this.photostr = photostr;
 		this.age = getAgeStr(datenaissance, afficheage);
-		if (affichesexe)
-			this.sexe = 3;
 		this.dateNaissance = datenaissance;
 		this.commentaire = commentaire;
 		this.admin = admin;

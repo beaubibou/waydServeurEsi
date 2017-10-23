@@ -120,6 +120,8 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
+		success=false;
+		
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
 
@@ -127,7 +129,7 @@ public class Connexion extends HttpServlet {
 			int temps = 0;
 			while (temps < 500) {
 				Thread.sleep(30);
-				LOG.info("wait");
+				LOG.info("wait"+temps);
 				temps++;
 				if (success) {
 
@@ -140,10 +142,13 @@ public class Connexion extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		LOG.info("************Sortie");
 
 	}
 
+	
+	
 	public void testToken(String idtoken, HttpServletRequest request,
 			HttpServletResponse response, String pwd) {
 
@@ -156,6 +161,8 @@ public class Connexion extends HttpServlet {
 						LOG.info("Feed back onsuccess");
 						String uid = decodedToken.getUid();
 
+					
+						
 						// if (!decodedToken.isEmailVerified() && pwd!=null ){
 						//
 						// try {
@@ -184,11 +191,10 @@ public class Connexion extends HttpServlet {
 
 								profil = PersonneDAO.getFullProfilByUid(uid);
 								LOG.info("User crée" + profil);
-
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
 								success = true;
-								return;
+								return ;
 							} catch (SQLException | NamingException
 									| IOException e) {
 								// TODO Auto-generated catch block
@@ -265,9 +271,7 @@ public class Connexion extends HttpServlet {
 
 								break;
 
-							case ProfilBean.ASSOCIATION:
-
-								break;
+							
 
 							}
 

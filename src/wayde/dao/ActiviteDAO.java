@@ -28,7 +28,8 @@ public class ActiviteDAO {
 	public ActiviteDAO(Connection connexion) {
 		this.connexion = connexion;
 	}
-
+		
+	
 	public Activite getActivite(int idactivite_) {
 
 			Activite activite = null;
@@ -212,6 +213,9 @@ public class ActiviteDAO {
 		activite.setId(cle);
 
 	}
+
+	
+	
 
 	public void addRefus(int idPersonne,int idActivite) throws SQLException {
 

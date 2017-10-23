@@ -42,11 +42,25 @@ public class ParametreHtmlPro {
 				+ " caractères maximum";
 	}
 	
+	public static String getHintPseudoWaydeur() {
+
+		return "Ton pseudo " + TAILLE_PSEUDO_MAX
+				+ " caractères maximum";
+	}
+	
 	public static String getHintDescriptionProfil() {
 
 		return "Décrivez votre activité " + TAILLE_DESCRIPTION_PROFIL_MAX
 				+ " caractères maximum";
 	}
+	
+	public static String getHintDescriptionProfilWaydeur() {
+
+		return "Décrivez votre profil en quelques mots " + TAILLE_DESCRIPTION_PROFIL_MAX
+				+ " caractères maximum";
+	}
+	
+	
 	public static String getHintDescriptionMessageContact() {
 
 		return "Laissez votre message " + TAILLE_MESSAGE_CONTACT_MAX

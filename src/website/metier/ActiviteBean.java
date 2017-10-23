@@ -73,6 +73,16 @@ public class ActiviteBean {
 	private int typeAccess;
 
 	private String libelleActivite;
+	
+	private int nbrVu=9;
+
+	public int getNbrVu() {
+		return nbrVu;
+	}
+
+	public void setNbrVu(int nbrVu) {
+		this.nbrVu = nbrVu;
+	}
 
 	private double latRef, longRef; // Coordonnée du pont de recherche
 
@@ -277,6 +287,42 @@ public class ActiviteBean {
 
 	}
 
+	public ActiviteBean(int id, String titre, String libelle,
+			int idorganisateur, Date datedebut, Date datefin,
+			int idtypeactivite, double latitude, double longitude,
+			String adresse, String nom, String pseudo, String photo,
+			double note, int role, boolean archive, int totalavis,
+			Date datenaissance, int sexe, int nbrparticipant,
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,int nbrvu) {
+
+		super();
+		this.id = id;
+		this.titre = titre;
+		this.libelle = libelle;
+		this.idorganisateur = idorganisateur;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.datefinStr = Outils.getStringWsFromDate(datefin);
+		this.datedebut = datedebut;
+		this.datefin = datefin;
+		this.datedebutStr = Outils.getStringWsFromDate(datedebut);
+		this.nomorganisateur = nom;
+		this.pseudo = pseudo;
+		this.photo = photo;
+		this.note = note;
+		this.totalavis = totalavis;
+		this.sexe = sexe;
+		this.nbrparticipant = nbrparticipant;
+		this.typeactivite = idtypeactivite;
+		this.nbmaxwaydeur = nbmaxwaydeur;
+		this.idorganisateur = idorganisateur;
+		this.adresse = adresse;
+		this.nbrVu=nbrvu;
+		
+
+	}
+
+	
 	public int getIdorganisateur() {
 		return idorganisateur;
 	}

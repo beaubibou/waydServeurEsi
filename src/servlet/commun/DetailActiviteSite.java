@@ -63,6 +63,9 @@ public class DetailActiviteSite extends HttpServlet {
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
 		activite.setPositionRecherche(filtre.getLatitude(),
 				filtre.getLongitude());
+		
+		ActiviteDAO.addNbrVu(authentification.getId(), idActivite,activite.getIdorganisateur());
+		
 		request.setAttribute("activite", activite);
 
 		// recuepre les coordonnes du filtre pour le calcul de la distance

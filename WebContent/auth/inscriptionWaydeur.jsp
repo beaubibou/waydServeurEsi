@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="website.metier.ProfilBean"%>
+    <%@page import="website.html.*"%>
+	<%@page import="website.dao.CacheValueDAO"%>
+	<%@page import="java.util.ArrayList"%>
+	<%@page import="website.metier.SexeBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -22,6 +26,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 
 <script>
 	var latitude = 0;
@@ -32,7 +37,7 @@
 <body>
 
 	<%
-	
+	ArrayList<SexeBean> listSexe= CacheValueDAO.getListSexe();
 	%>
 
 	<div class="container">
@@ -52,17 +57,25 @@
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Pseudo*:</label> <input type="text"
-								class="form-control"  name="nom" placeholder="Pseudo max 12 caractéres" maxlength="12"
+								class="form-control"  name="nom" placeholder="<%=ParametreHtmlPro.getHintPseudoWaydeur() %>"  maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>"
 								
 								required>
 						</div>
 
 						<div  class="form-group">
-							<label for="sexe">Vous êtes:</label> <select class="form-control"
-								id="idsexe" name="sexe">
-								<option value="1">Homme</option>
-								<option value="2">Femme</option>
-							</select>
+							<label for="sexe">Vous êtes:</label> 	<select class="form-control" id="genre" name="sexe">
+
+									<%
+										for (SexeBean sexebean:listSexe){
+									%>
+									<option value=<%=sexebean.getId()%>
+										>
+										<%=sexebean.getLibelle()%></option>
+
+									<%
+										};
+									%>
+								</select>
 						</div>
 						
 							<input type="hidden" class="form-control" 
@@ -70,10 +83,11 @@
 			
 						<div class="form-group">
 							<label for="commentaire">Renseignements:</label>
-							<textarea class="form-control" rows="5" id="commentaire"
-								name="commentaire" placeholder="Décris toi en quelques mots"></textarea>
+							<textarea class="form-control" rows="5" id="description"
+								name="commentaire" placeholder="<%=ParametreHtmlPro.getHintDescriptionProfilWaydeur() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX %>"></textarea>
 						</div>
-
+	<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur "<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>"</h5>
+					
 						</br>
 						<button type="submit" class="btn btn-info">Enregistrer</button>
 			
@@ -83,7 +97,28 @@
 				</div>
 			</div>
 		</div>
+<script>
+		$(document).ready(function(e) {
 
+			$('#description').keyup(function() {
+
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
+
+				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+
+			})
+
+		});
+
+		// Init le nombre de caraterces	
+		var nombreCaractere = $('#description').val().length;
+		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+		$('#nbr').text(msg);
+	</script>
 
 	
 

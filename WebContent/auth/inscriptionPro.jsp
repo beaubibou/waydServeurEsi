@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.TypeAccess"%>
-
+<%@page import="website.html.*"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@page import="website.dao.CacheValueDAO"%>
@@ -26,7 +26,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
-
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 <script>
 	var latitude = 0;
 	var longitude = 0;
@@ -51,20 +51,20 @@
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Nom*:</label> <input type="text"
-								 maxlength="15" class="form-control" id="nom" placeholder="Nom " name="nom"
+								 maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>" class="form-control" id="nom" placeholder="Nom " name="nom"
 								required>
 						</div>
 
 						<div class="form-group">
 							<label for="nom">Numéro SIRET*:</label> <input type="text"
 								class="form-control" id="nom" placeholder="numero siret "
-								name="siret" maxlength="20" required>
+								name="siret"  maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX %>" required>
 						</div>
 
 						<div class="form-group">
 							<label for="nom">Téléphone:</label> <input type="text"
 								class="form-control" id="nom" placeholder="téléphone"
-								name="telephone" required
+								name="telephone" required maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
 								>
 						</div>
 
@@ -72,20 +72,22 @@
 							placeholder="typeuser" name="typeuser" required value="1">
 
 
-
 						<div class="form-group">
 							<label for="adresse">Adresse*:</label> <input type="text"
 								class="form-control" id="adresse"
 								placeholder="Renseigner l'adresse" name="adresse"
-								onkeypress="initPosition()">
+								onkeypress="initPosition()" maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX %>">
 						</div>
 
 						<div class="form-group">
 							<label for="commentaire">Renseignements:</label>
-							<textarea class="form-control" rows="5" id="commentaire"
+							<textarea class="form-control" rows="5" id="description"
+							placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX %>"
 								name="commentaire"></textarea>
 						</div>
-
+						
+						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %></h5>
+						
 						</br>
 						<button type="submit" class="btn btn-info">Enregistrer</button>
 
@@ -181,5 +183,27 @@
 
 			}
 		</script>
+			<script>
+		$(document).ready(function(e) {
+
+			$('#description').keyup(function() {
+
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
+
+				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+
+			})
+
+		});
+
+		// Init le nombre de caraterces	
+		var nombreCaractere = $('#description').val().length;
+		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+		$('#nbr').text(msg);
+	</script>
 </body>
 </html>

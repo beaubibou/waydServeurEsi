@@ -1,9 +1,7 @@
 package servlet.commun;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
-import wayde.bean.Profil;
-import wayde.dao.PersonneDAO;
 import website.metier.ProfilBean;
 
 /**
@@ -44,13 +39,10 @@ public class Form_PremierProfil extends HttpServlet {
 		String nom = request.getParameter("nom");
 		String adresse = request.getParameter("adresse");
 		String commentaire = request.getParameter("commentaire");
-		String siret = request.getParameter("siret");
-		String telephone = request.getParameter("telephone");
 		int typeuser = Integer.parseInt(request.getParameter("typeuser"));
 		double latitude = 0;
 		double longitude = 0;
-		int sexe = 1;
-
+	
 		if (request.getParameter("latitude") != null)
 		
 		 latitude = Double.parseDouble(request.getParameter("latitude"));
@@ -58,9 +50,7 @@ public class Form_PremierProfil extends HttpServlet {
 		if (request.getParameter("longitude") != null)
 			 longitude =Double.parseDouble(request.getParameter("longitude"));
 
-			if (request.getParameter("sexe") != null)
-				sexe = Integer.parseInt(request.getParameter("sexe"));
-
+	
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
 		if (profil != null) {
@@ -69,7 +59,10 @@ public class Form_PremierProfil extends HttpServlet {
 			switch (typeuser) {
 
 			case ProfilBean.PRO:
-
+			
+				String siret = request.getParameter("siret");
+				String telephone = request.getParameter("telephone");
+			
 				personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
 						 commentaire,   siret, telephone,profil.getId());
 				profil.setPseudo(nom);
@@ -82,27 +75,24 @@ public class Form_PremierProfil extends HttpServlet {
 				profil.setLongitudeFixe(longitude);
 				profil.setSiret(siret);
 				profil.setTelephone(telephone);
-				
 				profil.setPremiereconnexion(false);
 				response.sendRedirect("AcceuilPro");
 
 				break;
 
-			case ProfilBean.ASSOCIATION:
-
-				personneDAO.updateProfilAssociation(nom, adresse, latitude,
-						longitude, typeuser);
-				
-
-				break;
+			
 
 			case ProfilBean.WAYDEUR:
+			
+				
+				int sexe = Integer.parseInt(request.getParameter("sexe"));
 				personneDAO.updateProfilWaydeur(nom, sexe, commentaire,
 						profil.getId());
 				profil.setPseudo(nom);
 				profil.setCommentaire(commentaire);
 				profil.setTypeuser(typeuser);
 				profil.setPremiereconnexion(false);
+				profil.setSexe(sexe);
 				response.sendRedirect("AcceuilWaydeur");
 			
 

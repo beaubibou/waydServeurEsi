@@ -127,7 +127,7 @@
 									<td><textarea class="form-control" disabled rows="2"
 											id="comment"><%=activite.getLibelle()%></textarea></td>
 
-									<td><span class="badge">10</span></td>
+									<td><span class="badge"><%=activite.getNbrVu()%></span></td>
 
 									<%
 										if (!activite.isTerminee()){
