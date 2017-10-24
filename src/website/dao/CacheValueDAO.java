@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
 import website.enumeration.TypePhoto;
 import website.metier.DureeBean;
@@ -24,7 +26,8 @@ import website.metier.TypeEtatActivite;
 import website.metier.TypeUser;
 
 public class CacheValueDAO {
-
+	private static final Logger LOG = Logger.getLogger(CacheValueDAO.class);
+	
 	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
 	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<TypePhoto, String>();
 
@@ -232,7 +235,7 @@ public class CacheValueDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=1 order by ordre asc";
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=2 order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
 
@@ -264,7 +267,7 @@ public class CacheValueDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
-			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=3 order by ordre asc";
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=3 or typeuser=2 order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
 
