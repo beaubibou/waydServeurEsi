@@ -1,6 +1,7 @@
 package wayd.ws;
 
 import fcm.PushNotifictionHelper;
+import fcm.ServeurMethodes;
 import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AcquitMessageByActGcm;
 import gcmnotification.AcquitMessageDiscussionByActGcm;
@@ -87,6 +88,7 @@ import wayde.dao.PreferenceDAO;
 import wayde.dao.SignalementDAO;
 import wayde.dao.SuggestionDAO;
 import wayde.dao.TypeActiviteDAO;
+import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 
 import com.google.firebase.FirebaseApp;
@@ -734,9 +736,9 @@ public class WBservices {
 			}
 
 			// Ajoute le nbr de vu pour chaque vu de l'activité
-			website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,activite.getIdorganisateur());
-			
-			
+			website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,
+					activite.getIdorganisateur());
+
 			String loginfo = "getActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -3545,6 +3547,218 @@ public class WBservices {
 
 		} finally {
 			CxoPool.closeConnection(connexion);
+		}
+
+	}
+
+	public Activite[] getActivites(int idPersonne, String latitudestr,
+			String longitudestr, int rayonmetre, int typeactivite,
+			String motcle, int typeUser, int commenceDans, String jeton) {
+		double malatitude = Double.valueOf(latitudestr);
+		double malongitude = Double.valueOf(longitudestr);
+
+		int TOUTES = -1;
+		LOG.info("getActivits");
+		LOG.info("lat-" + malatitude + " lon-" + malongitude + " ray="
+				+ rayonmetre + " typeactivite=" + typeactivite + " mot cle="
+				+ motcle + " typeuser=" + typeUser + " commence="
+				+ commenceDans);
+
+		Connection connexion = null;
+		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		LOG.info("commence" + commenceDans);
+		try {
+			connexion = CxoPool.getConnection();
+			double coef = rayonmetre * 0.007 / 700;
+			double latMin = malatitude - coef;
+			double latMax = malatitude + coef;
+			double longMin = malongitude - coef;
+			double longMax = malongitude + coef;
+			Activite activite = null;
+
+			Calendar calendrierDebut = Calendar.getInstance();
+
+			if (commenceDans != TOUTES)
+				calendrierDebut.add(Calendar.MINUTE, commenceDans * 60);
+
+			Date dateRechercheDebut = calendrierDebut.getTime();
+
+			Calendar calendrierFin = Calendar.getInstance();
+			int finiDans = (commenceDans) * 60 + 60;
+			calendrierFin.add(Calendar.MINUTE, finiDans);
+			Date dateRechercheFin = calendrierFin.getTime();
+			// on remonte les activitÃ©s dont le debut est comprise entre
+			// l'heure
+			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
+			// heure
+
+			String requete = null;
+
+			// Renvoi les immédiates
+			if (commenceDans == 0) {
+
+				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
+						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
+						+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
+						+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
+						+ "and (? between datedebut and  datefin )"
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?";
+			}
+			;
+			// else
+			// {
+			// requete =
+			// " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+			// +
+			// " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+			// +
+			// "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
+			// + "activite.nbrwaydeur as nbrparticipant,1 as role,"
+			// +
+			// "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
+			// + "activite  WHERE personne.idpersonne = activite.idpersonne  "
+			// + "and (datefin>? )"
+			// + " and activite.latitude between ? and ?"
+			// + " and activite.longitude between ? and ?";
+			//
+			// }
+
+			if (typeactivite != -1) {
+				requete = requete + " and activite.idtypeactivite=?";
+			}
+
+			if (!motcle.isEmpty()) {
+				LOG.info("ajoute mot");
+
+				requete = requete
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
+
+			}
+
+			if (typeUser != 0) {
+				LOG.info("ajoute typuser");
+				requete = requete + " and activite.typeuser=?";
+
+			}
+
+			requete = requete + " ORDER BY datedebut asc;";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+
+			preparedStatement.setDouble(2, latMin);
+			preparedStatement.setDouble(3, latMax);
+			preparedStatement.setDouble(4, longMin);
+			preparedStatement.setDouble(5, longMax);
+
+			int index = 5;
+
+			if (typeactivite != -1) {
+				LOG.info("ajoute typactivite");
+				index++;
+				preparedStatement.setInt(index, typeactivite);
+
+			}
+
+			if (!motcle.isEmpty()) {
+				index++;
+				String test = "%" + motcle + "%";
+				preparedStatement.setString(index, test);
+				index++;
+				preparedStatement.setString(index, test);
+
+			}
+
+			if (typeUser != 0) {
+				LOG.info("ajoute typeuser");
+				index++;
+				preparedStatement.setInt(index, typeUser);
+
+			}
+
+			//
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				double distance = ServeurMethodes.getDistance(malatitude,
+						latitude, malongitude, longitude);
+				if (distance >= rayonmetre)
+					continue;
+
+				int id = rs.getInt("idactivite");
+				String libelle = rs.getString("libelle");
+				String titre = rs.getString("titre");
+				int idorganisateur = rs.getInt("idpersonne");
+				int idtypeactivite = rs.getInt("idtypeactivite");
+				int sexe = rs.getInt("sexe");
+				int nbmaxwayd = rs.getInt("nbmaxwayd");
+				int nbrparticipant = rs.getInt("nbrparticipant");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Date datefin = rs.getTimestamp("datefin");
+				String adresse = rs.getString("adresse");
+				double note = rs.getDouble("note");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				boolean afficheage = rs.getBoolean("afficheage");
+				boolean affichesexe = rs.getBoolean("affichesexe");
+
+				// Date datefinactivite = rs.getTimestamp("d_finactivite");
+
+				if (prenom == null)
+					prenom = "";
+				String photo = rs.getString("photo");
+				int role = rs.getInt("role");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				boolean archive = false;
+				int totalavis = rs.getInt("totalavis");
+				int typeuser = rs.getInt("typeuser");
+				activite = new Activite(id, titre, libelle, idorganisateur,
+						datedebut, datefin, idtypeactivite, latitude,
+						longitude, adresse, nom, prenom, photo, note, role,
+						archive, totalavis, datenaissance, sexe,
+						nbrparticipant, afficheage, affichesexe, nbmaxwayd,
+						typeuser, 0);
+
+				listActivite.add(activite);
+
+			}
+
+			rs.close();
+			preparedStatement.close();
+
+			LOG.info("nbr de retour" + listActivite.size());
+			return (Activite[]) listActivite.toArray(new Activite[listActivite
+					.size()]);
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return (Activite[]) listActivite.toArray(new Activite[listActivite
+					.size()]);
+		} finally {
+			try {
+				if (connexion != null)
+					connexion.close();
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					rs.close();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
