@@ -3581,15 +3581,14 @@ public class WBservices {
 
 			Calendar calendrierDebut = Calendar.getInstance();
 
-			if (commenceDans != TOUTES)
-				calendrierDebut.add(Calendar.MINUTE, commenceDans * 60);
-
 			Date dateRechercheDebut = calendrierDebut.getTime();
 
 			Calendar calendrierFin = Calendar.getInstance();
-			int finiDans = (commenceDans) * 60 + 60;
-			calendrierFin.add(Calendar.MINUTE, finiDans);
+			
+			calendrierFin.add(Calendar.MINUTE, commenceDans);
 			Date dateRechercheFin = calendrierFin.getTime();
+			LOG.info("daterecherche fin"+dateRechercheFin);
+			LOG.info("daterecherche debut"+dateRechercheDebut);
 			// on remonte les activitÃ©s dont le debut est comprise entre
 			// l'heure
 			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
@@ -3610,24 +3609,27 @@ public class WBservices {
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?";
 			}
-			;
-			// else
-			// {
-			// requete =
-			// " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-			// +
-			// " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-			// +
-			// "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
-			// + "activite.nbrwaydeur as nbrparticipant,1 as role,"
-			// +
-			// "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-			// + "activite  WHERE personne.idpersonne = activite.idpersonne  "
-			// + "and (datefin>? )"
-			// + " and activite.latitude between ? and ?"
-			// + " and activite.longitude between ? and ?";
-			//
-			// }
+			
+			
+			// recheche les activite dont la date de debut est comprise entre datefinde rechere et maintenant
+			 else
+			 {
+			//Requete N°2	 
+			 requete =
+			 " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+			 +
+			 " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+			 +
+			 "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
+			 + "activite.nbrwaydeur as nbrparticipant,1 as role,"
+			 +
+			 "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
+			 + "activite  WHERE personne.idpersonne = activite.idpersonne  "
+			 + "and datedebut>? "
+			 + " and activite.latitude between ? and ?"
+			 + " and activite.longitude between ? and ? and datedebut<?";
+			
+			 }
 
 			if (typeactivite != -1) {
 				requete = requete + " and activite.idtypeactivite=?";
@@ -3661,6 +3663,15 @@ public class WBservices {
 
 			int index = 5;
 
+			
+			
+			if (commenceDans!=0){
+				//ajoute à la requete n°2 la date de fin
+				index++;
+				preparedStatement.setTimestamp(index, new java.sql.Timestamp(
+						dateRechercheFin.getTime()));
+			}
+			
 			if (typeactivite != -1) {
 				LOG.info("ajoute typactivite");
 				index++;
@@ -3687,7 +3698,7 @@ public class WBservices {
 			//
 
 			rs = preparedStatement.executeQuery();
-
+LOG.info(requete);
 			while (rs.next()) {
 
 				double latitude = rs.getDouble("latitude");

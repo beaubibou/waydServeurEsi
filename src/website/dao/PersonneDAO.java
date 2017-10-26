@@ -308,7 +308,7 @@ public class PersonneDAO {
 			preparedStatement.setString(2, adresse);
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
-			preparedStatement.setString(5, commentaire);
+			preparedStatement.setString(5, Outils.getStringStatement(commentaire));
 			preparedStatement.setInt(6, ProfilBean.PRO);
 			preparedStatement.setDouble(7, latitude);
 			preparedStatement.setDouble(8, longitude);
