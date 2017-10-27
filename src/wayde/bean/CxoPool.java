@@ -64,8 +64,7 @@ public abstract class CxoPool {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("Driver O.K.");
-
+			
 				String url = "jdbc:postgresql://localhost:5432/wayd";
 				String user = "postgres";
 				String passwd = "azerty";

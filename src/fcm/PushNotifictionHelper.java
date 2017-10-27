@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import wayde.bean.Activite;
 import wayde.bean.Personne;
+import website.metier.ProfilBean;
 
 public class PushNotifictionHelper {
 	public final static String AUTH_KEY_FCM = ServeurMethodes.key_gcm;
@@ -67,7 +68,12 @@ public class PushNotifictionHelper {
 		JSONObject info = new JSONObject();
 		info.put("title", activite.getTitre()); // Notification title
 		info.put("body", StringEscapeUtils.unescapeJava(activite.getLibelle())); // Notification
-		info.put("click_action", "notificationSuggestion");
+		if (activite.getTypeUser()==ProfilBean.WAYDEUR)
+				info.put("click_action", "notificationSuggestion");
+		
+		if (activite.getTypeUser()==ProfilBean.PRO)
+				info.put("click_action", "notificationSuggestionPro");
+		
 		//info.put("icon", mTypeActivite.get(activite.getTypeactivite()));
 		json.put("notification", info);
 
@@ -79,7 +85,6 @@ public class PushNotifictionHelper {
 		int dureeNotification = (int) (activite.datefinactivite.getTime() - new Date()
 				.getTime()) / 1000;
 
-		//System.out.println("dureeenot"+dureeNotification);
 		data.put("time_to_live", dureeNotification);
 		json.put("data", data); // Notification
 		
@@ -93,9 +98,7 @@ public class PushNotifictionHelper {
 					(conn.getInputStream())));
 
 			String output;
-		//	System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
-			//	System.out.println(output);
 			}
 			result = "ok";
 			LOG.info("Notification envoyée Ok");

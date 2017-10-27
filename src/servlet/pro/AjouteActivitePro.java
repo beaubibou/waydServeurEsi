@@ -1,5 +1,7 @@
 package servlet.pro;
 
+import gcmnotification.AddActiviteGcm;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.metier.AuthentificationSite;
@@ -96,8 +99,13 @@ public class AjouteActivitePro extends HttpServlet {
 			
 		
 			website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
-			activiteDAO.addActivitePro(authentification.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
+			int idActivite=activiteDAO.addActivitePro(authentification.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
 					longitude, typeactivite, ProfilBean.PRO, 2);
+			LOG.info("idactivite ajotée"+idActivite);
+		
+			 if (idActivite!=0){
+				 PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
+			 }
 			
 			response.sendRedirect("AcceuilPro");
 			

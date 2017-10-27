@@ -40,7 +40,6 @@ public class ComptePro extends HttpServlet {
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 
-		// System.out.println("Profil dans acceuil pro" + profil);
 		if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return;
@@ -78,10 +77,6 @@ public class ComptePro extends HttpServlet {
 		String telephone = request.getParameter("telephone");
 		String siteWeb = request.getParameter("siteweb");
 		String siret = request.getParameter("siret");
-
-		System.out.println("ComptePro-method post" + " " + adresse + "typeuse "
-				+ " lat:" + latitude + "  " + longitude + siteWeb + " "
-				+ telephone);
 
 		ProfilBean profil = authentification.getProfil();
 		FiltreRecherche filtreRecherche = authentification.getFiltre();

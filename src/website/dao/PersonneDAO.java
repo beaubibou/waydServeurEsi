@@ -298,7 +298,6 @@ public class PersonneDAO {
 			// on met le sexe à autre
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
 					+ "premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=?, siret=?,telephone=?,sexe=2 "
 					+ " WHERE idpersonne=?";
@@ -357,7 +356,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
 					+ "siteweb=?,telephone=?,latitudefixe=?,longitudefixe=?,siret=? "
 					+ " WHERE idpersonne=?";
@@ -420,7 +418,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, commentaire=?,sexe=?,typeuser=?,premiereconnexion=false"
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
@@ -466,7 +463,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set photo=?"
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion
@@ -510,7 +506,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			System.out.println("uopdate user");
 			String requete = "UPDATE  personne set prenom=?, adresse=?,commentaire=?,datenaissance=? ,affichesexe=?,afficheage=?,sexe=?"
 					+ " WHERE idpersonne=?";
 			PreparedStatement preparedStatement = connexion

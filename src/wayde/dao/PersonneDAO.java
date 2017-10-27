@@ -242,7 +242,6 @@ public class PersonneDAO {
 
 	public String test_getToken(int idpersonne) throws Exception {
 		Statement stmt = connexion.createStatement();
-		System.out.println("Cherche token" + idpersonne);
 		String requete = " SELECT jeton from personne where idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);

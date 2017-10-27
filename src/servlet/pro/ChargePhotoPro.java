@@ -90,8 +90,6 @@ public class ChargePhotoPro extends HttpServlet {
 						String fileName = fi.getName();
 						boolean isInMemory = fi.isInMemory();
 						long sizeInBytes = fi.getSize();
-						// file = new File( filePath + "yourFileName") ;
-						System.out.println(fi.getString());
 						BufferedImage imBuff = ImageIO
 								.read(fi.getInputStream());
 

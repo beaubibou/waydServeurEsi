@@ -71,18 +71,15 @@ public class SignalerProfil extends HttpServlet {
 					complement);
 
 			if (messageServeur.isReponse()) {
-				System.out.println("message servuer ok");
 				switch (authentification.getProfil().getTypeuser()) {
 
 				case ProfilBean.WAYDEUR:
-					System.out.println("Profil waydeur");
 					
 					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
 							"MesActivitesWaydeur").send(request, response);
 					return;
 
 				case ProfilBean.PRO:
-					System.out.println("Profil pro");
 					
 					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
 							"MesActivites").send(request, response);
@@ -92,8 +89,7 @@ public class SignalerProfil extends HttpServlet {
 			}
 			if (!messageServeur.isReponse()) {
 				{
-					System.out.println("message servuer nok");
-
+			
 					if (authentification.isPro()) {
 						new AlertInfoJsp(messageServeur.getMessage(),
 								AlertJsp.Alert, "MesActivites").send(request,response);

@@ -4,6 +4,8 @@ package wayde.bean;
 import java.util.Calendar;
 import java.util.Date;
 
+import website.metier.ActiviteBean;
+
 public class Activite {
 	
 
@@ -199,6 +201,31 @@ public class Activite {
 	        }
 		
 	
+	public Activite(ActiviteBean activiteBean) {
+		// TODO Auto-generated constructor stub
+	
+		this.id=activiteBean.getId();
+		this.titre = activiteBean.getTitre();
+		this.libelle =activiteBean.getLibelle();
+		this.idorganisateur = activiteBean.getIdorganisateur();
+		this.latitude = activiteBean.getLatitude();
+		this.longitude = activiteBean.getLongitude();
+		this.adresse = activiteBean.getAdresse();
+		this.datefinStr = Parametres.getStringWsFromDate(activiteBean.getDatefin());
+		this.datedebut=activiteBean.getDatedebut();
+		this.datefinactivite=activiteBean.datefin;
+		this.datedebutStr = Parametres.getStringWsFromDate(activiteBean.getDatedebut());
+		this.nomorganisateur=activiteBean.getNomorganisateur();
+		this.prenomorganisateur=activiteBean.getPseudo();
+		this.photo=activiteBean.getPhoto();
+		this.typeUser=typeUser;
+		this.typeAcces=typeAcces;
+		this.nbmaxwaydeur=nbmaxwaydeur;
+		if (this.titre.equals(""))this.titre=" ";
+		
+	
+	}
+
 	private long getSeTermine(Date finActivite) {// calcul en miliseconde le temps avant la fin
 		// TODO Auto-generated method stub
 		return  finActivite.getTime()-new Date().getTime();

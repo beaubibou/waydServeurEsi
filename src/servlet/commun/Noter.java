@@ -41,7 +41,6 @@ public class Noter extends HttpServlet {
 	
 		String description=request.getParameter("description");
 
-	System.out.println(note+" "+description);
 	
 	}
 

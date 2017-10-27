@@ -33,9 +33,7 @@ public class AlertInfoJsp {
 		
 		if (redirection==null)return "";
 		else
-		{System.out.println("redirection");
-			
-			return "document.location.href="+"\""+redirection+"\""+";";
+		{	return "document.location.href="+"\""+redirection+"\""+";";
 			
 		}
 			

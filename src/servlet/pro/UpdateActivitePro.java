@@ -48,8 +48,7 @@ public class UpdateActivitePro extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.print("modifie activite");
-
+	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
@@ -58,8 +57,6 @@ public class UpdateActivitePro extends HttpServlet {
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
-
-		System.out.println("aderess" + adresse);
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
@@ -75,8 +72,7 @@ public class UpdateActivitePro extends HttpServlet {
 
 		Date dateDebut = null;
 		Date dateFin = null;
-		System.out.println("idac"+idactivite);
-
+	
 		try {
 			dateDebut = Outils.getDateFromString(datedebut);
 			dateFin = Outils.getDateFromString(datefin);

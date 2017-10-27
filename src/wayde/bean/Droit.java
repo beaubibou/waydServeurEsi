@@ -64,10 +64,7 @@ public class Droit {
 	public MessageServeur isDefautAccess() {// Test uniquement que le compte,est
 											// actif est pas verrouille
 
-	//	return new MessageServeur(true, "Ok");
-		
-	//	System.out.println("actif "+actif);
-		
+	
 		if (!actif)
 			return new MessageServeur(false, "Votre compte n'est plus actif");
 		if (verrouille)

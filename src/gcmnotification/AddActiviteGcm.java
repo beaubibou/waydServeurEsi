@@ -13,6 +13,7 @@ import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ActiviteDAO;
+import website.metier.ActiviteBean;
 
 public class AddActiviteGcm implements Runnable {
 	Activite activite;
@@ -25,6 +26,37 @@ public class AddActiviteGcm implements Runnable {
 
 	}
 
+	public AddActiviteGcm(ActiviteBean activiteBean, int idOrganisateur) {
+
+		this.idOrganisateur = idOrganisateur;
+		this.activite = new Activite(activiteBean);
+
+	}
+
+	public AddActiviteGcm(int idactivite) {
+	
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			Activite activiteTemp = new ActiviteDAO(connexion)
+					.getActivite(idactivite);
+			this.idOrganisateur = activiteTemp.getIdorganisateur();
+			this.activite = activiteTemp;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (connexion != null)
+				try {
+					connexion.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+
 	@Override
 	public void run() {
 
@@ -33,12 +65,15 @@ public class AddActiviteGcm implements Runnable {
 
 			connexiongcm = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexiongcm);
-			final ArrayList<Personne> personneinteresse = activitedao.getListPersonneInterresse(activite);
+			final ArrayList<Personne> personneinteresse = activitedao
+					.getListPersonneInterresse(activite);
 			ServeurMethodes serveurmethode = new ServeurMethodes(connexiongcm);
 			serveurmethode.gcmUpdateNbrActivite(idOrganisateur);
-			serveurmethode.gcmPushInterressByactivite(personneinteresse, activite.getId());
+			serveurmethode.gcmPushInterressByactivite(personneinteresse,
+					activite.getId());
 			serveurmethode.gcmUpdateNbrSuggestion(personneinteresse);
-			PushNotifictionHelper.sendPushNotificationSuggestionList(personneinteresse, activite);
+			PushNotifictionHelper.sendPushNotificationSuggestionList(
+					personneinteresse, activite);
 
 		} catch (SQLException | NamingException e1) {
 			// TODO Auto-generated catch block

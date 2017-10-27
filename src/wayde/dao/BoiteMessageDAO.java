@@ -846,9 +846,7 @@ public class BoiteMessageDAO {
 			boolean lu = rs.getBoolean("lu");
 			boolean archive = false;
 			boolean supprime = false;
-			System.out
-					.println("********************Methode get messagebyact after  "
-							+ idmessage);
+			
 			message = new Message(idmessage, nomemetteur, prenomemetteur,
 					idmetteur, sujet, corps, datecreation, lu, archive,
 					supprime, idactivite);

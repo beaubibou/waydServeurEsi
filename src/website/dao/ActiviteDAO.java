@@ -15,10 +15,18 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
+import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.LibelleMessage;
 import wayde.bean.MessageServeur;
+import wayde.bean.Notification;
+import wayde.bean.Personne;
+
+import wayde.dao.DiscussionDAO;
+import wayde.dao.NotificationDAO;
+import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
 import website.metier.ActiviteAjax;
@@ -28,6 +36,7 @@ import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeEtatActivite;
 import fcm.ServeurMethodes;
+import gcmnotification.EffaceActiviteGcm;
 
 public class ActiviteDAO {
 
@@ -42,13 +51,15 @@ public class ActiviteDAO {
 
 	}
 
-	public static boolean addNbrVu(int idpersonne, int idactivite,int idorganisateur) {
+	public static boolean addNbrVu(int idpersonne, int idactivite,
+			int idorganisateur) {
 
 		Connection connexion = null;
-		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement = null;
 
-		if (idorganisateur==idpersonne)return false;
-		
+		if (idorganisateur == idpersonne)
+			return false;
+
 		if (isDejaVu(idpersonne, idactivite))
 			return false;
 
@@ -62,14 +73,14 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			requete= "UPDATE activite  SET  nbrvu=nbrvu+1 WHERE idactivite=?";
-			preparedStatement = connexion.prepareStatement(requete);		
+
+			requete = "UPDATE activite  SET  nbrvu=nbrvu+1 WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
-			
+
 			connexion.commit();
-		
+
 			return true;
 
 		} catch (NamingException e) {
@@ -80,15 +91,16 @@ public class ActiviteDAO {
 			e.printStackTrace();
 		} finally {
 
-			
-				try {
-					
-					if (connexion != null)	connexion.close();
-					if (preparedStatement!=null)preparedStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			try {
+
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
@@ -110,25 +122,28 @@ public class ActiviteDAO {
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setInt(2, idactivite);
 			rs = preparedStatement.executeQuery();
-		
-			if (rs.next())return true;
-				
+
+			if (rs.next())
+				return true;
+
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		finally{
-			
-				try {
-					if (rs!=null)	rs.close();
-					if (preparedStatement!=null)preparedStatement.close();
-					connexion.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		return false;
 	}
@@ -361,11 +376,13 @@ public class ActiviteDAO {
 
 	}
 
-	public void addActivitePro(int idpersonne, String titre,
-			String commentaire, Date datedebut, Date datefin, String adresse,
-			double latitude, double longitude, int idtypeactivite,
-			int typeuser, int typeaccess) {
+	public int addActivitePro(int idpersonne, String titre, String commentaire,
+			Date datedebut, Date datefin, String adresse, double latitude,
+			double longitude, int idtypeactivite, int typeuser, int typeaccess) {
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+		
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -375,7 +392,7 @@ public class ActiviteDAO {
 					+ " idtypeactivite,datecreation,typeuser,typeacces,nbrvu)"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
 
-			PreparedStatement preparedStatement = connexion.prepareStatement(
+			 preparedStatement = connexion.prepareStatement(
 					requete, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
@@ -394,15 +411,30 @@ public class ActiviteDAO {
 			preparedStatement.setInt(12, typeuser);
 			preparedStatement.setInt(13, typeaccess);
 			preparedStatement.execute();
-			preparedStatement.close();
 			connexion.commit();
-
+			 rs = preparedStatement.getGeneratedKeys();
+			int cle = 0;
+			if (rs.next())
+				cle = rs.getInt("idactivite");
+		
+			return cle;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+		
+				try {
+					if (rs!=null)	rs.close();
+					if (connexion!=null)connexion.close();
+					if (preparedStatement!=null)preparedStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		LOG.info("Creation activite user");
-
+		return 0;
 	}
 
 	public static IndicateurWayd getIndicateurs() {
@@ -829,15 +861,15 @@ public class ActiviteDAO {
 				int role = rs.getInt("role");
 				int sexe = rs.getInt("sexe");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
-			
+
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-				
+
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
 						archive, totalavis, datenaissance, sexe,
 						nbrparticipant, true, true, nbmaxwayd);
-				
+
 				retour.add(activite);
 
 			}
@@ -863,7 +895,7 @@ public class ActiviteDAO {
 				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
 						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-				System.out.println("encours");
+			
 				break;
 			case TypeEtatActivite.TERMINEE:
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
@@ -879,7 +911,7 @@ public class ActiviteDAO {
 				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
 						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-				System.out.println("encours");
+				
 				break;
 
 			case TypeEtatActivite.TOUTES:
@@ -917,15 +949,15 @@ public class ActiviteDAO {
 				int sexe = rs.getInt("sexe");
 				int totalavis = rs.getInt("totalavis");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				int nbrvu=rs.getInt("nbrvu");
+				int nbrvu = rs.getInt("nbrvu");
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, 1,
 						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, true, true, nbmaxwayd,nbrvu);
-				
+						nbrparticipant, true, true, nbmaxwayd, nbrvu);
+
 				retour.add(activite);
 			}
 
@@ -969,7 +1001,6 @@ public class ActiviteDAO {
 
 			connexion = CxoPool.getConnection();
 			if (typeactivite != -1) {// on trie sur l'activitÃ©
-				System.out.println("tire sur l'activite");
 				String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 						+ "personne.note,personne.nbravis as totalavis,personne.photo,"
@@ -993,7 +1024,6 @@ public class ActiviteDAO {
 			}
 
 			else { // On renvou toutes
-				System.out.println("tire toutes");
 				String requete = " SELECT activite.datedebut,activite.adresse,activite.latitude,activite.longitude,personne.prenom,"
 						+ "personne.sexe,personne.nom,personne.idpersonne,personne.datenaissance,personne.note,personne.nbravis as totalavis,personne.photo,"
 						+ "activite.nbrwaydeur as nbrparticipant,activite.idactivite,activite.libelle,activite.titre,"
@@ -1086,7 +1116,6 @@ public class ActiviteDAO {
 			connexion = CxoPool.getConnection();
 
 			if (typeactivite != -1) {// on trie sur l'activitÃ©
-				System.out.println("tire sur l'activite");
 				String requete = " SELECT count(idactivite) as nbr "
 						+ " FROM personne, activite"
 						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
@@ -1103,7 +1132,6 @@ public class ActiviteDAO {
 			}
 
 			else { // On renvou toutes
-				System.out.println("tire toutes");
 				String requete = " SELECT count(idactivite) as nbr "
 						+ "FROM personne, activite "
 						+ " WHERE personne.idpersonne = activite.idpersonne    "
@@ -1217,6 +1245,77 @@ public class ActiviteDAO {
 		}
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
+
+	}
+	
+	public MessageServeur effaceActivite(int idorganisateur, int idactivite
+			) {
+
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+
+		try {
+
+			connexion = CxoPool.getConnection();
+
+			wayde.dao.ActiviteDAO activitedao = new wayde.dao.ActiviteDAO(connexion);
+			NotificationDAO notificationdao = new NotificationDAO(connexion);
+			ParticipationDAO participationdao = new ParticipationDAO(connexion);
+			DiscussionDAO discussiondao = new DiscussionDAO(connexion);
+
+			Activite activite = activitedao.getActivite(idactivite);
+
+			if (activite == null)
+				return new MessageServeur(false, LibelleMessage.activiteFinie);
+
+			if (activite.isTerminee())
+				return new MessageServeur(false, "L'activite est terminée");
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+		
+			// Recuepre les personnes interesse par cette activitée
+			connexion.setAutoCommit(false);
+			final ArrayList<Personne> personneinteresse = activitedao
+					.getListPersonneInterresse(activitedao
+							.getActivite(idactivite));
+			ArrayList<Personne> participants = participationdao
+					.getListPartipantActivite(idactivite);
+
+			activitedao.RemoveActivite(idactivite);
+			notificationdao.addNotification(participants,
+					Notification.Supprime_Activite, 0, idorganisateur);
+			discussiondao.effaceDiscussionTouteActivite(idactivite);
+			connexion.commit();
+			// new EffaceActiviteGcm(personneinteresse, participants,
+			// idactivite)
+			// .start();
+			PoolThreadGCM.poolThread.execute(new EffaceActiviteGcm(
+					personneinteresse, participants, idactivite));
+
+			String loginfo = "effaceActivite - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+			LOG.info(loginfo);
+			return new MessageServeur(true, LibelleMessage.suppressionActivite);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return new MessageServeur(false, e.getMessage());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new MessageServeur(false, e.getMessage());
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
 
 	}
 
@@ -1342,8 +1441,7 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Creation activite user");
-
+	
 	}
 
 	public ArrayList<ActiviteBean> getListActivites(Double malatitude,
@@ -1510,7 +1608,6 @@ public class ActiviteDAO {
 
 			rs.close();
 			preparedStatement.close();
-			System.out.println(retour.size());
 			return retour;
 
 		} catch (NamingException | SQLException e) {
@@ -1706,7 +1803,6 @@ public class ActiviteDAO {
 
 			rs.close();
 			preparedStatement.close();
-			System.out.println(retour.size());
 			return retour;
 
 		} catch (NamingException | SQLException e) {

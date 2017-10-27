@@ -52,8 +52,6 @@ public class Outils {
 
 			Transport.send(message);
 
-		//	System.out.println("Mail envoye à"+mailof);
-
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

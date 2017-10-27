@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
+import sun.util.locale.provider.LocaleServiceProviderPool.LocalizedObjectGetter;
+import wayd.ws.WBservices;
 import wayde.bean.Personne;
 import wayde.bean.TableauBord;
 import wayde.dao.ActiviteDAO;
@@ -21,6 +25,7 @@ import com.google.firebase.tasks.OnSuccessListener;
 
 public class ServeurMethodes {
 	static String key_gcm = "AIzaSyCpwBa7gclZ9H1oRi0jRZ-tVj2nTWfnrRI";
+	private static final Logger LOG = Logger.getLogger(ServeurMethodes.class);
 
 	Connection connexion;
 
@@ -470,8 +475,12 @@ public class ServeurMethodes {
 		try {
 
 		String	GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
-			if (GCMid == null)
+			
+		LOG.info("GCMID"+GCMid);
+	
+		if (GCMid == null)
 				return;
+			if (GCMid.isEmpty())return;
 			
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_NOTIFICATION));
@@ -490,8 +499,6 @@ public class ServeurMethodes {
 	}
 	
 	
-	
-
 	
 
 	public void gcmAnnuleActivite(ArrayList<Personne> listpersonne,

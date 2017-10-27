@@ -55,9 +55,7 @@ public class ListActivite extends HttpServlet {
 						filtre.getLatitude(), filtre.getLongitude(),
 						filtre.getRayon(), filtre.getTypeactivite());
 				
-				System.out.println("page afiicher"
-						+ request.getParameter("pageAafficher"));
-				System.out.println(filtre.toString());
+			
 
 				int pageAafficher = Integer.parseInt(request
 						.getParameter("pageAafficher"));
@@ -66,7 +64,6 @@ public class ListActivite extends HttpServlet {
 						nbrTotalLigne, pageAafficher, Outils.nbrLigneParPage,
 						Outils.nbrMaxPagination, 1);
 			
-				System.out.println(pagination);
 				ArrayList<ActiviteBean> listActivite = ActiviteDAO
 						.getListActivite(filtre.getLatitude(),
 								filtre.getLongitude(), filtre.getRayon(),
@@ -108,7 +105,6 @@ public class ListActivite extends HttpServlet {
 
 			if (request.getParameter("rechercheactivite") != null) {
 
-				System.out.println("rechercher acti!=null");
 				int rayon = Integer.parseInt(request.getParameter("rayon"));
 				int idtypeactivite = Integer.parseInt(request
 						.getParameter("typeactivite"));

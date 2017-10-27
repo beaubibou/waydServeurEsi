@@ -217,7 +217,7 @@ public class NotificationDAO {
 		ResultSet rs = preparedStatement.executeQuery();
 
 		while (rs.next()) {
-//System.out.println("kkkkkkkkkkkkk");
+
 			String titreactivite = rs.getString("titre");
 			if (titreactivite == null)
 				titreactivite = "";
@@ -291,8 +291,7 @@ public class NotificationDAO {
 
 	public void effaceNotification(int iddestinataire, int idnotification) throws SQLException {
 			PreparedStatement preparedStatement = null;
-	//	System.out.println("Effacement d'une activite");
-		String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
+			String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
 		preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idnotification);
@@ -305,8 +304,7 @@ public class NotificationDAO {
 	}
 
 	public void addNotificationSupAmi(int idpersonne, int idami) throws SQLException {
-	//	System.out.println("*****Ajout notification supprime ami");
-
+	
 		String requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
@@ -327,7 +325,6 @@ public class NotificationDAO {
 
 	public void LitNotification(int idpersonne, int idnotification) throws SQLException {
 			PreparedStatement preparedStatement = null;
-		//	System.out.println("Lecture d'une notification d'une activite");
 			String requete = "UPDATE  notification set lu=true  "
 					+ " WHERE idnotification=? and iddestinataire=? ";
 			preparedStatement = connexion.prepareStatement(requete);

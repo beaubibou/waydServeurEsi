@@ -93,7 +93,8 @@
 							
 				</form>
 				</div>
-					<div style="padding-top: 30px" class="panel-body">
+				
+				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="table-responsive">
 						<table class="table table-condensed">

@@ -151,7 +151,7 @@ public class WBservices {
 	public boolean testToken(String idtoken, String photostr, String nom,
 			String gcmToken) {
 		long debut = System.currentTimeMillis();
-		System.out.print("test token");
+	LOG.info("Test Token");
 
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
@@ -234,7 +234,7 @@ public class WBservices {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// System.out.println("REtuornull");
+	
 			return null;
 		} finally {
 
@@ -757,7 +757,6 @@ public class WBservices {
 	}
 
 	public TableauBord getTableauBord(int idpersonne) {
-		// System.out.println("Get Tableau de bord " + idpersonne);
 		Connection connexion = null;
 		TableauBord tableaubord;
 
@@ -1102,7 +1101,7 @@ public class WBservices {
 				}
 
 			}
-			// System.out.println("Perf"+Stats.getPerf());
+			
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block

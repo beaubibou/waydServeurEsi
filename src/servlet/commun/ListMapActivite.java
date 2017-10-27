@@ -58,7 +58,6 @@ public class ListMapActivite extends HttpServlet {
 		double latitudeSW = Double.parseDouble(request.getParameter("boundSWlat"));
 		double longitueSW = Double.parseDouble(request.getParameter("boundSWlon"));
 	
-		System.out.println(latitudeNE+" "+longitueNE+" "+latitudeSW+" "+longitueSW);
 		
 		try {
 	
@@ -72,7 +71,6 @@ public class ListMapActivite extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 			
-		//	System.out.println(listActiviteAjax.size());
 		
 		
 		

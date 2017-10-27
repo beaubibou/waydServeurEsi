@@ -29,7 +29,7 @@ public class ActiviteDAO {
 		this.connexion = connexion;
 	}
 		
-	
+
 	public Activite getActivite(int idactivite_) {
 
 			Activite activite = null;
@@ -139,7 +139,7 @@ public class ActiviteDAO {
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-		// System.out.println("Récurpere activite ");
+	
 		preparedStatement.setInt(1, jour);
 		preparedStatement.setInt(2, heuredebut);
 		preparedStatement.setInt(3, heuredebut);
@@ -202,7 +202,6 @@ public class ActiviteDAO {
 		preparedStatement.setInt(12, activite.getNbmaxwaydeur());
 		preparedStatement.setInt(13, activite.getNbrparticipant());
 		preparedStatement.setInt(14, activite.getTypeUser());
-		
 		preparedStatement.execute();
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;

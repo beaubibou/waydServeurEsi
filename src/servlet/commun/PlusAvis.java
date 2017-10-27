@@ -53,8 +53,6 @@ public class PlusAvis extends HttpServlet {
 			String json = new Gson().toJson(listAvis);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-		
-			System.out.println("plius avis index " +lastIndex+ json);
 			response.getWriter().write(json);
 			
 

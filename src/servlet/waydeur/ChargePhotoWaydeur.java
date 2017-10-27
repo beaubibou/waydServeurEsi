@@ -87,8 +87,7 @@ public class ChargePhotoWaydeur extends HttpServlet {
 						boolean isInMemory = fi.isInMemory();
 						long sizeInBytes = fi.getSize();
 						// file = new File( filePath + "yourFileName") ;
-						System.out.println(fi.getString());
-
+				
 						BufferedImage imBuff = ImageIO
 								.read(fi.getInputStream());
 

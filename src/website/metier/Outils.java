@@ -43,9 +43,7 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 		Date d = sdf.parse(datestr);
 		Calendar caldate = Calendar.getInstance();
 		caldate.setTime(d);
-		System.out.println(datestr);
-		System.out.println(d);
-
+		
 		return caldate.getTime();
 	}
 
