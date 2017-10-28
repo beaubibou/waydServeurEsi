@@ -52,7 +52,7 @@ public class AlertInfoJsp {
 
 		switch (typeAlert) {
 		case Alert:
-			retour="<div id=\"myAlert\" class=\"alert alert-danger\">"+
+			retour="<div id=\"myAlert\" class='alert alert-danger text-center'>"+
 			        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
 			        "<strong>"+message+"</div>";
 			break;
@@ -69,7 +69,7 @@ public class AlertInfoJsp {
 //					+ "<a   class=\"close\" data-dismiss=\"alert\" >&times;</a>"
 //					+ message+"</div></div>";
 			
-			retour="<div id=\"myAlert\" class=\"alert alert-success\">"+
+			retour="<div id=\"myAlert\" class='alert alert-success text-center'>"+
         "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
         "<strong>"+message+"</div>";
 	

@@ -220,7 +220,7 @@ public class Connexion extends HttpServlet {
 
 							if (profil.isPremiereconnexion()) {
 								try {
-									response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
+									response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 									success = true;
 									return;
 								} catch (IOException e) {
@@ -259,9 +259,9 @@ public class Connexion extends HttpServlet {
 
 							case ProfilBean.WAYDEUR:
 
-								session.setAttribute("profil", profil);
+								//session.setAttribute("profil", profil);
 								try {
-									response.sendRedirect("AcceuilWaydeur");
+									response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
 									success = true;
 									return;
 								} catch (IOException e) {

@@ -18,6 +18,8 @@ import org.apache.log4j.Logger;
 import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.AuthentificationSite;
 import website.metier.DureeBean;
 import website.metier.Outils;
@@ -33,87 +35,89 @@ public class AjouteActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(AjouteActivitePro.class);
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AjouteActivitePro() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public AjouteActivitePro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-	
-		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(request, response);
-		
-	
+
+		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(
+				request, response);
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		
-		
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-		
+
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
-		//int typeaccess = Integer.parseInt(request.getParameter("typeaccess"));
-		int typeactivite = Integer.parseInt(request.getParameter("typeactivite"));
-		
-		String datedebut=request.getParameter("debut");
-		String datefin=request.getParameter("fin");
-	
-		Date dateDebut=null;
-		Date dateFin=null;
-		
+		// int typeaccess =
+		// Integer.parseInt(request.getParameter("typeaccess"));
+		int typeactivite = Integer.parseInt(request
+				.getParameter("typeactivite"));
+
+		String datedebut = request.getParameter("debut");
+		String datefin = request.getParameter("fin");
+
+		Date dateDebut = null;
+		Date dateFin = null;
+
 		try {
-			dateDebut=Outils.getDateFromString(datedebut);
-			dateFin=Outils.getDateFromString(datefin);
-		
-		
+			dateDebut = Outils.getDateFromString(datedebut);
+			dateFin = Outils.getDateFromString(datefin);
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
-			
-		
-			website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
-			int idActivite=activiteDAO.addActivitePro(authentification.getId(), titre, description, dateDebut, dateFin, adresse, latitude, 
-					longitude, typeactivite, ProfilBean.PRO, 2);
-			LOG.info("idactivite ajotée"+idActivite);
-		
-			 if (idActivite!=0){
-				 PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
-			 }
-			
-			response.sendRedirect("AcceuilPro");
-			
 
-		
+		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
+		int idActivite = activiteDAO.addActivitePro(authentification.getId(),
+				titre, description, dateDebut, dateFin, adresse, latitude,
+				longitude, typeactivite, ProfilBean.PRO, 2);
+		LOG.info("idactivite ajotée from pro" + idActivite);
+
+		if (idActivite != 0) {
+			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
+			new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
+					.send(request, response);
+			return;
+		}
+
+		new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
+				"AcceuilPro").send(request, response);
+
+		return;
 
 	}
-	
-	}
 
-
+}

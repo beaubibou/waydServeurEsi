@@ -88,7 +88,7 @@ public class UpdateActivitePro extends HttpServlet {
 				 latitude,  longitude,  typeactivite,
 				 idactivite))
 			{
-			AlertInfoJsp alerte=new AlertInfoJsp("Activite mise", AlertJsp.Sucess,"MesActivites");
+			AlertInfoJsp alerte=new AlertInfoJsp("Activite mise à jour", AlertJsp.Sucess,"MesActivites");
 			request.setAttribute("alerte", alerte);
 			request.getRequestDispatcher("commun/alert.jsp").forward(
 					request, response);

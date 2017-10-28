@@ -38,10 +38,10 @@
 		<div class="page-header">
 			
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Décris ton activité </h1>
+				alt="Cinque Terre" width="50" height="50">Décris ton activité professionelle. </h1>
 		</div>
 		<p>blablal......</p>
-			<p>blablal......</p>
+		
 	
 	</div>
 
