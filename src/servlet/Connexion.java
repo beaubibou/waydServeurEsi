@@ -192,7 +192,7 @@ public class Connexion extends HttpServlet {
 								profil = PersonneDAO.getFullProfilByUid(uid);
 								LOG.info("User crée" + profil);
 								session.setAttribute("profil", profil);
-								response.sendRedirect("/wayd/auth/form_PremierProfil.jsp");
+								response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 								success = true;
 								return ;
 							} catch (SQLException | NamingException

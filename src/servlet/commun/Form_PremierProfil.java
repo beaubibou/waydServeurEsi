@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.ProfilBean;
 
 /**
@@ -60,6 +62,14 @@ public class Form_PremierProfil extends HttpServlet {
 
 			case ProfilBean.PRO:
 			
+				if (profil.isPremiereconnexion()==false){
+					
+					new AlertInfoJsp("Votre compte est déjà crée", AlertJsp.Alert,
+							"AcceuilPro").send(request, response);
+					return;
+					
+				}
+				
 				String siret = request.getParameter("siret");
 				String telephone = request.getParameter("telephone");
 			

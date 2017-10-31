@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import com.google.firebase.internal.Log;
+
+import website.dao.PersonneDAO;
+import website.enumeration.AlertJsp;
+import website.html.AlertInfoJsp;
 import website.metier.ProfilBean;
 
 /**
@@ -15,7 +22,8 @@ import website.metier.ProfilBean;
  */
 public class CreationComptePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(CreationComptePro.class);
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -57,6 +65,11 @@ public class CreationComptePro extends HttpServlet {
 				response.sendRedirect("aut/login.jsp");
 				return;
 			}
+			
+			
+	
+			
+			//**************************************
 			website.dao.PersonneDAO personneDAO = new website.dao.PersonneDAO();
 
 				personneDAO.updateProfilPro(nom, adresse, latitude, longitude,
