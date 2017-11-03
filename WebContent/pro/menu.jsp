@@ -1,5 +1,6 @@
 
-
+<%@page import="website.html.MenuHtml"%>
+<%@page import="website.enumeration.*"%>
 <nav class="navbar navbar-inverse navbar-fixed-top" >
   <div class="container-fluid">
     <div class="navbar-header">
@@ -16,11 +17,11 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         
-         <li><a href="/wayd/ComptePro">Mon compte</a></li>
-         <li><a href="/wayd/MesActivites">Gérer </a></li>
-         <li><a href="/wayd/AjouteActivitePro">Proposer</a></li>
-         <li><a href="/wayd/MapPro">Carte</a></li>
-         <li><a href="/wayd/Apropos">A propos</a></li>
+         <li <%=MenuHtml.getActiviteClass(etatMenu,MenuEnum.moncompte) %>><a href="/wayd/ComptePro">Mon compte</a></li>
+         <li <%=MenuHtml.getActiviteClass(etatMenu,MenuEnum.mesactivites) %>><a href="/wayd/MesActivites">Gérer </a></li>
+         <li <%=MenuHtml.getActiviteClass(etatMenu,MenuEnum.ajouteactivite) %>><a href="/wayd/AjouteActivitePro">Proposer</a></li>
+         <li <%=MenuHtml.getActiviteClass(etatMenu,MenuEnum.carte) %>><a href="/wayd/MapPro">Carte</a></li>
+         <li  <%=MenuHtml.getActiviteClass(etatMenu,MenuEnum.apropos) %>><a href="/wayd/Apropos">A propos</a></li>
            <li><a href="/wayd/Contact">Contact</a></li>
       
       </ul>

@@ -38,6 +38,9 @@
 </br>
 <div id="contact" class="text-center">
   
+  	<%
+		MenuEnum etatMenu = MenuEnum.contact;
+	%>
    <%@ include file="menu.jsp"%>
 
   <div class="container" style="background-color: #FFD54F;">

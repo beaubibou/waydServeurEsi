@@ -9,6 +9,7 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.enumeration.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 
@@ -36,64 +37,69 @@
 
 </head>
 <body>
-	<%@ include file="menu.jsp"%>
-	
-	
+
+
 	<%
+	
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifiePro())
-			return;
+			if (!authentification.isAuthentifiePro())
+		return;
+			
+			FiltreRecherche filtre=authentification.getFiltre();
+		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 		
-		FiltreRecherche filtre=authentification.getFiltre();
-			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+		// Defini le li a rendre actif
+		MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
-	
-		
-<div class="container">
-  <div class="page-header">
-    <h1>Gerez vos activités </h1>      
-  </div>
-  <p>Supprimez, modifiez vos activités...</p>      
-    
-</div>
-	
+
+	<%@ include file="menu.jsp"%>
+
+	<div class="container">
+		<div class="page-header">
+			<h1>Gerez vos activités</h1>
+		</div>
+		<p>Supprimez, modifiez vos activités...</p>
+
+	</div>
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-12  col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title" style="text-align:center;">Liste de vos activités</div>
-				<form action="MesActivites" method="post">
-			
-				<div class="row">
+					<div class="panel-title" style="text-align: center;">Liste de
+						vos activités</div>
+					<form action="MesActivites" method="post">
 
-						<div class='col-sm-2'>
-							<div class="form-group">
-								<select class="form-control" id="idtypeaccess"
-									name="etatActivite">
+						<div class="row">
 
-									<%
-										for (TypeEtatActivite etatActivite:listEtatActivite) {
-									%>
-									<option value="<%=etatActivite.getId()%>"
-										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-										<%=etatActivite.getLibelle()%></option>
-									<%
-										}
-									%>
+							<div class='col-sm-2'>
+								<div class="form-group">
+									<select class="form-control" id="idtypeaccess"
+										name="etatActivite">
 
-								</select>
-							</div>
+										<%
+											for (TypeEtatActivite etatActivite:listEtatActivite) {
+										%>
+										<option value="<%=etatActivite.getId()%>"
+											<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+											<%=etatActivite.getLibelle()%></option>
+										<%
+											}
+										%>
+
+									</select>
+								</div>
 							</div>
 							<div class='col-sm-2'>
 
-							<button type="submit" class="btn btn-info">Cherchez</button>
-						</div>
+								<button type="submit" class="btn btn-info">Cherchez</button>
 							</div>
-							
-				</form>
+						</div>
+
+					</form>
 				</div>
-					<div style="padding-top: 30px" class="panel-body">
+				<div style="padding-top: 30px" class="panel-body">
 
 					<div class="table-responsive">
 						<table class="table table-condensed">
@@ -111,14 +117,14 @@
 
 								<%
 									ArrayList<ActiviteBean> listMesActivite =
-																					(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																		    
-																				    if (listMesActivite!=null)
-																				for (ActiviteBean activite : listMesActivite) {
-																					String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																				String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-																				String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																											(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																								    
+																										    if (listMesActivite!=null)
+																										for (ActiviteBean activite : listMesActivite) {
+																											String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+																											String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																										String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																										String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>
@@ -135,7 +141,7 @@
 
 									<%
 										}
-																 	else{
+																							 	else{
 									%>
 
 									<td><span class="label label-pill label-danger"> </span></td>

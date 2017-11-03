@@ -37,39 +37,46 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
-<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
+	type="text/css">
 </head>
 <body>
-	<%@ include file="menu.jsp"%>
-<div class="container" >
-  <div class="page-header"  >
-    <h1>Proposez vos activités </h1>      
-  </div>
-  <p>Proposez vos activités gratuites à la communauté. Une activité ne peut pas exéder 8 heures.</p>      
-  <p> Vous pouvez planifier jusqu à 5 activités  simultanément.</p>      
-</div>
+
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		
-		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
+			
+			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+					// Defini le li a rendre actif
+		MenuEnum etatMenu=MenuEnum.ajouteactivite;
 	%>
-	
-	<div class="container" >
+
+	<%@ include file="menu.jsp"%>
+	<div class="container">
+		<div class="page-header">
+			<h1>Proposez vos activités</h1>
+		</div>
+		<p>Proposez vos activités gratuites à la communauté. Une activité
+			ne peut pas exéder 8 heures.</p>
+		<p>Vous pouvez planifier jusqu à 5 activités simultanément.</p>
+	</div>
+
+	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom" >
-					<div class="panel-title" >Ajoute une activité</div>
+				<div class="panel-heading panel-heading-custom">
+					<div class="panel-title">Ajoute une activité</div>
 				</div>
-		
+
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
-								class="form-control" id="titre" required placeholder="<%=ParametreHtmlPro.getHintTitreActivite() %>"
-								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"   name="titre" required>
+								class="form-control" id="titre" required
+								placeholder="<%=ParametreHtmlPro.getHintTitreActivite()%>"
+								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"
+								name="titre" required>
 						</div>
 
 						<div class="form-group">
@@ -98,14 +105,18 @@
 										</div>
 									</div>
 								</div>
-							<div class='col-sm-4'>	
-										<label for="typeactivite">Type d'activitée:</label> <select
-								class="form-control" id="type" name="typeactivite">
-								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
-							<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
-							<%} %>	
-							</select>
-								
+								<div class='col-sm-4'>
+									<label for="typeactivite">Type d'activitée:</label> <select
+										class="form-control" id="type" name="typeactivite">
+										<%
+											for (TypeActiviteBean typeactivite:listTypeActivite) {
+										%>
+										<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
+										<%
+											}
+										%>
+									</select>
+
 								</div>
 							</div>
 
@@ -120,10 +131,15 @@
 
 						<div class="form-group">
 							<label for="description">Description:</label>
-							<textarea placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>" class="form-control" rows="5" id="description"
+							<textarea
+								placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite()%>"
+								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+								class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
-						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %></h5>
+						<h5 class="nbrcaracteremax" id="nbr">
+							0 Caractére sur
+							<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%></h5>
 
 
 
@@ -309,7 +325,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+				var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -320,7 +336,8 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
+		';
 		$('#nbr').text(msg);
 	</script>
 </body>

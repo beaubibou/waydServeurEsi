@@ -40,6 +40,9 @@
 		if (profil == null) {
 
 		}
+		
+		MenuEnum etatMenu = MenuEnum.moncompte;
+	
 	%>
 	<%@ include file="menu.jsp"%>
 

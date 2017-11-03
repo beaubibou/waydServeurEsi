@@ -28,13 +28,12 @@
 </style>
 </head>
 <body>
-	<%@ include file="menu.jsp"%>
 
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		//	ArrayList<ActiviteAjax> listMesActivite = (ArrayList<ActiviteAjax>) request.getAttribute("listMesActivite");
-		//	System.out.println("nbr actié"+listMesActivite.size());
+		MenuEnum etatMenu = MenuEnum.carte;
 	%>
+	<%@ include file="menu.jsp"%>
 
 
 	<div id="map-container" class="col-sm-5 col-md-6 col-lg-12"
@@ -134,14 +133,14 @@
 						activite.longitude);
 				var var_marker = new google.maps.Marker({
 					position : positionItem,
-					map : var_map
-					,title : activite.titre
+					map : var_map,
+					title : activite.titre
 				});
 				var_marker.setMap(var_map);
 				markersMap.push(var_marker);
 
 				//	var info = getInfoWindow("titre", "contenu", "lien", "");
-				var lien="DetailActiviteSite?idactivite="+activite.id;
+				var lien = "DetailActiviteSite?idactivite=" + activite.id;
 				var contentString = getContent(activite.titre,
 						activite.libelle, lien, "");
 				var info = new google.maps.InfoWindow({
@@ -176,8 +175,8 @@
 					+ '</div>' + '<h1 id="firstHeading" class="firstHeading">'
 					+ titre + '</h1>' + '<div id="bodyContent">' + '<p>'
 					+ contenu + '</p>' + '<p><a href='+lien+'>'
-					+ 'Consulter</a> ' + '' + cree + '</p>'
-					+ '</div>' + '</div>';
+					+ 'Consulter</a> ' + '' + cree + '</p>' + '</div>'
+					+ '</div>';
 
 			return contentString;
 
