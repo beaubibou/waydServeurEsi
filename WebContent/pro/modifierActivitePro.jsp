@@ -43,8 +43,7 @@
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 </head>
 <body>
-	<%@ include file="menu.jsp"%>
-
+	
 	<%
 		
 	//AuthentificationSite authentification=	new AuthentificationSite(request, response);
@@ -53,9 +52,11 @@
 	
 		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
 		ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
-		
+		MenuEnum etatMenu=null;
 		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
+	<%@ include file="menu.jsp"%>
+	
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">

@@ -33,6 +33,7 @@
 				request, response);
 		if (!authentification.isAuthentifie())
 			return;
+		MenuEnum etatMenu=null;
 	%>
 
 	<%

@@ -66,6 +66,7 @@
 			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 			ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
 			.getAttribute("listAvis");
+			MenuEnum etatMenu=null;
 	%>
 
 

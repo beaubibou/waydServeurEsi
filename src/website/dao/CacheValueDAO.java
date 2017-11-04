@@ -349,8 +349,10 @@ public class CacheValueDAO {
 
 		ArrayList<TypeEtatActivite> retour = new ArrayList<TypeEtatActivite>();
 		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Termines"));
 		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planifée"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Terminées"));
+	
 
 		return retour;
 	}

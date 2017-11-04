@@ -1,7 +1,7 @@
 package website.metier;
 
 public class TypeEtatActivite {
-	public final static int TOUTES = 0, ENCOURS = 1, TERMINEE = 2;
+	public final static int TOUTES = 0, ENCOURS = 1, TERMINEE = 2,PLANIFIEE=3;
 
 	public TypeEtatActivite(int id, String libelle) {
 		super();

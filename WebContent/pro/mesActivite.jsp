@@ -1,4 +1,6 @@
 
+<%@page import="website.enumeration.MenuEnum"%>
+
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
@@ -9,9 +11,9 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="website.enumeration.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,146 +42,107 @@
 
 
 	<%
-	
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
 			if (!authentification.isAuthentifiePro())
 		return;
 			
 			FiltreRecherche filtre=authentification.getFiltre();
 		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
-		
-		// Defini le li a rendre actif
 		MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
 
 	<%@ include file="menu.jsp"%>
 
 	<div class="container">
-		<div class="page-header">
-			<h1>Gerez vos activités</h1>
-		</div>
-		<p>Supprimez, modifiez vos activités...</p>
+		</br>
+		<h2>Mes activités</h2>
+		<p>Gérez vos activités</p>
+		<form action="MesActivites" method="post">
 
-	</div>
+			<div class="row">
 
-	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-12  col-sm-8">
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title" style="text-align: center;">Liste de
-						vos activités</div>
-					<form action="MesActivites" method="post">
+				<div class='col-sm-2'>
+					<div class="form-group">
+						<select class="form-control" id="idtypeaccess" name="etatActivite">
 
-						<div class="row">
+							<%
+								for (TypeEtatActivite etatActivite:listEtatActivite) {
+							%>
+							<option value="<%=etatActivite.getId()%>"
+								<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+								<%=etatActivite.getLibelle()%></option>
+							<%
+								}
+							%>
 
-							<div class='col-sm-2'>
-								<div class="form-group">
-									<select class="form-control" id="idtypeaccess"
-										name="etatActivite">
-
-										<%
-											for (TypeEtatActivite etatActivite:listEtatActivite) {
-										%>
-										<option value="<%=etatActivite.getId()%>"
-											<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-											<%=etatActivite.getLibelle()%></option>
-										<%
-											}
-										%>
-
-									</select>
-								</div>
-							</div>
-							<div class='col-sm-2'>
-
-								<button type="submit" class="btn btn-info">Cherchez</button>
-							</div>
-						</div>
-
-					</form>
-				</div>
-				<div style="padding-top: 30px" class="panel-body">
-
-					<div class="table-responsive">
-						<table class="table table-condensed">
-							<thead>
-								<tr>
-									<th>Titre</th>
-									<th>Description</th>
-									<th>Vues</th>
-									<th>Etat</th>
-									<th>Horaire</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<%
-									ArrayList<ActiviteBean> listMesActivite =
-																											(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																								    
-																										    if (listMesActivite!=null)
-																										for (ActiviteBean activite : listMesActivite) {
-																											String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-																											String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-																										String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-																										String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-								%>
-
-								<tr>
-									<td><%=activite.getTitre()%></td>
-									<td><textarea class="form-control" disabled rows="2"
-											id="comment"><%=activite.getLibelle()%></textarea></td>
-
-									<td><span class="badge"><%=activite.getNbrVu()%></span></td>
-
-									<%
-										if (!activite.isTerminee()){
-									%>
-									<td><span class="label label-pill label-success"> </span></td>
-
-									<%
-										}
-																							 	else{
-									%>
-
-									<td><span class="label label-pill label-danger"> </span></td>
-									<%
-										}
-									%>
-									<td><%=activite.getHoraireLeA()%></td>
-
-									<td><a href="<%=lienDetail%>" class="btn btn-info btn-sm">
-											<span class="glyphicon glyphicon-search"></span>
-									</a> <!-- Affiche le bouton effacer si pas terminée --> <%
- 	if (!activite.isTerminee()){
- %> <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
-											class="glyphicon glyphicon-edit"></span>
-									</a>
-
-										<button id=<%out.println(lienEfface);%> name="supprimer"
-											type="button" class="btn btn-danger btn-sm">
-											<span class="glyphicon glyphicon-remove"></span>
-										</button> <%
- 	}
- %></td>
-
-								</tr>
-								<%
-									}
-								%>
-
-
-							</tbody>
-						</table>
-
+						</select>
 					</div>
+				</div>
+				<div class='col-sm-2'>
 
+					<button type="submit" class="btn btn-info">Cherchez</button>
 				</div>
 			</div>
-		</div>
+
+		</form>
+		<table class="table table-responsive" border="3";>
+			<thead style="background-color: #2196F3;" align="center">
+				<tr>
+					<th class="text-center">Titre</th>
+
+					<th class="text-center">Vus</th>
+					<th class="text-center">Etat</th>
+					<th class="text-center">Date</th>
+					<th class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody
+				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
+
+				<%
+					ArrayList<ActiviteBean> listMesActivite =
+										(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																														    
+										    if (listMesActivite!=null)
+										for (ActiviteBean activite : listMesActivite) {
+											String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+											String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+										String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+										String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+				%>
+
+
+				<tr>
+					<td style="vertical-align: middle;"><%=activite.getTitre()%></td>
+					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
+
+					<%=activite.getEtatHtml() %>
+				
+					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
+
+					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
+						class="btn btn-info btn-sm"> <span
+							class="glyphicon glyphicon-search"></span>
+					</a> <!-- Affiche le bouton effacer si pas terminée --> 
+					<%if (!activite.isTerminee()){ %>
+					
+					 <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+							class="glyphicon glyphicon-edit"></span>
+					</a>
+
+						<button id=<%out.println(lienEfface);%> name="supprimer"
+							type="button" class="btn btn-danger btn-sm">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button> <%} %></td>
+				</tr>
+				<%
+					}
+				%>
+			</tbody>
+		</table>
+
 	</div>
+
 
 	<script>
 		$(function() {

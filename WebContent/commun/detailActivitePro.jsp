@@ -70,6 +70,7 @@
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
+		MenuEnum etatMenu=null;
 	%>
 
 	<%

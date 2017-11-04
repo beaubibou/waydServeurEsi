@@ -160,6 +160,20 @@ public class ActiviteBean {
 
 	}
 
+	public boolean isEnCours(){
+		
+		Date maintenant=new Date();
+		if (maintenant.after(datedebut) && maintenant.before(datefin))return true;
+		return false;
+		
+	}
+	
+	public boolean isPlanifie(){
+		Date maintenant=new Date();
+		if (datedebut.after(maintenant))return true;
+		return false;
+		
+	}
 	public void setUrlPhoto(String urlPhoto) {
 		this.urlPhoto = urlPhoto;
 	}
@@ -616,4 +630,19 @@ public class ActiviteBean {
 		return "Le " + datestrdebut + " de " + heuredebutstr + " à "
 				+ heurefinstr;
 	}
+	
+	public String getEtatHtml(){
+		
+		if (isTerminee())
+		return 	"<td style='vertical-align: middle;'><span style='color: red;'	class='glyphicon glyphicon-stop'></span></td>";
+		
+		if (isEnCours())
+			return 	"<td style='vertical-align: middle;'><span style='color: green;'	class='glyphicon glyphicon-play'></span></td>";
+	
+		if (isPlanifie())
+			return 	"<td style='vertical-align: middle;'><span style='color: blue;'	class='glyphicon glyphicon-time'></span></td>";
+
+		return "lmk";
+	}
+	
 }
