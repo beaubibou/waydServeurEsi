@@ -607,4 +607,24 @@
     <servlet-name>ContactWaydeur</servlet-name>
     <url-pattern>/ContactWaydeur</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjouteActivitePlanifiee</display-name>
+    <servlet-name>AjouteActivitePlanifiee</servlet-name>
+    <servlet-class>servlet.pro.AjouteActivitePlanifiee</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouteActivitePlanifiee</servlet-name>
+    <url-pattern>/AjouteActivitePlanifiee</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Home</display-name>
+    <servlet-name>Home</servlet-name>
+    <servlet-class>servlet.pro.Home</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Home</servlet-name>
+    <url-pattern>/Home</url-pattern>
+  </servlet-mapping>
 </web-app>

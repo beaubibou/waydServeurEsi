@@ -3,7 +3,47 @@
     vertical-align: middle;
    
 }
+
 .panel-default > .panel-heading-custom {
-    background: #ffD740; color: #fff;
+    background: #BBBBBB; color: #fff;
+    
+}
+
+
+/*Couleur de la barre de navigation quand menu selectionné*/
+
+.active a {
+    background-color: #EF0000!important;
+    color:blue!important;
+}
+
+/* couleur de fond des pages*/
+body{
+	background-color: #E3F2FD;
+	
+}
+/*Couleur de la barre de navigation */
+
+.navbar {
+ 
+background-color:#0000AA;
+ 
+}
+/*Couleur de la police du menu de la barre de naivgation par défaut */
+
+#menupro a{font-size:16px;
+font-weight:bold;
+color:white;
+font-family: Arial; }
+
+/*Le footer */
+.navbar-fixed-bottom {
+ 
+    background: #FFFF00;
+    color: #000000;
+}
+.navbar-fixed-bottom a {
+ 
+    color: #000000;
 }
 
