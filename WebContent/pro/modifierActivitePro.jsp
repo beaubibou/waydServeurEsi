@@ -40,23 +40,23 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
-<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
+	type="text/css">
 </head>
 <body>
-	
+
 	<%
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
 		
-	//AuthentificationSite authentification=	new AuthentificationSite(request, response);
-//	if (!authentification.isAuthentifiePro())
-	//	return;
-	
-		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-		ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
-		MenuEnum etatMenu=null;
-		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
+			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+			ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
+			MenuEnum etatMenu=null;
+			//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
 	<%@ include file="menu.jsp"%>
-	
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
@@ -69,8 +69,9 @@
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
-								maxlength="50" class="form-control" id="titre" required placeholder="Titre de l'activité "
-								name="titre" value=<%=activite.getTitre() %>>
+								maxlength="50" class="form-control" id="titre" required
+								placeholder="Titre de l'activité " name="titre"
+								value=<%=activite.getTitre()%>>
 						</div>
 
 
@@ -100,17 +101,22 @@
 										</div>
 									</div>
 								</div>
-							<div class='col-sm-4'>	
-										<label for="typeactivite">Type d'activitée:</label> <select
-								class="form-control" id="type" name="typeactivite">
-								<%for (TypeActiviteBean typeactivite:listTypeActivite) {%>
-								
-										<option value="<%=typeactivite.id%>"<%=Outils.jspAdapterListSelected(typeactivite.getId(), activite.getTypeactivite())%>><%=typeactivite.getLibelle()%></option>
-								
-							
-							<%} %>	
-							</select>
-								
+								<div class='col-sm-4'>
+									<label for="typeactivite">Type d'activitée:</label> <select
+										class="form-control" id="type" name="typeactivite">
+										<%
+											for (TypeActiviteBean typeactivite:listTypeActivite) {
+										%>
+
+										<option value="<%=typeactivite.id%>"
+											<%=Outils.jspAdapterListSelected(typeactivite.getId(), activite.getTypeactivite())%>><%=typeactivite.getLibelle()%></option>
+
+
+										<%
+											}
+										%>
+									</select>
+
 								</div>
 							</div>
 
@@ -125,8 +131,8 @@
 
 						<div class="form-group">
 							<label for="description">Description:</label>
-							<textarea maxlength="200" class="form-control" rows="5" id="description"
-								name="description"></textarea>
+							<textarea maxlength="200" class="form-control" rows="5"
+								id="description" name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
 
@@ -146,7 +152,8 @@
 								placeholder="longitude" name="longitude"
 								value=<%=activite.getLongitude()%>>
 						</div>
-							<input type="hidden" name="idActivite" value="<%=activite.getId() %>">
+						<input type="hidden" name="idActivite"
+							value="<%=activite.getId()%>">
 
 						<div class="form-group"></div>
 
@@ -212,26 +219,26 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
 	<script>
-
 		$(function() {
 
-			var dateDebut=<%=DateHtlm.getDateHtml(activite.getDatedebut())%>;
-			var dateFin=<%=DateHtlm.getDateHtml(activite.getDatefin())%>;
-			
+			var dateDebut =
+	<%=DateHtlm.getDateHtml(activite.getDatedebut())%>
+		;
+			var dateFin =
+	<%=DateHtlm.getDateHtml(activite.getDatefin())%>
+		;
 
-				$('#datedebut').datetimepicker({
-				defaultDate :  dateDebut,
+			$('#datedebut').datetimepicker({
+				defaultDate : dateDebut,
 				format : 'DD/MM/YYYY HH:mm'
 
 			});
 
-		
-			$('#datefin').datetimepicker(
-					{
-						defaultDate : dateFin,
-						format : 'DD/MM/YYYY HH:mm'
+			$('#datefin').datetimepicker({
+				defaultDate : dateFin,
+				format : 'DD/MM/YYYY HH:mm'
 
-					});
+			});
 
 		});
 	</script>

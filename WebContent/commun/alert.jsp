@@ -16,18 +16,12 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
-<title>Insert title here</title>
+<title>Message information</title>
 </head>
 <body>
 
-	<div class="container">
-		<div class="alert alert-success alert-dismissible">
-			<a id="idalert" class="close" data-dismiss="alert" aria-label="close">&times;</a>"
-			coucmlklm
-		</div>
-	</div>
-	";
-
+	
+	
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -50,8 +44,14 @@
 		}
 	%>
 
+</br>
+</br>
+</br>
+</br>
+</br>
 
 	<%
+	
 		AlertInfoJsp alerte = (AlertInfoJsp) request.getAttribute("alerte");
 	%>
 

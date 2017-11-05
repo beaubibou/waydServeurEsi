@@ -132,7 +132,7 @@
 
 						<button id=<%out.println(lienEfface);%> name="supprimer"
 							type="button" class="btn btn-danger btn-sm">
-							<span class="glyphicon glyphicon-remove"></span>
+							<span class="glyphicon glyphicon-trash"></span>
 						</button> <%} %></td>
 				</tr>
 				<%

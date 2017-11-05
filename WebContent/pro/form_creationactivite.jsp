@@ -6,6 +6,7 @@
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,8 +44,12 @@
 <body>
 
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-			
+		
+	AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	if (!authentification.isAuthentifiePro())
+	return;
+	
+	ProfilBean profil = authentification.getProfil();
 			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
 					// Defini le li a rendre actif
 		MenuEnum etatMenu=MenuEnum.ajouteactivite;

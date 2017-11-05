@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="website.html.*"%>
+    <%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,7 +40,11 @@
 <div id="contact" class="text-center">
   
   	<%
-		MenuEnum etatMenu = MenuEnum.contact;
+  	AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	if (!authentification.isAuthentifiePro())
+	return;
+  	
+  	MenuEnum etatMenu = MenuEnum.contact;
 	%>
    <%@ include file="menu.jsp"%>
 

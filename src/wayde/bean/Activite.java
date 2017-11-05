@@ -479,7 +479,13 @@ public String getTempsRestant(Date datefinactivite){
 	}
 
 	
-
+public boolean isEnCours(){
+		
+		Date maintenant=new Date();
+		if (maintenant.after(datedebut) && maintenant.before(datefinactivite))return true;
+		return false;
+		
+	}
 	
 		
 	

@@ -11,7 +11,7 @@
 <%@page import="website.metier.Pagination"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.Outils"%>
-
+<%@page import="website.metier.AuthentificationSite"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -42,16 +42,18 @@
 <body>
 	<%@ include file="menu.jsp"%>
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		FiltreRecherche filtre=(FiltreRecherche)session.getAttribute("filtreRecherche");
-		  
-		ArrayList<TypeActiviteBean> listTypeActivite= (ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
-		ArrayList<TypeAccess> listTypeAccess= (ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
-		ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
-		ArrayList<QuandBean> listQuand= (ArrayList<QuandBean>) request.getAttribute("listQuand");
-		ArrayList<RayonBean> listRayon= (ArrayList<RayonBean>) request.getAttribute("listRayon");
-
-	
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+		if (!authentification.isAuthentifiePro())
+		return;
+		
+		ProfilBean profil = authentification.getProfil();
+			FiltreRecherche filtre=(FiltreRecherche)session.getAttribute("filtreRecherche");
+			  
+			ArrayList<TypeActiviteBean> listTypeActivite= (ArrayList<TypeActiviteBean>) request.getAttribute("listTypeActivite");
+			ArrayList<TypeAccess> listTypeAccess= (ArrayList<TypeAccess>) request.getAttribute("listTypeAccess");
+			ArrayList<TypeUser> listTypeUser= (ArrayList<TypeUser>) request.getAttribute("listTypeUser");
+			ArrayList<QuandBean> listQuand= (ArrayList<QuandBean>) request.getAttribute("listQuand");
+			ArrayList<RayonBean> listRayon= (ArrayList<RayonBean>) request.getAttribute("listRayon");
 	%>
 	<div class="container">
 
@@ -65,7 +67,8 @@
 					<div class="form-group">
 						<label for="adresse">Adresse:</label> <input type="text"
 							class="form-control" id="adresse"
-							placeholder="Renseigner l'adresse" name="adresse" required value="<%=filtre.getAdresse()%>">
+							placeholder="Renseigner l'adresse" name="adresse" required
+							value="<%=filtre.getAdresse()%>">
 					</div>
 
 
@@ -84,7 +87,7 @@
 									<label for="acces">Acces</label> <select class="form-control"
 										id="idtypeaccess" name="typeaccess">
 
-																				<%
+										<%
 											for (TypeAccess typeaccess:listTypeAccess) {
 										%>
 										<option value="<%=typeaccess.getId()%>"><%=typeaccess.getLibelle()%></option>
@@ -100,7 +103,7 @@
 								<div class="form-group">
 									<label for="duree">Type:</label> <select class="form-control"
 										id="typeactivite" name="typeactivite">
-									
+
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite){
 										%>
@@ -118,13 +121,13 @@
 									<label for="duree">Propsé par:</label> <select
 										class="form-control" id="idtypeuser" name="typeuser">
 
-									
+
 										<%
 											for (TypeUser typeUser:listTypeUser){
 										%>
-										<option value="<%=typeUser.getId()%>" 
-										 <%=Outils.jspAdapterListSelected(typeUser.getId(), filtre.getTyperUser())%>>
-										<%=typeUser.getLibelle()%></option>
+										<option value="<%=typeUser.getId()%>"
+											<%=Outils.jspAdapterListSelected(typeUser.getId(), filtre.getTyperUser())%>>
+											<%=typeUser.getLibelle()%></option>
 										<%
 											}
 										%>
@@ -140,13 +143,15 @@
 										<%
 											for (QuandBean quand:listQuand){
 										%>
-										<option value="<%=quand.getValue()%>" 
-										<%=Outils.jspAdapterListSelected(quand.getValue(), filtre.getQuand())%>>
-										<%=quand.getLibelle()%></option>
-										
-										<%} %>
-									
-										
+										<option value="<%=quand.getValue()%>"
+											<%=Outils.jspAdapterListSelected(quand.getValue(), filtre.getQuand())%>>
+											<%=quand.getLibelle()%></option>
+
+										<%
+											}
+										%>
+
+
 
 									</select>
 								</div>
@@ -160,10 +165,12 @@
 										<%
 											for (RayonBean rayon:listRayon){
 										%>
-										<option value="<%=rayon.getValue()%>" 
-										<%=Outils.jspAdapterListSelected(rayon.getValue(), filtre.getRayon())%>>
-										<%=rayon.getLibelle()%></option>
-										<%} %>
+										<option value="<%=rayon.getValue()%>"
+											<%=Outils.jspAdapterListSelected(rayon.getValue(), filtre.getRayon())%>>
+											<%=rayon.getLibelle()%></option>
+										<%
+											}
+										%>
 									</select>
 								</div>
 
@@ -178,11 +185,11 @@
 					<div class="form-group">
 
 						<input type="text" class="form-control" id="latitude"
-							 name="latitude" value="<%=filtre.getLatitude() %>">
+							name="latitude" value="<%=filtre.getLatitude()%>">
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" id="longitude"
-							 name="longitude" value="<%=filtre.getLongitude() %>">
+							name="longitude" value="<%=filtre.getLongitude()%>">
 					</div>
 
 
@@ -276,12 +283,12 @@
 
 								<%
 									ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request.getAttribute("listActivite");
-																																						    
-															if (listActivite!=null)
-															for (ActiviteBean activite : listActivite) {
-															String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-															String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-															String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+																																												    
+																					if (listActivite!=null)
+																					for (ActiviteBean activite : listActivite) {
+																					String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
+																					String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+																					String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 
 								<tr>

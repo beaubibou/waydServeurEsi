@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="website.metier.AuthentificationSite"%>
 
 <!DOCTYPE html>
 <html>
@@ -30,8 +31,12 @@
 <body>
 
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		MenuEnum etatMenu = MenuEnum.carte;
+	AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	if (!authentification.isAuthentifiePro())
+	return;
+	ProfilBean profil=authentification.getProfil();
+	
+	MenuEnum etatMenu = MenuEnum.carte;
 	%>
 	<%@ include file="menu.jsp"%>
 

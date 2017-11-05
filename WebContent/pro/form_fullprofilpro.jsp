@@ -1,6 +1,7 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.html.*"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -35,12 +36,11 @@
 <body>
 
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		if (profil == null) {
-
-		}
-		
+	AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	if (!authentification.isAuthentifiePro())
+	return;
+	
+	ProfilBean profil = authentification.getProfil();
 		MenuEnum etatMenu = MenuEnum.moncompte;
 	
 	%>

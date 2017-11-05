@@ -732,16 +732,18 @@ public class WBservices {
 			if (activite != null) {
 				activite.defineOrganisateur(idpersonne);//
 				activitedao.isInscrit(activite, idpersonne);
+				website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,
+						activite.getIdorganisateur());
 
 			}
 
 			// Ajoute le nbr de vu pour chaque vu de l'activité
-			website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,
-					activite.getIdorganisateur());
-
+			
 			String loginfo = "getActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
+					
+			
 			return activite;
 
 		} catch (SQLException | NamingException e) {

@@ -57,7 +57,7 @@ public class SupprimeActivite extends HttpServlet {
 					activite.getIdorganisateur(), activite.getId());
 		
 			if (retour.isReponse())
-				new AlertInfoJsp("Activite supprimmée", AlertJsp.Sucess,
+				new AlertInfoJsp("Activite supprimée", AlertJsp.Sucess,
 						"MesActivites").send(request, response);
 			else
 				new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
