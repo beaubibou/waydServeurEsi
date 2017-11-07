@@ -14,7 +14,9 @@ import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
 
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
+import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
+import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 
@@ -88,10 +90,17 @@ public class UpdateActivitePro extends HttpServlet {
 				 latitude,  longitude,  typeactivite,
 				 idactivite))
 			{
-			AlertInfoJsp alerte=new AlertInfoJsp("Activite mise à jour", AlertJsp.Sucess,"MesActivites");
-			request.setAttribute("alerte", alerte);
-			request.getRequestDispatcher("commun/alert.jsp").forward(
-					request, response);
+		//	AlertInfoJsp alerte=new AlertInfoJsp("Activite mise à jour", AlertJsp.Sucess,"MesActivites");
+		//	request.setAttribute("alerte", alerte);
+		
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activité modifiée",null));
+			request.getRequestDispatcher("MesActivites").forward(request, response);
+			
+			//new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
+			//		.send(request, response);
+		//	LOG.debug("**********************redirectio");
+		//	request.getRequestDispatcher("commun/alert.jsp").forward(
+		//			request, response);
 			return;
 			};
 		}

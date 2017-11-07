@@ -19,7 +19,9 @@ import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.enumeration.AlertJsp;
+import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
+import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.DureeBean;
 import website.metier.Outils;
@@ -72,7 +74,6 @@ public class AjouteActivitePro extends HttpServlet {
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
@@ -104,12 +105,20 @@ public class AjouteActivitePro extends HttpServlet {
 		int idActivite = activiteDAO.addActivitePro(authentification.getId(),
 				titre, description, dateDebut, dateFin, adresse, latitude,
 				longitude, typeactivite, ProfilBean.PRO, 2);
-		LOG.info("idactivite ajotée from pro" + idActivite);
+		LOG.debug("idactivite ajotée from pro" + idActivite);
 
 		if (idActivite != 0) {
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
-			new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
-					.send(request, response);
+			
+			System.out.println("******************ajoteu acitivte prokkkkkkkkkkkkkkkkkkk");
+			
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activité ajouté",null));
+	
+			//new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
+			//		.send(request, response);
+			
+			request.getRequestDispatcher("MesActivites").forward(request, response);
+			
 			return;
 		}
 

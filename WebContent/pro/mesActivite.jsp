@@ -1,4 +1,5 @@
 
+<%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 
 <%@page import="website.metier.FiltreJSP"%>
@@ -10,6 +11,7 @@
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.dao.CacheValueDAO"%>
+<%@page import="website.html.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -34,8 +36,10 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
+<script src="js/alertdialog.js"></script>
+
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -50,6 +54,9 @@
 		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 		MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
+	
+
+
 
 	<%@ include file="menu.jsp"%>
 
@@ -190,7 +197,9 @@
 			location.href = lien;
 		}
 	</script>
+<script type="text/javascript">
 
-
+<%=new AlertDialog(request).getMessage()%>
+</script>
 </body>
 </html>

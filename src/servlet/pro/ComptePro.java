@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.enumeration.AlertJsp;
+import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
+import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
@@ -99,8 +101,11 @@ public class ComptePro extends HttpServlet {
 			profil.setPremiereconnexion(false);
 			filtreRecherche.setLatitude(latitude);
 			filtreRecherche.setLongitude(longitude);
-			new AlertInfoJsp("Compte mis à jour", AlertJsp.Sucess, "AcceuilPro")
-					.send(request, response);
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Compte mis à jour",null));
+			request.getRequestDispatcher("MesActivites").forward(request, response);
+	
+		//	new AlertInfoJsp("Compte mis à jour", AlertJsp.Sucess, "AcceuilPro")
+			//	.send(request, response);
 		} else {
 			new AlertInfoJsp("Un probleme est survenue", AlertJsp.Alert,
 					"AcceuilPro").send(request, response);

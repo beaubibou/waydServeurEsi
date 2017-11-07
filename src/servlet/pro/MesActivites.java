@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
+import website.html.AlertDialog;
 import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
@@ -75,11 +76,13 @@ public class MesActivites extends HttpServlet {
 		FiltreRecherche filtre =authentification.getFiltre();
 
 		
+		if (request.getParameter("etatActivite")!=null){
 		int etatActivite = Integer.parseInt(request
 				.getParameter("etatActivite"));
-
 		filtre.setTypeEtatActivite(etatActivite);
 
+		}
+		
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
 
@@ -90,6 +93,7 @@ public class MesActivites extends HttpServlet {
 		
 
 		} 
+		
 			request.setAttribute("listMesActivite", listMesActivite);
 			request.getRequestDispatcher("/pro/mesActivite.jsp")
 					.forward(request, response);
