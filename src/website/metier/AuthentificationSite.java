@@ -6,11 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.html.MessageAlertDialog;
+
 public class AuthentificationSite {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private ProfilBean profil;
+	private MessageAlertDialog messageAlertDialog;
 
 	public AuthentificationSite(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -21,6 +24,19 @@ public class AuthentificationSite {
 		HttpSession session = request.getSession();
 		profil = (ProfilBean) session.getAttribute("profil");
 
+	}
+	
+	public void setAlertMessageDialog(MessageAlertDialog messageAlertDialog){
+		profil.setMessageAlertDialog(messageAlertDialog);
+		
+	}
+	
+	public MessageAlertDialog getMessageAlertDialog() {
+		return profil.getMessageAlertDialog();
+	}
+
+	public void setMessageAlertDialog(MessageAlertDialog messageAlertDialog) {
+		this.messageAlertDialog = messageAlertDialog;
 	}
 
 	public ProfilBean getProfil() {

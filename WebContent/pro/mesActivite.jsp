@@ -199,7 +199,7 @@
 	</script>
 <script type="text/javascript">
 
-<%=new AlertDialog(request).getMessage()%>
+<%=new AlertDialog(authentification).getMessage()%>
 </script>
 </body>
 </html>

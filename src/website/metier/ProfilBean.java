@@ -9,6 +9,7 @@ import org.apache.axis.encoding.Base64;
 import wayde.bean.Parametres;
 import website.dao.CacheValueDAO;
 import website.enumeration.TypePhoto;
+import website.html.MessageAlertDialog;
 
 public class ProfilBean {
 
@@ -65,8 +66,18 @@ public class ProfilBean {
 	private String siret;
 	private FiltreRecherche filtreRecherche;
 
+	private MessageAlertDialog messageAlertDialog;
+	
 	public FiltreRecherche getFiltreRecherche() {
 		return filtreRecherche;
+	}
+
+	public MessageAlertDialog getMessageAlertDialog() {
+		return messageAlertDialog;
+	}
+
+	public void setMessageAlertDialog(MessageAlertDialog messageAlertDialog) {
+		this.messageAlertDialog = messageAlertDialog;
 	}
 
 	public void setFiltreRecherche(FiltreRecherche filtreRecherche) {

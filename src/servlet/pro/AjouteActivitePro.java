@@ -112,12 +112,12 @@ public class AjouteActivitePro extends HttpServlet {
 			
 			System.out.println("******************ajoteu acitivte prokkkkkkkkkkkkkkkkkkk");
 			
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activité ajouté",null));
-	
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Activité ajouté",null));
+			response.sendRedirect("MesActivites");
 			//new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
 			//		.send(request, response);
 			
-			request.getRequestDispatcher("MesActivites").forward(request, response);
+			//request.getRequestDispatcher("MesActivites").forward(request, response);
 			
 			return;
 		}
