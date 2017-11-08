@@ -627,4 +627,14 @@
     <servlet-name>Home</servlet-name>
     <url-pattern>/Home</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SupprimeActivites</display-name>
+    <servlet-name>SupprimeActivites</servlet-name>
+    <servlet-class>servlet.pro.SupprimeActivites</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimeActivites</servlet-name>
+    <url-pattern>/SupprimeActivites</url-pattern>
+  </servlet-mapping>
 </web-app>

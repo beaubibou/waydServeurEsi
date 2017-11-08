@@ -59,28 +59,22 @@ public class SupprimeActivite extends HttpServlet {
 					activite.getIdorganisateur(), activite.getId());
 
 			if (retour.isReponse()) {
-				request.setAttribute(AlertDialog.ALERT_DIALOG,
-						new MessageAlertDialog("Message Information",
-								"Activité supprimée", null));
 
-				request.getRequestDispatcher("MesActivites").forward(request,
-						response);
+				authentification.setAlertMessageDialog(new MessageAlertDialog(
+						"Message Information", "Activitï¿½ supprimï¿½e", null));
+				response.sendRedirect("MesActivites");
 				return;
 			}
-			// new AlertInfoJsp("Activite supprimée", AlertJsp.Sucess,
-			// "MesActivites").send(request, response);
+
 			else {
+
 				request.setAttribute(AlertDialog.ALERT_DIALOG,
 						new MessageAlertDialog("Message Erreur",
 								"Une erreur est survenue", null));
-
 				request.getRequestDispatcher("MesActivites").forward(request,
 						response);
 				return;
 			}
-			// new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
-			// "MesActivites").send(request, response);
-		
 
 		}
 

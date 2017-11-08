@@ -119,15 +119,18 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			
 			ajouteActivite(authentification.getId() , titre, description, adresse,
 					 latitude, longitude, typeactivite,dateDebut, dateFin, joursVoulus);
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Vos activités ont été crée",null));
-			request.getRequestDispatcher("MesActivites").forward(request, response);
+			
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Vos activitï¿½s ont ï¿½tï¿½ crï¿½e",null));
+			response.sendRedirect("MesActivites");
+		
 			return;
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message erreur",e.getMessage(),null));
-			request.getRequestDispatcher("MesActivites").forward(request, response);
+				
+			authentification.setAlertMessageDialog(  new MessageAlertDialog("Message erreur",e.getMessage(),null));
+			response.sendRedirect("MesActivites");
 		
 		}
 
