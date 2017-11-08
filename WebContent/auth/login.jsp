@@ -27,6 +27,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+	
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -233,12 +237,13 @@ function popup(){
 			//  document.getElementById("demo").innerHTML ="opo";
 			//   document.location.href="/wayd/Connexion?token="+idToken;
 			  document.getElementById("token").value =idToken;
-				document.getElementById("formmasque").submit();
+			  document.getElementById("formmasque").submit();
 			
 		 
 		  }).catch(function(error) {
 			  var errorMessage = error.message;
-			  alert(errorMessage);
+			  
+			  BootstrapDialog.alert(errorMessage);
 			  // Handle error
 			});
 	  
@@ -251,7 +256,7 @@ function popup(){
 		  var email = error.email;
 		  // The firebase.auth.AuthCredential type that was used.
 		  var credential = error.credential;
-		  alert(errorMessage);
+		  BootstrapDialog.alert(errorMessage);
 		  // ...
 		});
 	
@@ -272,7 +277,7 @@ function signPassword(){
 			
 			//  document.getElementById("login-username").innerHTML ="opo";
 			 //  document.location.href="/wayd/Connexion?token="+idToken+"&pwd=1";
-			  document.getElementById("token").value =idToken;
+			    document.getElementById("token").value =idToken;
 			    document.getElementById("pwd").value ="1";
 				document.getElementById("formmasque").submit();
 		  
@@ -289,7 +294,7 @@ function signPassword(){
 		  var email = error.email;
 		  // The firebase.auth.AuthCredential type that was used.
 		  var credential = error.credential;
-		 alert(errorMessage);
+		  BootstrapDialog.alert(errorMessage);
 		  // ...
 		});
 	
