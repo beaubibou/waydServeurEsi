@@ -212,7 +212,7 @@ public class ActiviteDAO {
 		if (rs.next())
 			cle = rs.getInt("idactivite");
 		preparedStatement.close();
-		// System.out.println("cle generée" + cle);
+		// System.out.println("cle generï¿½e" + cle);
 		activite.setId(cle);
 
 	}
@@ -525,7 +525,7 @@ public class ActiviteDAO {
 						proprietepreference.getLatitude(), latitude,
 						proprietepreference.getLongitude(), longitude);
 
-				// Passe à l'enregistrement suivant si la distance est plus
+				// Passe ï¿½ l'enregistrement suivant si la distance est plus
 				// grande que le rayon
 
 				if (distance >= proprietepreference.getRayon())
@@ -736,6 +736,25 @@ public class ActiviteDAO {
 		preparedStatement.close();
 
 		requete = "DELETE FROM public.activite where ( idactivite=? );";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setInt(1, idactivite);
+		preparedStatement.execute();
+		preparedStatement.close();
+
+		
+
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+
+	}
+
+	public void RemoveOnlyActivite(int idactivite)
+			throws SQLException {
+		
+	//	System.out.println("Effacement d'une activite");
+			
+		String requete  = "DELETE FROM activite where ( idactivite=? );";
+		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
@@ -972,7 +991,7 @@ public class ActiviteDAO {
 
 	}
 
-	// Defini si la personne participe à une activite
+	// Defini si la personne participe ï¿½ une activite
 	public boolean isInscrit(Activite activite, int idpersonne) {
 		String requete = "SELECT  idpersonne FROM public.participer "
 				+ "where( idpersonne=? and idactivite=?);";
@@ -1325,7 +1344,7 @@ public class ActiviteDAO {
 
 		int nbrTotalactivite = 0, nbrTotalparticipation = 0, nbrTotalInscrit = 0, nbrTotalMessage = 0, nbrTotalMessageByAct = 0;
 
-		// ************Calcul le nbr total d'activité
+		// ************Calcul le nbr total d'activitï¿½
 
 		String requete = "Select count(idactivite) as nbractivite  FROM activite";
 		PreparedStatement preparedStatement = connexion

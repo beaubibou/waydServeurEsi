@@ -4,22 +4,6 @@
 <title>Login</title>
 <meta charset="utf-8">
 <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
-
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCGjJo3B1bApNd9_I7hhaQNcrcLr9q9y3I",
-    authDomain: "wayd-c0414.firebaseapp.com",
-    databaseURL: "https://wayd-c0414.firebaseio.com",
-    projectId: "wayd-c0414",
-    storageBucket: "wayd-c0414.appspot.com",
-    messagingSenderId: "902442853604"
-  };
-  firebase.initializeApp(config);
- 
-</script>
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -32,6 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 	
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<script src="/wayd/js/initfirebase.js"></script>
+
 </head>
 <body>
 

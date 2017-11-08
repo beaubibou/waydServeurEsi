@@ -1301,21 +1301,16 @@ public class ActiviteDAO {
 
 			wayde.dao.ActiviteDAO activitedao = new wayde.dao.ActiviteDAO(
 					connexion);
-			NotificationDAO notificationdao = new NotificationDAO(connexion);
 			ParticipationDAO participationdao = new ParticipationDAO(connexion);
-			DiscussionDAO discussiondao = new DiscussionDAO(connexion);
-
 			Activite activite = activitedao.getActivite(idactivite);
 
 			if (activite == null)
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "L'activite est terminée");
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-
-			// Recuepre les personnes interesse par cette activitée
+				return new MessageServeur(false, "L'activite est terminï¿½e");
+		
+			// Recuepre les personnes interesse par cette activitï¿½e
 			connexion.setAutoCommit(false);
 			final ArrayList<Personne> personneinteresse = activitedao
 					.getListPersonneInterresse(activitedao
@@ -1323,16 +1318,14 @@ public class ActiviteDAO {
 			ArrayList<Personne> participants = participationdao
 					.getListPartipantActivite(idactivite);
 
-			activitedao.RemoveActivite(idactivite);
-			notificationdao.addNotification(participants,
-					Notification.Supprime_Activite, 0, idorganisateur);
-			discussiondao.effaceDiscussionTouteActivite(idactivite);
+			activitedao.RemoveOnlyActivite(idactivite);
 			connexion.commit();
-			// new EffaceActiviteGcm(personneinteresse, participants,
-			// idactivite)
-			// .start();
+		
+			// ************ Si l'activitÃ© est en cours je brodact via GCM*******************
+			if (activite.isEnCours())
 			PoolThreadGCM.poolThread.execute(new EffaceActiviteGcm(
 					personneinteresse, participants, idactivite));
+			//******************************************************************************
 
 			String loginfo = "effaceActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
