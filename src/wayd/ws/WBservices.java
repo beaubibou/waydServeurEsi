@@ -148,8 +148,8 @@ public class WBservices {
 		// kljlkj
 	}
 
-	public boolean testToken(String idtoken, String photostr, String nom,
-			String gcmToken) {
+	public boolean testToken(final String idtoken, final String photostr, final String nom,
+			final String gcmToken) {
 		long debut = System.currentTimeMillis();
 	LOG.info("Test Token");
 
@@ -203,7 +203,7 @@ public class WBservices {
 			int idpersonnenotee, int idDemandeur, String jeton) {
 
 		// Retour l'avis si idnoter est !=0 on cherche l'avis par son id
-		// dans la table noter, sinon par les 3 autres paramétres
+		// dans la table noter, sinon par les 3 autres paramï¿½tres
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -620,7 +620,7 @@ public class WBservices {
 
 	}
 
-	// Permet de lire les messages aprés le message idxmessage
+	// Permet de lire les messages aprï¿½s le message idxmessage
 	public Message[] getListMessageAfter(int idpersonne, int idxmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
@@ -737,7 +737,7 @@ public class WBservices {
 
 			}
 
-			// Ajoute le nbr de vu pour chaque vu de l'activité
+			// Ajoute le nbr de vu pour chaque vu de l'activitï¿½
 			
 			String loginfo = "getActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
@@ -1442,7 +1442,7 @@ public class WBservices {
 
 		if (corps.length() == 0)
 			return null;
-		// return new MessageServeur(false, "Chaine vide non autorisée");
+		// return new MessageServeur(false, "Chaine vide non autorisï¿½e");
 
 		Connection connexion = null;
 		Message message = new Message(idemetteur, corps, 0, 0);
@@ -1513,7 +1513,7 @@ public class WBservices {
 
 		if (corps.length() == 0)
 			return null;
-		// return new MessageServeur(false, "Chaine vide non autorisée");
+		// return new MessageServeur(false, "Chaine vide non autorisï¿½e");
 
 		Connection connexion = null;
 
@@ -1608,7 +1608,7 @@ public class WBservices {
 			if (activite == null)
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 			if (activite.isTerminee())
-				return new MessageServeur(false, "Activité terminéee");
+				return new MessageServeur(false, "Activitï¿½ terminï¿½ee");
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
@@ -1631,7 +1631,7 @@ public class WBservices {
 			if (idDemandeur == activite.getIdorganisateur()) {
 
 				message = new Message(idAeffacer,
-						"L'organisateur à désinscrit " + personne.getPrenom(),
+						"L'organisateur ï¿½ dï¿½sinscrit " + personne.getPrenom(),
 						idactivite, 0);
 				notificationDAO.addNotification(idAeffacer,
 						Notification.MESSAGE_TEXT, idactivite, idDemandeur);
@@ -1701,7 +1701,7 @@ public class WBservices {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "L'activite est terminée");
+				return new MessageServeur(false, "L'activite est terminï¿½e");
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
@@ -1710,7 +1710,7 @@ public class WBservices {
 				return autorise;
 			}
 
-			// Recuepre les personnes interesse par cette activitée
+			// Recuepre les personnes interesse par cette activitï¿½e
 			connexion.setAutoCommit(false);
 			final ArrayList<Personne> personneinteresse = activitedao
 					.getListPersonneInterresse(activitedao
@@ -2480,7 +2480,7 @@ public class WBservices {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "Activité terminéee");
+				return new MessageServeur(false, "Activitï¿½ terminï¿½ee");
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
@@ -2757,7 +2757,7 @@ public class WBservices {
 	}
 
 	// ************************Permet de avoir si des notifications de notation
-	// sont à pousser
+	// sont ï¿½ pousser
 	// *************************En effet les notification de notations
 	// n'apparaissent qu'a la fin de l'activite
 	// ************** Il n' y pas de thread sur le serveur d'appli c'est le
@@ -2770,7 +2770,7 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 
-			// **************Securité
+			// **************Securitï¿½
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
@@ -3109,7 +3109,7 @@ public class WBservices {
 				NotificationDAO notificationdao = new NotificationDAO(connexion);
 				notificationdao.addNotificationFromAvis(personne.getId());
 
-				// ******** Met les notifications existantes à pas lu **//
+				// ******** Met les notifications existantes ï¿½ pas lu **//
 				String requete = "UPDATE  notification set lu=false "
 						+ " WHERE iddestinataire=? and idtype=1";
 				PreparedStatement preparedStatement = connexion
@@ -3521,7 +3521,7 @@ public class WBservices {
 			}
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerProfil(idpersonne, idsignalement))
-				return new MessageServeur(false, "Tu as déja signalé ce profil");
+				return new MessageServeur(false, "Tu as dï¿½ja signalï¿½ ce profil");
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerProfil(idpersonne, idsignalement, idmotif,
@@ -3597,7 +3597,7 @@ public class WBservices {
 
 			String requete = null;
 
-			// Renvoi les immédiates
+			// Renvoi les immï¿½diates
 			if (commenceDans == 0) {
 
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
@@ -3615,7 +3615,7 @@ public class WBservices {
 			// recheche les activite dont la date de debut est comprise entre datefinde rechere et maintenant
 			 else
 			 {
-			//Requete N°2	 
+			//Requete Nï¿½2	 
 			 requete =
 			 " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 			 +
@@ -3667,7 +3667,7 @@ public class WBservices {
 			
 			
 			if (commenceDans!=0){
-				//ajoute à la requete n°2 la date de fin
+				//ajoute ï¿½ la requete nï¿½2 la date de fin
 				index++;
 				preparedStatement.setTimestamp(index, new java.sql.Timestamp(
 						dateRechercheFin.getTime()));
