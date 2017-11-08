@@ -208,7 +208,7 @@ public class Connexion extends HttpServlet {
 							} // ...
 							finally {
 								CxoPool.closeConnection(connexion);
-
+//
 							}
 
 						}
