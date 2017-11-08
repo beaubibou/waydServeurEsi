@@ -149,10 +149,10 @@ public class Connexion extends HttpServlet {
 
 	
 	
-	public void testToken(String idtoken, HttpServletRequest request,
-			HttpServletResponse response, String pwd) {
+	public void testToken(final String idtoken, HttpServletRequest request,
+			final HttpServletResponse response, String pwd) {
 
-		HttpSession session = request.getSession();
+		final HttpSession session = request.getSession();
 		LOG.info("Test token");
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
@@ -190,7 +190,7 @@ public class Connexion extends HttpServlet {
 								connexion.commit();
 
 								profil = PersonneDAO.getFullProfilByUid(uid);
-								LOG.info("User crée" + profil);
+								LOG.info("User crï¿½e" + profil);
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 								success = true;
