@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import sun.util.locale.provider.LocaleServiceProviderPool.LocalizedObjectGetter;
 import wayd.ws.WBservices;
 import wayde.bean.Personne;
 import wayde.bean.TableauBord;
@@ -514,8 +513,8 @@ public class ServeurMethodes {
 	}
 
 	public void gcmEffaceSuggestion(ArrayList<Personne> listpersonne,
-			int idactivite) {// Informe les terminaux concernées par la
-								// suggestion que l'ativité est annulée.
+			int idactivite) {// Informe les terminaux concernï¿½es par la
+								// suggestion que l'ativitï¿½ est annulï¿½e.
 
 		try {
 
