@@ -3,12 +3,14 @@ package website.html;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import website.enumeration.AlertJsp;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 public class AlertDialog {
 	MessageAlertDialog messageAlertDialog;
 	public static String ALERT_DIALOG = "messageAlertDialog";
+	private AlertJsp typeAlert;
 
 	public static String getAlertInfo(String titre, String message) {
 
@@ -27,6 +29,22 @@ public class AlertDialog {
 
 	public AlertDialog(AuthentificationSite authentificationSite) {
 
+		typeAlert = null;
+
+		if (authentificationSite.getMessageAlertDialog() != null)
+			// On fait un clone du message stocke dans la sessionc
+			messageAlertDialog = new MessageAlertDialog(
+					authentificationSite.getMessageAlertDialog());
+		else
+			messageAlertDialog = null;
+		// on efface le MessageAlertDIalog de la session
+		authentificationSite.setAlertMessageDialog(null);
+	}
+
+	public AlertDialog(AuthentificationSite authentificationSite,
+			AlertJsp typeAlert) {
+		this.typeAlert = typeAlert;
+
 		if (authentificationSite.getMessageAlertDialog() != null)
 			// On fait un clone du message stocke dans la sessionc
 			messageAlertDialog = new MessageAlertDialog(
@@ -44,8 +62,15 @@ public class AlertDialog {
 
 	public String getMessage() {
 
+	
 		if (messageAlertDialog == null)
 			return "";
+		
+		if (typeAlert == AlertJsp.Sucess) {
+
+			return "BootstrapDialog.success('"+messageAlertDialog.getMessage()+"');";
+		}
+
 
 		if (messageAlertDialog.getAction() == null)
 			return "affichePoPup('" + messageAlertDialog.getTitre() + "','"

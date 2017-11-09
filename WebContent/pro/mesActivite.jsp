@@ -1,7 +1,7 @@
 
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
-
+<%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
@@ -47,19 +47,23 @@
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-			if (!authentification.isAuthentifiePro())
-		return;
-			
-			FiltreRecherche filtre=authentification.getFiltre();
-		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
-		MenuEnum etatMenu=MenuEnum.mesactivites;
+		if (!authentification.isAuthentifiePro())
+			return;
+		
+		FiltreRecherche filtre=authentification.getFiltre();
+			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+			MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
-	
+
 
 
 
 	<%@ include file="menu.jsp"%>
-
+	<script type="text/javascript">
+	<%=new AlertDialog(authentification,AlertJsp.Sucess).getMessage()%>
+		
+	</script>
+	
 	<div class="container">
 		</br>
 		<h2>Mes activités</h2>
@@ -108,14 +112,14 @@
 
 				<%
 					ArrayList<ActiviteBean> listMesActivite =
-										(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																														    
-										    if (listMesActivite!=null)
-										for (ActiviteBean activite : listMesActivite) {
-											String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-											String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-										String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-										String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+												(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																																    
+												    if (listMesActivite!=null)
+												for (ActiviteBean activite : listMesActivite) {
+													String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+													String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+												String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+												String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 
@@ -123,24 +127,27 @@
 					<td style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
 
-					<%=activite.getEtatHtml() %>
-				
+					<%=activite.getEtatHtml()%>
+
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
 
 					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
 						class="btn btn-info btn-sm"> <span
 							class="glyphicon glyphicon-search"></span>
-					</a> <!-- Affiche le bouton effacer si pas terminée --> 
-					<%if (!activite.isTerminee()){ %>
-					
-					 <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
+ 	if (!activite.isTerminee()){
+ %>
+
+						<a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
 							class="glyphicon glyphicon-edit"></span>
 					</a>
 
 						<button id=<%out.println(lienEfface);%> name="supprimer"
 							type="button" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%} %></td>
+						</button> <%
+ 	}
+ %></td>
 				</tr>
 				<%
 					}
@@ -197,9 +204,6 @@
 			location.href = lien;
 		}
 	</script>
-<script type="text/javascript">
-
-<%=new AlertDialog(authentification).getMessage()%>
-</script>
+	
 </body>
 </html>

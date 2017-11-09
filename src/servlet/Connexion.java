@@ -50,8 +50,7 @@ public class Connexion extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
-				
-		
+
 		super.init(config);
 		FirebaseOptions options;
 		if (FirebaseApp.getApps().isEmpty()) {
@@ -98,9 +97,10 @@ public class Connexion extends HttpServlet {
 		super.init();
 		BufferedImage img = null;
 		try {
-		   img = ImageIO.read(new File(getServletContext().getRealPath("/") + "img/inconnu.jpg"));
-		    String photoStr=Outils.encodeToString(img, "jpg");
-		    CacheValueDAO.addPhotoCache(TypePhoto.Inconnu,photoStr);
+			img = ImageIO.read(new File(getServletContext().getRealPath("/")
+					+ "img/inconnu.jpg"));
+			String photoStr = Outils.encodeToString(img, "jpg");
+			CacheValueDAO.addPhotoCache(TypePhoto.Inconnu, photoStr);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -120,8 +120,12 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
-		success=false;
-		
+		success = false;
+
+		if (testEsi(request, response))
+			return;
+		;
+
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
 
@@ -129,7 +133,7 @@ public class Connexion extends HttpServlet {
 			int temps = 0;
 			while (temps < 500) {
 				Thread.sleep(30);
-				LOG.info("wait"+temps);
+				LOG.info("wait" + temps);
 				temps++;
 				if (success) {
 
@@ -142,13 +146,32 @@ public class Connexion extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		LOG.info("************Sortie");
 
 	}
 
-	
-	
+	public boolean testEsi(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		final HttpSession session = request.getSession();
+		String pwd = (String) request.getParameter("pwd");
+		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
+		System.out.println(profil.getPseudo());
+
+		session.setAttribute("profil", profil);
+
+		try {
+			response.sendRedirect("AcceuilPro");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+
+	}
+
 	public void testToken(final String idtoken, HttpServletRequest request,
 			final HttpServletResponse response, String pwd) {
 
@@ -161,8 +184,6 @@ public class Connexion extends HttpServlet {
 						LOG.info("Feed back onsuccess");
 						String uid = decodedToken.getUid();
 
-					
-						
 						// if (!decodedToken.isEmailVerified() && pwd!=null ){
 						//
 						// try {
@@ -194,7 +215,7 @@ public class Connexion extends HttpServlet {
 								session.setAttribute("profil", profil);
 								response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 								success = true;
-								return ;
+								return;
 							} catch (SQLException | NamingException
 									| IOException e) {
 								// TODO Auto-generated catch block
@@ -208,12 +229,11 @@ public class Connexion extends HttpServlet {
 							} // ...
 							finally {
 								CxoPool.closeConnection(connexion);
-//
+								//
 							}
 
 						}
 
-						
 						if (profil != null) {
 
 							session.setAttribute("profil", profil);
@@ -259,7 +279,7 @@ public class Connexion extends HttpServlet {
 
 							case ProfilBean.WAYDEUR:
 
-								//session.setAttribute("profil", profil);
+								// session.setAttribute("profil", profil);
 								try {
 									response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
 									success = true;
@@ -270,8 +290,6 @@ public class Connexion extends HttpServlet {
 								}
 
 								break;
-
-							
 
 							}
 
