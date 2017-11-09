@@ -63,40 +63,49 @@
 	<%=new AlertDialog(authentification,AlertJsp.Sucess).getMessage()%>
 		
 	</script>
-	
-	<div class="container">
-		</br>
-		<h2>Mes activités</h2>
-		<p>Gérez vos activités</p>
-		<form action="MesActivites" method="post">
+	</br>
+	</br>
+<div class="container">
 
-			<div class="row">
+		<div class="panel panel-primary"">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-2">
+						<form method="post" action="MesActivites" id="formulaire"
+							class="form-inline">
+							<div class="form-group">
+								<select class="form-control" id="idEtatActivite"
+									name="etatActivite">
 
-				<div class='col-sm-2'>
-					<div class="form-group">
-						<select class="form-control" id="idtypeaccess" name="etatActivite">
+									<%
+										for (TypeEtatActivite etatActivite:listEtatActivite) {
+									%>
+									<option value="<%=etatActivite.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+										<%=etatActivite.getLibelle()%></option>
+									<%
+										}
+									%>
 
-							<%
-								for (TypeEtatActivite etatActivite:listEtatActivite) {
-							%>
-							<option value="<%=etatActivite.getId()%>"
-								<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-								<%=etatActivite.getLibelle()%></option>
-							<%
-								}
-							%>
+								</select>
 
-						</select>
+							</div>
+
+						</form>
 					</div>
-				</div>
-				<div class='col-sm-2'>
 
-					<button type="submit" class="btn btn-info">Cherchez</button>
+					<div class="col-sm-2 col-sm-offset-8 ">
+						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+					</div>
+
+
 				</div>
+
+
 			</div>
 
-		</form>
-		<table class="table table-responsive" border="3";>
+		</div>
+		<table class="table table-responsive" border="3" id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
 					<th class="text-center">Titre</th>
@@ -105,6 +114,7 @@
 					<th class="text-center">Etat</th>
 					<th class="text-center">Date</th>
 					<th class="text-center">Action</th>
+					<th class="text-center"><input type="checkbox" id="ckAll">
 				</tr>
 			</thead>
 			<tbody
@@ -124,7 +134,7 @@
 
 
 				<tr>
-					<td style="vertical-align: middle;"><%=activite.getTitre()%></td>
+					<td class="idActivite" id=<%=activite.getId()%> style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
 
 					<%=activite.getEtatHtml()%>
@@ -148,6 +158,8 @@
 						</button> <%
  	}
  %></td>
+ 	<td><input type="checkbox" id="moncheck"></td>
+ 
 				</tr>
 				<%
 					}
@@ -157,8 +169,7 @@
 
 	</div>
 
-
-	<script>
+<script>
 		$(function() {
 
 			$('button').click(function() {
@@ -167,12 +178,76 @@
 				var action = $(this).attr('name')
 				if (action == 'supprimer')
 					DialogEffaceActivite(lien);
+				if (action == 'supprimerActivites')
+					effaceActivites();
 
 			});
+
+			$("#ckAll").click(function() {
+
+				litTable();
+			});
+		});
+
+		$(function() {
+
+			$('#idEtatActivite').on('change', function() {
+				var selected = $(this).val();
+				document.getElementById("formulaire").submit();
+			});
+
 		});
 	</script>
 
 	<script>
+		function litTable() {
+
+			$('#matable tr').each(function() {
+				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
+
+				if ($('#ckAll').is(":checked")) {
+
+					checkBox.prop("checked", true); // it is checked
+				} else {
+
+					checkBox.prop("checked", false); // it is checked
+
+				}
+
+			});
+		}
+
+		
+		function DialogEffaceActivites() {
+
+			BootstrapDialog.show({
+				title : 'Efface activité',
+				message : 'Confirmez',
+				buttons : [
+
+				{
+					label : 'Annuler',
+					action : function(dialog) {
+						dialog.close();
+					}
+				},
+
+				{
+					label : 'Oui',
+					action : function(dialog) {
+						document.getElementById("form_listActivites").submit();
+						dialog.close();
+					}
+				}
+
+				]
+			});
+
+		}
+
+
+
+		
 		function DialogEffaceActivite(lien) {
 
 			BootstrapDialog.show({
@@ -199,9 +274,44 @@
 			});
 
 		}
+		
 
 		function effaceActivite(lien) {
 			location.href = lien;
+		}
+	</script>
+
+
+	<form id="form_listActivites" action="SupprimeActivites" method="post">
+		<input id="idListActivites" type="text"></input>
+	</form>
+	<script type="text/javascript">
+		function effaceActivites() {
+			alert("effacxe actiovies");
+		
+			var listActivite = "";
+			var nbrLigne = 0;
+			$('#matable tr').each(function() {
+				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
+				var id = $(this).find('input:checkbox');
+
+				if (checkBox.is(":checked")) {
+
+					var id = $(this).find('.idActivite').attr('id');
+					if (id != null) {
+						listActivite = listActivite + id + ";";
+						nbrLigne++;
+					}
+				}
+
+			});
+			if (nbrLigne > 0) {
+				alert(listActivite);
+				document.getElementById("idListActivites").value = listActivite;
+				DialogEffaceActivites();
+				
+			}
+			
 		}
 	</script>
 	
