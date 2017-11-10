@@ -13,6 +13,7 @@ import wayd.ws.WBservices;
 import website.dao.SuggestionDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
+import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
@@ -69,12 +70,14 @@ public class ContactMessage extends HttpServlet {
 
 			case ProfilBean.PRO:
 
-				new AlertInfoJsp("Message envoyé. ", AlertJsp.Sucess,
-						"MesActivites").send(request, response);
+				authentification.setAlertMessageDialog( new MessageAlertDialog
+						("Message Information","Votre message a Ã©tÃ© pris en compte",null,AlertJsp.Sucess));
+				response.sendRedirect("MesActivites");
+			
 				break;
 
 			case ProfilBean.WAYDEUR:
-				new AlertInfoJsp("Message envoyé", AlertJsp.Sucess,
+				new AlertInfoJsp("Message envoyï¿½", AlertJsp.Sucess,
 						"MesActivitesWaydeur").send(request, response);
 				
 				break;
@@ -91,13 +94,17 @@ public class ContactMessage extends HttpServlet {
 
 			case ProfilBean.PRO:
 
-				new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
-						"MesActivites").send(request, response);
+				authentification.setAlertMessageDialog( new MessageAlertDialog
+						("Message Information","Une erreur est survenue",null,AlertJsp.danger));
+				response.sendRedirect("MesActivites");
+			
 				break;
 
 			case ProfilBean.WAYDEUR:
-				new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
-						"MesActivitesWaydeur").send(request, response);
+				authentification.setAlertMessageDialog( new MessageAlertDialog
+						("Message Information","Une erreur est survenue",null,AlertJsp.danger));
+				response.sendRedirect("MesActivites");
+			
 				
 				break;
 

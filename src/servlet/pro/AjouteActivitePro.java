@@ -105,21 +105,20 @@ public class AjouteActivitePro extends HttpServlet {
 		int idActivite = activiteDAO.addActivitePro(authentification.getId(),
 				titre, description, dateDebut, dateFin, adresse, latitude,
 				longitude, typeactivite, ProfilBean.PRO, 2);
-		LOG.debug("idactivite ajot�e from pro" + idActivite);
-
+	
 		if (idActivite != 0) {
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
 				
-			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Activit� ajout�",null));
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Activité ajoutée",null,AlertJsp.Sucess));
 			response.sendRedirect("MesActivites");
 			
 			
 			return;
 		}
 
-		new AlertInfoJsp("Une erreur est survenue", AlertJsp.Alert,
-				"AcceuilPro").send(request, response);
-
+		authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Une erreur est survenue",null,AlertJsp.warning));
+		response.sendRedirect("MesActivites");
+	
 		return;
 
 	}

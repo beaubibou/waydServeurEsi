@@ -66,11 +66,22 @@ public class AlertDialog {
 		if (messageAlertDialog == null)
 			return "";
 		
-		if (typeAlert == AlertJsp.Sucess) {
+		System.out.println(messageAlertDialog.getTypeMessage());
+		
+		if (messageAlertDialog.getTypeMessage() == AlertJsp.Sucess) {
 
 			return "BootstrapDialog.success('"+messageAlertDialog.getMessage()+"');";
 		}
 
+		if (messageAlertDialog.getTypeMessage() == AlertJsp.danger) {
+
+			return "BootstrapDialog.danger('"+messageAlertDialog.getMessage()+"');";
+		}
+		
+		if (messageAlertDialog.getTypeMessage() == AlertJsp.warning) {
+
+			return "BootstrapDialog.warning('"+messageAlertDialog.getMessage()+"');";
+		}
 
 		if (messageAlertDialog.getAction() == null)
 			return "affichePoPup('" + messageAlertDialog.getTitre() + "','"

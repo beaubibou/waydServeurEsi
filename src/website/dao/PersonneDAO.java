@@ -295,7 +295,7 @@ public class PersonneDAO {
 		Connection connexion = null;
 		try {
 			
-			// on met le sexe à autre
+			// on met le sexe ï¿½ autre
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
@@ -347,9 +347,13 @@ public class PersonneDAO {
 			int idpersonne, String siteWeb, String telephone,String siret) {
 		// TODO Auto-generated method stub
 
+		if (pseudo!=null)
 		pseudo = pseudo.trim();
+		if (adresse!=null)
 		adresse = adresse.trim();
+		if (commentaire!=null)
 		commentaire = commentaire.trim();
+		if (siteWeb!=null)
 		siteWeb = siteWeb.trim();
 
 		Connection connexion = null;

@@ -31,7 +31,7 @@
 					<%=MenuHtml.getActiviteClass(etatMenu,
 					MenuEnum.ajouteactivite)%>
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" >Proposez <span ></span></a>
+					data-toggle="dropdown" >Proposez <span  class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/wayd/AjouteActivitePro">Proposez une
 								activité</a></li>

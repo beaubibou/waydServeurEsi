@@ -122,15 +122,16 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 		
 		if (value.booleanValue()==false)
 			return "";
-		
+	
 		return "checked";
 		
 	}
 
 	public static String getStringStatement(String chaine) {
 		// TODO Auto-generated method stub
-		if (chaine.length()==0) return null;
 		if (chaine==null)return null;
+		if (chaine.length()==0) return null;
+		
 		return chaine;
 	}
 	

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
+import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
 import website.metier.ActiviteBean;
@@ -68,14 +69,21 @@ public class SupprimeActivites extends HttpServlet {
 		
 			if (retour.isReponse()) 
 			nbrLigneSupprime++;
-							
+			
+			if (!retour.isReponse()){
+				authentification.setAlertMessageDialog(new MessageAlertDialog(
+						"Message Information", "Une erreur est survenue", null,AlertJsp.warning));
+				response.sendRedirect("MesActivites");
+				return;
+			}
+			
 		}
 		
 				
 		}
 		
 		authentification.setAlertMessageDialog(new MessageAlertDialog(
-				"Message Information", "Vous avez supprimé "+ nbrLigneSupprime+ " activités", null));
+				"Message Information", "Vous avez supprimé "+ nbrLigneSupprime+ " activités", null,AlertJsp.Sucess));
 		response.sendRedirect("MesActivites");
 	
 		return;

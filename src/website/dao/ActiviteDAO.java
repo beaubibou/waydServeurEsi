@@ -1335,21 +1335,29 @@ public class ActiviteDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+		
 			try {
 				connexion.rollback();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				return new MessageServeur(false, e1.getMessage());
+
 			}
 			return new MessageServeur(false, e.getMessage());
-
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new MessageServeur(false, e.getMessage());
+
+		
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
+	
+		
 
 	}
 

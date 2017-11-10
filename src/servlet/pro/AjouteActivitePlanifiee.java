@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
@@ -120,7 +121,9 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			ajouteActivite(authentification.getId() , titre, description, adresse,
 					 latitude, longitude, typeactivite,dateDebut, dateFin, joursVoulus);
 			
-			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Vos activit�s ont �t� cr�e",null));
+			
+			authentification.setAlertMessageDialog(
+					new MessageAlertDialog("Message Information","Vos activités ont été crées",null,AlertJsp.Sucess));
 			response.sendRedirect("MesActivites");
 		
 			return;
@@ -129,7 +132,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 				
-			authentification.setAlertMessageDialog(  new MessageAlertDialog("Message erreur",e.getMessage(),null));
+			authentification.setAlertMessageDialog(  new MessageAlertDialog("Message erreur",e.getMessage(),null,AlertJsp.warning));
 			response.sendRedirect("MesActivites");
 		
 		}

@@ -61,7 +61,7 @@ public class SupprimeActivite extends HttpServlet {
 			if (retour.isReponse()) {
 
 				authentification.setAlertMessageDialog(new MessageAlertDialog(
-						"Message Information", "Activit� supprim�e", null));
+						"Message Information", "Activité supprimée", null,AlertJsp.Sucess));
 				response.sendRedirect("MesActivites");
 				return;
 			}
@@ -70,9 +70,8 @@ public class SupprimeActivite extends HttpServlet {
 
 				request.setAttribute(AlertDialog.ALERT_DIALOG,
 						new MessageAlertDialog("Message Erreur",
-								"Une erreur est survenue", null));
-				request.getRequestDispatcher("MesActivites").forward(request,
-						response);
+								"Une erreur est survenue", null,AlertJsp.warning));
+				response.sendRedirect("MesActivites");
 				return;
 			}
 
