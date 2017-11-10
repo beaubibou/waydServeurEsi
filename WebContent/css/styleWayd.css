@@ -9,7 +9,10 @@
     
 }
 
-
+.dropdown-toggle:active, .open .dropdown-toggle {
+        background:#FFF !important; 
+        color:#000 !important;
+    }
 /*Couleur de la barre de navigation quand menu selectionné*/
 
 .active a {
