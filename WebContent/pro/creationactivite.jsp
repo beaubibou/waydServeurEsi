@@ -52,11 +52,11 @@
 	ProfilBean profil = authentification.getProfil();
 			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
 					// Defini le li a rendre actif
-		MenuEnum etatMenu=MenuEnum.ajouteactivite;
+		MenuEnum etatMenu=null;
 	%>
 
 	<%@ include file="menu.jsp"%>
-	<div class="container">
+	<div class="container" style="margin-top: 30px">
 		<div class="page-header">
 			<h1>Proposez vos activités</h1>
 		</div>

@@ -44,7 +44,6 @@
 </head>
 <body>
 
-
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
 		if (!authentification.isAuthentifiePro())
@@ -54,9 +53,6 @@
 			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
 			MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
-
-
-
 
 	<%@ include file="menu.jsp"%>
 	<script type="text/javascript">

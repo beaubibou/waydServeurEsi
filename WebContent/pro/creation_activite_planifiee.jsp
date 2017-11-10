@@ -37,7 +37,7 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
 </head>
@@ -55,7 +55,7 @@
 	
 	<%@ include file="menu.jsp"%>
 	<div class="container">
-		<div class="page-header">
+		<div class="page-header" style="margin-top: 100px">
 			<h1>Proposez vos activités</h1>
 		</div>
 		<p>Proposez vos activités gratuites à la communauté. Une activité

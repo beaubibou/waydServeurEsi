@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import website.enumeration.MenuEnum;
 import website.html.MessageAlertDialog;
 
 public class AuthentificationSite {
@@ -25,12 +26,12 @@ public class AuthentificationSite {
 		profil = (ProfilBean) session.getAttribute("profil");
 
 	}
-	
-	public void setAlertMessageDialog(MessageAlertDialog messageAlertDialog){
+
+	public void setAlertMessageDialog(MessageAlertDialog messageAlertDialog) {
 		profil.setMessageAlertDialog(messageAlertDialog);
-		
+
 	}
-	
+
 	public MessageAlertDialog getMessageAlertDialog() {
 		return profil.getMessageAlertDialog();
 	}
@@ -43,15 +44,16 @@ public class AuthentificationSite {
 		return profil;
 	}
 
-	public boolean isPro(){
-		
+	public boolean isPro() {
+
 		return profil.isPro();
 	}
-	
-public boolean isWaydeur(){
-		
+
+	public boolean isWaydeur() {
+
 		return profil.isWaydeur();
 	}
+
 	public void setProfil(ProfilBean profil) {
 		this.profil = profil;
 	}
@@ -93,9 +95,9 @@ public boolean isWaydeur(){
 		return true;
 
 	}
-	
+
 	public boolean isAuthentifie() throws IOException {
-	
+
 		if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return false;
@@ -104,8 +106,9 @@ public boolean isWaydeur(){
 		return true;
 
 	}
-	public FiltreRecherche getFiltre(){
-		
+
+	public FiltreRecherche getFiltre() {
+
 		return profil.getFiltreRecherche();
 	}
 

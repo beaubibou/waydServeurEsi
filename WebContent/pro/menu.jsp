@@ -1,7 +1,7 @@
 
 <%@page import="website.html.MenuHtml"%>
 <%@page import="website.enumeration.*"%>
-
+<%@page import="website.metier.AuthentificationSite"%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -15,7 +15,7 @@
 				alt="Cinque Terre" width="30" height="30">
 
 		</div>
-
+	
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.home)%>><a
@@ -31,7 +31,7 @@
 					<%=MenuHtml.getActiviteClass(etatMenu,
 					MenuEnum.ajouteactivite)%>
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Proposez <span class="caret"></span></a>
+					data-toggle="dropdown" >Proposez <span ></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/wayd/AjouteActivitePro">Proposez une
 								activité</a></li>
@@ -46,7 +46,7 @@
 					href="/wayd/MapPro">Carte</a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.apropos)%>><a
 					href="/wayd/Apropos">A propos</a></li>
-				<li><a href="/wayd/Contact">Contact</a></li>
+				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a href="/wayd/Contact">Contact</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
