@@ -58,7 +58,7 @@ public class SupprimeActivites extends HttpServlet {
 		{
 	
 		
-		int idActivite = Integer.parseInt(request.getParameter("activiteStr"));
+		int idActivite = Integer.parseInt(activiteStr);
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
 			
 		if (activite.isSupprimable(authentification.getId()))
@@ -71,14 +71,14 @@ public class SupprimeActivites extends HttpServlet {
 							
 		}
 		
+				
+		}
+		
 		authentification.setAlertMessageDialog(new MessageAlertDialog(
 				"Message Information", "Vous avez supprimé "+ nbrLigneSupprime+ " activités", null));
 		response.sendRedirect("MesActivites");
 	
 		return;
-		
-		}
-		
 
 	
 	

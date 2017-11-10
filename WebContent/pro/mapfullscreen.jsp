@@ -16,17 +16,13 @@
 	href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.css"
 	rel="stylesheet" media="screen">
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
-      <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
-    <![endif]-->
-
 <style>
 #map-container {
 	height: 100vh
 }
+
 </style>
+<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 

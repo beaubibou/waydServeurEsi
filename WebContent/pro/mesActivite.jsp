@@ -60,12 +60,13 @@
 
 	<%@ include file="menu.jsp"%>
 	<script type="text/javascript">
-	<%=new AlertDialog(authentification,AlertJsp.Sucess).getMessage()%>
+		
+	<%=new AlertDialog(authentification).getMessage()%>
 		
 	</script>
 	</br>
 	</br>
-<div class="container">
+	<div class="container">
 
 		<div class="panel panel-primary"">
 			<div class="panel-heading">
@@ -108,10 +109,9 @@
 		<table class="table table-responsive" border="3" id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
-					<th class="text-center">Titre</th>
-
-					<th class="text-center">Vus</th>
 					<th class="text-center">Etat</th>
+					<th class="text-center">Titre</th>
+					<th class="text-center">Vus</th>
 					<th class="text-center">Date</th>
 					<th class="text-center">Action</th>
 					<th class="text-center"><input type="checkbox" id="ckAll">
@@ -122,22 +122,22 @@
 
 				<%
 					ArrayList<ActiviteBean> listMesActivite =
-												(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																																    
-	    if (listMesActivite!=null)
-	for (ActiviteBean activite : listMesActivite) {
-	String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-	String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-	String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-	String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-			%>
+																(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																																				    
+							    if (listMesActivite!=null)
+							for (ActiviteBean activite : listMesActivite) {
+							String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+							String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+				%>
 
 
 				<tr>
-					<td class="idActivite" id=<%=activite.getId()%> style="vertical-align: middle;"><%=activite.getTitre()%></td>
-					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
-
 					<%=activite.getEtatHtml()%>
+					<td class="idActivite" id=<%=activite.getId()%>
+						style="vertical-align: middle;"><%=activite.getTitre()%></td>
+					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
 
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
 
@@ -145,21 +145,18 @@
 						class="btn btn-info btn-sm"> <span
 							class="glyphicon glyphicon-search"></span>
 					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
- 	if (!activite.isTerminee()){
- %>
-
-						<a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
-							class="glyphicon glyphicon-edit"></span>
+ 	if (!activite.isTerminee()){%> 
+ 	<a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+	class="glyphicon glyphicon-edit"></span>
 					</a>
 
 						<button id=<%out.println(lienEfface);%> name="supprimer"
 							type="button" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%
- 	}
+						</button> <%	}
  %></td>
- 	<td><input type="checkbox" id="moncheck"></td>
- 
+					<td><%=activite.getCheckHtml()%></td>
+
 				</tr>
 				<%
 					}
@@ -169,7 +166,7 @@
 
 	</div>
 
-<script>
+	<script>
 		$(function() {
 
 			$('button').click(function() {
@@ -217,7 +214,6 @@
 			});
 		}
 
-		
 		function DialogEffaceActivites() {
 
 			BootstrapDialog.show({
@@ -245,9 +241,6 @@
 
 		}
 
-
-
-		
 		function DialogEffaceActivite(lien) {
 
 			BootstrapDialog.show({
@@ -274,7 +267,6 @@
 			});
 
 		}
-		
 
 		function effaceActivite(lien) {
 			location.href = lien;
@@ -283,12 +275,11 @@
 
 
 	<form id="form_listActivites" action="SupprimeActivites" method="post">
-		<input id="idListActivites" type="text"></input>
+		<input id="idListActivites" type="hidden" name="listActivite"></input>
 	</form>
 	<script type="text/javascript">
 		function effaceActivites() {
-			alert("effacxe actiovies");
-		
+
 			var listActivite = "";
 			var nbrLigne = 0;
 			$('#matable tr').each(function() {
@@ -306,14 +297,14 @@
 
 			});
 			if (nbrLigne > 0) {
-				alert(listActivite);
+
 				document.getElementById("idListActivites").value = listActivite;
 				DialogEffaceActivites();
-				
+
 			}
-			
+
 		}
 	</script>
-	
+
 </body>
 </html>

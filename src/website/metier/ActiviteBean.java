@@ -73,8 +73,8 @@ public class ActiviteBean {
 	private int typeAccess;
 
 	private String libelleActivite;
-	
-	private int nbrVu=9;
+
+	private int nbrVu = 9;
 
 	public int getNbrVu() {
 		return nbrVu;
@@ -160,20 +160,23 @@ public class ActiviteBean {
 
 	}
 
-	public boolean isEnCours(){
-		
-		Date maintenant=new Date();
-		if (maintenant.after(datedebut) && maintenant.before(datefin))return true;
+	public boolean isEnCours() {
+
+		Date maintenant = new Date();
+		if (maintenant.after(datedebut) && maintenant.before(datefin))
+			return true;
 		return false;
-		
+
 	}
-	
-	public boolean isPlanifie(){
-		Date maintenant=new Date();
-		if (datedebut.after(maintenant))return true;
+
+	public boolean isPlanifie() {
+		Date maintenant = new Date();
+		if (datedebut.after(maintenant))
+			return true;
 		return false;
-		
+
 	}
+
 	public void setUrlPhoto(String urlPhoto) {
 		this.urlPhoto = urlPhoto;
 	}
@@ -209,16 +212,15 @@ public class ActiviteBean {
 	}
 
 	public String getPhoto() {
-		
-			if (photo==null)
-		return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
-		
-		if (photo.equals("")){
-				return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+
+		if (photo == null)
+			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+
+		if (photo.equals("")) {
+			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
 		}
 		return photo;
-		
-		
+
 	}
 
 	public void setPhoto(String photo) {
@@ -297,7 +299,6 @@ public class ActiviteBean {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
-		
 
 	}
 
@@ -307,7 +308,7 @@ public class ActiviteBean {
 			String adresse, String nom, String pseudo, String photo,
 			double note, int role, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
-			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,int nbrvu) {
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur, int nbrvu) {
 
 		super();
 		this.id = id;
@@ -331,12 +332,10 @@ public class ActiviteBean {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
-		this.nbrVu=nbrvu;
-		
+		this.nbrVu = nbrvu;
 
 	}
 
-	
 	public int getIdorganisateur() {
 		return idorganisateur;
 	}
@@ -607,15 +606,14 @@ public class ActiviteBean {
 		if (distance < 1000)
 			return "" + Math.round(distance) + " m�tres";
 
-		else{
-			
-			distance=distance/1000;
-		String pattern="##.##";
-		DecimalFormat myFormatter = new DecimalFormat(pattern);
-				
+		else {
+
+			distance = distance / 1000;
+			String pattern = "##.##";
+			DecimalFormat myFormatter = new DecimalFormat(pattern);
+
 			return "" + myFormatter.format(distance) + " Km";
 		}
-		
 
 	}
 
@@ -630,27 +628,33 @@ public class ActiviteBean {
 		return "Le " + datestrdebut + " de " + heuredebutstr + " � "
 				+ heurefinstr;
 	}
-	
-	public String getEtatHtml(){
-		
+
+	public String getEtatHtml() {
+
 		if (isTerminee())
-		return 	"<td style='vertical-align: middle;'><span style='color: red;'	class='glyphicon glyphicon-stop'></span></td>";
-		
+			return "<td style='vertical-align: middle;'><span style='color: red;'	class='glyphicon glyphicon-stop'></span></td>";
+
 		if (isEnCours())
-			return 	"<td style='vertical-align: middle;'><span style='color: green;'	class='glyphicon glyphicon-play'></span></td>";
-	
+			return "<td style='vertical-align: middle;'><span style='color: green;'	class='glyphicon glyphicon-play'></span></td>";
+
 		if (isPlanifie())
-			return 	"<td style='vertical-align: middle;'><span style='color: blue;'	class='glyphicon glyphicon-time'></span></td>";
+			return "<td style='vertical-align: middle;'><span style='color: blue;'	class='glyphicon glyphicon-time'></span></td>";
 
 		return "lmk";
 	}
 
 	public boolean isSupprimable(int idOrganisateur) {
 		// TODO Auto-generated method stub
-	if (this.idorganisateur==idOrganisateur && !isTerminee())return true;
-	
-		
+		if (this.idorganisateur == idOrganisateur && !isTerminee())
+			return true;
+
 		return false;
 	}
-	
+
+	public String getCheckHtml() {
+
+		if (!isTerminee())
+			return "<input type='checkbox' id='moncheck'>";
+		return "";
+	}
 }

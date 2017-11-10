@@ -133,10 +133,11 @@ function creerUserPassWord(){
 	var password= document.getElementById("login-password").value;
 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 
-		 BootstrapDialog.alert('Hi Apple!', function(){
+ 		 BootstrapDialog.alert('Votre compte a été crée', function(){
 			 location.href="login.jsp";
 	        });
-      
+
+		 
           
 }, function(error) {
     // Handle Errors here.

@@ -1,6 +1,7 @@
 
 <%@page import="website.html.MenuHtml"%>
 <%@page import="website.enumeration.*"%>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -59,10 +60,8 @@
 						class="glyphicon glyphicon-log-in"></span> Log in</a></li>
 				<%} %>
 
-
 				
 			</ul>
 		</div>
 	</div>
 </nav>
-<div class="container" style="margin-top: 30px">
