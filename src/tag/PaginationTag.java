@@ -17,7 +17,7 @@ public class PaginationTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		JspWriter out = getJspContext().getOut();
 	System.out.println("rentre dans pagination tag"+nbrTotalLigne);
-	
+	//
 	}
 	public int getNbrTotalLigne() {
 		return nbrTotalLigne;
