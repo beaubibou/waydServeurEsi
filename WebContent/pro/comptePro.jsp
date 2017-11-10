@@ -24,7 +24,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 
 <script>
@@ -46,7 +46,7 @@
 	%>
 	<%@ include file="menu.jsp"%>
 
-<div class="container">
+<div class="container" style="margin-top: 50px;">
   <div class="page-header">
     <h1>Votre compte</h1>      
   </div>
@@ -54,7 +54,7 @@
     
 </div>
 	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
+		<div id="loginbox" 
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">

@@ -45,7 +45,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		if (!authentification.isAuthentifiePro())
 			return;
 
-		request.getRequestDispatcher("pro/form_creation_activite_planifiee.jsp").forward(
+		request.getRequestDispatcher("pro/creation_activite_planifiee.jsp").forward(
 				request, response);
 	
 	}

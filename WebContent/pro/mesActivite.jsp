@@ -39,7 +39,7 @@
 
 <script src="js/alertdialog.js"></script>
 
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">>
 
 </head>
 <body>
@@ -64,9 +64,8 @@
 	<%=new AlertDialog(authentification).getMessage()%>
 		
 	</script>
-	</br>
-	</br>
-	<div class="container">
+	
+	<div class="container" style="margin-top: 100px">
 
 		<div class="panel panel-primary"">
 			<div class="panel-heading">

@@ -59,7 +59,9 @@ body, html {
 
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
+
+<title>Accueil</title>
 </head>
 <body>
 

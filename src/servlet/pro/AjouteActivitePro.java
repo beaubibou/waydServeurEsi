@@ -57,7 +57,7 @@ public class AjouteActivitePro extends HttpServlet {
 		if (!authentification.isAuthentifiePro())
 			return;
 
-		request.getRequestDispatcher("pro/form_creationactivite.jsp").forward(
+		request.getRequestDispatcher("pro/creationactivite.jsp").forward(
 				request, response);
 
 	}

@@ -22,8 +22,7 @@
 }
 
 </style>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
-</head>
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css"></head>
 <body>
 
 	<%

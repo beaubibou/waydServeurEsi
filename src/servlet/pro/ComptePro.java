@@ -53,7 +53,7 @@ public class ComptePro extends HttpServlet {
 			return;
 		}
 
-		response.sendRedirect("pro/form_fullprofilpro.jsp");
+		response.sendRedirect("pro/comptePro.jsp");
 
 	}
 
@@ -101,10 +101,10 @@ public class ComptePro extends HttpServlet {
 			profil.setPremiereconnexion(false);
 			filtreRecherche.setLatitude(latitude);
 			filtreRecherche.setLongitude(longitude);
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Compte mis à jour",null));
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Compte mis ï¿½ jour",null));
 			request.getRequestDispatcher("MesActivites").forward(request, response);
 	
-		//	new AlertInfoJsp("Compte mis à jour", AlertJsp.Sucess, "AcceuilPro")
+		//	new AlertInfoJsp("Compte mis ï¿½ jour", AlertJsp.Sucess, "AcceuilPro")
 			//	.send(request, response);
 		} else {
 			new AlertInfoJsp("Un probleme est survenue", AlertJsp.Alert,
