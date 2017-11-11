@@ -62,7 +62,9 @@ public class AddActiviteGcm implements Runnable {
 
 		Connection connexiongcm = null;
 		try {
-
+			// dans le cas ou l'activié n'est pas en cours on ne fait rien
+			
+			if (!activite.isEnCours())return;
 			connexiongcm = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexiongcm);
 			final ArrayList<Personne> personneinteresse = activitedao

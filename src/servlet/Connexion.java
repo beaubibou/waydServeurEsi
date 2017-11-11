@@ -123,10 +123,10 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
 		success = false;
-
-		if (testEsi(request, response))
-			return;
-	;
+//
+//		if (testEsi(request, response))
+//			return;
+//	;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);

@@ -1,5 +1,7 @@
 package servlet.pro;
 
+import gcmnotification.AddActiviteGcm;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import threadpool.PoolThreadGCM;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
@@ -185,7 +188,10 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		int idActivite = activiteDAO.addActivitePro(idPersonne,
 				titre, description, dateDebut.getTime(), calFin.getTime(), adresse, latitude,
 				longitude, typeactivite, ProfilBean.PRO, 2);
-	
+		
+		if (idActivite != 0) 
+			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
+				
 		
 	}
 
