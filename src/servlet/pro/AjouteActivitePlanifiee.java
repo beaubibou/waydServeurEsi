@@ -184,7 +184,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		System.out.println("Fin"+calFin);
 			
 		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
-	
+	//
 		int idActivite = activiteDAO.addActivitePro(idPersonne,
 				titre, description, dateDebut.getTime(), calFin.getTime(), adresse, latitude,
 				longitude, typeactivite, ProfilBean.PRO, 2);
