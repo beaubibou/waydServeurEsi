@@ -19,6 +19,17 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.tasks.OnSuccessListener;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
+import com.google.firebase.auth.UserRecord.UpdateRequest;
+
+import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
@@ -28,19 +39,12 @@ import website.metier.ProfilBean;
 
 
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.tasks.OnSuccessListener;
-
 /**
  * Servlet implementation class Connexion
  */
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(Connexion.class);
-
 	protected boolean success;
 
 	/**
@@ -52,43 +56,7 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		super.init(config);
-		FirebaseOptions options;
-		if (FirebaseApp.getApps().isEmpty()) {
-
-			try {
-
-				options = new FirebaseOptions.Builder()
-						// .setServiceAccount(new
-						// FileInputStream("/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
-
-						.setServiceAccount(new FileInputStream("d:/cle.json"))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-						.build();
-				FirebaseApp.initializeApp(options);
-
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		if (FirebaseApp.getApps().isEmpty()) {
-
-			
-			try {
-				options = new FirebaseOptions.Builder()
-						.setServiceAccount(
-								new FileInputStream(
-										"/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
-
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-						.build();
-				FirebaseApp.initializeApp(options);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 	
 	}
 
@@ -96,6 +64,7 @@ public class Connexion extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
+		FirebaseApp.initializeApp(WBservices.optionFireBase);
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File(getServletContext().getRealPath("/")
@@ -124,11 +93,12 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
 		success = false;
-//
+		
 //		if (testEsi(request, response))
 //			return;
 //	;
 
+		
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
 

@@ -16,6 +16,7 @@ import wayde.dao.ActiviteDAO;
 import wayde.dao.PersonneDAO;
 
 import com.google.android.gcm.server.Sender;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -663,23 +664,11 @@ public class ServeurMethodes {
 
 		uid = null;
 
-		FirebaseOptions options;
-		if (FirebaseApp.getApps().isEmpty()) {
-
-			try {
-				options = new FirebaseOptions.Builder()
-						.setServiceAccount(new FileInputStream("d:/cle.json"))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-
-						.build();
-				FirebaseApp.initializeApp(options);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		if (FirebaseApp.getApps().isEmpty()) 
+				FirebaseApp.initializeApp(WBservices.optionFireBase);
+		
 		// Verfie le jeton si correspodant cree le compte ou renvoi la personne
-
+		
 		FirebaseAuth.getInstance().verifyIdToken(idToken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
 					@Override

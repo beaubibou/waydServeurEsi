@@ -647,4 +647,14 @@
     <servlet-name>CreerUtilisateurFireBase</servlet-name>
     <url-pattern>/CreerUtilisateurFireBase</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreerUserPro</display-name>
+    <servlet-name>CreerUserPro</servlet-name>
+    <servlet-class>servlet.pro.CreerUserPro</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreerUserPro</servlet-name>
+    <url-pattern>/CreerUserPro</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -91,6 +91,7 @@ import wayde.dao.TypeActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,37 +105,45 @@ public class WBservices {
 	public static SimpleDateFormat formatDate = new SimpleDateFormat(
 			"dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
+	public static FirebaseOptions optionFireBase;
 
 	static {
-		FirebaseOptions options;
-		if (FirebaseApp.getApps().isEmpty()) {
+
+		if (optionFireBase==null) {
 
 			try {
-				options = new FirebaseOptions.Builder()
-						.setServiceAccount(new FileInputStream("d:/cle.json"))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com/")
+
+				FileInputStream serviceAccount = new FileInputStream(
+						"d:/cle.json");
+
+				optionFireBase = new FirebaseOptions.Builder()
+						.setCredentials(
+								GoogleCredentials.fromStream(serviceAccount))
+						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
 						.build();
-				FirebaseApp.initializeApp(options);
+
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-		if (FirebaseApp.getApps().isEmpty()) {
+		if (optionFireBase==null) {
 
 			try {
-				options = new FirebaseOptions.Builder()
-						.setServiceAccount(
-								new FileInputStream(
-										"/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json"))
 
-						// .setServiceAccount(new
-						// FileInputStream("d:/cle.json"))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com/")
+				FileInputStream serviceAccount = new FileInputStream(
+						"/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json");
+
+				optionFireBase = new FirebaseOptions.Builder()
+						.setCredentials(
+								GoogleCredentials.fromStream(serviceAccount))
+						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
 						.build();
-				FirebaseApp.initializeApp(options);
-			} catch (FileNotFoundException e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -148,11 +157,16 @@ public class WBservices {
 		// kljlkj
 	}
 
-	public boolean testToken(final String idtoken, final String photostr, final String nom,
-			final String gcmToken) {
+	public boolean testToken(final String idtoken, final String photostr,
+			final String nom, final String gcmToken) {
 		long debut = System.currentTimeMillis();
-	LOG.info("Test Token");
+		LOG.info("Test Token");
+	
+		if (FirebaseApp.getApps().isEmpty()) {
 
+			FirebaseApp.initializeApp(WBservices.optionFireBase);
+		
+		}
 		FirebaseAuth.getInstance().verifyIdToken(idtoken)
 				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
 					@Override
@@ -193,7 +207,7 @@ public class WBservices {
 
 		String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
 				+ "ms";
-		LOG.info(loginfo);
+	LOG.info(loginfo);
 
 		return true;
 
@@ -234,7 +248,7 @@ public class WBservices {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	
+
 			return null;
 		} finally {
 
@@ -738,12 +752,11 @@ public class WBservices {
 			}
 
 			// Ajoute le nbr de vu pour chaque vu de l'activit�
-			
+
 			String loginfo = "getActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-					
-			
+
 			return activite;
 
 		} catch (SQLException | NamingException e) {
@@ -1103,7 +1116,6 @@ public class WBservices {
 				}
 
 			}
-			
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1154,7 +1166,7 @@ public class WBservices {
 
 	public Version getVersion() {
 		long debut = System.currentTimeMillis();
-
+		
 		Connection connexion = null;
 
 		Version retour = new Version(0, 0, 0);
@@ -1631,8 +1643,8 @@ public class WBservices {
 			if (idDemandeur == activite.getIdorganisateur()) {
 
 				message = new Message(idAeffacer,
-						"L'organisateur � d�sinscrit " + personne.getPrenom(),
-						idactivite, 0);
+						"L'organisateur � d�sinscrit "
+								+ personne.getPrenom(), idactivite, 0);
 				notificationDAO.addNotification(idAeffacer,
 						Notification.MESSAGE_TEXT, idactivite, idDemandeur);
 				activiteDAO.addRefus(idAeffacer, idactivite);
@@ -3521,7 +3533,8 @@ public class WBservices {
 			}
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerProfil(idpersonne, idsignalement))
-				return new MessageServeur(false, "Tu as d�ja signal� ce profil");
+				return new MessageServeur(false,
+						"Tu as d�ja signal� ce profil");
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerProfil(idpersonne, idsignalement, idmotif,
@@ -3585,11 +3598,11 @@ public class WBservices {
 			Date dateRechercheDebut = calendrierDebut.getTime();
 
 			Calendar calendrierFin = Calendar.getInstance();
-			
+
 			calendrierFin.add(Calendar.MINUTE, commenceDans);
 			Date dateRechercheFin = calendrierFin.getTime();
-			LOG.info("daterecherche fin"+dateRechercheFin);
-			LOG.info("daterecherche debut"+dateRechercheDebut);
+			LOG.info("daterecherche fin" + dateRechercheFin);
+			LOG.info("daterecherche debut" + dateRechercheDebut);
 			// on remonte les activités dont le debut est comprise entre
 			// l'heure
 			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
@@ -3610,27 +3623,22 @@ public class WBservices {
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?";
 			}
-			
-			
-			// recheche les activite dont la date de debut est comprise entre datefinde rechere et maintenant
-			 else
-			 {
-			//Requete N�2	 
-			 requete =
-			 " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-			 +
-			 " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-			 +
-			 "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
-			 + "activite.nbrwaydeur as nbrparticipant,1 as role,"
-			 +
-			 "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-			 + "activite  WHERE personne.idpersonne = activite.idpersonne  "
-			 + "and datedebut>? "
-			 + " and activite.latitude between ? and ?"
-			 + " and activite.longitude between ? and ? and datedebut<?";
-			
-			 }
+
+			// recheche les activite dont la date de debut est comprise entre
+			// datefinde rechere et maintenant
+			else {
+				// Requete N�2
+				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
+						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
+						+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
+						+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
+						+ "and datedebut>? "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ? and datedebut<?";
+
+			}
 
 			if (typeactivite != -1) {
 				requete = requete + " and activite.idtypeactivite=?";
@@ -3664,15 +3672,13 @@ public class WBservices {
 
 			int index = 5;
 
-			
-			
-			if (commenceDans!=0){
-				//ajoute � la requete n�2 la date de fin
+			if (commenceDans != 0) {
+				// ajoute � la requete n�2 la date de fin
 				index++;
 				preparedStatement.setTimestamp(index, new java.sql.Timestamp(
 						dateRechercheFin.getTime()));
 			}
-			
+
 			if (typeactivite != -1) {
 				LOG.info("ajoute typactivite");
 				index++;
@@ -3699,7 +3705,7 @@ public class WBservices {
 			//
 
 			rs = preparedStatement.executeQuery();
-LOG.info(requete);
+			LOG.info(requete);
 			while (rs.next()) {
 
 				double latitude = rs.getDouble("latitude");

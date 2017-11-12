@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.google.firebase.internal.Log;
 
 import website.dao.PersonneDAO;
 import website.enumeration.AlertJsp;

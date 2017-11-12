@@ -11,8 +11,6 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
-import com.google.firebase.internal.Log;
-
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
@@ -20,7 +18,7 @@ import wayde.bean.IndicateurWayd;
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
-import website.metier.ActiviteAjax;
+
 
 public class ActiviteDAO {
 	Connection connexion;
