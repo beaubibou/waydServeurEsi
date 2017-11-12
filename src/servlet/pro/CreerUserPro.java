@@ -22,6 +22,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
+import website.enumeration.AlertJsp;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -94,11 +95,14 @@ public class CreerUserPro extends HttpServlet {
 		if (messageServeur.isReponse())
 		{
 			request.setAttribute("messageAlert", messageServeur.getMessage());
+			request.setAttribute("typeMessage", AlertJsp.Sucess);
 			request.getRequestDispatcher("auth/login.jsp").forward(request, response);
 		}
 		else
 		{
-		//	request.getRequestDispatcher("MesActivites").forward(request, response);
+			request.setAttribute("messageAlert", messageServeur.getMessage());
+			request.setAttribute("typeMessage", AlertJsp.warning);
+			request.getRequestDispatcher("auth/login.jsp").forward(request, response);
 		}
 		}
 		} catch (Exception e) {
@@ -132,8 +136,14 @@ public class CreerUserPro extends HttpServlet {
 			// TODO Auto-generated catch block
 			
 			
-			e.printStackTrace();
-			return new MessageServeur(false, "Erreur");
+		//	e.printStackTrace();
+			
+			String erreur="Erreur inconnue";
+			System.out.println(e.getMessage());
+			if (e.getMessage().toString().contains("EMAIL_EXISTS"))
+			 erreur="Mail existe déja";
+			 
+			return new MessageServeur(false, erreur);
 			
 		}
 		

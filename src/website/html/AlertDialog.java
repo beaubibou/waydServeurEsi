@@ -42,11 +42,11 @@ public class AlertDialog {
 	}
 	
 	
-	public AlertDialog(String messeAlert) {
+	public AlertDialog(String messeAlert, AlertJsp typeMessage) {
 		
 		if (messeAlert!= null)
 			// On fait un clone du message stocke dans la sessionc
-			messageAlertDialog = new MessageAlertDialog("Titre",messeAlert,null,null);
+			messageAlertDialog = new MessageAlertDialog("Titre",messeAlert,null,typeMessage);
 			
 		else
 			messageAlertDialog = null;

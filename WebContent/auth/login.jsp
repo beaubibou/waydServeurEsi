@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="jdk.nashorn.internal.ir.RuntimeNode.Request"%>
+<%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.html.*"%>
 <html lang="en">
 <head>
@@ -33,9 +35,10 @@
 		
 	
 	</div>
-	
-		<%=new AlertDialog((String)request.getAttribute("messageAlert")).getMessage()%>
-	
+	<script type="text/javascript">
+	<%=new AlertDialog((String)request.getAttribute("messageAlert"),(AlertJsp)request.getAttribute("typeMessage")).getMessage()%>
+	</script>
+		
 	<form id="formmasque" action="/wayd/Connexion" method="post">
 		<input id="token" type="hidden" class="form-control" name="token">
 		<input id="pwd" type="hidden" class="form-control" name="pwd">
