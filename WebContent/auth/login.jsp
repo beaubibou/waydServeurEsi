@@ -99,7 +99,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Pas de compte! <a href="form_creation_compte.html">
+									Pas de compte! <a href="creationCompteCaptcha.html">
 										Inscrivez vous!! </a>
 								</div>
 							

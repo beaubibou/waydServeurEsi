@@ -63,6 +63,7 @@ public class CreerUserPro extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println(request.getParameter("pwd"));
 		System.out.println("***********test creation");
 		if (FirebaseApp.getApps().isEmpty()) 
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
@@ -94,8 +95,9 @@ public class CreerUserPro extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		System.out.println(request.getParameter("pwd"));
+		System.out.println("captcha= " + request.getParameter("g-recaptcha-response"));
 		
-
 	}
 
 }
