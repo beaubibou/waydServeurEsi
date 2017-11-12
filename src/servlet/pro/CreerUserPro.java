@@ -1,10 +1,14 @@
 package servlet.pro;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
@@ -13,6 +17,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
@@ -98,6 +111,52 @@ public class CreerUserPro extends HttpServlet {
 		System.out.println(request.getParameter("pwd"));
 		System.out.println("captcha= " + request.getParameter("g-recaptcha-response"));
 		
+		String reponseCaptcha=request.getParameter("g-recaptcha-response");
+		try {
+			sendPost(reponseCaptcha);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void sendPost(String reponseCaptcha) throws Exception {
+
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+	
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+
+		// add header
+		
+		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+		
+		urlParameters.add(new BasicNameValuePair("secret", "6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
+		urlParameters.add(new BasicNameValuePair("response", reponseCaptcha));
+
+		post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+		HttpResponse response = client.execute(post);
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + post.getEntity());
+		System.out.println("Response Code : " +
+                                    response.getStatusLine().getStatusCode());
+		
+		JSONObject oj=new JSONObject(response);
+		
+		System.out.println(oj);
+		
+//		BufferedReader rd = new BufferedReader(
+//                        new InputStreamReader(response.getEntity().getContent()));
+//
+//		StringBuffer result = new StringBuffer();
+//		String line = "";
+//		while ((line = rd.readLine()) != null) {
+//			result.append(line);
+//		
+//		System.out.println(result.toString());
+
 	}
 
+	
 }
