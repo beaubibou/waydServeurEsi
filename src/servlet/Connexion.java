@@ -64,6 +64,7 @@ public class Connexion extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
+		if (FirebaseApp.getApps().isEmpty()) 
 		FirebaseApp.initializeApp(WBservices.optionFireBase);
 		BufferedImage img = null;
 		try {
