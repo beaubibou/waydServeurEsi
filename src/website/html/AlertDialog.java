@@ -40,6 +40,18 @@ public class AlertDialog {
 		// on efface le MessageAlertDIalog de la session
 		authentificationSite.setAlertMessageDialog(null);
 	}
+	
+	
+	public AlertDialog(String messeAlert) {
+		
+		if (messeAlert!= null)
+			// On fait un clone du message stocke dans la sessionc
+			messageAlertDialog = new MessageAlertDialog("Titre",messeAlert,null,null);
+			
+		else
+			messageAlertDialog = null;
+		
+	}
 
 	public AlertDialog(AuthentificationSite authentificationSite,
 			AlertJsp typeAlert) {

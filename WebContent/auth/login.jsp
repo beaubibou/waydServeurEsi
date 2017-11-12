@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="website.html.*"%>
 <html lang="en">
 <head>
 <title>Login</title>
@@ -33,7 +34,7 @@
 	
 	</div>
 	
-	
+		<%=new AlertDialog((String)request.getAttribute("messageAlert")).getMessage()%>
 	
 	<form id="formmasque" action="/wayd/Connexion" method="post">
 		<input id="token" type="hidden" class="form-control" name="token">
@@ -99,7 +100,7 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Pas de compte! <a href="creationCompteCaptcha.html">
+									Pas de compte! <a href="/wayd/CreerUserPro">
 										Inscrivez vous!! </a>
 								</div>
 							

@@ -58,7 +58,8 @@
 	<script type="text/javascript">
 		
 	<%=new AlertDialog(authentification).getMessage()%>
-		
+	
+	
 	</script>
 	
 	<div class="container" style="margin-top: 100px">
