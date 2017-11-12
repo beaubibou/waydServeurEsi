@@ -19,14 +19,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
 import website.enumeration.TypePhoto;
-import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+
+
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -74,6 +74,7 @@ public class Connexion extends HttpServlet {
 
 		if (FirebaseApp.getApps().isEmpty()) {
 
+			
 			try {
 				options = new FirebaseOptions.Builder()
 						.setServiceAccount(
@@ -88,9 +89,7 @@ public class Connexion extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		
-
+	
 	}
 
 	@Override
@@ -111,7 +110,9 @@ public class Connexion extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
 
+		
 	}
 
 	/**

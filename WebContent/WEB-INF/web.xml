@@ -637,4 +637,14 @@
     <servlet-name>SupprimeActivites</servlet-name>
     <url-pattern>/SupprimeActivites</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreerUtilisateurFireBase</display-name>
+    <servlet-name>CreerUtilisateurFireBase</servlet-name>
+    <servlet-class>servlet.commun.CreerUtilisateurFireBase</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreerUtilisateurFireBase</servlet-name>
+    <url-pattern>/CreerUtilisateurFireBase</url-pattern>
+  </servlet-mapping>
 </web-app>

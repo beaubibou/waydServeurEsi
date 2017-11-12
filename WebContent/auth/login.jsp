@@ -3,6 +3,7 @@
 <head>
 <title>Login</title>
 <meta charset="utf-8">
+
 <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -101,6 +102,7 @@
 									Pas de compte! <a href="form_creation_compte.html">
 										Inscrivez vous!! </a>
 								</div>
+							
 							</div>
 						</div>
 					</form>
