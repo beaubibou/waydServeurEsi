@@ -128,7 +128,7 @@ public class CreerUserPro extends HttpServlet {
 		HttpPost post = new HttpPost(url);
 
 		// add header
-		
+	
 		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
 		
 		urlParameters.add(new BasicNameValuePair("secret", "6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
@@ -138,25 +138,28 @@ public class CreerUserPro extends HttpServlet {
 
 		HttpResponse response = client.execute(post);
 		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + post.getEntity());
+	//	System.out.println("Post parameters : " + post.getEntity());
 		System.out.println("Response Code : " +
                                     response.getStatusLine().getStatusCode());
 		
-		JSONObject oj=new JSONObject(response);
 		
-		System.out.println(oj);
+	//	System.out.println(oj.toString());
 		
-//		BufferedReader rd = new BufferedReader(
-//                        new InputStreamReader(response.getEntity().getContent()));
-//
-//		StringBuffer result = new StringBuffer();
-//		String line = "";
-//		while ((line = rd.readLine()) != null) {
-//			result.append(line);
-//		
-//		System.out.println(result.toString());
+		BufferedReader rd = new BufferedReader(
+                        new InputStreamReader(response.getEntity().getContent()));
+
+		StringBuffer result = new StringBuffer();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		
+	
 
 	}
-
+		if (result.toString().contains("\"success\": true"))
+		System.out.println("c est ok");
+		else
+		System.out.println("Pas ok");
+	}
 	
 }
