@@ -23,7 +23,6 @@ import wayde.bean.LibelleMessage;
 import wayde.bean.MessageServeur;
 import wayde.bean.Notification;
 import wayde.bean.Personne;
-
 import wayde.dao.DiscussionDAO;
 import wayde.dao.NotificationDAO;
 import wayde.dao.ParticipationDAO;
@@ -35,6 +34,7 @@ import website.metier.IndicateurWayd;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeEtatActivite;
+import website.metier.TypeEtatMessage;
 import fcm.ServeurMethodes;
 import gcmnotification.EffaceActiviteGcm;
 
@@ -1022,7 +1022,140 @@ public class ActiviteDAO {
 		return retour;
 
 	}
+	public static ArrayList<website.metier.MessageBean> getMesMessages(int idpersonne,
+			int etatFiltreMessage) {
+		website.metier.MessageBean activite = null;
+		ArrayList<website.metier.MessageBean> retour = new ArrayList<website.metier.MessageBean>();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = "";
+			switch (etatFiltreMessage)
+
+			{
+			case TypeEtatMessage.ARCHIVES:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=? and ?  between datedebut and datefin) ORDER BY datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+
+				rs = preparedStatement.executeQuery();
+
+				break;
+			case TypeEtatMessage.LU:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=? and datefin<? ) ORDER BY datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+
+				break;
+
+			case TypeEtatMessage.TOUS:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=?  ) ORDER BY datedebut DESC";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				rs = preparedStatement.executeQuery();
+				break;
+
+			case TypeEtatMessage.NONLU:
+				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
+						+ "personne.note,0 as role,"
+						+ "personne.nbravis as totalavis,"
+						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,"
+						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
+						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
+						+ "activite.idactivite = participer.idactivite "
+						+ " and participer.idpersonne=? and datedebut>? ) ORDER BY datedebut DESC";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idpersonne);
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
+						new Date().getTime()));
+				rs = preparedStatement.executeQuery();
+
+				break;
+
+			}
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String message = rs.getString("message");
+				String nomEmetteur = rs.getString("nomEmetteur");
+				Date dateCreation = rs.getTimestamp("datecreation");
+			
+
+				// Date datefinactivite = rs.getTimestamp("d_finactivite");
+
+				activite = new website.metier.MessageBean( id,  nomEmetteur,  dateCreation,
+						 message);
+
+				retour.add(activite);
+
+			}
+
+			preparedStatement.close();
+			rs.close();
+			// Cherche dans les activite
+
+			
+			
+			
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return retour;
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+		Collections.sort(retour, new Comparator<website.metier.MessageBean>() {
+
+			@Override
+			public int compare(website.metier.MessageBean o1, website.metier.MessageBean o2) {
+				// TODO Auto-generated method stub
+
+				return o2.getDateCreation().compareTo(o1.getDateCreation());
+			}
+		});
+		return retour;
+
+	}
+	
+	
 	public static ArrayList<ActiviteBean> getListActivite(double malatitude,
 			double malongitude, int rayonmetre, int typeactivite,
 			int nbxmaxEnregistrement, int indexDebutResultat) {

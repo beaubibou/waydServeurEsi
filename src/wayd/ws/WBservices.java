@@ -1404,16 +1404,13 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
-
 			connexion = CxoPool.getConnection();
-
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
-
 			connexion.setAutoCommit(false);
 			SuggestionDAO suggestiondao = new SuggestionDAO(connexion);
 			suggestiondao.addSuggestion(idpersonne, suggestion);
@@ -1522,7 +1519,7 @@ public class WBservices {
 
 			return new RetourMessage(new Date().getTime(), idmessage,
 					idemetteur);
-			// return new MessageServeur(true, "" + idmessage);
+			
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block

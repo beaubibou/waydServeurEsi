@@ -10,8 +10,17 @@ public class FiltreRecherche {
 	int typeAcces=0;
 	String adresse="Paris";
 	private String motCle="";
+	int typeMessage=0;
 	
 	
+	public int getTypeMessage() {
+		return typeMessage;
+	}
+
+	public void setTypeMessage(int typeMessage) {
+		this.typeMessage = typeMessage;
+	}
+
 	int typeEtatActivite=TypeEtatActivite.TOUTES;
 	
 	public int getTypeEtatActivite() {
@@ -54,7 +63,9 @@ public class FiltreRecherche {
 	public int getTypeActivite() {
 		return typeActivite;
 	}
+	
 
+	
 	public void setTypeActivite(int typeActivite) {
 		this.typeActivite = typeActivite;
 	}

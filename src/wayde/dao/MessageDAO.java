@@ -43,11 +43,7 @@ public class MessageDAO {
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idmessage");
-	
-	
 		preparedStatement.close();
-
-
 		for (Personne participant : listpersonne) {
 
 			if (participant.getId() != idemetteur) {
@@ -154,12 +150,12 @@ public class MessageDAO {
 	// Met la
 	// valeur
 	// de lu
-	// à
+	// ï¿½
 	// true
 	// dans
 	// la
 			// table recoit. En focntion d'une discussion entre emetteur et
-			// destinataire. Utilisé pour marquer tous les messages
+			// destinataire. Utilisï¿½ pour marquer tous les messages
 			// comme lu dans une discussion.
 
 			throws SQLException {
@@ -180,12 +176,12 @@ public class MessageDAO {
 	// Met la
 	// valeur
 	// de lu
-	// à
+	// ï¿½
 	// true
 	// dans
 	// la
 			// table recoit. En focntion d'une discussion entre emetteur et
-			// destinataire. Utilisé pour marquer tous les messages
+			// destinataire. Utilisï¿½ pour marquer tous les messages
 			// comme lu dans une discussion.
 
 			throws SQLException {
@@ -470,7 +466,7 @@ public class MessageDAO {
 		ArrayList<Discussion> retour = new ArrayList<Discussion>();
 
 		// " personne p where m.idpersonne=p.idpersonne and iddestinataire=? group by m.idpersonne,p.nom,p.prenom,p.photo,m.corps,m.idmessage";
-		// Une personne appartient à la discussion x-y ou y-x on gere les 2 cas
+		// Une personne appartient ï¿½ la discussion x-y ou y-x on gere les 2 cas
 
 		String iddiscussion = "%-" + idpersonne;
 		String iddiscussion1 = idpersonne + "-%";
@@ -517,7 +513,7 @@ public class MessageDAO {
 			int idpersonne1 = rs.getInt("idpersonne1");
 		
 			// A ce niveau on a le dernier message emis on ne sait qui est
-			// l'emetteur soit nous même
+			// l'emetteur soit nous mï¿½me
 			// soit l'autre. La discussion renvoi l'interlocuteur.
 			// On le recherche donc ici
 
@@ -814,7 +810,7 @@ public class MessageDAO {
 		preparedStatement.setInt(2, idxmessage);
 		ResultSet rs = preparedStatement.executeQuery();
 	//	System.out
-		//		.println("********************Recupere tous DAO les  message à partir de  ");
+		//		.println("********************Recupere tous DAO les  message ï¿½ partir de  ");
 
 		while (rs.next()) {
 			String sujet = rs.getString("sujet");

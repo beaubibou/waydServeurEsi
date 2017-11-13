@@ -210,7 +210,6 @@
 				</thead>
 				<tbody>
 					<%
-					System.out.println("listsignale"+listSignalement.size());
 						for (SignalementBean signalement : listSignalement) {
 							String lienDetailOrganisateur = "DetailParticipant?idparticipant="
 									+ signalement.getIdpersonneInformateur();

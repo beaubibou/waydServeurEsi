@@ -1,10 +1,11 @@
 
+<%@page import="website.metier.TypeEtatMessage"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 <%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.metier.FiltreJSP"%>
-<%@page import="website.metier.TypeActiviteBean"%>
-<%@page import="website.metier.ActiviteBean"%>
+<%@page import="website.metier.TypeEtatMessage"%>
+<%@page import="website.metier.MessageBean"%>
 <%@page import="website.metier.Pagination"%>
 <%@page import="website.metier.TypeEtatActivite"%>
 <%@page import="website.metier.FiltreRecherche"%>
@@ -50,17 +51,12 @@
 			return;
 		
 		FiltreRecherche filtre=authentification.getFiltre();
-			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
-			MenuEnum etatMenu=MenuEnum.mesactivites;
+			ArrayList<TypeEtatMessage> listEtatMessage = CacheValueDAO.getListEtatMessage();
+			MenuEnum etatMenu=MenuEnum.mesmessages;
 	%>
 
 	<%@ include file="menu.jsp"%>
-	<script type="text/javascript">
-		
-	<%=new AlertDialog(authentification).getMessage()%>
-	
-	
-	</script>
+
 	
 	<div class="container" style="margin-top: 100px">
 
@@ -68,18 +64,18 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-2">
-						<form method="post" action="MesActivites" id="formulaire"
+						<form method="post" action="MesMessages" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
 								<select class="form-control" id="idEtatActivite"
-									name="etatActivite">
+									name="etatMessage">
 
 									<%
-										for (TypeEtatActivite etatActivite:listEtatActivite) {
+										for (TypeEtatMessage etatMessage:listEtatMessage) {
 									%>
-									<option value="<%=etatActivite.getId()%>"
-										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
-										<%=etatActivite.getLibelle()%></option>
+									<option value="<%=etatMessage.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatMessage.getId(), filtre.getTypeMessage())%>>
+										<%=etatMessage.getLibelle()%></option>
 									<%
 										}
 									%>
@@ -92,9 +88,8 @@
 					</div>
 
 					<div class="col-sm-2 col-sm-offset-8 ">
-						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+						<button href="#" name="supprimerMessage" class="btn btn-default">Effacez</button>
 					</div>
-
 
 				</div>
 
@@ -105,11 +100,9 @@
 		<table class="table table-responsive" border="3" id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
-					<th class="text-center">Etat</th>
-					<th class="text-center">Titre</th>
-					<th class="text-center">Vus</th>
 					<th class="text-center">Date</th>
-					<th class="text-center">Action</th>
+					<th class="text-center">Message</th>
+					
 					<th class="text-center"><input type="checkbox" id="ckAll">
 				</tr>
 			</thead>
@@ -117,42 +110,24 @@
 				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 
 				<%
-					ArrayList<ActiviteBean> listMesActivite =
-																(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																																				    
-							    if (listMesActivite!=null)
-							for (ActiviteBean activite : listMesActivite) {
-							String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-							String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+					ArrayList<MessageBean> listMessage =
+					(ArrayList<MessageBean>) request.getAttribute("listMesMessages");
+																																																																			    
+							    if (listMessage!=null)
+							for (MessageBean messageBean : listMessage) {
+							String lienEfface = "/wayd/SupprimeMessage?idmessage=" + messageBean.getId();
+							String lienConfirmDialog="/wayd/ConfirmDialog?idmessage=" + messageBean.getId()+"&action=effaceActivite&from=MesActivites";
+							String lienDetail = "/wayd/DetailMessage?idmessage=" + messageBean.getId()+"&from=listActivite.jsp";
+						
 				%>
 
 
 				<tr>
-					<%=activite.getEtatHtml()%>
-					<td class="idActivite" id=<%=activite.getId()%>
-						style="vertical-align: middle;"><%=activite.getTitre()%></td>
-					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
-
-					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
-
-					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
-						class="btn btn-info btn-sm"> <span
-							class="glyphicon glyphicon-search"></span>
-					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
- 	if (!activite.isTerminee()){%> 
- 	<a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
-	class="glyphicon glyphicon-edit"></span>
-					</a>
-
-						<button id=<%out.println(lienEfface);%> name="supprimer"
-							type="button" class="btn btn-danger btn-sm">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%	}
- %></td>
-					<td><%=activite.getCheckHtml()%></td>
-
+					<td class="idActivite" id=<%=messageBean.getId()%>
+						style="vertical-align: middle;"><%=messageBean.getMessage()%></td>
+					<td style="vertical-align: middle;"><%=messageBean.getDateCreationHtml()%></td>
+					<td><%=messageBean.getCheckHtml()%></td>
+				
 				</tr>
 				<%
 					}

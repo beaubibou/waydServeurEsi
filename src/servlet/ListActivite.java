@@ -47,8 +47,8 @@ public class ListActivite extends HttpServlet {
 
 			if (request.getParameter("pageAafficher") != null) {
 
-				// Si on rentre par page à afficher c'est que le filtre est stocké dans la session
-				// Suite à une  recherche. (submit du form listactivite).
+				// Si on rentre par page ï¿½ afficher c'est que le filtre est stockï¿½ dans la session
+				// Suite ï¿½ une  recherche. (submit du form listactivite).
 				FiltreJSP filtre = (FiltreJSP) session.getAttribute("filtre");
 			
 				int nbrTotalLigne = ActiviteDAO.getCountListActivite(
@@ -130,8 +130,7 @@ public class ListActivite extends HttpServlet {
 				pagination = new website.metier.Pagination(nbrTotalLigne,
 							1, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
 							1);
-					System.out.println(pagination.toString());
-
+					
 					listActivite = ActiviteDAO.getListActivite(latitude,
 							longitude, rayon, idtypeactivite,
 							Outils.nbrLigneParPage, pagination.getDebut());
