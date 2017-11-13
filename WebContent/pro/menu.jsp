@@ -15,7 +15,7 @@
 				alt="Cinque Terre" width="30" height="30">
 
 		</div>
-	
+
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.home)%>><a
@@ -28,10 +28,16 @@
 					href="/wayd/MesActivites">Gérer </a></li>
 
 				<li
+					<%=MenuHtml
+					.getActiviteClass(etatMenu, MenuEnum.mesmessages)%>><a
+					href="/wayd/MesMessages"><span
+						class="glyphicon glyphicon-envelope"></span> <span class="badge">5</span></a></li>
+
+				<li
 					<%=MenuHtml.getActiviteClass(etatMenu,
 					MenuEnum.ajouteactivite)%>
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" >Proposez <span  class="caret"></span></a>
+					data-toggle="dropdown">Proposez <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="/wayd/AjouteActivitePro">Proposez une
 								activité</a></li>
@@ -46,21 +52,27 @@
 					href="/wayd/MapPro">Carte</a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.apropos)%>><a
 					href="/wayd/Apropos">A propos</a></li>
-				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a href="/wayd/Contact">Contact</a></li>
+				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a
+					href="/wayd/Contact">Contact</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<%if (request.getSession().getAttribute("profil")!=null) {%>
+				<%
+					if (request.getSession().getAttribute("profil") != null) {
+				%>
 				<li><a href="/wayd/Deconnexion"><span
 						class="glyphicon glyphicon-log-out"></span> Log out</a></li>
-				<%} else
-						{ %>
+				<%
+					} else {
+				%>
 
 				<li><a href="/wayd/Deconnexion"><span
 						class="glyphicon glyphicon-log-in"></span> Log in</a></li>
-				<%} %>
+				<%
+					}
+				%>
 
-				
+
 			</ul>
 		</div>
 	</div>

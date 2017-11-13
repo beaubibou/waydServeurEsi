@@ -1,3 +1,4 @@
+<%@page import="website.html.ParametreHtmlPro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
@@ -6,12 +7,12 @@
 <%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.AuthentificationSite"%>
-<%@page import="website.enumeration.MenuEnum"%>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <title>>Création activité</title>
 
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,7 +32,6 @@
 
 
 <script src="js/moment.js"></script>
-
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
 	rel="stylesheet" type="text/css" />
@@ -48,14 +48,16 @@
 	AuthentificationSite authentification=	new AuthentificationSite(request, response);
 	if (!authentification.isAuthentifiePro())
 	return;
-	ProfilBean profil = authentification.getProfil();
-	ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-	MenuEnum etatMenu=MenuEnum.ajouteActivitePlanifiee;
-	%>
 	
+	ProfilBean profil = authentification.getProfil();
+			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+					// Defini le li a rendre actif
+		MenuEnum etatMenu=null;
+	%>
+
 	<%@ include file="menu.jsp"%>
-	<div class="container">
-		<div class="page-header" style="margin-top: 100px">
+	<div class="container" style="margin-top: 30px">
+		<div class="page-header">
 			<h1>Proposez vos activités</h1>
 		</div>
 		<p>Proposez vos activités gratuites à la communauté. Une activité
@@ -63,83 +65,68 @@
 		<p>Vous pouvez planifier jusqu à 5 activités simultanément.</p>
 	</div>
 
-	<div id="loginbox" style="margin-top: 50px;"
-		class="mainbox col-md-8 col-md-offset-2 col-sm-8">
-		<div class="panel panel-default">
-			<div class="panel-heading panel-heading-custom">
-				<div class="panel-title">
-					<span><img src="/wayd/img/waydLogoHD.png" class="img-thumbnail"
-						alt="Cinque Terre" style="width: 10%"> </span> Ajoute une activité
+	<div class="container">
+		<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-heading-custom">
+					<div class="panel-title">Ajoute une activité</div>
 				</div>
 
-
-			</div>
-
-			<div style="padding-top: 30px" class="panel-body">
-				<form action="/wayd/AjouteActivitePlanifiee"
+				<div style="padding-top: 30px" class="panel-body">
+						<form action="/wayd/AjouteActivitePlanifiee"
 					onsubmit="return valideFormulaire()" method="post">
-
-					<div class="form-group">
-						<div class="row">
-							<div class='col-sm-8'>
-								<label for="titre">Titre:</label> <input type="text"
-									maxlength="50" class="form-control input" id="titre" required
-									placeholder="Nom " name="titre" value="tire">
-
-							</div>
-							<div class='col-sm-4'>
-								<label for="typeactivite">Type d'activitée:</label> <select
-									class="form-control" id="type" name="typeactivite">
-									<%
-										for (TypeActiviteBean typeactivite:listTypeActivite) {
-									%>
-									<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
-									<%
-										}
-									%>
-								</select>
-
-							</div>
-
+						<div class="form-group">
+							<label for="titre">Titre:</label> <input type="text"
+								class="form-control" id="titre" required
+								placeholder="<%=ParametreHtmlPro.getHintTitreActivite()%>"
+								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"
+								name="titre" required>
 						</div>
 
-					</div>
+						<div class="form-group">
+							<div class="row">
 
-					<div class="form-group">
-						<div class="row">
-
-							<div class='col-sm-4'>
-								<div class="form-group">
-									<label for="iddatedebut">Date debut</label>
-									<div class='input-group date' id='datedebut'>
-										<input type='text' class="form-control" id="iddatedebut"
-											name="debut" /> <span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-										</span>
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="iddatedebut">Date debut</label>
+										<div class='input-group date' id='datedebut'>
+											<input type='text' class="form-control" id="iddatedebut"
+												name="debut" /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
 									</div>
+								</div>
+
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="iddatefin">Date fin</label>
+										<div class='input-group date' id="datefin">
+											<input type='text' class="form-control" id="iddatefin"
+												name="fin" /> <span class="input-group-addon"> <span
+												class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class='col-sm-4'>
+									<label for="typeactivite">Type d'activitée:</label> <select
+										class="form-control" id="type" name="typeactivite">
+										<%
+											for (TypeActiviteBean typeactivite:listTypeActivite) {
+										%>
+										<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
+										<%
+											}
+										%>
+									</select>
+
 								</div>
 							</div>
 
-							<div class='col-sm-4'>
-								<div class="form-group">
-									<label for="iddatefin">Date fin</label>
-									<div class='input-group date' id="datefin">
-										<input type='text' class="form-control" id="iddatefin"
-											name="fin" /> <span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-										</span>
-									</div>
-								</div>
-							</div>
-
-
-
 						</div>
-
-					</div>
-
-
-					<div class="form-group">
+						<div class="form-group">
 						<div class="row">
 
 							<div class='col-sm-4'>
@@ -171,9 +158,9 @@
 						</div>
 
 					</div>
-
-
-					<div class="container">
+					
+						<div class="form-group">
+						<div class="container">
 
 						<h4>Cette activité se répéte tous les jours:</h4>
 						</br> <label class="radio-inline"> <input type="checkbox"
@@ -194,63 +181,54 @@
 
 
 					</div>
-					<div class="form-group">
-						<label for="adresse">Adresse:</label> <input type="text"
-							class="form-control" id="adresse" required
-							value="<%out.println(profil.getAdresse());%>" name="adresse"
-							onkeypress="initPosition()">
-					</div>
+</div>
+						<div class="form-group">
+							<label for="adresse">Adresse:</label> <input type="text"
+								class="form-control" id="adresse" required
+								value="<%out.println(profil.getAdresse());%>" name="adresse"
+								onkeypress="initPosition()">
+						</div>
 
-					<div class="form-group">
-						<label for="description">Description:</label>
-						<textarea maxlength="200" class="form-control" rows="5"
-							id="description" name="description"></textarea>
-					</div>
-					<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
-					<button type="submit" class="btn btn-info">Enregistrer</button>
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea
+								placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite()%>"
+								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+								class="form-control" rows="5" id="description"
+								name="description"></textarea>
+						</div>
+						<h5 class="nbrcaracteremax" id="nbr">
+							0 Caractére sur
+							<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%></h5>
 
-					<div class="form-group">
 
-						<input type="hidden" class="form-control" id="latitude"
-							placeholder="latitude" name="latitude"
-							value=<%=profil.getLatitudeFixe()%>>
-					</div>
-					<div class="form-group">
 
-						<input type="hidden" class="form-control" id="longitude"
-							placeholder="longitude" name="longitude"
-							value=<%=profil.getLongitudeFixe()%>>
-					</div>
+						<button type="submit" class="btn btn-info">Proposer</button>
 
-					<div class="form-group"></div>
+						<div class="form-group">
 
-				</form>
+							<input type="hidden" class="form-control" id="latitude"
+								placeholder="latitude" name="latitude"
+								value=<%=profil.getLatitudeFixe()%>>
+						</div>
+						<div class="form-group">
 
+							<input type="hidden" class="form-control" id="longitude"
+								placeholder="longitude" name="longitude"
+								value=<%=profil.getLongitudeFixe()%>>
+						</div>
+
+						<div class="form-group"></div>
+
+					</form>
+
+				</div>
 			</div>
 		</div>
-	</div>
-
-
-
-	<div class="navbar navbar-default navbar-fixed-bottom" id="monfooter">
-		<div class="container">
-			<p class="navbar-text pull-left">
-				© 2014 - Site Built By Mr. M. <a href="http://tinyurl.com/tbvalid"
-					target="_blank">HTML 5 Validation</a>
-			</p>
-
-			<a href="http://youtu.be/zJahlKPCL9g"
-				class="navbar-btn btn-danger btn pull-right"> <span
-				class="glyphicon glyphicon-star"></span>  Subscribe on YouTube
-			</a>
-		</div>
 
 
 	</div>
-	>
-
-
-	<script>
+<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
 			street_number : 'short_name',
@@ -431,5 +409,5 @@
 		var msg = nombreCaractere + ' Caractere(s) / 200';
 		$('#nbr').text(msg);
 	</script>
-</body>
+	</body>
 </html>

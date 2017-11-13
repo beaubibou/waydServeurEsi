@@ -114,6 +114,28 @@ public class WBservices {
 			try {
 
 				FileInputStream serviceAccount = new FileInputStream(
+						"/home/devel/perso/cle.json");
+
+				optionFireBase = new FirebaseOptions.Builder()
+						.setCredentials(
+								GoogleCredentials.fromStream(serviceAccount))
+						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
+						.build();
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (optionFireBase==null) {
+
+			try {
+
+				FileInputStream serviceAccount = new FileInputStream(
 						"d:/cle.json");
 
 				optionFireBase = new FirebaseOptions.Builder()

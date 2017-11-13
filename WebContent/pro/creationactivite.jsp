@@ -341,8 +341,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
-		';
+		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
 		$('#nbr').text(msg);
 	</script>
 </body>

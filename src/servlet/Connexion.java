@@ -80,9 +80,7 @@ public class Connexion extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-
-		
+			
 	}
 
 	/**
@@ -95,11 +93,9 @@ public class Connexion extends HttpServlet {
 		LOG.info("Do post Connexion");
 		success = false;
 		
-//		if (testEsi(request, response))
-//			return;
-//	;
-
-		
+		if (testEsi(request, response))
+			return;
+			
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
 

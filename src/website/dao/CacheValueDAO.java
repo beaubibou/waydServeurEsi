@@ -23,6 +23,7 @@ import website.metier.SexeBean;
 import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
+import website.metier.TypeEtatMessage;
 import website.metier.TypeUser;
 
 public class CacheValueDAO {
@@ -350,9 +351,22 @@ public class CacheValueDAO {
 		ArrayList<TypeEtatActivite> retour = new ArrayList<TypeEtatActivite>();
 		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
 		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planifée"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Terminées"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planifï¿½e"));
+		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Terminï¿½es"));
 	
+
+		return retour;
+	}
+	
+	public static ArrayList<TypeEtatMessage> getListEtatMessage() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatMessage> retour = new ArrayList<TypeEtatMessage>();
+		retour.add(new TypeEtatMessage(TypeEtatMessage.LU, "Lu"));
+		retour.add(new TypeEtatMessage(TypeEtatMessage.NONLU, "Non lus"));
+		retour.add(new TypeEtatMessage(TypeEtatMessage.TOUS, "Tous"));
+		retour.add(new TypeEtatMessage(TypeEtatMessage.ARCHIVES, "ArchivÃ©s"));
+
 
 		return retour;
 	}

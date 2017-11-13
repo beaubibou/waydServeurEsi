@@ -25,7 +25,7 @@
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
 
 </head>
-<body  style="background-color: #FFD54F;"> 
+<body  > 
 <!-- Contact Section -->
 </br>
 <div id="contact" class="text-center">
@@ -39,7 +39,7 @@
 	%>
    <%@ include file="menu.jsp"%>
 
-  <div class="container" style="background-color: #FFD54F;margin-top: 100px;">
+  <div class="container" style="margin-top: 100px;">
     <div class="section-title center">
       
       <h2>Contactez-nous</h2>
@@ -51,12 +51,6 @@
       <form action="/wayd/ContactMessage" method="post">
         <div class="row">
          
-          <div class="col-md-6">
-            <div class="form-group">
-              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse mail" maxlength="<%=ParametreHtmlPro.TAILLE_MAIL_CONTACT_MAX %>"  required="required">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
         </div>
         <div class="form-group">
           <textarea name="message" name="message" id="message" class="form-control" rows="4" placeholder="<%=ParametreHtmlPro.getHintDescriptionMessageContact() %>" maxlength="<%=ParametreHtmlPro.TAILLE_MESSAGE_CONTACT_MAX %>" required></textarea>
@@ -65,13 +59,7 @@
         <div id="success"></div>
         <button type="submit" class="btn btn-info btn-lg">Envoyer le message</button>
       </form>
-      <div class="social">
-        <ul>
-          <li><a href="https://www.facebook.com/WaydCommunity/"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="https://twitter.com/WaydCommunity"><i class="fa fa-twitter"></i></a></li>
-                 
-        </ul>
-      </div>
+  
     </div>
   </div>
 </body>

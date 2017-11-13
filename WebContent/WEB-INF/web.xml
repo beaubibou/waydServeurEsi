@@ -657,4 +657,14 @@
     <servlet-name>CreerUserPro</servlet-name>
     <url-pattern>/CreerUserPro</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MesMessages</display-name>
+    <servlet-name>MesMessages</servlet-name>
+    <servlet-class>servlet.pro.MesMessages</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MesMessages</servlet-name>
+    <url-pattern>/MesMessages</url-pattern>
+  </servlet-mapping>
 </web-app>

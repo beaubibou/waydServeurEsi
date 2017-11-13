@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@page import="jdk.nashorn.internal.ir.RuntimeNode.Request"%>
+
 <%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.html.*"%>
 <html lang="en">
@@ -91,10 +91,13 @@
 						<div style="margin-top: 10px" class="form-group">
 							<!-- Button -->
 
-							<div class="col-sm-12 controls">
-								<a id="btn-fblogin" onclick="popup()" class="btn btn-primary">Login
-									with Google</a> <a id="btn-password" onclick="signPassword()"
-									class="btn btn-primary">Loging pwd </a>
+					 	<div class="col-sm-12 controls">
+				
+					<!--			<a id="btn-fblogin" onclick="popup()" class="btn btn-primary">Login
+									with Google</a> 
+					 -->					
+									<a id="btn-password" onclick="signPassword()"
+									class="btn btn-primary">Se connecter</a>
 
 							</div>
 						</div>

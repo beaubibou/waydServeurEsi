@@ -137,11 +137,11 @@ public class CreerUserPro extends HttpServlet {
 			
 			
 		//	e.printStackTrace();
-			
+		
 			String erreur="Erreur inconnue";
 			System.out.println(e.getMessage());
 			if (e.getMessage().toString().contains("EMAIL_EXISTS"))
-			 erreur="Mail existe déja";
+				erreur="Mail existe dï¿½ja";
 			 
 			return new MessageServeur(false, erreur);
 			
@@ -151,42 +151,43 @@ public class CreerUserPro extends HttpServlet {
 
 	private boolean isCaptcha(String reponseCaptcha) throws Exception {
 
-		String url = "https://www.google.com/recaptcha/api/siteverify";
-
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(url);
-
-		// add header
-
-		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
-
-		urlParameters.add(new BasicNameValuePair("secret",
-				"6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
-		urlParameters.add(new BasicNameValuePair("response", reponseCaptcha));
-
-		post.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-		HttpResponse response = client.execute(post);
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		// System.out.println("Post parameters : " + post.getEntity());
-		System.out.println("Response Code : "
-				+ response.getStatusLine().getStatusCode());
-
-		// System.out.println(oj.toString());
-
-		BufferedReader rd = new BufferedReader(new InputStreamReader(response
-				.getEntity().getContent()));
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-
-		}
-		
-		if (result.toString().contains("\"success\": true"))
-			return true;
-	//Return false
+//		String url = "https://www.google.com/recaptcha/api/siteverify";
+//
+//		HttpClient client = new DefaultHttpClient();
+//		HttpPost post = new HttpPost(url);
+//
+//		// add header
+//
+//		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+//
+//		urlParameters.add(new BasicNameValuePair("secret",
+//				"6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
+//		urlParameters.add(new BasicNameValuePair("response", reponseCaptcha));
+//
+//		post.setEntity(new UrlEncodedFormEntity(urlParameters));
+//
+//		HttpResponse response = client.execute(post);
+//		System.out.println("\nSending 'POST' request to URL : " + url);
+//		// System.out.println("Post parameters : " + post.getEntity());
+//		System.out.println("Response Code : "
+//				+ response.getStatusLine().getStatusCode());
+//
+//		// System.out.println(oj.toString());
+//
+//		BufferedReader rd = new BufferedReader(new InputStreamReader(response
+//				.getEntity().getContent()));
+//
+//		StringBuffer result = new StringBuffer();
+//		String line = "";
+//		while ((line = rd.readLine()) != null) {
+//			result.append(line);
+//
+//		}
+//		
+//		if (result.toString().contains("\"success\": true"))
+//			return true;
+//	return false;
+	
 		return true;
 	}
 
