@@ -67,7 +67,7 @@
 						<form method="post" action="MesMessages" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
-								<select class="form-control" id="idEtatActivite"
+								<select class="form-control" id="idFiltreMessage"
 									name="etatMessage">
 
 									<%
@@ -88,7 +88,7 @@
 					</div>
 
 					<div class="col-sm-2 col-sm-offset-8 ">
-						<button href="#" name="supprimerMessage" class="btn btn-default">Effacez</button>
+						<button href="#" name="supprimerMessages" class="btn btn-default">Effacez</button>
 					</div>
 
 				</div>
@@ -100,10 +100,12 @@
 		<table class="table table-responsive" border="3" id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
-					<th class="text-center">Date</th>
+					<th  style="width:10%;"  class="text-center">Date</th>
 					<th class="text-center">Message</th>
 					
-					<th class="text-center"><input type="checkbox" id="ckAll">
+					<th   style="width:10%;"  class="text-center"><input type="checkbox" id="ckAll">
+						<th   style="width:10%;" class="text-center">Action</th>
+				
 				</tr>
 			</thead>
 			<tbody
@@ -116,17 +118,22 @@
 							    if (listMessage!=null)
 							for (MessageBean messageBean : listMessage) {
 							String lienEfface = "/wayd/SupprimeMessage?idmessage=" + messageBean.getId();
-							String lienConfirmDialog="/wayd/ConfirmDialog?idmessage=" + messageBean.getId()+"&action=effaceActivite&from=MesActivites";
 							String lienDetail = "/wayd/DetailMessage?idmessage=" + messageBean.getId()+"&from=listActivite.jsp";
 						
 				%>
 
 
 				<tr>
-					<td class="idActivite" id=<%=messageBean.getId()%>
+				<td style="vertical-align: middle;"><%=messageBean.getDateCreationHtml()%></td>
+					
+					<td class="idMessage" id=<%=messageBean.getId()%>
 						style="vertical-align: middle;"><%=messageBean.getMessage()%></td>
-					<td style="vertical-align: middle;"><%=messageBean.getDateCreationHtml()%></td>
+					
 					<td><%=messageBean.getCheckHtml()%></td>
+					<td><button id=<%out.println(lienEfface);%> name="supprimer"
+							type="button" class="btn btn-danger btn-sm">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button></td>
 				
 				</tr>
 				<%
@@ -146,7 +153,7 @@
 				var action = $(this).attr('name')
 				if (action == 'supprimer')
 					DialogEffaceActivite(lien);
-				if (action == 'supprimerActivites')
+				if (action == 'supprimerMessages')
 					effaceActivites();
 
 			});
@@ -159,7 +166,7 @@
 
 		$(function() {
 
-			$('#idEtatActivite').on('change', function() {
+			$('#idFiltreMessage').on('change', function() {
 				var selected = $(this).val();
 				document.getElementById("formulaire").submit();
 			});
@@ -185,10 +192,10 @@
 			});
 		}
 
-		function DialogEffaceActivites() {
+		function DialogEffaceMessages() {
 
 			BootstrapDialog.show({
-				title : 'Efface activité',
+				title : 'Efface messages',
 				message : 'Confirmez',
 				buttons : [
 
@@ -202,7 +209,7 @@
 				{
 					label : 'Oui',
 					action : function(dialog) {
-						document.getElementById("form_listActivites").submit();
+						document.getElementById("form_listMessages").submit();
 						dialog.close();
 					}
 				}
@@ -229,7 +236,7 @@
 				{
 					label : 'Oui',
 					action : function(dialog) {
-						effaceActivite(lien);
+						effaceMessage(lien);
 						dialog.close();
 					}
 				}
@@ -239,19 +246,19 @@
 
 		}
 
-		function effaceActivite(lien) {
+		function effaceMessage(lien) {
 			location.href = lien;
 		}
 	</script>
 
 
-	<form id="form_listActivites" action="SupprimeActivites" method="post">
-		<input id="idListActivites" type="hidden" name="listActivite"></input>
+	<form id="form_listMessages" action="SupprimeMessages" method="post">
+		<input id="idListMessages" type="hidden" name="listMessage"></input>
 	</form>
 	<script type="text/javascript">
 		function effaceActivites() {
 
-			var listActivite = "";
+			var listMessage = "";
 			var nbrLigne = 0;
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
@@ -259,9 +266,9 @@
 
 				if (checkBox.is(":checked")) {
 
-					var id = $(this).find('.idActivite').attr('id');
+					var id = $(this).find('.idMessage').attr('id');
 					if (id != null) {
-						listActivite = listActivite + id + ";";
+						listMessage = listMessage + id + ";";
 						nbrLigne++;
 					}
 				}
@@ -269,8 +276,8 @@
 			});
 			if (nbrLigne > 0) {
 
-				document.getElementById("idListActivites").value = listActivite;
-				DialogEffaceActivites();
+				document.getElementById("idListMessages").value = listMessage;
+				DialogEffaceMessages();
 
 			}
 

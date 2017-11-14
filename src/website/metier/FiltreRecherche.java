@@ -10,7 +10,7 @@ public class FiltreRecherche {
 	int typeAcces=0;
 	String adresse="Paris";
 	private String motCle="";
-	int typeMessage=0;
+	int typeMessage=TypeEtatMessage.TOUS;
 	
 	
 	public int getTypeMessage() {

@@ -1047,7 +1047,7 @@ public class ActiviteDAO {
 				break;
 			case TypeEtatMessage.LU:
 			
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
 						+ " from message,personne where personne.idpersonne=message.idemetteur";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
@@ -1056,8 +1056,8 @@ public class ActiviteDAO {
 
 			case TypeEtatMessage.TOUS:
 		
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idemetteur";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();

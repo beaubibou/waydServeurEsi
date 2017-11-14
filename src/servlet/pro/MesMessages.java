@@ -14,6 +14,7 @@ import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.MessageBean;
+import website.metier.TypeEtatMessage;
 
 /**
  * Servlet implementation class MesMessages
@@ -42,8 +43,9 @@ public class MesMessages extends HttpServlet {
 		FiltreRecherche filtre =authentification.getFiltre();
 
 		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
-				authentification.getProfil().getId(), filtre.getTypeMessage());
-
+			authentification.getProfil().getId(), filtre.getTypeMessage());
+	
+	
 	//	listMesActivite = new ArrayList<ActiviteBean>();
 		if (listMesMessages.size() == 0) {
 
@@ -72,7 +74,6 @@ public class MesMessages extends HttpServlet {
 
 		FiltreRecherche filtre =authentification.getFiltre();
 
-		
 		if (request.getParameter("etatMessage")!=null){
 		int typeMessage = Integer.parseInt(request
 				.getParameter("etatMessage"));
@@ -81,7 +82,7 @@ public class MesMessages extends HttpServlet {
 		}
 		
 		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
-				authentification.getProfil().getId(), filtre.getTypeEtatActivite());
+				authentification.getProfil().getId(), filtre.getTypeMessage());
 
 		if (listMesMessages.size() == 0) {
 
