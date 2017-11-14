@@ -5,10 +5,12 @@ import java.util.Date;
 
 public class MessageBean {
 
-	int id;
-	String nomEmetteur;
-	Date dateCreation;
-	String message;
+	private int id;
+	private String nomEmetteur;
+	private Date dateCreation;
+	private String message;
+	private boolean lu;
+	private boolean emis;
 	public int getId() {
 		return id;
 	}
@@ -41,13 +43,27 @@ public class MessageBean {
 	}
 	
 	
+	public boolean isLu() {
+		return lu;
+	}
+	public void setLu(boolean lu) {
+		this.lu = lu;
+	}
+	public boolean isEmis() {
+		return emis;
+	}
+	public void setEmis(boolean emis) {
+		this.emis = emis;
+	}
 	public MessageBean(int id, String nomEmetteur, Date dateCreation,
-			String message) {
+			String message,boolean lu,boolean emis) {
 		super();
 		this.id = id;
 		this.nomEmetteur = nomEmetteur;
 		this.dateCreation = dateCreation;
 		this.message = message;
+		this.lu=lu;
+		this.emis=emis;
 	}
 	public String getDateCreationHtml() {
 

@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wayd community</title>
@@ -21,7 +23,7 @@
 
 <!-- Stylesheet
     ================================================== -->
-<link rel="stylesheet" type="text/css"  href="commun/css/style.css">
+<link rel="stylesheet" type="text/css"  href="/wayd/commun/css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -49,7 +51,7 @@
 		<li><a href="#download" class="page-scroll">Téléchargement</a></li>
         <li><a href="#contact" class="page-scroll">Contact</a></li>
           <li><a href="auth/form_creation_compte.html" class="page-scroll">INSCRIPTION</a></li>
-            <li><a href="auth/login.jsp" class="page-scroll">SE CONNECTER</a></li>
+            <li><a href="/wayd/pro/home.jsp" class="page-scroll">Site Wayd Pro</a></li>
         
       </ul>
     </div>
@@ -166,27 +168,31 @@
       <p>Une question, un problème ? Vous pouvez nous contacter via le formulaire ci-dessous ou à l'adresse contact@wayd.fr</p>
     </div>
     <div class="col-md-8 col-md-offset-2">
-      <form name="sentMessage" id="contactForm" novalidate>
+      <form name="sentMessage" id="contactForm" action="/wayd/ContactMessageCaptcha" method="post" >
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <input type="text" id="name" class="form-control" placeholder="Nom" required="required">
+              <input name"pseudo" type="text" id="name" class="form-control" placeholder="Nom" required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <input type="email" id="email" class="form-control" placeholder="Adresse e-mail" required="required">
+              <input name="email" type="email" id="email" class="form-control" placeholder="Adresse e-mail" required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+          <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" maxlength="250" required></textarea>
           <p class="help-block text-danger"></p>
         </div>
         <div id="success"></div>
+        	<div class="g-recaptcha"
+							data-sitekey="6Ld6TzgUAAAAAMx76Q_NXm3xEJ1vPa799RLMeYLn"></div>
+    
         <button type="submit" class="btn btn-custom btn-lg">Envoyer le message</button>
+    	
       </form>
       <div class="social">
         <ul>

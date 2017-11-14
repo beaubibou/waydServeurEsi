@@ -64,16 +64,26 @@ public class AlertInfoJsp {
 	
 			break;
 		case Sucess:
-//			retour = "<div class=\"container\">"
-//					+ " <div id=\"idalert\" class=\"alert alert-success alert-dismissible\">"
-//					+ "<a   class=\"close\" data-dismiss=\"alert\" >&times;</a>"
-//					+ message+"</div></div>";
 			
 			retour="<div id=\"myAlert\" class='alert alert-success text-center'>"+
-        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
-        "<strong>"+message+"</div>";
-	
+			        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
+			        "<br><strong>"+message+"<br></div>";
+			
+			
+			
 			break;
+			
+	case warning:
+			
+			retour="<div id=\"myAlert\" class='alert alert-warning text-center'>"+
+        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"+
+        "<br><strong>"+message+"<br></div>";
+	
+			
+			
+			
+			break;
+			
 
 		default:
 			break;

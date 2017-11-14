@@ -1037,90 +1037,55 @@ public class ActiviteDAO {
 
 			{
 			case TypeEtatMessage.ARCHIVES:
-				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
-						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
-						+ "personne.note,0 as role,"
-						+ "personne.nbravis as totalavis,"
-						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
-						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
-						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
-						+ "activite.idactivite = participer.idactivite "
-						+ " and participer.idpersonne=? and ?  between datedebut and datefin) ORDER BY datedebut DESC";
-
+		
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idemetteur";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
-				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
-						new Date().getTime()));
-
 				rs = preparedStatement.executeQuery();
 
 				break;
 			case TypeEtatMessage.LU:
-				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
-						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
-						+ "personne.note,0 as role,"
-						+ "personne.nbravis as totalavis,"
-						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,"
-						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
-						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
-						+ "activite.idactivite = participer.idactivite "
-						+ " and participer.idpersonne=? and datefin<? ) ORDER BY datedebut DESC";
-
+			
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idemetteur";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
-				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
-						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-
 				break;
 
 			case TypeEtatMessage.TOUS:
-				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
-						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
-						+ "personne.note,0 as role,"
-						+ "personne.nbravis as totalavis,"
-						+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
-						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
-						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
-						+ "activite.idactivite = participer.idactivite "
-						+ " and participer.idpersonne=?  ) ORDER BY datedebut DESC";
+		
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idemetteur";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
 				break;
 
 			case TypeEtatMessage.NONLU:
-				requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
-						+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
-						+ "personne.note,0 as role,"
-						+ "personne.nbravis as totalavis,"
-						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,"
-						+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd  FROM personne,"
-						+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
-						+ "activite.idactivite = participer.idactivite "
-						+ " and participer.idpersonne=? and datedebut>? ) ORDER BY datedebut DESC";
-
+		
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idemetteur";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
-				preparedStatement.setTimestamp(2, new java.sql.Timestamp(
-						new Date().getTime()));
 				rs = preparedStatement.executeQuery();
-
 				break;
 
 			}
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				String message = rs.getString("message");
-				String nomEmetteur = rs.getString("nomEmetteur");
+				int id = rs.getInt("idmessage");
+				String message = rs.getString("corps");
+				String nomEmetteur = rs.getString("pseudo");
 				Date dateCreation = rs.getTimestamp("datecreation");
-			
-
+				boolean emis= rs.getBoolean("emis");
+				boolean lu= rs.getBoolean("lu");
+		
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				activite = new website.metier.MessageBean( id,  nomEmetteur,  dateCreation,
-						 message);
+						 message,lu,emis);
 
 				retour.add(activite);
 
