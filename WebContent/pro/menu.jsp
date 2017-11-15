@@ -4,7 +4,7 @@
 <%@page import="website.enumeration.*"%>
 <%@page import="website.dao.MessageDAO"%>
 <%@page import="website.metier.AuthentificationSite"%>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" id="menupro">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -28,22 +28,16 @@
 					<%=MenuHtml
 					.getActiviteClass(etatMenu, MenuEnum.mesactivites)%>><a
 					href="/wayd/MesActivites">Gérer </a></li>
-
-
-
 				<%
-					
-
-					if (request.getSession().getAttribute("profil")!=null) {
+					if (request.getSession().getAttribute("profil") != null) {
 				%>
 				<!--Affiche les message si connecté -->
 				<li
-			
 					<%=MenuHtml.getActiviteClass(etatMenu,
 						MenuEnum.mesmessages)%>><a
 					href="/wayd/MesMessages"><span
-						class="glyphicon glyphicon-envelope">
-						</span> <span class="badge"><%=MessageDAO.getNbrMessageNonLu(((ProfilBean)request.getSession().getAttribute("profil")).getId()) %></span></a></li>
+						class="glyphicon glyphicon-envelope"> </span> <span class="badge"><%=MessageDAO.getNbrMessageNonLu(((ProfilBean) request
+						.getSession().getAttribute("profil")).getId())%></span></a></li>
 
 				<%
 					}
@@ -75,7 +69,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<%
-				if (request.getSession().getAttribute("profil")!=null) {
+					if (request.getSession().getAttribute("profil") != null) {
 				%>
 				<li><a href="/wayd/Deconnexion"><span
 						class="glyphicon glyphicon-log-out"></span> Log out</a></li>

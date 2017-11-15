@@ -24,7 +24,7 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>

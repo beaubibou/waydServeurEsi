@@ -19,7 +19,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 	
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <script src="/wayd/js/initfirebase.js"></script>
 
 </head>
@@ -47,7 +47,7 @@
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<div class="panel panel-default">
+			<div class="panel panel-default" >
 				<div class="panel-heading panel-heading-custom">
 
 					<div class="panel-title">Connectez vous</div>
