@@ -63,13 +63,9 @@ public class CreerUserPro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("doget crres user");
+	
 		response.sendRedirect("auth/CreationCompteCaptcha.jsp");
-		
-//		System.out.println(request.getParameter("pwd"));
-//		System.out.println("***********test creation");
-//		
+	
 	}
 	
 	

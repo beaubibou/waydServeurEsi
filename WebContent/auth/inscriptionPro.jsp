@@ -56,7 +56,7 @@
 
 				<div style="padding-top: 30px" class="panel-body">
 
-					<form action="../Form_PremierProfil"
+					<form action="/wayd/Form_PremierProfil"
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Nom*:</label> <input type="text"
