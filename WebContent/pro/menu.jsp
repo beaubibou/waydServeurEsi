@@ -1,6 +1,8 @@
 
+<%@page import="website.metier.ProfilBean"%>
 <%@page import="website.html.MenuHtml"%>
 <%@page import="website.enumeration.*"%>
+<%@page import="website.dao.MessageDAO"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
@@ -27,11 +29,26 @@
 					.getActiviteClass(etatMenu, MenuEnum.mesactivites)%>><a
 					href="/wayd/MesActivites">Gérer </a></li>
 
+
+
+				<%
+					
+
+					if (request.getSession().getAttribute("profil")!=null) {
+				%>
+				<!--Affiche les message si connecté -->
 				<li
-					<%=MenuHtml
-					.getActiviteClass(etatMenu, MenuEnum.mesmessages)%>><a
+			
+					<%=MenuHtml.getActiviteClass(etatMenu,
+						MenuEnum.mesmessages)%>><a
 					href="/wayd/MesMessages"><span
-						class="glyphicon glyphicon-envelope"></span> <span class="badge">5</span></a></li>
+						class="glyphicon glyphicon-envelope">
+						</span> <span class="badge"><%=MessageDAO.getNbrMessageNonLu(((ProfilBean)request.getSession().getAttribute("profil")).getId()) %></span></a></li>
+
+				<%
+					}
+				%>
+
 
 				<li
 					<%=MenuHtml.getActiviteClass(etatMenu,
@@ -58,7 +75,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<%
-					if (request.getSession().getAttribute("profil") != null) {
+				if (request.getSession().getAttribute("profil")!=null) {
 				%>
 				<li><a href="/wayd/Deconnexion"><span
 						class="glyphicon glyphicon-log-out"></span> Log out</a></li>

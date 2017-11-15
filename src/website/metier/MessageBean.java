@@ -75,5 +75,22 @@ public class MessageBean {
 
 		return "horaire test";
 	}
+	public String getLuHtml(String lienLecture) {
+		
+		String retour="";
+		if (!lu)
+		{
+		retour="<button id='"+lienLecture+"' name='lireMessage' type='button' >"
+				+ "	<span class='glyphicon glyphicon-unchecked'></span>	</button>";
+		}
+		else
+		{
+			retour="<button id='noaction' name='noaction' type='button' >"
+					+ "	<span class='glyphicon glyphicon-check'></span>	</button>";
+		
+		}
+		
+		return retour;
+	}
 
 }

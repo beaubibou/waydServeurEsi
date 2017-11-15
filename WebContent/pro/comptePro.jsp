@@ -25,7 +25,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
-<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all" type="text/css"> 
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
+	type="text/css">
 
 <script>
 	var latitude = 0;
@@ -36,26 +37,25 @@
 <body>
 
 	<%
-	AuthentificationSite authentification=	new AuthentificationSite(request, response);
-	if (!authentification.isAuthentifiePro())
-	return;
-	
-	ProfilBean profil = authentification.getProfil();
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
+
+		ProfilBean profil = authentification.getProfil();
 		MenuEnum etatMenu = MenuEnum.moncompte;
-	
 	%>
 	<%@ include file="menu.jsp"%>
 
-<div class="container" style="margin-top: 50px;">
-  <div class="page-header">
-    <h1>Votre compte</h1>      
-  </div>
-  <p>Renseignez votre proifl.</p>      
-    
-</div>
+	<div class="container" style="margin-top: 50px;">
+		<div class="page-header">
+			<h1>Votre compte</h1>
+		</div>
+		<p>Renseignez votre proifl.</p>
+
+	</div>
 	<div class="container">
-		<div id="loginbox" 
-			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+		<div id="loginbox" class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 					<div class="panel-title">Mon compte</div>
@@ -88,8 +88,11 @@
 								<div class="col-sm-8">
 									<div class="form-group">
 										<label for="nom">Nom*:</label> <input type="text"
-											class="form-control" id="nom" placeholder="<%=ParametreHtmlPro.getHintNomSociete() %>" maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>" name="nom"
-											required value="<%out.println(profil.getPseudo());%>">
+											class="form-control" id="nom"
+											placeholder="<%=ParametreHtmlPro.getHintNomSociete()%>"
+											maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX%>"
+											name="nom" required
+											value="<%out.println(profil.getPseudo());%>">
 									</div>
 								</div>
 								<div class="col-sm-4">
@@ -102,14 +105,14 @@
 
 							</div>
 						</div>
-<div class="form-group">
+						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
 										<label for="siteweb">Site web:</label>
 									</div>
 									<input type="text" class="form-control" id="siteweb"
-									maxlength="<%=ParametreHtmlPro.TAILLE_SITE_WEB_MAX %>"
+										maxlength="<%=ParametreHtmlPro.TAILLE_SITE_WEB_MAX%>"
 										placeholder="http://monsite.fr" name="siteweb"
 										value=<%out.println(profil.getSiteWebStr());%>>
 								</div>
@@ -135,7 +138,7 @@
 										<label for="siret">Numéro Siret</label>
 									</div>
 									<input type="text" class="form-control" id="siret"
-										 maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX %>"
+										maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX%>"
 										placeholder="Numéro Siret" name="siret"
 										value=<%out.println(profil.getSiret());%>>
 								</div>
@@ -149,7 +152,7 @@
 								class="form-control" id="adresse"
 								placeholder="Renseigner l'adresse" name="adresse" required
 								onkeypress="initPosition()"
-								maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX %>"
+								maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX%>"
 								value="<%out.println(profil.getAdresse());%>">
 						</div>
 
@@ -157,13 +160,14 @@
 							<label for="description">Description:</label>
 							<textarea class="form-control" rows="5" id="description"
 								name="commentaire"
-								placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil() %>" maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX %>"
-								
-								><%=profil.getCommentaireStr()%></textarea>
+								placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil()%>"
+								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX%>"><%=profil.getCommentaireStr()%></textarea>
 						</div>
-						
-						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur "<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>"</h5>
-						
+
+						<h5 class="nbrcaracteremax" id="nbr">
+							0 Caractére sur "<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+						</h5>
+
 						<button type="submit" class="btn btn-info">Modifier</button>
 
 						<div class="form-group">
@@ -272,7 +276,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -283,7 +287,8 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX %>';
+		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
+		';
 		$('#nbr').text(msg);
 	</script>
 </body>

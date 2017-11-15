@@ -100,6 +100,7 @@ public class AlertDialog {
 					+ messageAlertDialog.getMessage() + "');";
 
 		if (messageAlertDialog.getAction() != null)
+			
 			return "affichePoPupAction('" + messageAlertDialog.getTitre()
 					+ "','" + messageAlertDialog.getMessage() + "','"
 					+ messageAlertDialog.getAction() + "');";

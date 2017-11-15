@@ -57,6 +57,13 @@ public class AuthentificationSite {
 	public void setProfil(ProfilBean profil) {
 		this.profil = profil;
 	}
+	
+	public boolean isSessionConnect(){
+		
+		if (profil == null)return false;
+		return true;
+		
+	}
 
 	public boolean isAuthentifieWaydeur() throws IOException {
 
@@ -115,6 +122,11 @@ public class AuthentificationSite {
 	public int getId() {
 		// TODO Auto-generated method stub
 		return profil.getId();
+	}
+	
+	public String getNbrMessageNonLu(){
+		
+		return new Integer(10).toString();
 	}
 
 }

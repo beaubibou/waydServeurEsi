@@ -1038,17 +1038,18 @@ public class ActiviteDAO {
 			{
 			case TypeEtatMessage.ARCHIVES:
 		
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idemetteur";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and supprime=true";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
+			
 
 				break;
 			case TypeEtatMessage.LU:
 			
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idemetteur";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=true";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
@@ -1065,8 +1066,8 @@ public class ActiviteDAO {
 
 			case TypeEtatMessage.NONLU:
 		
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,idpersonne,datecreation,idmessage,iddestinataire=?,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idemetteur";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=false";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();

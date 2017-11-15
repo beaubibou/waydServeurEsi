@@ -633,4 +633,14 @@
     <servlet-name>SupprimeMessage</servlet-name>
     <url-pattern>/SupprimeMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LireMessage</display-name>
+    <servlet-name>LireMessage</servlet-name>
+    <servlet-class>servlet.pro.LireMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LireMessage</servlet-name>
+    <url-pattern>/LireMessage</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -8,25 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import wayde.bean.MessageServeur;
-import website.coordination.Coordination;
-import website.dao.ActiviteDAO;
 import website.dao.MessageDAO;
 import website.enumeration.AlertJsp;
-import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 
 /**
- * Servlet implementation class SupprimeMessage
+ * Servlet implementation class LireMessage
  */
-public class SupprimeMessage extends HttpServlet {
+public class LireMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupprimeMessage() {
+    public LireMessage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,25 +46,9 @@ public class SupprimeMessage extends HttpServlet {
 				
 		}
 	
-		MessageServeur messageServeur=MessageDAO.effaceMessage(idMessage);
+		MessageServeur messageServeur=MessageDAO.lireMessage(idMessage);
 			
-		if (messageServeur.isReponse()){
-			
-			authentification.setAlertMessageDialog(new MessageAlertDialog(
-					"Message Information", "Message supprimé", null,AlertJsp.Sucess));
-			response.sendRedirect("MesMessages");
-			return;
-			
-		}
-		else
-		{
-			authentification.setAlertMessageDialog(new MessageAlertDialog(
-					"Message Information", "Une erreur est survenue", null,AlertJsp.warning));
-			response.sendRedirect("MesMessages");
-			return;
-			
-		}
-				
+		response.sendRedirect("MesMessages");
 		
 	}
 
@@ -76,15 +56,7 @@ public class SupprimeMessage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
-	
-		
-		if (!authentification.isAuthentifiePro())
-			return;
-		
-		
-		
+		// TODO Auto-generated method stub
 	}
 
 }

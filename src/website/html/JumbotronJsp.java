@@ -18,9 +18,20 @@ public class JumbotronJsp {
 	}
 
 	
+	public static String getJumbotron(JumbotronJsp jumbotron){
+		
+		if (jumbotron==null)return "";
+		
+		return  "<div class=\"container\">"
+				+ " <div class=\"jumbotron\">"
+				+ "<h1>"+ jumbotron.titre+ "</h1>"
+				+ "<p>"+jumbotron.sousTitre+"</p></div>"
+				+"<p>"+jumbotron.message+"</p>";
+		
+	}
 
 
-	public JumbotronJsp(String sousTitre, String titre, String message) {
+	public JumbotronJsp( String titre, String sousTitre,String message) {
 		super();
 		this.sousTitre = sousTitre;
 		this.titre = titre;

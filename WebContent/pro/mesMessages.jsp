@@ -57,6 +57,13 @@
 
 	<%@ include file="menu.jsp"%>
 
+	<%@ include file="menu.jsp"%>
+	<script type="text/javascript">
+		
+	<%=new AlertDialog(authentification).getMessage()%>
+	
+	
+	</script>
 	
 	<div class="container" style="margin-top: 100px">
 
@@ -106,6 +113,9 @@
 					<th   style="width:10%;"  class="text-center"><input type="checkbox" id="ckAll">
 						<th   style="width:10%;" class="text-center">Action</th>
 				
+					
+					<th style="width:10%;"  class="text-center">Lu</th>
+				
 				</tr>
 			</thead>
 			<tbody
@@ -118,7 +128,7 @@
 							    if (listMessage!=null)
 							for (MessageBean messageBean : listMessage) {
 							String lienEfface = "/wayd/SupprimeMessage?idmessage=" + messageBean.getId();
-							String lienDetail = "/wayd/DetailMessage?idmessage=" + messageBean.getId()+"&from=listActivite.jsp";
+							String lienLecture = "/wayd/LireMessage?idmessage=" + messageBean.getId();
 						
 				%>
 
@@ -130,10 +140,13 @@
 						style="vertical-align: middle;"><%=messageBean.getMessage()%></td>
 					
 					<td><%=messageBean.getCheckHtml()%></td>
-					<td><button id=<%out.println(lienEfface);%> name="supprimer"
-							type="button" class="btn btn-danger btn-sm">
-							<span class="glyphicon glyphicon-trash"></span>
+					<td><button id='<%=lienEfface%>' name='supprimer'
+							type='button' class='btn btn-danger btn-sm'>
+							<span class='glyphicon glyphicon-trash'></span>
 						</button></td>
+					<td>
+					<%=messageBean.getLuHtml(lienLecture) %>	
+					</td>
 				
 				</tr>
 				<%
@@ -155,6 +168,8 @@
 					DialogEffaceActivite(lien);
 				if (action == 'supprimerMessages')
 					effaceActivites();
+				if (action == 'lireMessage')
+					lireMessage(lien);
 
 			});
 
@@ -249,6 +264,9 @@
 		function effaceMessage(lien) {
 			location.href = lien;
 		}
+		
+
+		
 	</script>
 
 
@@ -281,6 +299,10 @@
 
 			}
 
+		}
+
+		function lireMessage(lien) {
+			location.href = lien;
 		}
 	</script>
 

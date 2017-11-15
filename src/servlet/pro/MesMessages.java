@@ -84,14 +84,8 @@ public class MesMessages extends HttpServlet {
 		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
 				authentification.getProfil().getId(), filtre.getTypeMessage());
 
-		if (listMesMessages.size() == 0) {
-
-			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
-				request.setAttribute("jumbotron", jumbotron);
 		
-
-		} 
-		
+	
 			request.setAttribute("listMesMessages", listMesMessages);
 			request.getRequestDispatcher("/pro/mesMessages.jsp")
 					.forward(request, response);

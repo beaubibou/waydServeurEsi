@@ -39,29 +39,30 @@
 
 <script src="js/alertdialog.js"></script>
 
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">>
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
+>
 
 </head>
 <body>
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifiePro())
-			return;
-		
+			if (!authentification.isAuthentifiePro())
+		return;
+			
 		FiltreRecherche filtre=authentification.getFiltre();
-			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
-			MenuEnum etatMenu=MenuEnum.mesactivites;
+		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+			
+		MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
 
 	<%@ include file="menu.jsp"%>
 	<script type="text/javascript">
 		
 	<%=new AlertDialog(authentification).getMessage()%>
-	
-	
+		
 	</script>
-	
+
 	<div class="container" style="margin-top: 100px">
 
 		<div class="panel panel-primary"">
@@ -118,15 +119,15 @@
 
 				<%
 					ArrayList<ActiviteBean> listMesActivite =
-																(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																																				    
-							    if (listMesActivite!=null)
-							for (ActiviteBean activite : listMesActivite) {
-							String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
-							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-							String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-				%>
+(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																													    
+    if (listMesActivite!=null)
+for (ActiviteBean activite : listMesActivite) {
+String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
+String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+%>
 
 
 				<tr>
@@ -141,15 +142,16 @@
 						class="btn btn-info btn-sm"> <span
 							class="glyphicon glyphicon-search"></span>
 					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
- 	if (!activite.isTerminee()){%> 
- 	<a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
-	class="glyphicon glyphicon-edit"></span>
+ 	if (!activite.isTerminee()){
+ %> <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+							class="glyphicon glyphicon-edit"></span>
 					</a>
 
 						<button id=<%out.println(lienEfface);%> name="supprimer"
 							type="button" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%	}
+						</button> <%
+ 	}
  %></td>
 					<td><%=activite.getCheckHtml()%></td>
 
@@ -160,6 +162,7 @@
 			</tbody>
 		</table>
 
+		<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
 	</div>
 
 	<script>
@@ -185,7 +188,7 @@
 		$(function() {
 
 			$('#idEtatActivite').on('change', function() {
-				var selected = $(this).val();
+
 				document.getElementById("formulaire").submit();
 			});
 

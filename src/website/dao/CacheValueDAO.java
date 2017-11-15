@@ -365,7 +365,7 @@ public class CacheValueDAO {
 		retour.add(new TypeEtatMessage(TypeEtatMessage.LU, "Lu"));
 		retour.add(new TypeEtatMessage(TypeEtatMessage.NONLU, "Non lus"));
 		retour.add(new TypeEtatMessage(TypeEtatMessage.TOUS, "Tous"));
-		retour.add(new TypeEtatMessage(TypeEtatMessage.ARCHIVES, "Archivés"));
+	//	retour.add(new TypeEtatMessage(TypeEtatMessage.ARCHIVES, "Archivés"));
 
 
 		return retour;
