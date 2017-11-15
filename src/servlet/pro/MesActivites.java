@@ -36,24 +36,7 @@ public class MesActivites extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// ********* Regle d'authentification*********************
-		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
-		if (!authentification.isAuthentifiePro())
-			return;
-
-		FiltreRecherche filtre = authentification.getFiltre();
-
-		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
-				authentification.getProfil().getId(),
-				filtre.getTypeEtatActivite());
-
-		afficheJumbotron(listMesActivite.size(), request,
-				filtre.getTypeEtatActivite());
-
-		request.setAttribute("listMesActivite", listMesActivite);
-		request.getRequestDispatcher("/pro/mesActivite.jsp").forward(request,
-				response);
-
+		doPost(request, response);
 	}
 
 	private void afficheJumbotron(int nbrActivite, HttpServletRequest request,

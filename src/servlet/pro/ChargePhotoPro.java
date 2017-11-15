@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import website.dao.PersonneDAO;
+import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
 
@@ -43,6 +44,8 @@ public class ChargePhotoPro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+	doPost(request, response);
 	}
 
 	/**
@@ -50,21 +53,13 @@ public class ChargePhotoPro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-
-		LOG.info("doPost");
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		if (!authentification.isAuthentifiePro())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
+		
+		ProfilBean profil=authentification.getProfil();
 
 		File file;
 		int maxFileSize = 5000 * 1024;

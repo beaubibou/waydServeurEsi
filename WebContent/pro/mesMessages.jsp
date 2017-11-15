@@ -156,6 +156,7 @@
 		</table>
 
 	</div>
+<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
 
 	<script>
 		$(function() {

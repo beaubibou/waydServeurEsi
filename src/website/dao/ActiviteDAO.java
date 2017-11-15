@@ -1036,16 +1036,6 @@ public class ActiviteDAO {
 			switch (etatFiltreMessage)
 
 			{
-			case TypeEtatMessage.ARCHIVES:
-		
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and supprime=true";
-				preparedStatement = connexion.prepareStatement(requete);
-				preparedStatement.setInt(1, idpersonne);
-				rs = preparedStatement.executeQuery();
-			
-
-				break;
 			case TypeEtatMessage.LU:
 			
 				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"

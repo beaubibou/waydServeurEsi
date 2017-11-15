@@ -1,7 +1,7 @@
 package website.metier;
 
 public class TypeEtatMessage {
-	public final static int LU = 0, NONLU = 1, ARCHIVES = 2,TOUS=3;
+	public final static int LU = 0, NONLU = 1, TOUS=3;
 
 	public TypeEtatMessage(int id, String libelle) {
 		super();

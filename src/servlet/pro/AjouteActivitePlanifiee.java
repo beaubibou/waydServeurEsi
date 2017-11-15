@@ -46,6 +46,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
+		
 		if (!authentification.isAuthentifiePro())
 			return;
 

@@ -41,6 +41,14 @@ public class UpdateActivitePro extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+			
+		if (!authentification.isAuthentifiePro())
+			return;
+		
+		response.sendRedirect("MesActivites");
 	}
 
 	/**
@@ -90,13 +98,13 @@ public class UpdateActivitePro extends HttpServlet {
 				 latitude,  longitude,  typeactivite,
 				 idactivite))
 			{
-		//	AlertInfoJsp alerte=new AlertInfoJsp("Activite mise à jour", AlertJsp.Sucess,"MesActivites");
+		//	AlertInfoJsp alerte=new AlertInfoJsp("Activite mise ï¿½ jour", AlertJsp.Sucess,"MesActivites");
 		//	request.setAttribute("alerte", alerte);
 		
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activité modifiée",null));
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activitï¿½ modifiï¿½e",null));
 			request.getRequestDispatcher("MesActivites").forward(request, response);
 			
-			//new AlertInfoJsp("Activite ajoutée", AlertJsp.Sucess, "AcceuilPro")
+			//new AlertInfoJsp("Activite ajoutï¿½e", AlertJsp.Sucess, "AcceuilPro")
 			//		.send(request, response);
 		//	LOG.debug("**********************redirectio");
 		//	request.getRequestDispatcher("commun/alert.jsp").forward(

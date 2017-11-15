@@ -277,7 +277,6 @@ tr.border_bottom td {
 						
 								for (ActiviteBean activite : listActivite) {
 							String lienEfface = "/wayd/SupprimeActiviteWaydeur?idactivite=" + activite.getId();
-							String lienConfirmDialog="/wayd/ConfirmDialog?idactivite=" + activite.getId()+"&action=effaceActivite&from=MesActivites";
 							String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 								%>
 

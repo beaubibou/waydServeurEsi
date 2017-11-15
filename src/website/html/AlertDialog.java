@@ -77,7 +77,7 @@ public class AlertDialog {
 	
 		if (messageAlertDialog == null)
 			return "";
-		
+	
 	
 		
 		if (messageAlertDialog.getTypeMessage() == AlertJsp.Sucess) {

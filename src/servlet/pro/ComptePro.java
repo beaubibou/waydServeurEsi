@@ -39,20 +39,12 @@ public class ComptePro extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		// ********* Regle d'authentification*********************
-		HttpSession session = request.getSession();
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
 
-		if (profil == null) {
-			response.sendRedirect("auth/login.jsp");
+		if (!authentification.isAuthentifiePro())
 			return;
-		}
-
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
-			response.sendRedirect("auth/login.jsp");
-			return;
-		}
-
+		
 		response.sendRedirect("pro/comptePro.jsp");
 
 	}

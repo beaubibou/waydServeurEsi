@@ -14,6 +14,7 @@ import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.MessageBean;
+import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
 
 /**
@@ -35,28 +36,25 @@ public class MesMessages extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
-		if (!authentification.isAuthentifiePro())
-			return;
-
-		FiltreRecherche filtre =authentification.getFiltre();
-
-		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
-			authentification.getProfil().getId(), filtre.getTypeMessage());
-	
-	
-	//	listMesActivite = new ArrayList<ActiviteBean>();
-		if (listMesMessages.size() == 0) {
-
-			JumbotronJsp jumbotron=new JumbotronJsp("sosu titre", "titre", "");
-				request.setAttribute("jumbotron", jumbotron);
+//		AuthentificationSite authentification = new AuthentificationSite(
+//				request, response);
+//		if (!authentification.isAuthentifiePro())
+//			return;
+//
+//		FiltreRecherche filtre =authentification.getFiltre();
+//
+//		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
+//			authentification.getProfil().getId(), filtre.getTypeMessage());
+//	
+//	
+//		afficheJumbotron(listMesMessages.size(), request,
+//			filtre.getTypeMessage());
+//		
+//		request.setAttribute("listMesMessages", listMesMessages);
+//		request.getRequestDispatcher("/pro/mesMessages.jsp")
+//				.forward(request, response);
 		
-		} 
-		
-		request.setAttribute("listMesMessages", listMesMessages);
-		request.getRequestDispatcher("/pro/mesMessages.jsp")
-				.forward(request, response);
+		doPost(request,response);
 	
 	}
 
@@ -85,13 +83,48 @@ public class MesMessages extends HttpServlet {
 				authentification.getProfil().getId(), filtre.getTypeMessage());
 
 		
-	
+		afficheJumbotron(listMesMessages.size(), request,
+				filtre.getTypeMessage());
+		
 			request.setAttribute("listMesMessages", listMesMessages);
 			request.getRequestDispatcher("/pro/mesMessages.jsp")
 					.forward(request, response);
 
 		
 	
+	}
+	
+	private void afficheJumbotron(int nbrActivite, HttpServletRequest request,
+			int typeEtatActivite) {
+
+		JumbotronJsp jumbotron = null;
+		if (nbrActivite == 0) {
+
+			switch (typeEtatActivite) {
+
+			case TypeEtatMessage.LU:
+				jumbotron = new JumbotronJsp("Informations",
+						"Aucun message à lire","");
+				request.setAttribute("jumbotron", jumbotron);
+				break;
+
+			case TypeEtatMessage.NONLU:
+				jumbotron = new JumbotronJsp("Informations",
+						"Aucun message non lus","");
+				request.setAttribute("jumbotron", jumbotron);
+				break;
+
+			case TypeEtatMessage.TOUS:
+				jumbotron = new JumbotronJsp("Informations",
+						"Aucun messages en cours",
+						"Bla....");
+				request.setAttribute("jumbotron", jumbotron);
+				break;
+
+			}
+
+		}
+
 	}
 
 }

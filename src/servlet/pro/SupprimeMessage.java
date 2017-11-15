@@ -83,6 +83,7 @@ public class SupprimeMessage extends HttpServlet {
 		if (!authentification.isAuthentifiePro())
 			return;
 		
+		response.sendRedirect("MesActivites");
 		
 		
 	}
