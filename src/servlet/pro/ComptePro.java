@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
@@ -72,6 +73,17 @@ public class ComptePro extends HttpServlet {
 		String siteWeb = request.getParameter("siteweb");
 		String siret = request.getParameter("siret");
 
+		MessageServeur messageServeur=testParametreRequete(nom,adresse,commentaire,latitude,longitude,telephone,siteWeb,siret);
+		
+		if (!messageServeur.isReponse()){
+			
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information",messageServeur.getMessage(),null,AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+			return;
+				
+		}
+		
+		
 		ProfilBean profil = authentification.getProfil();
 		FiltreRecherche filtreRecherche = authentification.getFiltre();
 
@@ -104,5 +116,38 @@ public class ComptePro extends HttpServlet {
 		}
 
 	}
+
+	private MessageServeur testParametreRequete(String nom, String adresse,
+			String commentaire, double latitude, double longitude,
+			String telephone, String siteWeb, String siret) {
+		// TODO Auto-generated method stub
+	
+		
+		if (!testFormatTelephone(telephone)){
+			
+			return new MessageServeur(false,"Numero de téléphonne non conforme");
+		
+		}
+	
+		
+		
+		return  new MessageServeur(true,"Ok");
+	}
+
+	private boolean testFormatTelephone(String telephone) {
+		// TODO Auto-generated method stub
+		
+		if (telephone==null)
+			return true;
+		
+		if (telephone.length()==0)return true;
+		
+		if (telephone.length()!=14)return false;
+		
+		
+		return false;
+	}
+
+	
 
 }

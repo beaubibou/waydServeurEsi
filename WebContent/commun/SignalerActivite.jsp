@@ -44,7 +44,8 @@
 			request, response);
 	if (!authentification.isAuthentifie())
 		return;
-		ActiviteBean activite = (ActiviteBean) request
+	
+	ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
 	%>
 	<%

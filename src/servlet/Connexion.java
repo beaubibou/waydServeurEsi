@@ -134,7 +134,7 @@ public class Connexion extends HttpServlet {
 		try {
 			
 			response.sendRedirect("AcceuilPro");
-			//response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
+		//	response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

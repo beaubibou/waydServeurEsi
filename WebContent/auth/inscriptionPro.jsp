@@ -4,7 +4,7 @@
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.html.*"%>
 <%@page import="java.util.ArrayList"%>
-
+<%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,11 +34,20 @@
 
 </head>
 <body>
+
+	<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifiePro())
+			return;
+
+		
+	%>
 <div class="container">
 	<div class="page-header">
 			
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Connectez vous</h1>
+				alt="Cinque Terre" width="100" height="100">Décrivez votre activité</h1>
 		</div>
 		<p>blablal......</p>
 		
@@ -72,14 +81,14 @@
 
 						<div class="form-group">
 							<label for="nom">Téléphone:</label> <input type="text"
-								class="form-control" id="nom" placeholder="téléphone"
-								name="telephone" required maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
+								class="form-control" id="nom" placeholder="XX-XX-XX-XX-XX"
+								pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
+								name="telephone"  maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
 								>
 						</div>
 
 						<input type="hidden" class="form-control" id="typeuser"
 							placeholder="typeuser" name="typeuser" required value="1">
-
 
 						<div class="form-group">
 							<label for="adresse">Adresse*:</label> <input type="text"

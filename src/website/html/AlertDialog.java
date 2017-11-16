@@ -108,4 +108,41 @@ public class AlertDialog {
 		return "";
 	}
 
+	public static  String getAlert(MessageAlertDialog monAlerte) {
+
+		
+		if (monAlerte == null)
+			return "";
+	
+
+		if (monAlerte.getTypeMessage() == AlertJsp.Sucess) {
+
+			return "BootstrapDialog.success(\""+monAlerte.getMessage()+"\");";
+		}
+		
+		
+		if (monAlerte.getTypeMessage() == AlertJsp.danger) {
+
+			return "BootstrapDialog.danger(\""+monAlerte.getMessage()+"\");";
+		}
+		
+		if (monAlerte.getTypeMessage() == AlertJsp.warning) {
+
+			return "BootstrapDialog.warning(\""+monAlerte.getMessage()+"\");";
+		}
+
+		if (monAlerte.getAction() == null)
+			return "affichePoPup('" + monAlerte.getTitre() + "','"
+					+ monAlerte.getMessage() + "');";
+
+		if (monAlerte.getAction() != null)
+			
+			return "affichePoPupAction('" + monAlerte.getTitre()
+					+ "','" + monAlerte.getMessage() + "','"
+					+ monAlerte.getAction() + "');";
+
+		return "";
+	}
+
+	
 }

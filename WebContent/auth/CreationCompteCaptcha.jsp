@@ -1,3 +1,6 @@
+<%@page import="website.html.AlertDialog"%>
+<%@page import="website.html.MessageAlertDialog"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,10 +35,17 @@
 	<div class="page-header">
 			
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Connectez vous</h1>
+				alt="Cinque Terre" width="100" height="100">Créer votre compte</h1>
 		</div>
 		<p>blablal......</p>
 		
+	<%MessageAlertDialog alerte=(MessageAlertDialog)request.getAttribute("alerte");%>
+	<script type="text/javascript">
+	<%=AlertDialog.getAlert(alerte) %>
+
+	</script>
+
+	
 	
 	</div>
 	<div class="container">
@@ -53,13 +63,13 @@
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
 
-					<form class="form-horizontal" action="/wayd/CreerUserPro"
-						method="POST">
+					<form class="form-horizontal" onsubmit="return valideFormulaire()" action="/wayd/CreerUserPro"
+						method="POST" >
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="email"
+								type="text" class="form-control" name="email" required
 								value="pmestivier@club.fr" placeholder="username or email">
 						</div>
 
@@ -82,7 +92,7 @@
 
 							<div class="col-sm-12 controls">
 
-								<button type="submit" method="post" action=""kl">Soumettre</button>
+								<button type="submit" >Soumettre</button>
 
 							</div>
 						</div>
@@ -96,6 +106,21 @@
 	</div>
 
 
+<script type="text/javascript">
 
+function valideFormulaire(){
+
+	var pwd=$('#login-password').val();
+	var pwd1=$('#login-password-bis').val();
+
+	if (pwd!=pwd1){
+	    BootstrapDialog.alert('Les mots de passe sont différents');
+		return false;
+		}
+
+}
+
+
+</script>
 </body>
 </html>

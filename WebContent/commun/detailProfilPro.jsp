@@ -38,8 +38,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
-
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript">
 	var lastIndex = 0;
@@ -83,7 +82,12 @@
 	<%
 		}
 	%>
-
+<div class="container" style="margin-top: 30px">
+		<div class="page-header">
+			<h1>Détail professionnel</h1>
+		</div>
+		
+	</div>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">

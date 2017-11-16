@@ -87,7 +87,7 @@
 							<div class="row">
 
 								<div class='col-sm-4'>
-									<divhttp://ulysse.dgfip/ class="form-group">
+									<div class="form-group">
 										<label for="iddatedebut">Date debut</label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
@@ -155,6 +155,7 @@
 
 
 							</div>
+
 
 						</div>
 

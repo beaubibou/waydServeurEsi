@@ -27,8 +27,8 @@
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
-	
-	<script src="js/initGoogleMap.js"></script>
+
+<script src="js/initGoogleMap.js"></script>
 
 <script>
 	var latitude = 0;
@@ -81,10 +81,10 @@
 							</div>
 						</div>
 					</div>
-					<form action="../ComptePro" method="post"
+
+
+					<form action="/wayd/ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
-
-
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
@@ -125,7 +125,8 @@
 										<label for="tel">Téléphone</label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="xx-xx-xx-xx-xx" name="telephone"
+										placeholder="XX-XX-XX-XX-XX" name="telephone"
+										pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
 										maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
 										value=<%out.println(profil.getTelephoneStr());%>>
 								</div>
@@ -280,16 +281,19 @@
 
 				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
 
-				$('#nbr').text(msg);
-				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+												$('#nbr').text(msg);
+												// Le script qui devra calculer et afficher le nombre de mots et de caractères
 
-			})
+											})
 
-		});
+						});
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + " Caractere(s) /" +<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>;
+		var msg = nombreCaractere + " Caractere(s) /"
+				+
+	<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
+		;
 		$('#nbr').text(msg);
 	</script>
 </body>

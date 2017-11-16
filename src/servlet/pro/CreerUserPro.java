@@ -23,6 +23,7 @@ import org.apache.http.message.BasicNameValuePair;
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
+import website.html.MessageAlertDialog;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,9 +79,17 @@ public class CreerUserPro extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		request.setAttribute("alerte", new MessageAlertDialog("Message Information","march",null,AlertJsp.warning) );
+		request.getRequestDispatcher("auth/CreationCompteCaptcha.jsp").forward(request, response);
+		
+		if (true)return;
+		
 		String pwd=request.getParameter("pwd");
+		String pwd1=request.getParameter("pwd1");
 		String email=request.getParameter("email");
-			
+	
+		
+		
 		
 		String reponseCaptcha = request.getParameter("g-recaptcha-response");
 		try {

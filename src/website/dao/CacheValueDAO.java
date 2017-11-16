@@ -31,6 +31,11 @@ public class CacheValueDAO {
 	
 	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
 	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<TypePhoto, String>();
+	static ArrayList<TypeEtatActivite> ListTypeEtatActivite = new ArrayList<TypeEtatActivite>();
+	static ArrayList<TypeEtatMessage> listTypeEtatMessage = new ArrayList<TypeEtatMessage>();
+	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<TypeActiviteBean>();
+	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
+
 
 	static {
 
@@ -228,11 +233,16 @@ public class CacheValueDAO {
 
 	public static ArrayList<TypeActiviteBean> getListTypeActivitePro() {
 
+		// SOllicite le cache
+		
+		if (listTypeActivitePro.size()>0)
+			return listTypeActivitePro;
+		
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
-
+		
 		try {
 			connexion = CxoPool.getConnection();
 
@@ -243,16 +253,16 @@ public class CacheValueDAO {
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
-				retour.add(new TypeActiviteBean(id, libelle));
+				listTypeActivitePro.add(new TypeActiviteBean(id, libelle));
 			}
 
-			return retour;
+			return listTypeActivitePro;
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			return retour;
+			return listTypeActivitePro;
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -268,7 +278,8 @@ public class CacheValueDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
-			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where typeuser=3 or typeuser=2 order by ordre asc";
+			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite where"
+					+ " typeuser=3 or typeuser=2 order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
 
@@ -348,27 +359,32 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
 		// TODO Auto-generated method stub
 
-		ArrayList<TypeEtatActivite> retour = new ArrayList<TypeEtatActivite>();
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planif�e"));
-		retour.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Termin�es"));
+		
+		
+		if (ListTypeEtatActivite.size()==0){
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planif�e"));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Termin�es"));
 	
-
-		return retour;
+		}
+		
+		
+		
+		
+		return ListTypeEtatActivite;
 	}
 	
 	public static ArrayList<TypeEtatMessage> getListEtatMessage() {
 		// TODO Auto-generated method stub
 
-		ArrayList<TypeEtatMessage> retour = new ArrayList<TypeEtatMessage>();
-		retour.add(new TypeEtatMessage(TypeEtatMessage.LU, "Lu"));
-		retour.add(new TypeEtatMessage(TypeEtatMessage.NONLU, "Non lus"));
-		retour.add(new TypeEtatMessage(TypeEtatMessage.TOUS, "Tous"));
-	//	retour.add(new TypeEtatMessage(TypeEtatMessage.ARCHIVES, "Archivés"));
+		if (listTypeEtatMessage.size()==0){
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.LU, "Lu"));
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.NONLU, "Non lus"));
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.TOUS, "Tous"));
+		}
 
-
-		return retour;
+		return listTypeEtatMessage;
 	}
 
 	public static ArrayList<QuandBean> getListQuand() {
@@ -406,11 +422,14 @@ public class CacheValueDAO {
 
 	public static ArrayList<RayonBean> getListRayon() {
 		// TODO Auto-generated method stub
-		ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
+		
+		if (listRayon.size()==0){
 
 		for (int f = 1; f < 9; f++) {
 			listRayon.add(new RayonBean(f, "" + f + " Km"));
 		}
+		}
+		
 		return listRayon;
 	}
 

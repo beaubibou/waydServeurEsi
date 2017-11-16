@@ -60,7 +60,7 @@
 		AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
 			if (!authentification.isAuthentifie())
-		return;
+			return;
 
 			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 			ArrayList<AvisBean> listAvis = (ArrayList<AvisBean>) request
