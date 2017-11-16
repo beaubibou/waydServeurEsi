@@ -30,7 +30,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-
 <script src="js/moment.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
@@ -294,11 +293,11 @@
 			}
 
 			if (datedebut > datefin) {
-				alert("date debut>datefin");
+				   BootstrapDialog.alert('La date de début est supérieure à la date de fin');
 				return false;
 			}
 			if (datefin < new Date()) {
-				alert("date fin avant maientnant");
+				   BootstrapDialog.alert('Votre date de fin est inférieur à la date du jour');
 				return false;
 			}
 
@@ -307,7 +306,12 @@
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			if (diffHeure > 8) {
-				alert("La durée ne peut pas exéder 8 heures");
+				   BootstrapDialog.alert('La durée ne peut pas exéder 8 heures');
+				return false;
+			}
+
+			if (diffHeure <1) {
+				   BootstrapDialog.alert('La durée ne peut pas être inférieur à 1 heures');
 				return false;
 			}
 			return true;

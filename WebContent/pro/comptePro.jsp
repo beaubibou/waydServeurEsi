@@ -27,6 +27,8 @@
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
+	
+	<script src="js/initGoogleMap.js"></script>
 
 <script>
 	var latitude = 0;
@@ -287,8 +289,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
-		';
+		var msg = nombreCaractere + " Caractere(s) /" +<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>;
 		$('#nbr').text(msg);
 	</script>
 </body>

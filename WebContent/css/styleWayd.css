@@ -12,9 +12,11 @@
 }
 
 .dropdown-toggle:active,.open .dropdown-toggle {
-	background: #FFF !important;
+	background: #e6ac00 !important;
 	color: #000 !important;
 }
+
+
 /*Couleur de la barre de navigation quand menu selectionné*/
 .active a {
 	background-color: #e6ac00 !important;

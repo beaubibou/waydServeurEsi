@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>>Création activité</title>
+<title>>Planifier des activités</title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,15 +44,14 @@
 <body>
 
 	<%
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+		if (!authentification.isAuthentifiePro())
+		return;
 		
-	AuthentificationSite authentification=	new AuthentificationSite(request, response);
-	if (!authentification.isAuthentifiePro())
-	return;
-	
-	ProfilBean profil = authentification.getProfil();
-			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-					// Defini le li a rendre actif
-		MenuEnum etatMenu=null;
+		ProfilBean profil = authentification.getProfil();
+		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+		// Defini le li a rendre actif
+			MenuEnum etatMenu=null;
 	%>
 
 	<%@ include file="menu.jsp"%>
@@ -74,8 +73,8 @@
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
-						<form action="/wayd/AjouteActivitePlanifiee"
-					onsubmit="return valideFormulaire()" method="post">
+					<form action="/wayd/AjouteActivitePlanifiee"
+						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
 							<label for="titre">Titre:</label> <input type="text"
 								class="form-control" id="titre" required
@@ -88,7 +87,7 @@
 							<div class="row">
 
 								<div class='col-sm-4'>
-									<div class="form-group">
+									<divhttp://ulysse.dgfip/ class="form-group">
 										<label for="iddatedebut">Date debut</label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
@@ -127,61 +126,61 @@
 
 						</div>
 						<div class="form-group">
-						<div class="row">
+							<div class="row">
 
-							<div class='col-sm-4'>
-								<div class="form-group">
-									<label for="idheuredebut">Heure debut</label>
-									<div class='input-group date' id='heuredebut'>
-										<input type='text' class="form-control" id="idheuredebut"
-											name="heuredebut" /> <span class="input-group-addon">
-											<span class="glyphicon glyphicon-calendar"></span>
-										</span>
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="idheuredebut">Heure debut</label>
+										<div class='input-group date' id='heuredebut'>
+											<input type='text' class="form-control" id="idheuredebut"
+												name="heuredebut" /> <span class="input-group-addon">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class='col-sm-4'>
-								<div class="form-group">
-									<label for="idheurefin">Heure fin</label>
-									<div class='input-group date' id="heurefin">
-										<input type='text' class="form-control" id="idheurefin"
-											name="heurefin" /> <span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-										</span>
+								<div class='col-sm-4'>
+									<div class="form-group">
+										<label for="idheurefin">Heure fin</label>
+										<div class='input-group date' id="heurefin">
+											<input type='text' class="form-control" id="idheurefin"
+												name="heurefin" /> <span class="input-group-addon">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</span>
+										</div>
 									</div>
 								</div>
+
+
+
 							</div>
-
-
 
 						</div>
 
-					</div>
-					
 						<div class="form-group">
-						<div class="container">
+							<div class="container" id="mescheck">
 
-						<h4>Cette activité se répéte tous les jours:</h4>
-						</br> <label class="radio-inline"> <input type="checkbox"
-							name="lundi">Lundi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="mardi">Mardi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="mercredi">Mercredi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="jeudi">Jeudi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="vendredi">Vendredi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="samedi">Samedi
-						</label> <label class="radio-inline"> <input type="checkbox"
-							name="dimanche">Dimanche
-						</label>
+								<h4>Cette activité se répéte tous les jours:</h4>
+								</br> <label class="radio-inline"> <input type="checkbox"
+									name="lundi">Lundi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="mardi">Mardi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="mercredi">Mercredi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="jeudi">Jeudi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="vendredi">Vendredi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="samedi">Samedi
+								</label> <label class="radio-inline"> <input type="checkbox"
+									name="dimanche">Dimanche
+								</label>
 
 
-					</div>
-</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="adresse">Adresse:</label> <input type="text"
 								class="form-control" id="adresse" required
@@ -228,7 +227,7 @@
 
 
 	</div>
-<script>
+	<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
 			street_number : 'short_name',
@@ -304,6 +303,8 @@
 				format : 'HH:mm'
 
 			});
+
+			
 			$('#heurefin').datetimepicker({
 				defaultDate : new Date,
 				format : 'HH:mm'
@@ -343,9 +344,12 @@
 		}
 
 		function valideFormulaire() {
-			return true;
+
 			var datedebut = $('#datedebut').data('DateTimePicker').date();
 			var datefin = $('#datefin').data('DateTimePicker').date();
+
+			var heuredebut = $('#heuredebut').data('DateTimePicker').date();
+			var heurefin = $('#heurefin').data('DateTimePicker').date();
 
 			// Verifie les positions
 			latitude = document.getElementById("latitude").value;
@@ -359,25 +363,58 @@
 			}
 
 			if (datedebut > datefin) {
-				alert("date debut>datefin");
+				BootstrapDialog
+						.alert('La date de début est superieure à la date de fin');
+
 				return false;
 			}
 			if (datefin < new Date()) {
-				alert("date fin avant maientnant");
+				alert("La date de fin est inférieur à la date du jour");
 				return false;
 			}
 
-			diffHeure = heureDiff(new Date(datedebut).getTime(), new Date(
-					datefin).getTime());
+			diffHeure = heureDiff(heuredebut, heurefin);
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			if (diffHeure > 8) {
-				alert("La durée ne peut pas exéder 8 heures");
+				BootstrapDialog.alert('La durée ne peut pas exéder 8 heures');
 				return false;
 			}
+
+			if (diffHeure < 1) {
+				BootstrapDialog
+						.alert('La durée ne peut pas être inférieur à 1 heures');
+				return false;
+			}
+			
+			var nbrCheck=getNbrJourCheck();
+
+				if (nbrCheck == 0) {
+				BootstrapDialog
+						.alert('Un jour doit être au moins selectionné');
+				return false;
+			}
+
 			return true;
 		}
 
+		function getNbrJourCheck() {
+	
+			var nbrLigne = 0;
+			$('#mescheck label ').each(function() {
+				var checkBox = $(this).find('input:checkbox');
+				if (checkBox.is(":checked")) {
+
+					nbrLigne++;
+
+				}
+
+			});
+
+		
+			return nbrLigne;
+		}
+		
 		function initPosition() {
 			latitude = 0;
 			longitude = 0;
@@ -409,5 +446,5 @@
 		var msg = nombreCaractere + ' Caractere(s) / 200';
 		$('#nbr').text(msg);
 	</script>
-	</body>
+</body>
 </html>

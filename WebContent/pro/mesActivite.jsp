@@ -106,12 +106,13 @@
 		<table class="table table-responsive" border="3" id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
-					<th class="text-center">Etat</th>
+					<th style="width: 10%;" class="text-center">Etat</th>
 					<th class="text-center">Titre</th>
-					<th class="text-center">Vus</th>
-					<th class="text-center">Date</th>
-					<th class="text-center">Action</th>
-					<th class="text-center"><input type="checkbox" id="ckAll">
+					<th style="width: 5%;" class="text-center">Vus</th>
+					<th style="width: 20%;" class="text-center">Date</th>
+					<th style="width: 15%;" class="text-center">Action</th>
+					<th style="width: 10%;" class="text-center"><input
+						type="checkbox" id="ckAll">
 				</tr>
 			</thead>
 			<tbody
@@ -119,15 +120,14 @@
 
 				<%
 					ArrayList<ActiviteBean> listMesActivite =
-(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																													    
-    if (listMesActivite!=null)
-for (ActiviteBean activite : listMesActivite) {
-String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-
-String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-%>
+						(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																																	    
+						    if (listMesActivite!=null)
+						for (ActiviteBean activite : listMesActivite) {
+						String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+						String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+						String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+				%>
 
 
 				<tr>
@@ -135,9 +135,7 @@ String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from
 					<td class="idActivite" id=<%=activite.getId()%>
 						style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
-
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
-
 					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
 						class="btn btn-info btn-sm"> <span
 							class="glyphicon glyphicon-search"></span>
@@ -162,9 +160,9 @@ String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from
 			</tbody>
 		</table>
 
-		</div>
-			<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
-		
+	</div>
+	<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
+
 
 	<script>
 		$(function() {
@@ -183,6 +181,7 @@ String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from
 			$("#ckAll").click(function() {
 
 				litTable();
+			
 			});
 		});
 
@@ -201,17 +200,20 @@ String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from
 
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
-
-				if ($('#ckAll').is(":checked")) {
+			
+					if ($('#ckAll').is(":checked")) {
 
 					checkBox.prop("checked", true); // it is checked
-				} else {
+				
+						} else {
 
 					checkBox.prop("checked", false); // it is checked
 
 				}
 
 			});
+
+		
 		}
 
 		function DialogEffaceActivites() {

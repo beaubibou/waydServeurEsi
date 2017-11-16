@@ -78,21 +78,21 @@ public class AlertDialog {
 		if (messageAlertDialog == null)
 			return "";
 	
-	
-		
+
 		if (messageAlertDialog.getTypeMessage() == AlertJsp.Sucess) {
 
-			return "BootstrapDialog.success('"+messageAlertDialog.getMessage()+"');";
+			return "BootstrapDialog.success(\""+messageAlertDialog.getMessage()+"\");";
 		}
-
+		
+		
 		if (messageAlertDialog.getTypeMessage() == AlertJsp.danger) {
 
-			return "BootstrapDialog.danger('"+messageAlertDialog.getMessage()+"');";
+			return "BootstrapDialog.danger(\""+messageAlertDialog.getMessage()+"\");";
 		}
 		
 		if (messageAlertDialog.getTypeMessage() == AlertJsp.warning) {
 
-			return "BootstrapDialog.warning('"+messageAlertDialog.getMessage()+"');";
+			return "BootstrapDialog.warning(\""+messageAlertDialog.getMessage()+"\");";
 		}
 
 		if (messageAlertDialog.getAction() == null)

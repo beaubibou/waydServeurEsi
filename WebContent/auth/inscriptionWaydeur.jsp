@@ -41,18 +41,17 @@
 	%>
 
 <div class="container">
-		<div class="page-header">
+	<div class="page-header">
 			
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Décrivez vous</h1>
+				alt="Cinque Terre" width="100" height="100">Connectez vous</h1>
 		</div>
 		<p>blablal......</p>
-			<p>blablal......</p>
+		
 	
 	</div>
-
 	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
+		<div id="loginbox" 
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">

@@ -3,7 +3,7 @@ package website.html;
 public class ParametreHtmlPro {
 
 	// v *******************COMPTE profil*********************
-	public static int TAILLE_PSEUDO_MAX = 20;
+	public static int TAILLE_PSEUDO_MAX = 40;
 	public	static int TAILLE_PSEUDO_MINI = 5;
 	public static int TAILLE_SITE_WEB_MAX = 100;
 	public static int TAILLE_TELEPHONNE_MAX = 14;
@@ -26,45 +26,45 @@ public class ParametreHtmlPro {
 		
 	public static String getHintTitreActivite() {
 
-		return "Titre de l'activité " + TAILLE_TITRE_ACTIVITE_MAX + 
-				" caractéres maximum";
+		return "Titre de l'activitï¿½ " + TAILLE_TITRE_ACTIVITE_MAX + 
+				" caractï¿½res maximum";
 	}
 
 	public static String getHintDescriptionActivite() {
 
-		return "Description de l'activité " + TAILLE_DESCRIPTION_ACTIVITE_MAX
-				+ " caractères maximum";
+		return "Description de l'activitï¿½ " + TAILLE_DESCRIPTION_ACTIVITE_MAX
+				+ " caractï¿½res maximum";
 	}
 
 	public static String getHintNomSociete() {
 
-		return "Nom de la société " + TAILLE_PSEUDO_MAX
-				+ " caractères maximum";
+		return "Nom de la sociï¿½tï¿½ " + TAILLE_PSEUDO_MAX
+				+ " caractï¿½res maximum";
 	}
 	
 	public static String getHintPseudoWaydeur() {
 
 		return "Ton pseudo " + TAILLE_PSEUDO_MAX
-				+ " caractères maximum";
+				+ " caractï¿½res maximum";
 	}
 	
 	public static String getHintDescriptionProfil() {
 
-		return "Décrivez votre activité " + TAILLE_DESCRIPTION_PROFIL_MAX
-				+ " caractères maximum";
+		return "Dï¿½crivez votre activitï¿½ " + TAILLE_DESCRIPTION_PROFIL_MAX
+				+ " caractï¿½res maximum";
 	}
 	
 	public static String getHintDescriptionProfilWaydeur() {
 
-		return "Décrivez votre profil en quelques mots " + TAILLE_DESCRIPTION_PROFIL_MAX
-				+ " caractères maximum";
+		return "Dï¿½crivez votre profil en quelques mots " + TAILLE_DESCRIPTION_PROFIL_MAX
+				+ " caractï¿½res maximum";
 	}
 	
 	
 	public static String getHintDescriptionMessageContact() {
 
 		return "Laissez votre message " + TAILLE_MESSAGE_CONTACT_MAX
-				+ " caractères maximum";
+				+ " caractï¿½res maximum";
 	}
 	
 	

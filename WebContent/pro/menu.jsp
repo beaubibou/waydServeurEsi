@@ -50,9 +50,9 @@
 					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown">Proposez <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="/wayd/AjouteActivitePro">Proposez une
+						<li><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePro">Proposez une
 								activité</a></li>
-						<li><a href="/wayd/AjouteActivitePlanifiee">Planifiez
+						<li ><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePlanifiee">Planifiez
 								plusieurs activités</a></li>
 
 					</ul></li>

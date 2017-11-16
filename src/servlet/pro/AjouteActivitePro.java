@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
+import wayde.bean.MessageServeur;
 import website.dao.CacheValueDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
@@ -98,9 +99,22 @@ public class AjouteActivitePro extends HttpServlet {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Date non conforme",null,AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+				
 			return;
 		}
 
+		MessageServeur messageServeur=testParametreReque(titre,adresse,description,latitude,longitude,typeactivite,dateDebut,dateFin);
+		
+		if (!messageServeur.isReponse())
+		{
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information",messageServeur.getMessage(),null,AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+			 return;
+			
+		}
+		
 		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
 		int idActivite = activiteDAO.addActivitePro(authentification.getId(),
 				titre, description, dateDebut, dateFin, adresse, latitude,
@@ -121,6 +135,17 @@ public class AjouteActivitePro extends HttpServlet {
 	
 		return;
 
+	}
+
+	private MessageServeur testParametreReque(String titre, String adresse,
+			String description, double latitude, double longitude,
+			int typeactivite, Date dateDebut, Date dateFin) {
+		// TODO Auto-generated method stub
+	
+
+		
+		return new MessageServeur(true,"ok");
+		
 	}
 
 }
