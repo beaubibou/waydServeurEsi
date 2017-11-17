@@ -67,7 +67,7 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="text" class="form-control" name="email"
+								type="email" class="form-control" name="email"
 								value="pmestivier@club.fr" placeholder="username or email">
 						</div>
 
@@ -187,6 +187,7 @@
 								<button id="btn-signup" type="button" class="btn btn-info">
 									<i class="icon-hand-right"></i> &nbsp Sign Up
 								</button>
+								
 								<span style="margin-left: 8px;">or</span>
 							</div>
 						</div>

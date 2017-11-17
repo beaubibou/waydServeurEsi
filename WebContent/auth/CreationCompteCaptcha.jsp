@@ -92,7 +92,7 @@
 
 							<div class="col-sm-12 controls">
 
-								<button type="submit" >Soumettre</button>
+								<button type="submit" class="btn btn-primary">Soumettre</button>
 
 							</div>
 						</div>

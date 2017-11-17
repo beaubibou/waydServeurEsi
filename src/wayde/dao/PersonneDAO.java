@@ -273,7 +273,7 @@ public class PersonneDAO {
 				adresse = "Pas d'adresse";
 			return new ProprietePref(rayon, latitude, longitude, adresse);
 		}
-		throw new Exception("Pas de préférence pour  " + idpersonne);
+		throw new Exception("Pas de prï¿½fï¿½rence pour  " + idpersonne);
 
 	}
 
@@ -338,7 +338,7 @@ public class PersonneDAO {
 					commentaire, afficheage, affichesexe, premiereconnexion,
 					rayonrecherche, admin, latitude, longitude, notification,
 					typeUser, siteWeb, siret, tel);
-			// System.out.println("Trouvé");
+			// System.out.println("Trouvï¿½");
 			rs.close();
 			return personne;
 
@@ -506,7 +506,7 @@ public class PersonneDAO {
 
 		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
 		// l'utlsation de plusieurs
-		// compte sur um mêm terminal de ne pas recevoir les rafaichissement des
+		// compte sur um mï¿½m terminal de ne pas recevoir les rafaichissement des
 		// autres.
 
 		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
@@ -556,6 +556,58 @@ public class PersonneDAO {
 		preparedStatement.setString(22, gcmToken);// affiche age
 		preparedStatement.setBoolean(23, true);// affiche age
 
+		preparedStatement.execute();
+		// System.out.println("Cree compte generique ");
+		ResultSet rs = preparedStatement.getGeneratedKeys();
+		int cle = 0;
+		if (rs.next())
+			cle = rs.getInt("idpersonne");
+		preparedStatement.close();
+		// System.out.println("cle recuepree de la personne" + cle);
+		return cle;
+	}
+
+	public int addComptePro(String uudi, String pseudo, String email,
+			String adresse, String siret, String telephonne, double latitude,
+			double longitude) throws SQLException {
+	
+		String requete = "";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+
+		Date datecreation = Calendar.getInstance().getTime();
+		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
+				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
+				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,3);";
+		String commentaire = null;
+		preparedStatement = connexion.prepareStatement(requete,
+				Statement.RETURN_GENERATED_KEYS);
+		preparedStatement.setString(1, pseudo);
+		preparedStatement.setString(2, pseudo);
+		preparedStatement.setString(3, uudi);
+		preparedStatement.setString(4, null);
+		preparedStatement.setString(5, email);
+		preparedStatement.setInt(6, 1);
+		preparedStatement.setBoolean(7, false);
+		preparedStatement.setBoolean(8, true);
+		preparedStatement.setTimestamp(9,
+				new java.sql.Timestamp(datecreation.getTime()));
+		preparedStatement.setTimestamp(10,
+				new java.sql.Timestamp(datecreation.getTime()));
+		preparedStatement.setString(11, null);
+		preparedStatement.setDouble(12, latitude);
+		preparedStatement.setDouble(13, longitude);
+		preparedStatement.setInt(14, 10000);
+		preparedStatement.setString(15, adresse);
+		preparedStatement.setString(16, null);
+		preparedStatement.setString(17, null);
+		preparedStatement.setString(18, commentaire);
+		preparedStatement.setBoolean(19, true);// affiche sexe
+		preparedStatement.setBoolean(20, true);// affiche age
+		preparedStatement.setBoolean(21, true);// affiche age
+		preparedStatement.setString(22, null);// affiche age
+		preparedStatement.setBoolean(23, true);// affiche age
 		preparedStatement.execute();
 		// System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();
