@@ -69,10 +69,16 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<%
-					if (request.getSession().getAttribute("profil") != null) {
+				ProfilBean profiltmp=(ProfilBean)request.getSession().getAttribute("profil") ;
+					if (profiltmp!= null) {
 				%>
+				<li><a style="color:black;"><span
+						class="glyphicon glyphicon-user"></span> <%=profiltmp.getPseudo() %></a></li>
+			
 				<li><a href="/wayd/Deconnexion"><span
 						class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+			
+			
 				<%
 					} else {
 				%>

@@ -24,17 +24,16 @@
 	<div class="container">
 
 		<h3>Critères</h3>
-	
+
 		<form class="form-inline" method="post" action="ListActivite">
 
 			<div class="form-group">
 				<label for="latitude">Date début:</label> <input type="date"
-					class="form-control" id="datedebut" name="datedebut" >
+					class="form-control" id="datedebut" name="datedebut"> <label
+					for="longitude">Date fin:</label> <input type="date"
+					class="form-control" id="datefin" name="datefin">
 
-				<label for="longitude">Date fin:</label> <input type="date"
-					class="form-control" id="datefin" name="datefin" >
 
-				
 				<div class="form-group">
 					<button id="go" type="submit" class="btn btn-default">Rechercher</button>
 
@@ -52,24 +51,29 @@
 					<th>Pseudo</th>
 					<th>Suggestion</th>
 					<th>Date</th>
+					<th>Action</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<%
 					ArrayList<SuggestionBean> listSuggestion = (ArrayList<SuggestionBean>) request
-															.getAttribute("listSuggestion");
-													for (SuggestionBean suggestion : listSuggestion) {
-														String lienDetailOrganisateur = "DetailParticipant?idparticipant="
-																+ suggestion.getIdPersonne();
-												
-				%>
+																	.getAttribute("listSuggestion");
+for (SuggestionBean suggestion : listSuggestion) {
+	String lienDetailOrganisateur = "DetailParticipant?idparticipant="
+			+ suggestion.getIdPersonne();
+String lienMessage =
+		"/wayd/EnvoiMessageAdmin?idDestinataire=" +suggestion.getIdPersonne()+
+		"&idMessage="+suggestion.getId();
+String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId();			
+
+%>
 
 				<tr>
 
 					<td><a href=<%out.println(lienDetailOrganisateur);%>> <%
- 					out.println(suggestion.getPseudo());
- 					%>
+ 	out.println(suggestion.getPseudo());
+ %>
 					</a></td>
 
 					<td>
@@ -85,8 +89,18 @@
 						%>
 					</td>
 
+					<td>
 
-
+						<button id='<%=lienMessage%>' name='envoiMessage' type='button'
+							class='btn btn-primary btn-sm'>
+							<span class='glyphicon glyphicon-send'></span>
+						</button>
+							<button id='<%=lienEfface%>' name='supprime' type='button'
+							class='btn btn-primary btn-sm'>
+							<span class='glyphicon glyphicon-trash'></span>
+						</button>
+					</td>
+					
 				</tr>
 
 				<%
@@ -97,7 +111,32 @@
 		</table>
 	</div>
 
-	
+
+	<script>
+		$(function() {
+
+			$('button').click(function() {
+
+				var lien = $(this).attr('id');
+				var action = $(this).attr('name')
+
+				if (action == 'envoiMessage')
+					location.href = lien;
+
+				if (action == 'supprime')
+					location.href = lien;
+
+			});
+
+		});
+
+		
+	</script>
+
 
 </body>
+
+
+
+
 </html>

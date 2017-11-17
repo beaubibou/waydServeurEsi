@@ -21,6 +21,46 @@ import website.metier.ProfilBean;
 public class PersonneDAO {
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
 
+	public static boolean isPseudoExist(String pseudo) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from personne where prenom=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, pseudo);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
+
 	public static ArrayList<ProfilBean> getListProfil() {
 
 		Connection connexion = null;
@@ -294,7 +334,7 @@ public class PersonneDAO {
 
 		Connection connexion = null;
 		try {
-			
+
 			// on met le sexe � autre
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -307,7 +347,8 @@ public class PersonneDAO {
 			preparedStatement.setString(2, adresse);
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
-			preparedStatement.setString(5, Outils.getStringStatement(commentaire));
+			preparedStatement.setString(5,
+					Outils.getStringStatement(commentaire));
 			preparedStatement.setInt(6, ProfilBean.PRO);
 			preparedStatement.setDouble(7, latitude);
 			preparedStatement.setDouble(8, longitude);
@@ -344,17 +385,17 @@ public class PersonneDAO {
 
 	public boolean updateProfilProFull(String pseudo, String adresse,
 			double latitude, double longitude, String commentaire,
-			int idpersonne, String siteWeb, String telephone,String siret) {
+			int idpersonne, String siteWeb, String telephone, String siret) {
 		// TODO Auto-generated method stub
 
-		if (pseudo!=null)
-		pseudo = pseudo.trim();
-		if (adresse!=null)
-		adresse = adresse.trim();
-		if (commentaire!=null)
-		commentaire = commentaire.trim();
-		if (siteWeb!=null)
-		siteWeb = siteWeb.trim();
+		if (pseudo != null)
+			pseudo = pseudo.trim();
+		if (adresse != null)
+			adresse = adresse.trim();
+		if (commentaire != null)
+			commentaire = commentaire.trim();
+		if (siteWeb != null)
+			siteWeb = siteWeb.trim();
 
 		Connection connexion = null;
 		try {
@@ -418,7 +459,7 @@ public class PersonneDAO {
 		commentaire = commentaire.trim();
 		Connection connexion = null;
 
-		LOG.info("updateProfilProFullWaydeur sexe " +sexe);
+		LOG.info("updateProfilProFullWaydeur sexe " + sexe);
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);

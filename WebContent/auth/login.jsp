@@ -95,14 +95,18 @@
 				
 					<!--			<a id="btn-fblogin" onclick="popup()" class="btn btn-primary">Login
 									with Google</a> 
-					 -->					
+					 -->			<div class="btn-group">		
 									<a id="btn-password" onclick="signPassword()"
 									class="btn btn-primary">Se connecter</a>
+								 <a href="/wayd/Home"  class="btn btn-info"><span
+								  class="glyphicon glyphicon-home" ></span> Accueil</a>
+									</div>
 
 							</div>
 						</div>
 
 						<div class="form-group">
+						
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
@@ -111,7 +115,10 @@
 								</div>
 							
 							</div>
+												
 						</div>
+						
+						
 					</form>
 
 

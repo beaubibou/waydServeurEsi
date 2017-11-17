@@ -72,7 +72,7 @@ public class CreerUserPro extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 	
-		response.sendRedirect("auth/CreationTotalCompteCaptcha.jsp");
+		response.sendRedirect("auth/CreationComptePro.jsp");
 	
 	}
 	
@@ -203,7 +203,7 @@ public class CreerUserPro extends HttpServlet {
 		request.setAttribute("latitude",latitude);
 		request.setAttribute("longitude",longitude);
 		try {
-			request.getRequestDispatcher("auth/CreationTotalCompteCaptcha.jsp").forward(request, response);
+			request.getRequestDispatcher("auth/CreationComptePro.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -297,8 +297,6 @@ public class CreerUserPro extends HttpServlet {
 
 			return new MessageServeur(false,"Erreur pendant la créatio en base de donnée");
 		
-
-		
 	}
 	
 private MessageServeur testParametreRequete(String pwd, String pwd1,
@@ -307,6 +305,9 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		double longitude) {
 	// TODO Auto-generated method stub
 
+	
+	if (PersonneDAO.isPseudoExist(pseudo))
+		new MessageServeur(false,"Le nom existe déja");
 	
 	if (pwd==null)return new MessageServeur(false,"Mot de passe ne peut pas être vide");
 	if (pwd.length()<6)return new MessageServeur(false,"Le mot de passe doit faire 6 caractéres");
@@ -317,6 +318,8 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 	if (!pwd.equals(pwd1)){
 		return new MessageServeur(false,"Le mot de passe de confirmation n'est pas valide");			
 	}
+	
+	
 	
 //	if (commentaire==null)return new MessageServeur(false,"ororororrok");
 //	if (commentaire.isEmpty())return new MessageServeur(false,"ororororrok");

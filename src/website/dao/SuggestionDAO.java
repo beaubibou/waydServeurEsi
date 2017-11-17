@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.naming.NamingException;
 
 import wayde.bean.CxoPool;
+import wayde.bean.MessageServeur;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
@@ -92,5 +93,57 @@ public class SuggestionDAO {
 		}
 		return false;
 
+	}
+
+	public static boolean supprime(int idSuggestion) {
+		// TODO Auto-generated method stub
+	
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "DELETE FROM amelioration where  id=? ;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idSuggestion);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+
+			try {
+				if (connexion != null)
+					connexion.rollback();
+				if (preparedStatement != null)
+					preparedStatement.close();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 	}
 }

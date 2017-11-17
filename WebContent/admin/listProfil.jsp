@@ -46,18 +46,20 @@
 					<th>photo</th>
 					<th>Pseudo</th>
 					<th>Date création</th>
-
-
+					<th>Action</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<%
 					ArrayList<ProfilBean> listProfil = (ArrayList<ProfilBean>) request
-							.getAttribute("listProfil");
-					for (ProfilBean profil : listProfil) {
-						String lien = "DetailParticipant?idparticipant="
-								+ profil.getId();
+									.getAttribute("listProfil");
+							for (ProfilBean profil : listProfil) {
+								String lien = "DetailParticipant?idparticipant="
+										+ profil.getId();
+								String lienMessage =
+										"/wayd/EnvoiMessageAdmin?idDestinataire=" +profil.getId()
+										;
 				%>
 
 				<tr>
@@ -66,8 +68,14 @@
 					<td><a href=<%=lien%>><%=profil.getPseudo()%></a></td>
 
 					<td><%=profil.getDatecreationStr()%></td>
+					<td>
+						<button id='<%=lienMessage%>' name='envoiMessage' type='button'
+							class='btn btn-primary btn-sm'>
+							<span class='glyphicon glyphicon-send'></span>
+						</button>
+					</td>
 
-			</tr>
+				</tr>
 
 
 
@@ -79,7 +87,24 @@
 		</table>
 	</div>
 
+	<script>
+		$(function() {
 
+			$('button').click(function() {
+
+				var lien = $(this).attr('id');
+				var action = $(this).attr('name')
+
+				if (action == 'envoiMessage')
+					location.href = lien;
+
+				if (action == 'supprime')
+					location.href = lien;
+
+			});
+
+		});
+	</script>
 
 
 </body>

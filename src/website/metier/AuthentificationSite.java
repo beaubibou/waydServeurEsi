@@ -57,12 +57,13 @@ public class AuthentificationSite {
 	public void setProfil(ProfilBean profil) {
 		this.profil = profil;
 	}
-	
-	public boolean isSessionConnect(){
-		
-		if (profil == null)return false;
+
+	public boolean isSessionConnect() {
+
+		if (profil == null)
+			return false;
 		return true;
-		
+
 	}
 
 	public boolean isAuthentifieWaydeur() throws IOException {
@@ -103,6 +104,26 @@ public class AuthentificationSite {
 
 	}
 
+	public boolean isAuthentifieAdmin() throws IOException {
+
+		HttpSession session = request.getSession();
+
+		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+
+		if (profil == null) {
+			response.sendRedirect("auth/login.jsp");
+			return false;
+		}
+
+		if (!profil.isAdmin()) {
+			response.sendRedirect("auth/login.jsp");
+			return false;
+		}
+
+		return true;
+
+	}
+
 	public boolean isAuthentifie() throws IOException {
 
 		if (profil == null) {
@@ -123,9 +144,9 @@ public class AuthentificationSite {
 		// TODO Auto-generated method stub
 		return profil.getId();
 	}
-	
-	public String getNbrMessageNonLu(){
-		
+
+	public String getNbrMessageNonLu() {
+
 		return new Integer(10).toString();
 	}
 

@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -249,9 +252,105 @@ return new Integer(nbrmessagenonlu).toString();
 	
 		
 		
-		
+	
 		
 		
 		
 	}
+
+	public static void ajouteMessageETclore(String message, int idPersonne,
+			int idEmetteur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static boolean ajouteMessage(String message, int idDestinataire, int idEmetteur) {
+		// TODO Auto-generated method stub
+		String iddiscussion;
+	
+		if (idEmetteur < idDestinataire)
+			iddiscussion = "" + idEmetteur + "-" + idDestinataire;
+		else
+			iddiscussion = "" + idDestinataire + "-" + idEmetteur;
+
+		
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+
+			try {
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
+				Date datecreation = Calendar.getInstance().getTime();
+				
+				String requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  "
+						+ "VALUES (?, ?, ?, ?,?,?,true,true);";
+				 preparedStatement = connexion.prepareStatement(
+						requete, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, message);
+				preparedStatement.setInt(2, idEmetteur);
+				preparedStatement.setTimestamp(3,
+						new java.sql.Timestamp(datecreation.getTime()));
+				preparedStatement.setInt(4,0);
+				preparedStatement.setInt(5, idDestinataire);
+				preparedStatement.setString(6,iddiscussion);
+				preparedStatement.execute();
+			
+				preparedStatement.close();
+				
+				requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
+				
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, message);
+				preparedStatement.setInt(2, idEmetteur);
+				preparedStatement.setTimestamp(3,
+						new java.sql.Timestamp(datecreation.getTime()));
+				preparedStatement.setInt(4, 0);
+				preparedStatement.setInt(5, idDestinataire);
+				preparedStatement.setString(6, iddiscussion);
+				preparedStatement.execute();
+				
+				preparedStatement.close();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				connexion.commit();
+
+				return true;
+
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+
+				try {
+
+					if (connexion != null)
+						connexion.close();
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+			return false;
+
+	}
+	
+		
+	
 }

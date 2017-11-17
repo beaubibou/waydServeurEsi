@@ -72,8 +72,7 @@
 
 			<h1>
 				<img src="/wayd/img/waydLogoHD.png" style="margin-right: 50px;"
-					class="img-rounded" alt="Cinque Terre" width="100" height="100">Décrivez
-				votre activité
+					class="img-rounded" alt="Cinque Terre" width="100" height="100">Créer votre compte
 			</h1>
 		</div>
 		<p>blablal......</p>
@@ -181,13 +180,20 @@
 								<input type="hidden" class="form-control" id="longitude"
 									name="longitude" value=0>
 							</div>
-<div class="form-group">
-							<div class="g-recaptcha"
-								data-sitekey="6Ld6TzgUAAAAAMx76Q_NXm3xEJ1vPa799RLMeYLn"></div>
-								</div>
-<div class="form-group">
-							<button type="submit" class="btn btn-info">Soumettre</button>
+							<div class="form-group">
+								<div class="g-recaptcha"
+									data-sitekey="6Ld6TzgUAAAAAMx76Q_NXm3xEJ1vPa799RLMeYLn"></div>
 							</div>
+
+							<div class="btn-group">
+								<button type="submit" class="btn btn-primary">Soumettre</button>
+							 <a href="/wayd/Home" class="btn btn-info" role="button"><span
+								  class="glyphicon glyphicon-home" ></span> Accueil</a>
+  
+
+							</div>
+						</div>
+						
 					</form>
 
 

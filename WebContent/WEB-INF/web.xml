@@ -643,4 +643,24 @@
     <servlet-name>LireMessage</servlet-name>
     <url-pattern>/LireMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EnvoiMessageAdmin</display-name>
+    <servlet-name>EnvoiMessageAdmin</servlet-name>
+    <servlet-class>servlet.EnvoiMessageAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EnvoiMessageAdmin</servlet-name>
+    <url-pattern>/EnvoiMessageAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EffaceSuggestionAdmin</display-name>
+    <servlet-name>EffaceSuggestionAdmin</servlet-name>
+    <servlet-class>servlet.EffaceSuggestionAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EffaceSuggestionAdmin</servlet-name>
+    <url-pattern>/EffaceSuggestionAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

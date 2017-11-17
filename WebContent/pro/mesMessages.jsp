@@ -57,7 +57,7 @@
 
 	<%@ include file="menu.jsp"%>
 
-	<%@ include file="menu.jsp"%>
+	
 	<script type="text/javascript">
 		
 	<%=new AlertDialog(authentification).getMessage()%>
@@ -67,7 +67,7 @@
 	
 	<div class="container" style="margin-top: 100px">
 
-		<div class="panel panel-primary"">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-2">
@@ -95,7 +95,7 @@
 					</div>
 
 					<div class="col-sm-2 col-sm-offset-8 ">
-						<button href="#" name="supprimerMessages" class="btn btn-default">Effacez</button>
+						<button  name="supprimerMessages" class="btn btn-default">Effacez</button>
 					</div>
 
 				</div>
@@ -104,7 +104,7 @@
 			</div>
 
 		</div>
-		<table class="table table-responsive" border="3" id="matable">
+		<table class="table table-responsive"  id="matable">
 			<thead style="background-color: #2196F3;" align="center">
 				<tr>
 					<th  style="width:10%;"  class="text-center">Date</th>

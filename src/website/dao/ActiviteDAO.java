@@ -108,6 +108,8 @@ public class ActiviteDAO {
 
 	}
 
+	
+	
 	private static boolean isDejaVu(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
 

@@ -68,12 +68,13 @@ public class MessageDAO {
 	public int addMessage(Message message, int iddestinataire)
 			throws SQLException {
 
-		String iddiscussion;
+		
 		int idemetteur = message.getIdemetteur();
 
 		// Tag le message avec un numero de discussion contentatnt les 2
 		// protagagoniste
 
+		String iddiscussion;
 		if (idemetteur < iddestinataire)
 			iddiscussion = "" + idemetteur + "-" + iddestinataire;
 		else
