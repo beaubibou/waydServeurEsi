@@ -1,6 +1,10 @@
 <%@page import="website.metier.ProblemeBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.admin.*"%>
+<%@page import="website.metier.Outils"%>
+<%@page import="website.dao.CacheValueDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -19,28 +23,50 @@
 <body>
 
 	<%@ include file="menu.jsp"%>
-<% %>
-	<div class="container">
-
-		<h3>Critères</h3>
+	<%	ArrayList<EtatProbleme> listEtatProbleme = CacheValueDAO.getListEtatProbleme();
+	FitreAdminProbleme filtre=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
 	
-	
-		<form class="form-inline" method="post" action="ListActivite">
+	%>
+	<div class="container" style="margin-top: 100px">
 
-			<div class="form-group">
-				<label for="datedebut">Date début:</label> <input type="date"
-					class="form-control" id="datedebut" name="datedebut">
+		<div class="panel panel-primary"">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-2">
+						<form method="post" action="ListProbleme" id="formulaire"
+							class="form-inline">
+							<div class="form-group">
+								<select class="form-control" id="idEtatProbleme"
+									name="etatProbleme">
 
-				<label for="datefin">Date fin:</label> <input type="date"
-					class="form-control" id="datefin" name="datefin" >
+									<%
+										for (EtatProbleme etatProbleme:listEtatProbleme) {
+									%>
+									<option value="<%=etatProbleme.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatProbleme.getId(), filtre.getEtatProbleme())%>>
+										<%=etatProbleme.getLibelle()%></option>
+									<%
+										}
+									%>
 
-				<div class="form-group">
-					<button id="go" type="submit" class="btn btn-default">Rechercher</button>
+								</select>
+
+							</div>
+
+						</form>
+					</div>
+
+					<div class="col-sm-2 col-sm-offset-8 ">
+						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+					</div>
+
 
 				</div>
+
+
 			</div>
-		</form>
-	</div>
+
+		</div>	
 
 	<div class="container">
 		<h2>Liste problemes</h2>
@@ -51,6 +77,7 @@
 					<th>Date</th>
 					<th>Problème</th>
 					<th>Email</th>
+					<th>Action</th>
 				
 				</tr>
 			</thead>
@@ -59,9 +86,9 @@
 					ArrayList<ProblemeBean> listProbleme = (ArrayList<ProblemeBean>) request
 									.getAttribute("listProbleme");
 							for (ProblemeBean prb : listProbleme) {
-							//	String lien = "DetailActivite?idactivite=" + prb.getId()+"&from=listActivite.jsp";
-					
-				%>
+								String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
+										
+					%>
 
 				<tr>
 				<td>
@@ -79,6 +106,13 @@
 						%>
 					</td>
 					
+					<td>
+						</button>
+							<button id='<%=lienEfface%>' name='supprime' type='button'
+							class='btn btn-primary btn-sm'>
+							<span class='glyphicon glyphicon-trash'></span>
+						</button>
+					</td>
 					
 
 				</tr>
@@ -91,7 +125,30 @@
 		</table>
 	</div>
 
+		<script>
+		$(function() {
+
+			$('button').click(function() {
+
+				var lien = $(this).attr('id');
+				var action = $(this).attr('name')
 	
+				if (action == 'supprime')
+					location.href = lien;
+
+			});
+
+		});
+		$(function() {
+
+			$('#idEtatProbleme').on('change', function() {
+
+				document.getElementById("formulaire").submit();
+			});
+
+		});
+		
+	</script>
 
 
 </body>

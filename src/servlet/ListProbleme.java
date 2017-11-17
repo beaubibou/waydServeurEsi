@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import website.dao.ProblemeDAO;
 import website.metier.ProblemeBean;
+import website.metier.admin.FitreAdminProbleme;
 
 /**
  * Servlet implementation class ListProbleme
@@ -33,6 +34,15 @@ public class ListProbleme extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
+		
+	
+//		int etatProbleme=Integer.parseInt((String)request.getParameter("etatProbleme"));
+//		
+//		
+//		FitreAdminProbleme filtre=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
+//	
+//		filtre.setEtatProbleme(etatProbleme);
+//	
 		if (session.getAttribute("profil") != null )
 			{
 				ArrayList<ProblemeBean> 	listProblemes= new ArrayList<ProblemeBean>();
@@ -52,6 +62,7 @@ public class ListProbleme extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	doGet(request, response);
 	}
 
 }

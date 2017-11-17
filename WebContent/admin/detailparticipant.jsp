@@ -24,7 +24,9 @@
 
 	<%@ include file="menu.jsp"%>
 
-	<h2 align="center">Detail Participant	</h2>
+	<h2 align="center">Detail Participant</h2>
+
+
 	<div class="container">
 
 
@@ -32,74 +34,94 @@
 			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 			ArrayList<AmiBean> listAmi = profil.getListAmi();
 			ArrayList<ActiviteBean> listActivite = profil.getListActivite();
-			ArrayList<SignalementBean> listSignalement = profil.getListSignalement();
-			
-			String idParticipant=request.getParameter("idparticipant");
-			
+			ArrayList<SignalementBean> listSignalement = profil
+					.getListSignalement();
+			String idParticipant = Integer.toString(profil.getId());
+
 			String libelleBoutonActif;
 			String lienBoutonActif;
-			
-			if (profil.isActif()){
-				 libelleBoutonActif="Désactiver";
-				 lienBoutonActif = "DetailParticipant?inactif=true&idparticipant="+idParticipant;
-				
+
+			if (profil.isActif()) {
+				libelleBoutonActif = "Désactiver";
+				lienBoutonActif = "DetailParticipant?inactif=true&idparticipant="
+						+ idParticipant;
+
 			}
-			
-			else
-			{
-				 libelleBoutonActif="Activer";
-				 lienBoutonActif = "DetailParticipant?actif=true&idparticipant="+idParticipant;
-					
-				
+
+			else {
+				libelleBoutonActif = "Activer";
+				lienBoutonActif = "DetailParticipant?actif=true&idparticipant="
+						+ idParticipant;
+
 			}
-			
 		%>
 
-		<h2><%out.println(profil.getPseudo());%></h2>
-		<div class="row" >
-		
+		<h2>
+			<%
+				out.println(profil.getPseudo());
+			%>
+		</h2>
+		<div class="row">
+
 			<div class="col-sm-2"">
 				<img height="80" width="80"
 					src=<%out.println(profil.getUrlPhoto());%> class="img-circle" />
 			</div>
 			<div class="col-sm-4"">
 				<div class="span2">
-				
+
 					<h6>
 						<%
 							out.println(profil.getAge());
 						%>
 					</h6>
 					<h6>
-					
+
 						<%
-						out.println(profil.getNote());
-					%>/5
+							out.println(profil.getNote());
+						%>/5
 					</h6>
 					<h6>
 						Nbr ami:
 						<%
 						out.println(profil.getNbrami());
 					%>
-					<h6>
-						Profil :
-						<%
-						out.println(profil.isActifStr());
-					%>
-					</h6>
-
+						<h6>
+							Profil :
+							<%
+							out.println(profil.isActifStr());
+						%>
+						</h6>
 				</div>
 			</div>
 			<div class="col-sm-6"">
-			  <a href=<%out.println(lienBoutonActif);%> class="btn btn-info" role="button" > <%out.println(libelleBoutonActif );%></a>
+				<a href=<%out.println(lienBoutonActif);%> class="btn btn-info"
+					role="button"> <%
+ 	out.println(libelleBoutonActif);
+ %></a>
 			</div>
 		</div>
-	
+
 
 
 	</div>
 	</br>
 	<div class="container">
+
+		<form method="post" action="/wayd/EnvoiMessageAdmin">
+
+			<div class="form-group">
+			<label for="comment">Message</label>
+			<textarea name="message" class="form-control" rows="5" id="comment"></textarea>
+			</div>
+			<input type="hidden" name="idDestinataire" value="<%=idParticipant%>">
+			<input type="hidden" name="formInit" value="detailParticipant">
+			<button type="submit" class="btn btn-primary">Envoyer un message</button>
+
+		</form>
+	</div>
+	<div class="container">
+
 		<button type="button" class="btn btn-info" data-toggle="collapse"
 			data-target="#amis">List des amis</button>
 		<div id="amis" class="collapse">
@@ -166,10 +188,9 @@
 					%>
 
 					<tr>
-						<td><a href=<%out.println(lien);%>>
-								<%
-									out.println(activite.getTitre());
-								%>
+						<td><a href=<%out.println(lien);%>> <%
+ 	out.println(activite.getTitre());
+ %>
 						</a></td>
 						<td>
 							<%
@@ -194,7 +215,7 @@
 	</div>
 
 
-<div class="container">
+	<div class="container">
 		<button type="button" class="btn btn-danger" data-toggle="collapse"
 			data-target="#signalement">Signalement</button>
 		<div id="signalement" class="collapse">
@@ -216,12 +237,11 @@
 					%>
 
 					<tr>
-						<td><a href=<%out.println(lienDetailOrganisateur);%>>
-								<%
-									out.println(signalement.getPseudoInformateur());
-								%>
+						<td><a href=<%out.println(lienDetailOrganisateur);%>> <%
+ 	out.println(signalement.getPseudoInformateur());
+ %>
 						</a></td>
-						
+
 						<td>
 							<%
 								out.println(signalement.getDateCreationStr());
@@ -237,8 +257,8 @@
 								out.println(signalement.getMotif());
 							%>
 						</td>
-						
-						
+
+
 					</tr>
 
 					<%

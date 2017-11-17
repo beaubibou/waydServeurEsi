@@ -11,6 +11,10 @@ import javax.servlet.http.HttpSession;
 import website.dao.ActiviteDAO;
 import website.dao.StatDAO;
 import website.metier.IndicateurWayd;
+import website.metier.admin.FitreAdminActivites;
+import website.metier.admin.FitreAdminProbleme;
+import website.metier.admin.FitreAdminProfils;
+import website.metier.admin.FitreAdminSuggestions;
 
 /**
  * Servlet implementation class Acceuil
@@ -35,8 +39,23 @@ public class Acceuil extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 	
+		
 		if (session.getAttribute("profil") != null )
 		{
+			if (session.getAttribute("filtreProbleme")==null)
+				session.setAttribute("filtreProbleme",new FitreAdminProbleme());
+			
+			
+			if (session.getAttribute("filtreSuggestion")==null)
+				session.setAttribute("filtreSuggestion",new FitreAdminSuggestions());
+			
+			if (session.getAttribute("filtreProfils")==null)
+				session.setAttribute("filtreProfils",new FitreAdminProfils());
+		
+			if (session.getAttribute("filtreActivite")==null)
+				session.setAttribute("filtreActivite",new FitreAdminActivites());
+			
+			
 			IndicateurWayd 	indicateur=ActiviteDAO.getIndicateurs();
 			indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
 			indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());

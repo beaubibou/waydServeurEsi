@@ -663,4 +663,14 @@
     <servlet-name>EffaceSuggestionAdmin</servlet-name>
     <url-pattern>/EffaceSuggestionAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EffaceProblemeAdmin</display-name>
+    <servlet-name>EffaceProblemeAdmin</servlet-name>
+    <servlet-class>servlet.EffaceProblemeAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EffaceProblemeAdmin</servlet-name>
+    <url-pattern>/EffaceProblemeAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

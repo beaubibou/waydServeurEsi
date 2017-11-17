@@ -59,6 +59,7 @@
 										+ profil.getId();
 								String lienMessage =
 										"/wayd/EnvoiMessageAdmin?idDestinataire=" +profil.getId()
+										+"&formInit=listProfil";
 										;
 				%>
 

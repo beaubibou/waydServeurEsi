@@ -25,6 +25,7 @@ import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeUser;
+import website.metier.admin.EtatProbleme;
 
 public class CacheValueDAO {
 	private static final Logger LOG = Logger.getLogger(CacheValueDAO.class);
@@ -35,7 +36,9 @@ public class CacheValueDAO {
 	static ArrayList<TypeEtatMessage> listTypeEtatMessage = new ArrayList<TypeEtatMessage>();
 	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<TypeActiviteBean>();
 	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
+	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<EtatProbleme>();
 
+	
 
 	static {
 
@@ -347,7 +350,7 @@ public class CacheValueDAO {
 	}
 
 	public ArrayList<QuantiteWaydeurBean> getListQuantiteWaydeur() {
-		// TODO Auto-generated method stub
+		// TODO AlistTypeEtatProblemeuto-generated method stub
 
 		ArrayList<QuantiteWaydeurBean> listQuantite = new ArrayList<QuantiteWaydeurBean>();
 		for (int f = 1; f < 9; f++) {
@@ -385,6 +388,18 @@ public class CacheValueDAO {
 		}
 
 		return listTypeEtatMessage;
+	}
+	
+	public static ArrayList<EtatProbleme> getListEtatProbleme() {
+		// TODO Auto-generated method stub
+
+		if (listTypeEtatProbleme.size()==0){
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.CLOTURE, "Cloturé"));
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.NONCLOTOURE, "En cours"));
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.TOUS, "Tous"));
+		}
+
+		return listTypeEtatProbleme;
 	}
 
 	public static ArrayList<QuandBean> getListQuand() {

@@ -28,6 +28,7 @@ import website.metier.SignalementBean;
 public class DetailParticipant extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(DetailParticipant.class);
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -42,40 +43,27 @@ public class DetailParticipant extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
 
-		if (session.getAttribute("profil") != null ) {
+		System.out.println("cocouououo");
 
-			if (request.getParameter("actif") != null) {// active le profil
-				int idParticipant = Integer.parseInt(request
-						.getParameter("idparticipant"));
-			
-				PersonneDAO.activerProfil(idParticipant, true);
-				afficheParticipant(request, response);
-				
-			}
+		if (request.getParameter("actif") != null) {// active le profil
+			int idParticipant = Integer.parseInt(request
+					.getParameter("idparticipant"));
 
-			if (request.getParameter("inactif") != null) {// desactive le profil
-			
-				int idParticipant = Integer.parseInt(request
-						.getParameter("idparticipant"));
-			
-				PersonneDAO.activerProfil(idParticipant, false);
-				afficheParticipant(request, response);
-			
-			}
-
-			if (request.getParameter("inactif") == null
-					&& request.getParameter("actif") == null
-					&& request.getParameter("idparticipant") != null) {// Cas
-																		// nominal
-
-				afficheParticipant(request, response);
-
-			}
+			PersonneDAO.activerProfil(idParticipant, true);
 
 		}
+
+		if (request.getParameter("inactif") != null) {// desactive le profil
+
+			int idParticipant = Integer.parseInt(request
+					.getParameter("idparticipant"));
+			PersonneDAO.activerProfil(idParticipant, false);
+
+		}
+
+		afficheParticipant(request, response);
+
 	}
 
 	/**
@@ -85,31 +73,38 @@ public class DetailParticipant extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
+
 	}
 
 	private void afficheParticipant(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		
-		HttpSession session = request.getSession();
-		if (session.getAttribute("profil") != null )
-		{
-		
-		int idParticipant = Integer.parseInt(request
-				.getParameter("idparticipant"));
-		
-		// Creation de l'objet profil complet ami+activité
+
+		// l'appel de la servelt peut venir d'une servlet ou d'une page
+
+		int idParticipant = 0;
+		if (request.getParameter("idparticipant") != null)
+			idParticipant = Integer.parseInt((String) request
+					.getParameter("idparticipant"));
+
+		if (request.getAttribute("idparticipant") != null)
+			idParticipant = Integer.parseInt((String) request
+					.getAttribute("idparticipant"));
+
+		// Creation de l'objet profil complet ami+activitï¿½
 
 		ProfilBean profilBean = PersonneDAO.getFullProfil(idParticipant);
 		ArrayList<AmiBean> listAmi = AmiDAO.getListAmi(idParticipant);
 		ArrayList<ActiviteBean> listActivite = ActiviteDAO
 				.getListActivite(idParticipant);
-		ArrayList<SignalementBean> listSignalement = SignalementDAO.getListSignalement(idParticipant);
-		
+		ArrayList<SignalementBean> listSignalement = SignalementDAO
+				.getListSignalement(idParticipant);
+
 		profilBean.setListAmi(listAmi);
 		profilBean.setListActivite(listActivite);
 		profilBean.setListSignalement(listSignalement);
 
-		// Tri des activités par dates
+		// Tri des activitï¿½s par dates
 
 		java.util.Collections.sort(listActivite,
 				new Comparator<ActiviteBean>() {
@@ -123,18 +118,9 @@ public class DetailParticipant extends HttpServlet {
 
 		// Direction vers la page
 		request.setAttribute("profil", profilBean);
-		request.getRequestDispatcher("admin/detailparticipant.jsp").forward(request,
-					response);
-		
+		request.getRequestDispatcher("admin/detailparticipant.jsp").forward(
+				request, response);
 
 	}
-		else{
-			
-			response.sendRedirect("auth/login.jsp");
-		}
-		
-	}
-	
-	
 
 }

@@ -64,8 +64,9 @@ for (SuggestionBean suggestion : listSuggestion) {
 			+ suggestion.getIdPersonne();
 String lienMessage =
 		"/wayd/EnvoiMessageAdmin?idDestinataire=" +suggestion.getIdPersonne()+
-		"&idMessage="+suggestion.getId();
-String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId();			
+		"&idMessage="+suggestion.getId()+"&formInit=listSuggestion";
+String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId()
++"&formInit=listSuggestion";			
 
 %>
 

@@ -48,5 +48,57 @@ public class ProblemeDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
+	
+	public static boolean supprime(int idProbleme) {
+		// TODO Auto-generated method stub
+	
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "DELETE FROM problemeconnexion where  id=? ;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idProbleme);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+
+			try {
+				if (connexion != null)
+					connexion.rollback();
+				if (preparedStatement != null)
+					preparedStatement.close();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+	}
 
 }
