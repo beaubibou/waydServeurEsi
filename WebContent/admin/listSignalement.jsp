@@ -32,8 +32,7 @@
 				<tr>
 					<th>Pseudo</th>
 					<th>Nombre</th>
-					
-
+		
 				</tr>
 			</thead>
 			<tbody>

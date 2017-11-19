@@ -93,9 +93,9 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
 		success = false;
-		
-		if (testEsi(request, response))
-			return;
+//		
+//		if (testEsi(request, response))
+//			return;
 			
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -211,17 +211,18 @@ public class Connexion extends HttpServlet {
 
 							session.setAttribute("profil", profil);
 
-							if (profil.isPremiereconnexion()) {
-								try {
-									response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
-									success = true;
-									return;
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-
-							}
+//							if (profil.isPremiereconnexion()) {
+//								try {
+//									LOG.info("premier connexion");
+//									response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
+//									success = true;
+//									return;
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//
+//							}
 
 							if (profil.isAdmin()) {
 
@@ -254,6 +255,7 @@ public class Connexion extends HttpServlet {
 
 								// session.setAttribute("profil", profil);
 								try {
+									session.invalidate();
 									response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
 									success = true;
 									return;

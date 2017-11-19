@@ -116,7 +116,7 @@
 									<input type="text" class="form-control" id="siteweb"
 										maxlength="<%=ParametreHtmlPro.TAILLE_SITE_WEB_MAX%>"
 										placeholder="http://monsite.fr" name="siteweb"
-										value=<%out.println(profil.getSiteWebStr());%>>
+										value=<%=OutilsHtml.convertRequeteToString(profil.getSiteWebStr())%>>
 								</div>
 
 
@@ -128,7 +128,7 @@
 										placeholder="XX-XX-XX-XX-XX" name="telephone"
 										pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
 										maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
-										value=<%out.println(profil.getTelephoneStr());%>>
+										value=<%=OutilsHtml.convertRequeteToString(profil.getTelephoneStr())%>>
 								</div>
 
 							</div>
@@ -143,7 +143,7 @@
 									<input type="text" class="form-control" id="siret"
 										maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX%>"
 										placeholder="Numéro Siret" name="siret"
-										value=<%out.println(profil.getSiret());%>>
+										value=<%=OutilsHtml.convertRequeteToString(profil.getSiret())%>>
 								</div>
 
 							</div>
@@ -156,7 +156,7 @@
 								placeholder="Renseigner l'adresse" name="adresse" required
 								onkeypress="initPosition()"
 								maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX%>"
-								value="<%out.println(profil.getAdresse());%>">
+								value="<%=OutilsHtml.convertRequeteToString(profil.getAdresse())%>">
 						</div>
 
 						<div class="form-group">

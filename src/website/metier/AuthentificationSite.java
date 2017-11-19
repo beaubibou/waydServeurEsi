@@ -94,8 +94,13 @@ public class AuthentificationSite {
 			return false;
 		}
 
-		if (profil.getTypeuser() != ProfilBean.PRO
-				|| profil.isPremiereconnexion()) {
+		// if (profil.getTypeuser() != ProfilBean.PRO
+		// || profil.isPremiereconnexion()) {
+		// response.sendRedirect("auth/login.jsp");
+		// return false;
+		// }
+
+		if (profil.getTypeuser() != ProfilBean.PRO) {
 			response.sendRedirect("auth/login.jsp");
 			return false;
 		}

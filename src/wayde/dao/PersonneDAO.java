@@ -568,7 +568,7 @@ public class PersonneDAO {
 	}
 
 	public int addComptePro(String uudi, String pseudo, String email,
-			String adresse, String siret, String telephonne, double latitude,
+			String adresse, String siret, String telephonne,String commentaire,String siteweb, double latitude,
 			double longitude) throws SQLException {
 	
 		String requete = "";
@@ -578,9 +578,9 @@ public class PersonneDAO {
 		Date datecreation = Calendar.getInstance().getTime();
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
-				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1);";
-		String commentaire = null;
+				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser,adresse,longitudefixe,latitudefixe,telephone,siret,siteweb)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?);";
+	
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, pseudo);
@@ -608,6 +608,12 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(21, true);// affiche age
 		preparedStatement.setString(22, null);// affiche age
 		preparedStatement.setBoolean(23, true);// affiche age
+		preparedStatement.setString(24, adresse);// affiche age
+		preparedStatement.setDouble(25, latitude);// affiche age
+		preparedStatement.setDouble(26, longitude);// affiche age
+		preparedStatement.setString(27, telephonne);// affiche age
+		preparedStatement.setString(28, siret);// affiche age
+		preparedStatement.setString(29, siteweb);// affiche age
 		preparedStatement.execute();
 		// System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();

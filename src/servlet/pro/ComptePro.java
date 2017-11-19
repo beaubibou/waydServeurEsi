@@ -129,9 +129,7 @@ public class ComptePro extends HttpServlet {
 		
 		}
 	
-		
-		
-		return  new MessageServeur(true,"Ok");
+	return  new MessageServeur(true,"Ok");
 	}
 
 	private boolean testFormatTelephone(String telephone) {
@@ -145,7 +143,7 @@ public class ComptePro extends HttpServlet {
 		if (telephone.length()!=14)return false;
 		
 		
-		return false;
+		return true;
 	}
 
 	

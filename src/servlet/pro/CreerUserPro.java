@@ -98,6 +98,7 @@ public class CreerUserPro extends HttpServlet {
 		String telephone=request.getParameter("telephone");
 		String adresse=request.getParameter("adresse");
 		String commentaire=request.getParameter("commentaire");
+		String siteweb=request.getParameter("siteweb");
 	
 		double latitude = 0;
 		double longitude = 0;
@@ -150,11 +151,11 @@ public class CreerUserPro extends HttpServlet {
 		if (messageServeurFireBase.isReponse())
 		{
 			String uuid=messageServeurFireBase.getMessage();
-			MessageServeur messageCreerUserDAO=creerUtilisateurDAO(uuid, pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire, latitude, longitude);
+			MessageServeur messageCreerUserDAO=creerUtilisateurDAO(uuid, pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire,siteweb, latitude, longitude);
 			
 			if (messageCreerUserDAO.isReponse()){
 				
-				request.setAttribute("messageAlert", messageServeurFireBase.getMessage());
+				request.setAttribute("messageAlert", messageCreerUserDAO.getMessage());
 				request.setAttribute("typeMessage", AlertJsp.Sucess);
 				request.getRequestDispatcher("auth/login.jsp").forward(request, response);
 				return;
@@ -259,7 +260,7 @@ public class CreerUserPro extends HttpServlet {
 	
 	private MessageServeur creerUtilisateurDAO(String uuid,String pwd, String pwd1,
 			String email, String pseudo, String siret, String telephone,
-			String adresse, String commentaire, double latitude,
+			String adresse, String commentaire,String siteweb, double latitude,
 			double longitude) {
 		// TODO Auto-generated method stub
 	
@@ -272,9 +273,9 @@ public class CreerUserPro extends HttpServlet {
 				connexion.setAutoCommit(false);
 				wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
 						connexion);
-				personnedao.addComptePro(uuid, pseudo, email, adresse, siret, telephone, latitude, longitude);
+				personnedao.addComptePro(uuid, pseudo, email, adresse, siret, telephone,commentaire,siteweb, latitude, longitude);
 				connexion.commit();
-				return new MessageServeur(true,"ok");
+				return new MessageServeur(true,"Votre compte a été crée");
 		
 			
 			} catch (SQLException | NamingException e) {

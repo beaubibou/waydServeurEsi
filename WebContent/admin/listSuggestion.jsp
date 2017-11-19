@@ -1,7 +1,11 @@
+<%@page import="website.metier.admin.FitreAdminSuggestions"%>
+<%@page import="website.metier.admin.EtatSuggestion"%>
 <%@page import="website.metier.SuggestionBean"%>
 <%@page import="website.metier.ProblemeBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.dao.CacheValueDAO"%>
+<%@page import="website.metier.Outils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -20,27 +24,52 @@
 <body>
 
 	<%@ include file="menu.jsp"%>
-
+<%	ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
+	FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
+	
+	%>
 	<div class="container">
+	
+		<div class="panel panel-primary"">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-2">
+						<form method="post" action="ListProbleme" id="formulaire"
+							class="form-inline">
+							<div class="form-group">
+								<select class="form-control" id="idEtatProbleme"
+									name="etatProbleme">
 
-		<h3>Critères</h3>
+									<%
+										for (EtatSuggestion etatSuggestion:listEtatSuggestion) {
+									%>
+									<option value="<%=etatSuggestion.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatSuggestion.getId(), filtre.getEtatSuggestion())%>>
+										<%=etatSuggestion.getLibelle()%></option>
+									<%
+										}
+									%>
 
-		<form class="form-inline" method="post" action="ListActivite">
+								</select>
 
-			<div class="form-group">
-				<label for="latitude">Date début:</label> <input type="date"
-					class="form-control" id="datedebut" name="datedebut"> <label
-					for="longitude">Date fin:</label> <input type="date"
-					class="form-control" id="datefin" name="datefin">
+							</div>
 
+						</form>
+					</div>
 
-				<div class="form-group">
-					<button id="go" type="submit" class="btn btn-default">Rechercher</button>
+					<div class="col-sm-2 col-sm-offset-8 ">
+						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+					</div>
+
 
 				</div>
+
+
 			</div>
-		</form>
-	</div>
+
+		</div>	
+
+	
 
 	<div class="container">
 		<h2>Liste de suggestions</h2>
@@ -52,6 +81,7 @@
 					<th>Suggestion</th>
 					<th>Date</th>
 					<th>Action</th>
+					<th>Cloturé</th>
 
 				</tr>
 			</thead>
@@ -101,8 +131,9 @@ String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId(
 							<span class='glyphicon glyphicon-trash'></span>
 						</button>
 					</td>
+						</td>
+
 					
-				</tr>
 
 				<%
 					}

@@ -26,6 +26,7 @@ import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeUser;
 import website.metier.admin.EtatProbleme;
+import website.metier.admin.EtatSuggestion;
 
 public class CacheValueDAO {
 	private static final Logger LOG = Logger.getLogger(CacheValueDAO.class);
@@ -37,7 +38,9 @@ public class CacheValueDAO {
 	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<TypeActiviteBean>();
 	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
 	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<EtatProbleme>();
-
+	static ArrayList<EtatSuggestion> listTypeEtatSuggestion = new ArrayList<EtatSuggestion>();
+	
+	
 	
 
 	static {
@@ -402,6 +405,18 @@ public class CacheValueDAO {
 		return listTypeEtatProbleme;
 	}
 
+	
+	public static ArrayList<EtatSuggestion> getListEtatSuggestions() {
+		// TODO Auto-generated method stub
+
+		if (listTypeEtatSuggestion.size()==0){
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, "Cloturé"));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, "En cours"));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.TOUS, "Tous"));
+		}
+
+		return listTypeEtatSuggestion;
+	}
 	public static ArrayList<QuandBean> getListQuand() {
 		// TODO Auto-generated method stub
 
