@@ -17,12 +17,13 @@ public class FitreAdminProbleme {
 		
 		dateDebutCreation = new DateTime() .withHourOfDay(0)
 			    .withMinuteOfHour(0)
-			    .withSecondOfMinute(0);
+			    .withSecondOfMinute(0)
+			    .withMillisOfSecond(00);
 	
 		
-		dateFinCreation = new DateTime() .withHourOfDay(0)
-			    .withMinuteOfHour(0)
-			    .withSecondOfMinute(0);
+		dateFinCreation = new DateTime() .withHourOfDay(23)
+			    .withMinuteOfHour(59)
+			    .withSecondOfMinute(59);
 
 	}
 

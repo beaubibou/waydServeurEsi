@@ -21,55 +21,72 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<script src="js/moment.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <body>
 
 	<%@ include file="menu.jsp"%>
-<%	ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
-	FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
-	
+	<%
+		ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
+		FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
 	%>
-	<div class="container">
-	
-		<div class="panel panel-primary"">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-sm-2">
-						<form method="post" action="ListProbleme" id="formulaire"
-							class="form-inline">
-							<div class="form-group">
-								<select class="form-control" id="idEtatProbleme"
-									name="etatProbleme" >
+	<div class="container" style="margin-top: 50px">
 
-									<%
-										for (EtatSuggestion etatSuggestion:listEtatSuggestion) {
-									%>
-									<option value="<%=etatSuggestion.getId()%>"
-										<%=Outils.jspAdapterListSelected(etatSuggestion.getId(), filtre.getEtatSuggestion())%>>
-										<%=etatSuggestion.getLibelle()%></option>
-									<%
-										}
-									%>
+		<form class="form-inline" action="ListSuggestion" id="formulaire">
+			<div class="form-group">
+				<label for="idEtatProbleme">Etat</label> <select
+					data-style="btn-primary" class="form-control" id="idEtatSuggestion"
+					name="etatSuggestion">
 
-								</select>
+					<%
+						for (EtatSuggestion etatSuggestion:listEtatSuggestion) {
+					%>
+					<option value="<%=etatSuggestion.getId()%>"
+						<%=Outils.jspAdapterListSelected(etatSuggestion.getId(), filtre.getEtatSuggestion())%>>
+						<%=etatSuggestion.getLibelle()%></option>
+					<%
+						}
+					%>
 
-							</div>
-
-						</form>
-					</div>
-
-					<div class="col-sm-2 col-sm-offset-8 ">
-						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
-					</div>
-
-
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="iddatedebut">Date debut</label>
+				<div class='input-group date' id='datedebut'>
+					<input type='text' class="form-control" id="iddatedebut"
+						name="debut" /> <span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
 				</div>
-
-
 			</div>
 
-		</div>	
 
-	
+
+			<div class="form-group">
+				<label for="iddatefin">Date fin</label>
+				<div class='input-group date' id="datefin">
+					<input type='text' class="form-control" id="iddatefin" name="fin" />
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+
+
+
+			<button type="submit" class="btn btn-default">Recherchez</button>
+
+		</form>
+
+		</br>
+
+
+	</div>
+
 
 	<div class="container">
 		<h2>Liste de suggestions</h2>
@@ -87,38 +104,32 @@
 			</thead>
 			<tbody>
 				<%
-					ArrayList<SuggestionBean> listSuggestion = (ArrayList<SuggestionBean>) request
-																	.getAttribute("listSuggestion");
-for (SuggestionBean suggestion : listSuggestion) {
-	String lienDetailOrganisateur = "DetailParticipant?idparticipant="
-			+ suggestion.getIdPersonne();
-String lienMessage =
-		"/wayd/EnvoiMessageAdmin?idDestinataire=" +suggestion.getIdPersonne()+
-		"&idMessage="+suggestion.getId()+"&formInit=listSuggestion";
-String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId()
-+"&formInit=listSuggestion";			
+					ArrayList<SuggestionBean> listSuggestion = (ArrayList<SuggestionBean>) request.getAttribute("listSuggestion");
+		
+						for (SuggestionBean suggestion : listSuggestion) {
+					String lienDetailOrganisateur = "DetailParticipant?idparticipant="
+					+ suggestion.getIdPersonne();
+				String lienMessage =
+						"/wayd/EnvoiMessageAdmin?idDestinataire=" +suggestion.getIdPersonne()+
+						"&idMessage="+suggestion.getId()+"&formInit=listSuggestion";
+				String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId()
+				+"&formInit=listSuggestion";		
 
-%>
+				String lienLecture = "/wayd/ClosSuggestionAdmin?idmessage=" + suggestion.getId();
+				%>
 
 				<tr>
 
-					<td><a href=<%out.println(lienDetailOrganisateur);%>> <%
- 	out.println(suggestion.getPseudo());
- %>
+					<td><a href=<%out.println(lienDetailOrganisateur);%>>
+					 <%=suggestion.getPseudo()%>
 					</a></td>
 
 					<td>
-						<%
-							out.println(suggestion.getSuggestion());
-						%>
+						<%=suggestion.getSuggestion()%>
 
 					</td>
 
-					<td>
-						<%
-							out.println(suggestion.getDateCreationStr());
-						%>
-					</td>
+					<td><%=suggestion.getDateCreationStr()%></td>
 
 					<td>
 
@@ -126,19 +137,19 @@ String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId(
 							class='btn btn-primary btn-sm'>
 							<span class='glyphicon glyphicon-send'></span>
 						</button>
-							<button id='<%=lienEfface%>' name='supprime' type='button'
+						<button id='<%=lienEfface%>' name='supprime' type='button'
 							class='btn btn-primary btn-sm'>
 							<span class='glyphicon glyphicon-trash'></span>
 						</button>
 					</td>
-						</td>
+					<td><%=suggestion.getLuHtml(lienLecture)%></td>
 
-					
 
-				<%
-					}
-				%>
 
+					<%
+						}
+					%>
+				
 			</tbody>
 		</table>
 	</div>
@@ -158,11 +169,40 @@ String lienEfface ="/wayd/EffaceSuggestionAdmin?idSuggestion="+suggestion.getId(
 				if (action == 'supprime')
 					location.href = lien;
 
+				if (action == 'lireMessage')
+					lireMessage(lien);
+
+			});
+
+			$('#datedebut').datetimepicker({
+				defaultDate : new Date('<%=filtre.getDateDebutCreation().getMonthOfYear()%>,<%=filtre.getDateDebutCreation().getDayOfMonth()%>,	<%=filtre.getDateDebutCreation().getYear()%>'),
+				format : 'DD/MM/YYYY'
+
+			});
+
+			var d = new Date(99,5,24)
+	
+			$('#datefin').datetimepicker(
+					{
+						defaultDate : new Date('<%=filtre.getDateFinCreation().getMonthOfYear()%>,<%=filtre.getDateFinCreation().getDayOfMonth()%>,	<%=filtre.getDateFinCreation().getYear()%>'),
+								format : 'DD/MM/YYYY'
+
+							});
+
+		});
+			
+		$(function() {
+
+			$('#idEtatSuggestion').on('change', function() {
+
+				document.getElementById("formulaire").submit();
 			});
 
 		});
 
-		
+		function lireMessage(lien) {
+			location.href = lien;
+		}
 	</script>
 
 

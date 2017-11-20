@@ -8,14 +8,15 @@ public class ProblemeBean {
 	private String probleme;
 	private String email;
 	private Date dateCreation;
-		
+	private boolean lu;
 	
-	public ProblemeBean(int id, String probleme, String email, Date dateCreation) {
+	public ProblemeBean(int id, String probleme, String email, Date dateCreation,boolean lu) {
 		super();
 		this.id = id;
 		this.probleme = probleme;
 		this.email = email;
 		this.dateCreation = dateCreation;
+		this.lu=lu;
 	}
 	public int getId() {
 		return id;
@@ -47,5 +48,29 @@ public class ProblemeBean {
 		this.dateCreation = dateCreation;
 	}
 	
+	public String getCheckHtml() {
+		
+		return "<input type='checkbox' id='moncheck'>";
+	}
+	
+	public String getLuHtml(String lienLecture) {
+			
+			String retour="";
+			if (!lu)
+			{
+			retour="<button id='"+lienLecture+"' name='lireMessage' type='button' >"
+					+ "	<span class='glyphicon glyphicon-unchecked'></span>	</button>";
+			}
+			else
+			{
+				retour="<button id='noaction' name='noaction' type='button' >"
+						+ "	<span class='glyphicon glyphicon-check'></span>	</button>";
+			
+			}
+			
+			return retour;
+		}
 	
 }
+	
+

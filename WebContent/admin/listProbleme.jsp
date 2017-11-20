@@ -99,6 +99,7 @@
 					<th>Problème</th>
 					<th>Email</th>
 					<th>Action</th>
+					<th>Clos</th>
 
 				</tr>
 			</thead>
@@ -108,6 +109,7 @@
 						.getAttribute("listProbleme");
 				for (ProblemeBean prb : listProbleme) {
 					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
+					String lienLecture = "/wayd/ClosProblemeAdmin?idmessage=" + prb.getId();
 				%>
 
 				<tr>
@@ -130,11 +132,15 @@
 					</td>
 
 					<td>
-						</button>
+						
 						<button id='<%=lienEfface%>' name='supprime' type='button'
 							class='btn btn-primary btn-sm'>
 							<span class='glyphicon glyphicon-trash'></span>
 						</button>
+					</td>
+					<td>
+						<%=prb.getLuHtml(lienLecture) %>	
+				
 					</td>
 
 
@@ -179,6 +185,9 @@
 
 				if (action == 'supprime')
 					location.href = lien;
+				if (action == 'lireMessage')
+					lireMessage(lien);
+				
 
 			});
 
@@ -191,6 +200,10 @@
 			});
 
 		});
+
+		function lireMessage(lien) {
+			location.href = lien;
+		}
 	</script>
 </body>
 </html>

@@ -673,4 +673,24 @@
     <servlet-name>EffaceProblemeAdmin</servlet-name>
     <url-pattern>/EffaceProblemeAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ClosProblemeAdmin</display-name>
+    <servlet-name>ClosProblemeAdmin</servlet-name>
+    <servlet-class>servlet.ClosProblemeAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClosProblemeAdmin</servlet-name>
+    <url-pattern>/ClosProblemeAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ClosSuggestionAdmin</display-name>
+    <servlet-name>ClosSuggestionAdmin</servlet-name>
+    <servlet-class>servlet.ClosSuggestionAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClosSuggestionAdmin</servlet-name>
+    <url-pattern>/ClosSuggestionAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

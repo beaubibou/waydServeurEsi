@@ -186,7 +186,7 @@ public class MessageDAO {
 
 		}
 		return new MessageServeur(false,
-				"Erreur dans la métode supprime activité");
+				"Erreur dans la métode lit message pro");
 
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub// TODO Auto-generated method stub

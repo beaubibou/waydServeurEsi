@@ -265,11 +265,8 @@
 		function effaceMessage(lien) {
 			location.href = lien;
 		}
-		
-
-		
+				
 	</script>
-
 
 	<form id="form_listMessages" action="SupprimeMessages" method="post">
 		<input id="idListMessages" type="hidden" name="listMessage"></input>
@@ -305,6 +302,7 @@
 		function lireMessage(lien) {
 			location.href = lien;
 		}
+		
 	</script>
 
 </body>

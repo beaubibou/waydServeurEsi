@@ -411,7 +411,7 @@ public class CacheValueDAO {
 
 		if (listTypeEtatSuggestion.size()==0){
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, "Cloturé"));
-			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, "En cours"));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, "Non cloturé"));
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.TOUS, "Tous"));
 		}
 

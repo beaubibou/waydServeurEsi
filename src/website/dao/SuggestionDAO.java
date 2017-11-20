@@ -11,11 +11,15 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.joda.time.DateTime;
+
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
+import website.metier.admin.EtatProbleme;
+import website.metier.admin.EtatSuggestion;
 
 public class SuggestionDAO {
 
@@ -29,7 +33,7 @@ public class SuggestionDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo  FROM personne,amelioration where "
+			String requete = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu  FROM personne,amelioration where "
 					+ "amelioration.idpersonne=personne.idpersonne";
 
 			preparedStatement = connexion.prepareStatement(requete);
@@ -41,8 +45,89 @@ public class SuggestionDAO {
 				String suggestion = rs.getString("suggestion");
 				String pseudo = rs.getString("pseudo");
 				Date d_creation = rs.getTimestamp("d_creation");
+				boolean lu = rs.getBoolean("lu");
 				retour.add(new SuggestionBean(id, idPersonne, suggestion,
-						d_creation, pseudo));
+						d_creation, pseudo,lu));
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+	
+	public static ArrayList<SuggestionBean> getListSuggestion(int etatProbleme,
+			DateTime debut, DateTime fin) {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<SuggestionBean> retour = new ArrayList<SuggestionBean>();
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete ="";
+			
+			switch (etatProbleme) {
+
+			case EtatSuggestion.TOUS:
+				requete  = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu"
+						+ "  FROM personne,amelioration"
+						+ " where "
+						+ "amelioration.idpersonne=personne.idpersonne and d_creation between ? and ?";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				break;
+			
+			case EtatSuggestion.CLOTURE:
+				requete  = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu"
+						+ "  FROM personne,amelioration"
+						+ " where "
+						+ "amelioration.idpersonne=personne.idpersonne and lu=true and d_creation between ? and ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				break;
+		
+			case EtatSuggestion.NONCLOTOURE:
+				requete  = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu"
+						+ "  FROM personne,amelioration"
+						+ " where "
+						+ "amelioration.idpersonne=personne.idpersonne and lu=false and d_creation between ? and ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				break;
+
+			}
+		
+			requete=requete+" order by id desc";
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int idPersonne = rs.getInt("idpersonne");
+				String suggestion = rs.getString("suggestion");
+				String pseudo = rs.getString("pseudo");
+				Date d_creation = rs.getTimestamp("d_creation");
+				boolean lu = rs.getBoolean("lu");
+				retour.add(new SuggestionBean(id, idPersonne, suggestion,
+						d_creation, pseudo,lu));
 			}
 
 			return retour;
@@ -145,5 +230,60 @@ public class SuggestionDAO {
 
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub	
+	}
+	
+	public static MessageServeur lireProbleme(int idMessage) {
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "update amelioration set lu=true   where  id=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idMessage);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			return new MessageServeur(true, "ok");
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+
+			try {
+				if (connexion != null)
+					connexion.rollback();
+				if (preparedStatement != null)
+					preparedStatement.close();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return new MessageServeur(false,
+				"Erreur dans la métode lit probleme admin");
+
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub// TODO Auto-generated method stub
+
 	}
 }

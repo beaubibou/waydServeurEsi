@@ -92,41 +92,18 @@ public class ListProbleme extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		// try {
-		// dateDebut = getDateFromString(datedebut);
-		// dateFin = getDateFromString(datefin);
-		//
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		//
-		// authentification.setAlertMessageDialog(new MessageAlertDialog(
-		// "Parse Date non conformes", e.getMessage(), null,
-		// AlertJsp.warning));
-		// response.sendRedirect("MesActivites");
-		// return;
-		//
-		// }
-		//
-		//
 		LOG.info("doget- datedebut" + dateDebut);
 		LOG.info("doget- dateFin" + dateFin);
 
-	
-		
-			ArrayList<ProblemeBean> listProblemes = new ArrayList<ProblemeBean>();
-			listProblemes = ProblemeDAO.getListProbleme(filtreProbleme.getEtatProbleme(),
-					filtreProbleme.getDateDebutCreation(),filtreProbleme.getDateFinCreation());
-			
-//		ArrayList<ProblemeBean> listProblemes = new ArrayList<ProblemeBean>();
-//		listProblemes = ProblemeDAO.getListProbleme();
+		ArrayList<ProblemeBean> listProblemes = new ArrayList<ProblemeBean>();
+		listProblemes = ProblemeDAO.getListProbleme(
+				filtreProbleme.getEtatProbleme(),
+				filtreProbleme.getDateDebutCreation(),
+				filtreProbleme.getDateFinCreation());
 
-		
 		request.setAttribute("listProbleme", listProblemes);
-			request.getRequestDispatcher("admin/listProbleme.jsp").forward(
-					request, response);
-
-	
+		request.getRequestDispatcher("admin/listProbleme.jsp").forward(request,
+				response);
 
 	}
 
@@ -141,8 +118,7 @@ public class ListProbleme extends HttpServlet {
 	}
 
 	public DateTime getDateFromString(String datestr) throws ParseException {
-		
-		
+
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
 		DateTime dt = formatter.parseDateTime(datestr);
 		return dt;
