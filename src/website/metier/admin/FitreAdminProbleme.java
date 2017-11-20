@@ -1,35 +1,56 @@
 package website.metier.admin;
 
+import java.util.Calendar;
 import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.JodaTimePermission;
 
 public class FitreAdminProbleme {
 
-	Date dateDebutCreation;
-	Date dateFinCreation;
+	DateTime dateDebutCreation;
+	DateTime dateFinCreation;
 	int etatProbleme = EtatProbleme.TOUS;
 
 	public FitreAdminProbleme() {
+
+		
+		dateDebutCreation = new DateTime() .withHourOfDay(0)
+			    .withMinuteOfHour(0)
+			    .withSecondOfMinute(0);
 	
-	dateDebutCreation = new Date();
-	dateFinCreation = new Date();
+		
+		dateFinCreation = new DateTime() .withHourOfDay(0)
+			    .withMinuteOfHour(0)
+			    .withSecondOfMinute(0);
 
 	}
 
-	public Date getDateDebutCreation() {
+	
+
+	public DateTime getDateDebutCreation() {
 		return dateDebutCreation;
 	}
 
-	public void setDateDebutCreation(Date dateDebutCreation) {
+
+
+	public void setDateDebutCreation(DateTime dateDebutCreation) {
 		this.dateDebutCreation = dateDebutCreation;
 	}
 
-	public Date getDateFinCreation() {
+
+
+	public DateTime getDateFinCreation() {
 		return dateFinCreation;
 	}
 
-	public void setDateFinCreation(Date dateFinCreation) {
+
+
+	public void setDateFinCreation(DateTime dateFinCreation) {
 		this.dateFinCreation = dateFinCreation;
 	}
+
+
 
 	public int getEtatProbleme() {
 		return etatProbleme;
@@ -38,5 +59,7 @@ public class FitreAdminProbleme {
 	public void setEtatProbleme(int etatProbleme) {
 		this.etatProbleme = etatProbleme;
 	}
+
+
 
 }

@@ -38,7 +38,7 @@
 							class="form-inline">
 							<div class="form-group">
 								<select class="form-control" id="idEtatProbleme"
-									name="etatProbleme">
+									name="etatProbleme" >
 
 									<%
 										for (EtatSuggestion etatSuggestion:listEtatSuggestion) {

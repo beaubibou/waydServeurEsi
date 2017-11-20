@@ -4,7 +4,9 @@
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.admin.*"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="java.util.*"%>
 <%@page import="website.dao.CacheValueDAO"%>
+<%@page import="org.joda.time.DateTime"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -32,20 +34,20 @@
 	<%@ include file="menu.jsp"%>
 	<%
 		ArrayList<EtatProbleme> listEtatProbleme = CacheValueDAO.getListEtatProbleme();
-		FitreAdminProbleme filtre=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
+			FitreAdminProbleme filtreProbleme=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
 	%>
 	<div class="container" style="margin-top: 50px">
 
-		<form class="form-inline">
+		<form  class="form-inline" action="ListProbleme" id="formulaire" >
 			<div class="form-group">
-				<label for="idEtatProbleme">Etat</label> <select
-					class="form-control" id="idEtatProbleme" name="etatProbleme">
+				<label  for="idEtatProbleme">Etat</label> <select data-style="btn-primary"
+					class="form-control" id="idEtatProbleme" name="etatProbleme"  >
 
 					<%
 						for (EtatProbleme etatProbleme:listEtatProbleme) {
 					%>
 					<option value="<%=etatProbleme.getId()%>"
-						<%=Outils.jspAdapterListSelected(etatProbleme.getId(), filtre.getEtatProbleme())%>>
+						<%=Outils.jspAdapterListSelected(etatProbleme.getId(), filtreProbleme.getEtatProbleme())%>>
 						<%=etatProbleme.getLibelle()%></option>
 					<%
 						}
@@ -75,18 +77,16 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
-			</div>
 
-			<button type="submit" class="btn btn-default">Submit</button>
+
+			<button type="submit" class="btn btn-default">Recherchez</button>
 
 		</form>
+	
 		</br>
 
 
 	</div>
-
 
 
 	<div class="container">
@@ -105,9 +105,9 @@
 			<tbody>
 				<%
 					ArrayList<ProblemeBean> listProbleme = (ArrayList<ProblemeBean>) request
-																						.getAttribute("listProbleme");
-																				for (ProblemeBean prb : listProbleme) {
-																					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
+						.getAttribute("listProbleme");
+				for (ProblemeBean prb : listProbleme) {
+					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
 				%>
 
 				<tr>
@@ -151,21 +151,21 @@
 	<script>
 		$(function() {
 
+			
 			$('#datedebut').datetimepicker({
-				defaultDate : new Date,
-				format : 'DD/MM/YYYY HH:mm'
+				defaultDate : new Date('<%=filtreProbleme.getDateDebutCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateDebutCreation().getYear()%>'),
+				format : 'DD/MM/YYYY'
 
 			});
 
-			var heure = new Date().getHours() + 3;
-
+			var d = new Date(99,5,24)
+	
 			$('#datefin').datetimepicker(
 					{
-						defaultDate : moment(new Date()).hours(heure)
-								.minutes(0).seconds(0).milliseconds(0),
-						format : 'DD/MM/YYYY HH:mm'
+						defaultDate : new Date('<%=filtreProbleme.getDateFinCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateFinCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateFinCreation().getYear()%>	'),
+			format : 'DD/MM/YYYY'
 
-					});
+							});
 
 		});
 	</script>
