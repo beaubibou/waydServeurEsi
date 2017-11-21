@@ -2,8 +2,6 @@ package servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,19 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
-
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.tasks.OnSuccessListener;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.auth.UserRecord.CreateRequest;
-import com.google.firebase.auth.UserRecord.UpdateRequest;
-
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
@@ -38,6 +24,10 @@ import website.dao.PersonneDAO;
 import website.enumeration.TypePhoto;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 
 /**
  * Servlet implementation class Connexion
@@ -93,31 +83,11 @@ public class Connexion extends HttpServlet {
 		LOG.info("Do post Connexion");
 		success = false;
 		//
-		// if (testEsi(request, response))
-		// return;
+		if (testEsi(request, response))
+			return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
-
-		// try {
-		// int temps = 0;
-		// while (temps < 500) {
-		// Thread.sleep(30);
-		// LOG.info("wait" + temps);
-		// temps++;
-		// if (success) {
-		//
-		// temps = 1001;
-		// }
-		//
-		// }
-		//
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-		LOG.info("************Sortie");
 
 	}
 
@@ -132,8 +102,8 @@ public class Connexion extends HttpServlet {
 		session.setAttribute("profil", profil);
 
 		try {
-			// response.sendRedirect("Acceuil");
-			response.sendRedirect("AcceuilPro");
+			response.sendRedirect("Acceuil");
+			//response.sendRedirect("AcceuilPro");
 			// response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -172,8 +142,7 @@ public class Connexion extends HttpServlet {
 				}
 			}
 
-			if (profil != null) 
-			{
+			if (profil != null) {
 
 				session.setAttribute("profil", profil);
 
@@ -202,22 +171,21 @@ public class Connexion extends HttpServlet {
 
 				case ProfilBean.PRO:
 					session.setAttribute("profil", profil);
-					
-						response.sendRedirect("AcceuilPro");
-						success = true;
-						return;
+
+					response.sendRedirect("AcceuilPro");
+					success = true;
+					return;
 
 				case ProfilBean.WAYDEUR:
-			
-						session.invalidate();
-						response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
-						success = true;
-						return;
-					
+
+					session.invalidate();
+					response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
+					success = true;
+					return;
 
 				}
 
-			} 
+			}
 
 		} catch (InterruptedException | ExecutionException e2) {
 			// TODO Auto-generated catch block

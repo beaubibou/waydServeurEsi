@@ -210,9 +210,6 @@ public class WBservices {
 			e2.printStackTrace();
 		    return false;
 		}
-
-		
-
 		
 
 	}

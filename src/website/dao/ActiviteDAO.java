@@ -1161,7 +1161,7 @@ public class ActiviteDAO {
 						+ "activite.nbrwaydeur as nbrparticipant,activite.idactivite,activite.libelle,activite.titre,"
 						+ "activite.datefin,activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite,activite.adresse "
 						+ "FROM personne, activite,type_activite "
-						+ " WHERE type_activite.idtypactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne    "
+						+ " WHERE type_activite.idtypeactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne    "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?"
 						+ " ORDER BY datedebut desc limit ?  offset ?";

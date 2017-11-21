@@ -43,8 +43,7 @@ public class ListActivite extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("profil") != null) {
-
+	
 			if (request.getParameter("pageAafficher") != null) {
 
 				// Si on rentre par page � afficher c'est que le filtre est stock� dans la session
@@ -84,7 +83,7 @@ public class ListActivite extends HttpServlet {
 				request.getRequestDispatcher("admin/listActivite.jsp").forward(
 						request, response);
 
-			}
+			
 
 		}
 
