@@ -8,19 +8,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import threadpool.PoolThreadGCM;
 import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
-import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
-import website.metier.Outils;
 import website.metier.ProfilBean;
 
 /**

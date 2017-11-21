@@ -9,7 +9,7 @@
   </appender>
 
   <appender name="util" class="org.apache.log4j.FileAppender">
-    <param name="file" value="/logs/debug.html" />
+    <param name="file" value="wayd/logs/debug.html" />
     <param name="append" value="false" />
     <layout class="org.apache.log4j.HTMLLayout" />
   </appender>
