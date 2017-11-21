@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
@@ -109,7 +110,7 @@ public class WBservices {
 
 	static {
 
-		if (optionFireBase==null) {
+		if (optionFireBase == null) {
 
 			try {
 
@@ -130,8 +131,8 @@ public class WBservices {
 				e.printStackTrace();
 			}
 		}
-		
-		if (optionFireBase==null) {
+
+		if (optionFireBase == null) {
 
 			try {
 
@@ -153,7 +154,7 @@ public class WBservices {
 			}
 		}
 
-		if (optionFireBase==null) {
+		if (optionFireBase == null) {
 
 			try {
 
@@ -182,56 +183,76 @@ public class WBservices {
 	public boolean testToken(final String idtoken, final String photostr,
 			final String nom, final String gcmToken) {
 		long debut = System.currentTimeMillis();
+		
 		LOG.info("Test Token");
-	
+
 		if (FirebaseApp.getApps().isEmpty()) {
 
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
-		
+
 		}
-		FirebaseAuth.getInstance().verifyIdToken(idtoken)
-				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
-					@Override
-					public void onSuccess(FirebaseToken decodedToken) {
-						String uid = decodedToken.getUid();
-						Connection connexion = null;
-						try {
-							connexion = CxoPool.getConnection();
-							connexion.setAutoCommit(false);
-							PersonneDAO personnedao = new PersonneDAO(connexion);
-							if (!personnedao.isLoginExist(uid)) {
-								personnedao.addCompteGenerique(uid, idtoken,
-										photostr, nom, gcmToken);
-							}
+		
+		try {
+			FirebaseToken	token = FirebaseAuth.getInstance().verifyIdTokenAsync(idtoken)
+					.get();
+			
+			String uid = token.getUid();
+		
+			MessageServeur messageServeur=gestionUid(uid, idtoken, photostr, nom, gcmToken);
 
-							else {
-								personnedao.updateJeton(uid, idtoken, photostr,
-										nom, gcmToken);
-							}
-							connexion.commit();
+			String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
+					+ "ms";
+			LOG.info(loginfo);
+			
+			return messageServeur.isReponse();
+		} catch (InterruptedException | ExecutionException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		    return false;
+		}
 
-						} catch (SQLException | NamingException e) {
-							// TODO Auto-generated catch block
-							try {
-								connexion.rollback();
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							e.printStackTrace();
-						} // ...
-						finally {
-							CxoPool.closeConnection(connexion);
-						}
+		
 
-					}
-				});
+		
 
-		String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
-				+ "ms";
-	LOG.info(loginfo);
+	}
 
-		return true;
+	private MessageServeur gestionUid(String uid, String idtoken,
+			String photostr, String nom, String gcmToken) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+
+			if (!personnedao.isLoginExist(uid)) {
+				personnedao.addCompteGenerique(uid, idtoken, photostr, nom,
+						gcmToken);
+			}
+
+			else {
+				personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken);
+			}
+			connexion.commit();
+			
+			return new MessageServeur(true, "ok");
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} // ...
+		finally {
+			CxoPool.closeConnection(connexion);
+		}
+		return new MessageServeur(false, "ok");
 
 	}
 
@@ -1188,7 +1209,7 @@ public class WBservices {
 
 	public Version getVersion() {
 		long debut = System.currentTimeMillis();
-		
+
 		Connection connexion = null;
 
 		Version retour = new Version(0, 0, 0);
@@ -1519,7 +1540,6 @@ public class WBservices {
 
 			return new RetourMessage(new Date().getTime(), idmessage,
 					idemetteur);
-			
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1662,8 +1682,8 @@ public class WBservices {
 			if (idDemandeur == activite.getIdorganisateur()) {
 
 				message = new Message(idAeffacer,
-						"L'organisateur � d�sinscrit "
-								+ personne.getPrenom(), idactivite, 0);
+						"L'organisateur � d�sinscrit " + personne.getPrenom(),
+						idactivite, 0);
 				notificationDAO.addNotification(idAeffacer,
 						Notification.MESSAGE_TEXT, idactivite, idDemandeur);
 				activiteDAO.addRefus(idAeffacer, idactivite);
@@ -3552,8 +3572,7 @@ public class WBservices {
 			}
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerProfil(idpersonne, idsignalement))
-				return new MessageServeur(false,
-						"Tu as d�ja signal� ce profil");
+				return new MessageServeur(false, "Tu as d�ja signal� ce profil");
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerProfil(idpersonne, idsignalement, idmotif,

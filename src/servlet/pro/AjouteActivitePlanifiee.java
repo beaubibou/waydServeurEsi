@@ -81,6 +81,9 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 				.parseDouble(request.getParameter("longitude"));
 		int typeactivite = Integer.parseInt(request
 				.getParameter("typeactivite"));
+		
+		int duree = Integer.parseInt(request
+				.getParameter("duree"));
 
 		String datedebut = request.getParameter("debut");
 		String datefin = request.getParameter("fin");
@@ -113,11 +116,15 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			joursVoulus.put(1, "dimanche");
 
 		String heuredebut = request.getParameter("heuredebut");
-		String heurefin = request.getParameter("heurefin");
-
+	//	String heurefin = request.getParameter("heurefin");
+		//String duree = request.getParameter("duree");
 		try {
 			dateDebut = getDateFromString(datedebut, heuredebut);
-			dateFin = getDateFromString(datefin, heurefin);
+		System.out.println("duree "+duree);
+			Calendar calFin=Calendar.getInstance();
+			calFin.setTime(dateDebut);
+			calFin.add(Calendar.MINUTE, duree);
+			dateFin = calFin.getTime();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -138,6 +145,15 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		if (!messageServeur.isReponse()) {
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
 					"Message erreur", messageServeur.getMessage(), null,
+					AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+			return;
+
+		}
+		
+		if (duree>8*60) {
+			authentification.setAlertMessageDialog(new MessageAlertDialog(
+					"Message erreur", "La durée de l'activité n'est pas correcte", null,
 					AlertJsp.warning));
 			response.sendRedirect("MesActivites");
 			return;

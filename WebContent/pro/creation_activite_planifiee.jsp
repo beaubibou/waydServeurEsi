@@ -7,6 +7,7 @@
 <%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.DureeBean"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,13 +46,14 @@
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifiePro())
-		return;
-		
-		ProfilBean profil = authentification.getProfil();
-		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-		// Defini le li a rendre actif
-			MenuEnum etatMenu=null;
+			if (!authentification.isAuthentifiePro())
+			return;
+			
+			ProfilBean profil = authentification.getProfil();
+			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+			ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
+			// Defini le li a rendre actif
+		MenuEnum etatMenu=null;
 	%>
 
 	<%@ include file="menu.jsp"%>
@@ -142,13 +144,17 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="idheurefin">Heure fin</label>
-										<div class='input-group date' id="heurefin">
-											<input type='text' class="form-control" id="idheurefin"
-												name="heurefin" /> <span class="input-group-addon">
-												<span class="glyphicon glyphicon-calendar"></span>
-											</span>
-										</div>
+
+										<label for="duree">Durée:</label> <select class="form-control"
+											id="typeactivite" name="duree">
+											<%
+												for (DureeBean duree:listDuree) {
+											%>
+											<option value="<%=duree.getValue()%>"><%=duree.getLibelle()%></option>
+											<%
+												}
+											%>
+										</select>
 									</div>
 								</div>
 
@@ -305,7 +311,6 @@
 
 			});
 
-			
 			$('#heurefin').datetimepicker({
 				defaultDate : new Date,
 				format : 'HH:mm'
@@ -387,12 +392,11 @@
 						.alert('La durée ne peut pas être inférieur à 1 heures');
 				return false;
 			}
-			
-			var nbrCheck=getNbrJourCheck();
 
-				if (nbrCheck == 0) {
-				BootstrapDialog
-						.alert('Un jour doit être au moins selectionné');
+			var nbrCheck = getNbrJourCheck();
+
+			if (nbrCheck == 0) {
+				BootstrapDialog.alert('Un jour doit être au moins selectionné');
 				return false;
 			}
 
@@ -400,7 +404,7 @@
 		}
 
 		function getNbrJourCheck() {
-	
+
 			var nbrLigne = 0;
 			$('#mescheck label ').each(function() {
 				var checkBox = $(this).find('input:checkbox');
@@ -412,10 +416,9 @@
 
 			});
 
-		
 			return nbrLigne;
 		}
-		
+
 		function initPosition() {
 			latitude = 0;
 			longitude = 0;
