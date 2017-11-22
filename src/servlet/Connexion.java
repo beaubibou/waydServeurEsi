@@ -102,8 +102,8 @@ public class Connexion extends HttpServlet {
 		session.setAttribute("profil", profil);
 
 		try {
-	//		response.sendRedirect("Acceuil");
-			response.sendRedirect("AcceuilPro");
+			response.sendRedirect("Acceuil");
+		//	response.sendRedirect("AcceuilPro");
 			// response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

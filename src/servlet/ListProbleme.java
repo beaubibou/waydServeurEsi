@@ -25,6 +25,7 @@ import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.ProblemeBean;
 import website.metier.admin.FitreAdminProbleme;
+import website.pager.PagerProblemeBean;
 
 /**
  * Servlet implementation class ListProbleme
@@ -92,9 +93,15 @@ public class ListProbleme extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		LOG.info("doget- datedebut" + dateDebut);
-		LOG.info("doget- dateFin" + dateFin);
-
+//		int pageAfficher=0;
+//		if (request.getParameter("page")!=null)
+//			pageAfficher=Integer.parseInt(request.getParameter("page"));
+//		
+//		PagerProblemeBean pagerProblemeBean=new PagerProblemeBean(filtreProbleme.getEtatProbleme(),
+//				filtreProbleme.getDateDebutCreation(),
+//				filtreProbleme.getDateFinCreation(), pageAfficher);
+//		ArrayList<ProblemeBean> listProblemes =pagerProblemeBean.getListProbleme();
+		
 		ArrayList<ProblemeBean> listProblemes = new ArrayList<ProblemeBean>();
 		listProblemes = ProblemeDAO.getListProbleme(
 				filtreProbleme.getEtatProbleme(),
@@ -102,6 +109,7 @@ public class ListProbleme extends HttpServlet {
 				filtreProbleme.getDateFinCreation());
 
 		request.setAttribute("listProbleme", listProblemes);
+	//	request.setAttribute("pager", pagerProblemeBean);
 		request.getRequestDispatcher("admin/listProbleme.jsp").forward(request,
 				response);
 

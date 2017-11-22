@@ -1,3 +1,4 @@
+<%@page import="website.pager.PagerProblemeBean"%>
 <%@page import="website.metier.ProblemeBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -35,6 +36,10 @@
 	<%
 		ArrayList<EtatProbleme> listEtatProbleme = CacheValueDAO.getListEtatProbleme();
 			FitreAdminProbleme filtreProbleme=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
+			ArrayList<ProblemeBean> listProbleme = (ArrayList<ProblemeBean>) request
+					.getAttribute("listProbleme");
+			PagerProblemeBean pager=(PagerProblemeBean) request
+					.getAttribute("pager");
 	%>
 	<div class="container" style="margin-top: 50px">
 
@@ -90,7 +95,7 @@
 
 
 	<div class="container">
-		<h2>Liste problemes</h2>
+		<h2>Liste problemes (<%=listProbleme.size() %>)</h2>
 
 		<table class="table table-striped">
 			<thead>
@@ -105,8 +110,7 @@
 			</thead>
 			<tbody>
 				<%
-					ArrayList<ProblemeBean> listProbleme = (ArrayList<ProblemeBean>) request
-						.getAttribute("listProbleme");
+					
 				for (ProblemeBean prb : listProbleme) {
 					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
 					String lienLecture = "/wayd/ClosProblemeAdmin?idmessage=" + prb.getId();
@@ -154,6 +158,17 @@
 		</table>
 	</div>
 
+
+<!-- Debut de la méthode pager
+ <ul class="pager">
+ 
+  <li <%//=pager.isPreviousHtml()%>> <a  href="<%//=pager.getLienPrevioustHtml()%>">Previous</a></li>
+  <li  <%//=pager.isNextHtml()%>><a href="<%//=pager.getLienNextHtml()%>">Next</a></li>
+
+
+</ul>
+
+ --> 
 	<script>
 		$(function() {
 

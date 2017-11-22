@@ -126,6 +126,89 @@ public class ProblemeDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
+	
+	public static ArrayList<ProblemeBean> getListProbleme(int etatProbleme,
+			DateTime debut, DateTime fin,int page,int maxResult) {
+
+		int offset=(maxResult)*page;
+	
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<ProblemeBean> retour = new ArrayList<ProblemeBean>();
+
+		System.out.println(debut);
+		System.out.println(fin);
+		try {
+
+			String requete = "";
+			connexion = CxoPool.getConnection();
+
+			switch (etatProbleme) {
+
+			case EtatProbleme.TOUS:
+				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+						+ " d_creation between ? and ? order by id desc  limit ?  offset ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+			
+			case EtatProbleme.CLOTURE:
+				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+						+ " d_creation between ? and ? and lu=true order by id desc  limit ?  offset ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+		
+			case EtatProbleme.NONCLOTOURE:
+				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+						+ " d_creation between ? and ? and lu=false order by id desc  limit ?  offset ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+
+			}
+
+			rs = preparedStatement.executeQuery();
+
+			
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String probleme = rs.getString("probleme");
+				String email = rs.getString("email");
+				Date d_creation = rs.getTimestamp("d_creation");
+				boolean lu = rs.getBoolean("lu");
+				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
+			}
+			System.out.println(retour.size());
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
 
 	public static boolean supprime(int idProbleme) {
 		// TODO Auto-generated method stub
