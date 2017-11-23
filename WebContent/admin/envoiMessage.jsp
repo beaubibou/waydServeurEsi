@@ -1,5 +1,4 @@
-<%@taglib uri="/typeActiviteTag" prefix="typeactivite"%>
-<%@taglib uri="/paginationTags" prefix="paginationtag"%>
+
 <%@page import="website.metier.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>

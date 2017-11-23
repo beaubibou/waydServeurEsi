@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
 import website.dao.StatDAO;
+import website.metier.AuthentificationSite;
 import website.metier.IndicateurWayd;
 import website.metier.admin.FitreAdminActivites;
 import website.metier.admin.FitreAdminProbleme;
@@ -37,38 +38,38 @@ public class Acceuil extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+
+		if (!authentification.isAuthentifieAdmin())
+			return;
+
 		HttpSession session = request.getSession();
-	
-		
-		if (session.getAttribute("profil") != null )
-		{
-			if (session.getAttribute("filtreProbleme")==null)
-				session.setAttribute("filtreProbleme",new FitreAdminProbleme());
-			
-			
-			if (session.getAttribute("filtreSuggestion")==null)
-				session.setAttribute("filtreSuggestion",new FitreAdminSuggestions());
-			
-			if (session.getAttribute("filtreProfils")==null)
-				session.setAttribute("filtreProfils",new FitreAdminProfils());
-		
-			if (session.getAttribute("filtreActivite")==null)
-				session.setAttribute("filtreActivite",new FitreAdminActivites());
-			
-			
-			IndicateurWayd 	indicateur=ActiviteDAO.getIndicateurs();
-			indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
-			indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());
-			indicateur.setNbrActiviteDuJour(StatDAO.getNbrActiviteDuJour());
-			indicateur.setNbrParticipationDuJour(StatDAO.getNbrParticipationDuJour());
-			request.setAttribute("indicateur", indicateur);
-			request.getRequestDispatcher("admin/acceuil.jsp").forward(request, response);
-		
-		}
-		else{
-			
-			response.sendRedirect("auth/login.jsp");
-		}
+
+		if (session.getAttribute("filtreProbleme") == null)
+			session.setAttribute("filtreProbleme", new FitreAdminProbleme());
+
+		if (session.getAttribute("filtreSuggestion") == null)
+			session.setAttribute("filtreSuggestion",
+					new FitreAdminSuggestions());
+
+		if (session.getAttribute("filtreProfils") == null)
+			session.setAttribute("filtreProfils", new FitreAdminProfils());
+
+		if (session.getAttribute("filtreActivite") == null)
+			session.setAttribute("filtreActivite", new FitreAdminActivites());
+
+		IndicateurWayd indicateur = ActiviteDAO.getIndicateurs();
+		indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
+		indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());
+		indicateur.setNbrActiviteDuJour(StatDAO.getNbrActiviteDuJour());
+		indicateur.setNbrParticipationDuJour(StatDAO
+				.getNbrParticipationDuJour());
+		request.setAttribute("indicateur", indicateur);
+		request.getRequestDispatcher("admin/acceuil.jsp").forward(request,
+				response);
+
 	}
 
 	/**
@@ -78,6 +79,7 @@ public class Acceuil extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

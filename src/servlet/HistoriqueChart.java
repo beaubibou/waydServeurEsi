@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import website.dao.StatDAO;
+import website.metier.AuthentificationSite;
 import website.metier.Outils;
 
 /**
@@ -32,6 +33,11 @@ public class HistoriqueChart extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+
 		String requete = null;
 		String titre = null;
 		String action = request.getParameter("action");
@@ -49,14 +55,14 @@ public class HistoriqueChart extends HttpServlet {
 
 			requete = Outils.convertStatistiqueBeanToString(StatDAO
 					.getHistoriqueMessageByAct());
-			titre = "Messages des activités";
+			titre = "Messages des activitï¿½s";
 
 			break;
 		case "histoNbrActivite":
 
 			requete = Outils.convertStatistiqueBeanToString(StatDAO
 					.getHistoriqueActivite());
-			titre = "Nombre Activités";
+			titre = "Nombre Activitï¿½s";
 			break;
 
 		case "histoNbrParticipation":
@@ -72,8 +78,8 @@ public class HistoriqueChart extends HttpServlet {
 
 		request.setAttribute("titre", titre);
 		request.setAttribute("requete", requete);
-		request.getRequestDispatcher("admin/chartLine.jsp")
-				.forward(request, response);
+		request.getRequestDispatcher("admin/chartLine.jsp").forward(request,
+				response);
 
 	}
 
@@ -84,6 +90,7 @@ public class HistoriqueChart extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

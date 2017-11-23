@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 
 /**
  * Servlet implementation class ListSignalementActivite
@@ -31,19 +32,19 @@ public class ListSignalementActivite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-
-		if (session.getAttribute("profil") != null )
-		{
+		
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
 			ArrayList<ActiviteBean> 	listActivite= new ArrayList<ActiviteBean>();
 			listActivite=ActiviteDAO.getListActiviteSignale();
 			request.setAttribute("listActivite", listActivite);
 			request.getRequestDispatcher("admin/listActiviteSignale.jsp").forward(request, response);
 		
-		}
-	else{
-		response.sendRedirect("auth/login.jsp");
-	}
+	
 
 	
 	}
@@ -53,6 +54,7 @@ public class ListSignalementActivite extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	doGet(request, response);
 	}
 
 }

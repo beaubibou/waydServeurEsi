@@ -25,7 +25,7 @@
 			<li><a href="ListSignalementProfils">Signalements Profils</a></li>
 			<li><a href="ListSignalementActivite">Signalements Activités</a></li>
 			<li><a href="ListProfil">Profils</a></li>
-			<li><a href="Controleur?action=deconnexion">Déconnexion</a></li>
+			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
 
 		</ul>
 

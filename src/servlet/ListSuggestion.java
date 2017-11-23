@@ -15,6 +15,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import website.dao.SuggestionDAO;
+import website.metier.AuthentificationSite;
 import website.metier.SuggestionBean;
 import website.metier.admin.EtatSuggestion;
 import website.metier.admin.FitreAdminProbleme;
@@ -41,6 +42,12 @@ public class ListSuggestion extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
 		HttpSession session = request.getSession();
 
 		FitreAdminSuggestions filtreSuggestion = (FitreAdminSuggestions) session
@@ -99,6 +106,7 @@ public class ListSuggestion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	doGet(request, response);
 	}
 	
 	public DateTime getDateFromString(String datestr) throws ParseException {

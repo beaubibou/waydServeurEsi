@@ -83,6 +83,9 @@ public class Connexion extends HttpServlet {
 		LOG.info("Do post Connexion");
 		success = false;
 		//
+	
+		
+		
 		if (testEsi(request, response))
 			return;
 
@@ -102,8 +105,8 @@ public class Connexion extends HttpServlet {
 		session.setAttribute("profil", profil);
 
 		try {
-		//	response.sendRedirect("Acceuil");
-		response.sendRedirect("AcceuilPro");
+			response.sendRedirect("Acceuil");
+			// response.sendRedirect("AcceuilPro");
 			// response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -115,7 +118,8 @@ public class Connexion extends HttpServlet {
 	}
 
 	public void testToken(final String idtoken, HttpServletRequest request,
-			final HttpServletResponse response, String pwd) throws IOException {
+			final HttpServletResponse response, String pwd) throws IOException,
+			ServletException {
 
 		final HttpSession session = request.getSession();
 		LOG.info("Test token");
@@ -129,20 +133,24 @@ public class Connexion extends HttpServlet {
 
 			if (profil == null) {
 
-				MessageServeur messageServeur = creationProfilBdd(uid, idtoken,
-						request, response);
-				if (messageServeur.isReponse()) {
-					response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
-					return;
-				} else {
+				
+				request.setAttribute("message",
+						"La création du compte à échouée");
+				request.getRequestDispatcher("commun/erreurConnection.jsp")
+						.forward(request, response);
+				return;
 
-					response.sendRedirect("Error.jsp");
-					return;
-
-				}
 			}
 
 			if (profil != null) {
+
+				if (!profil.isActif()) {
+					request.setAttribute("message",
+							"Votre compte est désactivé");
+					request.getRequestDispatcher("commun/erreurConnection.jsp")
+							.forward(request, response);
+					return;
+				}
 
 				session.setAttribute("profil", profil);
 
@@ -190,54 +198,58 @@ public class Connexion extends HttpServlet {
 		} catch (InterruptedException | ExecutionException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-			response.sendRedirect("Error.jsp");
+
+			request.setAttribute("message", e2.getMessage());
+			request.getRequestDispatcher("commun/erreurConnection.jsp")
+					.forward(request, response);
+			return;
 		}
 
 	}
 
-	private MessageServeur creationProfilBdd(String uid, String idtoken,
-			HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		Connection connexion = null;
-
-		try {
-			LOG.info("Creation du compte");
-			connexion = CxoPool.getConnection();
-			connexion.setAutoCommit(false);
-			wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
-					connexion);
-			personnedao.addCompteGenerique(uid, idtoken, "", "", "");
-			connexion.commit();
-
-			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
-
-			if (profil != null) {
-				HttpSession session = request.getSession();
-				LOG.info("User cr�e" + profil);
-				session.setAttribute("profil", profil);
-
-				return new MessageServeur(true, "ok");
-			} else {
-				return new MessageServeur(false, "ok");
-
-			}
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} // ...
-		finally {
-			CxoPool.closeConnection(connexion);
-			//
-		}
-		return new MessageServeur(false, "ok");
-
-	}
+//	private MessageServeur creationProfilBdd(String uid, String idtoken,
+//			HttpServletRequest request, HttpServletResponse response) {
+//		// TODO Auto-generated method stub
+//		Connection connexion = null;
+//
+//		try {
+//			LOG.info("Creation du compte");
+//			connexion = CxoPool.getConnection();
+//			connexion.setAutoCommit(false);
+//			wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
+//					connexion);
+//			personnedao.addCompteGenerique(uid, idtoken, "", "", "");
+//			connexion.commit();
+//
+//			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
+//
+//			if (profil != null) {
+//				HttpSession session = request.getSession();
+//				LOG.info("User cr�e" + profil);
+//				session.setAttribute("profil", profil);
+//
+//				return new MessageServeur(true, "ok");
+//			} else {
+//				return new MessageServeur(false, "ok");
+//
+//			}
+//
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			try {
+//				connexion.rollback();
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			e.printStackTrace();
+//		} // ...
+//		finally {
+//			CxoPool.closeConnection(connexion);
+//			//
+//		}
+//		return new MessageServeur(false, "ok");
+//
+//	}
 
 }

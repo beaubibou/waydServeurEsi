@@ -49,8 +49,9 @@ public class ListProbleme extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		LOG.info("doget- Listprobleme");
-
+		
+		
+		
 		HttpSession session = request.getSession();
 
 		AuthentificationSite authentification = new AuthentificationSite(

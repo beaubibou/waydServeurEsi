@@ -19,6 +19,7 @@ import website.dao.PersonneDAO;
 import website.dao.SignalementDAO;
 import website.metier.ActiviteBean;
 import website.metier.AmiBean;
+import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 import website.metier.SignalementBean;
 
@@ -44,8 +45,12 @@ public class DetailParticipant extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("cocouououo");
-
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
+		
 		if (request.getParameter("actif") != null) {// active le profil
 			int idParticipant = Integer.parseInt(request
 					.getParameter("idparticipant"));

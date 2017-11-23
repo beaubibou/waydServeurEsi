@@ -14,6 +14,7 @@ import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 
 /**
  * Servlet implementation class DetailActivite
@@ -37,15 +38,18 @@ public class DetailActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		LOG.info("doGet");
-				
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+					
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("profil") != null) {
 
 			String action = (String) request.getParameter("action");
 			
-			if (action == null) {// chargemetn par défaut
+			if (action == null) {// chargemetn par dï¿½faut
 				int idActivite = Integer.parseInt(request
 						.getParameter("idactivite"));
 				ActiviteBean activite = new Coordination().getActivite(idActivite);
@@ -91,6 +95,14 @@ public class DetailActivite extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
+		doGet(request, response);
+	
 	}
 
 }

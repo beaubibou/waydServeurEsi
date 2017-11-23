@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AuthentificationSite;
 import website.metier.FiltreJSP;
 import website.metier.Outils;
 import website.metier.Pagination;
@@ -40,6 +41,10 @@ public class ListActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
 		
 		HttpSession session = request.getSession();
 
@@ -96,10 +101,15 @@ public class ListActivite extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("profil") != null) {
-
+	
 			// Si la rechereche vient du submit
 
 			if (request.getParameter("rechercheactivite") != null) {
@@ -145,9 +155,7 @@ public class ListActivite extends HttpServlet {
 				return;
 			}
 
-		} else {
-			response.sendRedirect("auth/login.jsp");
-		}
+		
 	}
 
 }

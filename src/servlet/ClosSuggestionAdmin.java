@@ -34,8 +34,7 @@ public class ClosSuggestionAdmin extends HttpServlet {
 	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-	
-		
+			
 		if (!authentification.isAuthentifieAdmin())
 			return;
 	
@@ -58,6 +57,10 @@ public class ClosSuggestionAdmin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+			
+		doGet(request, response);
+	
 	}
 
 }

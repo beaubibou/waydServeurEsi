@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
+import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.TypeActiviteBean;
 
@@ -47,6 +48,12 @@ public class ChargePhotoActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		
+		if (!authentification.isAuthentifieAdmin())
+			return;
+	
 		LOG.info("doGet");
 		ArrayList<TypeActiviteBean> listPhotoTypeActivite=CacheValueDAO.getListTypeActiviteBeanFull();
 		
@@ -66,7 +73,11 @@ public class ChargePhotoActivite extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		LOG.info("doPost");
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+	
 	
 		int id = Integer.parseInt(request
 				.getParameter("idTypeActivite"));

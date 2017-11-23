@@ -41,6 +41,7 @@
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
+	<script src="js/creationActivite.js"></script>
 </head>
 <body>
 

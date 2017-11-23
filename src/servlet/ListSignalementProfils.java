@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import website.dao.SignalementDAO;
+import website.metier.AuthentificationSite;
 import website.metier.SignalementCount;
 
 /**
@@ -33,19 +34,18 @@ public class ListSignalementProfils extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-
-		if (session.getAttribute("profil") != null) {
-
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+	
 			ArrayList<SignalementCount> listSignalementCount = new ArrayList<SignalementCount>();
 			listSignalementCount = SignalementDAO.getCountSignalementBy();
 			request.setAttribute("listSignalementCount", listSignalementCount);
 			request.getRequestDispatcher("admin/listSignalement.jsp").forward(request,
 					response);
 
-		}else{
-			response.sendRedirect("auth/login.jsp");
-		}
+	
 
 		// TODO Auto-generated method stub
 	}
@@ -58,6 +58,11 @@ public class ListSignalementProfils extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		
 		ArrayList<SignalementCount> listSignalementCount = new ArrayList<SignalementCount>();
 		listSignalementCount = SignalementDAO.getCountSignalementBy();
 		request.setAttribute("listSignalementCount", listSignalementCount);

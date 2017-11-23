@@ -693,4 +693,14 @@
     <servlet-name>ClosSuggestionAdmin</servlet-name>
     <url-pattern>/ClosSuggestionAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeconnexionAdmin</display-name>
+    <servlet-name>DeconnexionAdmin</servlet-name>
+    <servlet-class>servlet.DeconnexionAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeconnexionAdmin</servlet-name>
+    <url-pattern>/DeconnexionAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

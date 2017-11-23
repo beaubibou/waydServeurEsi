@@ -32,8 +32,7 @@ public class EnvoiMessageAdmin extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println(request.getRequestURI());
-
+	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
