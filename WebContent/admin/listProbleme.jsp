@@ -112,8 +112,8 @@
 				<%
 					
 				for (ProblemeBean prb : listProbleme) {
-					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId();
-					String lienLecture = "/wayd/ClosProblemeAdmin?idmessage=" + prb.getId();
+					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId()+"&page="+pager.getPageEnCours()+"&action=supprime";
+					String lienLecture = "/wayd/ListProbleme?idmessage=" + prb.getId()+"&page="+pager.getPageEnCours()+"&action=clos";
 				%>
 
 				<tr>
@@ -159,16 +159,17 @@
 	</div>
 
 
-<!-- Debut de la méthode pager
+
  <ul class="pager">
  
-  <li <%//=pager.isPreviousHtml()%>> <a  href="<%//=pager.getLienPrevioustHtml()%>">Previous</a></li>
-  <li  <%//=pager.isNextHtml()%>><a href="<%//=pager.getLienNextHtml()%>">Next</a></li>
+  <li <%=pager.isPreviousHtml()%>> <a  href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
+ <li>Page N° <%=pager.getPageEnCours()%></li>
+  <li  <%=pager.isNextHtml()%>><a href="<%=pager.getLienNextHtml()%>">Next</a></li>
 
 
 </ul>
 
- --> 
+
 	<script>
 		$(function() {
 

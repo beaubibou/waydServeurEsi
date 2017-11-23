@@ -8,11 +8,11 @@ import org.joda.time.DateTime;
 import website.dao.ProblemeDAO;
 import website.metier.ProblemeBean;
 
-public class PagerProblemeBean extends Pager{
+public class PagerProblemeBean {
 
 	private ArrayList<ProblemeBean> listProbleme;
 	private int pageEnCours = 0;
-	private final int maxResult = 5;
+	private final int maxResult = 35;
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
 
@@ -74,45 +74,41 @@ public class PagerProblemeBean extends Pager{
 	public int getMaxResult() {
 		return maxResult;
 	}
-	
-	public String getLienNextHtml(){
-	
-		if (hasNext){
-			this.pageEnCours++;
 
-		return "ListProbleme?page="+pageEnCours;
-		}
-		else return "#";
-	}
-	
-	public String getLienPrevioustHtml(){
-		if (hasPrevious){
-			this.pageEnCours--;
+	public String getLienNextHtml() {
 
-		return "ListProbleme?page="+pageEnCours;
-		}
-		else return "#";
-	}
 	
-	public String isNextHtml(){
-		
-	if (!hasNext)
+		if (hasNext) {
+			int suivant = pageEnCours + 1;
+			return "ListProbleme?page=" + suivant;
+		} else
+			return "#";
+	}
+
+	public String getLienPrevioustHtml() {
+		if (hasPrevious) {
+			int previous = pageEnCours - 1;
+			return "ListProbleme?page=" + previous;
+		} else
+			return "#";
+	}
+
+	public String isNextHtml() {
+
+		if (!hasNext)
 			return "class='disabled'";
-	
-	return "";
-	
-	}
-	
-public String isPreviousHtml(){
-		
-	if (!hasPrevious)
-			return "class='disabled'";
-		
-	return "";
-	
+
+		return "";
+
 	}
 
-	
-	
+	public String isPreviousHtml() {
+
+		if (!hasPrevious)
+			return "class='disabled'";
+
+		return "";
+
+	}
 
 }

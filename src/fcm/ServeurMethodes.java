@@ -660,27 +660,6 @@ public class ServeurMethodes {
 
 	}
 
-	public String getUserIdByToken(String idToken) {
-
-		uid = null;
-
-		if (FirebaseApp.getApps().isEmpty()) 
-				FirebaseApp.initializeApp(WBservices.optionFireBase);
-		
-		// Verfie le jeton si correspodant cree le compte ou renvoi la personne
-		
-		FirebaseAuth.getInstance().verifyIdToken(idToken)
-				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
-					@Override
-					public void onSuccess(FirebaseToken decodedToken) {
-						uid = decodedToken.getUid();
-						// ...
-
-					}
-				});
-
-		return uid;
-
-	}
+	
 
 }

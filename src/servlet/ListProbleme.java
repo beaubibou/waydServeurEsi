@@ -18,6 +18,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import wayde.bean.MessageServeur;
 import website.dao.ActiviteDAO;
 import website.dao.ProblemeDAO;
 import website.enumeration.AlertJsp;
@@ -49,9 +50,7 @@ public class ListProbleme extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		
+
 		HttpSession session = request.getSession();
 
 		AuthentificationSite authentification = new AuthentificationSite(
@@ -66,6 +65,11 @@ public class ListProbleme extends HttpServlet {
 		DateTime dateDebut = filtreProbleme.getDateDebutCreation();
 		DateTime dateFin = filtreProbleme.getDateFinCreation();
 
+		String action=(String) request.getParameter("action");
+		
+		doAction(action,request);
+		
+		
 		if (request.getParameter("etatProbleme") != null) {
 			etatProbleme = Integer.parseInt((String) request
 					.getParameter("etatProbleme"));
@@ -94,26 +98,57 @@ public class ListProbleme extends HttpServlet {
 			e.printStackTrace();
 		}
 
-//		int pageAfficher=0;
-//		if (request.getParameter("page")!=null)
-//			pageAfficher=Integer.parseInt(request.getParameter("page"));
-//		
-//		PagerProblemeBean pagerProblemeBean=new PagerProblemeBean(filtreProbleme.getEtatProbleme(),
-//				filtreProbleme.getDateDebutCreation(),
-//				filtreProbleme.getDateFinCreation(), pageAfficher);
-//		ArrayList<ProblemeBean> listProblemes =pagerProblemeBean.getListProbleme();
-		
-		ArrayList<ProblemeBean> listProblemes = new ArrayList<ProblemeBean>();
-		listProblemes = ProblemeDAO.getListProbleme(
+		int pageAfficher = 0;
+		if (request.getParameter("page") != null)
+			pageAfficher = Integer.parseInt(request.getParameter("page"));
+
+		PagerProblemeBean pagerProblemeBean = new PagerProblemeBean(
 				filtreProbleme.getEtatProbleme(),
 				filtreProbleme.getDateDebutCreation(),
-				filtreProbleme.getDateFinCreation());
+				filtreProbleme.getDateFinCreation(), pageAfficher);
+		
+		System.out.println("*****************");
+		System.out.println("paga à affiche " + pageAfficher);
+		// ArrayList<ProblemeBean> listProblemes
+		// =pagerProblemeBean.getListProbleme();
 
-		request.setAttribute("listProbleme", listProblemes);
-	//	request.setAttribute("pager", pagerProblemeBean);
+		// ArrayList<ProblemeBean> listProblemes = new
+		// ArrayList<ProblemeBean>();
+		// listProblemes = ProblemeDAO.getListProbleme(
+		// filtreProbleme.getEtatProbleme(),
+		// filtreProbleme.getDateDebutCreation(),
+		// filtreProbleme.getDateFinCreation());
+		//
+		request.setAttribute("listProbleme",
+				pagerProblemeBean.getListProbleme());
+		request.setAttribute("pager", pagerProblemeBean);
 		request.getRequestDispatcher("admin/listProbleme.jsp").forward(request,
 				response);
 
+	}
+
+	private void doAction(String action,HttpServletRequest request) {
+		// TODO Auto-generated method stub
+	
+	
+		
+		if (action==null)return;
+		
+		switch (action){
+		
+		case "clos":
+			
+			int idMessage = 0;
+
+			if (request.getParameter("idmessage") != null) {
+				idMessage = Integer.parseInt(request.getParameter("idmessage"));
+			}
+
+			MessageServeur messageServeur = ProblemeDAO.lireProbleme(idMessage);
+	
+			break;	
+		
+		}
 	}
 
 	/**
@@ -123,6 +158,7 @@ public class ListProbleme extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 
