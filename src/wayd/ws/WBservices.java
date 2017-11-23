@@ -202,6 +202,7 @@ public class WBservices {
 
 			String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
 					+ "ms";
+			
 			LOG.info(loginfo);
 			
 			return messageServeur.isReponse();
@@ -230,10 +231,12 @@ public class WBservices {
 			}
 
 			else {
-				personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken);
+				
+			personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken);
+			
 			}
 			connexion.commit();
-			
+		
 			return new MessageServeur(true, "ok");
 
 		} catch (SQLException | NamingException e) {
@@ -275,9 +278,10 @@ public class WBservices {
 
 			if (idnoter != 0)//
 				avis = avisdao.getAvisById(idnoter);
+		
 			else
 
-				avis = avisdao.getDetailAvis(idactivite, idnotateur,
+			avis = avisdao.getDetailAvis(idactivite, idnotateur,
 						idpersonnenotee);
 
 			String loginfo = "getAvis - "
