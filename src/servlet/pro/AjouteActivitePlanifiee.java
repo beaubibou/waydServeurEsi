@@ -77,9 +77,8 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 				.parseDouble(request.getParameter("longitude"));
 		int typeactivite = Integer.parseInt(request
 				.getParameter("typeactivite"));
-		
-		int duree = Integer.parseInt(request
-				.getParameter("duree"));
+
+		int duree = Integer.parseInt(request.getParameter("duree"));
 
 		String datedebut = request.getParameter("debut");
 		String datefin = request.getParameter("fin");
@@ -112,15 +111,11 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			joursVoulus.put(1, "dimanche");
 
 		String heuredebut = request.getParameter("heuredebut");
-	//	String heurefin = request.getParameter("heurefin");
-		//String duree = request.getParameter("duree");
+		// String heurefin = request.getParameter("heurefin");
+		// String duree = request.getParameter("duree");
 		try {
 			dateDebut = getDateFromString(datedebut, heuredebut);
-		System.out.println("duree "+duree);
-			Calendar calFin=Calendar.getInstance();
-			calFin.setTime(dateDebut);
-			calFin.add(Calendar.MINUTE, duree);
-			dateFin = calFin.getTime();
+			dateFin = getDateFromString(datefin, heuredebut);
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -136,7 +131,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 
 		MessageServeur messageServeur = testParametreReque(titre, adresse,
 				description, latitude, longitude, typeactivite, dateDebut,
-				dateFin);
+				dateFin, duree);
 
 		if (!messageServeur.isReponse()) {
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
@@ -146,46 +141,38 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			return;
 
 		}
-		
-		if (duree>8*60) {
+
+		int nbrActiviteCree = ajouteActivite(authentification.getId(), titre,
+				description, adresse, latitude, longitude, typeactivite,
+				dateDebut, dateFin, joursVoulus,duree);
+
+		if (nbrActiviteCree == 0) {
+
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
-					"Message erreur", "La durée de l'activité n'est pas correcte", null,
-					AlertJsp.warning));
+					"Message Information",
+					"Vous n'avez crée aucune activité. Vérifier vos dates",
+					null, AlertJsp.warning));
 			response.sendRedirect("MesActivites");
 			return;
-
 		}
 
-		int nbrActiviteCree=ajouteActivite(authentification.getId(), titre, description, adresse,
-				latitude, longitude, typeactivite, dateDebut, dateFin,
-				joursVoulus);
+		if (nbrActiviteCree > 0) {
 
-		if (nbrActiviteCree==0){
-	
-		authentification.setAlertMessageDialog(new MessageAlertDialog(
-				"Message Information", "Vous n'avez crée aucune activité. Vérifier vos dates", null,
-				AlertJsp.warning));
-		response.sendRedirect("MesActivites");
-		return;
-		}
-	
-
-		if (nbrActiviteCree>0){
-			
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
-					"Message Information", "Vous avez crée "+nbrActiviteCree+" activités ont été crées ", null,
+					"Message Information", "Vous avez crée " + nbrActiviteCree
+							+ " activités ont été crées ", null,
 					AlertJsp.Sucess));
 			response.sendRedirect("MesActivites");
 			return;
-			}
+		}
 	}
 
 	private int ajouteActivite(int idPersonne, String titre,
 			String description, String adresse, double latitude,
 			double longitude, int typeactivite, Date dateDebut, Date dateFin,
-			HashMap<Integer, String> joursVoulus) {
+			HashMap<Integer, String> joursVoulus,int duree) {
 		// TODO Auto-generated method stub
-		int nbrAjout=0;
+		int nbrAjout = 0;
 		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600
 				/ 24 + 1;
 
@@ -200,7 +187,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			if (joursVoulus.containsKey(datetmp.get(Calendar.DAY_OF_WEEK))) {
 
 				if (ajouteActiviteDAO(idPersonne, titre, description, adresse,
-						latitude, longitude, typeactivite, datetmp, dateFin))
+						latitude, longitude, typeactivite, datetmp, duree))
 					nbrAjout++;
 			}
 
@@ -211,15 +198,13 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 
 	private boolean ajouteActiviteDAO(int idPersonne, String titre,
 			String description, String adresse, double latitude,
-			double longitude, int typeactivite, Calendar dateDebut, Date dateFin) {
+			double longitude, int typeactivite, Calendar dateDebut, int duree) {
 		// TODO Auto-generated method stub
 
 		Calendar calFin = Calendar.getInstance();
-		calFin.setTime(dateFin);
-		calFin.set(Calendar.DAY_OF_MONTH, dateDebut.get(Calendar.DAY_OF_MONTH));
-		calFin.set(Calendar.MONTH, dateDebut.get(Calendar.MONTH));
-		calFin.set(Calendar.YEAR, dateDebut.get(Calendar.YEAR));
-
+		calFin.setTime(dateDebut.getTime());
+		calFin.add(Calendar.MINUTE, duree);
+		
 		System.out.println("Debut" + dateDebut);
 		System.out.println("Fin" + calFin);
 
@@ -253,8 +238,12 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 
 	private MessageServeur testParametreReque(String titre, String adresse,
 			String description, double latitude, double longitude,
-			int typeactivite, Date dateDebut, Date dateFin) {
+			int typeactivite, Date dateDebut, Date dateFin, int duree) {
 		// TODO Auto-generated method stub
+
+		if (duree > 8 * 60)
+
+			return new MessageServeur(false, "Durée trop longue");
 
 		// titre = titre.trim();
 		// adresse = adresse.trim();
