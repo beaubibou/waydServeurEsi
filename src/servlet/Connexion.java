@@ -101,7 +101,6 @@ public class Connexion extends HttpServlet {
 		String pwd = (String) request.getParameter("pwd");
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
 		System.out.println(profil.getPseudo());
-
 		session.setAttribute("profil", profil);
 
 		try {

@@ -15,9 +15,12 @@ import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
-import website.metier.FiltreJSP;
 import website.metier.Outils;
 import website.metier.Pagination;
+import website.metier.admin.FiltreJSP;
+import website.metier.admin.FitreAdminActivites;
+import website.metier.admin.FitreAdminProbleme;
+import website.pager.PagerActiviteBean;
 
 /**
  * Servlet implementation class ListActivite
@@ -25,6 +28,7 @@ import website.metier.Pagination;
 public class ListActivite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ListActivite.class);
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,57 +44,37 @@ public class ListActivite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
 			return;
-		
+
 		HttpSession session = request.getSession();
 
+		FitreAdminActivites filtreActivite = (FitreAdminActivites) session
+				.getAttribute("filtreActivite");
+
+		metAjourFiltre(request, response, filtreActivite);
+		
+		int page = 0;
+		
+		if (request.getParameter("page") != null)
+			page = Integer.parseInt(request.getParameter("page"));
+
+		System.out.println(filtreActivite);
+		
+		PagerActiviteBean pager = new PagerActiviteBean(
+				filtreActivite.getLatitude(), filtreActivite.getLongitude(),
+				filtreActivite.getRayon(), filtreActivite.getTypeactivite(),
+				page);
+
+		request.setAttribute("pager", pager);
 	
-			if (request.getParameter("pageAafficher") != null) {
+		request.getRequestDispatcher("admin/listActivite.jsp").forward(request,
+				response);
 
-				// Si on rentre par page � afficher c'est que le filtre est stock� dans la session
-				// Suite � une  recherche. (submit du form listactivite).
-				FiltreJSP filtre = (FiltreJSP) session.getAttribute("filtre");
-			
-				int nbrTotalLigne = ActiviteDAO.getCountListActivite(
-						filtre.getLatitude(), filtre.getLongitude(),
-						filtre.getRayon(), filtre.getTypeactivite());
-				
-			
-
-				int pageAafficher = Integer.parseInt(request
-						.getParameter("pageAafficher"));
-
-			Pagination pagination = new website.metier.Pagination(
-						nbrTotalLigne, pageAafficher, Outils.nbrLigneParPage,
-						Outils.nbrMaxPagination, 1);
-			
-				ArrayList<ActiviteBean> listActivite = ActiviteDAO
-						.getListActivite(filtre.getLatitude(),
-								filtre.getLongitude(), filtre.getRayon(),
-								filtre.getTypeactivite(),
-								Outils.nbrLigneParPage, pagination.getDebut());
-
-				request.setAttribute("pagination", pagination);
-				request.setAttribute("listActivite", listActivite);
-				request.setAttribute("nbrTotalLigne",Integer.toString(nbrTotalLigne) );
-				request.setAttribute("pageAafficher",Integer.toString(pageAafficher));
-				request.getRequestDispatcher("admin/listActivite.jsp").forward(
-						request, response);
-
-			} else {
-			
-				request.setAttribute("nbrTotalLigne", Integer.toString(0));
-				request.setAttribute("pageAafficher", Integer.toString(0));
-				request.getRequestDispatcher("admin/listActivite.jsp").forward(
-						request, response);
-
-			
-
-		}
+		return;
 
 	}
 
@@ -101,61 +85,41 @@ public class ListActivite extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request, response);
 		
-		AuthentificationSite authentification = new AuthentificationSite(
-				request, response);
-		if (!authentification.isAuthentifieAdmin())
-			return;
-		
-		HttpSession session = request.getSession();
+	}
 
-	
-			// Si la rechereche vient du submit
+	private void metAjourFiltre(HttpServletRequest request,
+			HttpServletResponse response, FitreAdminActivites filtreActivite) {
+		// TODO Auto-generated method stub
+		if (request.getParameter("rayon") != null) {
+			int rayon = Integer.parseInt(request.getParameter("rayon"));
+			filtreActivite.setRayon(rayon);
+		}
 
-			if (request.getParameter("rechercheactivite") != null) {
+		if (request.getParameter("typeactivite") != null) {
+			int typeactivite = Integer.parseInt(request
+					.getParameter("typeactivite"));
+			filtreActivite.setTypeactivite(typeactivite);
+		}
 
-				int rayon = Integer.parseInt(request.getParameter("rayon"));
-				int idtypeactivite = Integer.parseInt(request
-						.getParameter("typeactivite"));
-				double latitude = Double.parseDouble(request
-						.getParameter("latitude"));
-				double longitude = Double.parseDouble(request
-						.getParameter("longitude"));
-				String ville = (String) request.getParameter("autocomplete");
+		if (request.getParameter("latitude") != null) {
+			double latitude = Double.parseDouble(request
+					.getParameter("latitude"));
+			filtreActivite.setLatitude(latitude);
+		}
 
-				Pagination pagination = null;
+		if (request.getParameter("longitude") != null) {
+			double longitude = Double.parseDouble(request
+					.getParameter("longitude"));
+			filtreActivite.setLongitude(longitude);
+		}
 
-				FiltreJSP filtreActivite = new FiltreJSP(rayon, idtypeactivite,
-						ville, latitude, longitude);
+		if (request.getParameter("autocomplete") != null) {
+			String autocomplete = request.getParameter("autocomplete");
+			filtreActivite.setVille(autocomplete);
+		}
 
-				
-				session.setAttribute("filtre", filtreActivite);
-
-				ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
-
-				int nbrTotalLigne = ActiviteDAO.getCountListActivite(latitude,
-						longitude, rayon, idtypeactivite);
-
-				pagination = new website.metier.Pagination(nbrTotalLigne,
-							1, Outils.nbrLigneParPage, Outils.nbrMaxPagination,
-							1);
-					
-					listActivite = ActiviteDAO.getListActivite(latitude,
-							longitude, rayon, idtypeactivite,
-							Outils.nbrLigneParPage, pagination.getDebut());
-				
-				request.setAttribute("nbrTotalLigne",Integer.toString(1) );
-				request.setAttribute("pageAafficher",Integer.toString(1));
-				
-				request.setAttribute("pagination", pagination);
-				request.setAttribute("listActivite", listActivite);
-				request.getRequestDispatcher("admin/listActivite.jsp").forward(
-						request, response);
-
-				return;
-			}
-
-		
 	}
 
 }

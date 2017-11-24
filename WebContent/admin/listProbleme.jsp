@@ -36,10 +36,10 @@
 	<%
 		ArrayList<EtatProbleme> listEtatProbleme = CacheValueDAO.getListEtatProbleme();
 			FitreAdminProbleme filtreProbleme=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
-			ArrayList<ProblemeBean> listProbleme = (ArrayList<ProblemeBean>) request
-					.getAttribute("listProbleme");
+			
 			PagerProblemeBean pager=(PagerProblemeBean) request
 					.getAttribute("pager");
+			ArrayList<ProblemeBean> listProbleme = pager.getListProbleme();
 	%>
 	<div class="container" style="margin-top: 50px">
 
@@ -90,7 +90,6 @@
 	
 		</br>
 
-
 	</div>
 
 
@@ -112,8 +111,8 @@
 				<%
 					
 				for (ProblemeBean prb : listProbleme) {
-					String lienEfface ="/wayd/EffaceProblemeAdmin?idProbleme="+prb.getId()+"&page="+pager.getPageEnCours()+"&action=supprime";
-					String lienLecture = "/wayd/ListProbleme?idmessage=" + prb.getId()+"&page="+pager.getPageEnCours()+"&action=clos";
+					String lienEfface ="/wayd/ListProbleme?idmessage="+prb.getId()+"&page="+pager.getPageEnCours()+"&action=supprime";
+					String lienLecture ="/wayd/ListProbleme?idmessage=" + prb.getId()+"&page="+pager.getPageEnCours()+"&action=clos";
 				%>
 
 				<tr>

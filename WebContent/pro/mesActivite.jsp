@@ -2,7 +2,7 @@
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 <%@page import="website.enumeration.AlertJsp"%>
-<%@page import="website.metier.FiltreJSP"%>
+<%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.Pagination"%>
@@ -40,7 +40,7 @@
 <script src="js/alertdialog.js"></script>
 
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
->
+
 
 </head>
 <body>

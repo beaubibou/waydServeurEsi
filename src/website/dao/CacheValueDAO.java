@@ -39,6 +39,7 @@ public class CacheValueDAO {
 	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
 	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<EtatProbleme>();
 	static ArrayList<EtatSuggestion> listTypeEtatSuggestion = new ArrayList<EtatSuggestion>();
+	static ArrayList<TypeActiviteBean> tousTypeActivite = new ArrayList<TypeActiviteBean>();
 	
 	
 	
@@ -71,7 +72,7 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 
 			rs = preparedStatement.executeQuery();
-			retour.add(new TypeActiviteBean(0, "Tous"));
+			retour.add(new TypeActiviteBean(TypeActiviteBean.TOUS, "Tous"));
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
@@ -313,29 +314,30 @@ public class CacheValueDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
-
+		
+		if (tousTypeActivite.size()>0)
+			return tousTypeActivite;
+				
 		try {
 			connexion = CxoPool.getConnection();
 
 			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
-
 			rs = preparedStatement.executeQuery();
-			retour.add(new TypeActiviteBean(0, "Tous"));
+			tousTypeActivite.add(new TypeActiviteBean(0, "Tous"));
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
-				retour.add(new TypeActiviteBean(id, libelle));
+				tousTypeActivite.add(new TypeActiviteBean(id, libelle));
 			}
 
-			return retour;
+			return tousTypeActivite;
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			return retour;
+			return tousTypeActivite;
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);

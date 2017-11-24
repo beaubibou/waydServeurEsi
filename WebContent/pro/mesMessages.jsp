@@ -3,7 +3,7 @@
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 <%@page import="website.enumeration.AlertJsp"%>
-<%@page import="website.metier.FiltreJSP"%>
+<%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeEtatMessage"%>
 <%@page import="website.metier.MessageBean"%>
 <%@page import="website.metier.Pagination"%>

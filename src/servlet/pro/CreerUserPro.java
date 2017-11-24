@@ -102,7 +102,8 @@ public class CreerUserPro extends HttpServlet {
 	
 		double latitude = 0;
 		double longitude = 0;
-			
+		
+	
 		if (request.getParameter("latitude") != null)
 		
 		 latitude = Double.parseDouble(request.getParameter("latitude"));
@@ -134,7 +135,8 @@ public class CreerUserPro extends HttpServlet {
 		}
 		
 		
-		
+
+	
 		MessageServeur messageServeurTestRequete=testParametreRequete(pwd,pwd1,email,pseudo,siret,
 				telephone,adresse,commentaire,latitude,longitude);
 			
@@ -155,9 +157,13 @@ public class CreerUserPro extends HttpServlet {
 			
 			if (messageCreerUserDAO.isReponse()){
 				
-				request.setAttribute("messageAlert", messageCreerUserDAO.getMessage());
-				request.setAttribute("typeMessage", AlertJsp.Sucess);
-				request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+//				request.setAttribute("messageAlert", messageCreerUserDAO.getMessage());
+//				request.setAttribute("typeMessage", AlertJsp.Sucess);
+//			
+//				request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+				
+				envoiMailConfirmation(request,response, email, pwd);
+				
 				return;
 			}
 			else
@@ -187,6 +193,15 @@ public class CreerUserPro extends HttpServlet {
 	}
 
 
+
+	private void envoiMailConfirmation(HttpServletRequest request,
+			HttpServletResponse response,String email,String pwd) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setAttribute("email", email);
+		request.setAttribute("pwd", pwd);
+		request.getRequestDispatcher("auth/sendEmail.jsp").forward(request, response);
+//
+	}
 
 	private void redirige(String pwd, String pwd1,
 			String email, String pseudo, String siret, String telephone,
@@ -275,7 +290,7 @@ public class CreerUserPro extends HttpServlet {
 						connexion);
 				personnedao.addComptePro(uuid, pseudo, email, adresse, siret, telephone,commentaire,siteweb, latitude, longitude);
 				connexion.commit();
-				return new MessageServeur(true,"Votre compte a été crée");
+				return new MessageServeur(true,"Votre compte a ï¿½tï¿½ crï¿½e");
 		
 			
 			} catch (SQLException | NamingException e) {

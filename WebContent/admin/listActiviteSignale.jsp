@@ -1,4 +1,4 @@
-<%@page import="website.metier.FiltreJSP"%>
+<%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="java.util.ArrayList"%>

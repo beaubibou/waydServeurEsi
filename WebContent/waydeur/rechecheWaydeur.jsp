@@ -3,7 +3,7 @@
 <%@page import="website.html.AlertInfoJsp"%>
 <%@page import="website.metier.QuandBean"%>
 <%@page import="website.metier.FiltreRecherche"%>
-<%@page import="website.metier.FiltreJSP"%>
+<%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.metier.TypeUser"%>

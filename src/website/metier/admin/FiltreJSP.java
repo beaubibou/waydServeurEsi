@@ -1,6 +1,6 @@
-package website.metier;
+package website.metier.admin;
 
-// Classe utilisée pour garder en memoire le filtre
+// Classe utilisï¿½e pour garder en memoire le filtre
 
 public class FiltreJSP {
 

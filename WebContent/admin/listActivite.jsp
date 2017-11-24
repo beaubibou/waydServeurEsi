@@ -1,8 +1,12 @@
 ationTags" prefix="paginationtag" %>
-<%@page import="website.metier.FiltreJSP"%>
+<%@page import="website.pager.PagerActiviteBean"%>
+<%@page import="website.dao.CacheValueDAO"%>
+<%@page import="website.metier.admin.FitreAdminActivites"%>
+<%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.Pagination"%>
+<%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -24,25 +28,14 @@ ationTags" prefix="paginationtag" %>
 	<%@ include file="menu.jsp"%>
 
 	<%
-		int rayon=10000000;
-		   	String ville="";
-		   	double latitude=0,longitude=0;
-		   
-		   	FiltreJSP filtre=(FiltreJSP)session.getAttribute("filtre");
-		   	
-		   	if (filtre!=null){
-		   	 	rayon=filtre.getRayon();
-		   		latitude=filtre.getLatitude();
-		   		longitude=filtre.getLongitude();
-		   		ville=filtre.getVille();
-		   	}
-		   	int nbrTotalLigne= Integer.valueOf((String)request.getAttribute("nbrTotalLigne"));
-			int pageAafficher=Integer.valueOf((String)request.getAttribute("pageAafficher"));
-			
-			
+		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
+			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+			PagerActiviteBean pager=(PagerActiviteBean) request
+					.getAttribute("pager");
+			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
-	
-	
+
+
 
 
 	<div class="container">
@@ -56,17 +49,35 @@ ationTags" prefix="paginationtag" %>
 				<label for="autocomplete">Ville:</label> <input
 					placeholder="Enter your address" onFocus="geolocate()" type="text"
 					class="form-control" id="autocomplete" name="autocomplete"
-					value="<%=ville%>"> <input type="hidden" step="any"
-					class="form-control" id="latitude" name="latitude"
-					value="<%=latitude%>"> <input type="hidden" step="any"
-					class="form-control" id="longitude" name="longitude"
-					value="<%=longitude%>"> <label for="rayon">Rayon:</label> <input
-					type="number" class="form-control" id="rayon" name="rayon"
-					value="<%=rayon%>"> <label for="sel1">Type activité</label>
-				
-				<typeactivite:typeactivites></typeactivite:typeactivites>
-				
-				
+					value="<%=filtre.getVille()%>"> <input type="hidden"
+					step="any" class="form-control" id="latitude" name="latitude"
+					value="<%=filtre.getLatitude()%>"> <input type="hidden"
+					step="any" class="form-control" id="longitude" name="longitude"
+					value="<%=filtre.getLongitude()%>"> <label for="rayon">Rayon:</label>
+				<input type="number" class="form-control" id="rayon" name="rayon"
+					value="<%=filtre.getRayon()%>">
+
+
+				<div class="form-group">
+					<label for="typeactivite">Etat</label> <select
+						data-style="btn-primary" class="form-control" id="typeactivite"
+						name="typeactivite">
+
+						<%
+							for (TypeActiviteBean typeActivite:listTypeActiviteBean) {
+						%>
+						<option value="<%=typeActivite.getId()%>"
+							<%=Outils.jspAdapterListSelected(typeActivite.getId(), filtre.getTypeactivite())%>>
+							<%=typeActivite.getLibelle()%></option>
+						<%
+							}
+						%>
+
+					</select>
+				</div>
+
+
+
 				<button id="go" type="submit" class="btn btn-default"
 					name="rechercheactivite">Rechercher</button>
 
@@ -88,13 +99,11 @@ ationTags" prefix="paginationtag" %>
 			</thead>
 			<tbody>
 				<%
-					ArrayList<ActiviteBean> listActivite = (ArrayList<ActiviteBean>) request
-																			.getAttribute("listActivite");
-												
-										if (listActivite!=null)
-											for (ActiviteBean activite : listActivite) {
-													String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-				%>
+					
+if (listActivite!=null)
+	for (ActiviteBean activite : listActivite) {
+			String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+%>
 
 				<tr>
 					<td><a href=<%out.println(lien);%>> <%=activite.getTitre()%></a></td>
@@ -112,6 +121,16 @@ ationTags" prefix="paginationtag" %>
 		</table>
 	</div>
 
+
+
+ <ul class="pager">
+ 
+  <li <%=pager.isPreviousHtml()%>> <a  href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
+ <li>Page N° <%=pager.getPageEnCours()%></li>
+  <li  <%=pager.isNextHtml()%>><a href="<%=pager.getLienNextHtml()%>">Next</a></li>
+
+
+</ul>
 	<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
@@ -167,47 +186,7 @@ ationTags" prefix="paginationtag" %>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
-	<%
-		if (filtre!=null) {
-	%>
-
-	<script type="text/javascript">
-document.getElementById("<%=filtre.getTypeactivite()%>").selected = true;
-	</script>
-	<%
-		}
-	%>
-
+	
 </body>
-<footer class="container-fluid bg-4 text-center">
-	<ul class="pagination">
 
-		<%
-			Pagination pagination = (Pagination) request
-					.getAttribute("pagination");
-		
-		
-			if (pagination != null) {
-				for (String numpage : pagination.getPagination()) {
-					if (Integer.valueOf(numpage) == pagination.getPage()) {
-		%>
-
-		<li class="active"><a href=ListActivite?pageAafficher=<%=numpage%>><%=numpage%></a></li>
-
-		<%
-			} else {
-		%>
-		<li><a href=ListActivite?pageAafficher=<%=numpage%>><%=numpage%></a></li>
-
-		<%
-			}
-				}
-			}
-		%>
-
-	</ul>
-
-	
-	
-</footer>
 </html>

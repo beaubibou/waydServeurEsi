@@ -1,7 +1,7 @@
 package website.metier;
 
 public class TypeActiviteBean {
-	
+	public static  final int TOUS=0;
 	public int id;
 	public String libelle;
 	public String photo;

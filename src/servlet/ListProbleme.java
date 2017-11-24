@@ -61,14 +61,16 @@ public class ListProbleme extends HttpServlet {
 
 		FitreAdminProbleme filtreProbleme = (FitreAdminProbleme) session
 				.getAttribute("filtreProbleme");
+		
 		int etatProbleme = filtreProbleme.getEtatProbleme();
 		DateTime dateDebut = filtreProbleme.getDateDebutCreation();
 		DateTime dateFin = filtreProbleme.getDateFinCreation();
 
 		String action=(String) request.getParameter("action");
 		
+		// ******************ACTION EN FONCTION DE LA DEMANDE
 		doAction(action,request);
-		
+		// *****************************************************
 		
 		if (request.getParameter("etatProbleme") != null) {
 			etatProbleme = Integer.parseInt((String) request
@@ -119,8 +121,7 @@ public class ListProbleme extends HttpServlet {
 		// filtreProbleme.getDateDebutCreation(),
 		// filtreProbleme.getDateFinCreation());
 		//
-		request.setAttribute("listProbleme",
-				pagerProblemeBean.getListProbleme());
+	
 		request.setAttribute("pager", pagerProblemeBean);
 		request.getRequestDispatcher("admin/listProbleme.jsp").forward(request,
 				response);
@@ -129,22 +130,38 @@ public class ListProbleme extends HttpServlet {
 
 	private void doAction(String action,HttpServletRequest request) {
 		// TODO Auto-generated method stub
+		System.out.println("action="+action);
 	
+		int idMessage = 0;
+		MessageServeur messageServeur=new MessageServeur(false,"nok");
 	
-		
 		if (action==null)return;
 		
 		switch (action){
 		
 		case "clos":
 			
-			int idMessage = 0;
+			
 
 			if (request.getParameter("idmessage") != null) {
 				idMessage = Integer.parseInt(request.getParameter("idmessage"));
 			}
 
-			MessageServeur messageServeur = ProblemeDAO.lireProbleme(idMessage);
+			 messageServeur = ProblemeDAO.lireProbleme(idMessage);
+	
+			break;	
+		
+		case "supprime":
+			
+			
+		
+			if (request.getParameter("idmessage") != null) {
+				idMessage = Integer.parseInt(request.getParameter("idmessage"));
+			}
+
+			System.out.println("action=surrpiem"+idMessage);
+			
+			ProblemeDAO.supprime(idMessage);
 	
 			break;	
 		
