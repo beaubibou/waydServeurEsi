@@ -1,6 +1,8 @@
 package website.metier;
 
 public class TypeUser {
+	public final static int TOUS = 0, PRO = 1, WAYDEUR = 3;
+	
 	int id;
 	String libelle;
 	public TypeUser(int id, String libelle) {

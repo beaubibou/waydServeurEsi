@@ -182,6 +182,7 @@ public class ActiviteBean {
 	}
 
 	private ArrayList<ParticipantBean> listParticipant = new ArrayList<ParticipantBean>();
+	private int nbrSignalement;
 
 	public String getDatefinStr() {
 		return datefinStr;
@@ -349,7 +350,7 @@ public class ActiviteBean {
 			int idtypeactivite, double latitude, double longitude, String nom,
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
-			int typeUser, int typeAcces, String libelleActivite, String adresse) {
+			int typeUser, int typeAcces, String libelleActivite, String adresse,int nbrSignalement) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -373,9 +374,17 @@ public class ActiviteBean {
 		this.typeUser = typeUser;
 		this.libelleActivite = libelleActivite;
 		this.adresse = adresse;
-
+this.nbrSignalement=nbrSignalement;
 		// TODO Auto-generated constructor stub
 
+	}
+
+	public int getNbrSignalement() {
+		return nbrSignalement;
+	}
+
+	public void setNbrSignalement(int nbrSignalement) {
+		this.nbrSignalement = nbrSignalement;
 	}
 
 	private long getSeTermine(Date finActivite) {// calcul en miliseconde le
@@ -656,5 +665,17 @@ public class ActiviteBean {
 		if (!isTerminee())
 			return "<input type='checkbox' id='moncheck'>";
 		return "";
+	}
+	
+	public String getTypeUserHTML(){
+		
+		if (typeUser==TypeUser.PRO)
+			return "<span style='color: blue;'	class='glyphicon glyphicon-usd'></span>";
+
+		if (typeUser==TypeUser.WAYDEUR)
+			return "<span style='color: black;'	class='glyphicon glyphicon-user'></span>";
+
+			return "";
+		
 	}
 }

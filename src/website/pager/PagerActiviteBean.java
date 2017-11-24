@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.admin.FitreAdminActivites;
 
 public class PagerActiviteBean {
 
@@ -15,14 +16,12 @@ public class PagerActiviteBean {
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
 
-	public PagerActiviteBean(double latitude, double longitude, int rayon,
-			int typeActivite,int pageEnCours) {
+	public PagerActiviteBean(FitreAdminActivites filtre, int pageEnCours) {
 
 		this.pageEnCours = pageEnCours;
 
 		// On recherhce les maxresult+1 si on
-		listActivite =ActiviteDAO.getListActivite(latitude,
-			longitude,rayon,typeActivite,pageEnCours, maxResult + 1);;
+		listActivite =ActiviteDAO.getListActivite(filtre,pageEnCours, maxResult + 1);;
 
 		if (listActivite.size() == maxResult + 1) {
 			hasNext = true;

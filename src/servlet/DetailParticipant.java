@@ -53,7 +53,7 @@ public class DetailParticipant extends HttpServlet {
 		
 		if (request.getParameter("actif") != null) {// active le profil
 			int idParticipant = Integer.parseInt(request
-					.getParameter("idparticipant"));
+					.getParameter("idPersonne"));
 
 			PersonneDAO.activerProfil(idParticipant, true);
 
@@ -62,7 +62,7 @@ public class DetailParticipant extends HttpServlet {
 		if (request.getParameter("inactif") != null) {// desactive le profil
 
 			int idParticipant = Integer.parseInt(request
-					.getParameter("idparticipant"));
+					.getParameter("idPersonne"));
 			PersonneDAO.activerProfil(idParticipant, false);
 
 		}
@@ -88,13 +88,13 @@ public class DetailParticipant extends HttpServlet {
 		// l'appel de la servelt peut venir d'une servlet ou d'une page
 
 		int idParticipant = 0;
-		if (request.getParameter("idparticipant") != null)
+		if (request.getParameter("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
-					.getParameter("idparticipant"));
+					.getParameter("idPersonne"));
 
-		if (request.getAttribute("idparticipant") != null)
+		if (request.getAttribute("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
-					.getAttribute("idparticipant"));
+					.getAttribute("idPersonne"));
 
 		// Creation de l'objet profil complet ami+activit�
 

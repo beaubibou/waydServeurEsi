@@ -1,12 +1,29 @@
 package website.metier.admin;
 
 import website.metier.TypeActiviteBean;
+import website.metier.TypeSignalement;
+import website.metier.TypeUser;
 
 public class FitreAdminActivites {
 	int rayon,typeactivite;
 	String ville;
 	double latitude,longitude;
+	int typeUser;
+	int typeSignalement;
 	
+	
+	public int getTypeSignalement() {
+		return typeSignalement;
+	}
+	public void setTypeSignalement(int typeSignalement) {
+		this.typeSignalement = typeSignalement;
+	}
+	public int getTypeUser() {
+		return typeUser;
+	}
+	public void setTypeUser(int typeUser) {
+		this.typeUser = typeUser;
+	}
 	public int getRayon() {
 		return rayon;
 	}
@@ -59,6 +76,8 @@ public class FitreAdminActivites {
 		this.ville = "Paris";
 		this.latitude = 48;
 		this.longitude = 2;
+		typeUser=TypeUser.TOUS;
+		typeSignalement=TypeSignalement.TOUS;
 		
 	}
 }

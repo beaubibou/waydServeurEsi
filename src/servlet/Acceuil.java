@@ -54,8 +54,8 @@ public class Acceuil extends HttpServlet {
 			session.setAttribute("filtreSuggestion",
 					new FitreAdminSuggestions());
 
-		if (session.getAttribute("filtreProfils") == null)
-			session.setAttribute("filtreProfils", new FitreAdminProfils());
+		if (session.getAttribute("filtreProfil") == null)
+			session.setAttribute("filtreProfil", new FitreAdminProfils());
 
 		if (session.getAttribute("filtreActivite") == null)
 			session.setAttribute("filtreActivite", new FitreAdminActivites());

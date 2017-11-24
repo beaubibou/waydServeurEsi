@@ -43,14 +43,14 @@
 
 			if (profil.isActif()) {
 				libelleBoutonActif = "Désactiver";
-				lienBoutonActif = "DetailParticipant?inactif=true&idparticipant="
+				lienBoutonActif = "DetailParticipant?inactif=true&idPersonne="
 						+ idParticipant;
 
 			}
 
 			else {
 				libelleBoutonActif = "Activer";
-				lienBoutonActif = "DetailParticipant?actif=true&idparticipant="
+				lienBoutonActif = "DetailParticipant?actif=true&idPersonne="
 						+ idParticipant;
 
 			}
@@ -97,7 +97,7 @@
 			<div class="col-sm-6"">
 				<a href=<%out.println(lienBoutonActif);%> class="btn btn-info"
 					role="button"> <%
- 	out.println(libelleBoutonActif);
+ 				out.println(libelleBoutonActif);
  %></a>
 			</div>
 		</div>
@@ -114,7 +114,7 @@
 			<label for="comment">Message</label>
 			<textarea name="message" class="form-control" rows="5" id="comment"></textarea>
 			</div>
-			<input type="hidden" name="idDestinataire" value="<%=idParticipant%>">
+			<input type="hidden" name="idPersonne" value="<%=idParticipant%>">
 			<input type="hidden" name="formInit" value="detailParticipant">
 			<button type="submit" class="btn btn-primary">Envoyer un message</button>
 
@@ -189,7 +189,7 @@
 
 					<tr>
 						<td><a href=<%out.println(lien);%>> <%
- 	out.println(activite.getTitre());
+ 						out.println(activite.getTitre());
  %>
 						</a></td>
 						<td>

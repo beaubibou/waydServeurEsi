@@ -36,6 +36,10 @@ import website.metier.ProfilBean;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
+import website.metier.TypeEtatProfil;
+import website.metier.TypeSignalement;
+import website.metier.TypeUser;
+import website.metier.admin.FitreAdminActivites;
 import fcm.ServeurMethodes;
 import gcmnotification.EffaceActiviteGcm;
 
@@ -561,12 +565,13 @@ public class ActiviteDAO {
 
 				int totalavis = rs.getInt("totalavis");
 				String libelleActivite = rs.getString("libelleActivite");
-
+				int nbrSignalement = 0;
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse);
+						typeUser, typeAcces, libelleActivite, adresse,
+						nbrSignalement);
 
 				retour.add(activite);
 
@@ -631,12 +636,13 @@ public class ActiviteDAO {
 
 				int totalavis = rs.getInt("totalavis");
 				String libelleActivite = rs.getString("libelleActivite");
-
+				int nbrSignalement = 0;
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse);
+						typeUser, typeAcces, libelleActivite, adresse,
+						nbrSignalement);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
 						connexion).getListPaticipant(idActivite);
@@ -1109,11 +1115,17 @@ public class ActiviteDAO {
 
 	}
 
-	public static ArrayList<ActiviteBean> getListActivite(double malatitude,
-			double malongitude, int rayonmetre, int typeactivite, int page,
-			int maxResult) {
+	public static ArrayList<ActiviteBean> getListActivite(
+			FitreAdminActivites filtre, int page, int maxResult) {
 
 		int offset = (maxResult) * page;
+
+		int typeactivite = filtre.getTypeactivite();
+		int typeUser_ = filtre.getTypeUser();
+		int rayonmetre = filtre.getRayon();
+		int typeSignalement = filtre.getTypeSignalement();
+		double malatitude = filtre.getLatitude();
+		double malongitude = filtre.getLongitude();
 
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
@@ -1121,74 +1133,84 @@ public class ActiviteDAO {
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
 
-		System.out.println("latmin"+latMin);
-		System.out.println("latlonn"+latMax);
-		
-		System.out.println("lonMin"+longMin);
-		System.out.println("lonMax"+longMax);
-		
-		System.out.println("maxresul"+maxResult);
+		System.out.println("latmin" + latMin);
+		System.out.println("latlonn" + latMax);
+
+		System.out.println("lonMin" + longMin);
+		System.out.println("lonMax" + longMax);
+
+		System.out.println("maxresul" + maxResult);
+		System.out.println("pageencour" + page);
+		System.out.println("offset" + offset);
 		ActiviteBean activite = null;
-		
+
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
 		Connection connexion = null;
+
 		try {
 
 			connexion = CxoPool.getConnection();
-			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur l'activité
-				String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-						+ "personne.note,personne.nbravis as totalavis,personne.photo,"
-						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-						+ "activite.idactivite,type_activite.nom as libelleActivite,activite.libelle,activite.titre,activite.typeuser,activite.typeacces,activite.d_finactivite,activite.datefin,activite.idtypeactivite,activite.nbmaxwayd "
-						+ " FROM personne,activite,type_activite"
-						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ?"
-						+ " ORDER BY datedebut  desc limit ?  offset ?";
-				
-				preparedStatement = connexion.prepareStatement(requete);
-				preparedStatement.setInt(1, typeactivite);
-				preparedStatement.setDouble(2, latMin);
-				preparedStatement.setDouble(3, latMax);
-				preparedStatement.setDouble(4, longMin);
-				preparedStatement.setDouble(5, longMax);
-				preparedStatement.setInt(6, maxResult);
-				preparedStatement.setInt(7, offset);
-				rs = preparedStatement.executeQuery();
+
+			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+					+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+					+ "personne.note,personne.nbravis as totalavis,personne.photo,"
+					+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
+					+ "activite.idactivite,type_activite.nom as libelleActivite,activite.libelle,activite.titre,"
+					+ "activite.typeuser,activite.typeacces,activite.d_finactivite,activite.datefin,"
+					+ "activite.idtypeactivite,activite.nbmaxwayd,"
+					+ " (SELECT COUNT(*) FROM signaler_activite where signaler_activite.idactivite=activite.idactivite ) as nbrsignalement "
+					+ " FROM personne,activite,type_activite"
+					+ "  WHERE personne.idpersonne = activite.idpersonne and  type_activite.idtypeactivite=activite.idtypeactivite "
+					+ " and activite.latitude between ? and ?"
+					+ " and activite.longitude between ? and ? ";
+
+			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
+														// l'activité
+
+				requete = requete + " and activite.idtypeactivite=? ";
 
 			}
 
-			else {
-				System.out.println("renovue tout");
-				// On renvou toutes
-				System.out.println("maxresul"+maxResult);
-				System.out.println("offser"+offset);
-				String requete = " SELECT activite.datedebut,activite.adresse,activite.latitude,activite.longitude,personne.prenom,"
-						+ "personne.sexe,personne.nom,personne.idpersonne,personne.datenaissance,personne.note,personne.nbravis as totalavis,personne.photo,"
-						+ "activite.nbrwaydeur as nbrparticipant,activite.idactivite,activite.libelle,activite.titre,"
-						+ "activite.datefin,activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite,activite.adresse "
-						+ "FROM personne, activite,type_activite "
-						+ " WHERE type_activite.idtypeactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne    "
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ?"
-						+ " ORDER BY datedebut desc limit ?  offset ?";
-				preparedStatement = connexion.prepareStatement(requete);
-				preparedStatement.setDouble(1, latMin);
-				preparedStatement.setDouble(2, latMax);
-				preparedStatement.setDouble(3, longMin);
-				preparedStatement.setDouble(4, longMax);
-				preparedStatement.setInt(5, maxResult);
-				preparedStatement.setInt(6, offset);
+			if (typeUser_ != TypeUser.TOUS) {// on trie sur l'activité
 
-				rs = preparedStatement.executeQuery();
+				requete = requete + " and activite.typeuser=? ";
 
 			}
+
+			requete = requete
+					+ " order by activite.datecreation desc limit ?  offset ?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setDouble(1, latMin);
+			preparedStatement.setDouble(2, latMax);
+			preparedStatement.setDouble(3, longMin);
+			preparedStatement.setDouble(4, longMax);
+
+			int index = 5;
+
+			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
+														// l'activité
+
+				preparedStatement.setInt(index, typeactivite);
+				index++;
+			}
+
+			if (typeUser_ != TypeUser.TOUS) {// on trie sur l'activité
+
+				preparedStatement.setInt(index, typeUser_);
+				index++;
+
+			}
+
+			preparedStatement.setInt(index, maxResult);
+			index++;
+			preparedStatement.setInt(index, offset);
+
+			rs = preparedStatement.executeQuery();
+
 			while (rs.next()) {
 
-				System.out.println("dqjksdj");
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
 				double distance = ServeurMethodes.getDistance(malatitude,
@@ -1219,11 +1241,18 @@ public class ActiviteDAO {
 
 				String libelleActivite = rs.getString("libelleActivite");
 				String adresse = rs.getString("adresse");
+				int nbrSignalement = rs.getInt("nbrsignalement");
+
+				System.out.println("nbr singame"+nbrSignalement);
+				
+				
+
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse);
+						typeUser, typeAcces, libelleActivite, adresse,
+						nbrSignalement);
 
 				retour.add(activite);
 
@@ -1510,14 +1539,15 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+				int nbrSignalement = 0;
 				String libelleActivite = rs.getString("libelleActivite");
 				String adresse = rs.getString("adresse");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse);
+						typeUser, typeAcces, libelleActivite, adresse,
+						nbrSignalement);
 
 				retour.add(activite);
 

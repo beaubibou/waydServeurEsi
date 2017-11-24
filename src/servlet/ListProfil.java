@@ -9,56 +9,133 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import wayde.bean.MessageServeur;
 import website.dao.PersonneDAO;
+import website.dao.ProblemeDAO;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
+import website.metier.admin.FitreAdminActivites;
+import website.metier.admin.FitreAdminProfils;
+import website.pager.PagerActiviteBean;
+import website.pager.PagerProfilBean;
 
 /**
  * Servlet implementation class ListProfil
  */
 public class ListProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ListProfil() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ListProfil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
 			return;
+
+		HttpSession session = request.getSession();
+
+		FitreAdminProfils filtreProfil = (FitreAdminProfils) session
+				.getAttribute("filtreProfil");
+
+		metAjourFiltre(request, response, filtreProfil);
 		
+		String action=request.getParameter("action");
 		
-				ArrayList<ProfilBean> 	listProfil= new ArrayList<ProfilBean>();
-				listProfil=PersonneDAO.getListProfil();
-				request.setAttribute("listProfil", listProfil);
-				request.getRequestDispatcher("admin/listProfil.jsp").forward(request, response);
-			
-			
+		doAction(action,request);
+
+		int page = 0;
+
+		if (request.getParameter("page") != null)
+			page = Integer.parseInt(request.getParameter("page"));
+
 		
+		PagerProfilBean pager = new PagerProfilBean(filtreProfil, page);
+
+		request.setAttribute("pager", pager);
+
+		request.getRequestDispatcher("admin/listProfil.jsp").forward(request,
+				response);
+
+		return;
+
+	}
+
+	private void doAction(String action,HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		System.out.println("action="+action);
 	
+		int idPersonne = 0;
 	
+		if (action==null)return;
+		
+		switch (action){
+		
+		case "desactive":
+			
+		
+			if (request.getParameter("idPersonne") != null) {
+				idPersonne = Integer.parseInt(request.getParameter("idPersonne"));
+			}
+
+			 PersonneDAO.activerProfil(idPersonne, false);
+	
+			break;	
+		
+			case "active":
+			
+		
+			if (request.getParameter("idPersonne") != null) {
+				idPersonne = Integer.parseInt(request.getParameter("idPersonne"));
+			}
+
+			 PersonneDAO.activerProfil(idPersonne, true);
+	
+			break;	
+		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	doGet(request, response);
-	
-		
-		
+		doGet(request, response);
+
 	}
 
+	private void metAjourFiltre(HttpServletRequest request,
+			HttpServletResponse response, FitreAdminProfils filtre) {
+		// TODO Auto-generated method stub
+
+		if (request.getParameter("typeUser") != null) {
+			int typeUser = Integer.parseInt(request.getParameter("typeUser"));
+			filtre.setTypeUser(typeUser);
+		}
+		
+		
+		
+		if (request.getParameter("etatProfil") != null) {
+			int etatUser = Integer.parseInt(request.getParameter("etatProfil"));
+			filtre.setEtatProfil(etatUser);
+		}
+
+		filtre.setPseudo(request.getParameter("pseudo"));
+
+	}
 }

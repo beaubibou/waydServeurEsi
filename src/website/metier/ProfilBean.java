@@ -285,7 +285,7 @@ public class ProfilBean {
 
 	public String getAgeStr(Date datenaissance, boolean afficheage) {
 		if (afficheage)
-			return "Masqué";
+			return "Masquï¿½";
 		if (datenaissance != null) {
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -298,11 +298,11 @@ public class ProfilBean {
 			if (yeardiff < 0)
 				return "Erreur";
 			if (yeardiff == 0)
-				return "Pas d'age indiqué";
+				return "Pas d'age indiquï¿½";
 			return Integer.toString(yeardiff) + " ans";
 		}
 
-		return "Pas d'age indiqué";
+		return "Pas d'age indiquï¿½";
 	}
 
 	public int getNbractivite() {
@@ -452,6 +452,30 @@ public class ProfilBean {
 		this.adresse = adresse;
 	}
 
+	public String getActifHtml(){
+		
+		if (!isActif())
+			return "<span style='color: red;'	class='glyphicon glyphicon-stop'></span>";
+
+		if (isActif())
+			return "<span style='color: green;'	class='glyphicon glyphicon-play'></span>";
+
+			return "";
+		
+	}
+	
+	public String getLienActive(){
+	
+		if (!isActif())
+	
+			return "/wayd/ListProfil?idPersonne=" +id+"&action=active";
+		
+		if (isActif())
+			return "/wayd/ListProfil?idPersonne=" +id+"&action=desactive";
+		
+		return "";
+		
+	}
 	@Override
 	public String toString() {
 		return "ProfilBean [id=" + id + ", nom=" + nom + ", pseudo=" + pseudo

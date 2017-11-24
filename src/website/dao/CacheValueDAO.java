@@ -24,6 +24,8 @@ import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
+import website.metier.TypeEtatProfil;
+import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.EtatProbleme;
 import website.metier.admin.EtatSuggestion;
@@ -431,6 +433,32 @@ public class CacheValueDAO {
 		return listQuand;
 
 	}
+	
+	public static ArrayList<TypeEtatProfil> getListEtatProfil() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatProfil> listEtat = new ArrayList<TypeEtatProfil>();
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, "Tous"));
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.ACTIF, "Actif"));
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.INACTIF, "Inactif"));
+		
+		return listEtat;
+
+	}
+	
+	public static ArrayList<TypeSignalement> getListTypeSignalement() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
+		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
+		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
+		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins une"));
+		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, "Tous"));
+		
+		return listEtat;
+
+	}
+
 
 	public static String getPhotoTypeActivite(Integer idType) {
 

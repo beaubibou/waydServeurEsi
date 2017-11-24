@@ -64,9 +64,7 @@ public class ListActivite extends HttpServlet {
 
 		System.out.println(filtreActivite);
 		
-		PagerActiviteBean pager = new PagerActiviteBean(
-				filtreActivite.getLatitude(), filtreActivite.getLongitude(),
-				filtreActivite.getRayon(), filtreActivite.getTypeactivite(),
+		PagerActiviteBean pager = new PagerActiviteBean(filtreActivite,
 				page);
 
 		request.setAttribute("pager", pager);
@@ -96,7 +94,19 @@ public class ListActivite extends HttpServlet {
 			int rayon = Integer.parseInt(request.getParameter("rayon"));
 			filtreActivite.setRayon(rayon);
 		}
-
+		
+		if (request.getParameter("typeUser") != null) {
+			int typeUser = Integer.parseInt(request
+					.getParameter("typeUser"));
+			filtreActivite.setTypeUser(typeUser);
+		}
+		
+		if (request.getParameter("typeSignalement") != null) {
+			int typeSignalement = Integer.parseInt(request
+					.getParameter("typeSignalement"));
+			filtreActivite.setTypeSignalement(typeSignalement);
+		}
+		
 		if (request.getParameter("typeactivite") != null) {
 			int typeactivite = Integer.parseInt(request
 					.getParameter("typeactivite"));

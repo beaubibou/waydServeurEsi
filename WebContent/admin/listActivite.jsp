@@ -1,4 +1,5 @@
-ationTags" prefix="paginationtag" %>
+
+<%@page import="website.metier.TypeSignalement"%>
 <%@page import="website.pager.PagerActiviteBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.admin.FitreAdminActivites"%>
@@ -8,6 +9,7 @@ ationTags" prefix="paginationtag" %>
 <%@page import="website.metier.Pagination"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.TypeUser"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -29,10 +31,12 @@ ationTags" prefix="paginationtag" %>
 
 	<%
 		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
-			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
-			PagerActiviteBean pager=(PagerActiviteBean) request
-					.getAttribute("pager");
-			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
+		ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+		ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalement();
+		PagerActiviteBean pager=(PagerActiviteBean) request
+				.getAttribute("pager");
+		ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
 
 
@@ -57,9 +61,26 @@ ationTags" prefix="paginationtag" %>
 				<input type="number" class="form-control" id="rayon" name="rayon"
 					value="<%=filtre.getRayon()%>">
 
+				<div class="form-group">
+					<label for="typeUser">Type</label> <select data-style="btn-primary"
+						class="form-control" id="typeUser" name="typeUser">
+
+						<%
+							for (TypeUser typeuser:listTypeUser) {
+						%>
+						<option value="<%=typeuser.getId()%>"
+							<%=Outils.jspAdapterListSelected(typeuser.getId(), filtre.getTypeUser())%>>
+							<%=typeuser.getLibelle()%></option>
+						<%
+							}
+						%>
+
+					</select>
+				</div>
+
 
 				<div class="form-group">
-					<label for="typeactivite">Etat</label> <select
+					<label for="typeactivite">Cat.</label> <select
 						data-style="btn-primary" class="form-control" id="typeactivite"
 						name="typeactivite">
 
@@ -69,6 +90,24 @@ ationTags" prefix="paginationtag" %>
 						<option value="<%=typeActivite.getId()%>"
 							<%=Outils.jspAdapterListSelected(typeActivite.getId(), filtre.getTypeactivite())%>>
 							<%=typeActivite.getLibelle()%></option>
+						<%
+							}
+						%>
+
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label for="typeSignalement">Signalement</label> <select
+						data-style="btn-primary" class="form-control" id="typeSignalement"
+						name="typeSignalement">
+
+						<%
+							for (TypeSignalement typeSignalement:listTypeSignalement) {
+						%>
+						<option value="<%=typeSignalement.getId()%>"
+							<%=Outils.jspAdapterListSelected(typeSignalement.getId(), filtre.getTypeSignalement())%>>
+							<%=typeSignalement.getLibelle()%></option>
 						<%
 							}
 						%>
@@ -91,6 +130,7 @@ ationTags" prefix="paginationtag" %>
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th style="width: 10%;" class="text-center">User</th>
 					<th>Titre</th>
 					<th>Organisateur</th>
 					<th>Date fin</th>
@@ -99,13 +139,13 @@ ationTags" prefix="paginationtag" %>
 			</thead>
 			<tbody>
 				<%
-					
-if (listActivite!=null)
-	for (ActiviteBean activite : listActivite) {
-			String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-%>
+					if (listActivite!=null)
+					for (ActiviteBean activite : listActivite) {
+					String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+				%>
 
 				<tr>
+				<td><%=activite.getTypeUserHTML() %>
 					<td><a href=<%out.println(lien);%>> <%=activite.getTitre()%></a></td>
 					<td><%=activite.getPseudo()%></td>
 					<td><%=activite.getDatefinStr()%></td>
@@ -123,14 +163,16 @@ if (listActivite!=null)
 
 
 
- <ul class="pager">
- 
-  <li <%=pager.isPreviousHtml()%>> <a  href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
- <li>Page N° <%=pager.getPageEnCours()%></li>
-  <li  <%=pager.isNextHtml()%>><a href="<%=pager.getLienNextHtml()%>">Next</a></li>
+	<ul class="pager">
+
+		<li <%=pager.isPreviousHtml()%>><a
+			href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
+		<li>Page N° <%=pager.getPageEnCours()%></li>
+		<li <%=pager.isNextHtml()%>><a
+			href="<%=pager.getLienNextHtml()%>">Next</a></li>
 
 
-</ul>
+	</ul>
 	<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
@@ -186,7 +228,7 @@ if (listActivite!=null)
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
-	
+
 </body>
 
 </html>

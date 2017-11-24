@@ -17,6 +17,9 @@ import wayde.bean.CxoPool;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+import website.metier.TypeEtatProfil;
+import website.metier.TypeUser;
+import website.metier.admin.FitreAdminProfils;
 
 public class PersonneDAO {
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
@@ -110,7 +113,6 @@ public class PersonneDAO {
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
 				String adresse = rs.getString("adresse");
-
 				String telephone = rs.getString("telephone");
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
@@ -134,6 +136,138 @@ public class PersonneDAO {
 			e.printStackTrace();
 			return retour;
 		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+	}
+
+	public static ArrayList<ProfilBean> getListProfil(FitreAdminProfils filtre,
+			int page, int maxResult) {
+
+		int offset = (maxResult) * page;
+		int typeUser = filtre.getTypeUser();
+		String pseudo = filtre.getPseudo();
+		int etatProfil=filtre.getEtatProfil();
+	
+		pseudo=pseudo.replace("*", "%");
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ProfilBean profil = null;
+		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
+		//
+		int index = 1;
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = " SELECT personne.note,personne.nbravis,"
+					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
+					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
+					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
+					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
+					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
+					+ "  mail, cleactivation,commentaire, photo,typeuser,"
+					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret  FROM personne where 1=1";
+
+			if (typeUser != TypeUser.TOUS) {
+				requete = requete + " and typeuser=?";
+			}
+
+			
+			if (pseudo != null) {
+				if (!pseudo.isEmpty())
+					requete = requete + " and prenom like ?";
+			}
+
+			if (etatProfil != TypeEtatProfil.TOUTES) {
+				switch(etatProfil)
+				{
+				case TypeEtatProfil.ACTIF:
+				requete = requete + " and actif=true";
+				break;
+				case TypeEtatProfil.INACTIF:
+				requete = requete + " and actif=false";
+				
+				}
+				}
+			
+				
+			
+			
+			requete = requete + " order by datecreation desc limit ?  offset ?";
+
+			// *********************************************************************
+			preparedStatement = connexion.prepareStatement(requete);
+
+			if (typeUser != TypeUser.TOUS) {
+
+				preparedStatement.setInt(index, typeUser);
+				index++;
+			}
+
+			if (pseudo != null) {
+				if (!pseudo.isEmpty()) {
+					preparedStatement.setString(index, pseudo);
+					index++;
+				}
+			}
+
+			preparedStatement.setInt(index, maxResult);
+			index++;
+			preparedStatement.setInt(index, offset);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("idpersonne");
+				int nbravis = rs.getInt("nbravis");
+				int nbractivite = rs.getInt("nbractivite");
+				int nbrparticipation = rs.getInt("nbrparticipation");
+				int nbrami = rs.getInt("nbrami");
+				String commentaire = rs.getString("commentaire");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				Date datecreation = rs.getTimestamp("datecreation");
+				Date datenaissance = rs.getTimestamp("datenaissance");
+				boolean afficheage = rs.getBoolean("afficheage");
+				boolean affichesexe = rs.getBoolean("affichesexe");
+				boolean actif = rs.getBoolean("actif");
+				String photo = rs.getString("photo");
+				int sexe = rs.getInt("sexe");
+				double note = rs.getDouble("note");
+				boolean admin = rs.getBoolean("admin");
+				int typeuser = rs.getInt("typeuser");
+				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				String adresse = rs.getString("adresse");
+
+				String telephone = rs.getString("telephone");
+				String siteWeb = rs.getString("siteweb");
+				double latitudeFixe = rs.getDouble("latitudefixe");
+				double longitudeFixe = rs.getDouble("longitudefixe");
+				String siret = rs.getString("siret");
+				profil = new ProfilBean(id, nom, prenom, datecreation,
+						datenaissance, nbravis, sexe, nbractivite,
+						nbrparticipation, nbrami, note, photo, affichesexe,
+						afficheage, commentaire, actif, admin, typeuser,
+						premiereconnexion, latitude, longitude, adresse,
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
+
+				retour.add(profil);
+
+			}
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 

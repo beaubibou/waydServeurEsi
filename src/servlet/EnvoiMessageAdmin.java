@@ -41,9 +41,9 @@ public class EnvoiMessageAdmin extends HttpServlet {
 		int idDestinataire = 0;
 		int idMessage = 0;
 
-		if (request.getParameter("idDestinataire") != null)
+		if (request.getParameter("idPersonne") != null)
 			idDestinataire = Integer.parseInt((String) request
-					.getParameter("idDestinataire"));
+					.getParameter("idPersonne"));
 
 		if (request.getParameter("idMessage") != null)
 			idMessage = Integer.parseInt((String) request
@@ -78,9 +78,9 @@ public class EnvoiMessageAdmin extends HttpServlet {
 		boolean clore = false;
 		String message = "";
 
-		if (request.getParameter("idDestinataire") != null)
+		if (request.getParameter("idPersonne") != null)
 			idDestinataire = Integer.parseInt((String) request
-					.getParameter("idDestinataire"));
+					.getParameter("idPersonne"));
 
 		if (request.getParameter("idMessage") != null)
 			idMessage = Integer.parseInt((String) request
@@ -107,7 +107,7 @@ public class EnvoiMessageAdmin extends HttpServlet {
 
 		case "detailParticipant":
 
-			request.setAttribute("idparticipant", Integer.toString(idDestinataire));
+			request.setAttribute("idPersonne", Integer.toString(idDestinataire));
 			request.getRequestDispatcher("DetailParticipant").forward(request,
 					response);
 			break;
