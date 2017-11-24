@@ -1118,7 +1118,7 @@ public class ActiviteDAO {
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
 
-		int offset = (maxResult) * page;
+		int offset = (maxResult-1) * page;
 
 		int typeactivite = filtre.getTypeactivite();
 		int typeUser_ = filtre.getTypeUser();
@@ -1179,6 +1179,30 @@ public class ActiviteDAO {
 
 			}
 
+			
+//			switch (typeSignalement) {
+//
+//			case TypeSignalement.AUMOINSUNE:
+//			
+//				break;
+//
+//			case TypeSignalement.MOINSDE10:
+//				
+//				
+//
+//				break;
+//			case TypeSignalement.PLUSDE10:
+//
+//
+//				break;
+//
+//			case TypeSignalement.TOUS:
+//
+//				break;
+//			}
+			
+			
+			
 			requete = requete
 					+ " order by activite.datecreation desc limit ?  offset ?";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -1243,9 +1267,10 @@ public class ActiviteDAO {
 				String adresse = rs.getString("adresse");
 				int nbrSignalement = rs.getInt("nbrsignalement");
 
-				System.out.println("nbr singame"+nbrSignalement);
 				
 				
+				if (nbrSignalement==6)
+					System.out.println("nbr singame"+nbrSignalement);
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,

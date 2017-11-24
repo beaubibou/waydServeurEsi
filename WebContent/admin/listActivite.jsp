@@ -135,6 +135,7 @@
 					<th>Organisateur</th>
 					<th>Date fin</th>
 					<th>Active</th>
+					<th>Nbr Signalement</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -150,6 +151,7 @@
 					<td><%=activite.getPseudo()%></td>
 					<td><%=activite.getDatefinStr()%></td>
 					<td><%=activite.isActiveStr()%></td>
+					<td><%=activite.getNbrSignalement()%></td>
 
 				</tr>
 

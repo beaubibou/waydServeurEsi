@@ -374,7 +374,7 @@ public class ActiviteBean {
 		this.typeUser = typeUser;
 		this.libelleActivite = libelleActivite;
 		this.adresse = adresse;
-this.nbrSignalement=nbrSignalement;
+		this.nbrSignalement=nbrSignalement;
 		// TODO Auto-generated constructor stub
 
 	}
@@ -386,6 +386,7 @@ this.nbrSignalement=nbrSignalement;
 	public void setNbrSignalement(int nbrSignalement) {
 		this.nbrSignalement = nbrSignalement;
 	}
+	
 
 	private long getSeTermine(Date finActivite) {// calcul en miliseconde le
 													// temps avant la fin
