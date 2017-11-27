@@ -65,6 +65,16 @@ public class ProfilBean {
 	private boolean afficeSexe;
 	private String siret;
 	private FiltreRecherche filtreRecherche;
+	private int nbrSignalement;
+
+	public int getNbrSignalement() {
+		return nbrSignalement;
+	}
+
+	
+	public void setNbrSignalement(int nbrSignalement) {
+		this.nbrSignalement = nbrSignalement;
+	}
 
 	private MessageAlertDialog messageAlertDialog;
 	
@@ -249,6 +259,7 @@ public class ProfilBean {
 		filtreRecherche = new FiltreRecherche();
 		filtreRecherche.setLatitude(latitudeFixe);
 		filtreRecherche.setLongitude(longitudeFixe);
+		
 	}
 
 	public String getSiret() {

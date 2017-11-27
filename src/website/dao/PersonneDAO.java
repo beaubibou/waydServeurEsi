@@ -162,20 +162,7 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			// String requete = " SELECT personne.note,personne.nbravis,"
-			// +
-			// "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
-			// +
-			// "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
-			// +
-			// "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-			// +
-			// "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
-			// +
-			// "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-			// + "  mail, cleactivation,commentaire, photo,typeuser,"
-			// +
-			// "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret  FROM personne where 1=1";
+			
 
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
@@ -281,6 +268,7 @@ public class PersonneDAO {
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
+				int  nbrSignalement=rs.getInt("nbrsignalement");
 				String siret = rs.getString("siret");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
@@ -288,6 +276,7 @@ public class PersonneDAO {
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
+				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
 

@@ -28,14 +28,13 @@
 	<%@ include file="menu.jsp"%>
 	<%
 		FitreAdminProfils filtre=(FitreAdminProfils)session.getAttribute("filtreProfil");
-			
-			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
-			ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
-			ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
-			
+		
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+		ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
+		ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
 		PagerProfilBean pager=(PagerProfilBean) request
-		.getAttribute("pager");
-		ArrayList<ProfilBean> listProfil = pager.getListProfils();
+			.getAttribute("pager");
+			ArrayList<ProfilBean> listProfil = pager.getListProfils();
 	%>
 
 	<div class="container">
@@ -84,7 +83,7 @@
 
 					</select>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="typeSignalement">Signalement</label> <select
 						data-style="btn-primary" class="form-control" id="typeSignalement"
@@ -120,23 +119,24 @@
 					<th>Pseudo</th>
 					<th>Date création</th>
 					<th>Action</th>
+					<th>Signalement</th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<%
 					for (ProfilBean profil : listProfil) {
-																		String lien = "DetailParticipant?idPersonne="
-																				+ profil.getId();
-																		String lienMessage =
-																				"/wayd/EnvoiMessageAdmin?idPersonne=" +profil.getId()
-																				+"&formInit=listProfil";
-																				
-																		String lienActivation =profil.getLienActive();
+																				String lien = "DetailParticipant?idPersonne="
+																						+ profil.getId();
+																				String lienMessage =
+																						"/wayd/EnvoiMessageAdmin?idPersonne=" +profil.getId()
+																						+"&formInit=listProfil";
+																						
+																				String lienActivation =profil.getLienActive();
 				%>
 
 				<tr>
-					<td><a href='<%=lienActivation%>'> <%=profil.getActifHtml()%></a></td>
+					<td><a href='<%=lienActivation%>' title="Active/Désactive"> <%=profil.getActifHtml()%></a></td>
 
 					<td><img height="30" width="30" src=<%=profil.getUrlPhoto()%>
 						class="img-circle" /></td>
@@ -152,6 +152,7 @@
 
 					</td>
 
+					<td><%=profil.getNbrSignalement()%></td>
 				</tr>
 
 

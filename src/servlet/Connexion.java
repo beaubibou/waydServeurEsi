@@ -32,8 +32,7 @@ import com.google.firebase.auth.FirebaseToken;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(Connexion.class);
-	protected boolean success;
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -78,13 +77,9 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
-		success = false;
-		//
-	
 		
-		
-//		if (testEsi(request, response))
-//			return;
+		if (testEsi(request, response))
+		return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -95,7 +90,6 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) {
 
 		final HttpSession session = request.getSession();
-		String pwd = (String) request.getParameter("pwd");
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
 		System.out.println(profil.getPseudo());
 		session.setAttribute("profil", profil);
@@ -175,7 +169,7 @@ public class Connexion extends HttpServlet {
 				if (profil.isAdmin()) {
 
 					response.sendRedirect("Acceuil");
-					success = true;
+				
 					return;
 
 				}
@@ -186,14 +180,14 @@ public class Connexion extends HttpServlet {
 					session.setAttribute("profil", profil);
 
 					response.sendRedirect("AcceuilPro");
-					success = true;
+					
 					return;
 
 				case ProfilBean.WAYDEUR:
 
 					session.invalidate();
 					response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
-					success = true;
+				
 					return;
 
 				}
