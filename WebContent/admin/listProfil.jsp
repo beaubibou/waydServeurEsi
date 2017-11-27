@@ -7,6 +7,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="website.metier.TypeSignalement"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
 			
 			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
 			ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
-			
+			ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
 			
 		PagerProfilBean pager=(PagerProfilBean) request
 		.getAttribute("pager");
@@ -77,6 +78,24 @@
 						<option value="<%=typeEtatProfil.getId()%>"
 							<%=Outils.jspAdapterListSelected(typeEtatProfil.getId(), filtre.getEtatProfil())%>>
 							<%=typeEtatProfil.getLibelle()%></option>
+						<%
+							}
+						%>
+
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label for="typeSignalement">Signalement</label> <select
+						data-style="btn-primary" class="form-control" id="typeSignalement"
+						name="typeSignalement">
+
+						<%
+							for (TypeSignalement typeSignalement:listTypeSignalementProfil) {
+						%>
+						<option value="<%=typeSignalement.getId()%>"
+							<%=Outils.jspAdapterListSelected(typeSignalement.getId(), filtre.getTypeSignalement())%>>
+							<%=typeSignalement.getLibelle()%></option>
 						<%
 							}
 						%>

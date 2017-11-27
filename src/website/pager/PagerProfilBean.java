@@ -26,10 +26,10 @@ public class PagerProfilBean {
 		// On recherhce les maxresult+1 si on
 		listProfils =PersonneDAO.getListProfil(filtre, pageEnCours,maxResult);
 
-		if (listProfils.size() == maxResult + 1) {
+		if (listProfils.size()>0) {
 			hasNext = true;
-			// on efface le dernier
-			listProfils.remove(maxResult);
+			
+		
 		} else
 			hasNext = false;
 

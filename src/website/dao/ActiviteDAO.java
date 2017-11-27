@@ -1118,7 +1118,7 @@ public class ActiviteDAO {
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
 
-		int offset = (maxResult - 1) * page;
+		int offset = (maxResult) * page;
 
 		int typeactivite = filtre.getTypeactivite();
 		int typeUser_ = filtre.getTypeUser();

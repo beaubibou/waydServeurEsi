@@ -21,12 +21,11 @@ public class PagerActiviteBean {
 		this.pageEnCours = pageEnCours;
 
 		// On recherhce les maxresult+1 si on
-		listActivite =ActiviteDAO.getListActivite(filtre,pageEnCours, maxResult + 1);;
+		listActivite =ActiviteDAO.getListActivite(filtre,pageEnCours, maxResult );;
 
-		if (listActivite.size() == maxResult + 1) {
+		if (listActivite.size() >0) {
 			hasNext = true;
-			// on efface le dernier
-			listActivite.remove(maxResult);
+			
 		} else
 			hasNext = false;
 

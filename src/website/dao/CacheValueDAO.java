@@ -366,6 +366,21 @@ public class CacheValueDAO {
 		return listQuantite;
 	}
 
+	public static ArrayList<TypeSignalement> getListTypeSignalementActivite() {
+		// TODO Auto-generated method stub
+	
+		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
+		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, "Tous"));
+		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins un"));
+		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
+		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
+	
+		
+		
+		return listEtat;
+	
+	}
+
 	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
 		// TODO Auto-generated method stub
 
@@ -446,7 +461,7 @@ public class CacheValueDAO {
 
 	}
 	
-	public static ArrayList<TypeSignalement> getListTypeSignalement() {
+	public static ArrayList<TypeSignalement> getListTypeSignalementProfil() {
 		// TODO Auto-generated method stub
 
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();

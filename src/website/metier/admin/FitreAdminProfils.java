@@ -2,6 +2,7 @@ package website.metier.admin;
 
 import java.util.Date;
 
+import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
 public class FitreAdminProfils {
@@ -11,6 +12,7 @@ public class FitreAdminProfils {
 	String pseudo;
 	int typeUser;
 	int etatProfil;
+	int typeSignalement;
 	
 	
 	public FitreAdminProfils(){
@@ -20,7 +22,18 @@ public class FitreAdminProfils {
 		dateCreationFin=new Date();
 		typeUser=TypeUser.TOUS;
 		etatProfil=EtatProfil.TOUS;
+		typeSignalement=TypeSignalement.TOUS;
 			
+	}
+
+
+	public int getTypeSignalement() {
+		return typeSignalement;
+	}
+
+
+	public void setTypeSignalement(int typeSignalement) {
+		this.typeSignalement = typeSignalement;
 	}
 
 

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -34,8 +35,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
-
-import fcm.ServeurMethodes;
 
 /**
  * Servlet implementation class CreerUserPro
@@ -258,13 +257,14 @@ public class CreerUserPro extends HttpServlet {
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			
-			
-		//	e.printStackTrace();
-		
+			System.out.println("***cause "+e.getCause().getLocalizedMessage());
+	
+			 String s = ExceptionUtils.getStackTrace(e);
 			String erreur="Erreur inconnue";
-			System.out.println(e.getMessage());
-		
-			if (e.getMessage().toString().contains("EMAIL_EXISTS"))
+			
+			System.out.println(s);
+			
+			if (s.contains("EMAIL_EXISTS"))
 				erreur="Mail existe d�ja";
 			 
 			return new MessageServeur(false, erreur);

@@ -3,22 +3,19 @@ package servlet;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
-import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
+
 import wayd.ws.WBservices;
-import wayde.bean.CxoPool;
-import wayde.bean.MessageServeur;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
 import website.enumeration.TypePhoto;
@@ -86,8 +83,8 @@ public class Connexion extends HttpServlet {
 	
 		
 		
-		if (testEsi(request, response))
-			return;
+//		if (testEsi(request, response))
+//			return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -127,14 +124,23 @@ public class Connexion extends HttpServlet {
 			FirebaseToken token = FirebaseAuth.getInstance()
 					.verifyIdTokenAsync(idtoken).get();
 			String uid = token.getUid();
-
+			
+			if (!token.isEmailVerified()){
+				request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
+				request.getRequestDispatcher("commun/erreurConnection.jsp")
+						.forward(request, response);	
+				return;
+				
+			}
+			
+			
 			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 
 			if (profil == null) {
 
 				
 				request.setAttribute("message",
-						"La création du compte à échouée");
+						"La crÃ©ation du compte Ã  Ã©chouÃ©e");
 				request.getRequestDispatcher("commun/erreurConnection.jsp")
 						.forward(request, response);
 				return;
@@ -145,7 +151,7 @@ public class Connexion extends HttpServlet {
 
 				if (!profil.isActif()) {
 					request.setAttribute("message",
-							"Votre compte est désactivé");
+							"Votre compte est dÃ©sactivÃ©");
 					request.getRequestDispatcher("commun/erreurConnection.jsp")
 							.forward(request, response);
 					return;
@@ -224,7 +230,7 @@ public class Connexion extends HttpServlet {
 //
 //			if (profil != null) {
 //				HttpSession session = request.getSession();
-//				LOG.info("User cr�e" + profil);
+//				LOG.info("User crï¿½e" + profil);
 //				session.setAttribute("profil", profil);
 //
 //				return new MessageServeur(true, "ok");

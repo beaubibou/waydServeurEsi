@@ -23,12 +23,12 @@ public class PagerProblemeBean {
 
 		// On recherhce les maxresult+1 si on
 		listProbleme = ProblemeDAO.getListProbleme(etatProbleme, debut, fin,
-				pageEnCours, maxResult + 1);
+				pageEnCours, maxResult );
 
-		if (listProbleme.size() == maxResult + 1) {
+		if (listProbleme.size()>0) {
 			hasNext = true;
-			// on efface le dernier
-			listProbleme.remove(maxResult);
+			
+		
 		} else
 			hasNext = false;
 

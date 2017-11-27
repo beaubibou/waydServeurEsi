@@ -22,8 +22,6 @@
 			<li><a href="ListActivite">Activités</a></li>
 			<li><a href="ListProbleme">Problèmes</a></li>
 			<li><a href="ListSuggestion">Suggestions</a></li>
-			<li><a href="ListSignalementProfils">Signalements Profils</a></li>
-			<li><a href="ListSignalementActivite">Signalements Activités</a></li>
 			<li><a href="ListProfil">Profils</a></li>
 			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
 

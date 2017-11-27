@@ -18,6 +18,7 @@ import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.TypeEtatProfil;
+import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.FitreAdminProfils;
 
@@ -147,10 +148,10 @@ public class PersonneDAO {
 		int offset = (maxResult) * page;
 		int typeUser = filtre.getTypeUser();
 		String pseudo = filtre.getPseudo();
-		int etatProfil=filtre.getEtatProfil();
-	
-		pseudo=pseudo.replace("*", "%");
-		
+		int etatProfil = filtre.getEtatProfil();
+		int typeSignalement = filtre.getTypeSignalement();
+		pseudo = pseudo.replace("*", "%");
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -161,6 +162,21 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
+			// String requete = " SELECT personne.note,personne.nbravis,"
+			// +
+			// "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
+			// +
+			// "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
+			// +
+			// "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
+			// +
+			// "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
+			// +
+			// "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
+			// + "  mail, cleactivation,commentaire, photo,typeuser,"
+			// +
+			// "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret  FROM personne where 1=1";
+
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -168,33 +184,51 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,"
-					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret  FROM personne where 1=1";
+					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement"
+					+ "  FROM personne "
+					+ " left join (select count(*) as nbrsignalement,signaler_profil.idsignalement from signaler_profil group by signaler_profil.idsignalement) tablesignalement "
+					+ " ON personne.idpersonne = tablesignalement.idsignalement where 1=1 ";
 
 			if (typeUser != TypeUser.TOUS) {
 				requete = requete + " and typeuser=?";
 			}
 
-			
 			if (pseudo != null) {
 				if (!pseudo.isEmpty())
 					requete = requete + " and prenom like ?";
 			}
 
 			if (etatProfil != TypeEtatProfil.TOUTES) {
-				switch(etatProfil)
-				{
+				switch (etatProfil) {
 				case TypeEtatProfil.ACTIF:
-				requete = requete + " and actif=true";
-				break;
+					requete = requete + " and actif=true";
+					break;
 				case TypeEtatProfil.INACTIF:
-				requete = requete + " and actif=false";
-				
+					requete = requete + " and actif=false";
+
 				}
-				}
-			
-				
-			
-			
+			}
+
+			switch (typeSignalement) {
+
+			case TypeSignalement.AUMOINSUNE:
+				requete = requete + " and nbrsignalement>0 ";
+
+				break;
+
+			case TypeSignalement.MOINSDE10:
+				requete = requete + " and nbrsignalement<10 ";
+
+				break;
+			case TypeSignalement.PLUSDE10:
+				requete = requete + " and nbrsignalement>=10 ";
+				break;
+
+			case TypeSignalement.TOUS:
+
+				break;
+			}
+
 			requete = requete + " order by datecreation desc limit ?  offset ?";
 
 			// *********************************************************************

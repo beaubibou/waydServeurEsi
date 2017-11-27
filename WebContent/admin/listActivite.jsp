@@ -31,12 +31,12 @@
 
 	<%
 		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
-		ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
-		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
-		ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalement();
-		PagerActiviteBean pager=(PagerActiviteBean) request
-				.getAttribute("pager");
-		ArrayList<ActiviteBean> listActivite = pager.getListActivite();
+			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+			ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
+			PagerActiviteBean pager=(PagerActiviteBean) request
+			.getAttribute("pager");
+			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
 
 

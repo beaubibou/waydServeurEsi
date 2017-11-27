@@ -130,12 +130,24 @@ public class ListProfil extends HttpServlet {
 		
 		
 		
+		
 		if (request.getParameter("etatProfil") != null) {
 			int etatUser = Integer.parseInt(request.getParameter("etatProfil"));
 			filtre.setEtatProfil(etatUser);
 		}
+		System.out.println("pseudo"+request.getParameter("pseudo"));
 
-		filtre.setPseudo(request.getParameter("pseudo"));
+
+		if (request.getParameter("pseudo") != null) {
+			filtre.setPseudo(request.getParameter("pseudo"));
+		}
+	
+		if (request.getParameter("typeSignalement") != null) {
+			int typeSignalement = Integer.parseInt(request
+					.getParameter("typeSignalement"));
+			filtre.setTypeSignalement(typeSignalement);
+		}
+
 
 	}
 }
