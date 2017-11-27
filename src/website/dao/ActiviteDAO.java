@@ -1118,7 +1118,7 @@ public class ActiviteDAO {
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
 
-		int offset = (maxResult-1) * page;
+		int offset = (maxResult - 1) * page;
 
 		int typeactivite = filtre.getTypeactivite();
 		int typeUser_ = filtre.getTypeUser();
@@ -1153,19 +1153,39 @@ public class ActiviteDAO {
 
 			connexion = CxoPool.getConnection();
 
-			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-					+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-					+ "personne.note,personne.nbravis as totalavis,personne.photo,"
-					+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-					+ "activite.idactivite,type_activite.nom as libelleActivite,activite.libelle,activite.titre,"
-					+ "activite.typeuser,activite.typeacces,activite.d_finactivite,activite.datefin,"
-					+ "activite.idtypeactivite,activite.nbmaxwayd,"
-					+ " (SELECT COUNT(*) FROM signaler_activite where signaler_activite.idactivite=activite.idactivite ) as nbrsignalement "
-					+ " FROM personne,activite,type_activite"
-					+ "  WHERE personne.idpersonne = activite.idpersonne and  type_activite.idtypeactivite=activite.idtypeactivite "
-					+ " and activite.latitude between ? and ?"
-					+ " and activite.longitude between ? and ? ";
+			// String requete =
+			// " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+			// +
+			// " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
+			// + "personne.note,personne.nbravis as totalavis,personne.photo,"
+			// + "activite.nbrwaydeur as nbrparticipant,1 as role,"
+			// +
+			// "activite.idactivite,type_activite.nom as libelleActivite,activite.libelle,activite.titre,"
+			// +
+			// "activite.typeuser,activite.typeacces,activite.d_finactivite,activite.datefin,"
+			// + "activite.idtypeactivite,activite.nbmaxwayd,"
+			// +
+			// " (SELECT COUNT(*) FROM signaler_activite where signaler_activite.idactivite=activite.idactivite ) as nbrsignalement "
+			// + " FROM personne,activite,type_activite"
+			// +
+			// "  WHERE personne.idpersonne = activite.idpersonne and  type_activite.idtypeactivite=activite.idtypeactivite "
+			// + " and activite.latitude between ? and ?"
+			// + " and activite.longitude between ? and ? ";
 
+			String requete = "SELECT 	personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,"
+					+ " personne.note,personne.nbravis as totalavis,personne.photo,activite.idactivite,    activite.titre,    activite.libelle,    activite.adresse,"
+					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
+					+ "activite.idpersonne,    activite.datecreation,    activite.nbrwaydeur as nbrparticipant,    activite.nbmaxwayd,    activite.d_finactivite,"
+					+ "activite.typeacces,    activite.typeuser,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
+					+ "type_activite.nom as libelleActivite "
+					+ " FROM activite"
+					+ " LEFT JOIN ( SELECT count(*) AS nbrsignalement, signaler_activite.idactivite "
+					+ " FROM signaler_activite  GROUP BY signaler_activite.idactivite) tablesignalement ON activite.idactivite = tablesignalement.idactivite"
+					+ " LEFT JOIN type_activite ON type_activite.idtypeactivite = activite.idtypeactivite "
+					+ " left join personne on personne.idpersonne = activite.idpersonne "
+					+ " WHERE activite.latitude between ? and ? and activite.longitude between ? and ?  ";
+
+			// tablesignalement.nbrsignalement = 1
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
 														// l'activité
 
@@ -1179,30 +1199,26 @@ public class ActiviteDAO {
 
 			}
 
-			
-//			switch (typeSignalement) {
-//
-//			case TypeSignalement.AUMOINSUNE:
-//			
-//				break;
-//
-//			case TypeSignalement.MOINSDE10:
-//				
-//				
-//
-//				break;
-//			case TypeSignalement.PLUSDE10:
-//
-//
-//				break;
-//
-//			case TypeSignalement.TOUS:
-//
-//				break;
-//			}
-			
-			
-			
+			switch (typeSignalement) {
+
+			case TypeSignalement.AUMOINSUNE:
+				requete = requete + " and nbrsignalement>0 ";
+
+				break;
+
+			case TypeSignalement.MOINSDE10:
+				requete = requete + " and nbrsignalement<10 ";
+
+				break;
+			case TypeSignalement.PLUSDE10:
+				requete = requete + " and nbrsignalement>=10 ";
+				break;
+
+			case TypeSignalement.TOUS:
+
+				break;
+			}
+
 			requete = requete
 					+ " order by activite.datecreation desc limit ?  offset ?";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -1267,10 +1283,8 @@ public class ActiviteDAO {
 				String adresse = rs.getString("adresse");
 				int nbrSignalement = rs.getInt("nbrsignalement");
 
-				
-				
-				if (nbrSignalement==6)
-					System.out.println("nbr singame"+nbrSignalement);
+				if (nbrSignalement == 6)
+					System.out.println("nbr singame" + nbrSignalement);
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,

@@ -450,10 +450,12 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
-		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
-		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
-		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins une"));
 		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, "Tous"));
+		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins un"));
+		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
+		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
+
+		
 		
 		return listEtat;
 
