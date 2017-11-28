@@ -101,11 +101,11 @@ public class PushNotifictionHelper {
 			while ((output = br.readLine()) != null) {
 			}
 			result = "ok";
-			LOG.info("Notification envoyée Ok");
+			LOG.info("Notification envoyï¿½e Ok");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Nok";
-			LOG.warn("Erreur envoi Notification envoyée Ok");
+			LOG.warn("Erreur envoi Notification envoyï¿½e Ok");
 		}
 		
 
@@ -164,7 +164,7 @@ public class PushNotifictionHelper {
 			e.printStackTrace();
 			result = "Nok";
 		}
-		System.out.println("GCM Notification is sent successfully");
+	LOG.info("GCM Notification is sent successfully");
 
 		return result;
 

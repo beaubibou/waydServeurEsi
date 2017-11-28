@@ -649,7 +649,6 @@ public class ActiviteBean {
 
 		if (isPlanifie())
 			return "<td style='vertical-align: middle;'><span style='color: blue;'	class='glyphicon glyphicon-time'></span></td>";
-
 		return "lmk";
 	}
 
@@ -657,7 +656,6 @@ public class ActiviteBean {
 		// TODO Auto-generated method stub
 		if (this.idorganisateur == idOrganisateur && !isTerminee())
 			return true;
-
 		return false;
 	}
 

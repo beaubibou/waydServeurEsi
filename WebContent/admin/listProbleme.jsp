@@ -29,6 +29,8 @@
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body>
 
@@ -42,7 +44,7 @@
 			ArrayList<ProblemeBean> listProbleme = pager.getListProbleme();
 	%>
 	
-	
+	<div class="container" style="width: 90%;">
   <div class="panel panel-primary">	
 	    <div class="panel-body" style="background: #99ccff;">
 		<form  class="form-inline" action="ListProbleme" id="formulaire" >
@@ -93,7 +95,7 @@
 	</div>
 
 	</div>
-
+</div>
 
 
 <div class="container" style="width: 90%;">

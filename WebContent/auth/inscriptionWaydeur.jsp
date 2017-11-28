@@ -67,9 +67,7 @@
 						onsubmit="return valideFormulaire()">
 						<div class="form-group">
 							<label for="nom">Pseudo*:</label> <input type="text"
-								class="form-control"  name="nom" placeholder="<%=ParametreHtmlPro.getHintPseudoWaydeur() %>"  maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>"
-								
-								required>
+								class="form-control"  name="nom" placeholder='<%=ParametreHtmlPro.getHintPseudoWaydeur() %>'  maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX %>"	required>
 						</div>
 
 						<div  class="form-group">

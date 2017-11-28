@@ -27,7 +27,11 @@
 
 		</ul>
 
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#"><span class="glyphicon glyphicon-king"></span>
+					Mode Admin</a></li>
 
+		</ul>
 
 	</div>
 </nav>

@@ -31,7 +31,8 @@
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
 				alt="Cinque Terre" width="100" height="100">Connectez vous</h1>
 		</div>
-	
+		<p>blablal......</p>
+		
 	
 	</div>
 	<script type="text/javascript">
@@ -49,11 +50,8 @@
 			<div class="panel panel-default" >
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Connectez vous</div>
-					<div
-						style="float: right; font-size: 80%; position: relative; top: -10px">
-						<a href="form_forget_password.html">Mot de passe oublié?</a>
-					</div>
+					<div class="panel-title">Demandez un mail de confirmation</div>
+			
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -77,38 +75,22 @@
 								placeholder="password">
 						</div>
 
-
 						<div style="margin-top: 10px" class="form-group">
 							<!-- Button -->
 
 					 	<div class="col-sm-12 controls">
 				
-					<!--			<a id="btn-fblogin" onclick="popup()" class="btn btn-primary">Login
-									with Google</a> 
-					 -->			<div class="btn-group">		
-									<a id="btn-password" onclick="signPassword()"
-									class="btn btn-primary">Se connecter</a>
+							<div class="btn-group">		
+									<a id="btn-password" onclick="envoiDemande()"
+									class="btn btn-primary">Envoyer la demande</a>
 								 <a href="/wayd/Home"  class="btn btn-info"><span
 								  class="glyphicon glyphicon-home" ></span> Accueil</a>
 									</div>
-									<a id="btn-primary" href="/wayd/auth/redemandeConfirmationMail.jsp"
-									class="btn btn-primary">Mail de confirmation non recu?</a>
 
 							</div>
 						</div>
 
-						<div class="form-group">
-						
-							<div class="col-md-12 control">
-								<div
-									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Pas de compte! <a href="/wayd/CreerUserPro">
-										Inscrivez vous!! </a>
-								</div>
-							
-							</div>
-												
-						</div>
+					
 						
 						
 					</form>
@@ -217,68 +199,29 @@
 	<script>
 
 
-function popup(){
-	
-	var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithPopup(provider).then(function(result) {
-		  // This gives you a Google Access Token. You can use it to access the Google API.
-		  var token = result.credential.accessToken;
-		  // The signed-in user info.
-		  var user = result.user;
-		  // ...
-		  firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(function(idToken) {
-			  // Send token to your backend via HTTPS
-			  // ...
-			//  document.getElementById("demo").innerHTML ="opo";
-			//   document.location.href="/wayd/Connexion?token="+idToken;
-			  document.getElementById("token").value =idToken;
-			  document.getElementById("formmasque").submit();
-			
-		 
-		  }).catch(function(error) {
-			  var errorMessage = error.message;
-			  
-			  BootstrapDialog.alert(errorMessage);
-			  // Handle error
-			});
-	  
-		  
-	}).catch(function(error) {
-		  // Handle Errors here.
-		  var errorCode = error.code;
-		  var errorMessage = error.message;
-		  // The email of the user's account used.
-		  var email = error.email;
-		  // The firebase.auth.AuthCredential type that was used.
-		  var credential = error.credential;
-		  BootstrapDialog.alert(errorMessage);
-		  // ...
-		});
-	
-	
-}
-
-
-function signPassword(){
+function envoiDemande(){
 
 	var email= document.getElementById("login-username").value;
 	var password= document.getElementById("login-password").value;
-	
-	
+
 	firebase.auth().signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
 		 
-		  firebase.auth().currentUser.getToken(/* forceRefresh */ true).then(function(idToken) {
-			  // Send token to your backend via HTTPS
-			
-			//  document.getElementById("login-username").innerHTML ="opo";
-			 //  document.location.href="/wayd/Connexion?token="+idToken+"&pwd=1";
-			    document.getElementById("token").value =idToken;
-			    document.getElementById("pwd").value ="1";
-				document.getElementById("formmasque").submit();
-		  
-		  }).catch(function(error) {
-			  // Handle error
+		firebase.auth().currentUser.sendEmailVerification().then(function() {
+			  // Email sent.
+
+			BootstrapDialog.alert('Bienvenue un email de confirmation vous a été envoyé', function(){
+				document.location.href="/wayd/auth/login.jsp";
 			});
+			
+		}).catch(function(error) {
+			  // An error happened.
+		  var errorMessage = error.message;
+			 
+			BootstrapDialog.alert(errorMessage, function(){
+				document.location.href="/wayd/auth/login.jsp";   
+			});
+
+				});
 	  
 		  
 	}).catch(function(error) {
@@ -289,9 +232,16 @@ function signPassword(){
 		  var email = error.email;
 		  // The firebase.auth.AuthCredential type that was used.
 		  var credential = error.credential;
-		  BootstrapDialog.alert(errorMessage);
+		  BootstrapDialog.alert(errorMessage, function(){
+				document.location.href="/wayd/auth/login.jsp";
+			});
+
 		  // ...
 		});
+	
+
+	
+
 	
 }
 </script>

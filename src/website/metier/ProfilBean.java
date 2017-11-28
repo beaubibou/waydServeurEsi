@@ -34,6 +34,7 @@ public class ProfilBean {
 		this.longitudeFixe = longitudeFixe;
 	}
 
+
 	private String nom;
 	private String pseudo;
 	private String ville;
@@ -71,6 +72,24 @@ public class ProfilBean {
 		return nbrSignalement;
 	}
 
+public String getTypeUserHTML(){
+		
+	if (isAdmin())
+		return "<span style='color: green;'	class='glyphicon glyphicon-king'></span>";
+
+	
+	if (typeuser==TypeUser.PRO)
+			return "<span style='color: blue;'	class='glyphicon glyphicon-usd'></span>";
+
+		if (typeuser==TypeUser.WAYDEUR)
+			return "<span style='color: black;'	class='glyphicon glyphicon-user'></span>";
+
+		
+		
+	return "";
+		
+	}
+	
 	
 	public void setNbrSignalement(int nbrSignalement) {
 		this.nbrSignalement = nbrSignalement;

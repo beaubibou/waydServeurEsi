@@ -59,7 +59,7 @@ public class ServeurMethodes {
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5).addData("id", messageaenvoyer.getId())
 					.build();
-			// System.out.println(GCMid);
+		
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (SQLException e1) {

@@ -53,7 +53,7 @@
 		<div class="page-header">
 			<h1>Votre compte</h1>
 		</div>
-		<p>Renseignez votre proifl.</p>
+		<p>Renseignez votre profil.</p>
 
 	</div>
 	<div class="container">

@@ -1,0 +1,53 @@
+.panel-default>.panel-heading {
+	color: #333;
+	background-color: #ffbf00;
+	border-color: #000000;
+	font-weight: bold;
+	color: white;
+	font-family: Arial;
+}
+
+.table-responsive>.table>tbody>tr>td {
+	vertical-align: middle;
+}
+
+.dropdown-toggle:active,.open .dropdown-toggle {
+	background: #e6ac00 !important;
+	color: #000 !important;
+}
+
+
+/*Couleur de la barre de navigation quand menu selectionné*/
+.active a {
+	background-color: #e6ac00 !important;
+	color: #000000 !important;
+}
+
+
+/* couleur de fond des pages*/
+body {
+	background-color: #E3F2FD;
+}
+/*Couleur de la barre de navigation */
+.navbar {
+	background-color: #003310;
+		color: #FF0000;
+}
+
+/*Couleur de la police du menu de la barre de naivgation par défaut */
+#menupro a {
+	font-size: 16px;
+	font-weight: bold;
+	color: #fff;
+	font-family: Arial;
+}
+
+/*Le footer */
+.navbar-fixed-bottom {
+	background: #FFFF00;
+	color: #000000;
+}
+
+.navbar-fixed-bottom a {
+	color: #0FFF000;
+}

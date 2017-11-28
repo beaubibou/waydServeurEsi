@@ -24,6 +24,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body>
 
@@ -39,8 +41,8 @@
 			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
 
-
-	<div class="panel panel-primary">	
+<div class="container" style="width: 90%;">
+	<div class="panel panel-primary" >	
 	    <div class="panel-body" style="background: #99ccff;">	
 
 		<form class="form-inline" id="formulaire" method="post" action="ListActivite">
@@ -119,7 +121,7 @@
 		</form>
 		</div>
 		</div>
-		
+		</div>
 
 	
 	<div class="container" style="width: 90%;">
