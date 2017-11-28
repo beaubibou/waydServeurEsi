@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -85,9 +87,11 @@ public class ChargePhotoPro extends HttpServlet {
 						String fileName = fi.getName();
 						boolean isInMemory = fi.isInMemory();
 						long sizeInBytes = fi.getSize();
-						BufferedImage imBuff = ImageIO
+						BufferedImage tmp = ImageIO
 								.read(fi.getInputStream());
 
+						BufferedImage imBuff=resize(tmp,100,100);
+						
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
 						new PersonneDAO().updatePhoto(stringPhoto, profil.getId());
@@ -105,6 +109,10 @@ public class ChargePhotoPro extends HttpServlet {
 		}
 
 	}
+	
+	public static BufferedImage resize(BufferedImage img, int newW, int newH) throws IOException {
+		  return Thumbnails.of(img).forceSize(newW, newH).asBufferedImage();
+		}
 	
 	}
 
