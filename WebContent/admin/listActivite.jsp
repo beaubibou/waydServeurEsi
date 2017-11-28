@@ -40,14 +40,10 @@
 	%>
 
 
+	<div class="panel panel-primary">	
+	    <div class="panel-body" style="background: #99ccff;">	
 
-
-	<div class="container">
-
-		<h3>Critéres</h3>
-
-
-		<form class="form-inline" method="post" action="ListActivite">
+		<form class="form-inline" id="formulaire" method="post" action="ListActivite">
 
 			<div class="form-group">
 				<label for="autocomplete">Ville:</label> <input
@@ -114,18 +110,20 @@
 
 					</select>
 				</div>
-
-
-
-				<button id="go" type="submit" class="btn btn-default"
+	
+		<button id="go" type="submit" class="btn btn-info"
 					name="rechercheactivite">Rechercher</button>
 
 			</div>
+			
 		</form>
+		</div>
+		</div>
+		
 
-	</div>
-	<div class="container">
-		<h2>Liste activites</h2>
+	
+	<div class="container" style="width: 90%;">
+		<h3>Liste activites</h3>
 
 		<table class="table table-striped">
 			<thead>
@@ -230,6 +228,25 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
+		
+		
+	<script>
+		$(function() {
+
+			$('select').change(function() {
+
+				document.getElementById("formulaire").submit();
+			});
+
+
+			$('#rayon').change(function() {
+
+				document.getElementById("formulaire").submit();
+			});			
+		});
+
+		
+	</script>
 
 </body>
 

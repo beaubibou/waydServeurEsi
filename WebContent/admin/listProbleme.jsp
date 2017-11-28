@@ -41,8 +41,10 @@
 					.getAttribute("pager");
 			ArrayList<ProblemeBean> listProbleme = pager.getListProbleme();
 	%>
-	<div class="container" style="margin-top: 50px">
-
+	
+	
+  <div class="panel panel-primary">	
+	    <div class="panel-body" style="background: #99ccff;">
 		<form  class="form-inline" action="ListProbleme" id="formulaire" >
 			<div class="form-group">
 				<label  for="idEtatProbleme">Etat</label> <select data-style="btn-primary"
@@ -84,18 +86,18 @@
 
 
 
-			<button type="submit" class="btn btn-default">Recherchez</button>
+			<button type="submit" class="btn btn-info">Recherchez</button>
 
 		</form>
 	
-		</br>
+	</div>
 
 	</div>
 
 
-	<div class="container">
-		<h2>Liste problemes (<%=listProbleme.size() %>)</h2>
 
+<div class="container" style="width: 90%;">
+	
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -155,41 +157,16 @@
 
 			</tbody>
 		</table>
-	</div>
-
-
-
+	
+</div>
  <ul class="pager">
  
   <li <%=pager.isPreviousHtml()%>> <a  href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
  <li>Page N° <%=pager.getPageEnCours()%></li>
   <li  <%=pager.isNextHtml()%>><a href="<%=pager.getLienNextHtml()%>">Next</a></li>
 
-
 </ul>
 
-
-	<script>
-		$(function() {
-
-			
-			$('#datedebut').datetimepicker({
-				defaultDate : new Date('<%=filtreProbleme.getDateDebutCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateDebutCreation().getYear()%>'),
-				format : 'DD/MM/YYYY'
-
-			});
-
-			var d = new Date(99,5,24)
-	
-			$('#datefin').datetimepicker(
-					{
-						defaultDate : new Date('<%=filtreProbleme.getDateFinCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateFinCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateFinCreation().getYear()%>	'),
-			format : 'DD/MM/YYYY'
-
-							});
-
-		});
-	</script>
 	<script>
 		$(function() {
 
@@ -206,19 +183,50 @@
 
 			});
 
-		});
-		$(function() {
-
-			$('#idEtatProbleme').on('change', function() {
+			$('select').change(function() {
 
 				document.getElementById("formulaire").submit();
 			});
 
-		});
+			
+			
+			$('#datedebut').datetimepicker({
+				defaultDate : new Date('<%=filtreProbleme.getDateDebutCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateDebutCreation().getYear()%>'),
+				format : 'DD/MM/YYYY'
 
+			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
+
+			var d = new Date(99,5,24)
+	
+			$('#datefin').datetimepicker(
+					{
+						defaultDate : new Date('<%=filtreProbleme.getDateFinCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateFinCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateFinCreation().getYear()%>	'),
+			format : 'DD/MM/YYYY'
+
+							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
+
+		});
+	</script>
+	<script>
+	
+
+
+		
+		
+
+		
+
+		
 		function lireMessage(lien) {
 			location.href = lien;
 		}
+		<script>
+
+
+	
+
+	
+		
 	</script>
 </body>
 </html>

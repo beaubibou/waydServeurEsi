@@ -37,12 +37,10 @@
 			ArrayList<ProfilBean> listProfil = pager.getListProfils();
 	%>
 
-	<div class="container">
+		<div class="panel panel-primary">	
+	    <div class="panel-body" style="background: #99ccff;">
 
-		<h3>Critéres</h3>
-
-
-		<form class="form-inline" method="post" action="ListProfil">
+		<form id="formulaire" class="form-inline" method="post" action="ListProfil">
 
 			<div class="form-group">
 				<label for="pseudo">Pseudo</label> <input type="text"
@@ -101,24 +99,24 @@
 
 					</select>
 				</div>
-				<button id="go" type="submit" class="btn btn-default"
+				<button id="go" type="submit" class="btn btn-info"
 					name="rechercheactivite">Rechercher</button>
 
 			</div>
 		</form>
+		</div>
+		
 
 	</div>
-	<div class="container">
-		<h2>Liste profils</h2>
-
-		<table class="table table-striped">
+	<div class="container" style="width: 90%;">
+		<table class="table table-striped" style="margin-left:30px">
 			<thead>
 				<tr>
-					<th style="width: 10%;" class="text-center">Etat</th>
-					<th>photo</th>
+					<th style="width: 5%;" class="text-center">Etat</th>
+					<th style="width: 5%;" class="text-center">photo</th>
 					<th>Pseudo</th>
-					<th>Date création</th>
-					<th>Action</th>
+					<th  >Date création</th>
+					<th >Action</th>
 					<th>Signalement</th>
 
 				</tr>
@@ -163,8 +161,8 @@
 
 			</tbody>
 		</table>
-	</div>
-
+		</div>
+	
 	<ul class="pager">
 
 		<li <%=pager.isPreviousHtml()%>><a
@@ -191,6 +189,11 @@
 				if (action == 'supprime')
 					location.href = lien;
 
+			});
+
+			$('select').on('change', function() {
+
+				document.getElementById("formulaire").submit();
 			});
 
 		});

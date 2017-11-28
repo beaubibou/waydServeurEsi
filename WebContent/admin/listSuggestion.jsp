@@ -34,8 +34,8 @@
 		ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
 		FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
 	%>
-	<div class="container" style="margin-top: 50px">
-
+<div class="panel panel-primary">	
+	    <div class="panel-body" style="background: #99ccff;">		
 		<form class="form-inline" action="ListSuggestion" id="formulaire">
 			<div class="form-group">
 				<label for="idEtatProbleme">Etat</label> <select
@@ -78,17 +78,14 @@
 
 
 
-			<button type="submit" class="btn btn-default">Recherchez</button>
+			<button type="submit" class="btn btn-info">Recherchez</button>
 
 		</form>
+</div>
+	
+</div>
 
-		</br>
-
-
-	</div>
-
-
-	<div class="container">
+	<div class="container" style="width: 90%;">
 		<h2>Liste de suggestions</h2>
 
 		<table class="table table-striped">
@@ -178,28 +175,32 @@
 				defaultDate : new Date('<%=filtre.getDateDebutCreation().getMonthOfYear()%>,<%=filtre.getDateDebutCreation().getDayOfMonth()%>,	<%=filtre.getDateDebutCreation().getYear()%>'),
 				format : 'DD/MM/YYYY'
 
-			});
+			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
 
-			var d = new Date(99,5,24)
+		
 	
 			$('#datefin').datetimepicker(
 					{
 						defaultDate : new Date('<%=filtre.getDateFinCreation().getMonthOfYear()%>,<%=filtre.getDateFinCreation().getDayOfMonth()%>,	<%=filtre.getDateFinCreation().getYear()%>'),
 								format : 'DD/MM/YYYY'
 
-							});
+							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
 
-		});
-			
-		$(function() {
 
-			$('#idEtatSuggestion').on('change', function() {
+			$('select').on('change', function() {
 
 				document.getElementById("formulaire").submit();
 			});
 
-		});
 
+			});
+			
+		
+
+	
+	
+
+	
 		function lireMessage(lien) {
 			location.href = lien;
 		}

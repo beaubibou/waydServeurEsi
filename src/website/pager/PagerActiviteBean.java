@@ -23,7 +23,7 @@ public class PagerActiviteBean {
 		// On recherhce les maxresult+1 si on
 		listActivite =ActiviteDAO.getListActivite(filtre,pageEnCours, maxResult );;
 
-		if (listActivite.size() >0) {
+		if (listActivite.size()==maxResult) {
 			hasNext = true;
 			
 		} else

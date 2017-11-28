@@ -25,7 +25,7 @@ public class PagerProblemeBean {
 		listProbleme = ProblemeDAO.getListProbleme(etatProbleme, debut, fin,
 				pageEnCours, maxResult );
 
-		if (listProbleme.size()>0) {
+		if (listProbleme.size()==maxResult) {
 			hasNext = true;
 			
 		
