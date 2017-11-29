@@ -1,7 +1,9 @@
 package website.html;
 
-public class ParametreHtmlPro {
+import org.apache.log4j.Logger;
 
+public class ParametreHtmlPro {
+	private static final Logger LOG = Logger.getLogger(ParametreHtmlPro.class);
 	// v *******************COMPTE profil*********************
 	public static int TAILLE_PSEUDO_MAX = 40;
 	public	static int TAILLE_PSEUDO_MINI = 5;

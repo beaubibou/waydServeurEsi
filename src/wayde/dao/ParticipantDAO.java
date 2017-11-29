@@ -6,9 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+
 import wayde.bean.Participant;
 
 public class ParticipantDAO {
+
+	private static final Logger LOG = Logger.getLogger(ParticipantDAO.class);
 
 	Connection connexion;
 

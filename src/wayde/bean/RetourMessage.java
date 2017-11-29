@@ -1,6 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class RetourMessage {
+	
+	private static final Logger LOG = Logger.getLogger(RetourMessage.class);
+
 	private long datecreation;
 	private int id,idemetteur;
 	public final static int PLUS_SON_AMI=-1;

@@ -1,11 +1,16 @@
 package website.metier.admin;
 
+import org.apache.log4j.Logger;
+
+import website.metier.AmiBean;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
 public class FitreAdminActivites {
+	private static final Logger LOG = Logger.getLogger(FitreAdminActivites.class);
+	   
 	int rayon,typeactivite;
 	String ville;
 	double latitude,longitude;

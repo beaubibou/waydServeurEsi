@@ -2,9 +2,14 @@ package wayde.bean;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.TypeActiviteDb;
 
 public class TypeActivite {
+	
+	private static final Logger LOG = Logger.getLogger(TypeActivite.class);
+
 	long id;
 	long idcategorie;
 	String nom;

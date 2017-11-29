@@ -3,11 +3,16 @@ package website.html;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayde.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
 public class AlertDialog {
+	private static final Logger LOG = Logger.getLogger(AlertDialog.class);
+
 	MessageAlertDialog messageAlertDialog;
 	public static String ALERT_DIALOG = "messageAlertDialog";
 	private AlertJsp typeAlert;

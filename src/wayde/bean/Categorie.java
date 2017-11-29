@@ -1,31 +1,30 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.CategorieDb;
 
 public class Categorie {
-long id;
-String nom;
-	
-public Categorie( CategorieDb categoriedb){
-	
-	
-	this.id=categoriedb.getId();
-	this.nom=categoriedb.getNom();
-}
+	private static final Logger LOG = Logger.getLogger(Categorie.class);
+	long id;
+	String nom;
 
-public Categorie( ){
-	
-	
-	
-}
+	public Categorie(CategorieDb categoriedb) {
 
-public long getId() {
-	return id;
-}
+		this.id = categoriedb.getId();
+		this.nom = categoriedb.getNom();
+	}
 
-public String getNom() {
-	return nom;
-}
+	public Categorie() {
 
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
 
 }

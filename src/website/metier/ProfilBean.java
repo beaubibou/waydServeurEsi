@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.axis.encoding.Base64;
+import org.apache.log4j.Logger;
 
 import wayde.bean.Parametres;
 import website.dao.CacheValueDAO;
@@ -12,7 +13,8 @@ import website.enumeration.TypePhoto;
 import website.html.MessageAlertDialog;
 
 public class ProfilBean {
-
+	private static final Logger LOG = Logger.getLogger(ProfilBean.class);
+	   
 	int id;
 	public final static int PRO = 1;
 	public final static int ASSOCIATION = 2;
@@ -114,6 +116,7 @@ public String getTypeUserHTML(){
 	}
 
 	private Date dateNaissance;
+	private String sexeStr;
 
 	public String getSiteWeb() {
 		return siteWeb;
@@ -244,7 +247,7 @@ public String getTypeUserHTML(){
 			boolean actif, boolean admin, int typeuser,
 			boolean premiereconnexion, double latitude, double longitude,
 			String adresse, String siteWeb, String telephone,
-			double latitudeFixe, double longitudeFixe, String siret) {
+			double latitudeFixe, double longitudeFixe, String siret,String sexeStr) {
 		super();
 			
 		this.id = id;
@@ -275,10 +278,19 @@ public String getTypeUserHTML(){
 		this.afficeSexe = affichesexe;
 		this.afficheAge = afficheage;
 		this.siret = siret;
+		this.sexeStr=sexeStr;
 		filtreRecherche = new FiltreRecherche();
 		filtreRecherche.setLatitude(latitudeFixe);
 		filtreRecherche.setLongitude(longitudeFixe);
 		
+	}
+
+	public String getSexeStr() {
+		return sexeStr;
+	}
+
+	public void setSexeStr(String sexeStr) {
+		this.sexeStr = sexeStr;
 	}
 
 	public String getSiret() {

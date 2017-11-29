@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 public class SignalementDAO {
+	private static final Logger LOG = Logger.getLogger(SignalementDAO.class);
 	Connection connexion;
 	public static int SUSPECTE=0;
 	public static int DANGEREUSE=1;

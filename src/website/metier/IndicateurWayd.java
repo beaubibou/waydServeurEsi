@@ -1,5 +1,7 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class IndicateurWayd {
 
 	int nbrTotalActivite;
@@ -11,6 +13,8 @@ public class IndicateurWayd {
 	int nbrMessageByActDuJour;
 	int nbrActiviteDuJour;
 	int nbrParticipationDuJour;
+	private static final Logger LOG = Logger.getLogger(IndicateurWayd.class);
+	   
 
 	public IndicateurWayd(int nbrTotalActivite, int nbrTotalParticipation,
 			int nbrTotalInscrit, int nbrTotalMessage, int nbrTotalMessageByact) {

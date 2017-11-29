@@ -154,11 +154,11 @@ public class PushNotifictionHelper {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					(conn.getInputStream())));
 
-			String output;
-			System.out.println("Output from Server .... \n");
-			while ((output = br.readLine()) != null) {
-				System.out.println(output);
-			}
+//			String output;
+//			System.out.println("Output from Server .... \n");
+//			while ((output = br.readLine()) != null) {
+//				System.out.println(output);
+//			}
 			result = "ok";
 		} catch (Exception e) {
 			e.printStackTrace();

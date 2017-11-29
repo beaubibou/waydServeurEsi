@@ -91,14 +91,12 @@ public class Connexion extends HttpServlet {
 
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
-		System.out.println(profil.getPseudo());
+		LOG.info(profil.getPseudo());
 		session.setAttribute("profil", profil);
 
 		try {
 			response.sendRedirect("Acceuil");
-			// response.sendRedirect("AcceuilPro");
-			// response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
-		} catch (IOException e) {
+			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

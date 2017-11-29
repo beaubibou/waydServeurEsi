@@ -1,5 +1,6 @@
 package servlet.pro;
 
+import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AddActiviteGcm;
 
 import java.io.IOException;
@@ -8,10 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
 import threadpool.PoolThreadGCM;
 import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
@@ -24,7 +29,8 @@ import website.metier.ProfilBean;
  */
 public class AjouteActivitePlanifiee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(AjouteActivitePlanifiee.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -71,7 +77,6 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
 
-		System.out.println("aderess" + adresse);
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
@@ -176,9 +181,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600
 				/ 24 + 1;
 
-		System.out.println("nbr jours" + (int) nbrJours);
-		System.out.println("nbr de jours " + joursVoulus.size());
-
+	
 		for (int f = 0; f <= nbrJours; f++) {
 
 			Calendar datetmp = Calendar.getInstance();
@@ -205,9 +208,6 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		calFin.setTime(dateDebut.getTime());
 		calFin.add(Calendar.MINUTE, duree);
 		
-		System.out.println("Debut" + dateDebut);
-		System.out.println("Fin" + calFin);
-
 		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
 		//
 		int idActivite = activiteDAO.addActivitePro(idPersonne, titre,

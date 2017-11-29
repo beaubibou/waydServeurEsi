@@ -78,12 +78,10 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-
 			requete = "UPDATE activite  SET  nbrvu=nbrvu+1 WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
-
 			connexion.commit();
 
 			return true;
@@ -513,81 +511,7 @@ public class ActiviteDAO {
 		}
 	}
 
-	public static ArrayList<ActiviteBean> getListActiviteTotal() {
-
-		ActiviteBean activite = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
-		Connection connexion = null;
-		try {
-
-			connexion = CxoPool.getConnection();
-
-			String requete = " SELECT activite.datedebut,      activite.adresse,    activite.latitude,"
-					+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,"
-					+ "personne.datenaissance  ,    personne.idpersonne, "
-					+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
-					+ "activite.nbrwaydeur as nbrparticipant,"
-					+ "activite.idactivite,    activite.libelle, activite.titre,"
-					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite,activite.adresse  FROM personne,"
-					+ "activite,type_activite  WHERE personne.idpersonne = activite.idpersonne and type_activite.idtypeactivite=activite.idtypeactivite  "
-					+ " ORDER BY datedebut desc";
-
-			preparedStatement = connexion.prepareStatement(requete);
-			rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-
-				double latitude = rs.getDouble("latitude");
-				double longitude = rs.getDouble("longitude");
-				int id = rs.getInt("idactivite");
-				String libelle = rs.getString("libelle");
-				String titre = rs.getString("titre");
-				String adresse = rs.getString("adresse");
-				int idorganisateur = rs.getInt("idpersonne");
-				int idtypeactivite = rs.getInt("idtypeactivite");
-				int sexe = rs.getInt("sexe");
-				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				int nbrparticipant = rs.getInt("nbrparticipant");
-				Date datedebut = rs.getTimestamp("datedebut");
-				Date datefin = rs.getTimestamp("datefin");
-				double note = rs.getDouble("note");
-				String nom = rs.getString("nom");
-				String pseudo = rs.getString("pseudo");
-				String photo = rs.getString("photo");
-				Date datenaissance = rs.getTimestamp("datenaissance");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
-				int typeUser = rs.getInt("typeuser");
-				int typeAcces = rs.getInt("typeacces");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
-				int totalavis = rs.getInt("totalavis");
-				String libelleActivite = rs.getString("libelleActivite");
-				int nbrSignalement = 0;
-				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
-						datedebut, datefin, idtypeactivite, latitude,
-						longitude, nom, pseudo, photo, note, totalavis,
-						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement);
-
-				retour.add(activite);
-
-			}
-
-			return retour;
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return retour;
-		} finally {
-
-			CxoPool.close(connexion, preparedStatement, rs);
-		}
-
-	}
+	
 
 	// Renvoi une activité avec la liste des participants
 	//
@@ -1329,74 +1253,7 @@ public class ActiviteDAO {
 
 	}
 
-	public static int getCountListActivite(double malatitude,
-			double malongitude, int rayonmetre, int typeactivite) {
-
-		double coef = rayonmetre * 0.007 / 700;
-		double latMin = malatitude - coef;
-		double latMax = malatitude + coef;
-		double longMin = malongitude - coef;
-		double longMax = malongitude + coef;
-
-		ActiviteBean activite = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
-		Connection connexion = null;
-		try {
-
-			connexion = CxoPool.getConnection();
-
-			if (typeactivite != -1) {// on trie sur l'activité
-				String requete = " SELECT count(idactivite) as nbr "
-						+ " FROM personne, activite"
-						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ?";
-				preparedStatement = connexion.prepareStatement(requete);
-				preparedStatement.setInt(1, typeactivite);
-				preparedStatement.setDouble(2, latMin);
-				preparedStatement.setDouble(3, latMax);
-				preparedStatement.setDouble(4, longMin);
-				preparedStatement.setDouble(5, longMax);
-				rs = preparedStatement.executeQuery();
-
-			}
-
-			else { // On renvou toutes
-				String requete = " SELECT count(idactivite) as nbr "
-						+ "FROM personne, activite "
-						+ " WHERE personne.idpersonne = activite.idpersonne    "
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ?";
-
-				preparedStatement = connexion.prepareStatement(requete);
-				preparedStatement.setDouble(1, latMin);
-				preparedStatement.setDouble(2, latMax);
-				preparedStatement.setDouble(3, longMin);
-				preparedStatement.setDouble(4, longMax);
-				rs = preparedStatement.executeQuery();
-
-			}
-			if (rs.next()) {
-
-				int nbr = rs.getInt("nbr");
-				return nbr;
-
-			}
-
-			return 0;
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
-		} finally {
-
-			CxoPool.close(connexion, preparedStatement, rs);
-		}
-
-	}
-
+	
 	public static boolean terminerActivite(int idActivite) {
 
 		Connection connexion = null;
@@ -1549,79 +1406,7 @@ public class ActiviteDAO {
 
 	}
 
-	public static ArrayList<ActiviteBean> getListActiviteSignale() {
-		// TODO Auto-generated method stub
-		ActiviteBean activite = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
-		Connection connexion = null;
-		try {
-
-			connexion = CxoPool.getConnection();
-			String requete = " SELECT activite.datedebut,      activite.adresse,    activite.latitude,"
-					+ " activite.longitude,  personne.prenom as pseudo,    personne.sexe,    personne.nom,"
-					+ "personne.datenaissance  ,    personne.idpersonne, "
-					+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
-					+ "activite.nbrwaydeur as nbrparticipant,"
-					+ "activite.idactivite,  activite.libelle,activite.adresse, activite.titre,"
-					+ " activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeacces,activite.typeuser,type_activite.nom as libelleActivite "
-					+ " FROM personne,activite,signaler_activite,type_activite  "
-					+ "  WHERE type_activite.idtypeactivite=activite.idtypeactivite and personne.idpersonne = activite.idpersonne and signaler_activite.idactivite=activite.idactivite"
-					+ " ORDER BY datedebut desc";
-
-			preparedStatement = connexion.prepareStatement(requete);
-			rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-
-				double latitude = rs.getDouble("latitude");
-				double longitude = rs.getDouble("longitude");
-				int id = rs.getInt("idactivite");
-				String libelle = rs.getString("libelle");
-				String titre = rs.getString("titre");
-				int idorganisateur = rs.getInt("idpersonne");
-				int idtypeactivite = rs.getInt("idtypeactivite");
-				int sexe = rs.getInt("sexe");
-				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				int nbrparticipant = rs.getInt("nbrparticipant");
-				Date datedebut = rs.getTimestamp("datedebut");
-				Date datefin = rs.getTimestamp("datefin");
-				double note = rs.getDouble("note");
-				String nom = rs.getString("nom");
-				String pseudo = rs.getString("pseudo");
-				String photo = rs.getString("photo");
-				Date datenaissance = rs.getTimestamp("datenaissance");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
-				int totalavis = rs.getInt("totalavis");
-				int typeUser = rs.getInt("typeuser");
-				int typeAcces = rs.getInt("typeacces");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-				int nbrSignalement = 0;
-				String libelleActivite = rs.getString("libelleActivite");
-				String adresse = rs.getString("adresse");
-				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
-						datedebut, datefin, idtypeactivite, latitude,
-						longitude, nom, pseudo, photo, note, totalavis,
-						datenaissance, sexe, nbrparticipant, nbmaxwayd,
-						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement);
-
-				retour.add(activite);
-
-			}
-
-			return retour;
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return retour;
-		} finally {
-
-			CxoPool.close(connexion, preparedStatement, rs);
-		}
-	}
+	
 
 	public void addActiviteWaydeur(int idpersonne, String titre,
 			String commentaire, String adresse, double latitude,

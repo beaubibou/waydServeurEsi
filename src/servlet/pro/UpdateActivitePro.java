@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.SendResult;
 
+import org.apache.log4j.Logger;
+
 import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
 
 import website.dao.ActiviteDAO;
@@ -25,7 +27,8 @@ import website.metier.Outils;
  */
 public class UpdateActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(UpdateActivitePro.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

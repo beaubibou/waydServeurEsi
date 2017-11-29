@@ -2,10 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +15,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import wayde.bean.MessageServeur;
-import website.dao.ActiviteDAO;
 import website.dao.ProblemeDAO;
-import website.enumeration.AlertJsp;
-import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
-import website.metier.ProblemeBean;
 import website.metier.admin.FitreAdminProbleme;
 import website.pager.PagerProblemeBean;
 
@@ -33,7 +25,7 @@ import website.pager.PagerProblemeBean;
  */
 public class ListProbleme extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);
+	private static final Logger LOG = Logger.getLogger(ListProbleme.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -108,19 +100,6 @@ public class ListProbleme extends HttpServlet {
 				filtreProbleme.getEtatProbleme(),
 				filtreProbleme.getDateDebutCreation(),
 				filtreProbleme.getDateFinCreation(), pageAfficher);
-		
-		System.out.println("*****************");
-		System.out.println("paga à affiche " + pageAfficher);
-		// ArrayList<ProblemeBean> listProblemes
-		// =pagerProblemeBean.getListProbleme();
-
-		// ArrayList<ProblemeBean> listProblemes = new
-		// ArrayList<ProblemeBean>();
-		// listProblemes = ProblemeDAO.getListProbleme(
-		// filtreProbleme.getEtatProbleme(),
-		// filtreProbleme.getDateDebutCreation(),
-		// filtreProbleme.getDateFinCreation());
-		//
 	
 		request.setAttribute("pager", pagerProblemeBean);
 		request.getRequestDispatcher("admin/listProbleme.jsp").forward(request,
@@ -130,7 +109,6 @@ public class ListProbleme extends HttpServlet {
 
 	private void doAction(String action,HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		System.out.println("action="+action);
 	
 		int idMessage = 0;
 		MessageServeur messageServeur=new MessageServeur(false,"nok");
@@ -159,7 +137,6 @@ public class ListProbleme extends HttpServlet {
 				idMessage = Integer.parseInt(request.getParameter("idmessage"));
 			}
 
-			System.out.println("action=surrpiem"+idMessage);
 			
 			ProblemeDAO.supprime(idMessage);
 	

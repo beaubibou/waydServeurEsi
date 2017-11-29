@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.MessageServeur;
 import website.dao.MessageDAO;
 import website.enumeration.AlertJsp;
@@ -20,7 +22,8 @@ import website.metier.AuthentificationSite;
  */
 public class SupprimeMessages extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(SupprimeMessages.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

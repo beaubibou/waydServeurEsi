@@ -1,7 +1,11 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 
 	public class LoginBean {  
+		private static final Logger LOG = Logger.getLogger(LoginBean.class);
+		   
 		private String email,pass;  
 		  
 		public String getEmail() {  

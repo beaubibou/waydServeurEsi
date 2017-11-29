@@ -1,6 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class Tutoriel {
+	
+	private static final Logger LOG = Logger.getLogger(Tutoriel.class);
+
 	public static int PROPOSE_ACTIVITE=1;
 	public static int MA_SPHERE=2;
 	public static int DETAIL_ACTIVITE=3;

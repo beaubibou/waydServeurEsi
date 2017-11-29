@@ -1,6 +1,9 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class PhotoWaydeur {
+	private static final Logger LOG = Logger.getLogger(PhotoWaydeur.class);
 
 	private int id;
 	private String photo;

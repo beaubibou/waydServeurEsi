@@ -4,10 +4,13 @@ package wayde.bean;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import website.metier.ActiviteBean;
 
 public class Activite {
-	
+	private static final Logger LOG = Logger.getLogger(Activite.class);
+
 
 	int id;
 
@@ -234,7 +237,7 @@ public class Activite {
 
 	public  String getAgeStr(Date datenaissance,boolean afficheage)
 	{
-		if (afficheage)return "Masqué";
+		if (afficheage)return "Masquï¿½";
 		if (datenaissance!=null){
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -246,17 +249,17 @@ public class Activite {
 				yeardiff = yeardiff - 1;
 			}
 			if (yeardiff<0)return "Erreur";
-			if (yeardiff==0)return "Pas d'age indiqué";
+			if (yeardiff==0)return "Pas d'age indiquï¿½";
 			return Integer.toString(yeardiff) +" ans";
 		}
 
-		return "Pas d'age indiqué";
+		return "Pas d'age indiquï¿½";
 	}
 
 public String getTempsRestant(Date datefinactivite){
 		
-		if (datefinactivite==null)return "Terminée";
-		if (new Date().after(datefinactivite))return "Activité passée";
+		if (datefinactivite==null)return "Terminï¿½e";
+		if (new Date().after(datefinactivite))return "Activitï¿½ passï¿½e";
 		else
 		{
 		
@@ -265,7 +268,7 @@ public String getTempsRestant(Date datefinactivite){
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 		//	long diffDays = diff / (24 * 60 * 60 * 1000);
-		if (diff<0)return "Terminée";
+		if (diff<0)return "Terminï¿½e";
 			
 			return diffHours+":" +String.format("%02d", diffMinutes);
 	

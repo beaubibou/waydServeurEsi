@@ -8,10 +8,14 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
+import wayde.dao.ActiviteDAO;
 import website.metier.TypeActiviteBean;
 
 public class TypeActiviteDAO {
+	private static final Logger LOG = Logger.getLogger(TypeActiviteDAO.class);
 
 	public static ArrayList<TypeActiviteBean> getListTypeActivite() {
 

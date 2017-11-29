@@ -74,10 +74,19 @@ public class ActiviteBean {
 
 	private String libelleActivite;
 
+	private String typeActiviteStr;
 	private int nbrVu = 9;
 
 	public int getNbrVu() {
 		return nbrVu;
+	}
+
+	public String getTypeActiviteStr() {
+		return typeActiviteStr;
+	}
+
+	public void setTypeActiviteStr(String typeActiviteStr) {
+		this.typeActiviteStr = typeActiviteStr;
 	}
 
 	public void setNbrVu(int nbrVu) {
@@ -677,4 +686,17 @@ public class ActiviteBean {
 			return "";
 		
 	}
+	public String getTypeUserLienHTML(String lien){
+		
+		if (typeUser==TypeUser.PRO)
+			return "<a href='"+lien+"'"+"<span style='color: blue;'	class='glyphicon glyphicon-usd'></span></a>";
+
+		if (typeUser==TypeUser.WAYDEUR)
+			return "<a href='"+lien+"'"+"<span style='color: black;'	class='glyphicon glyphicon-user'></span></a>";
+
+			return "";
+		
+	}
+	
+	
 }

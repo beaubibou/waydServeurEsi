@@ -1,11 +1,15 @@
 package servlet.pro;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
@@ -21,7 +25,8 @@ import website.metier.AuthentificationSite;
  */
 public class SupprimeActivites extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(SupprimeActivites.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

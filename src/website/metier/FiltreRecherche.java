@@ -1,6 +1,10 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class FiltreRecherche {
+	private static final Logger LOG = Logger.getLogger(FiltreRecherche.class);
+	   
 	int quand=0;
 	int typerUser=0;
 	int typeActivite=0;

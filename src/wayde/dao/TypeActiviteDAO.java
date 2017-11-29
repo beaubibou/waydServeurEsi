@@ -6,9 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.TypeActiviteDb;
 
 public class TypeActiviteDAO {
+	private static final Logger LOG = Logger.getLogger(TypeActiviteDAO.class);
+
 	Connection connexion ;
 	public TypeActiviteDAO(Connection connexion) {
 		// TODO Auto-generated constructor stub

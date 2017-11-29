@@ -1,7 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 
 public class MessageConnexion {
+	private static final Logger LOG = Logger.getLogger(MessageConnexion.class);
+
 int reponse;
 String message;
 String jeton;

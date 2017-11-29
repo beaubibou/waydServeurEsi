@@ -5,13 +5,16 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
 public class EffaceMessageRecuByActGcm implements Runnable{
 int idPersonne;
 
-	
+private static final Logger LOG = Logger.getLogger(EffaceMessageEmisByActGcm.class);
+
 	public EffaceMessageRecuByActGcm(int idPersonne) {
 	super();
 	this.idPersonne = idPersonne;

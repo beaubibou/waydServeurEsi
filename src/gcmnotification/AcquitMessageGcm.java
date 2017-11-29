@@ -5,12 +5,15 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
 public class AcquitMessageGcm implements Runnable {
 	private int idPersonne;
-
+	private static final Logger LOG = Logger.getLogger(AcquitMessageGcm.class);
+	
 	public AcquitMessageGcm(int idPersonne) {
 		super();
 		this.idPersonne = idPersonne;

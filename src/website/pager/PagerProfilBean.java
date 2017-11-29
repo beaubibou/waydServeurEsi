@@ -3,16 +3,20 @@ package website.pager;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import website.dao.ActiviteDAO;
 import website.dao.PersonneDAO;
 import website.metier.ActiviteBean;
+import website.metier.AmiBean;
 import website.metier.ProfilBean;
 import website.metier.admin.FitreAdminProfils;
 
 public class PagerProfilBean {
 
+	private static final Logger LOG = Logger.getLogger(PagerProfilBean.class);
+	   
 	private ArrayList<ProfilBean> listProfils;
 	private int pageEnCours = 0;
 	private final int maxResult = 35;

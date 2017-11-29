@@ -2,9 +2,15 @@ package wayde.beandatabase;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import wayde.bean.MessageConnexion;
+
 public class CategorieDb
 {
-    long id;
+	private static final Logger LOG = Logger.getLogger(CategorieDb.class);
+
+	long id;
     String nom;
     Date datecreation;
     boolean active;

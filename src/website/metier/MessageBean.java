@@ -3,8 +3,11 @@ package website.metier;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MessageBean {
+import org.apache.log4j.Logger;
 
+public class MessageBean {
+	private static final Logger LOG = Logger.getLogger(MessageBean.class);
+	   
 	private int id;
 	private String nomEmetteur;
 	private Date dateCreation;

@@ -11,16 +11,21 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
+import wayde.bean.MessageConnexion;
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
 
 
 public class ActiviteDAO {
+	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);
+
 	Connection connexion;
 
 	public ActiviteDAO(Connection connexion) {

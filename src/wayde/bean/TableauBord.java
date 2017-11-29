@@ -1,7 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 
 public class TableauBord {
+	
+private static final Logger LOG = Logger.getLogger(TableauBord.class);
 int nbrmessagenonlu;
 int nbractiviteencours;
 int nbrsuggestion;

@@ -1,7 +1,11 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class QuantiteWaydeurBean {
- int value;
+	private static final Logger LOG = Logger.getLogger(QuantiteWaydeurBean.class);
+	   
+	int value;
  String libelle;
 public int getValue() {
 	return value;

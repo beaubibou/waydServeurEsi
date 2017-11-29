@@ -1,5 +1,7 @@
 package servlet.pro;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,6 +25,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
@@ -41,7 +44,8 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
  */
 public class CreerUserPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(CreerUserPro.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -257,13 +261,10 @@ public class CreerUserPro extends HttpServlet {
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			
-			System.out.println("***cause "+e.getCause().getLocalizedMessage());
-	
+			
 			 String s = ExceptionUtils.getStackTrace(e);
 			String erreur="Erreur inconnue";
-			
-			System.out.println(s);
-			
+		
 			if (s.contains("EMAIL_EXISTS"))
 				erreur="Mail existe d�ja";
 			 
@@ -336,20 +337,13 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 	}
 	
 	
-	
-//	if (commentaire==null)return new MessageServeur(false,"ororororrok");
-//	if (commentaire.isEmpty())return new MessageServeur(false,"ororororrok");
-//	
 	return new MessageServeur(true,"ok");
 	
 }
 
 	private boolean isCaptcha(String reponseCaptcha) throws Exception {
 
-//	if (true)
-//			return true;
-	
-	
+
 	String url = "https://www.google.com/recaptcha/api/siteverify";
 
 		HttpClient client = new DefaultHttpClient();
@@ -366,13 +360,7 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		post.setEntity(new UrlEncodedFormEntity(urlParameters));
 
 		HttpResponse response = client.execute(post);
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		// System.out.println("Post parameters : " + post.getEntity());
-		System.out.println("Response Code : "
-				+ response.getStatusLine().getStatusCode());
-
-		// System.out.println(oj.toString());
-
+	
 		BufferedReader rd = new BufferedReader(new InputStreamReader(response
 				.getEntity().getContent()));
 
@@ -384,8 +372,13 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		}
 		
 		if (result.toString().contains("\"success\": true"))
+			{
+			LOG.info("Captcha Ok");
 			return true;
-	return false;
+			}
+			
+		LOG.info("Captcha NOk");
+		return false;
 	
 		
 	}

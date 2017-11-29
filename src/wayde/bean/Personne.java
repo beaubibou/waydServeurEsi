@@ -2,6 +2,8 @@ package wayde.bean;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 
 public class Personne {
@@ -9,6 +11,8 @@ public class Personne {
 	/**
 	 * serialVersionUID - long, DOCUMENTEZ_MOI
 	 */
+	private static final Logger LOG = Logger.getLogger(Personne.class);
+
 	private int id;
 	private String login;
 	private String mdp;

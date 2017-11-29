@@ -3,14 +3,12 @@ package wayde.bean;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 
 public class Avis implements Serializable {
-
-
-	/**
-	 * 
-	 */
+	private static final Logger LOG = Logger.getLogger(Avis.class);
 	private static final long serialVersionUID = 1L;
 	int idnoter;
 	int idactivite;

@@ -2,28 +2,29 @@ package website.metier.admin;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+
+import website.metier.AmiBean;
 
 public class FitreAdminSuggestions {
 
+	private static final Logger LOG = Logger
+			.getLogger(FitreAdminSuggestions.class);
 	DateTime dateDebutCreation;
 	DateTime dateFinCreation;
-	int etatSuggestion=EtatSuggestion.TOUS;
-	
-	public FitreAdminSuggestions(){
+	int etatSuggestion = EtatSuggestion.TOUS;
 
-		dateDebutCreation = new DateTime() .withHourOfDay(0)
-			    .withMinuteOfHour(0)
-			    .withSecondOfMinute(0)
-			    .withMillisOfSecond(00);
-	
-		
-		dateFinCreation = new DateTime() .withHourOfDay(23)
-			    .withMinuteOfHour(59)
-			    .withSecondOfMinute(59);
+	public FitreAdminSuggestions() {
+
+		dateDebutCreation = new DateTime().withHourOfDay(0).withMinuteOfHour(0)
+				.withSecondOfMinute(0).withMillisOfSecond(00);
+
+		dateFinCreation = new DateTime().withHourOfDay(23).withMinuteOfHour(59)
+				.withSecondOfMinute(59);
 
 	}
-	
+
 	public DateTime getDateDebutCreation() {
 		return dateDebutCreation;
 	}
@@ -43,9 +44,9 @@ public class FitreAdminSuggestions {
 	public int getEtatSuggestion() {
 		return etatSuggestion;
 	}
+
 	public void setEtatSuggestion(int etatSuggestion) {
 		this.etatSuggestion = etatSuggestion;
 	}
-	
-	
+
 }

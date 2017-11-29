@@ -9,11 +9,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Notification;
 import wayde.bean.Personne;
 import wayde.beandatabase.AvisaDonnerDb;
 
 public class NotificationDAO {
+	private static final Logger LOG = Logger.getLogger(NotificationDAO.class);
+
 	Connection connexion;
 
 	public NotificationDAO() {
@@ -51,7 +55,7 @@ public class NotificationDAO {
 		
 		for (Personne personne:listpersonne)
 		{
-		if (personne.getId()!=idpersonne)	{// Ne met pas de notification à l'emtteur
+		if (personne.getId()!=idpersonne)	{// Ne met pas de notification ï¿½ l'emtteur
 		requete = "INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 			 preparedStatement = connexion.prepareStatement(
@@ -96,7 +100,7 @@ public class NotificationDAO {
 	public void addNotificationFromAvis(
 			 int idpersonne) throws SQLException {
 
-		// ************Recuperles avis à donner pour les activite à noter
+		// ************Recuperles avis ï¿½ donner pour les activite ï¿½ noter
 		AvisaDonnerDAO avisadonnerdao = new AvisaDonnerDAO(connexion);
 		ArrayList<AvisaDonnerDb> listavisadonner=avisadonnerdao.getListAvisaDonner(idpersonne);
 			
@@ -138,7 +142,7 @@ public class NotificationDAO {
 	}
 	public void removeNotificationAnoter(int idpersonne, int idpersonnenotee,
 			int idactivite) {// Efface un message dans la table notificiation
-		// utilisé aprés a voir déposé un avis
+		// utilisï¿½ aprï¿½s a voir dï¿½posï¿½ un avis
 
 		String requete = "Delete from notification where iddestinataire=? and idtype=?"
 				+ " and idactivite=? and idpersonne=?;";

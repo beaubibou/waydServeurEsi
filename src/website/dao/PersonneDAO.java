@@ -65,82 +65,6 @@ public class PersonneDAO {
 		return false;
 	}
 
-	public static ArrayList<ProfilBean> getListProfil() {
-
-		Connection connexion = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-		ProfilBean profil = null;
-		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
-		//
-		try {
-			connexion = CxoPool.getConnection();
-			Statement stmt = connexion.createStatement();
-			// System.out.println("Cherche compte personen par Id" +
-			// idpersonne);
-			String requete = " SELECT personne.note,personne.nbravis,"
-					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
-					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
-					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
-					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
-					+ "  mail, cleactivation,commentaire, photo,typeuser,"
-					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret FROM personne";
-
-			preparedStatement = connexion.prepareStatement(requete);
-			rs = preparedStatement.executeQuery();
-			stmt.close();
-
-			while (rs.next()) {
-				int id = rs.getInt("idpersonne");
-				int nbravis = rs.getInt("nbravis");
-				int nbractivite = rs.getInt("nbractivite");
-				int nbrparticipation = rs.getInt("nbrparticipation");
-				int nbrami = rs.getInt("nbrami");
-				String commentaire = rs.getString("commentaire");
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				Date datecreation = rs.getTimestamp("datecreation");
-				Date datenaissance = rs.getTimestamp("datenaissance");
-				boolean afficheage = rs.getBoolean("afficheage");
-				boolean affichesexe = rs.getBoolean("affichesexe");
-				boolean actif = rs.getBoolean("actif");
-				String photo = rs.getString("photo");
-				int sexe = rs.getInt("sexe");
-				double note = rs.getDouble("note");
-				boolean admin = rs.getBoolean("admin");
-				int typeuser = rs.getInt("typeuser");
-				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
-				double latitude = rs.getDouble("latitude");
-				double longitude = rs.getDouble("longitude");
-				String adresse = rs.getString("adresse");
-				String telephone = rs.getString("telephone");
-				String siteWeb = rs.getString("siteweb");
-				double latitudeFixe = rs.getDouble("latitudefixe");
-				double longitudeFixe = rs.getDouble("longitudefixe");
-				String siret = rs.getString("siret");
-				profil = new ProfilBean(id, nom, prenom, datecreation,
-						datenaissance, nbravis, sexe, nbractivite,
-						nbrparticipation, nbrami, note, photo, affichesexe,
-						afficheage, commentaire, actif, admin, typeuser,
-						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
-
-				retour.add(profil);
-
-			}
-			return retour;
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			return retour;
-		} finally {
-			CxoPool.close(connexion, preparedStatement, rs);
-		}
-
-	}
 
 	public static ArrayList<ProfilBean> getListProfil(FitreAdminProfils filtre,
 			int page, int maxResult) {
@@ -162,8 +86,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			
-
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -171,10 +93,12 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,"
-					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,latitudefixe,longitudefixe,siret, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement"
+					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,"
+					+ "latitudefixe,longitudefixe,siret,"
+					+ " COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, sexe.libelle  as sexeStr"
 					+ "  FROM personne "
 					+ " left join (select count(*) as nbrsignalement,signaler_profil.idsignalement from signaler_profil group by signaler_profil.idsignalement) tablesignalement "
-					+ " ON personne.idpersonne = tablesignalement.idsignalement where 1=1 ";
+					+ " ON personne.idpersonne = tablesignalement.idsignalement left join sexe on personne.sexe=sexe.id  where 1=1"   ;
 
 			if (typeUser != TypeUser.TOUS) {
 				requete = requete + " and typeuser=?";
@@ -270,12 +194,13 @@ public class PersonneDAO {
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				int  nbrSignalement=rs.getInt("nbrsignalement");
 				String siret = rs.getString("siret");
+				String sexeStr = rs.getString("sexeStr");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexeStr);
 				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
@@ -316,8 +241,8 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse"
-					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret "
-					+ " FROM personne where idpersonne=?";
+					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret,sexe.libelle as sexeStr "
+					+ " FROM personne,sexe where idpersonne=? and sexe.id=personne.sexe";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -354,12 +279,13 @@ public class PersonneDAO {
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
+				String sexestr=rs.getString("sexeStr");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexestr);
 
 			}
 			return profil;
@@ -432,8 +358,8 @@ public class PersonneDAO {
 					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire,"
-					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse"
-					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret FROM personne where login=?";
+					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse,sexe.libelle as sexeStr "
+					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret FROM personne,sexe  where login=? and sexe.id=personne.sexe";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -466,6 +392,7 @@ public class PersonneDAO {
 				String adresse = rs.getString("adresse");
 				String telephone = rs.getString("telephone");
 				String siteWeb = rs.getString("siteweb");
+				String sexeStr = rs.getString("sexeStr");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
@@ -474,7 +401,7 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexeStr);
 
 			}
 

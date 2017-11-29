@@ -1,8 +1,13 @@
 package website.html;
 
+import org.apache.log4j.Logger;
+
+import wayde.dao.ActiviteDAO;
+
 
 
 public class JumbotronJsp {
+	private static final Logger LOG = Logger.getLogger(JumbotronJsp.class);
 
 	private String sousTitre ;
 	private String titre;

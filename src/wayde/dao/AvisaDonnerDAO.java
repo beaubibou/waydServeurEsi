@@ -8,9 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.AvisaDonnerDb;
 
 public class AvisaDonnerDAO {
+	private static final Logger LOG = Logger.getLogger(AvisaDonnerDAO.class);
+
 	Connection connexion;
 	
 	public  AvisaDonnerDAO(Connection connexion){

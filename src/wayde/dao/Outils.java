@@ -10,21 +10,21 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
+
 
 
 
 public class Outils {
+
+	private static final Logger LOG = Logger.getLogger(Outils.class);
 
  	public static String getCleActivation() {
 		// TODO Auto-generated method stub
 		return  ""+(int) (Math.random() * 9000 + 110);
 	}
 	
- 	
-
-
-	
-	
+ 		
 	public  void EnvoyerMail(String mailof,String cleactivation){
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "auth.smtp.1and1.fr");
@@ -92,7 +92,7 @@ public class Outils {
 			message.setText("Votre mot de passe:" +
 					mdp);
 			Transport.send(message);
-		//	System.out.println("Mail envoye à"+mailof);
+		//	System.out.println("Mail envoye ï¿½"+mailof);
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

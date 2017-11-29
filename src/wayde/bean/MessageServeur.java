@@ -1,7 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class MessageServeur {
-boolean reponse;
+	private static final Logger LOG = Logger.getLogger(MessageServeur.class);
+
+	boolean reponse;
 String message;
 	
 	public MessageServeur(){

@@ -5,11 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.CategorieDb;
 
 
 
 public class CategorieDAO {
+	private static final Logger LOG = Logger.getLogger(CategorieDAO.class);
+
 	Connection connexion;
 	public CategorieDAO(Connection connexion) {
 		// TODO Auto-generated constructor stub

@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,15 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
-import website.dao.ActiviteDAO;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
-import website.metier.Outils;
-import website.metier.Pagination;
-import website.metier.admin.FiltreJSP;
 import website.metier.admin.FitreAdminActivites;
-import website.metier.admin.FitreAdminProbleme;
 import website.pager.PagerActiviteBean;
 
 /**
@@ -62,7 +54,6 @@ public class ListActivite extends HttpServlet {
 		if (request.getParameter("page") != null)
 			page = Integer.parseInt(request.getParameter("page"));
 
-		System.out.println(filtreActivite);
 		
 		PagerActiviteBean pager = new PagerActiviteBean(filtreActivite,
 				page);

@@ -1,8 +1,11 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class RayonBean {
 
-	
+	private static final Logger LOG = Logger.getLogger(RayonBean.class);
+	   
 	private int value;
 	private String libelle;
 	public int getValue() {

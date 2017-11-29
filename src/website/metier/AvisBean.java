@@ -4,6 +4,8 @@ package website.metier;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Parametres;
 
 
@@ -15,6 +17,8 @@ public class AvisBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(AvisBean.class);
+	   
 	int idnoter;
 	int idactivite;
 	int idpersonnenotee;
@@ -215,7 +219,7 @@ public class AvisBean implements Serializable {
 	public String getLibelle() {
 		
 		if (libelle==null)
-			return "Pas d'avis laissé";
+			return "Pas d'avis laissï¿½";
 		else
 		return libelle;
 	}

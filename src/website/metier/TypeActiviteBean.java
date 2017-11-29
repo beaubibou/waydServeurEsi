@@ -1,6 +1,11 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class TypeActiviteBean {
+
+	private static final Logger LOG = Logger.getLogger(TypeActiviteBean.class);
+	   
 	public static  final int TOUS=0;
 	public int id;
 	public String libelle;

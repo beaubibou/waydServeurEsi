@@ -2,10 +2,14 @@ package wayde.bean;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 
 public class Ami {
-    private int id;
+	private static final Logger LOG = Logger.getLogger(Ami.class);
+
+	private int id;
     private String login;
     private String nom;
     private String prenom;
@@ -15,9 +19,7 @@ public class Ami {
     public final static int ETAT_ATTENTE=0;
     public final static int ETAT_ACTIF=1;
     public final static int ETAT_BANNI=2;
-    
-    
-
+ 
     public String getDepuisle() {
 		return depuisle;
 	}

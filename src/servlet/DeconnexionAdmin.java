@@ -8,14 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import website.metier.ProfilBean;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class DeconnexionAdmin
  */
 public class DeconnexionAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(DeconnexionAdmin.class);
+	  
     /**
      * @see HttpServlet#HttpServlet()
      */

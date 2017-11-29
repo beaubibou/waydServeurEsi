@@ -6,12 +6,15 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ParticipationDAO;
 
 public class UpdateActiviteGcm implements Runnable {
+	private static final Logger LOG = Logger.getLogger(UpdateActiviteGcm.class);
 	
 	private int idActivite;
 	private int idPersonne;
@@ -36,10 +39,10 @@ public class UpdateActiviteGcm implements Runnable {
 		
 			new ServeurMethodes(connexionGcm)
 					.envoiAndroidUpdateActivite(listpersonne,
-							idActivite);// envoi la mise à jour à
+							idActivite);// envoi la mise ï¿½ jour ï¿½
 										// tous les participants
 										// sauf l'organisateur
-			// sa mise à jour est en local.
+			// sa mise ï¿½ jour est en local.
 
 		} catch (SQLException | NamingException e1) {
 			// TODO Auto-generated catch block

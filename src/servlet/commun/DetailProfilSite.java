@@ -1,5 +1,7 @@
 package servlet.commun;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
@@ -18,7 +22,8 @@ import website.metier.ProfilBean;
  */
 public class DetailProfilSite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(DetailProfilSite.class);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */

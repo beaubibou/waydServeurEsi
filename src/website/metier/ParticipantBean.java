@@ -3,7 +3,11 @@ package website.metier;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class ParticipantBean {
+	private static final Logger LOG = Logger.getLogger(ParticipantBean.class);
+	   
 	int id;
 	private String pseudo;
 	private int nbravis;
@@ -11,6 +15,8 @@ public class ParticipantBean {
 	private double note;
 	private String photostr;
 	private String age;
+	private int typeuser;
+	private boolean admin;
 
 	public ParticipantBean() {
 
@@ -18,7 +24,7 @@ public class ParticipantBean {
 
 	public ParticipantBean(int id, String pseudo, int nbravis, int sexe,
 			double note, String photostr, Date datenaissance,
-			boolean afficheage, boolean affichesexe) {
+			boolean afficheage, boolean affichesexe,int typeuser,boolean admin) {
 		super();
 		this.id = id;
 		this.pseudo = pseudo;
@@ -26,14 +32,36 @@ public class ParticipantBean {
 		this.sexe = sexe;
 		this.note = note;
 		this.photostr = photostr;
+		this.typeuser=typeuser;
+		this.admin=admin;
 		this.age = getAgeStr(datenaissance, afficheage);
 		if (affichesexe)
 			this.sexe = 3;
 	}
 
+	public String getTypeUserHTML() {
+
+		if (isAdmin())
+			return "<span style='color: green;'	class='glyphicon glyphicon-king'></span>";
+
+		if (typeuser == TypeUser.PRO)
+			return "<span style='color: blue;'	class='glyphicon glyphicon-usd'></span>";
+
+		if (typeuser == TypeUser.WAYDEUR)
+			return "<span style='color: black;'	class='glyphicon glyphicon-user'></span>";
+
+		return "";
+
+	}
+
+	private boolean isAdmin() {
+		// TODO Auto-generated method stub
+		return admin;
+	}
+
 	public String getAgeStr(Date datenaissance, boolean afficheage) {
 		if (afficheage)
-			return "Non communiqué";
+			return "Non communiquï¿½";
 		if (datenaissance != null) {
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -46,10 +74,10 @@ public class ParticipantBean {
 			if (yeardiff < 0)
 				return "Erreur";
 			if (yeardiff == 0)
-				return "Pas d'age indiqué";
+				return "Pas d'age indiquï¿½";
 			return Integer.toString(yeardiff) + " ans";
 		}
-		return "Pas d'age indiqué";
+		return "Pas d'age indiquï¿½";
 	}
 
 	public int getId() {

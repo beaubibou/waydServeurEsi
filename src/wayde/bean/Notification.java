@@ -2,7 +2,10 @@ package wayde.bean;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class Notification {
+	private static final Logger LOG = Logger.getLogger(Notification.class);
 
 	int idactivite;
 	int idtype;
@@ -39,33 +42,33 @@ public class Notification {
 		switch (idtypemessage){
 		
 		case DonneAvis:
-			this.message="Penser à noter "+nompersconcernee+ " pour sa participation à "
-			+ " « "+titreactivite+" » ";
+			this.message="Penser ï¿½ noter "+nompersconcernee+ " pour sa participation ï¿½ "
+			+ " ï¿½ "+titreactivite+" ï¿½ ";
 			break;
 			
 		case RecoitAvis:
-			this.message="Vous avez recu un avis de "+nompersconcernee+ " pour votre participation à "
-			+ " « "+titreactivite+" » ";
+			this.message="Vous avez recu un avis de "+nompersconcernee+ " pour votre participation ï¿½ "
+			+ " ï¿½ "+titreactivite+" ï¿½ ";
 		
 			break;
 			
 		case NouvelAmi:
-			this.message="Vous êtes à présent l'ami de "+nompersconcernee;
+			this.message="Vous ï¿½tes ï¿½ prï¿½sent l'ami de "+nompersconcernee;
 			break;
 			
 		case SUPPRIME_AMI:
-			this.message= nompersconcernee+ " ne souhaite plus être votre ami";
+			this.message= nompersconcernee+ " ne souhaite plus ï¿½tre votre ami";
 			break;
 		
 		case Supprime_Participation:
-			this.message= nompersconcernee+ " ne participe plus à l'activité";
+			this.message= nompersconcernee+ " ne participe plus ï¿½ l'activitï¿½";
 			break;	
 		case Supprime_Activite:
-			this.message= nompersconcernee+ " à annulé son activité";
+			this.message= nompersconcernee+ " ï¿½ annulï¿½ son activitï¿½";
 			break;	
 			
 		case MESSAGE_TEXT:
-			this.message= "L'organisateur à annulé votre participation";
+			this.message= "L'organisateur ï¿½ annulï¿½ votre participation";
 			break;	
 				
 		}

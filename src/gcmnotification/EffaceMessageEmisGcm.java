@@ -2,7 +2,11 @@ package gcmnotification;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
@@ -11,6 +15,7 @@ import wayde.bean.CxoPool;
 
 public class EffaceMessageEmisGcm implements Runnable
 {
+	private static final Logger LOG = Logger.getLogger(EffaceMessageEmisGcm.class);
 	
 	private int idPersonne;
 

@@ -2,8 +2,11 @@ package website.metier;
 
 import java.util.Date;
 
-public class ProblemeBean {
+import org.apache.log4j.Logger;
 
+public class ProblemeBean {
+	private static final Logger LOG = Logger.getLogger(ProblemeBean.class);
+	   
 	private int id;
 	private String probleme;
 	private String email;

@@ -1,6 +1,10 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class TypeAccess {
+	private static final Logger LOG = Logger.getLogger(TypeAccess.class);
+	   
 public TypeAccess(int id, String libelle) {
 		super();
 		this.id = id;

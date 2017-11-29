@@ -65,8 +65,8 @@ public class ListMapActivite extends HttpServlet {
 		// mettre la requete
 		
 			String json = new Gson().toJson(listActiviteAjax);
-			for (ActiviteAjax activiteAjax:listActiviteAjax)
-				System.out.println(activiteAjax);
+//			for (ActiviteAjax activiteAjax:listActiviteAjax)
+//				System.out.println(activiteAjax);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);

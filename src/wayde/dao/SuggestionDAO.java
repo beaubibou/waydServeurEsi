@@ -6,7 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class SuggestionDAO {
+	private static final Logger LOG = Logger.getLogger(SuggestionDAO.class);
+
 	Connection connexion;
 	public SuggestionDAO(Connection connexion) {
 		// TODO Auto-generated constructor stub

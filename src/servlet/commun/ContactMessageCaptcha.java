@@ -1,5 +1,7 @@
 package servlet.commun;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +19,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
@@ -30,7 +33,8 @@ import com.google.firebase.FirebaseApp;
  */
 public class ContactMessageCaptcha extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(ContactMessageCaptcha.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -158,10 +162,8 @@ if (message == null)
 		 post.setEntity(new UrlEncodedFormEntity(urlParameters));
 		
 		 HttpResponse response = client.execute(post);
-		 System.out.println("\nSending 'POST' request to URL : " + url);
-		 // System.out.println("Post parameters : " + post.getEntity());
-		 System.out.println("Response Code : "
-		 + response.getStatusLine().getStatusCode());
+		 LOG.info("\nSending 'POST' request to URL : " + url);
+		
 		
 		 // System.out.println(oj.toString());
 		
@@ -175,8 +177,11 @@ if (message == null)
 		
 		 }
 		
-		 if (result.toString().contains("\"success\": true"))
-		 return true;
+		 if (result.toString().contains("\"success\": true")){
+		LOG.info("Captcha ok");
+			 return true;
+		 }
+		 LOG.info("Captcha refusé");
 		 return false;
 
 	

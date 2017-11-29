@@ -9,12 +9,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Discussion;
 import wayde.bean.Message;
 import wayde.bean.Personne;
 
 
 public class MessageDAO {
+	
+	private static final Logger LOG = Logger.getLogger(MessageDAO.class);
+
 	Connection connexion;
 
 	public MessageDAO(Connection connexion) {

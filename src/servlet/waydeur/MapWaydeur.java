@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import wayde.bean.CxoPool;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
@@ -21,7 +24,8 @@ import website.metier.ProfilBean;
  */
 public class MapWaydeur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(MapWaydeur.class);
+
     /**
      * @see HttpServlet#HttpServlet()
      */

@@ -1,6 +1,9 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class IndicateurWayd {
+	private static final Logger LOG = Logger.getLogger(IndicateurWayd.class);
 
 	int nbrTotalActivite;
 	int nbrTotalParticipation;

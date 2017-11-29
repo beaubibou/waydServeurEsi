@@ -5,10 +5,15 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
 public class UpdatePreferenceGcm implements Runnable {
+	private static final Logger LOG = Logger.getLogger(UpdatePreferenceGcm.class);
+	
+	
 	int idPersonne;
 
 	public UpdatePreferenceGcm(int idPersonne) {

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import website.dao.ActiviteDAO;
 import website.dao.StatDAO;
 import website.metier.AuthentificationSite;
@@ -22,7 +24,8 @@ import website.metier.admin.FitreAdminSuggestions;
  */
 public class Acceuil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(Acceuil.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

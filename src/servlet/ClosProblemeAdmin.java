@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.MessageServeur;
-import website.dao.MessageDAO;
 import website.dao.ProblemeDAO;
 import website.metier.AuthentificationSite;
 
@@ -17,7 +18,8 @@ import website.metier.AuthentificationSite;
  */
 public class ClosProblemeAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(ClosProblemeAdmin.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

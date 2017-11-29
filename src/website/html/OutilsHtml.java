@@ -1,8 +1,10 @@
 package website.html;
 
-import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 public class OutilsHtml {
+	private static final Logger LOG = Logger.getLogger(OutilsHtml.class);
+
 	public static String convertRequeteToString(Object requetAttribute) {
 
 		if (requetAttribute == null)

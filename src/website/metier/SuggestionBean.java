@@ -2,8 +2,11 @@ package website.metier;
 
 import java.util.Date;
 
-public class SuggestionBean {
+import org.apache.log4j.Logger;
 
+public class SuggestionBean {
+	private static final Logger LOG = Logger.getLogger(SuggestionBean.class);
+	   
 	private int id, idPersonne;
 	private String pseudo;
 	private String suggestion;

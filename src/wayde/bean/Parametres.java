@@ -4,7 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class Parametres {
+	private static final Logger LOG = Logger.getLogger(Parametres.class);
+
 	public static SimpleDateFormat formatDateWs = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	public static String getStringWsFromDate (Date date){
 		if (date==null)	 return "Pas de date";

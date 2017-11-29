@@ -7,9 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Ami;
 
 public class AmiDAO {
+	
+	private static final Logger LOG = Logger.getLogger(AmiDAO.class);
 
 	Connection connexion;
 

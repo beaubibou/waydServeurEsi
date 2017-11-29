@@ -2,9 +2,12 @@ package website.metier;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 
 public class AmiBean {
+	private static final Logger LOG = Logger.getLogger(AmiBean.class);
     private int id;
     private String login;
     private String nom;

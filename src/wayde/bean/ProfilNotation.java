@@ -3,8 +3,11 @@ package wayde.bean;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 
 public class ProfilNotation {
+	private static final Logger LOG = Logger.getLogger(ProfilNotation.class);
 
 	int id;
 	private String nom;
@@ -112,7 +115,7 @@ public class ProfilNotation {
 
 	public  String getAgeStr(Date datenaissance,boolean afficheage)
 	{
-		if (afficheage)return "Non communiqué";
+		if (afficheage)return "Non communiquï¿½";
 		if (datenaissance!=null){
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -124,11 +127,11 @@ public class ProfilNotation {
 				yeardiff = yeardiff - 1;
 			}
 			if (yeardiff<0)return "Erreur";
-			if (yeardiff==0)return "Pas d'age indiqué";
+			if (yeardiff==0)return "Pas d'age indiquï¿½";
 			return Integer.toString(yeardiff) +" ans";
 		}
 
-		return "Pas d'age indiqué";
+		return "Pas d'age indiquï¿½";
 	}
 
 

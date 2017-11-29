@@ -8,11 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.dao.AmiDAO;
 import website.dao.PersonneDAO;
@@ -49,8 +47,7 @@ public class DetailParticipant extends HttpServlet {
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
 			return;
-		
-		
+
 		if (request.getParameter("actif") != null) {// active le profil
 			int idParticipant = Integer.parseInt(request
 					.getParameter("idPersonne"));
@@ -87,20 +84,16 @@ public class DetailParticipant extends HttpServlet {
 
 		// l'appel de la servelt peut venir d'une servlet ou d'une page
 
-		
 		int idParticipant = 0;
 		if (request.getParameter("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
 					.getParameter("idPersonne"));
-		System.out.println("idpaeri"+idParticipant);
 
 		if (request.getAttribute("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
 					.getAttribute("idPersonne"));
 
 		// Creation de l'objet profil complet ami+activit�
-
-		System.out.println("idpaeri"+idParticipant);
 		ProfilBean profilBean = PersonneDAO.getFullProfil(idParticipant);
 		ArrayList<AmiBean> listAmi = AmiDAO.getListAmi(idParticipant);
 		ArrayList<ActiviteBean> listActivite = ActiviteDAO

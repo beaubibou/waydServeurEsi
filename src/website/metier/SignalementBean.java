@@ -2,8 +2,12 @@ package website.metier;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class SignalementBean {
 
+	private static final Logger LOG = Logger.getLogger(SignalementBean.class);
+	   
 	public int idpersonneSignalee;
 	public int idpersonneInformateur;
 	public String pseudoSignale,pseudoInformateur;

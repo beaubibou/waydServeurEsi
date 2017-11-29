@@ -2,14 +2,18 @@ package website.pager;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import website.metier.AmiBean;
 import website.metier.admin.FitreAdminActivites;
 
 public class PagerActiviteBean {
 
+	private static final Logger LOG = Logger.getLogger(PagerActiviteBean.class);
+	   
 	private ArrayList<ActiviteBean> listActivite;
 	private int pageEnCours = 0;
 	private final int maxResult = 35;

@@ -35,14 +35,14 @@
 
 	<%
 		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
-		ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
-		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
-		ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
-		ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
-		
-		PagerActiviteBean pager=(PagerActiviteBean) request
-		.getAttribute("pager");
-		ArrayList<ActiviteBean> listActivite = pager.getListActivite();
+			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+			ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
+			ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
+			
+			PagerActiviteBean pager=(PagerActiviteBean) request
+			.getAttribute("pager");
+			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
 
 	<div class="container" style="width: 90%;">
@@ -121,10 +121,10 @@
 						</div>
 
 
-		<div class="form-group">
+						<div class="form-group">
 							<label for="etatActivite">Etat</label> <select
-								data-style="btn-primary" class="form-control"
-								id="etatActivite" name="etatActivite">
+								data-style="btn-primary" class="form-control" id="etatActivite"
+								name="etatActivite">
 
 								<%
 									for (TypeEtatActivite typeEtatActivite:listEtatActivite) {
@@ -150,7 +150,7 @@
 
 
 	<div class="container" style="width: 90%;">
-	
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -161,25 +161,28 @@
 					<th style="width: 10%;" class="text-center">Date fin</th>
 					<th style="width: 5%;" class="text-center">Vu</th>
 					<th style="width: 5%;" class="text-center">Sign.</th>
+					<th style="width: 5%;" class="text-center">Type</th>
 				</tr>
 			</thead>
 			<tbody
 				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 				<%
 					if (listActivite!=null)
-							for (ActiviteBean activite : listActivite) {
-							String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									for (ActiviteBean activite : listActivite) {
+									String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+									String lienParticipant = "DetailParticipant?idPersonne=" + activite.getIdorganisateur()+"&from=listActivite.jsp";
 				%>
 
 				<tr>
 					<td><%=activite.getEtatHtml()%></td>
-					<td><%=activite.getTypeUserHTML()%></td>
-					<td><a href=<%out.println(lien);%>> <%=activite.getTitre()%></a></td>
-					<td><%=activite.getPseudo()%></td>
+					<td><%=activite.getTypeUserLienHTML(lienParticipant)%></td>
+					<td><a href=<%=lien%>> <%=activite.getTitre()%></a></td>
+					<td><a href=<%=lienParticipant%>><%=activite.getPseudo()%></a></td>
 					<td><%=activite.getHoraireLeA()%></td>
 					<td><%=activite.getNbrVu()%></td>
 					<td><%=activite.getNbrSignalement()%></td>
-
+					<td><%=activite.getLibelleActivite()%></td>
+				
 				</tr>
 
 				<%

@@ -1,3 +1,4 @@
+<%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.SignalementBean"%>
 <%@page import="website.metier.AmiBean"%>
 <%@page import="website.metier.ProfilBean"%>
@@ -25,10 +26,6 @@
 <body>
 
 	<%@ include file="menu.jsp"%>
-
-
-
-
 
 	<%
 		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
@@ -64,11 +61,9 @@
 		<%=profil.getTypeUserHTML()%>
 		<%=profil.getPseudo()%>
 	</h2>
-	
+
 	</br>
 	<div class="container">
-
-
 
 		<div class="row">
 
@@ -80,27 +75,31 @@
 			</div>
 
 
-
 			<div class="col-sm-2">
 
-				<h6>
-					<%=profil.getAge()%>
-				</h6>
-				<h6>
+			<% if (profil.getTypeuser()==TypeUser.WAYDEUR){%>
+				<h5>
+					Sexe:<%=profil.getSexeStr()%>
+				</h5>
 
-					<%=profil.getNote()%>/5
-				</h6>
-				<h6>
+				<h5>
+					Age:<%=profil.getAge()%>
+				</h5>
+
+				<h5>
+
+					Note:<%=profil.getNote()%>/5
+				</h5>
+				
+				<h5>
 					Nbr ami:
-					<%
-					out.println(profil.getNbrami());
-				%>
-					<h6>
-						Profil :
-						<%
-						out.println(profil.isActifStr());
-					%>
-					</h6>
+					<%=profil.getNbrami()%>
+				</h5>	
+				<%} %>	
+					<h5>
+						Status :
+						<%=profil.getActifHtml()%>
+					</h5>
 			</div>
 			<div class="col-sm-8">
 

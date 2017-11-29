@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Activite;
 import wayde.bean.Droit;
 import wayde.bean.LibelleMessage;
@@ -25,6 +27,9 @@ import wayde.bean.ProfilPro;
 import wayde.bean.ProprietePref;
 
 public class PersonneDAO {
+	
+	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
+
 	Connection connexion;
 
 	public PersonneDAO() {

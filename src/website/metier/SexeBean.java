@@ -1,6 +1,10 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class SexeBean {
+	private static final Logger LOG = Logger.getLogger(SexeBean.class);
+	   
 int id;
 String libelle;
 public SexeBean(int id, String libelle) {

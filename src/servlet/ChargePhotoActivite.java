@@ -18,9 +18,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
-import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.TypeActiviteBean;

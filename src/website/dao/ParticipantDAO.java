@@ -10,15 +10,19 @@ import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
+import wayde.dao.ActiviteDAO;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 
 public class ParticipantDAO {
+	private static final Logger LOG = Logger.getLogger(ParticipantDAO.class);
 
 	Connection connexion;
 
@@ -37,7 +41,8 @@ public class ParticipantDAO {
 		try {
 
 			String requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,personne.nbravis,"
-					+ "personne.sexe,personne.note,personne.datenaissance,personne.afficheage,personne.affichesexe"
+					+ "personne.sexe,personne.note,personne.datenaissance,personne.afficheage,"
+					+ "personne.affichesexe,personne.typeuser,personne.admin "
 					+ " from personne,participer"
 					+ " where personne.idpersonne=participer.idpersonne"
 					+ " and participer.idactivite=?  ";
@@ -58,8 +63,11 @@ public class ParticipantDAO {
 				int sexe = rs.getInt("sexe");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
+				int typeuser = rs.getInt("typeuser");
+				boolean admin = rs.getBoolean("admin");
+				
 				participant = new ParticipantBean(id, pseudo, nbravis, sexe,
-						note, photostr, datenaissance, afficheage, affichesexe);
+						note, photostr, datenaissance, afficheage, affichesexe,typeuser,admin);
 				retour.add(participant);
 			}
 
@@ -68,7 +76,7 @@ public class ParticipantDAO {
 
 			requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,"
 					+ " personne.nbravis,personne.sexe,personne.note,"
-					+ " personne.datenaissance,personne.afficheage,personne.affichesexe"
+					+ " personne.datenaissance,personne.afficheage,personne.affichesexe,personne.typeuser,personne.admin "
 					+ " from personne,activite"
 					+ " where personne.idpersonne=activite.idpersonne"
 					+ " and activite.idactivite=?  ";
@@ -90,8 +98,10 @@ public class ParticipantDAO {
 				int sexe = rs.getInt("sexe");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
+				int typeuser = rs.getInt("typeuser");
+				boolean admin = rs.getBoolean("admin");
 				participant = new ParticipantBean(id, pseudo, nbravis, sexe,
-						note, photostr, datenaissance, afficheage, affichesexe);
+						note, photostr, datenaissance, afficheage, affichesexe,typeuser,admin);
 				retour.add(0, participant);
 			}
 			return retour;

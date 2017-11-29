@@ -8,10 +8,14 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
+import wayde.dao.ActiviteDAO;
 import website.metier.StatistiqueBean;
 
 public class StatDAO {
+	private static final Logger LOG = Logger.getLogger(StatDAO.class);
 
 	public static int getNbrMessageDuJour() {
 

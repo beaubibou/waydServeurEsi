@@ -1,5 +1,7 @@
 package servlet.pro;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import website.metier.ProfilBean;
 
 /**
@@ -15,7 +19,8 @@ import website.metier.ProfilBean;
  */
 public class Deconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final Logger LOG = Logger.getLogger(Deconnexion.class);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */

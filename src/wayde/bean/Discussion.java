@@ -3,8 +3,11 @@ package wayde.bean;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class Discussion {
-	
+	private static final Logger LOG = Logger.getLogger(Discussion.class);
+
 	private int idemetteur;
 	private String titre;
 	private String datecreationstr;

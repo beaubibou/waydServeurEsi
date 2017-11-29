@@ -1,9 +1,13 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.AvisaDonnerDb;
 
 public class AvisaDonner {
 	
+	private static final Logger LOG = Logger.getLogger(AvisaDonner.class);
+
 	int idnoter;
 	
 	int idactivite;

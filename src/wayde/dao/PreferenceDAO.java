@@ -6,9 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
 import wayde.bean.Preference;
 
 public class PreferenceDAO {
+	private static final Logger LOG = Logger.getLogger(PreferenceDAO.class);
+
 	Connection connexion;
 
 	public PreferenceDAO(Connection connexion) {
@@ -68,7 +73,7 @@ public class PreferenceDAO {
 	public void addPreference(int idpersonne, int idtypeactivite[],
 			Boolean[] active) throws SQLException {
 		// TODO Auto-generated method stub
-		//System.out.println("Ajoute met a jour la préférence DAO");
+		//System.out.println("Ajoute met a jour la prï¿½fï¿½rence DAO");
 
 		String requete = "DELETE FROM prefere WHERE prefere.idpersonne=? ";
 

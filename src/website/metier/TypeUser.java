@@ -1,6 +1,10 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class TypeUser {
+	private static final Logger LOG = Logger.getLogger(TypeUser.class);
+	   
 	public final static int TOUS = 0, PRO = 1, WAYDEUR = 3;
 	
 	int id;

@@ -2,8 +2,12 @@ package wayde.beandatabase;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import wayde.bean.MessageConnexion;
+
 public class NotificationDb {
-	
+	private static final Logger LOG = Logger.getLogger(NotificationDb.class);
 	int idestinataire;
 	int idtype; 
 	int idactivite; 

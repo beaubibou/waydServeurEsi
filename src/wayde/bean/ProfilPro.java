@@ -1,8 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class ProfilPro {
+	private static final Logger LOG = Logger.getLogger(ProfilPro.class);
+
 	int id;
-	
 	private String prenom;
 	private String adresse;
 	private String siret;

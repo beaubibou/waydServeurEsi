@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 
@@ -12,7 +14,8 @@ public class AddAvisGcm implements Runnable {
 
 	private int idPersonnenotee;
 	private int idPersonne;
-
+	private static final Logger LOG = Logger.getLogger(AddAvisGcm.class);
+	
 	public AddAvisGcm(int idPersonnenotee, int idPersonne) {
 		super();
 		this.idPersonnenotee = idPersonnenotee;

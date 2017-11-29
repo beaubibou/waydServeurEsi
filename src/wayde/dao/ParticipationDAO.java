@@ -19,11 +19,11 @@ import wayde.bean.Personne;
 
 public class ParticipationDAO {
 
+	private static final Logger LOG = Logger.getLogger(ParticipantDAO.class);
 	final int ATTENTE_REPONSE=0;
 	final int ACCEPT_AMI=1;
 	final int REFUSE_AMI=0;
-	private static final Logger LOG = Logger.getLogger(ParticipationDAO.class);
-
+	
 	Connection connexion;
 
 	public ParticipationDAO(Connection connexion) {
@@ -177,7 +177,7 @@ public class ParticipationDAO {
 			retour.add(new Personne(gcm, idpersonne,notification));
 		}
 		
-	//	System.out.println("Cherche les participants à l'activité en "
+	//	System.out.println("Cherche les participants ï¿½ l'activitï¿½ en "
 	//			+ (System.currentTimeMillis() - debut) + " ms");
 		
 		return retour;
@@ -187,7 +187,7 @@ public class ParticipationDAO {
 	public  int  getNombreParticipant(int idactivite,int personne) throws Exception {
 
 		Statement stmt = connexion.createStatement();
-	//	System.out.println("Cherche touts participants à l'activité"+ idactivite);
+	//	System.out.println("Cherche touts participants ï¿½ l'activitï¿½"+ idactivite);
 		String requete = "select count (idpersonne) as nbrparticipant from participer where idpersonne=? and idactivite=?";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, personne);
@@ -208,7 +208,7 @@ public class ParticipationDAO {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
-	//	System.out.println("Cherche touts participants à l'activité"+ idactivite);
+	//	System.out.println("Cherche touts participants ï¿½ l'activitï¿½"+ idactivite);
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
 				+ "	and personne.idpersonne=participer.idpersonne and  personne.idpersonne!=? union "
 				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=? "

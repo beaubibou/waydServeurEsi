@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
+
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.DefinitionPreferenceDb;
 
 
 public class DefinintionPreferenceDAO {
+	private static final Logger LOG = Logger.getLogger(DefinintionPreferenceDAO.class);
+
+	
 	Connection connexion;
 	public DefinintionPreferenceDAO(Connection connexion) {
 		// TODO Auto-generated constructor stub

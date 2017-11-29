@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.PushNotifictionHelper;
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
@@ -18,7 +20,8 @@ import website.metier.ActiviteBean;
 public class AddActiviteGcm implements Runnable {
 	Activite activite;
 	int idOrganisateur;
-
+	private static final Logger LOG = Logger.getLogger(AddActiviteGcm.class);
+	
 	public AddActiviteGcm(Activite activite, int idOrganisateur) {
 
 		this.idOrganisateur = idOrganisateur;
@@ -62,7 +65,7 @@ public class AddActiviteGcm implements Runnable {
 
 		Connection connexiongcm = null;
 		try {
-			// dans le cas ou l'activié n'est pas en cours on ne fait rien
+			// dans le cas ou l'activiï¿½ n'est pas en cours on ne fait rien
 			
 			if (!activite.isEnCours())return;
 			connexiongcm = CxoPool.getConnection();

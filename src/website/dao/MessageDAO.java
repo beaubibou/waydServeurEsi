@@ -12,10 +12,14 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
+import wayde.dao.ActiviteDAO;
 
 public class MessageDAO {
+	private static final Logger LOG = Logger.getLogger(MessageDAO.class);
 
 	public static MessageServeur effaceMessage(int idMessage) {
 
@@ -88,7 +92,6 @@ public class MessageDAO {
 		param.insert(0, "(");
 		param.delete(param.length() - 1, param.length());
 		param.insert(param.length(), ")");
-		System.out.println("chaine=" + param);
 		PreparedStatement preparedStatement = null;
 		try {
 			connexion = CxoPool.getConnection();

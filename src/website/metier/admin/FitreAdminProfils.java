@@ -2,11 +2,15 @@ package website.metier.admin;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import website.metier.AmiBean;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
 public class FitreAdminProfils {
-
+	private static final Logger LOG = Logger.getLogger(FitreAdminProfils.class);
+	   
 	Date dateCreationDebut;
 	Date dateCreationFin;
 	String pseudo;

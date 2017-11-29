@@ -9,10 +9,14 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
+import wayde.dao.ActiviteDAO;
 import website.metier.AmiBean;
 
 public class AmiDAO {
+	private static final Logger LOG = Logger.getLogger(AmiDAO.class);
 
 	public static ArrayList<AmiBean> getListAmi(int idpersonne) {
 

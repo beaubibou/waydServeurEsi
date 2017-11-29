@@ -3,13 +3,17 @@ package website.pager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import website.dao.ProblemeDAO;
+import website.metier.AmiBean;
 import website.metier.ProblemeBean;
 
 public class PagerProblemeBean {
 
+	private static final Logger LOG = Logger.getLogger(PagerProblemeBean.class);
+	   
 	private ArrayList<ProblemeBean> listProbleme;
 	private int pageEnCours = 0;
 	private final int maxResult = 35;

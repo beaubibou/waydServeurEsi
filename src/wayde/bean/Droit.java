@@ -1,6 +1,10 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class Droit {
+
+	private static final Logger LOG = Logger.getLogger(Droit.class);
 
 	private int idpersonne;
 	private boolean admin, verrouille, actif;

@@ -1,8 +1,11 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 
 
 public class Preference {
+	private static final Logger LOG = Logger.getLogger(Preference.class);
 
 	int idpersonne;
 	int idtypeactivite;

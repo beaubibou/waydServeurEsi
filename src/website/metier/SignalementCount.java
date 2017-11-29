@@ -1,6 +1,10 @@
 package website.metier;
 
+import org.apache.log4j.Logger;
+
 public class SignalementCount {
+	private static final Logger LOG = Logger.getLogger(SignalementCount.class);
+	   
  private int idpersonne=0;
  private int nbrSignalement;
  private String pseudo;

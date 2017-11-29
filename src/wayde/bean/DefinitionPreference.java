@@ -1,5 +1,7 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 import wayde.beandatabase.DefinitionPreferenceDb;
 
 
@@ -8,7 +10,8 @@ import wayde.beandatabase.DefinitionPreferenceDb;
  */
 
 public class DefinitionPreference {
-    
+	private static final Logger LOG = Logger.getLogger(DefinitionPreference.class);
+
     int jour;
     int heuredebut;
     int heurefin;

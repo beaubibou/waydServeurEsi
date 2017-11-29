@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -17,8 +18,6 @@ import org.joda.time.format.DateTimeFormatter;
 import website.dao.SuggestionDAO;
 import website.metier.AuthentificationSite;
 import website.metier.SuggestionBean;
-import website.metier.admin.EtatSuggestion;
-import website.metier.admin.FitreAdminProbleme;
 import website.metier.admin.FitreAdminSuggestions;
 
 /**
@@ -26,7 +25,8 @@ import website.metier.admin.FitreAdminSuggestions;
  */
 public class ListSuggestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(ListSuggestion.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */

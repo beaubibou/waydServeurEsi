@@ -9,12 +9,16 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
+import wayde.dao.ActiviteDAO;
 import website.metier.SignalementBean;
 import website.metier.SignalementCount;
 
 public class SignalementDAO {
+	private static final Logger LOG = Logger.getLogger(SignalementDAO.class);
 
 	public static ArrayList<SignalementBean> getListSignalement(int idpersonne) {
 
@@ -109,7 +113,7 @@ public class SignalementDAO {
 
 			if (new wayde.dao.SignalementDAO(connexion).isSignalerProfil(
 					idpersonne, idsignalee))
-				return new MessageServeur(false, "Profil déja signalé");
+				return new MessageServeur(false, "Profil dï¿½ja signalï¿½");
 
 			String requete = "INSERT INTO signaler_profil(idpersonne,idsignalement,idmotif,motif,d_creation)  VALUES (?, ?, ?,?,?);";
 			connexion.setAutoCommit(false);
@@ -124,7 +128,7 @@ public class SignalementDAO {
 			preparedStatement.execute();
 			connexion.commit();
 
-			return new MessageServeur(true, "Activité signalée");
+			return new MessageServeur(true, "Activitï¿½ signalï¿½e");
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block

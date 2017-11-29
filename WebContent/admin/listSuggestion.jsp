@@ -106,7 +106,7 @@
 					ArrayList<SuggestionBean> listSuggestion = (ArrayList<SuggestionBean>) request.getAttribute("listSuggestion");
 		
 						for (SuggestionBean suggestion : listSuggestion) {
-					String lienDetailOrganisateur = "DetailParticipant?idparticipant="
+					String lienDetailOrganisateur = "DetailParticipant?idPersonne="
 					+ suggestion.getIdPersonne();
 				String lienMessage =
 						"/wayd/EnvoiMessageAdmin?idDestinataire=" +suggestion.getIdPersonne()+
@@ -119,7 +119,7 @@
 
 				<tr>
 
-					<td><a href=<%out.println(lienDetailOrganisateur);%>>
+					<td><a href=<%=lienDetailOrganisateur%>>
 					 <%=suggestion.getPseudo()%>
 					</a></td>
 

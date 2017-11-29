@@ -11,10 +11,12 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
+import wayde.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
@@ -22,6 +24,7 @@ import website.metier.admin.EtatProbleme;
 import website.metier.admin.EtatSuggestion;
 
 public class SuggestionDAO {
+	private static final Logger LOG = Logger.getLogger(SuggestionDAO.class);
 
 	public static ArrayList<SuggestionBean> getListSuggestion() {
 

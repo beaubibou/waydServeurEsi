@@ -1,9 +1,14 @@
 package website.metier.admin;
 
+import org.apache.log4j.Logger;
+
+import website.metier.AmiBean;
+
 // Classe utilis�e pour garder en memoire le filtre
 
 public class FiltreJSP {
-
+	private static final Logger LOG = Logger.getLogger(FiltreJSP.class);
+	   
 	int rayon,typeactivite;
 	String ville;
 	double latitude,longitude;

@@ -1,11 +1,15 @@
 package servlet.commun;
 
+import gcmnotification.AcquitAllNotificationGcm;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
@@ -23,7 +27,8 @@ import website.metier.ProfilBean;
  */
 public class SignalerProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger LOG = Logger.getLogger(SignalerProfil.class);
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -52,7 +57,7 @@ public class SignalerProfil extends HttpServlet {
 
 		request.setAttribute("profil", profilAsignaler);
 		if (request.getParameter("idmotif") == null) {
-			// Si pas de motif issu d'un detail activité redirection vers le
+			// Si pas de motif issu d'un detail activitï¿½ redirection vers le
 			// choix du motif
 
 			request.getRequestDispatcher("/commun/SignalerProfil.jsp").forward(
@@ -61,11 +66,10 @@ public class SignalerProfil extends HttpServlet {
 		}
 
 		if (request.getParameter("idmotif") != null) {
-			// Mise à jour du signalement
+			// Mise ï¿½ jour du signalement
 			int idMotif = Integer.parseInt(request.getParameter("idmotif"));
 
 			String complement = request.getParameter("complement");
-			System.out.println("id motif!= null");
 			MessageServeur messageServeur = SignalementDAO.addSignalement(
 					authentification.getProfil().getId(), idProfil, idMotif,
 					complement);
@@ -75,13 +79,13 @@ public class SignalerProfil extends HttpServlet {
 
 				case ProfilBean.WAYDEUR:
 					
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+					new AlertInfoJsp("Profil signalï¿½", AlertJsp.Sucess,
 							"MesActivitesWaydeur").send(request, response);
 					return;
 
 				case ProfilBean.PRO:
 					
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+					new AlertInfoJsp("Profil signalï¿½", AlertJsp.Sucess,
 							"MesActivites").send(request, response);
 					return;
 				}

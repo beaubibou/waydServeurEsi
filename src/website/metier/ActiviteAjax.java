@@ -6,11 +6,12 @@ import java.util.Date;
 
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;
 
 public class ActiviteAjax implements Comparable<ActiviteAjax> {
-
+	private static final Logger LOG = Logger.getLogger(ActiviteAjax.class);
 	int id;
 
 	public static int GRATUIT=1;

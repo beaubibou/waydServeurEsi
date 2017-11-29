@@ -13,11 +13,13 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import org.apache.axis.encoding.Base64;
+import org.apache.log4j.Logger;
 
 import sun.misc.BASE64Encoder;
 
 public class Outils {
-
+	private static final Logger LOG = Logger.getLogger(Outils.class);
+	   
 	public static int nbrLigneParPage = 6;
 	public static int nbrMaxPagination = 8;
 

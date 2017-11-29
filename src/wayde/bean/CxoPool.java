@@ -11,15 +11,20 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+
 public abstract class CxoPool {
+
+	private static final Logger LOG = Logger.getLogger(CxoPool.class);
 
 	public static Connection getConnection() throws NamingException,
 			SQLException {
 		// Récupération connection référencées dans le JNDI - cf
 		// context.xml
-
+		
 		Context ctx = new InitialContext();
 		try{
+			
 			DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
 			return source.getConnection();
 		}

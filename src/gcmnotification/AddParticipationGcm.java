@@ -6,12 +6,15 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
+
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 
 public class AddParticipationGcm implements Runnable {
-
+	private static final Logger LOG = Logger.getLogger(AddParticipationGcm.class);
+	
 	
 	private ArrayList<Personne> listParticipant;
 	private int idActivite;

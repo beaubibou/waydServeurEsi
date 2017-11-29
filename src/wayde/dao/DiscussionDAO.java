@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import wayde.bean.Activite;
 import wayde.bean.Discussion;
 import wayde.bean.Message;
@@ -14,6 +16,7 @@ import wayde.bean.Message;
 
 
 public class DiscussionDAO {
+	private static final Logger LOG = Logger.getLogger(DiscussionDAO.class);
 
 	Connection connexion;
 

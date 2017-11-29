@@ -6,11 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import website.enumeration.MenuEnum;
 import website.html.MessageAlertDialog;
 
 public class AuthentificationSite {
-
+	private static final Logger LOG = Logger.getLogger(AuthentificationSite.class);
+	   
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private ProfilBean profil;

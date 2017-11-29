@@ -1,6 +1,9 @@
 package wayde.bean;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 public class MessageBoite {
+	private static final Logger LOG = Logger.getLogger(MessageBoite.class);
 
 	private int idmessage;
 	private int idemetteur;

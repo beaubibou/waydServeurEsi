@@ -1,6 +1,11 @@
 package website.dao;
 
+import org.apache.log4j.Logger;
+
+import wayde.dao.ActiviteDAO;
+
 public class MessageBean {
+	private static final Logger LOG = Logger.getLogger(MessageBean.class);
 
 	private String message;
 

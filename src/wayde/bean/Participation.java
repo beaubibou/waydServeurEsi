@@ -4,8 +4,12 @@ package wayde.bean;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class Participation
 {
+	private static final Logger LOG = Logger.getLogger(Participation.class);
+
     static int EtatAttenteValidation = 0;
 
     static int EtatValidee = 1;

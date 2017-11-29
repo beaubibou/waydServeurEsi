@@ -2,7 +2,7 @@
 <%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
-<%@page import="website.metier.Pagination"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -29,7 +29,6 @@
 		int idMessage = ((Integer) request.getAttribute("idMessage"))
 				.intValue();
 		String  formInit = (String) request.getAttribute("formInit");
-		System.out.println("idesdkksd"+idDestinataire);
 		
 		
 		

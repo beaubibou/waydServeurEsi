@@ -1,7 +1,12 @@
 package website.metier.admin;
 
-public class EtatSuggestion {
+import org.apache.log4j.Logger;
 
+import website.metier.AmiBean;
+
+public class EtatSuggestion {
+	private static final Logger LOG = Logger.getLogger(EtatSuggestion.class);
+	   
 	public final static int TOUS = 0, CLOTURE = 1, NONCLOTOURE = 2;
 	
 	int id;

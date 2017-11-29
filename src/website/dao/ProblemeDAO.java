@@ -9,14 +9,17 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
+import wayde.dao.ActiviteDAO;
 import website.metier.ProblemeBean;
 import website.metier.admin.EtatProbleme;
 
 public class ProblemeDAO {
+	private static final Logger LOG = Logger.getLogger(ProblemeDAO.class);
 
 	public static ArrayList<ProblemeBean> getListProbleme() {
 
@@ -62,8 +65,6 @@ public class ProblemeDAO {
 		ResultSet rs = null;
 		ArrayList<ProblemeBean> retour = new ArrayList<ProblemeBean>();
 
-		System.out.println(debut);
-		System.out.println(fin);
 		try {
 
 			String requete = "";
@@ -113,7 +114,6 @@ public class ProblemeDAO {
 				boolean lu = rs.getBoolean("lu");
 				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
 			}
-			System.out.println(retour.size());
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -137,8 +137,6 @@ public class ProblemeDAO {
 		ResultSet rs = null;
 		ArrayList<ProblemeBean> retour = new ArrayList<ProblemeBean>();
 
-		System.out.println(debut);
-		System.out.println(fin);
 		try {
 
 			String requete = "";
@@ -195,7 +193,6 @@ public class ProblemeDAO {
 				boolean lu = rs.getBoolean("lu");
 				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
 			}
-			System.out.println(retour.size());
 			return retour;
 
 		} catch (SQLException | NamingException e) {

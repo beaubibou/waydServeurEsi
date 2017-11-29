@@ -1,6 +1,10 @@
 package wayde.bean;
 
+import org.apache.log4j.Logger;
+
 public class ProprietePref {
+	private static final Logger LOG = Logger.getLogger(ProprietePref.class);
+
 int rayon;
 double latitude,longitude;
 String adresse;

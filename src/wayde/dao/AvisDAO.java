@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+
 import wayde.bean.Avis;
 
 
 public class AvisDAO {
+	
+	private static final Logger LOG = Logger.getLogger(AvisDAO.class);
+
 	Connection connexion;
 
 	public AvisDAO(Connection connexion) {
@@ -129,7 +135,7 @@ public class AvisDAO {
 			return rs.getInt("idpersonnenotee");
 		}
 		throw new Exception(
-				"Methode AvisDAO.getidpersonneNote Pas de personne notée pour "
+				"Methode AvisDAO.getidpersonneNote Pas de personne notï¿½e pour "
 						+ idnoter);
 
 	}
@@ -241,9 +247,9 @@ public class AvisDAO {
 	public void updateDemande(int idparticipant, int idorganisateur,
 			int idactivite, boolean ami) throws SQLException {
 
-		// LA demande d'almi est crée lors de la demande de participation
-		// A chaque avis note le nbr est augmenté
-		// Si la variable ami est à true la reponse est augmenté de 1
+		// LA demande d'almi est crï¿½e lors de la demande de participation
+		// A chaque avis note le nbr est augmentï¿½
+		// Si la variable ami est ï¿½ true la reponse est augmentï¿½ de 1
 
 		String requete = "UPDATE demandeami   SET nbrreponse=nbrreponse+1"
 				+ " WHERE ((idparticipant=? and idorganisateur=?) or (idparticipant=? and idorganisateur=?))and idactivite=? ";
@@ -297,7 +303,7 @@ public class AvisDAO {
 		preparedStatement.setInt(6, idactivite);
 		ResultSet rs = preparedStatement.executeQuery();
 
-		if (rs.next()) {// Si un enregistrement avec 2 avis positif à été trouvé
+		if (rs.next()) {// Si un enregistrement avec 2 avis positif ï¿½ ï¿½tï¿½ trouvï¿½
 						// on ajoute les amis dans la table
 
 			if (!isAmiFrom(idparticipant,idorganisateur)){
