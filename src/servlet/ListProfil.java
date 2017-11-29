@@ -73,8 +73,7 @@ public class ListProfil extends HttpServlet {
 
 	private void doAction(String action,HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		System.out.println("action="+action);
-	
+		
 		int idPersonne = 0;
 	
 		if (action==null)return;
@@ -132,8 +131,7 @@ public class ListProfil extends HttpServlet {
 			int etatUser = Integer.parseInt(request.getParameter("etatProfil"));
 			filtre.setEtatProfil(etatUser);
 		}
-		System.out.println("pseudo"+request.getParameter("pseudo"));
-
+	
 
 		if (request.getParameter("pseudo") != null) {
 			filtre.setPseudo(request.getParameter("pseudo"));
