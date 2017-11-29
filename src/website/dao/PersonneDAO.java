@@ -204,7 +204,7 @@ public class PersonneDAO {
 				break;
 
 			case TypeSignalement.MOINSDE10:
-				requete = requete + " and nbrsignalement<10 ";
+				requete = requete + " and nbrsignalement<10 or nbrsignalement is null ";
 
 				break;
 			case TypeSignalement.PLUSDE10:
@@ -375,6 +375,43 @@ public class PersonneDAO {
 
 	}
 
+	public static String getUID(int idpersonne) {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ProfilBean profil = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			Statement stmt = connexion.createStatement();
+			String requete = " SELECT login FROM personne where idpersonne=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			rs = preparedStatement.executeQuery();
+			stmt.close();
+			
+			String uid=null;
+			if (rs.next()) {
+				 uid = rs.getString("login");
+			
+
+			}
+			return uid;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return null;
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+	}
+	
+	
 	public static ProfilBean getFullProfilByUid(String uid) {
 
 		Connection connexion = null;

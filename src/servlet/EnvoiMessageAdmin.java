@@ -50,7 +50,7 @@ public class EnvoiMessageAdmin extends HttpServlet {
 					.getParameter("idMessage"));
 
 		String formInit = request.getParameter("formInit");
-
+		
 		request.setAttribute("idDestinataire", idDestinataire);
 		request.setAttribute("idMessage", idMessage);
 		request.setAttribute("formInit", formInit);

@@ -703,4 +703,14 @@
     <servlet-name>DeconnexionAdmin</servlet-name>
     <url-pattern>/DeconnexionAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EffaceParticipant</display-name>
+    <servlet-name>EffaceParticipant</servlet-name>
+    <servlet-class>servlet.EffaceParticipant</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EffaceParticipant</servlet-name>
+    <url-pattern>/EffaceParticipant</url-pattern>
+  </servlet-mapping>
 </web-app>

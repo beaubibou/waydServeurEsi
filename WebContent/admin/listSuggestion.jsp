@@ -89,8 +89,7 @@
 </div>
 
 	<div class="container" style="width: 90%;">
-		<h2>Liste de suggestions</h2>
-
+	
 		<table class="table table-striped">
 			<thead>
 				<tr>

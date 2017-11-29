@@ -37,7 +37,6 @@ public class MessageBean {
 	}
 	public String getCheckHtml() {
 
-	
 			return "<input type='checkbox' id='moncheck'>";
 		
 	}
@@ -67,13 +66,11 @@ public class MessageBean {
 	}
 	public String getDateCreationHtml() {
 
-//		SimpleDateFormat jour = new SimpleDateFormat("dd-MM-yyyy");
-//		String datestrdebut = jour.format(datedebut);
-//		SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm");
-//		String heuredebutstr = formatHeure.format(datedebut);
-//		String heurefinstr = formatHeure.format(datefin);
+		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy-HH:mm");
+		String datestr = formater.format(dateCreation);
+		return datestr; 
 
-		return "horaire test";
+		
 	}
 	public String getLuHtml(String lienLecture) {
 		

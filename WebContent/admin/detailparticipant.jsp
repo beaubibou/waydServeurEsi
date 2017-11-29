@@ -19,104 +19,133 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+	type="text/css">
 </head>
 <body>
 
 	<%@ include file="menu.jsp"%>
 
-	<h2 align="center">Detail Participant</h2>
 
 
+
+
+	<%
+		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
+		ArrayList<AmiBean> listAmi = profil.getListAmi();
+		ArrayList<ActiviteBean> listActivite = profil.getListActivite();
+		ArrayList<SignalementBean> listSignalement = profil
+				.getListSignalement();
+		String idParticipant = Integer.toString(profil.getId());
+
+		String libelleBoutonActif;
+		String lienBoutonActif;
+
+		String lienSupprimer;
+
+		lienSupprimer = "EffaceParticipant?idPersonne=" + idParticipant;
+
+		if (profil.isActif()) {
+			libelleBoutonActif = "Désactiver";
+			lienBoutonActif = "DetailParticipant?inactif=true&idPersonne="
+					+ idParticipant;
+
+		}
+
+		else {
+			libelleBoutonActif = "Activer";
+			lienBoutonActif = "DetailParticipant?actif=true&idPersonne="
+					+ idParticipant;
+
+		}
+	%>
+
+	<h2 align="center">
+		<%=profil.getTypeUserHTML()%>
+		<%=profil.getPseudo()%>
+	</h2>
+	
+	</br>
 	<div class="container">
 
 
-		<%
-			ProfilBean profil = (ProfilBean) request.getAttribute("profil");
-			ArrayList<AmiBean> listAmi = profil.getListAmi();
-			ArrayList<ActiviteBean> listActivite = profil.getListActivite();
-			ArrayList<SignalementBean> listSignalement = profil
-					.getListSignalement();
-			String idParticipant = Integer.toString(profil.getId());
 
-			String libelleBoutonActif;
-			String lienBoutonActif;
-
-			if (profil.isActif()) {
-				libelleBoutonActif = "Désactiver";
-				lienBoutonActif = "DetailParticipant?inactif=true&idPersonne="
-						+ idParticipant;
-
-			}
-
-			else {
-				libelleBoutonActif = "Activer";
-				lienBoutonActif = "DetailParticipant?actif=true&idPersonne="
-						+ idParticipant;
-
-			}
-		%>
-
-		<h2>
-			<%
-				out.println(profil.getPseudo());
-			%>
-		</h2>
 		<div class="row">
 
 			<div class="col-sm-2"">
-				<img height="80" width="80"
-					src=<%out.println(profil.getUrlPhoto());%> class="img-circle" />
+
+				<img height="300" width="200" src=<%=profil.getUrlPhoto()%>
+					class="img-thumbnail" />
+
 			</div>
-			<div class="col-sm-4"">
-				<div class="span2">
 
-					<h6>
-						<%
-							out.println(profil.getAge());
-						%>
-					</h6>
-					<h6>
 
-						<%
-							out.println(profil.getNote());
-						%>/5
-					</h6>
+
+			<div class="col-sm-2">
+
+				<h6>
+					<%=profil.getAge()%>
+				</h6>
+				<h6>
+
+					<%=profil.getNote()%>/5
+				</h6>
+				<h6>
+					Nbr ami:
+					<%
+					out.println(profil.getNbrami());
+				%>
 					<h6>
-						Nbr ami:
+						Profil :
 						<%
-						out.println(profil.getNbrami());
+						out.println(profil.isActifStr());
 					%>
-						<h6>
-							Profil :
-							<%
-							out.println(profil.isActifStr());
-						%>
-						</h6>
+					</h6>
+			</div>
+			<div class="col-sm-8">
+
+
+				<textarea disabled="disabled" class="form-control" rows="5"
+					id="comment"><%=profil.getCommentaireStr()%>
+					</textarea>
+
+			</div>
+
+
+		</div>
+		</br>
+
+		<div class="container">
+			<div class="panel panel-primary">
+				<div class="panel-body" style="background: #99ccff;">
+
+					<a href=<%=lienBoutonActif%> class="btn btn-info" role="button">
+						<%=libelleBoutonActif%></a> <a href=<%=lienSupprimer%>
+						class="btn btn-danger" role="button"> Supprimer</a>
+
+
 				</div>
 			</div>
-			<div class="col-sm-6"">
-				<a href=<%out.println(lienBoutonActif);%> class="btn btn-info"
-					role="button"> <%
- 				out.println(libelleBoutonActif);
- %></a>
-			</div>
 		</div>
-
-
-
 	</div>
-	</br>
+
+
+
+
+
+
 	<div class="container">
 
 		<form method="post" action="/wayd/EnvoiMessageAdmin">
 
 			<div class="form-group">
-			<label for="comment">Message</label>
-			<textarea name="message" class="form-control" rows="5" id="comment"></textarea>
+				<label for="comment">Message</label>
+				<textarea name="message" class="form-control" rows="5" id="comment"></textarea>
 			</div>
 			<input type="hidden" name="idPersonne" value="<%=idParticipant%>">
 			<input type="hidden" name="formInit" value="detailParticipant">
-			<button type="submit" class="btn btn-primary">Envoyer un message</button>
+			<button type="submit" class="btn btn-primary">Envoyer un
+				message</button>
 
 		</form>
 	</div>
@@ -142,20 +171,10 @@
 					%>
 
 					<tr>
-						<td><a href=<%out.println(lien);%>> <%
- 	out.println(amiBean.getPrenom());
- %>
+						<td><a href=<%=lien%>> <%=amiBean.getPrenom()%>
 						</a></td>
-						<td>
-							<%
-								out.println(amiBean.getNote());
-							%>
-						</td>
-						<td>
-							<%
-								out.println(amiBean.getDepuisle());
-							%>
-						</td>
+						<td><%=amiBean.getNote()%></td>
+						<td><%=amiBean.getDepuisle()%></td>
 					</tr>
 
 					<%
@@ -188,20 +207,10 @@
 					%>
 
 					<tr>
-						<td><a href=<%out.println(lien);%>> <%
- 						out.println(activite.getTitre());
- %>
+						<td><a href=<%out.println(lien);%>> <%=activite.getTitre()%>
 						</a></td>
-						<td>
-							<%
-								out.println(activite.getPseudo());
-							%>
-						</td>
-						<td>
-							<%
-								out.println(activite.getDatefinStr());
-							%>
-						</td>
+						<td><%=activite.getPseudo()%></td>
+						<td><%=activite.getDatefinStr()%></td>
 					</tr>
 
 					<%
@@ -237,26 +246,12 @@
 					%>
 
 					<tr>
-						<td><a href=<%out.println(lienDetailOrganisateur);%>> <%
- 	out.println(signalement.getPseudoInformateur());
- %>
+						<td><a href=<%out.println(lienDetailOrganisateur);%>> <%=signalement.getPseudoInformateur()%>
 						</a></td>
 
-						<td>
-							<%
-								out.println(signalement.getDateCreationStr());
-							%>
-						</td>
-						<td>
-							<%
-								out.println(signalement.getLibelle());
-							%>
-						</td>
-						<td>
-							<%
-								out.println(signalement.getMotif());
-							%>
-						</td>
+						<td><%=signalement.getDateCreationStr()%></td>
+						<td><%=signalement.getLibelle()%></td>
+						<td><%=signalement.getMotif()%></td>
 
 
 					</tr>

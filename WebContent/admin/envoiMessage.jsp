@@ -29,7 +29,8 @@
 		int idMessage = ((Integer) request.getAttribute("idMessage"))
 				.intValue();
 		String  formInit = (String) request.getAttribute("formInit");
-				
+		System.out.println("idesdkksd"+idDestinataire);
+		
 		
 		
 	%>

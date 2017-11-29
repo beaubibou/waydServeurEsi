@@ -1,5 +1,7 @@
 
 <%@page import="website.metier.TypeSignalement"%>
+<%@page import="website.metier.TypeEtatActivite"%>
+
 <%@page import="website.pager.PagerActiviteBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.admin.FitreAdminActivites"%>
@@ -24,7 +26,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
 	type="text/css">
 </head>
 <body>
@@ -33,124 +35,149 @@
 
 	<%
 		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
-			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
-			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
-			ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
-			PagerActiviteBean pager=(PagerActiviteBean) request
-			.getAttribute("pager");
-			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
+		ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+		ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
+		ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
+		
+		PagerActiviteBean pager=(PagerActiviteBean) request
+		.getAttribute("pager");
+		ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
 
-<div class="container" style="width: 90%;">
-	<div class="panel panel-primary" >	
-	    <div class="panel-body" style="background: #99ccff;">	
-
-		<form class="form-inline" id="formulaire" method="post" action="ListActivite">
-
-			<div class="form-group">
-				<label for="autocomplete">Ville:</label> <input
-					placeholder="Enter your address" onFocus="geolocate()" type="text"
-					class="form-control" id="autocomplete" name="autocomplete"
-					value="<%=filtre.getVille()%>"> <input type="hidden"
-					step="any" class="form-control" id="latitude" name="latitude"
-					value="<%=filtre.getLatitude()%>"> <input type="hidden"
-					step="any" class="form-control" id="longitude" name="longitude"
-					value="<%=filtre.getLongitude()%>"> <label for="rayon">Rayon:</label>
-				<input type="number" class="form-control" id="rayon" name="rayon"
-					value="<%=filtre.getRayon()%>">
-
-				<div class="form-group">
-					<label for="typeUser">Type</label> <select data-style="btn-primary"
-						class="form-control" id="typeUser" name="typeUser">
-
-						<%
-							for (TypeUser typeuser:listTypeUser) {
-						%>
-						<option value="<%=typeuser.getId()%>"
-							<%=Outils.jspAdapterListSelected(typeuser.getId(), filtre.getTypeUser())%>>
-							<%=typeuser.getLibelle()%></option>
-						<%
-							}
-						%>
-
-					</select>
-				</div>
-
-
-				<div class="form-group">
-					<label for="typeactivite">Cat.</label> <select
-						data-style="btn-primary" class="form-control" id="typeactivite"
-						name="typeactivite">
-
-						<%
-							for (TypeActiviteBean typeActivite:listTypeActiviteBean) {
-						%>
-						<option value="<%=typeActivite.getId()%>"
-							<%=Outils.jspAdapterListSelected(typeActivite.getId(), filtre.getTypeactivite())%>>
-							<%=typeActivite.getLibelle()%></option>
-						<%
-							}
-						%>
-
-					</select>
-				</div>
-				
-				<div class="form-group">
-					<label for="typeSignalement">Signalement</label> <select
-						data-style="btn-primary" class="form-control" id="typeSignalement"
-						name="typeSignalement">
-
-						<%
-							for (TypeSignalement typeSignalement:listTypeSignalement) {
-						%>
-						<option value="<%=typeSignalement.getId()%>"
-							<%=Outils.jspAdapterListSelected(typeSignalement.getId(), filtre.getTypeSignalement())%>>
-							<%=typeSignalement.getLibelle()%></option>
-						<%
-							}
-						%>
-
-					</select>
-				</div>
-	
-		<button id="go" type="submit" class="btn btn-info"
-					name="rechercheactivite">Rechercher</button>
-
-			</div>
-			
-		</form>
-		</div>
-		</div>
-		</div>
-
-	
 	<div class="container" style="width: 90%;">
-		<h3>Liste activites</h3>
+		<div class="panel panel-primary">
+			<div class="panel-body" style="background: #99ccff;">
 
+				<form class="form-inline" id="formulaire" method="post"
+					action="ListActivite">
+
+					<div class="form-group">
+						<label for="autocomplete">Ville:</label> <input
+							placeholder="Enter your address" onFocus="geolocate()"
+							type="text" class="form-control" id="autocomplete"
+							name="autocomplete" value="<%=filtre.getVille()%>"> <input
+							type="hidden" step="any" class="form-control" id="latitude"
+							name="latitude" value="<%=filtre.getLatitude()%>"> <input
+							type="hidden" step="any" class="form-control" id="longitude"
+							name="longitude" value="<%=filtre.getLongitude()%>"> <label
+							for="rayon">Rayon:</label> <input type="number"
+							class="form-control" id="rayon" name="rayon"
+							value="<%=filtre.getRayon()%>">
+
+						<div class="form-group">
+							<label for="typeUser">Type</label> <select
+								data-style="btn-primary" class="form-control" id="typeUser"
+								name="typeUser">
+
+								<%
+									for (TypeUser typeuser:listTypeUser) {
+								%>
+								<option value="<%=typeuser.getId()%>"
+									<%=Outils.jspAdapterListSelected(typeuser.getId(), filtre.getTypeUser())%>>
+									<%=typeuser.getLibelle()%></option>
+								<%
+									}
+								%>
+
+							</select>
+						</div>
+
+
+						<div class="form-group">
+							<label for="typeactivite">Cat.</label> <select
+								data-style="btn-primary" class="form-control" id="typeactivite"
+								name="typeactivite">
+
+								<%
+									for (TypeActiviteBean typeActivite:listTypeActiviteBean) {
+								%>
+								<option value="<%=typeActivite.getId()%>"
+									<%=Outils.jspAdapterListSelected(typeActivite.getId(), filtre.getTypeactivite())%>>
+									<%=typeActivite.getLibelle()%></option>
+								<%
+									}
+								%>
+
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="typeSignalement">Signalement</label> <select
+								data-style="btn-primary" class="form-control"
+								id="typeSignalement" name="typeSignalement">
+
+								<%
+									for (TypeSignalement typeSignalement:listTypeSignalement) {
+								%>
+								<option value="<%=typeSignalement.getId()%>"
+									<%=Outils.jspAdapterListSelected(typeSignalement.getId(), filtre.getTypeSignalement())%>>
+									<%=typeSignalement.getLibelle()%></option>
+								<%
+									}
+								%>
+
+							</select>
+						</div>
+
+
+		<div class="form-group">
+							<label for="etatActivite">Etat</label> <select
+								data-style="btn-primary" class="form-control"
+								id="etatActivite" name="etatActivite">
+
+								<%
+									for (TypeEtatActivite typeEtatActivite:listEtatActivite) {
+								%>
+								<option value="<%=typeEtatActivite.getId()%>"
+									<%=Outils.jspAdapterListSelected(typeEtatActivite.getId(), filtre.getEtatActivite())%>>
+									<%=typeEtatActivite.getLibelle()%></option>
+								<%
+									}
+								%>
+
+							</select>
+						</div>
+						<button id="go" type="submit" class="btn btn-info"
+							name="rechercheactivite">Rechercher</button>
+
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container" style="width: 90%;">
+	
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th style="width: 10%;" class="text-center">User</th>
-					<th>Titre</th>
-					<th>Organisateur</th>
-					<th>Date fin</th>
-					<th>Active</th>
-					<th>Nbr Signalement</th>
+					<th style="width: 5%;" class="text-center">Etat</th>
+					<th style="width: 5%;" class="text-center">User</th>
+					<th style="width: 30%;" class="text-center">Titre</th>
+					<th style="width: 10%;" class="text-center">Organisateur</th>
+					<th style="width: 10%;" class="text-center">Date fin</th>
+					<th style="width: 5%;" class="text-center">Vu</th>
+					<th style="width: 5%;" class="text-center">Sign.</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody
+				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 				<%
 					if (listActivite!=null)
-					for (ActiviteBean activite : listActivite) {
-					String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+							for (ActiviteBean activite : listActivite) {
+							String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 				<tr>
-				<td><%=activite.getTypeUserHTML() %>
+					<td><%=activite.getEtatHtml()%></td>
+					<td><%=activite.getTypeUserHTML()%></td>
 					<td><a href=<%out.println(lien);%>> <%=activite.getTitre()%></a></td>
 					<td><%=activite.getPseudo()%></td>
-					<td><%=activite.getDatefinStr()%></td>
-					<td><%=activite.isActiveStr()%></td>
+					<td><%=activite.getHoraireLeA()%></td>
+					<td><%=activite.getNbrVu()%></td>
 					<td><%=activite.getNbrSignalement()%></td>
 
 				</tr>
@@ -230,8 +257,8 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
 		async defer></script>
-		
-		
+
+
 	<script>
 		$(function() {
 
@@ -240,14 +267,11 @@
 				document.getElementById("formulaire").submit();
 			});
 
-
 			$('#rayon').change(function() {
 
 				document.getElementById("formulaire").submit();
-			});			
+			});
 		});
-
-		
 	</script>
 
 </body>

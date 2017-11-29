@@ -642,13 +642,13 @@ public class ActiviteBean {
 	public String getEtatHtml() {
 
 		if (isTerminee())
-			return "<td style='vertical-align: middle;'><span style='color: red;'	class='glyphicon glyphicon-stop'></span></td>";
+			return "<span style='color: red;'	class='glyphicon glyphicon-stop'>";
 
 		if (isEnCours())
-			return "<td style='vertical-align: middle;'><span style='color: green;'	class='glyphicon glyphicon-play'></span></td>";
+			return "<span style='color: green;'	class='glyphicon glyphicon-play'></span>";
 
 		if (isPlanifie())
-			return "<td style='vertical-align: middle;'><span style='color: blue;'	class='glyphicon glyphicon-time'></span></td>";
+			return "<span style='color: blue;'	class='glyphicon glyphicon-time'></span>";
 		return "lmk";
 	}
 

@@ -90,7 +90,7 @@ public class ChargePhotoPro extends HttpServlet {
 						BufferedImage tmp = ImageIO
 								.read(fi.getInputStream());
 
-						BufferedImage imBuff=resize(tmp,100,100);
+						BufferedImage imBuff=resize(tmp,300,200);
 						
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
@@ -111,7 +111,7 @@ public class ChargePhotoPro extends HttpServlet {
 	}
 	
 	public static BufferedImage resize(BufferedImage img, int newW, int newH) throws IOException {
-		  return Thumbnails.of(img).forceSize(newW, newH).asBufferedImage();
+		  return Thumbnails.of(img).forceSize(newW, newH).outputQuality(1).asBufferedImage();
 		}
 	
 	}

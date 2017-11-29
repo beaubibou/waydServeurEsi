@@ -112,6 +112,13 @@ public class ListActivite extends HttpServlet {
 					.getParameter("typeactivite"));
 			filtreActivite.setTypeactivite(typeactivite);
 		}
+		
+		if (request.getParameter("etatActivite") != null) {
+			int etatActivite = Integer.parseInt(request
+					.getParameter("etatActivite"));
+			filtreActivite.setEtatActivite(etatActivite);
+		}
+		
 
 		if (request.getParameter("latitude") != null) {
 			double latitude = Double.parseDouble(request
@@ -129,6 +136,8 @@ public class ListActivite extends HttpServlet {
 			String autocomplete = request.getParameter("autocomplete");
 			filtreActivite.setVille(autocomplete);
 		}
+		
+		
 
 	}
 

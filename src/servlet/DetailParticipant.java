@@ -87,10 +87,12 @@ public class DetailParticipant extends HttpServlet {
 
 		// l'appel de la servelt peut venir d'une servlet ou d'une page
 
+		
 		int idParticipant = 0;
 		if (request.getParameter("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
 					.getParameter("idPersonne"));
+		System.out.println("idpaeri"+idParticipant);
 
 		if (request.getAttribute("idPersonne") != null)
 			idParticipant = Integer.parseInt((String) request
@@ -98,6 +100,7 @@ public class DetailParticipant extends HttpServlet {
 
 		// Creation de l'objet profil complet ami+activit�
 
+		System.out.println("idpaeri"+idParticipant);
 		ProfilBean profilBean = PersonneDAO.getFullProfil(idParticipant);
 		ArrayList<AmiBean> listAmi = AmiDAO.getListAmi(idParticipant);
 		ArrayList<ActiviteBean> listActivite = ActiviteDAO

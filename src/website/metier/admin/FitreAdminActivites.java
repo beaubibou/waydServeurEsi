@@ -1,6 +1,7 @@
 package website.metier.admin;
 
 import website.metier.TypeActiviteBean;
+import website.metier.TypeEtatActivite;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
@@ -10,7 +11,7 @@ public class FitreAdminActivites {
 	double latitude,longitude;
 	int typeUser;
 	int typeSignalement;
-	
+	int etatActivite;
 	
 	public int getTypeSignalement() {
 		return typeSignalement;
@@ -70,6 +71,12 @@ public class FitreAdminActivites {
 		this.longitude = longitude;
 	}
 	
+	public int getEtatActivite() {
+		return etatActivite;
+	}
+	public void setEtatActivite(int etatActivite) {
+		this.etatActivite = etatActivite;
+	}
 	public  FitreAdminActivites(){
 		this.rayon = 3000000;
 		this.typeactivite = TypeActiviteBean.TOUS;
@@ -78,6 +85,7 @@ public class FitreAdminActivites {
 		this.longitude = 2;
 		typeUser=TypeUser.TOUS;
 		typeSignalement=TypeSignalement.TOUS;
+		this.etatActivite=TypeEtatActivite.TOUTES;
 		
 	}
 }

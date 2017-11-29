@@ -602,7 +602,7 @@ public class ActiviteDAO {
 				+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
-				+ "activite.titre,activite.nbrwaydeur as nbrparticipant ,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite,"
+				+ "activite.titre,activite.nbrwaydeur as nbrparticipant ,activite.nbmaxwayd,activite.nbrvu,   activite.datefin, activite.idtypeactivite,"
 				+ "activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite,activite.adresse   FROM personne,"
 				+ "activite,type_activite  WHERE activite.idtypeactivite=type_activite.idtypeactivite and personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
 
@@ -635,6 +635,7 @@ public class ActiviteDAO {
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				int totalavis = rs.getInt("totalavis");
+				int nbrVu=rs.getInt("nbrvu");
 				String libelleActivite = rs.getString("libelleActivite");
 				int nbrSignalement = 0;
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
@@ -643,6 +644,7 @@ public class ActiviteDAO {
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
 						nbrSignalement);
+				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
 						connexion).getListPaticipant(idActivite);
@@ -1124,6 +1126,7 @@ public class ActiviteDAO {
 		int typeUser_ = filtre.getTypeUser();
 		int rayonmetre = filtre.getRayon();
 		int typeSignalement = filtre.getTypeSignalement();
+		int etatActivite=filtre.getEtatActivite();
 		double malatitude = filtre.getLatitude();
 		double malongitude = filtre.getLongitude();
 
@@ -1133,15 +1136,6 @@ public class ActiviteDAO {
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
 
-		System.out.println("latmin" + latMin);
-		System.out.println("latlonn" + latMax);
-
-		System.out.println("lonMin" + longMin);
-		System.out.println("lonMax" + longMax);
-
-		System.out.println("maxresul" + maxResult);
-		System.out.println("pageencour" + page);
-		System.out.println("offset" + offset);
 		ActiviteBean activite = null;
 
 		PreparedStatement preparedStatement = null;
@@ -1176,7 +1170,7 @@ public class ActiviteDAO {
 					+ " personne.note,personne.nbravis as totalavis,personne.photo,activite.idactivite,    activite.titre,    activite.libelle,    activite.adresse,"
 					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
 					+ "activite.idpersonne,    activite.datecreation,    activite.nbrwaydeur as nbrparticipant,    activite.nbmaxwayd,    activite.d_finactivite,"
-					+ "activite.typeacces,    activite.typeuser,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
+					+ "activite.typeacces,    activite.typeuser,activite.nbrvu,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
 					+ "type_activite.nom as libelleActivite "
 					+ " FROM activite"
 					+ " LEFT JOIN ( SELECT count(*) AS nbrsignalement, signaler_activite.idactivite "
@@ -1198,6 +1192,32 @@ public class ActiviteDAO {
 				requete = requete + " and activite.typeuser=? ";
 
 			}
+			
+			
+			
+			switch(etatActivite){
+			
+			case TypeEtatActivite.ENCOURS:
+			
+				requete=requete+" and current_timestamp between datedebut and datefin ";
+				
+			break;
+			
+			 case TypeEtatActivite.PLANIFIEE:
+				
+					requete=requete+" and datedebut>current_timestamp ";
+					
+				break;
+				
+				
+			case TypeEtatActivite.TERMINEE:
+			
+				requete=requete+" and datefin<current_timestamp ";
+				break;
+			
+			
+			}
+			
 
 			switch (typeSignalement) {
 
@@ -1207,7 +1227,7 @@ public class ActiviteDAO {
 				break;
 
 			case TypeSignalement.MOINSDE10:
-				requete = requete + " and nbrsignalement<10 ";
+				requete = requete + " and nbrsignalement<10  or nbrsignalement is null ";
 
 				break;
 			case TypeSignalement.PLUSDE10:
@@ -1282,17 +1302,17 @@ public class ActiviteDAO {
 				String libelleActivite = rs.getString("libelleActivite");
 				String adresse = rs.getString("adresse");
 				int nbrSignalement = rs.getInt("nbrsignalement");
-
-				if (nbrSignalement == 6)
-					System.out.println("nbr singame" + nbrSignalement);
-
+				int nbrVu=rs.getInt("nbrvu");
+				
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
 						nbrSignalement);
-
+			
+				activite.setNbrVu(nbrVu);
+			
 				retour.add(activite);
 
 			}

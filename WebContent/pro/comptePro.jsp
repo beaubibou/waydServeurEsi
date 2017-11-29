@@ -67,13 +67,13 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-4">
-								<img height="300" width="300"
+								<img height="300" width="200"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
 									class="img-thumbnail" />
 							</div>
 
 							<div class="col-sm-8">
-								<form action="/wayd/ChargePhotoWaydeur" method="post"
+								<form action="/wayd/ChargePhotoPro" method="post"
 									enctype="multipart/form-data">
 									<input type="file" name="file" size="50" /> <input
 										type="submit" value="Envoyer" class="btn btn-info" />

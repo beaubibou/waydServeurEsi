@@ -121,7 +121,7 @@
 					<th style="width: 10%;" class="text-center">User</th>
 					<th style="width: 5%;" class="text-center">Etat</th>
 					<th style="width: 5%;" class="text-center">photo</th>
-					<th style="width: 15%;" class="text-center">Pseudo</th>
+					<th  class="text-center">Pseudo</th>
 					<th style="width: 15%;" class="text-center">Date création</th>
 					<th style="width: 5%;" class="text-center">Action</th>
 					<th style="width: 20%;" class="text-center">Signalement</th>

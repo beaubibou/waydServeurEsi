@@ -131,7 +131,7 @@
 
 
 				<tr>
-					<%=activite.getEtatHtml()%>
+					<td><%=activite.getEtatHtml()%></td>
 					<td class="idActivite" id=<%=activite.getId()%>
 						style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
