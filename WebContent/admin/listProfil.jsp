@@ -31,7 +31,7 @@
 	<%
 		FitreAdminProfils filtre=(FitreAdminProfils)session.getAttribute("filtreProfil");
 		
-		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUserAdmin();
 		ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
 		ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
 		PagerProfilBean pager=(PagerProfilBean) request

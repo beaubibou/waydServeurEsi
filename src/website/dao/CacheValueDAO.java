@@ -171,6 +171,43 @@ public class CacheValueDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
+	
+	public static ArrayList<TypeUser> getListTypeUserAdmin() {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<TypeUser> retour = new ArrayList<TypeUser>();
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = " SELECT  id,libelle from typeuser ";
+			preparedStatement = connexion.prepareStatement(requete);
+			rs = preparedStatement.executeQuery();
+
+			retour.add(new TypeUser(TypeUser.TOUS, ListeValeurText.TOUS));
+		
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String libelle = rs.getString("libelle");
+				retour.add(new TypeUser(id, libelle));
+			}
+			
+			retour.add(new TypeUser(TypeUser.ADMIN, ListeValeurText.ADMIN));
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			return retour;
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
+
 
 	public static ArrayList<TypeAccess> getListTypeAccess() {
 

@@ -23,48 +23,7 @@ public class DefinintionPreferenceDAO {
 	this.connexion=connexion;
 	}
 
-	public  ArrayList<DefinitionPreferenceDb> getListDefinitionPref(
-			int idpersonne, int idtypeactivite) throws SQLException {
-			DefinitionPreferenceDb defPrefdb = null;
-		ArrayList<DefinitionPreferenceDb> retour = new ArrayList<DefinitionPreferenceDb>();
-
 	
-			String requete = " SELECT  prefere.always,prefere.active,prefere.idpersonne,"
-					+ "prefere.idtypeactivite,jour,heuredebut,heurefin "
-					+ "from prefere,plage "
-					+ "where prefere.idpersonne=? "
-					+ "and prefere.idtypeactivite=? and"
-					+ " prefere.idpersonne=plage.idpersonne and"
-					+ " prefere.idtypeactivite=plage.idtypeactivite;";
-
-			PreparedStatement preparedStatement = connexion
-					.prepareStatement(requete);
-
-			preparedStatement.setInt(1, idpersonne);
-			preparedStatement.setInt(2, idtypeactivite);
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			
-			while (rs.next()) {
-				int jour=rs.getInt("jour");
-				int heuredebut=rs.getInt("heuredebut");
-				int heurefin=rs.getInt("heurefin");
-				int typeactivite=rs.getInt("idtypeactivite");
-				boolean active=rs.getBoolean("active");
-				boolean always=rs.getBoolean("always");
-				defPrefdb = new DefinitionPreferenceDb(  jour,  heuredebut,
-						 heurefin,  typeactivite,  idpersonne,active,always );
-
-				retour.add(defPrefdb);
-
-			}
-			rs.close();
-			preparedStatement.close();
-		
-			return retour;
-
-	}
-
 	public  DefinitionPreferenceDb getDefPref(int idpersonne,
 			int idtypeactivite) throws SQLException {
 		

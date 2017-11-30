@@ -68,12 +68,9 @@ public class DiscussionDAO {
 	public void effaceDiscussionTouteActivite(int idactivite) throws SQLException {
 	
 		String requete = "Delete from messagebyact where idactivite=? ;";
-	
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setInt(1, idactivite);
-		
-	
 		preparedStatement.execute();
 
 	}

@@ -7,10 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
@@ -25,6 +29,227 @@ import website.metier.admin.FitreAdminProfils;
 public class PersonneDAO {
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
 
+	public static boolean supprimePersonne(int idPersonne) {
+		// TODO Auto-generated method stub
+		String uid = PersonneDAO.getUID(idPersonne);
+
+		if (uid == null)
+			return false;
+
+		if (supprimePersonneFireBase(uid))
+			supprimePersonneDAO(idPersonne);
+
+		return true;
+
+	}
+
+	private static boolean supprimePersonneDAO(int idPersonne) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			String requete ="";
+			connexion.setAutoCommit(false);
+		
+			requete = "DELETE FROM amelioration where  idpersonne=? ;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+		
+			requete = "DELETE FROM ami where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM ami where  idami=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM demandeami where  idorganisateur=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM demandeami where  idparticipant=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM message where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM message where  iddestinataire=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM messagebyact where  idemetteur=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM messagebyact where  iddestinataire=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM nbrvu where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM noter where  idpersonnenotee=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM noter where  idpersonnenotateur=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM notification where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM notification where  iddestinataire=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+	
+			requete = "DELETE FROM participer where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM plage where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM prefere where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM refusparticipation where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			//efface signaler_activité
+			
+			requete="delete from signaler_activite where idactivite in (select idactivite from activite where idpersonne=?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM signaler_profil where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM refusparticipation where  idsignalement=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			connexion.commit();
+			
+			
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+
+			try {
+				if (connexion != null)
+					connexion.rollback();
+				if (preparedStatement != null)
+					preparedStatement.close();
+
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+
+			}
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+	
+	}
+
+	public static boolean supprimePersonneFireBase(String uid) {
+
+		
+		try {
+	
+			if (FirebaseApp.getApps().isEmpty())
+				FirebaseApp.initializeApp(WBservices.optionFireBase);
+		
+			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
+			return true;
+
+		} catch (InterruptedException | ExecutionException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
 	public static boolean isPseudoExist(String pseudo) {
 		// TODO Auto-generated method stub
 
@@ -65,7 +290,6 @@ public class PersonneDAO {
 		return false;
 	}
 
-
 	public static ArrayList<ProfilBean> getListProfil(FitreAdminProfils filtre,
 			int page, int maxResult) {
 
@@ -98,10 +322,15 @@ public class PersonneDAO {
 					+ " COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, sexe.libelle  as sexeStr"
 					+ "  FROM personne "
 					+ " left join (select count(*) as nbrsignalement,signaler_profil.idsignalement from signaler_profil group by signaler_profil.idsignalement) tablesignalement "
-					+ " ON personne.idpersonne = tablesignalement.idsignalement left join sexe on personne.sexe=sexe.id  where 1=1"   ;
+					+ " ON personne.idpersonne = tablesignalement.idsignalement left join sexe on personne.sexe=sexe.id  where 1=1";
 
-			if (typeUser != TypeUser.TOUS) {
-				requete = requete + " and typeuser=?";
+			if (typeUser == TypeUser.ADMIN) {
+				requete = requete + " and admin=true ";
+			} else {
+
+				if (typeUser == TypeUser.PRO || typeUser == TypeUser.WAYDEUR) {
+					requete = requete + " and typeuser=? ";
+				}
 			}
 
 			if (pseudo != null) {
@@ -128,7 +357,8 @@ public class PersonneDAO {
 				break;
 
 			case TypeSignalement.MOINSDE10:
-				requete = requete + " and nbrsignalement<10 or nbrsignalement is null ";
+				requete = requete
+						+ " and nbrsignalement<10 or nbrsignalement is null ";
 
 				break;
 			case TypeSignalement.PLUSDE10:
@@ -144,13 +374,14 @@ public class PersonneDAO {
 
 			// *********************************************************************
 			preparedStatement = connexion.prepareStatement(requete);
-
-			if (typeUser != TypeUser.TOUS) {
-
-				preparedStatement.setInt(index, typeUser);
-				index++;
-			}
-
+		
+			if (typeUser != TypeUser.ADMIN) 
+				if (typeUser == TypeUser.PRO || typeUser == TypeUser.WAYDEUR) {
+					preparedStatement.setInt(index, typeUser);
+					index++;
+				}
+			
+		
 			if (pseudo != null) {
 				if (!pseudo.isEmpty()) {
 					preparedStatement.setString(index, pseudo);
@@ -192,7 +423,7 @@ public class PersonneDAO {
 				String siteWeb = rs.getString("siteweb");
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
-				int  nbrSignalement=rs.getInt("nbrsignalement");
+				int nbrSignalement = rs.getInt("nbrsignalement");
 				String siret = rs.getString("siret");
 				String sexeStr = rs.getString("sexeStr");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
@@ -200,7 +431,8 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexeStr);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
+						sexeStr);
 				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
@@ -279,13 +511,14 @@ public class PersonneDAO {
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
-				String sexestr=rs.getString("sexeStr");
+				String sexestr = rs.getString("sexeStr");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexestr);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
+						sexestr);
 
 			}
 			return profil;
@@ -317,11 +550,10 @@ public class PersonneDAO {
 			preparedStatement.setInt(1, idpersonne);
 			rs = preparedStatement.executeQuery();
 			stmt.close();
-			
-			String uid=null;
+
+			String uid = null;
 			if (rs.next()) {
-				 uid = rs.getString("login");
-			
+				uid = rs.getString("login");
 
 			}
 			return uid;
@@ -336,8 +568,7 @@ public class PersonneDAO {
 		}
 
 	}
-	
-	
+
 	public static ProfilBean getFullProfilByUid(String uid) {
 
 		Connection connexion = null;
@@ -401,7 +632,8 @@ public class PersonneDAO {
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
-						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,sexeStr);
+						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
+						sexeStr);
 
 			}
 
@@ -776,5 +1008,6 @@ public class PersonneDAO {
 		// TODO Auto-generated method stub
 		return new ArrayList<AvisBean>();
 	}
+		
 
 }

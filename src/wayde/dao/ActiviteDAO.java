@@ -59,7 +59,6 @@ public class ActiviteDAO {
 				int sexe = rs.getInt("sexe");
 				Date datedebut = rs.getTimestamp("datedebut");
 				Date datefin = rs.getTimestamp("datefin");
-			//	Date datefinactivite = rs.getTimestamp("d_finactivite");
 				String adresse = rs.getString("adresse");
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
@@ -458,35 +457,7 @@ public class ActiviteDAO {
 		double longMax = proprietepreference.getLongitude() + coef;
 		try {
 
-//			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
-//					+ " activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,personne.datenaissance,activite.typeuser,activite.typeacces,  "
-//					+ " personne.note,personne.nbravis as totalavis,"
-//					+ " activite.nbrwaydeur as nbrparticipant,activite.nbmaxwayd,"
-//					+ " personne.prenom,personne.sexe,personne.nom,personne.idpersonne "
-//					+ " FROM activite,personne "
-//
-//					+ " where exists ("
-//					+ " select 1 from plage,prefere where	plage.idpersonne=? and 	plage.idpersonne=prefere.idpersonne and plage.idtypeactivite=prefere.idtypeactivite and	prefere.active=true and prefere.always=false and"
-//					+ "	activite.idtypeactivite =plage.idtypeactivite and 	to_number(to_char(activite.datedebut,'HH24'),'99') between plage.heuredebut and plage.heurefin"
-//					+ "	and  to_number(to_char(activite.datedebut,'d'),'99')=plage.jour"
-//					+ "	union"
-//					+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 "
-//					+ " and prefere.always=true and prefere.active=true )"
-//					+ " and personne.idpersonne = activite.idpersonne  and activite.datefin>? and activite.idpersonne!=? "
-//					+ " and activite.latitude between ? and ?"
-//					+ " and activite.longitude between ? and ? ORDER BY datedebut ASC;";
-//
-//			PreparedStatement preparedStatement = connexion
-//					.prepareStatement(requete);
-//			preparedStatement.setInt(1, idpersonne);
-//			preparedStatement.setInt(2, idpersonne);
-//			preparedStatement.setTimestamp(3,
-//					new java.sql.Timestamp(new Date().getTime()));
-//			preparedStatement.setInt(4, idpersonne);
-//			preparedStatement.setDouble(5, latMin);
-//			preparedStatement.setDouble(6, latMax);
-//			preparedStatement.setDouble(7, longMin);
-//			preparedStatement.setDouble(8, longMax);
+
 			
 			
 			// Modifcation des requets pour n'avoir que les suggestions en cours
@@ -930,34 +901,7 @@ public class ActiviteDAO {
 		double latMax = proprietepreference.getLatitude() + coef;
 		double longMin = proprietepreference.getLongitude() - coef;
 		double longMax = proprietepreference.getLongitude() + coef;
-//		String requete = " SELECT  activite.latitude, activite.longitude"
-//				+ " FROM activite,personne  where exists ("
-//				+ "select 1 from plage,prefere where	plage.idpersonne=? and 	plage.idpersonne=prefere.idpersonne "
-//				+ " and plage.idtypeactivite=prefere.idtypeactivite and	prefere.active=true and prefere.always=false and"
-//				+ "	activite.idtypeactivite =plage.idtypeactivite and "
-//				+ " to_number(to_char(activite.datedebut,'HH24'),'99') between plage.heuredebut and plage.heurefin"
-//				+ "	and  to_number(to_char(activite.datedebut,'d'),'99')=plage.jour"
-//				+ "	union"
-//				+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 and prefere.always=true and prefere.active=true        )"
-//				+ " and personne.idpersonne = activite.idpersonne  and activite.datefin>? and activite.idpersonne!=?"
-//				+ " and activite.latitude between ? and ?"
-//				+ " and activite.longitude between ? and ?  ORDER BY datedebut DESC;";
-//	
-//		
-//		
-//		
-//		PreparedStatement preparedStatement = connexion
-//				.prepareStatement(requete);
-//		preparedStatement = connexion.prepareStatement(requete);
-//		preparedStatement.setInt(1, idpersonne);
-//		preparedStatement.setInt(2, idpersonne);
-//		preparedStatement.setTimestamp(3,
-//				new java.sql.Timestamp(new Date().getTime()));
-//		preparedStatement.setInt(4, idpersonne);
-//		preparedStatement.setDouble(5, latMin);
-//		preparedStatement.setDouble(6, latMax);
-//		preparedStatement.setDouble(7, longMin);
-//		preparedStatement.setDouble(8, longMax);
+
 		
 		String requete = " SELECT  activite.latitude, activite.longitude"
 				+ " FROM activite,personne  where exists ("
@@ -1210,29 +1154,6 @@ public class ActiviteDAO {
 			nbrmessagenonlu = nbrmessagenonlu + rs.getInt("nbrmessagenonlu");
 		}
 
-//		requete = " SELECT  activite.latitude, activite.longitude"
-//				+ " FROM activite,personne  where exists ("
-//				+ "select 1 from plage,prefere where	plage.idpersonne=? and 	plage.idpersonne=prefere.idpersonne "
-//				+ " and plage.idtypeactivite=prefere.idtypeactivite and	prefere.active=true and prefere.always=false and"
-//				+ "	activite.idtypeactivite =plage.idtypeactivite and "
-//				+ " to_number(to_char(activite.datedebut,'HH24'),'99') between plage.heuredebut and plage.heurefin"
-//				+ "	and  to_number(to_char(activite.datedebut,'d'),'99')=plage.jour"
-//				+ "	union"
-//				+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 and prefere.always=true and prefere.active=true        )"
-//				+ " and personne.idpersonne = activite.idpersonne  and activite.datefin>? and activite.idpersonne!=?"
-//				+ " and activite.latitude between ? and ?"
-//				+ " and activite.longitude between ? and ?  ORDER BY datedebut DESC;";
-//
-//		preparedStatement = connexion.prepareStatement(requete);
-//		preparedStatement.setInt(1, idpersonne);
-//		preparedStatement.setInt(2, idpersonne);
-//		preparedStatement.setTimestamp(3,
-//				new java.sql.Timestamp(new Date().getTime()));
-//		preparedStatement.setInt(4, idpersonne);
-//		preparedStatement.setDouble(5, latMin);
-//		preparedStatement.setDouble(6, latMax);
-//		preparedStatement.setDouble(7, longMin);
-//		preparedStatement.setDouble(8, longMax);
 		requete = " SELECT  activite.latitude, activite.longitude"
 				+ " FROM activite,personne  where exists ("
 				+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 and prefere.always=true and prefere.active=true        )"

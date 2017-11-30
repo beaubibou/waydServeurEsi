@@ -119,42 +119,6 @@ public class ParticipantDAO {
 
 	}
 
-	public static boolean supprimeParticipant(int idPersonne) {
-		// TODO Auto-generated method stub
-		String uid = PersonneDAO.getUID(idPersonne);
 
-		if (uid == null)
-			return false;
-
-		if (supprimeParticipantFireBase(uid))
-			supprimeParticipantDAO(idPersonne);
-
-		return true;
-
-	}
-
-	private static void supprimeParticipantDAO(int idPersonne) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static boolean supprimeParticipantFireBase(String uid) {
-
-		
-		try {
-	
-			if (FirebaseApp.getApps().isEmpty())
-				FirebaseApp.initializeApp(WBservices.optionFireBase);
-		
-			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
-			return true;
-
-		} catch (InterruptedException | ExecutionException e) {
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-	}
 
 }

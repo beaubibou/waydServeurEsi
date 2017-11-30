@@ -2,6 +2,7 @@ package texthtml.pro;
 
 public class ListeValeurText {
 	
+	public static final String ADMIN = "Admin";
 	public static String TOUTES="Toutes";
 	public static String ENCOURS="En cours";
 	public static String PLANIFIEES="Planifiées";

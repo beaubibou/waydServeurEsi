@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import website.dao.ParticipantDAO;
+import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 
 /**
@@ -47,7 +48,7 @@ public class EffaceParticipant extends HttpServlet {
 			idPersonne = Integer.parseInt((String) request
 					.getParameter("idPersonne"));
 
-		boolean retour = ParticipantDAO.supprimeParticipant(idPersonne);
+		boolean retour = PersonneDAO.supprimePersonne(idPersonne);
 
 		response.sendRedirect("Acceuil");
 
