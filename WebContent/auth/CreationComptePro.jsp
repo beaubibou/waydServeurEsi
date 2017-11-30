@@ -1,3 +1,4 @@
+<%@page import="texthtml.pro.CreationCompteProText"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.TypeUser"%>
@@ -72,7 +73,8 @@
 
 			<h1>
 				<img src="/wayd/img/waydLogoHD.png" style="margin-right: 50px;"
-					class="img-rounded" alt="Cinque Terre" width="100" height="100">Créer votre compte
+					class="img-rounded" alt="Cinque Terre" width="100" height="100">Créer
+				votre compte
 			</h1>
 		</div>
 		<p>blablal......</p>
@@ -84,7 +86,7 @@
 		<div id="loginbox" class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Inscription Professionel</div>
+					<div class="panel-title"><%=CreationCompteProText.TITRE_PANEL%></div>
 
 				</div>
 
@@ -102,14 +104,16 @@
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-user"></i></span> <input
 									id="login-username" type="email" class="form-control"
-									name="email" required value="<%=email%>" placeholder="email">
+									name="email" required value="<%=email%>"
+									placeholder="<%=CreationCompteProText.HINT_EMAIL%>">
 							</div>
 
 							<div style="margin-bottom: 25px" class="input-group">
 								<span class="input-group-addon"><i
 									class="glyphicon glyphicon-lock"></i></span> <input
 									id="login-password" type="password" class="form-control"
-									name="pwd" value="<%=pwd%>" placeholder="Mot de passe">
+									name="pwd" value="<%=pwd%>"
+									placeholder="<%=CreationCompteProText.HINT_MOT_DE_PASSE%>">
 							</div>
 
 							<div style="margin-bottom: 25px" class="input-group">
@@ -117,7 +121,7 @@
 									class="glyphicon glyphicon-lock"></i></span> <input
 									id="login-password-bis" type="password" class="form-control"
 									name="pwd1" value="<%=pwd1%>"
-									placeholder="Réssaisir le mot de passe">
+									placeholder="<%=CreationCompteProText.HINT_MOT_DE_PASSE_BIS%>">
 							</div>
 							<div class="row">
 								<div class='col-md-4 col-md-offset-5'>
@@ -126,50 +130,52 @@
 							</div>
 
 							<div class="form-group">
-								<label for="nom">Nom*:</label> <input type="text"
-									maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX%>"
+								<label for="nom"><%=CreationCompteProText.LABEL_NOM%></label> <input
+									type="text"
+									maxlength="<%=CreationCompteProText.TAILLE_PSEUDO_MAX%>"
 									value="<%=pseudo%>" class="form-control" id="nom"
 									placeholder="Nom " name="nom" required>
 							</div>
 
 							<div class="form-group">
-								<label for="nom">Numéro SIRET*:</label> <input type="text"
-									class="form-control" id="nom" placeholder="numero siret "
-									value="<%=siret%>" name="siret"
-									maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX%>" required>
+								<label for="nom"><%=CreationCompteProText.LABEL_NUMERO_SIRET%></label>
+								<input type="text" class="form-control" id="nom"
+									placeholder="numero siret " value="<%=siret%>" name="siret"
+									maxlength="<%=CreationCompteProText.TAILLE_SIRET_MAX%>"
+									required>
 							</div>
 
 							<div class="form-group">
-								<label for="nom">Téléphone:</label> <input type="text"
-									class="form-control" id="nom" placeholder="XX-XX-XX-XX-XX"
+								<label for="nom"><%=CreationCompteProText.LABEL_TELEPHONE%></label>
+								<input type="text" class="form-control" id="nom"
+									placeholder="XX-XX-XX-XX-XX"
 									pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
 									name="telephone" value="<%=telephone%>"
-									maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>">
+									maxlength="<%=CreationCompteProText.TAILLE_TELEPHONNE_MAX%>">
 							</div>
 
 							<input type="hidden" class="form-control" id="typeuser"
 								placeholder="typeuser" name="typeuser" required value="1">
 
 							<div class="form-group">
-								<label for="adresse">Adresse*:</label> <input type="text"
-									class="form-control" id="adresse" value="<%=adresse%>"
-									placeholder="Renseigner l'adresse" name="adresse"
-									onkeypress="initPosition()"
-									maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX%>">
+								<label for="adresse"><%=CreationCompteProText.LABEL_ADRESSE%></label>
+								<input type="text" class="form-control" id="adresse"
+									value="<%=adresse%>" placeholder="Renseigner l'adresse"
+									name="adresse" onkeypress="initPosition()"
+									maxlength="<%=CreationCompteProText.TAILLE_ADRESSE_MAX%>">
 							</div>
 
 							<div class="form-group">
-								<label for="commentaire">Renseignements:</label>
+								<label for="commentaire"><%=CreationCompteProText.LABEL_DESCRIPTION_PROFIL%></label>
 								<textarea class="form-control" rows="5" id="description"
-									placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil()%>"
-									maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX%>"
+									placeholder="<%=CreationCompteProText.getHintDescriptionProfil()%>"
+									maxlength="<%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
 									value="<%=commentaire%>" name="commentaire"></textarea>
 							</div>
 
 							<h5 class="nbrcaracteremax" id="nbr">
-								0 Caractére sur
-								<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%></h5>
-
+								0 Caractére sur <%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
+							</h5>
 							<div class="form-group">
 
 								<input type="hidden" class="form-control" id="latitude"
@@ -187,13 +193,13 @@
 
 							<div class="btn-group">
 								<button type="submit" class="btn btn-primary">Soumettre</button>
-							 <a href="/wayd/Home" class="btn btn-info" role="button"><span
-								  class="glyphicon glyphicon-home" ></span> Accueil</a>
-  
+								<a href="/wayd/Home" class="btn btn-info" role="button"><span
+									class="glyphicon glyphicon-home"></span> Accueil</a>
+
 
 							</div>
 						</div>
-						
+
 					</form>
 
 
@@ -271,7 +277,7 @@
 
 					if ((latitude == 0 || longitude == 0)) {
 					BootstrapDialog
-							.alert('La position GPS de votre adresse n\'a pas ï¿½tï¿½ trouvï¿½e. Veuillez ressaisir votre adresse');
+							.alert('<%=CreationCompteProText.ALERT_GPS_NO_POSITION%>');
 					return false;
 				}
 			}
@@ -290,19 +296,21 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
+				var msg = nombreCaractere + ' Caractere(s) / <%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>';
 
-				$('#nbr').text(msg);
-				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+												$('#nbr').text(msg);
+												// Le script qui devra calculer et afficher le nombre de mots et de caractères
 
-			})
+											})
 
-		});
+						});
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
-		';
+		var msg = nombreCaractere + " Caractere(s) /"
+				+
+	<%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
+		;
 		$('#nbr').text(msg);
 	</script>
 </body>

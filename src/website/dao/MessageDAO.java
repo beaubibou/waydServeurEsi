@@ -297,8 +297,7 @@ return new Integer(nbrmessagenonlu).toString();
 				preparedStatement.setInt(5, idDestinataire);
 				preparedStatement.setString(6,iddiscussion);
 				preparedStatement.execute();
-			
-				preparedStatement.close();
+							preparedStatement.close();
 				
 				requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
 				

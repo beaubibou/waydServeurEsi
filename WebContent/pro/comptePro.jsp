@@ -285,7 +285,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
+				var msg = nombreCaractere + ' Caractere(s) / <%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>';
 
 												$('#nbr').text(msg);
 												// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -298,7 +298,7 @@
 		var nombreCaractere = $('#description').val().length;
 		var msg = nombreCaractere + " Caractere(s) /"
 				+
-	<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>
+	<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
 		;
 		$('#nbr').text(msg);
 	</script>

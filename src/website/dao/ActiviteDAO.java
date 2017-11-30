@@ -971,8 +971,9 @@ public class ActiviteDAO {
 			{
 			case TypeEtatMessage.LU:
 
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=true";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,"
+						+ "iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=true and emis=false";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
@@ -980,8 +981,9 @@ public class ActiviteDAO {
 
 			case TypeEtatMessage.TOUS:
 
-				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=?";
+				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,"
+						+ "iddestinataire,lu,emis,iddiscussion"
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and emis=false";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
@@ -990,7 +992,7 @@ public class ActiviteDAO {
 			case TypeEtatMessage.NONLU:
 
 				requete = "SELECT personne.prenom as pseudo,sujet,corps,message.idpersonne,message.datecreation,idmessage,iddestinataire,lu,emis,iddiscussion"
-						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=false";
+						+ " from message,personne where personne.idpersonne=message.idpersonne and message.iddestinataire=? and lu=false and emis=false";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setInt(1, idpersonne);
 				rs = preparedStatement.executeQuery();
@@ -1054,6 +1056,8 @@ public class ActiviteDAO {
 		double malatitude = filtre.getLatitude();
 		double malongitude = filtre.getLongitude();
 
+		System.out.println("lat "+malatitude +" lon "+malongitude);
+		
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
 		double latMax = malatitude + coef;

@@ -55,7 +55,7 @@
 		</div>
 		
 		<input type="hidden" name="idMessage" value="<%=idMessage%>">
-		 <input	type="hidden" name="idDestinataire" value="<%=idDestinataire%>">
+		 <input	type="hidden" name="idPersonne" value="<%=idDestinataire%>">
 		  <input	type="hidden" name="formInit" value="<%=formInit%>">
 		<button type="submit" class="btn btn-default">Submit</button>
 	

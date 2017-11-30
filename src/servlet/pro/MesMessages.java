@@ -40,24 +40,7 @@ public class MesMessages extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		AuthentificationSite authentification = new AuthentificationSite(
-//				request, response);
-//		if (!authentification.isAuthentifiePro())
-//			return;
-//
-//		FiltreRecherche filtre =authentification.getFiltre();
-//
-//		ArrayList<MessageBean> listMesMessages = ActiviteDAO.getMesMessages(
-//			authentification.getProfil().getId(), filtre.getTypeMessage());
-//	
-//	
-//		afficheJumbotron(listMesMessages.size(), request,
-//			filtre.getTypeMessage());
-//		
-//		request.setAttribute("listMesMessages", listMesMessages);
-//		request.getRequestDispatcher("/pro/mesMessages.jsp")
-//				.forward(request, response);
+
 		
 		doPost(request,response);
 	

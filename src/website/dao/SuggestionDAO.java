@@ -163,7 +163,6 @@ public class SuggestionDAO {
 			preparedStatement.setTimestamp(4,
 					new java.sql.Timestamp(new Date().getTime()));
 			preparedStatement.execute();
-			preparedStatement.execute();
 			connexion.commit();
 			preparedStatement.close();
 			return true;

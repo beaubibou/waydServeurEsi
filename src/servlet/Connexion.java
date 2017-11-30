@@ -78,8 +78,8 @@ public class Connexion extends HttpServlet {
 		// TODO Auto-generated method stub
 		LOG.info("Do post Connexion");
 		
-		if (testEsi(request, response))
-		return;
+//		if (testEsi(request, response))
+//		return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -117,14 +117,14 @@ public class Connexion extends HttpServlet {
 					.verifyIdTokenAsync(idtoken).get();
 			String uid = token.getUid();
 			
-			if (!token.isEmailVerified()){
-				request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
-				request.getRequestDispatcher("commun/erreurConnection.jsp")
-						.forward(request, response);	
-				return;
-				
-			}
-			
+//			if (!token.isEmailVerified()){
+//				request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
+//				request.getRequestDispatcher("commun/erreurConnection.jsp")
+//						.forward(request, response);	
+//				return;
+//				
+//			}
+//			
 			
 			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 

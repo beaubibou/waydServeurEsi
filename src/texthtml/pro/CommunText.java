@@ -7,13 +7,9 @@ public class CommunText {
 	public static int TAILLE_TITRE_ACTIVITE_MAX = 50;
 	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 250;
 	public static int TAILLE_ADRESSE_MAX = 250;
-	
-	
 	public static String HINT_ADRESSE="Saissisez une adresse";
 	public static String HINT_TITRE="Saissisez un titre";
 
-	
-	
 	public static  String ALERT_GPS_NO_POSITION="La position GPS de votre adresse n'a pas été trouvée. "
 			+ " Veuillez ressaisir votre adresse.";
 	
