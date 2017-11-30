@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.ListeValeurText;
 import wayde.bean.CxoPool;
 import website.enumeration.TypePhoto;
 import website.metier.DureeBean;
@@ -74,7 +75,7 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 
 			rs = preparedStatement.executeQuery();
-			retour.add(new TypeActiviteBean(TypeActiviteBean.TOUS, "Tous"));
+			retour.add(new TypeActiviteBean(TypeActiviteBean.TOUS, ListeValeurText.TOUS));
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
@@ -151,13 +152,13 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
 
-			retour.add(new TypeUser(0, "Tous"));
+			retour.add(new TypeUser(0, ListeValeurText.TOUS));
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String libelle = rs.getString("libelle");
 				retour.add(new TypeUser(id, libelle));
 			}
-
+		
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -185,7 +186,7 @@ public class CacheValueDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 
 			rs = preparedStatement.executeQuery();
-			retour.add(new TypeAccess(0, "Tous"));
+			retour.add(new TypeAccess(0, ListeValeurText.TOUS));
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
@@ -326,7 +327,7 @@ public class CacheValueDAO {
 			String requete = "SELECT idtypeactivite,nom as libelle FROM type_activite order by ordre asc";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
-			tousTypeActivite.add(new TypeActiviteBean(0, "Tous"));
+			tousTypeActivite.add(new TypeActiviteBean(0, ListeValeurText.TOUS));
 			while (rs.next()) {
 				int id = rs.getInt("idtypeactivite");
 				String libelle = rs.getString("libelle");
@@ -370,10 +371,10 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 	
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
-		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, "Tous"));
-		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins un"));
-		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
-		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
+		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, ListeValeurText.TOUS));
+		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE,  ListeValeurText.AUMOINSUN));
+		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, ListeValeurText.MOINSDE10));
+		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10,  ListeValeurText.PLUSDE10));
 	
 		
 		
@@ -387,10 +388,10 @@ public class CacheValueDAO {
 		
 		
 		if (ListTypeEtatActivite.size()==0){
-			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TOUTES, "Toutes"));
-			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS, "En cours"));
-			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE, "Planif�e"));
-			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, "Termin�es"));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TOUTES,  ListeValeurText.TOUTES));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS,  ListeValeurText.ENCOURS));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE,  ListeValeurText.PLANIFIEES));
+			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TERMINEE, ListeValeurText.TERMINEES));
 	
 		}
 		
@@ -404,9 +405,9 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		if (listTypeEtatMessage.size()==0){
-		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.LU, "Lu"));
-		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.NONLU, "Non lus"));
-		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.TOUS, "Tous"));
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.LU, ListeValeurText.LU));
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.NONLU, ListeValeurText.NONLU));
+		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.TOUS, ListeValeurText.TOUS));
 		}
 
 		return listTypeEtatMessage;
@@ -416,9 +417,9 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		if (listTypeEtatProbleme.size()==0){
-			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.CLOTURE, "Cloturé"));
-			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.NONCLOTOURE, "En cours"));
-			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.TOUS, "Tous"));
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.CLOTURE, ListeValeurText.CLOTURE));
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.NONCLOTOURE, ListeValeurText.NONCLOTURE));
+			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.TOUS, ListeValeurText.TOUS));
 		}
 
 		return listTypeEtatProbleme;
@@ -429,9 +430,9 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		if (listTypeEtatSuggestion.size()==0){
-			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, "Cloturé"));
-			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, "Non cloturé"));
-			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.TOUS, "Tous"));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, ListeValeurText.CLOTURE));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, ListeValeurText.NONCLOTURE));
+			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.TOUS, ListeValeurText.TOUS));
 		}
 
 		return listTypeEtatSuggestion;
@@ -453,9 +454,9 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		ArrayList<TypeEtatProfil> listEtat = new ArrayList<TypeEtatProfil>();
-		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, "Tous"));
-		listEtat.add(new TypeEtatProfil(TypeEtatProfil.ACTIF, "Actif"));
-		listEtat.add(new TypeEtatProfil(TypeEtatProfil.INACTIF, "Inactif"));
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, ListeValeurText.TOUS));
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.ACTIF, ListeValeurText.ACTIF));
+		listEtat.add(new TypeEtatProfil(TypeEtatProfil.INACTIF,ListeValeurText.INACTIF));
 		
 		return listEtat;
 
@@ -465,12 +466,11 @@ public class CacheValueDAO {
 		// TODO Auto-generated method stub
 
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
-		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, "Tous"));
-		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, "Au moins un"));
-		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, "Moins de 10"));
-		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, "Plus de 10"));
-
-		
+		listEtat.add(new TypeSignalement(TypeSignalement.TOUS,ListeValeurText.TOUS));
+		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, ListeValeurText.AUMOINSUN));
+		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, ListeValeurText.MOINSDE10));
+		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, ListeValeurText.PLUSDE10));
+	
 		
 		return listEtat;
 

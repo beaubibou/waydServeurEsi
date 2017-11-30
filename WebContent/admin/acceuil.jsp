@@ -1,11 +1,12 @@
+<%@page import="texthtml.pro.AccueilProText"%>
 <%@page import="website.metier.IndicateurWayd"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<title>Acceuil</title>
+<title><%=AccueilProText.TITRE_ONGLET %></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -35,25 +36,25 @@
 		<h3>Statistiques</h3>
 		<ul class="list-group">
 			<li class="list-group-item">Nombre activités total <span
-				class="badge"><%out.println(indicateurBean.getNbrTotalActivite()); %></span></li>
+				class="badge"><%=indicateurBean.getNbrTotalActivite() %></span></li>
 			
 			<li class="list-group-item">Nombre de participation totale <span
-				class="badge"><%out.println(indicateurBean.getNbrTotalParticipation()); %></span></li>
+				class="badge"><%=indicateurBean.getNbrTotalParticipation() %></span></li>
 		
 			<li class="list-group-item">Nombre d'inscrit
-		  <span class="badge"><%out.println(indicateurBean.getNbrTotalInscrit()); %></span></li>
+		  <span class="badge"><%=indicateurBean.getNbrTotalInscrit()%></span></li>
 		
 		  	<li class="list-group-item"><a href="HistoriqueChart?action=histoNbrMessage">Nombre de message du jour</a>
-			  <span class="badge" ><%out.println(indicateurBean.getNbrMessageDuJour()); %></span></li>
+			  <span class="badge" ><%=indicateurBean.getNbrMessageDuJour()%></span></li>
 		
 		   	<li class="list-group-item"><a href="HistoriqueChart?action=histoNbrMessageByAct">Nombre de message du jour par activité</a>
-		  <span class="badge"><%out.println(indicateurBean.getNbrMessageByActDuJour()); %></span></li>
+		  <span class="badge"><%=indicateurBean.getNbrMessageByActDuJour() %></span></li>
 		
 		   	<li class="list-group-item"><a href="HistoriqueChart?action=histoNbrParticipation">Nombre de participations du jour</a>
-		  <span class="badge"><%out.println(indicateurBean.getNbrParticipationDuJour()); %></span></li>
+		  <span class="badge"><%=indicateurBean.getNbrParticipationDuJour() %></span></li>
 		
 		   	<li class="list-group-item"><a href="HistoriqueChart?action=histoNbrActivite">Nombre d'activités du jour</a>
-		  <span class="badge" ><%out.println(indicateurBean.getNbrActiviteDuJour()); %></span></li>
+		  <span class="badge" ><%=indicateurBean.getNbrActiviteDuJour()%></span></li>
 	
 		</ul>
 	</div>

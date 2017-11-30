@@ -20,12 +20,10 @@ public class ParametreHtmlPro {
 	
 	// v *******************Contact *********************
 
-		public static int TAILLE_MESSAGE_CONTACT_MAX = 250;
-		public static int TAILLE_MAIL_CONTACT_MAX = 60;
+	public static int TAILLE_MESSAGE_CONTACT_MAX = 250;
+	public static int TAILLE_MAIL_CONTACT_MAX = 60;
 		
-	
-		
-		
+			
 	public static String getHintTitreActivite() {
 
 		return "Titre de l'activit� " + TAILLE_TITRE_ACTIVITE_MAX + 
@@ -38,11 +36,7 @@ public class ParametreHtmlPro {
 				+ " caract�res maximum";
 	}
 
-	public static String getHintNomSociete() {
-
-		return "Nom de la soci�t� " + TAILLE_PSEUDO_MAX
-				+ " caract�res maximum";
-	}
+	
 	
 	public static String getHintPseudoWaydeur() {
 
@@ -50,11 +44,7 @@ public class ParametreHtmlPro {
 				+ " caract�res maximum";
 	}
 	
-	public static String getHintDescriptionProfil() {
-
-		return "D�crivez votre activit� " + TAILLE_DESCRIPTION_PROFIL_MAX
-				+ " caract�res maximum";
-	}
+	
 	
 	public static String getHintDescriptionProfilWaydeur() {
 

@@ -22,4 +22,16 @@ public class OutilsHtml {
 		else
 			return (double) requetAttribute;
 	}
+	
+	public static String convertStringHtml(String chaine){
+		
+		if (chaine == null ||chaine.isEmpty())
+			return "";
+		
+		return chaine;
+		
+	}
+	
+
+			
 }

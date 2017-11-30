@@ -1,4 +1,5 @@
 
+<%@page import="texthtml.pro.MenuProText"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.html.MenuHtml"%>
 <%@page import="website.enumeration.*"%>
@@ -21,13 +22,13 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.home)%>><a
-					href="/wayd/Home">Acceuil</a></li>
+					href="/wayd/Home"><%=MenuProText.ACCUEIL %></a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.moncompte)%>><a
-					href="/wayd/ComptePro">Mon compte</a></li>
+					href="/wayd/ComptePro"><%=MenuProText.MON_COMPTE %></a></li>
 				<li
 					<%=MenuHtml
 					.getActiviteClass(etatMenu, MenuEnum.mesactivites)%>><a
-					href="/wayd/MesActivites">Gérer </a></li>
+					href="/wayd/MesActivites"><%=MenuProText.GERER %> </a></li>
 				<%
 					if (request.getSession().getAttribute("profil") != null) {
 				%>
@@ -36,7 +37,8 @@
 					<%=MenuHtml.getActiviteClass(etatMenu,
 						MenuEnum.mesmessages)%>><a
 					href="/wayd/MesMessages"><span
-						class="glyphicon glyphicon-envelope"> </span> <span class="badge"><%=MessageDAO.getNbrMessageNonLu(((ProfilBean) request
+						class="glyphicon glyphicon-envelope"> </span> <span class="badge">
+						<%=MessageDAO.getNbrMessageNonLu(((ProfilBean) request
 						.getSession().getAttribute("profil")).getId())%></span></a></li>
 
 				<%
@@ -48,21 +50,18 @@
 					<%=MenuHtml.getActiviteClass(etatMenu,
 					MenuEnum.ajouteactivite)%>
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown">Proposez <span class="caret"></span></a>
+					data-toggle="dropdown"><%=MenuProText.PROPOSER %> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePro">Proposez une
-								activité</a></li>
-						<li ><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePlanifiee">Planifiez
-								plusieurs activités</a></li>
+						<li><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePro"><%=MenuProText.CREER_ACTIVITE %></a></li>
+						<li ><a style='color:black;background-color:#FFFFFF;' href="/wayd/AjouteActivitePlanifiee"><%=MenuProText.PLANIFIER_ACTIVITE %></a></li>
 
 					</ul></li>
 
 
-
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.carte)%>><a
-					href="/wayd/MapPro">Carte</a></li>
+					href="/wayd/MapPro"><%=MenuProText.CARTE %></a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.apropos)%>><a
-					href="/wayd/Apropos">A propos</a></li>
+					href="/wayd/Apropos"><%=MenuProText.A_PROPOS %></a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a
 					href="/wayd/Contact">Contact</a></li>
 

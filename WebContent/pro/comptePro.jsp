@@ -1,3 +1,5 @@
+<%@page import="texthtml.pro.CompteProText"%>
+<%@page import="javax.print.attribute.standard.Compression"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.html.*"%>
@@ -7,15 +9,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Mon compte</title>
-<meta charset="utf-8">
+<title><%=CompteProText.TITRE_ONGLET %></title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
 <link
@@ -24,9 +28,10 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
-<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
-	type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css"/>
+
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"type="text/css"/>
+
 
 <script src="js/initGoogleMap.js"></script>
 
@@ -49,11 +54,12 @@
 	%>
 	<%@ include file="menu.jsp"%>
 
+
 	<div class="container" style="margin-top: 50px;">
 		<div class="page-header">
-			<h1>Votre compte</h1>
+			<h1><%=CompteProText.TITRE_JUMBO %></h1>
 		</div>
-		<p>Renseignez votre profil.</p>
+		<p><%=CompteProText.MESSAGE_JUMBO_L1 %></p>
 
 	</div>
 	<div class="container">
@@ -68,7 +74,7 @@
 						<div class="row">
 							<div class="col-sm-4">
 								<img height="300" width="200"
-									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									src=<%=Outils.getUrlPhoto(profil.getPhotostr())%>
 									class="img-thumbnail" />
 							</div>
 
@@ -89,12 +95,12 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="nom">Nom*:</label> <input type="text"
+										<label for="nom"><%=CompteProText.LABEL_NOM %></label> <input type="text"
 											class="form-control" id="nom"
-											placeholder="<%=ParametreHtmlPro.getHintNomSociete()%>"
-											maxlength="<%=ParametreHtmlPro.TAILLE_PSEUDO_MAX%>"
+											placeholder="<%=CompteProText.getHintNomSociete()%>"
+											maxlength="<%=CompteProText.TAILLE_PSEUDO_MAX%>"
 											name="nom" required
-											value="<%out.println(profil.getPseudo());%>">
+											value="<%=profil.getPseudo()%>">
 									</div>
 								</div>
 								<div class="col-sm-4">
@@ -111,23 +117,23 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="siteweb">Site web:</label>
+										<label for="siteweb"><%=CompteProText.LABEL_SITE_WEB %></label>
 									</div>
 									<input type="text" class="form-control" id="siteweb"
-										maxlength="<%=ParametreHtmlPro.TAILLE_SITE_WEB_MAX%>"
-										placeholder="http://monsite.fr" name="siteweb"
+										maxlength="<%=CompteProText.TAILLE_SITE_WEB_MAX%>"
+										placeholder='<%=CompteProText.HINT_SITEWEB%>' name="siteweb"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiteWebStr())%>>
 								</div>
 
 
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="tel">Téléphone</label>
+										<label for="tel"><%=CompteProText.LABEL_TELEPHONE %></label>
 									</div>
 									<input type="text" class="form-control" id="tel"
 										placeholder="XX-XX-XX-XX-XX" name="telephone"
 										pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
-										maxlength="<%=ParametreHtmlPro.TAILLE_TELEPHONNE_MAX%>"
+										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getTelephoneStr())%>>
 								</div>
 
@@ -138,11 +144,11 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="siret">Numéro Siret</label>
+										<label for="siret"><%=CompteProText.LABEL_NUMERO_SIRET %></label>
 									</div>
 									<input type="text" class="form-control" id="siret"
-										maxlength="<%=ParametreHtmlPro.TAILLE_SIRET_MAX%>"
-										placeholder="Numéro Siret" name="siret"
+										maxlength="<%=CompteProText.TAILLE_SIRET_MAX%>"
+										placeholder='<%=CompteProText.HINT_SIRET%>' name="siret"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiret())%>>
 								</div>
 
@@ -151,24 +157,24 @@
 
 
 						<div class="form-group">
-							<label for="adresse">Adresse*:</label> <input type="text"
+							<label for="adresse"><%=CompteProText.LABEL_ADRESSE %></label> <input type="text"
 								class="form-control" id="adresse"
-								placeholder="Renseigner l'adresse" name="adresse" required
+								placeholder='<%=CompteProText.HINT_ADRESSE %>' name="adresse" required
 								onkeypress="initPosition()"
-								maxlength="<%=ParametreHtmlPro.TAILLE_ADRESSE_MAX%>"
+								maxlength="<%=CompteProText.TAILLE_ADRESSE_MAX%>"
 								value="<%=OutilsHtml.convertRequeteToString(profil.getAdresse())%>">
 						</div>
 
 						<div class="form-group">
-							<label for="description">Description:</label>
+							<label for="description"><%=CompteProText.LABEL_DESCRIPTION_PROFIL %></label>
 							<textarea class="form-control" rows="5" id="description"
 								name="commentaire"
-								placeholder="<%=ParametreHtmlPro.getHintDescriptionProfil()%>"
-								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_PROFIL_MAX%>"><%=profil.getCommentaireStr()%></textarea>
+								placeholder="<%=CompteProText.getHintDescriptionProfil()%>"
+								maxlength="<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"><%=profil.getCommentaireStr()%></textarea>
 						</div>
 
 						<h5 class="nbrcaracteremax" id="nbr">
-							0 Caractére sur "<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+							0 Caractére sur "<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
 						</h5>
 
 						<button type="submit" class="btn btn-info">Modifier</button>
@@ -176,12 +182,12 @@
 						<div class="form-group">
 
 							<input type="hidden" class="form-control" id="latitude"
-								name="latitude" value=<%out.println(profil.getLatitude());%>>
+								name="latitude" value=<%=profil.getLatitude()%>>
 						</div>
 						<div class="form-group">
 
 							<input type="hidden" class="form-control" id="longitude"
-								name="longitude" value=<%out.println(profil.getLongitude());%>>
+								name="longitude" value=<%=profil.getLongitude()%>>
 						</div>
 
 					</form>
@@ -257,7 +263,7 @@
 			longitude = document.getElementById("longitude").value;
 			if (latitude == 0 || longitude == 0) {
 				BootstrapDialog
-						.alert('La position GPS de votre adresse n\'a pas Ã©tÃ© trouvÃ©e. Veuillez ressaisir votre adresse');
+						.alert('<%=CompteProText.ALERT_GPS_NO_POSITION%>');
 				return false;
 			}
 		}

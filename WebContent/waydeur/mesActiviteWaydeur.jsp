@@ -2,7 +2,7 @@
 <%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
-<%@page import="website.metier.Pagination"%>
+
 <%@page import="website.metier.TypeEtatActivite"%>
 <%@page import="website.metier.FiltreRecherche"%>
 <%@page import="website.metier.AuthentificationSite"%>

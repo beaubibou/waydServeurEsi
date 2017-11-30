@@ -11,7 +11,7 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.RayonBean"%>
 <%@page import="website.metier.AuthentificationSite"%>
-<%@page import="website.metier.Pagination"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.dao.CacheValueDAO"%>

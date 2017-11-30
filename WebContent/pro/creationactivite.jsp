@@ -1,3 +1,5 @@
+<%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
+<%@page import="texthtml.pro.CreationActiviteText"%>
 <%@page import="website.html.ParametreHtmlPro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -10,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>>Création activité</title>
+<title>><%=CreationActiviteText.TITRE_ONGLET %></title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,11 +59,10 @@
 	<%@ include file="menu.jsp"%>
 	<div class="container" style="margin-top: 30px">
 		<div class="page-header">
-			<h1>Proposez vos activités</h1>
+			<h1><%=CreationActiviteText.TITRE_JUMBO %></h1>
 		</div>
-		<p>Proposez vos activités gratuites à la communauté. Une activité
-			ne peut pas exéder 8 heures.</p>
-		<p>Vous pouvez planifier jusqu à 5 activités simultanément.</p>
+		<p><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1 %></p>
+		<p><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
 	</div>
 
 	<div class="container">
@@ -69,17 +70,17 @@
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Ajoute une activité</div>
+					<div class="panel-title"><%=CreationActiviteText.TITRE_PANEL %></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
-							<label for="titre">Titre:</label> <input type="text"
+							<label for="titre"><%=CreationActiviteText.LABEL_TITRE%></label> <input type="text"
 								class="form-control" id="titre" required
-								placeholder="<%=ParametreHtmlPro.getHintTitreActivite()%>"
-								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"
+								placeholder="<%=CreationActiviteText.getHintTitreActivite()%>"
+								maxLength="<%=CreationActiviteText.TAILLE_TITRE_ACTIVITE_MAX%>"
 								name="titre" required>
 						</div>
 
@@ -88,7 +89,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatedebut">Date debut</label>
+										<label for="iddatedebut"><%=CreationActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
@@ -100,7 +101,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin">Date fin</label>
+										<label for="iddatefin"><%=CreationActiviteText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
 											<input type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
@@ -110,7 +111,7 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite">Type d'activitée:</label> <select
+									<label for="typeactivite"><%=CreationActiviteText.LABEL_TYPE_ACTIVITE%></label> <select
 										class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
@@ -127,24 +128,24 @@
 						</div>
 
 						<div class="form-group">
-							<label for="adresse">Adresse:</label> <input type="text"
+							<label for="adresse"><%=CreationActiviteText.LABEL_ADRESSE%></label> <input type="text"
 								class="form-control" id="adresse" required
-								value="<%out.println(profil.getAdresse());%>" name="adresse"
-								onkeypress="initPosition()">
+								value="<%=profil.getAdresse()%>" name="adresse"
+								onkeypress="initPosition()"
+								maxlength="<%=CreationActiviteText.TAILLE_ADRESSE_MAX%>">
 						</div>
 
 						<div class="form-group">
-							<label for="description">Description:</label>
+							<label for="description"><%=CreationActiviteText.LABEL_DESCRIPTION%></label>
 							<textarea
-								placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite()%>"
-								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+								placeholder="<%=CreationActiviteText.getHintDescriptionActivite()%>"
+								maxlength="<%=CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
 								class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">
-							0 Caractére sur
-							<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%></h5>
-
+							
+							<%=CreationActiviteText.initNbrCaracteres()%></h5>
 
 
 						<button type="submit" class="btn btn-info">Proposer</button>
@@ -334,7 +335,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
+				var msg = nombreCaractere + '<%=CreationActiviteText.getNbrCarateresDescription()%>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -345,7 +346,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) /  <%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>';
+		var msg = nombreCaractere +   '<%=CreationActiviteText.getNbrCarateresDescription()%>';
 		$('#nbr').text(msg);
 	</script>
 </body>

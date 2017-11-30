@@ -1,3 +1,4 @@
+<%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 <%@page import="website.html.ParametreHtmlPro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
@@ -11,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>>Planifier des activités</title>
+<title><%=CreationActivitePlanifieeText.TITRE_ONGLET %></title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,11 +61,10 @@
 	<%@ include file="menu.jsp"%>
 	<div class="container" style="margin-top: 30px">
 		<div class="page-header">
-			<h1>Proposez vos activités</h1>
+			<h1><%=CreationActivitePlanifieeText.TITRE_JUMBO %></h1>
 		</div>
-		<p>Proposez vos activités gratuites à la communauté. Une activité
-			ne peut pas exéder 8 heures.</p>
-		<p>Vous pouvez planifier jusqu à 5 activités simultanément.</p>
+		<p><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE1 %></p>
+		<p><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE2 %></p>
 	</div>
 
 	<div class="container">
@@ -72,17 +72,17 @@
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Ajoute une activité</div>
+					<div class="panel-title"><%=CreationActivitePlanifieeText.TITRE_PANEL %></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePlanifiee"
 						onsubmit="return valideFormulaire()" method="post">
 						<div class="form-group">
-							<label for="titre">Titre:</label> <input type="text"
+							<label for="titre"><%=CreationActivitePlanifieeText.LABEL_TITRE %></label> <input type="text"
 								class="form-control" id="titre" required
-								placeholder="<%=ParametreHtmlPro.getHintTitreActivite()%>"
-								maxLength="<%=ParametreHtmlPro.TAILLE_TITRE_ACTIVITE_MAX%>"
+								placeholder="<%=CreationActivitePlanifieeText.getHintTitreActivite()%>"
+								maxLength="<%=CreationActivitePlanifieeText.TAILLE_TITRE_ACTIVITE_MAX%>"
 								name="titre" required>
 						</div>
 
@@ -91,7 +91,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatedebut">Date debut</label>
+										<label for="iddatedebut"><%=CreationActivitePlanifieeText.LABEL_DATE_DEBUT %></label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
@@ -103,7 +103,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin">Date fin</label>
+										<label for="iddatefin"><%=CreationActivitePlanifieeText.LABEL_DATE_FIN %></label>
 										<div class='input-group date' id="datefin">
 											<input type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
@@ -113,7 +113,7 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite">Type d'activitée:</label> <select
+									<label for="typeactivite"><%=CreationActivitePlanifieeText.LABEL_TYPE_ACTIVITE %></label> <select
 										class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
@@ -133,7 +133,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="idheuredebut">Heure debut</label>
+										<label for="idheuredebut"><%=CreationActivitePlanifieeText.LABEL_HEURE_DEBUT %></label>
 										<div class='input-group date' id='heuredebut'>
 											<input type='text' class="form-control" id="idheuredebut"
 												name="heuredebut" /> <span class="input-group-addon">
@@ -146,7 +146,7 @@
 								<div class='col-sm-4'>
 									<div class="form-group">
 
-										<label for="duree">Durée:</label> <select class="form-control"
+										<label for="duree"><%=CreationActivitePlanifieeText.LABEL_DUREE %></label> <select class="form-control"
 											id="typeactivite" name="duree">
 											<%
 												for (DureeBean duree:listDuree) {
@@ -159,8 +159,6 @@
 									</div>
 								</div>
 
-
-
 							</div>
 
 
@@ -169,8 +167,9 @@
 						<div class="form-group">
 							<div class="container" id="mescheck">
 
-								<h4>Cette activité se répéte tous les jours:</h4>
-								</br> <label class="radio-inline"> <input type="checkbox"
+								<h4><%=CreationActivitePlanifieeText.MESSAGE_CHECKBOX %></h4>
+								</br>
+								 <label class="radio-inline"> <input type="checkbox"
 									name="lundi">Lundi
 								</label> <label class="radio-inline"> <input type="checkbox"
 									name="mardi">Mardi
@@ -190,27 +189,27 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="adresse">Adresse:</label> <input type="text"
+							<label for="adresse"><%=CreationActivitePlanifieeText.LABEL_ADRESSE %></label> <input type="text"
 								class="form-control" id="adresse" required
-								value="<%out.println(profil.getAdresse());%>" name="adresse"
+								value="<%=profil.getAdresse()%>" name="adresse"
 								onkeypress="initPosition()">
 						</div>
 
 						<div class="form-group">
-							<label for="description">Description:</label>
+							<label for="description"><%=CreationActivitePlanifieeText.LABEL_DESCRIPTION %></label>
 							<textarea
-								placeholder="<%=ParametreHtmlPro.getHintDescriptionActivite()%>"
-								maxlength="<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+								placeholder="<%=CreationActivitePlanifieeText.getHintDescriptionActivite()%>"
+								maxlength="<%=CreationActivitePlanifieeText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
 								class="form-control" rows="5" id="description"
 								name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">
-							0 Caractére sur
-							<%=ParametreHtmlPro.TAILLE_DESCRIPTION_ACTIVITE_MAX%></h5>
+							
+							<%=CreationActivitePlanifieeText.initNbrCaracteres()%></h5>
 
 
 
-						<button type="submit" class="btn btn-info">Proposer</button>
+						<button type="submit" class="btn btn-info"><%=CreationActivitePlanifieeText.LABEL_BUTTON_PROPOSEZ %></button>
 
 						<div class="form-group">
 
@@ -365,7 +364,7 @@
 			if (latitude == 0 || longitude == 0) {
 				alert();
 				BootstrapDialog
-						.alert('La position GPS de votre adresse n\'a pas été trouvée. Veuillez ressaisir votre adresse');
+						.alert(<%=CreationActivitePlanifieeText.ALERT_GPS_NO_POSITION%>);
 				return false;
 			}
 
@@ -437,7 +436,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / 200';
+				var msg = nombreCaractere + '<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>';
 
 				$('#nbr').text(msg);
 				// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -448,7 +447,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / 200';
+		var msg = nombreCaractere + '<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>';
 		$('#nbr').text(msg);
 	</script>
 </body>

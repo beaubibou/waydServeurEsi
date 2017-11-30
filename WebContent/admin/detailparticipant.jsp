@@ -1,3 +1,4 @@
+<%@page import="website.html.OutilsHtml"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.SignalementBean"%>
 <%@page import="website.metier.AmiBean"%>
@@ -100,6 +101,10 @@
 						Status :
 						<%=profil.getActifHtml()%>
 					</h5>
+					<h6>
+						Adr :
+						<%=OutilsHtml.convertStringHtml(profil.getAdresse())%>
+					</h>
 			</div>
 			<div class="col-sm-8">
 

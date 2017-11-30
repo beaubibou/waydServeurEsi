@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <title>Renseignements</title>
 <meta charset="utf-8">
