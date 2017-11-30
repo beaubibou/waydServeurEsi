@@ -36,8 +36,8 @@ public class PersonneDAO {
 		if (uid == null)
 			return false;
 
-		if (supprimePersonneFireBase(uid))
-			supprimePersonneDAO(idPersonne);
+		supprimePersonneFireBase(uid,idPersonne);
+			
 
 		return true;
 
@@ -183,7 +183,20 @@ public class PersonneDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			
-			requete = "DELETE FROM refusparticipation where  idsignalement=?;";
+			requete = "DELETE FROM refusparticipation where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "DELETE FROM activite where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM personne where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
@@ -230,7 +243,7 @@ public class PersonneDAO {
 	
 	}
 
-	public static boolean supprimePersonneFireBase(String uid) {
+	public static boolean supprimePersonneFireBase(String uid,int idPersonne) {
 
 		
 		try {
@@ -239,6 +252,8 @@ public class PersonneDAO {
 				FirebaseApp.initializeApp(WBservices.optionFireBase);
 		
 			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
+			supprimePersonneDAO(idPersonne);
+			
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
