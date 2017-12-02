@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.UpdateRequest;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
@@ -264,6 +266,30 @@ public class PersonneDAO {
 		}
 	}
 	
+public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolean actif) {
+
+		
+		try {
+	
+			
+			if (FirebaseApp.getApps().isEmpty())
+				FirebaseApp.initializeApp(WBservices.optionFireBase);
+		
+			UpdateRequest request=new UpdateRequest(uid);
+			
+			request.setDisabled(!actif);
+			UserRecord userRecord = FirebaseAuth.getInstance().updateUserAsync(request).get();
+			
+			return true;
+
+		} catch (InterruptedException | ExecutionException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 	public static boolean isPseudoExist(String pseudo) {
 		// TODO Auto-generated method stub
@@ -304,6 +330,48 @@ public class PersonneDAO {
 		}
 		return false;
 	}
+	
+	public static boolean isProfilActif(int idpersonne) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT actif from personne where idpersonne=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+			if (rs.getBoolean("actif")==true)
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
 
 	public static ArrayList<ProfilBean> getListProfil(FitreAdminProfils filtre,
 			int page, int maxResult) {
@@ -311,9 +379,11 @@ public class PersonneDAO {
 		int offset = (maxResult) * page;
 		int typeUser = filtre.getTypeUser();
 		String pseudo = filtre.getPseudo();
+		String email = filtre.getEmail();
 		int etatProfil = filtre.getEtatProfil();
 		int typeSignalement = filtre.getTypeSignalement();
 		pseudo = pseudo.replace("*", "%");
+		email = email.replace("*", "%");
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -351,6 +421,11 @@ public class PersonneDAO {
 			if (pseudo != null) {
 				if (!pseudo.isEmpty())
 					requete = requete + " and prenom like ?";
+			}
+			
+			if (email != null) {
+				if (!email.isEmpty())
+					requete = requete + " and mail like ?";
 			}
 
 			if (etatProfil != TypeEtatProfil.TOUTES) {
@@ -400,6 +475,13 @@ public class PersonneDAO {
 			if (pseudo != null) {
 				if (!pseudo.isEmpty()) {
 					preparedStatement.setString(index, pseudo);
+					index++;
+				}
+			}
+			
+			if (email != null) {
+				if (!email.isEmpty()) {
+					preparedStatement.setString(index, email);
 					index++;
 				}
 			}
@@ -665,36 +747,73 @@ public class PersonneDAO {
 
 	}
 
-	public static MessageBean activerProfil(int idpersonne, boolean actif) {
 
+
+	public static boolean activerProfilEtActivite(int idPersonne, boolean actif) {
+		// TODO Auto-generated method stub
+	
+	
+		String uid = PersonneDAO.getUID(idPersonne);
+
+		if (uid == null)
+			return false;
+
+		if (!desactivePersonneFireBase(uid,idPersonne,actif))
+		return false;
+		
+		
 		Connection connexion = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
 
+		
+		// ACTIVE OU DESACTIVE PROFIL ET ACTIVITE
+		
+		
+		
 		try {
 			connexion = CxoPool.getConnection();
-
-			String requete = "UPDATE  personne set actif=? "
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE activite  SET   actif=? WHERE idpersonne=?";
+			PreparedStatement preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setBoolean(1, actif);
+			preparedStatement.setInt(2,idPersonne);
+			preparedStatement.execute();
+		    
+			requete = "UPDATE  personne set actif=? "
 					+ " WHERE idpersonne=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
-			preparedStatement.setInt(2, idpersonne);
+			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
+			
+			
+			connexion.commit();
 
-			return new MessageBean("Ok");
-
-		} catch (SQLException | NamingException e) {
+		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
+			try {
+				connexion.rollback();
 
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
-			return new MessageBean("Erreur ");
+			return false;
 
 		} finally {
-			CxoPool.close(connexion, preparedStatement, rs);
+
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
+		return true;
+			
+		
 	}
-
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
 			double longitude, String commentaire, String siret,
 			String telephonne, int idpersonne) {

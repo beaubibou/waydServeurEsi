@@ -197,13 +197,13 @@ public class WBservices {
 					.get();
 			
 			String uid = token.getUid();
-		
-			MessageServeur messageServeur=gestionUid(uid, idtoken, photostr, nom, gcmToken);
+		String email=token.getEmail();
+			MessageServeur messageServeur=gestionUid(uid, idtoken, photostr, nom, gcmToken,email);
 
 			String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
 					+ "ms";
 			
-			LOG.info(loginfo);
+			LOG.info(loginfo+" email:"+email);
 			
 			return messageServeur.isReponse();
 		} catch (InterruptedException | ExecutionException e2) {
@@ -216,7 +216,7 @@ public class WBservices {
 	}
 
 	private MessageServeur gestionUid(String uid, String idtoken,
-			String photostr, String nom, String gcmToken) {
+			String photostr, String nom, String gcmToken,String email) {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
@@ -227,12 +227,12 @@ public class WBservices {
 
 			if (!personnedao.isLoginExist(uid)) {
 				personnedao.addCompteGenerique(uid, idtoken, photostr, nom,
-						gcmToken);
+						gcmToken,email);
 			}
 
 			else {
 				
-			personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken);
+			personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken,email);
 			
 			}
 			connexion.commit();

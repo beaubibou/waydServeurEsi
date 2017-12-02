@@ -1,94 +1,239 @@
+<%@page import="website.metier.SignalementBean"%>
+<%@page import="website.dao.CacheValueDAO"%>
+<%@page import="website.metier.ProfilBean"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@page import="website.metier.ParticipantBean"%>
+<%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.ActiviteBean"%>
-<%@page import="website.metier.IndicateurWayd"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="utf-8"%>
-<!DOCTYPE html>
-<html lang="en">
+<%@page import="website.metier.AuthentificationSite"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<title>DÃ©tail Activite</title>
+<title>>Détail activité pro</title>
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+	rel="stylesheet">
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
-	type="text/css">
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<!-- <script src="src/bootstrap-rating-input.js"></script> -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
+
+
+<script src="js/moment.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
+
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
+
+<style>
+.vcenter {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
+.vertical-align {
+	display: flex;
+	align-items: center;
+}
+</style>
 </head>
 <body>
-
 	<%@ include file="menu.jsp"%>
 
+
 	<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+		if (!authentification.isAuthentifie())
+			return;
+
 		ActiviteBean activite = (ActiviteBean) request
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
-		String lienDetailOrganisateur = "DetailParticipant?idPersonne="
-				+ activite.getIdorganisateur();
+
+		ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
 	%>
-	<h2 align="center">
-		<%=activite.getEtatHtml()%>
-		-
-		<%=activite.getTitre()%></h2>
+
+
 
 	<div class="container">
-		<a href=<%=lienDetailOrganisateur%>><h4><%=activite.getTypeUserHTML()%>
-				-
-				<%=activite.getPseudo()%></h4></a>
-		<div class="row">
+		<div id="loginbox" style="margin-top: 50px;"
+			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-heading-custom">
 
-			<div class="col-sm-2">
-				<img height="300" width="200" src=<%=activite.getUrlPhoto()%>
-					class="img-thumbnail" />
-			</div>
-			<div class="col-sm-2">
-				<h5><%=activite.getLibelleActivite()%></h5>
-				<h6><%=activite.getHoraireLeA()%></h6>
+					<div style="text-align: center;" class="panel-title ">Détail
+						activité professionelle</div>
 
-			</div>
-			<div class="col-sm-8">
-
-				<textarea disabled="disabled" class="form-control" rows="5"
-					id="comment"><%=activite.getLibelle()%>
-					</textarea>
-
-			</div>
-		</div>
-		</br>
-
-		<div class="container">
-			<div class="panel panel-primary">
-				<div class="panel-body" style="background: #99ccff;">
-
-					<%
-						if (activite.isActive()) {
-					%>
-
-					<a
-						href="DetailActivite?action=terminerActivite&idactivite=<%=activite.getId()%>"
-						class="btn btn-info" role="button">Terminer</a>
+				</div>
 
 
-					<%
-						}
-					%>
-					<a
-						href="DetailActivite?action=effacerActivite&idactivite=<%=activite.getId()%>"
-						class="btn btn-danger" role="button">Supprimer</a>
+				<div style="padding-top: 30px" class="panel-body">
+
+					<div class="form-group">
+						<div class="row">
+
+							<div class='col-sm-2  ' class="text-center">
+								<%
+									if (activite.isActive()) {
+								%>
+
+								<a
+									href="DetailActivite?action=terminerActivite&idactivite=<%=activite.getId()%>"
+									class="btn btn-info" role="button">Terminer</a>
+
+
+								<%
+									}
+								%>
+							</div>
+
+
+							<div class='col-sm-2  ' class="text-center">
+								<a
+									href="DetailActivite?action=effacerActivite&idactivite=<%=activite.getId()%>"
+									class="btn btn-danger" role="button">Supprimer</a>
+
+							</div>
+
+
+
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+
+						<div class="row">
+
+							<div class='col-sm-1  ' class="text-center">
+								<img height="30" width="30"
+									src=<%out.println(Outils.getUrlPhoto(CacheValueDAO
+					.getPhotoTypeActivite(activite.getTypeactivite())));%>
+									class="img-circle" class="text-center" />
+
+							</div>
+
+
+						</div>
+
+					</div>
+					<div class="form-group">
+
+						<div class="row vertical-align">
+							<div class='col-sm-4'>
+
+								<img height="300" width="300"
+									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+									class="img-thumbnail" class="text-center" />
+
+							</div>
+
+							<div class='col-sm-6' class="text-center">
+
+								<a href="#">
+									<h3 style="padding-left: 15px; color: blue;"><%=activite.getPseudo()%></h3>
+								</a>
+
+								<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
+								<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
+								<h5 style="padding-left: 15px">
+									à
+									<%=activite.calculDistance()%></h5>
+
+
+							</div>
+
+						</div>
+
+
+						<div class="form-group">
+							</br>
+							<h5>
+								Type d'activité:
+								<%=CacheValueDAO.geLibelleTypeActivite(activite
+					.getTypeactivite())%></h5>
+
+
+							<h5><%=activite.getHoraireLeAHorizontal()%></h5>
+
+						</div>
+
+
+						<div class="form-group">
+							<label for="description">Description:</label>
+							<textarea disabled class="form-control" rows="5" id="description"
+								name="description"><%=activite.getLibelle()%></textarea>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
 
+
 	</div>
 
 	<div class="container">
-		<h4>Liste participants</h4>
+		
+			<button type="button" class="btn btn-info" data-toggle="collapse"
+			data-target="#amis">List des amis</button>
+		<div id="amis" class="collapse">
+		
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+					for (SignalementBean signalement : listSignalement) {
+						
+				%>
 
+				<tr>
+					<td><%=signalement.getLibelle()%></td>
+
+
+				</tr>
+
+				<%
+					}
+				%>
+
+			</tbody>
+		</table>
+		</div>
+		
+	</div>
+
+
+	<div class="container">
+		<button type="button" class="btn btn-info" data-toggle="collapse"
+			data-target="#signalement">List Signalement</button>
+		<div id="signalement" class="collapse">
+		
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -123,6 +268,8 @@
 
 			</tbody>
 		</table>
+		</div>
 	</div>
+
 </body>
 </html>

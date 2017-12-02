@@ -31,6 +31,7 @@ import wayde.dao.SignalementDAO;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
+import website.metier.Outils;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeActiviteBean;
@@ -1907,4 +1908,6 @@ public class ActiviteDAO {
 		preparedStatement.execute();
 
 	}
+
+
 }

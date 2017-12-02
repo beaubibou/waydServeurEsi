@@ -2,12 +2,15 @@ package website.metier;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
+import website.dao.PersonneDAO;
 import website.enumeration.MenuEnum;
 import website.html.MessageAlertDialog;
 
@@ -86,7 +89,7 @@ public class AuthentificationSite {
 		return true;
 	}
 
-	public boolean isAuthentifiePro() throws IOException {
+	public boolean isAuthentifiePro() throws IOException, ServletException {
 
 		HttpSession session = request.getSession();
 
@@ -97,6 +100,19 @@ public class AuthentificationSite {
 			return false;
 		}
 
+		if (!PersonneDAO.isProfilActif(profil.getId())){
+		request.setAttribute("message", Erreur_HTML.ERR_COMPTE_DESACTIVTE);	
+		
+		request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);
+		
+		return false;	
+			
+		}
+		
+		if (!profil.isActif()){
+			response.sendRedirect("auth/login.jsp");
+		return false;
+		}
 		// if (profil.getTypeuser() != ProfilBean.PRO
 		// || profil.isPremiereconnexion()) {
 		// response.sendRedirect("auth/login.jsp");

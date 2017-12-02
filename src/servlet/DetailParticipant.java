@@ -20,6 +20,7 @@ import website.metier.AmiBean;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 import website.metier.SignalementBean;
+import website.metier.TypeUser;
 
 /**
  * Servlet implementation class DetailParticipant
@@ -51,8 +52,7 @@ public class DetailParticipant extends HttpServlet {
 		if (request.getParameter("actif") != null) {// active le profil
 			int idParticipant = Integer.parseInt(request
 					.getParameter("idPersonne"));
-
-			PersonneDAO.activerProfil(idParticipant, true);
+			PersonneDAO.activerProfilEtActivite(idParticipant, true);
 
 		}
 
@@ -60,7 +60,7 @@ public class DetailParticipant extends HttpServlet {
 
 			int idParticipant = Integer.parseInt(request
 					.getParameter("idPersonne"));
-			PersonneDAO.activerProfil(idParticipant, false);
+			PersonneDAO.activerProfilEtActivite(idParticipant, false);
 
 		}
 
@@ -119,8 +119,19 @@ public class DetailParticipant extends HttpServlet {
 
 		// Direction vers la page
 		request.setAttribute("profil", profilBean);
-		request.getRequestDispatcher("admin/detailparticipant.jsp").forward(
-				request, response);
+		switch (profilBean.getTypeuser()) {
+
+		case TypeUser.PRO:
+			request.getRequestDispatcher("admin/detailparticipantPro.jsp")
+					.forward(request, response);
+			break;
+
+		case TypeUser.WAYDEUR:
+			request.getRequestDispatcher("admin/detailparticipantWaydeur.jsp")
+					.forward(request, response);
+			break;
+
+		}
 
 	}
 

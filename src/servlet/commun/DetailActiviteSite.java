@@ -61,8 +61,19 @@ public class DetailActiviteSite extends HttpServlet {
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 	
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
+		
+		if (activite==null){
+			
+			request.setAttribute("message", "L'activité n'existe plus");
+			request.getRequestDispatcher("/commun/erreurConnection.jsp")
+			.forward(request, response);
+
+			return;
+		}
+		
 		activite.setPositionRecherche(filtre.getLatitude(),
 				filtre.getLongitude());
+		
 		
 		ActiviteDAO.addNbrVu(authentification.getId(), idActivite,activite.getIdorganisateur());
 		

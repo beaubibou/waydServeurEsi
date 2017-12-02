@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import website.dao.ActiviteDAO;
 import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 import website.metier.admin.FitreAdminProfils;
@@ -87,8 +88,9 @@ public class ListProfil extends HttpServlet {
 				idPersonne = Integer.parseInt(request.getParameter("idPersonne"));
 			}
 
-			 PersonneDAO.activerProfil(idPersonne, false);
-	
+			 PersonneDAO.activerProfilEtActivite(idPersonne, false);
+			
+			 
 			break;	
 		
 			case "active":
@@ -98,7 +100,7 @@ public class ListProfil extends HttpServlet {
 				idPersonne = Integer.parseInt(request.getParameter("idPersonne"));
 			}
 
-			 PersonneDAO.activerProfil(idPersonne, true);
+			PersonneDAO.activerProfilEtActivite(idPersonne, true);
 	
 			break;	
 		}
@@ -135,6 +137,10 @@ public class ListProfil extends HttpServlet {
 
 		if (request.getParameter("pseudo") != null) {
 			filtre.setPseudo(request.getParameter("pseudo"));
+		}
+		
+		if (request.getParameter("email") != null) {
+			filtre.setEmail(request.getParameter("email"));
 		}
 	
 		if (request.getParameter("typeSignalement") != null) {

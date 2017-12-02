@@ -42,13 +42,13 @@ public class Notification {
 		switch (idtypemessage){
 		
 		case DonneAvis:
-			this.message="Penser � noter "+nompersconcernee+ " pour sa participation � "
-			+ " � "+titreactivite+" � ";
+			this.message="Penser à noter "+nompersconcernee+ " pour sa participation  "
+			+ " à "+titreactivite+".";
 			break;
 			
 		case RecoitAvis:
-			this.message="Vous avez recu un avis de "+nompersconcernee+ " pour votre participation � "
-			+ " � "+titreactivite+" � ";
+			this.message="Vous avez recu un avis de "+nompersconcernee+ " pour votre participation à "
+			+ titreactivite+".";
 		
 			break;
 			

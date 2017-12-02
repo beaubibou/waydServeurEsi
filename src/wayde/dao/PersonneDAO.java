@@ -503,11 +503,10 @@ public class PersonneDAO {
 		preparedStatement.setString(11, personne.cleactivation);
 		preparedStatement.execute();
 		preparedStatement.close();
-
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom, String gcmToken) throws SQLException {
+			String photostr, String nom, String gcmToken,String email) throws SQLException {
 
 		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
 		// l'utlsation de plusieurs
@@ -531,10 +530,10 @@ public class PersonneDAO {
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, nom);
-		preparedStatement.setString(2, "waydeur");
+		preparedStatement.setString(2, "waydeur"+System.currentTimeMillis());
 		preparedStatement.setString(3, iduser);
 		preparedStatement.setString(4, null);
-		preparedStatement.setString(5, null);
+		preparedStatement.setString(5, email);
 		preparedStatement.setInt(6, 1);
 		preparedStatement.setBoolean(7, false);
 		preparedStatement.setBoolean(8, true);
@@ -748,7 +747,7 @@ public class PersonneDAO {
 	}
 
 	public void updateJeton(String iduser, String idtoken, String photostr,
-			String nom, String gcmToken) throws SQLException {
+			String nom, String gcmToken,String email) throws SQLException {
 
 		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
 		PreparedStatement preparedStatement = connexion
@@ -761,13 +760,14 @@ public class PersonneDAO {
 		if (photostr.equals("")) {// Cas ou la photo vient d'un compte avec mot
 									// de passe
 
-			requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
+			requete = "UPDATE  personne set jeton=?,nom=?,gcm=?,mail=? "
 					+ " WHERE login=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, idtoken);
 			preparedStatement.setString(2, nom);
 			preparedStatement.setString(3, gcmToken);
-			preparedStatement.setString(4, iduser);
+			preparedStatement.setString(4, email);
+			preparedStatement.setString(5, iduser);
 			preparedStatement.execute();
 			preparedStatement.close();
 		}

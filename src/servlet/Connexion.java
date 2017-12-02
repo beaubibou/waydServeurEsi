@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
@@ -142,8 +143,7 @@ public class Connexion extends HttpServlet {
 			if (profil != null) {
 
 				if (!profil.isActif()) {
-					request.setAttribute("message",
-							"Votre compte est dÃ©sactivÃ©");
+					request.setAttribute("message",Erreur_HTML.ERR_COMPTE_DESACTIVTE);
 					request.getRequestDispatcher("commun/erreurConnection.jsp")
 							.forward(request, response);
 					return;
@@ -204,49 +204,6 @@ public class Connexion extends HttpServlet {
 
 	}
 
-//	private MessageServeur creationProfilBdd(String uid, String idtoken,
-//			HttpServletRequest request, HttpServletResponse response) {
-//		// TODO Auto-generated method stub
-//		Connection connexion = null;
-//
-//		try {
-//			LOG.info("Creation du compte");
-//			connexion = CxoPool.getConnection();
-//			connexion.setAutoCommit(false);
-//			wayde.dao.PersonneDAO personnedao = new wayde.dao.PersonneDAO(
-//					connexion);
-//			personnedao.addCompteGenerique(uid, idtoken, "", "", "");
-//			connexion.commit();
-//
-//			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
-//
-//			if (profil != null) {
-//				HttpSession session = request.getSession();
-//				LOG.info("User crï¿½e" + profil);
-//				session.setAttribute("profil", profil);
-//
-//				return new MessageServeur(true, "ok");
-//			} else {
-//				return new MessageServeur(false, "ok");
-//
-//			}
-//
-//		} catch (SQLException | NamingException e) {
-//			// TODO Auto-generated catch block
-//			try {
-//				connexion.rollback();
-//			} catch (SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//			e.printStackTrace();
-//		} // ...
-//		finally {
-//			CxoPool.closeConnection(connexion);
-//			//
-//		}
-//		return new MessageServeur(false, "ok");
-//
-//	}
+
 
 }
