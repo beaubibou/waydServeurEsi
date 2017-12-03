@@ -523,13 +523,14 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 				int nbrSignalement = rs.getInt("nbrsignalement");
 				String siret = rs.getString("siret");
 				String sexeStr = rs.getString("sexeStr");
+				String mail = rs.getString("mail");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr);
+						sexeStr,mail);
 				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
@@ -609,13 +610,14 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
 				String sexestr = rs.getString("sexeStr");
+				String mail = rs.getString("mail");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexestr);
+						sexestr,mail);
 
 			}
 			return profil;
@@ -724,13 +726,14 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 				double latitudeFixe = rs.getDouble("latitudefixe");
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
+				String mail = rs.getString("mail");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr);
+						sexeStr,mail);
 
 			}
 

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
+
 public class Participant {
 	private static final Logger LOG = Logger.getLogger(Participant.class);
 
@@ -37,7 +39,7 @@ public class Participant {
 
 	public String getAgeStr(Date datenaissance, boolean afficheage) {
 		if (afficheage)
-			return "Non communiqu�";
+			return Erreur_HTML.NON_COMMUNIQUE;
 		if (datenaissance != null) {
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();

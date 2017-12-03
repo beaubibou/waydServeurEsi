@@ -15,18 +15,20 @@ import texthtml.pro.Erreur_HTML;
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
 import wayde.dao.ActiviteDAO;
-import website.metier.SignalementBean;
+import website.metier.SignalementActiviteBean;
+import website.metier.SignalementProfilBean;
 import website.metier.SignalementCount;
 
 public class SignalementDAO {
 	private static final Logger LOG = Logger.getLogger(SignalementDAO.class);
 
-	public static ArrayList<SignalementBean> getListSignalement(int idpersonne) {
+	public static ArrayList<SignalementProfilBean> getListSignalement(
+			int idpersonne) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SignalementBean> retour = new ArrayList<SignalementBean>();
+		ArrayList<SignalementProfilBean> retour = new ArrayList<SignalementProfilBean>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -50,7 +52,7 @@ public class SignalementDAO {
 				String motif = rs.getString("motif");
 				String libelle = rs.getString("libelle");
 
-				retour.add(new SignalementBean(idpersonnesignalee,
+				retour.add(new SignalementProfilBean(idpersonnesignalee,
 						idinformateur, pseudoSignale, pseudoInfo, d_creation,
 						idmotif, motif, libelle));
 			}
@@ -68,18 +70,25 @@ public class SignalementDAO {
 		}
 	}
 
-	public static ArrayList<SignalementBean> getListSignalementActivite(
+	public static ArrayList<SignalementActiviteBean> getListSignalementActivite(
 			int idActivite) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SignalementBean> retour = new ArrayList<SignalementBean>();
+		ArrayList<SignalementActiviteBean> retour = new ArrayList<SignalementActiviteBean>();
 
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT idactivite, idmotif, motif, signaler_activite.idpersonne, titre, signaler_activite.libelle,personne.login,ref_signalementactivite.libelle"
+			String requete = "SELECT idactivite,"
+					+ " idmotif,signaler_activite.d_creation,"
+					+ "motif,"
+					+ "titre,"
+					+ "signaler_activite.libelle,"
+					+ "personne.prenom as pseudoInfo,"
+					+ "signaler_activite.idpersonne as idinformateur, "
+					+ "ref_signalementactivite.libelle as libelleMotif"
 					+ "  FROM signaler_activite,personne,ref_signalementactivite"
 					+ " where"
 					+ " signaler_activite.idmotif=ref_signalementactivite.id"
@@ -90,17 +99,17 @@ public class SignalementDAO {
 			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				int idpersonnesignalee = rs.getInt("idpersonnesignalee");
+				int idpersonnesignalee = rs.getInt("idactivite");
 				int idinformateur = rs.getInt("idinformateur");
-				String pseudoSignale = rs.getString("pseudoSignale");
+			
 				String pseudoInfo = rs.getString("pseudoInfo");
 				Date d_creation = rs.getTimestamp("d_creation");
 				int idmotif = rs.getInt("idmotif");
 				String motif = rs.getString("motif");
-				String libelle = rs.getString("libelle");
+				String libelle = rs.getString("libelleMotif");
 
-				retour.add(new SignalementBean(idpersonnesignalee,
-						idinformateur, pseudoSignale, pseudoInfo, d_creation,
+				retour.add(new SignalementActiviteBean(idpersonnesignalee,
+						idinformateur,  pseudoInfo, d_creation,
 						idmotif, motif, libelle));
 			}
 

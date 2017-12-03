@@ -57,7 +57,7 @@ public class ProfilBean {
 	private boolean premiereconnexion;
 	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
 	private ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
-	private ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
+	private ArrayList<SignalementProfilBean> listSignalement = new ArrayList<SignalementProfilBean>();
 	private double latitude;
 	private double longitude;
 	private double latitudeFixe;
@@ -119,6 +119,8 @@ public String getTypeUserHTML(){
 	private Date dateNaissance;
 	private String sexeStr;
 
+	private String email;
+
 	public String getSiteWeb() {
 		return siteWeb;
 	}
@@ -155,11 +157,11 @@ public String getTypeUserHTML(){
 		this.telephone = telephone;
 	}
 
-	public ArrayList<SignalementBean> getListSignalement() {
+	public ArrayList<SignalementProfilBean> getListSignalement() {
 		return listSignalement;
 	}
 
-	public void setListSignalement(ArrayList<SignalementBean> listSignalement) {
+	public void setListSignalement(ArrayList<SignalementProfilBean> listSignalement) {
 		this.listSignalement = listSignalement;
 	}
 
@@ -248,7 +250,7 @@ public String getTypeUserHTML(){
 			boolean actif, boolean admin, int typeuser,
 			boolean premiereconnexion, double latitude, double longitude,
 			String adresse, String siteWeb, String telephone,
-			double latitudeFixe, double longitudeFixe, String siret,String sexeStr) {
+			double latitudeFixe, double longitudeFixe, String siret,String sexeStr,String email) {
 		super();
 			
 		this.id = id;
@@ -280,10 +282,19 @@ public String getTypeUserHTML(){
 		this.afficheAge = afficheage;
 		this.siret = siret;
 		this.sexeStr=sexeStr;
+		this.email=email;
 		filtreRecherche = new FiltreRecherche();
 		filtreRecherche.setLatitude(latitudeFixe);
 		filtreRecherche.setLongitude(longitudeFixe);
 		
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSexeStr() {

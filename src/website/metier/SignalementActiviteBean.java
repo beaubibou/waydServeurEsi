@@ -4,25 +4,33 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-public class SignalementBean {
+public class SignalementActiviteBean {
 
-	private static final Logger LOG = Logger.getLogger(SignalementBean.class);
+	private static final Logger LOG = Logger.getLogger(SignalementActiviteBean.class);
 	   
-	public int idpersonneSignalee;
+	
 	public int idpersonneInformateur;
-	public String pseudoSignale,pseudoInformateur;
+	public String pseudoInformateur;
 	public Date d_creation;
 	public int idMotif;
 	private String motif,libelle;
+	private int idActiviteSignalee;
 	
 	
-	public SignalementBean(int idpersonneSignalee, int idpersonneInformateur,
-			String pseudoSignale, String pseudoInformateur, Date d_creation,
+	public int getIdActiviteSignalee() {
+		return idActiviteSignalee;
+	}
+
+	public void setIdActiviteSignalee(int idActiviteSignalee) {
+		this.idActiviteSignalee = idActiviteSignalee;
+	}
+
+	public SignalementActiviteBean(int idActiviteSignalee, int idpersonneInformateur,
+			 String pseudoInformateur, Date d_creation,
 			int idMotif, String motif,String libelle) {
 		super();
-		this.idpersonneSignalee = idpersonneSignalee;
+		this.idActiviteSignalee = idActiviteSignalee;
 		this.idpersonneInformateur = idpersonneInformateur;
-		this.pseudoSignale = pseudoSignale;
 		this.pseudoInformateur = pseudoInformateur;
 		this.d_creation = d_creation;
 		this.idMotif = idMotif;
@@ -44,15 +52,7 @@ public class SignalementBean {
 	}
 
 
-	public int getIdpersonneSignalee() {
-		return idpersonneSignalee;
-	}
-
-
-	public void setIdpersonneSignalee(int idpersonneSignalee) {
-		this.idpersonneSignalee = idpersonneSignalee;
-	}
-
+	
 
 	public int getIdpersonneInformateur() {
 		return idpersonneInformateur;
@@ -64,15 +64,7 @@ public class SignalementBean {
 	}
 
 
-	public String getPseudoSignale() {
-		return pseudoSignale;
-	}
-
-
-	public void setPseudoSignale(String pseudoSignale) {
-		this.pseudoSignale = pseudoSignale;
-	}
-
+	
 
 	public String getPseudoInformateur() {
 		return pseudoInformateur;

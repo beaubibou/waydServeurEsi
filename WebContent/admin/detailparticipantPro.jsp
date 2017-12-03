@@ -1,3 +1,4 @@
+<%@page import="website.metier.SignalementProfilBean"%>
 <%@page import="website.html.Etoile"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -8,7 +9,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.html.OutilsHtml"%>
 <%@page import="website.metier.ActiviteBean"%>
-<%@page import="website.metier.SignalementBean"%>
+<%@page import="website.metier.SignalementProfilBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -71,7 +72,7 @@
 
 		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 		ArrayList<ActiviteBean> listActivite = profil.getListActivite();
-		ArrayList<SignalementBean> listSignalement = profil
+		ArrayList<SignalementProfilBean> listSignalement = profil
 		.getListSignalement();
 		String idParticipant = Integer.toString(profil.getId());
 
@@ -101,10 +102,6 @@
 
 
 
-
-
-
-	</div>
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -166,6 +163,11 @@
 									Adr :
 									<%=OutilsHtml.convertStringHtml(profil.getAdresse())%>
 								</h5>
+								
+								<h5 style="padding-left: 15px">
+									Mail :
+									<%=OutilsHtml.convertStringHtml(profil.getEmail())%>
+								</h5>
 
 							</div>
 
@@ -214,7 +216,7 @@
 
 	<div class="container">
 		<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#activite">List des activités</button>
+			data-target="#activite">List des activités (<%=listActivite.size()%>)</button>
 		<div id="activite" class="collapse">
 
 			<table class="table table-striped">
@@ -250,7 +252,7 @@
 
 	<div class="container">
 		<button type="button" class="btn btn-danger" data-toggle="collapse"
-			data-target="#signalement">Signalement</button>
+			data-target="#signalement">Signalement (<%=listSignalement.size()%>)</button>
 		<div id="signalement" class="collapse">
 
 			<table class="table table-striped">
@@ -264,7 +266,7 @@
 				</thead>
 				<tbody>
 					<%
-						for (SignalementBean signalement : listSignalement) {
+						for (SignalementProfilBean signalement : listSignalement) {
 																						String lienDetailOrganisateur = "DetailParticipant?idparticipant="
 																								+ signalement.getIdpersonneInformateur();
 					%>
@@ -290,65 +292,7 @@
 
 	</div>
 
-	<script>
-		$(document).on("click", "#plusavis", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-			$.get("PlusAvis?lastIndex=" + lastIndex, function(responseJson) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-
-				//       $select.find("tr").remove();    
-				//  	alert("klk");                      // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
-
-				ajouteLigneTable(responseJson);
-			});
-		});
-
-		function ajouteLigneTable(responseJson) {
-
-			$.each(responseJson, function(index, avis) { // Iterate over the JSON array.
-
-				var table = document.getElementById('list');
-				var newRow = table.insertRow(-1);
-				var rowNumber = table.childNodes.length;
-
-				var note = newRow.insertCell(-1);
-				var ligne = getNbrEtoile(avis.note) + '<strong >'
-						+ avis.prenomnotateur + '</strong>';
-				note.innerHTML = ligne;
-
-				var commentaire = newRow.insertCell(-1);
-				var pseudotext = '<p>' + avis.libelle + '</p>';
-				commentaire.innerHTML = pseudotext;
-
-				lastIndex = avis.idnoter;
-
-			});
-		}
-
-		function getNbrEtoile(nbr) {
-
-			nbr = Math.ceil(nbr);
-
-			if (nbr == 0) {
-
-				return '<p><span  style="color: #FF0000;" class="glyphicon glyphicon-thumbs-down"></span></p> ';
-
-			}
-
-			var retour = '<p>';
-			for (var iter = 0; iter < nbr; iter++) {
-
-				retour = retour
-						+ '<span class="glyphicon glyphicon-thumbs-up"></span> ';
-
-			}
-
-			retour = retour + '</p>';
-			return retour;
-
-		}
-	</script>
-
-
-
+	
 
 </body>
 </html>

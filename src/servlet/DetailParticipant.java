@@ -19,7 +19,7 @@ import website.metier.ActiviteBean;
 import website.metier.AmiBean;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
-import website.metier.SignalementBean;
+import website.metier.SignalementProfilBean;
 import website.metier.TypeUser;
 
 /**
@@ -98,7 +98,7 @@ public class DetailParticipant extends HttpServlet {
 		ArrayList<AmiBean> listAmi = AmiDAO.getListAmi(idParticipant);
 		ArrayList<ActiviteBean> listActivite = ActiviteDAO
 				.getListActivite(idParticipant);
-		ArrayList<SignalementBean> listSignalement = SignalementDAO
+		ArrayList<SignalementProfilBean> listSignalement = SignalementDAO
 				.getListSignalement(idParticipant);
 
 		profilBean.setListAmi(listAmi);

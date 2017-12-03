@@ -1,4 +1,5 @@
-<%@page import="website.metier.SignalementBean"%>
+<%@page import="website.dao.SignalementDAO"%>
+<%@page import="website.metier.SignalementActiviteBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -40,7 +41,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet" type="text/css">
 
 <style>
 .vcenter {
@@ -70,7 +71,8 @@
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
 
-		ArrayList<SignalementBean> listSignalement = new ArrayList<SignalementBean>();
+		ArrayList<SignalementActiviteBean> listSignalement = SignalementDAO
+				.getListSignalementActivite(activite.getId());
 	%>
 
 
@@ -82,7 +84,7 @@
 				<div class="panel-heading panel-heading-custom">
 
 					<div style="text-align: center;" class="panel-title ">Détail
-						activité professionelle</div>
+						activité Waydeur</div>
 
 				</div>
 
@@ -168,7 +170,7 @@
 
 
 						<div class="form-group">
-							</br>
+							<br>
 							<h5>
 								Type d'activité:
 								<%=CacheValueDAO.geLibelleTypeActivite(activite
@@ -195,58 +197,66 @@
 	</div>
 
 	<div class="container">
-		
-			<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#amis">List des amis</button>
-		<div id="amis" class="collapse">
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-					for (SignalementBean signalement : listSignalement) {
-						
-				%>
 
-				<tr>
-					<td><%=signalement.getLibelle()%></td>
+		<button type="button" class="btn btn-info" data-toggle="collapse"
+			data-target="#signalement">
+			Signalement (<%=listSignalement.size()%>)
+		</button>
+		<div id="signalement" class="collapse">
 
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Signalé par</th>
+						<th>Date</th>
+						<th>Motif</th>
+						<th>Commentaires</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (SignalementActiviteBean signalement : listSignalement) {
+							String lienDetailOrganisateur = "DetailParticipant?idPersonne="
+									+ signalement.getIdpersonneInformateur();
+					%>
 
-				</tr>
+					<tr>
+						<td><a href=<%=lienDetailOrganisateur%>> <%=signalement.getPseudoInformateur()%>
+						</a></td>
+						<td><%=signalement.getDateCreationStr()%></td>
+						<td><%=signalement.getLibelle()%></td>
+						<td><%=signalement.getMotif()%></td>
+					</tr>
 
-				<%
-					}
-				%>
+					<%
+						}
+					%>
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
 		</div>
-		
+
 	</div>
 
 
 	<div class="container">
-		<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#signalement">List Signalement</button>
-		<div id="signalement" class="collapse">
-		
-		<table class="table table-striped">
-			<thead>
-				<tr>
 
-					<th>User</th>
+		<button type="button" class="btn btn-info" data-toggle="collapse"
+			data-target="#participants">
+			Participants (<%=listParticipant.size()%>)
+		</button>
+		<div id="participants" class="collapse">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>User</th>
 					<th>Pseudo</th>
 					<th>age</th>
-
-
-				</tr>
-			</thead>
-			<tbody>
-				<%
+					</tr>
+				</thead>
+				<tbody>
+						<%
 					for (ParticipantBean participantBean : listParticipant) {
 						String lien = "DetailParticipant?idPersonne="
 								+ participantBean.getId();
@@ -266,10 +276,14 @@
 					}
 				%>
 
-			</tbody>
-		</table>
+
+				</tbody>
+			</table>
 		</div>
+
 	</div>
+
+
 
 </body>
 </html>
