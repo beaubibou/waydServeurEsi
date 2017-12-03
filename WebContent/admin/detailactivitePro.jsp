@@ -41,7 +41,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet" type="text/css">
 
 <style>
 .vcenter {

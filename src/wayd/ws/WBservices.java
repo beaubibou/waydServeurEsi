@@ -1753,7 +1753,7 @@ public class WBservices {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "L'activite est termin�e");
+				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
@@ -2532,7 +2532,7 @@ public class WBservices {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "Activit� termin�ee");
+				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
@@ -3145,7 +3145,7 @@ public class WBservices {
 						personne.getId(), idtoken);
 
 				if (droit == null) {
-					personne.setMessage("Tu n'es pas reconnu");
+					personne.setMessage(TextWebService.PAS_RECONNU);
 					personne.setId(0);// echec connexion
 					return personne;
 				}
@@ -3154,7 +3154,7 @@ public class WBservices {
 
 				if (!autorisation.isReponse()) {
 					personne.setId(0);// echec connexion
-					personne.setMessage("Ton compte n'est plus actif");
+					personne.setMessage(TextWebService.COMPTE_INACTIF);
 					return personne;
 				}
 
@@ -3573,7 +3573,7 @@ public class WBservices {
 			}
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerProfil(idpersonne, idsignalement))
-				return new MessageServeur(false, "Tu as d�ja signal� ce profil");
+				return new MessageServeur(false, TextWebService.PROFIL_DEJA_SIGNALE);
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerProfil(idpersonne, idsignalement, idmotif,

@@ -34,7 +34,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rating-input/0.4.0/bootstrap-rating-input.js"></script>
 
-
 <script src="js/moment.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
@@ -64,7 +63,6 @@
 </head>
 <body>
 	<%@ include file="menu.jsp"%>
-
 
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
