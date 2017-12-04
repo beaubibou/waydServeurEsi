@@ -43,4 +43,9 @@ public class CommunText {
 		// TODO Auto-generated method stub
 		return "Pseudo limité à "+ TAILLE_PSEUDO_MAX+ " caractéres.";
 	}
+
+	public static String DESCRIPTION_PROFIL_LIMITE_A_CARATERE() {
+		// TODO Auto-generated method stub
+		return "La description est limitée à "+ TAILLE_DESCRIPTION_PROFIL_MAX+ " caractéres.";
+	}
 }

@@ -156,6 +156,12 @@ public class ComptePro extends HttpServlet {
 		}
 
 		
+		if (commentaire!=null){
+			if (commentaire.length()>CommunText.TAILLE_DESCRIPTION_PROFIL_MAX)
+				return new MessageServeur(false,
+						CommunText.DESCRIPTION_PROFIL_LIMITE_A_CARATERE());
+			
+		}
 	
 	
 		return new MessageServeur(true, "Ok");
