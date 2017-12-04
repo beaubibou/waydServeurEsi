@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 import threadpool.PoolThreadGCM;
+import wayd.ws.TextWebService;
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import wayde.bean.LibelleMessage;
@@ -63,7 +64,7 @@ public class Coordination {
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "Activité terminéee");
+				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
@@ -162,7 +163,7 @@ public class Coordination {
 
 			if (!activite.isActive()) {
 
-				return new MessageBean("L'activité n'est plus active");
+				return new MessageBean(TextWebService.ACTIVITE_DESACTIVEE);
 			}
 			
 			
@@ -197,7 +198,7 @@ public class Coordination {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new MessageBean("erreur inconnue");
+			return new MessageBean(TextWebService.ERREUR_INCONNUE);
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);
