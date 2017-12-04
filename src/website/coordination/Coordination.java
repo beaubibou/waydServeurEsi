@@ -14,9 +14,7 @@ import org.apache.log4j.Logger;
 
 import threadpool.PoolThreadGCM;
 import wayd.ws.TextWebService;
-import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
-import wayde.bean.LibelleMessage;
 import wayde.bean.Message;
 import wayde.bean.MessageServeur;
 import wayde.bean.Participation;
@@ -26,9 +24,7 @@ import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import website.dao.ActiviteDAO;
 import website.dao.MessageBean;
-import website.dao.ParticipantDAO;
 import website.metier.ActiviteBean;
-import website.metier.ParticipantBean;
 
 public class Coordination {
 	private static final Logger LOG = Logger.getLogger(Coordination.class);
@@ -42,7 +38,7 @@ public class Coordination {
 
 			if (iddemandeur == idorganisateur)
 				return new MessageServeur(false,
-						LibelleMessage.infoParticpationActivite);
+						TextWebService.infoParticpationActivite);
 
 			connexion = CxoPool.getConnection();
 
@@ -61,18 +57,18 @@ public class Coordination {
 			
 			
 			if (activite == null)
-				return new MessageServeur(false, LibelleMessage.activiteFinie);
+				return new MessageServeur(false, TextWebService.ACTIVITE_INEXISTANTE);
 
 			if (activite.isTerminee())
 				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
-						LibelleMessage.activiteComplete);
+						TextWebService.activiteComplete);
 
 			if (activite.isInscrit( iddemandeur)) {
 				return new MessageServeur(false,
-						LibelleMessage.activiteDejaInscrit);
+						TextWebService.activiteDejaInscrit);
 			}
 
 			connexion.setAutoCommit(false);
@@ -104,7 +100,7 @@ public class Coordination {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.activiteInscription);
+			return new MessageServeur(true, TextWebService.activiteInscription);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

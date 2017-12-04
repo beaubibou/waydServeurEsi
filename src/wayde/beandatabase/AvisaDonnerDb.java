@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.MessageConnexion;
 
 public class AvisaDonnerDb {
 

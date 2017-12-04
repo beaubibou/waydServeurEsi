@@ -17,28 +17,22 @@ import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
-import wayd.ws.WBservices;
+import wayd.ws.TextWebService;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
-import wayde.bean.LibelleMessage;
 import wayde.bean.MessageServeur;
-import wayde.bean.Notification;
 import wayde.bean.Personne;
-import wayde.dao.DiscussionDAO;
-import wayde.dao.NotificationDAO;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
-import website.metier.Outils;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
-import website.metier.TypeEtatProfil;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.FitreAdminActivites;
@@ -1367,7 +1361,7 @@ public class ActiviteDAO {
 			String loginfo = "effaceActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.suppressionActivite);
+			return new MessageServeur(true, TextWebService.suppressionActivite);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1847,7 +1841,7 @@ public class ActiviteDAO {
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerActvite(idpersonne, idactivite))
 				return new MessageServeur(false,
-						LibelleMessage.activiteDejaSignale);
+						TextWebService.activiteDejaSignale);
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerActivite(idpersonne, idactivite, idmotif,
@@ -1858,7 +1852,7 @@ public class ActiviteDAO {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.activiteSignale);
+			return new MessageServeur(true, TextWebService.activiteSignale);
 
 		} catch (SQLException | NamingException e) {
 

@@ -1,3 +1,4 @@
+
 package servlet.pro;
 
 import gcmnotification.AcquitAllNotificationGcm;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.sun.mail.handlers.text_html;
+
+import texthtml.pro.CommunText;
 import texthtml.pro.Erreur_HTML;
 import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
@@ -81,7 +85,6 @@ public class ComptePro extends HttpServlet {
 
 		MessageServeur messageServeur = testParametreRequete(nom, adresse,
 				commentaire, latitude, longitude, telephone, siteWeb, siret);
-
 		if (!messageServeur.isReponse()) {
 
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
@@ -131,13 +134,30 @@ public class ComptePro extends HttpServlet {
 			String telephone, String siteWeb, String siret) {
 		// TODO Auto-generated method stub
 
+		nom=nom.trim();
+		LOG.info(nom.length());
+	
+		if (nom==null || nom.isEmpty()){
+			return new MessageServeur(false,
+					Erreur_HTML.NOM_VIDE_INTERDIT);
+			
+		}
+		
+		if (nom.length()>CommunText.TAILLE_PSEUDO_MAX)
+			return new MessageServeur(false,
+					CommunText.PSEUDO_LIMITE_A_CARATERE());
+		
+	
 		if (!testFormatTelephone(telephone)) {
 
 			return new MessageServeur(false,
-					"Numero de téléphonne non conforme");
+					Erreur_HTML.NUMERO_TEL_NON_CONFORME);
 
 		}
 
+		
+	
+	
 		return new MessageServeur(true, "Ok");
 	}
 

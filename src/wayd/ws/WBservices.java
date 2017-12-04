@@ -44,11 +44,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-
 import javax.naming.NamingException;
-
 import org.apache.log4j.Logger;
-
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -57,7 +54,6 @@ import wayde.bean.CxoPool;
 import wayde.bean.Discussion;
 import wayde.bean.Droit;
 import wayde.bean.IndicateurWayd;
-import wayde.bean.LibelleMessage;
 import wayde.bean.Message;
 import wayde.bean.MessageServeur;
 import wayde.bean.Notification;
@@ -344,7 +340,7 @@ public class WBservices {
 		String loginfo = "updatePreference - "
 				+ (System.currentTimeMillis() - debut) + "ms";
 		LOG.info(loginfo);
-		return new MessageServeur(true, LibelleMessage.preferenceSauvegardee);
+		return new MessageServeur(true, TextWebService.PREFERENCE_SAUVEGARDEES);
 
 	}
 
@@ -1309,7 +1305,7 @@ public class WBservices {
 
 			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
 				return new MessageServeur(false,
-						LibelleMessage.activiteOrganisee);
+						TextWebService.QUOTA_ACTIVITE_DEPASSE);
 			}
 
 			Activite activite = new Activite(titre, libelle, idorganisateur,
@@ -1380,7 +1376,7 @@ public class WBservices {
 
 			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
 				return new MessageServeur(false,
-						LibelleMessage.activiteOrganisee);
+						TextWebService.QUOTA_ACTIVITE_DEPASSE);
 			}
 
 			Activite activite = new Activite(titre, libelle, idorganisateur,
@@ -1440,7 +1436,7 @@ public class WBservices {
 			String loginfo = "addSuggestion - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.ajouteSuggestion);
+			return new MessageServeur(true, TextWebService.AJOUTE_SUGGESTION);
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1470,7 +1466,7 @@ public class WBservices {
 			String loginfo = "addPrbConnexion - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.ajouteSuggestion);
+			return new MessageServeur(true, TextWebService.AJOUTE_SUGGESTION);
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1533,8 +1529,9 @@ public class WBservices {
 			MessageDAO messagedao = new MessageDAO(connexion);
 			int idmessage = messagedao.addMessage(message, iddestinataire);
 			connexion.commit();
-			// new AddMessageGcm(iddestinataire).start();
+			
 			PoolThreadGCM.poolThread.execute(new AddMessageGcm(iddestinataire));
+			
 			String loginfo = "addMessage - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
@@ -1658,7 +1655,7 @@ public class WBservices {
 			Activite activite = activiteDAO.getActivite(idactivite);
 
 			if (activite == null)
-				return new MessageServeur(false, LibelleMessage.activiteFinie);
+				return new MessageServeur(false, TextWebService.activiteFinie);
 			if (activite.isTerminee())
 				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
@@ -1711,7 +1708,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.suppressionParicipation);
+					TextWebService.suppressionParicipation);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1750,7 +1747,7 @@ public class WBservices {
 			Activite activite = activitedao.getActivite(idactivite);
 
 			if (activite == null)
-				return new MessageServeur(false, LibelleMessage.activiteFinie);
+				return new MessageServeur(false, TextWebService.activiteFinie);
 
 			if (activite.isTerminee())
 				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
@@ -1784,7 +1781,7 @@ public class WBservices {
 			String loginfo = "effaceActivite - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.suppressionActivite);
+			return new MessageServeur(true, TextWebService.suppressionActivite);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1880,7 +1877,7 @@ public class WBservices {
 			String loginfo = "effaceMessageRecu - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.suppressionMessage);
+			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1929,7 +1926,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.suppressionMessage);
+			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1997,7 +1994,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.suppressionNotifiaction);
+					TextWebService.suppressionNotifiaction);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2045,7 +2042,7 @@ public class WBservices {
 			String loginfo = "effaceAmi - "
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
-			return new MessageServeur(true, LibelleMessage.suppressionAmi);
+			return new MessageServeur(true, TextWebService.suppressionAmi);
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -2093,7 +2090,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.suppressionMessage);
+			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2138,7 +2135,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.suppressionMessage);
+			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2183,7 +2180,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.suppressionDiscussion);
+					TextWebService.suppressionDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2232,7 +2229,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2280,7 +2277,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2328,7 +2325,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2378,7 +2375,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2427,7 +2424,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2473,7 +2470,7 @@ public class WBservices {
 			LOG.info(loginfo);
 
 			return new MessageServeur(true,
-					LibelleMessage.acquittementMessageDiscussion);
+					TextWebService.acquittementMessageDiscussion);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2502,7 +2499,7 @@ public class WBservices {
 
 			if (iddemandeur == idorganisateur)
 				return new MessageServeur(false,
-						LibelleMessage.infoParticpationActivite);
+						TextWebService.infoParticpationActivite);
 
 			connexion = CxoPool.getConnection();
 
@@ -2529,18 +2526,18 @@ public class WBservices {
 			}
 
 			if (activite == null)
-				return new MessageServeur(false, LibelleMessage.activiteFinie);
+				return new MessageServeur(false, TextWebService.activiteFinie);
 
 			if (activite.isTerminee())
 				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
-						LibelleMessage.activiteComplete);
+						TextWebService.activiteComplete);
 
 			if (activitedao.isInscrit(activite, iddemandeur)) {
 				return new MessageServeur(false,
-						LibelleMessage.activiteDejaInscrit);
+						TextWebService.activiteDejaInscrit);
 			}
 
 			connexion.setAutoCommit(false);
@@ -2573,7 +2570,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.activiteInscription);
+			return new MessageServeur(true, TextWebService.activiteInscription);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2645,7 +2642,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.notationValidee);
+			return new MessageServeur(true, TextWebService.notationValidee);
 
 		} catch (SQLException | NamingException e) {
 
@@ -2693,7 +2690,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.profilMisAjour);
+			return new MessageServeur(true, TextWebService.profilMisAjour);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2740,7 +2737,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.profilMisAjour);
+			return new MessageServeur(true, TextWebService.profilMisAjour);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2779,7 +2776,7 @@ public class WBservices {
 			}
 
 			if (personnedao.isPseudoExist(pseudo))
-				return new MessageServeur(false, LibelleMessage.pseudoExist);
+				return new MessageServeur(false, TextWebService.pseudoExist);
 
 			connexion.setAutoCommit(false);
 			personnedao.updatePseudo(lowerpseudo, datenaissance, sexe, jeton,
@@ -2790,7 +2787,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.profilMisAjour);
+			return new MessageServeur(true, TextWebService.profilMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2842,7 +2839,7 @@ public class WBservices {
 			// new UpdateNotificationGcm(idpersonne).start();
 			PoolThreadGCM.poolThread.execute(new UpdateNotificationGcm(
 					idpersonne));
-			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
+			return new MessageServeur(true, TextWebService.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2881,7 +2878,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
+			return new MessageServeur(true, TextWebService.preferenceMisAjour);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2926,7 +2923,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.preferenceMisAjour);
+			return new MessageServeur(true, TextWebService.preferenceMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			try {
@@ -2973,7 +2970,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.activiteModifiee);
+			return new MessageServeur(true, TextWebService.activiteModifiee);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3013,7 +3010,7 @@ public class WBservices {
 			connexion.commit();
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.profilMisAjour);
+			return new MessageServeur(true, TextWebService.profilMisAjour);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3519,7 +3516,7 @@ public class WBservices {
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerActvite(idpersonne, idactivite))
 				return new MessageServeur(false,
-						LibelleMessage.activiteDejaSignale);
+						TextWebService.activiteDejaSignale);
 
 			connexion.setAutoCommit(false);
 			signalementdao.signalerActivite(idpersonne, idactivite, idmotif,
@@ -3530,7 +3527,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.activiteSignale);
+			return new MessageServeur(true, TextWebService.activiteSignale);
 
 		} catch (SQLException | NamingException e) {
 
@@ -3564,7 +3561,7 @@ public class WBservices {
 					.getDroit(idpersonne, jeton);
 
 			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
+				return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 
 			MessageServeur autorisation = droit.isDefautAccess();
 
@@ -3584,7 +3581,7 @@ public class WBservices {
 					+ (System.currentTimeMillis() - debut) + "ms";
 			LOG.info(loginfo);
 
-			return new MessageServeur(true, LibelleMessage.profilSignale);
+			return new MessageServeur(true, TextWebService.profilSignale);
 
 		} catch (SQLException | NamingException e) {
 

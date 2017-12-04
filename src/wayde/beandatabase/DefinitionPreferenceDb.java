@@ -2,8 +2,6 @@ package wayde.beandatabase;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.MessageConnexion;
-
 public class DefinitionPreferenceDb {
 	
 	private static final Logger LOG = Logger.getLogger(DefinitionPreferenceDb.class);

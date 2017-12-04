@@ -17,7 +17,7 @@ import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
-import wayde.bean.MessageConnexion;
+
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;

@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.MessageConnexion;
-
 public class CategorieDb
 {
 	private static final Logger LOG = Logger.getLogger(CategorieDb.class);

@@ -880,10 +880,19 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 
 		if (pseudo != null)
 			pseudo = pseudo.trim();
+	
 		if (adresse != null)
 			adresse = adresse.trim();
-		if (commentaire != null)
-			commentaire = commentaire.trim();
+	
+		if (siteWeb != null)
+			siteWeb = siteWeb.trim();
+
+		if (siret != null)
+			siret = siret.trim();
+
+	
+		
+		LOG.info("coomentaire avanté"+commentaire);
 		if (siteWeb != null)
 			siteWeb = siteWeb.trim();
 

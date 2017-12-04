@@ -2,12 +2,12 @@ package texthtml.pro;
 
 public class CreationCompteProText {
 
-	public static int TAILLE_PSEUDO_MAX = 40;
-	public static int TAILLE_SITE_WEB_MAX = 100;
-	public static int TAILLE_TELEPHONNE_MAX = 14;
-	public static int TAILLE_SIRET_MAX = 40;
-	public static int TAILLE_ADRESSE_MAX = 150;
-	public static int TAILLE_DESCRIPTION_PROFIL_MAX = 250;
+	public static int TAILLE_PSEUDO_MAX = CommunText.TAILLE_PSEUDO_MAX;
+	public static int TAILLE_SITE_WEB_MAX = CommunText.TAILLE_SITE_WEB_MAX;
+	public static int TAILLE_TELEPHONNE_MAX = CommunText.TAILLE_TELEPHONNE_MAX;
+	public static int TAILLE_SIRET_MAX = CommunText.TAILLE_SIRET_MAX;
+	public static int TAILLE_ADRESSE_MAX = CommunText.TAILLE_ADRESSE_MAX;
+	public static int TAILLE_DESCRIPTION_PROFIL_MAX = CommunText.TAILLE_DESCRIPTION_PROFIL_MAX;
 
 	public static String HINT_ADRESSE = CommunText.HINT_ADRESSE;
 	public static String HINT_EMAIL = "Adresse email";

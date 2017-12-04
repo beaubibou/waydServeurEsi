@@ -21,7 +21,10 @@ public class Erreur_HTML {
 	public static final String ACTIVITE_TERMINEE = "Activité terminée";
 	public static final String TERMINEE = "Terminée";
 	public static final String AUCUN_AVIS_LAISSE = "Aucun avis laissé";
+	public static final String NUMERO_TEL_NON_CONFORME = "Numero de téléphone non conforme";
+	public static final String NOM_VIDE_INTERDIT = "Nom vide interdit";
 	
 	public static String ERR_COMPTE_DESACTIVTE = "Votre compte est désactivé";
+	
 	
 }

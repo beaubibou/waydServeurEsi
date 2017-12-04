@@ -14,14 +14,14 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import wayd.ws.TextWebService;
 import wayde.bean.Activite;
 import wayde.bean.Droit;
-import wayde.bean.LibelleMessage;
 import wayde.bean.MessageServeur;
 import wayde.bean.Parametres;
 import wayde.bean.Personne;
-import wayde.bean.Profil;
 import wayde.bean.PhotoWaydeur;
+import wayde.bean.Profil;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProfilPro;
 import wayde.bean.ProprietePref;
@@ -42,11 +42,11 @@ public class PersonneDAO {
 		try {
 			droit = getDroit(idpersonne, jeton);
 			if (droit == null)
-				return new MessageServeur(false, LibelleMessage.pasReconnu);
+				return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new MessageServeur(false, LibelleMessage.pasReconnu);
+			return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 		}
 
 		return droit.isDefautAccess();
