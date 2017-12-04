@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import wayde.bean.Activite;
@@ -1076,25 +1077,6 @@ public class ActiviteDAO {
 
 			connexion = CxoPool.getConnection();
 
-			// String requete =
-			// " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-			// +
-			// " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-			// + "personne.note,personne.nbravis as totalavis,personne.photo,"
-			// + "activite.nbrwaydeur as nbrparticipant,1 as role,"
-			// +
-			// "activite.idactivite,type_activite.nom as libelleActivite,activite.libelle,activite.titre,"
-			// +
-			// "activite.typeuser,activite.typeacces,activite.d_finactivite,activite.datefin,"
-			// + "activite.idtypeactivite,activite.nbmaxwayd,"
-			// +
-			// " (SELECT COUNT(*) FROM signaler_activite where signaler_activite.idactivite=activite.idactivite ) as nbrsignalement "
-			// + " FROM personne,activite,type_activite"
-			// +
-			// "  WHERE personne.idpersonne = activite.idpersonne and  type_activite.idtypeactivite=activite.idtypeactivite "
-			// + " and activite.latitude between ? and ?"
-			// + " and activite.longitude between ? and ? ";
-
 			String requete = "SELECT 	personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,"
 					+ " personne.note,personne.nbravis as totalavis,personne.photo,activite.idactivite,    activite.titre,    activite.libelle,    activite.adresse,"
 					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
@@ -1240,6 +1222,7 @@ public class ActiviteDAO {
 						typeUser, typeAcces, libelleActivite, adresse,
 						nbrSignalement);
 			
+				activite.setPositionRecherche(filtre.getLatitude(), filtre.getLongitude());
 				activite.setNbrVu(nbrVu);
 			
 				retour.add(activite);
@@ -1358,10 +1341,10 @@ public class ActiviteDAO {
 			Activite activite = activitedao.getActivite(idactivite);
 
 			if (activite == null)
-				return new MessageServeur(false, LibelleMessage.activiteFinie);
+				return new MessageServeur(false,  Erreur_HTML.ACTIVITE_EXISTE_PLUS);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, "L'activite est termin�e");
+				return new MessageServeur(false, Erreur_HTML.ACTIVITE_SUPPRIMEE);
 
 			// Recuepre les personnes interesse par cette activit�e
 			connexion.setAutoCommit(false);

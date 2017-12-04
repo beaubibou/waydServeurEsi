@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import website.dao.SuggestionDAO;
 import website.enumeration.AlertJsp;
@@ -77,7 +78,7 @@ public class ContactMessage extends HttpServlet {
 				break;
 
 			case ProfilBean.WAYDEUR:
-				new AlertInfoJsp("Message envoy�", AlertJsp.Sucess,
+				new AlertInfoJsp(Erreur_HTML.MESSAGE_ENVOYE, AlertJsp.Sucess,
 						"MesActivitesWaydeur").send(request, response);
 				
 				break;

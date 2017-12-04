@@ -8,6 +8,7 @@
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.metier.TypeSignalement"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -29,14 +30,19 @@
 
 	<%@ include file="menu.jsp"%>
 	<%
-		FitreAdminProfils filtre=(FitreAdminProfils)session.getAttribute("filtreProfil");
-			
-			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUserAdmin();
-			ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
-			ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
-			PagerProfilBean pager=(PagerProfilBean) request
-		.getAttribute("pager");
-		ArrayList<ProfilBean> listProfil = pager.getListProfils();
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
+	
+	FitreAdminProfils filtre=(FitreAdminProfils)session.getAttribute("filtreProfil");
+		
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUserAdmin();
+		ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
+		ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
+		PagerProfilBean pager=(PagerProfilBean) request
+			.getAttribute("pager");
+			ArrayList<ProfilBean> listProfil = pager.getListProfils();
 	%>
 
 	<div class="container" style="width: 90%;">
@@ -51,14 +57,14 @@
 							class="form-control" id="pseudo" name="pseudo"
 							value="<%=filtre.getPseudo()%>">
 					</div>
-					
-					
-						<div class="form-group">
+
+
+					<div class="form-group">
 						<label for="email">Email</label> <input type="text"
 							class="form-control" id="email" name="email"
 							value="<%=filtre.getEmail()%>">
-						</div>
-			
+					</div>
+
 					<div class="form-group">
 						<label for="typeUser">Type</label> <select
 							data-style="btn-primary" class="form-control" id="typeUser"
@@ -114,9 +120,9 @@
 					</div>
 					<button id="go" type="submit" class="btn btn-info"
 						name="rechercheactivite">Rechercher</button>
-		
-			</form>
-</div>
+
+				</form>
+			</div>
 
 		</div>
 	</div>
@@ -124,10 +130,9 @@
 		<table class="table table-striped">
 			<thead align="center">
 				<tr>
-					<th style="width: 10%;" class="text-center">User</th>
-					<th style="width: 5%;" class="text-center">Etat</th>
-					<th style="width: 5%;" class="text-center">photo</th>
-					<th class="text-center">Pseudo</th>
+					<th style="width: 15%;" class="text-center">photo</th>
+					<th style="width: 5%;" class="text-center">User</th>
+					<th class="text-center">Mail</th>
 					<th style="width: 15%;" class="text-center">Date création</th>
 					<th style="width: 5%;" class="text-center">Action</th>
 					<th style="width: 20%;" class="text-center">Signalement</th>
@@ -138,23 +143,32 @@
 				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 				<%
 					for (ProfilBean profil : listProfil) {
-																										String lien = "DetailParticipant?idPersonne="
-																												+ profil.getId();
-																										String lienMessage =
-																												"/wayd/EnvoiMessageAdmin?idPersonne=" +profil.getId()
-																												+"&formInit=listProfil";
-																												
-																										String lienActivation =profil.getLienActive();
+						String lien = "DetailParticipant?idPersonne="
+						+ profil.getId();
+						String lienMessage =
+						"/wayd/EnvoiMessageAdmin?idPersonne=" +profil.getId()
+						+"&formInit=listProfil";
+						
+						String lienActivation =profil.getLienActive();
 				%>
 
 				<tr>
-					<td><%=profil.getTypeUserHTML()%></td>
-					<td><a href='<%=lienActivation%>' title="Active/Désactive">
-							<%=profil.getActifHtml()%></a></td>
+					<td>
 
-					<td><img height="30" width="30" src=<%=profil.getUrlPhoto()%>
-						class="img-circle" /></td>
+						<div class="clearfix">
+							<img height="80" width="80" src=<%=profil.getUrlPhoto()%>
+								class="img-thumbnail pull-left ">
+							<p><%=profil.getTypeUserHTML()%></p>
+
+							
+							<a href='<%=lienActivation%>' title="Active/Désactive"> <%=profil.getActifHtml()%></a>
+						</div>
+					</td>
+
+
 					<td><a href=<%=lien%>><%=profil.getPseudo()%></a></td>
+					<td><a href=<%=lien%>><%=profil.getEmail()%></a></td>
+
 
 					<td><%=profil.getDatecreationStr()%></td>
 					<td>

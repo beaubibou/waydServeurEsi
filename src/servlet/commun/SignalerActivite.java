@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.mail.handlers.message_rfc822;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
@@ -56,7 +57,7 @@ public class SignalerActivite extends HttpServlet {
 		request.setAttribute("activite", activite);
 
 		if (request.getParameter("idmotif") == null) {
-			// Si pas de motif issu d'un detail activité redirection vers le
+			// Si pas de motif issu d'un detail activitï¿½ redirection vers le
 			// choix du motif
 			request.getRequestDispatcher("/commun/SignalerActivite.jsp")
 					.forward(request, response);
@@ -64,7 +65,7 @@ public class SignalerActivite extends HttpServlet {
 		}
 
 		if (request.getParameter("idmotif") != null) {
-			// Mise à jour du signalement
+			// Mise ï¿½ jour du signalement
 			int idMotif = Integer.parseInt(request.getParameter("idmotif"));
 
 			MessageServeur message = new ActiviteDAO().signalerActivite(
@@ -77,12 +78,12 @@ public class SignalerActivite extends HttpServlet {
 
 				case ProfilBean.WAYDEUR:
 
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+					new AlertInfoJsp(Erreur_HTML.PROFIL_SIGNALE, AlertJsp.Sucess,
 							"MesActivitesWaydeur").send(request, response);
 					return;
 					
 				case ProfilBean.PRO:
-					new AlertInfoJsp("Profil signalé", AlertJsp.Sucess,
+					new AlertInfoJsp(Erreur_HTML.PROFIL_SIGNALE, AlertJsp.Sucess,
 							"MesActivites").send(request, response);
 					return;
 

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
+
 
 public class Profil {
 	private static final Logger LOG = Logger.getLogger(Profil.class);
@@ -66,7 +68,7 @@ public class Profil {
 	}
 	public  String getAgeStr(Date datenaissance,boolean afficheage)
 	{
-		if (afficheage)return "Masqu�";
+		if (afficheage)return Erreur_HTML.MASQUE;
 		if (datenaissance!=null){
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -77,12 +79,12 @@ public class Profil {
 			{
 				yeardiff = yeardiff - 1;
 			}
-			if (yeardiff<0)return "Erreur";
-			if (yeardiff==0)return "Pas d'age indiqu�";
+			if (yeardiff<0)return Erreur_HTML.PAS_AGE_INDIQUE;
+			if (yeardiff==0)return Erreur_HTML.PAS_AGE_INDIQUE;
 			return Integer.toString(yeardiff) +" ans";
 		}
 
-		return "Pas d'age indiqu�";
+		return Erreur_HTML.PAS_AGE_INDIQUE;
 	}
 
 

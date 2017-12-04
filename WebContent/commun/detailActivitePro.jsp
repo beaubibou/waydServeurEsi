@@ -1,7 +1,7 @@
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,8 +10,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail activité pro</title>
-<meta charset="utf-8">
+<title>>DÃ©tail activitÃ© pro</title>
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -84,9 +84,7 @@
 		}
 	%>
 	<div class="container" style="margin-top: 30px">
-		<div class="page-header">
-			<h1>Détail de l'activité</h1>
-		</div>
+		
 
 	</div>
 	<div class="container">
@@ -95,8 +93,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div style="text-align: center;" class="panel-title ">Détail
-						activité professionelle</div>
+					<div style="text-align: center;" class="panel-title ">DÃ©tail
+						activitÃ© professionelle</div>
 
 				</div>
 
@@ -152,7 +150,7 @@
 							<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
 							<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
 							<h5 style="padding-left: 15px">
-								à
+								Ã 
 								<%=activite.calculDistance()%></h5>
 
 
@@ -164,7 +162,7 @@
 					<div class="form-group">
 						</br>
 						<h5>
-							Type d'activité:
+							Type d'activitÃ©:
 							<%=CacheValueDAO.geLibelleTypeActivite(activite
 					.getTypeactivite())%></h5>
 

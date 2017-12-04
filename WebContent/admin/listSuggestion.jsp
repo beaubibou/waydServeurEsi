@@ -6,6 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.Outils"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -33,7 +34,12 @@
 
 	<%@ include file="menu.jsp"%>
 	<%
-		ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
+	
+	ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
 		FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
 	%>
 		<div class="container" style="width: 90%;">

@@ -52,10 +52,10 @@ public class Participant {
 			if (yeardiff < 0)
 				return "Erreur";
 			if (yeardiff == 0)
-				return "Pas d'age indiqu�";
+				return Erreur_HTML.PAS_AGE_INDIQUE;
 			return Integer.toString(yeardiff) + " ans";
 		}
-		return "Pas d'age indiqu�";
+		return Erreur_HTML.PAS_AGE_INDIQUE;
 	}
 
 	public int getId() {

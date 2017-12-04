@@ -53,22 +53,22 @@ public class Notification {
 			break;
 			
 		case NouvelAmi:
-			this.message="Vous �tes � pr�sent l'ami de "+nompersconcernee;
+			this.message="Vous êtes à présent l'ami de "+nompersconcernee;
 			break;
 			
 		case SUPPRIME_AMI:
-			this.message= nompersconcernee+ " ne souhaite plus �tre votre ami";
+			this.message= nompersconcernee+ " ne souhaite plus être votre ami";
 			break;
 		
 		case Supprime_Participation:
-			this.message= nompersconcernee+ " ne participe plus � l'activit�";
+			this.message= nompersconcernee+ " ne participe plus à l'activité";
 			break;	
 		case Supprime_Activite:
-			this.message= nompersconcernee+ " � annul� son activit�";
+			this.message= nompersconcernee+ " a annulé son activité";
 			break;	
 			
 		case MESSAGE_TEXT:
-			this.message= "L'organisateur � annul� votre participation";
+			this.message= "L'organisateur a annulé votre participation";
 			break;	
 				
 		}

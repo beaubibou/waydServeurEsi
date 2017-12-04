@@ -188,7 +188,7 @@ public class SignalementDAO {
 			preparedStatement.execute();
 			connexion.commit();
 
-			return new MessageServeur(true, "Activit� signal�e");
+			return new MessageServeur(true, Erreur_HTML.ACTIVITE_SIGNALEE);
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block

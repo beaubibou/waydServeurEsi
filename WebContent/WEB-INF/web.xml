@@ -713,4 +713,14 @@
     <servlet-name>EffaceParticipant</servlet-name>
     <url-pattern>/EffaceParticipant</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapAdmin</display-name>
+    <servlet-name>MapAdmin</servlet-name>
+    <servlet-class>servlet.MapAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapAdmin</servlet-name>
+    <url-pattern>/MapAdmin</url-pattern>
+  </servlet-mapping>
 </web-app>

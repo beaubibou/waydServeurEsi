@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
 
+import texthtml.pro.Erreur_HTML;
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
@@ -101,17 +102,10 @@ public class UpdateActivitePro extends HttpServlet {
 				 latitude,  longitude,  typeactivite,
 				 idactivite))
 			{
-		//	AlertInfoJsp alerte=new AlertInfoJsp("Activite mise � jour", AlertJsp.Sucess,"MesActivites");
-		//	request.setAttribute("alerte", alerte);
 		
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Activit� modifi�e",null));
+			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information",Erreur_HTML.ACTIVITE_MODIFIEE,null));
 			request.getRequestDispatcher("MesActivites").forward(request, response);
-			
-			//new AlertInfoJsp("Activite ajout�e", AlertJsp.Sucess, "AcceuilPro")
-			//		.send(request, response);
-		//	LOG.debug("**********************redirectio");
-		//	request.getRequestDispatcher("commun/alert.jsp").forward(
-		//			request, response);
+
 			return;
 			};
 		}

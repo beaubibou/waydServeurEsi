@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import servlet.DetailActivite;
+import texthtml.pro.Erreur_HTML;
 import website.dao.CacheValueDAO;
 import website.enumeration.TypePhoto;
 import fcm.ServeurMethodes;
@@ -155,9 +156,9 @@ public class ActiviteBean {
 
 	public String isActiveStr() {
 		if (isActive())
-			return ("En cours");
+			return (Erreur_HTML.EN_COURS);
 		else
-			return ("Termin�e");
+			return (Erreur_HTML.ACTIVITE_TERMINEE);
 
 	}
 
@@ -406,7 +407,7 @@ public class ActiviteBean {
 
 	public String getAgeStr(Date datenaissance, boolean afficheage) {
 		if (afficheage)
-			return "Masqu�";
+			return Erreur_HTML.MASQUE;
 		if (datenaissance != null) {
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -417,21 +418,21 @@ public class ActiviteBean {
 				yeardiff = yeardiff - 1;
 			}
 			if (yeardiff < 0)
-				return "Erreur";
+				return Erreur_HTML.ERREUR_INCONNUE;
 			if (yeardiff == 0)
-				return "Pas d'age indiqu�";
+				return Erreur_HTML.PAS_AGE_INDIQUE;
 			return Integer.toString(yeardiff) + " ans";
 		}
 
-		return "Pas d'age indiqu�";
+		return Erreur_HTML.PAS_AGE_INDIQUE;
 	}
 
 	public String getTempsRestant(Date datefinactivite) {
 
 		if (datefinactivite == null)
-			return "Termin�e";
+			return Erreur_HTML.TERMINEE;
 		if (new Date().after(datefinactivite))
-			return "Activit� pass�e";
+			return Erreur_HTML.ACTIVITE_TERMINEE;
 		else {
 
 			long diff = datefinactivite.getTime() - new Date().getTime();
@@ -440,7 +441,7 @@ public class ActiviteBean {
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			// long diffDays = diff / (24 * 60 * 60 * 1000);
 			if (diff < 0)
-				return "Termin�e";
+				return Erreur_HTML.TERMINEE;
 
 			return diffHours + ":" + String.format("%02d", diffMinutes);
 
@@ -451,9 +452,9 @@ public class ActiviteBean {
 	public String getTempsRestant() {
 
 		if (datefin == null)
-			return "Termin�e";
+			return Erreur_HTML.TERMINEE;
 		if (new Date().after(datefin))
-			return "Activit� pass�e";
+			return Erreur_HTML.ACTIVITE_TERMINEE;
 		else {
 
 			long diff = datefin.getTime() - new Date().getTime();
@@ -462,7 +463,7 @@ public class ActiviteBean {
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			// long diffDays = diff / (24 * 60 * 60 * 1000);
 			if (diff < 0)
-				return "Termin�e";
+				return Erreur_HTML.TERMINEE;
 
 			return "Se termine dans " + diffHours + ":"
 					+ String.format("%02d", diffMinutes);
@@ -476,7 +477,7 @@ public class ActiviteBean {
 		if (isActive())
 			return "En cours";
 
-		return "Termin�e";
+		return Erreur_HTML.TERMINEE;
 	}
 
 	public int getTypeactivite() {
@@ -594,7 +595,7 @@ public class ActiviteBean {
 
 	public String getHoraire() {
 
-		return "De " + datedebutStr + " � " + datefinStr;
+		return "De " + datedebutStr + " à " + datefinStr;
 	}
 
 	public String getHoraireLeA() {
@@ -605,7 +606,7 @@ public class ActiviteBean {
 		String heuredebutstr = formatHeure.format(datedebut);
 		String heurefinstr = formatHeure.format(datefin);
 
-		return "Le " + datestrdebut + " </br> de " + heuredebutstr + " � "
+		return "Le " + datestrdebut + " </br> de " + heuredebutstr + " à "
 				+ heurefinstr;
 	}
 
@@ -623,7 +624,7 @@ public class ActiviteBean {
 		// return "mlooi";
 
 		if (distance < 1000)
-			return "" + Math.round(distance) + " m�tres";
+			return "" + Math.round(distance) + " métres";
 
 		else {
 
@@ -644,7 +645,7 @@ public class ActiviteBean {
 		String heuredebutstr = formatHeure.format(datedebut);
 		String heurefinstr = formatHeure.format(datefin);
 
-		return "Le " + datestrdebut + " de " + heuredebutstr + " � "
+		return "Le " + datestrdebut + " de " + heuredebutstr + " à "
 				+ heurefinstr;
 	}
 

@@ -121,8 +121,9 @@ public class AjouteActivitePro extends HttpServlet {
 				longitude, typeactivite, ProfilBean.PRO, 2);
 	
 		if (idActivite != 0) {
+	
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
-				
+			
 			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Activité ajoutée",null,AlertJsp.Sucess));
 			response.sendRedirect("MesActivites");
 			

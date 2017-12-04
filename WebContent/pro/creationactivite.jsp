@@ -1,6 +1,6 @@
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 <%@page import="texthtml.pro.CreationActiviteText"%>
-<%@page import="website.html.ParametreHtmlPro"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>

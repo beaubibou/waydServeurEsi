@@ -1,6 +1,7 @@
 package servlet.pro;
 
 import gcmnotification.AcquitAllNotificationGcm;
+import gcmnotification.EffaceActiviteGcm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
+import threadpool.PoolThreadGCM;
 import wayde.bean.MessageServeur;
 import wayde.bean.Personne;
 import website.coordination.Coordination;
@@ -60,13 +63,16 @@ public class SupprimeActivite extends HttpServlet {
 
 		if (activite.getIdorganisateur() == authentification.getId()) {
 
+			EffaceActiviteGcm effaceActiviteGcm=new EffaceActiviteGcm(idActivite);
+			
 			MessageServeur retour = new ActiviteDAO().effaceActivite(
 					activite.getIdorganisateur(), activite.getId());
 
 			if (retour.isReponse()) {
 
+				PoolThreadGCM.poolThread.execute(effaceActiviteGcm);
 				authentification.setAlertMessageDialog(new MessageAlertDialog(
-						"Message Information", "Activité supprimée", null,AlertJsp.Sucess));
+						"Message Information",Erreur_HTML.ACTIVITE_SUPPRIMEE, null,AlertJsp.Sucess));
 				response.sendRedirect("MesActivites");
 				return;
 			}
@@ -75,7 +81,7 @@ public class SupprimeActivite extends HttpServlet {
 
 				request.setAttribute(AlertDialog.ALERT_DIALOG,
 						new MessageAlertDialog("Message Erreur",
-								"Une erreur est survenue", null,AlertJsp.warning));
+								Erreur_HTML.ERREUR_INCONNUE, null,AlertJsp.warning));
 				response.sendRedirect("MesActivites");
 				return;
 			}

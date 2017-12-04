@@ -42,6 +42,10 @@
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
+	<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css"/>
+
+
+	
 </head>
 <body>
 
@@ -56,6 +60,7 @@
 			//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
 	<%@ include file="menu.jsp"%>
+	<div class="container" style="margin-top: 30px">
 
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
@@ -162,7 +167,7 @@
 				</div>
 			</div>
 		</div>
-
+</div>
 
 	</div>
 

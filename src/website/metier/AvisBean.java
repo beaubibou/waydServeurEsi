@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayde.bean.Parametres;
 
 
@@ -219,7 +220,7 @@ public class AvisBean implements Serializable {
 	public String getLibelle() {
 		
 		if (libelle==null)
-			return "Pas d'avis laiss�";
+			return Erreur_HTML.AUCUN_AVIS_LAISSE;
 		else
 		return libelle;
 	}

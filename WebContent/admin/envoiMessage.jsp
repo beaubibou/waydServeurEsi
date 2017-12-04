@@ -2,8 +2,8 @@
 <%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
-
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -24,7 +24,12 @@
 	<%@ include file="menu.jsp"%>
 
 	<%
-		int idDestinataire = ((Integer) request.getAttribute("idDestinataire"))
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
+	
+	int idDestinataire = ((Integer) request.getAttribute("idDestinataire"))
 				.intValue();
 		int idMessage = ((Integer) request.getAttribute("idMessage"))
 				.intValue();

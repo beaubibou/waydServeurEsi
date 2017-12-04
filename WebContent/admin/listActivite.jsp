@@ -1,17 +1,16 @@
 
 <%@page import="website.metier.TypeSignalement"%>
 <%@page import="website.metier.TypeEtatActivite"%>
-
 <%@page import="website.pager.PagerActiviteBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.admin.FitreAdminActivites"%>
 <%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
-
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.TypeUser"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -29,21 +28,27 @@
 <link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
 	type="text/css">
 </head>
+
 <body>
 
 	<%@ include file="menu.jsp"%>
 
 	<%
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
 		FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
-			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
-			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
-			ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
-			ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
-			
-			PagerActiviteBean pager=(PagerActiviteBean) request
-			.getAttribute("pager");
-			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
+		ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
+		ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
+		ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
+		PagerActiviteBean pager=(PagerActiviteBean) request
+		.getAttribute("pager");
+		ArrayList<ActiviteBean> listActivite = pager.getListActivite();
 	%>
+
+
 
 	<div class="container" style="width: 90%;">
 		<div class="panel panel-primary">
@@ -138,145 +143,169 @@
 
 							</select>
 						</div>
+
+						<input type="hidden" class="form-control" id="latitudeFiltre"
+							placeholder="latitudeFiltre" name="latitudeFiltre"
+							value=<%=pager.getFiltAdminActivites().getLatitude()%>>
+
+						<div class="form-group">
+
+							<input type="hidden" class="form-control" id="longitudeFiltre"
+								placeholder="longitude" name="longitudeFiltre"
+								value=<%=pager.getFiltAdminActivites().getLongitude()%>>
+						</div>
 						<button id="go" type="submit" class="btn btn-info"
 							name="rechercheactivite">Rechercher</button>
-
 					</div>
 
 				</form>
 			</div>
 		</div>
-	</div>
+</div>
 
 
-	<div class="container" style="width: 90%;">
+		<div class="container" style="width: 90%;">
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th style="width: 5%;" class="text-center">Etat</th>
-					<th style="width: 5%;" class="text-center">User</th>
-					<th style="width: 30%;" class="text-center">Titre</th>
-					<th style="width: 10%;" class="text-center">Organisateur</th>
-					<th style="width: 10%;" class="text-center">Date fin</th>
-					<th style="width: 5%;" class="text-center">Vu</th>
-					<th style="width: 5%;" class="text-center">Sign.</th>
-					<th style="width: 5%;" class="text-center">Type</th>
-				</tr>
-			</thead>
-			<tbody
-				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
-				<%
-					if (listActivite!=null)
-									for (ActiviteBean activite : listActivite) {
-									String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-									String lienParticipant = "DetailParticipant?idPersonne=" + activite.getIdorganisateur()+"&from=listActivite.jsp";
-				%>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th style="width: 10%;" class="text-center">Etat</th>
+						<th style="width: 5%;" class="text-center">Titre</th>
+						<th style="width: 30%;" class="text-center">User</th>
+						<th style="width: 10%;" class="text-center">Le</th>
+						<th style="width: 5%;" class="text-center">Vu</th>
+						<th style="width: 5%;" class="text-center">Sign.</th>
+						<th style="width: 5%;" class="text-center">Type</th>
+					</tr>
+				</thead>
+				<tbody
+					style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
+					<%
+						if (listActivite!=null)
+																for (ActiviteBean activite : listActivite) {
+					String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp"
+							+"&latitudeFiltre="+pager.getFiltAdminActivites().getLatitude()+
+							"&longitudeFiltre="+pager.getFiltAdminActivites().getLongitude();
+					String lienParticipant = "DetailParticipant?idPersonne=" + activite.getIdorganisateur()+"&from=listActivite.jsp";
+					%>
 
-				<tr>
-					<td><%=activite.getEtatHtml()%></td>
-					<td><%=activite.getTypeUserLienHTML(lienParticipant)%></td>
-					<td><a href=<%=lien%>> <%=activite.getTitre()%></a></td>
-					<td><a href=<%=lienParticipant%>><%=activite.getPseudo()%></a></td>
-					<td><%=activite.getHoraireLeA()%></td>
-					<td><%=activite.getNbrVu()%></td>
-					<td><%=activite.getNbrSignalement()%></td>
-					<td><%=activite.getLibelleActivite()%></td>
-				
-				</tr>
+					<tr>
+						<td>
 
-				<%
-					}
-				%>
+							<div class="clearfix">
+								<img height="100" width="100" src=<%=activite.getUrlPhoto()%>
+									class="img-thumbnail pull-left ">
 
-			</tbody>
-		</table>
-	</div>
+								<p>
+									<%=activite.getTypeUserLienHTML(lienParticipant)%></p>
+								<p><%=activite.getEtatHtml()%></p>
+									<p><%=activite.calculDistance()%></p>
+								
+							</div>
+						</td>
+
+						<td><a href=<%=lien%>> <%=activite.getTitre()%></a></td>
+						<td><a href=<%=lienParticipant%>><%=activite.getPseudo()%></a></td>
+						<td><%=activite.getHoraireLeA()%></td>
+						<td><%=activite.getNbrVu()%></td>
+						<td><%=activite.getNbrSignalement()%></td>
+						<td><%=activite.getLibelleActivite()%></td>
+
+					</tr>
+
+					<%
+						}
+					%>
+
+				</tbody>
+			</table>
+		</div>
 
 
 
-	<ul class="pager">
+		<ul class="pager">
 
-		<li <%=pager.isPreviousHtml()%>><a
-			href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
-		<li>Page N° <%=pager.getPageEnCours()%></li>
-		<li <%=pager.isNextHtml()%>><a
-			href="<%=pager.getLienNextHtml()%>">Next</a></li>
+			<li <%=pager.isPreviousHtml()%>><a
+				href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
+			<li>Page N° <%=pager.getPageEnCours()%></li>
+			<li <%=pager.isNextHtml()%>><a
+				href="<%=pager.getLienNextHtml()%>">Next</a></li>
 
 
-	</ul>
-	<script>
-		var placeSearch, autocomplete;
-		var componentForm = {
-			street_number : 'short_name',
-			route : 'long_name',
-			locality : 'long_name',
-			administrative_area_level_1 : 'short_name',
-			country : 'long_name',
-			postal_code : 'short_name'
-		};
+		</ul>
+		<script>
+			var placeSearch, autocomplete;
+			var componentForm = {
+				street_number : 'short_name',
+				route : 'long_name',
+				locality : 'long_name',
+				administrative_area_level_1 : 'short_name',
+				country : 'long_name',
+				postal_code : 'short_name'
+			};
 
-		function initAutocomplete() {
-			// Create the autocomplete object, restricting the search to geographical
-			// location types.
-			autocomplete = new google.maps.places.Autocomplete(
-			/** @type {!HTMLInputElement} */
-			(document.getElementById('autocomplete')), {
-				types : [ 'geocode' ]
-			});
-
-			// When the user selects an address from the dropdown, populate the address
-			// fields in the form.
-			autocomplete.addListener('place_changed', fillInAddress);
-		}
-
-		function fillInAddress() {
-			// Get the place details from the autocomplete object.
-			var place = autocomplete.getPlace();
-			document.getElementById("latitude").value = autocomplete.getPlace().geometry.location
-					.lat();
-			document.getElementById("longitude").value = autocomplete
-					.getPlace().geometry.location.lng();
-		}
-
-		// Bias the autocomplete object to the user's geographical location,
-		// as supplied by the browser's 'navigator.geolocation' object.
-		function geolocate() {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var geolocation = {
-						lat : position.coords.latitude,
-						lng : position.coords.longitude
-					};
-					var circle = new google.maps.Circle({
-						center : geolocation,
-						radius : position.coords.accuracy
-					});
-					autocomplete.setBounds(circle.getBounds());
+			function initAutocomplete() {
+				// Create the autocomplete object, restricting the search to geographical
+				// location types.
+				autocomplete = new google.maps.places.Autocomplete(
+				/** @type {!HTMLInputElement} */
+				(document.getElementById('autocomplete')), {
+					types : [ 'geocode' ]
 				});
+
+				// When the user selects an address from the dropdown, populate the address
+				// fields in the form.
+				autocomplete.addListener('place_changed', fillInAddress);
 			}
-		}
-	</script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
-		async defer></script>
+
+			function fillInAddress() {
+				// Get the place details from the autocomplete object.
+				var place = autocomplete.getPlace();
+				document.getElementById("latitude").value = autocomplete
+						.getPlace().geometry.location.lat();
+				document.getElementById("longitude").value = autocomplete
+						.getPlace().geometry.location.lng();
+			}
+
+			// Bias the autocomplete object to the user's geographical location,
+			// as supplied by the browser's 'navigator.geolocation' object.
+			function geolocate() {
+				if (navigator.geolocation) {
+					navigator.geolocation
+							.getCurrentPosition(function(position) {
+								var geolocation = {
+									lat : position.coords.latitude,
+									lng : position.coords.longitude
+								};
+								var circle = new google.maps.Circle({
+									center : geolocation,
+									radius : position.coords.accuracy
+								});
+								autocomplete.setBounds(circle.getBounds());
+							});
+				}
+			}
+		</script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
+			async defer></script>
 
 
-	<script>
-		$(function() {
+		<script>
+		
+			$(function() {
 
-			$('select').change(function() {
+				$('select').change(function() {
 
-				document.getElementById("formulaire").submit();
+					document.getElementById("formulaire").submit();
+				});
+
+				$('#rayon').change(function() {
+
+					document.getElementById("formulaire").submit();
+				});
 			});
-
-			$('#rayon').change(function() {
-
-				document.getElementById("formulaire").submit();
-			});
-		});
-	</script>
-
+		</script>
 </body>
 
 </html>

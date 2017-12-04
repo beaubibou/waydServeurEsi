@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
@@ -79,13 +80,13 @@ public class SignalerProfil extends HttpServlet {
 
 				case ProfilBean.WAYDEUR:
 					
-					new AlertInfoJsp("Profil signal�", AlertJsp.Sucess,
+					new AlertInfoJsp(Erreur_HTML.PROFIL_SIGNALE, AlertJsp.Sucess,
 							"MesActivitesWaydeur").send(request, response);
 					return;
 
 				case ProfilBean.PRO:
 					
-					new AlertInfoJsp("Profil signal�", AlertJsp.Sucess,
+					new AlertInfoJsp(Erreur_HTML.PROFIL_SIGNALE, AlertJsp.Sucess,
 							"MesActivites").send(request, response);
 					return;
 				}

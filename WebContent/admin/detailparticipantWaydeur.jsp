@@ -65,7 +65,7 @@
 	<%@ include file="menu.jsp"%>
 
 	<%
-		AuthentificationSite authentification = new AuthentificationSite(
+	AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
 			if (!authentification.isAuthentifieAdmin())
 		return;

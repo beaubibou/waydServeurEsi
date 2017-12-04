@@ -1,6 +1,7 @@
 <%@page import="texthtml.pro.AccueilProText"%>
 <%@page import="website.metier.IndicateurWayd"%>
 <%@page import="website.metier.ProfilBean"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -21,6 +22,11 @@
 <body>
 <%@ include file="menu.jsp"%>
 		<%
+		AuthentificationSite authentification = new AuthentificationSite(
+				request, response);
+				if (!authentification.isAuthentifieAdmin())
+			return;
+		
 		IndicateurWayd indicateurBean=(IndicateurWayd)request.getAttribute("indicateur");
 		ProfilBean profil=(ProfilBean)session.getAttribute("profil");
 		%>

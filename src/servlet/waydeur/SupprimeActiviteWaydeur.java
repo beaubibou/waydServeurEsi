@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.enumeration.AlertJsp;
@@ -54,7 +55,7 @@ public class SupprimeActiviteWaydeur extends HttpServlet {
 
 	if (activite.getIdorganisateur() == authentification.getId()) {
 		new Coordination().effaceActivite(idActivite);
-		new AlertInfoJsp("Activite supprimmée", AlertJsp.Sucess,"MesActivitesWaydeur").send(request, response);
+		new AlertInfoJsp(Erreur_HTML.ACTIVITE_SUPPRIMEE, AlertJsp.Sucess,"MesActivitesWaydeur").send(request, response);
 		return;
 		
 	}

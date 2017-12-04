@@ -54,7 +54,7 @@ public class MapPro extends HttpServlet {
 			return;
 
 					
-		request.getRequestDispatcher("/pro/mapfullscreen.jsp").forward(request, response);
+		request.getRequestDispatcher("/admin/mapfullscreen.jsp").forward(request, response);
 	
 	}
 

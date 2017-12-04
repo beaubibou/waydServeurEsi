@@ -1660,7 +1660,7 @@ public class WBservices {
 			if (activite == null)
 				return new MessageServeur(false, LibelleMessage.activiteFinie);
 			if (activite.isTerminee())
-				return new MessageServeur(false, "Activit� termin�ee");
+				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
@@ -1683,7 +1683,7 @@ public class WBservices {
 			if (idDemandeur == activite.getIdorganisateur()) {
 
 				message = new Message(idAeffacer,
-						"L'organisateur � d�sinscrit " + personne.getPrenom(),
+						"L'organisateur a désinscrit " + personne.getPrenom(),
 						idactivite, 0);
 				notificationDAO.addNotification(idAeffacer,
 						Notification.MESSAGE_TEXT, idactivite, idDemandeur);

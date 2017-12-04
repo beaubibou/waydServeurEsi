@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
+import wayde.dao.ActiviteDAO;
+import wayde.dao.DiscussionDAO;
+import wayde.dao.NotificationDAO;
+import wayde.dao.ParticipationDAO;
 
 public class EffaceActiviteGcm implements Runnable {
 	private static final Logger LOG = Logger.getLogger(EffaceActiviteGcm.class);
@@ -24,6 +28,38 @@ public class EffaceActiviteGcm implements Runnable {
 		this.participants=participants;
 		this.idActivite=idActivite;
 	}
+	
+	
+	public EffaceActiviteGcm(int idActivite) {
+			Connection connexion=null;
+			this.idActivite=idActivite;
+		try {
+		
+			LOG.info("Preparation à envoyer par GCM la notification");
+	
+			connexion = CxoPool.getConnection();
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			ParticipationDAO participationdao = new ParticipationDAO(connexion);
+			this.personneInterresse = activitedao
+					.getListPersonneInterresse(activitedao
+							.getActivite(idActivite));
+			this.participants = participationdao
+					.getListPartipantActivite(idActivite);
+			this.idActivite=idActivite;
+		
+			
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+		
+			e.printStackTrace();
+		}finally{
+			
+			CxoPool.closeConnection(connexion);
+		}
+
+	
+	}
+	
 	
 	
 	@Override

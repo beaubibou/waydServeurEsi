@@ -27,6 +27,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
@@ -266,7 +267,7 @@ public class CreerUserPro extends HttpServlet {
 			String erreur="Erreur inconnue";
 		
 			if (s.contains("EMAIL_EXISTS"))
-				erreur="Mail existe d�ja";
+				erreur=Erreur_HTML.MAIL_EXISTE_DEJA;
 			 
 			return new MessageServeur(false, erreur);
 			
@@ -291,7 +292,7 @@ public class CreerUserPro extends HttpServlet {
 						connexion);
 				personnedao.addComptePro(uuid, pseudo, email, adresse, siret, telephone,commentaire,siteweb, latitude, longitude);
 				connexion.commit();
-				return new MessageServeur(true,"Votre compte a �t� cr�e");
+				return new MessageServeur(true,Erreur_HTML.CREATION_COMPTE);
 		
 			
 			} catch (SQLException | NamingException e) {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
@@ -60,7 +61,7 @@ public class ModifierActivite extends HttpServlet {
 		
 		case ProfilBean.PRO:
 			
-				new AlertInfoJsp("L'activité n'existe plus", AlertJsp.Alert,
+				new AlertInfoJsp(Erreur_HTML.ACTIVITE_EXISTE_PLUS, AlertJsp.Alert,
 						"MesActivites").send(request, response);
 				
 				return;

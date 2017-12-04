@@ -63,7 +63,7 @@
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
-			if (!authentification.isAuthentifie())
+			if (!authentification.isAuthentifieAdmin())
 		return;
 
 			ActiviteBean activite = (ActiviteBean) request

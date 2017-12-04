@@ -19,10 +19,12 @@ public class PagerActiviteBean {
 	private final int maxResult = 35;
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
+	private FitreAdminActivites filtAdminActivites;
 
 	public PagerActiviteBean(FitreAdminActivites filtre, int pageEnCours) {
 
 		this.pageEnCours = pageEnCours;
+		this.filtAdminActivites=filtre;
 
 		// On recherhce les maxresult+1 si on
 		listActivite =ActiviteDAO.getListActivite(filtre,pageEnCours, maxResult );;
@@ -38,6 +40,14 @@ public class PagerActiviteBean {
 		else
 			hasPrevious = false;
 
+	}
+
+	public FitreAdminActivites getFiltAdminActivites() {
+		return filtAdminActivites;
+	}
+
+	public void setFiltAdminActivites(FitreAdminActivites filtAdminActivites) {
+		this.filtAdminActivites = filtAdminActivites;
 	}
 
 	public ArrayList<ActiviteBean> getListActivite() {

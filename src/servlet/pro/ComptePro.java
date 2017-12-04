@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayde.bean.MessageServeur;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
@@ -27,7 +28,7 @@ import website.metier.ProfilBean;
 public class ComptePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ComptePro.class);
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -50,7 +51,7 @@ public class ComptePro extends HttpServlet {
 
 		if (!authentification.isAuthentifiePro())
 			return;
-		
+
 		response.sendRedirect("pro/comptePro.jsp");
 
 	}
@@ -78,24 +79,26 @@ public class ComptePro extends HttpServlet {
 		String siteWeb = request.getParameter("siteweb");
 		String siret = request.getParameter("siret");
 
-		MessageServeur messageServeur=testParametreRequete(nom,adresse,commentaire,latitude,longitude,telephone,siteWeb,siret);
-		
-		if (!messageServeur.isReponse()){
-			
-			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information",messageServeur.getMessage(),null,AlertJsp.warning));
+		MessageServeur messageServeur = testParametreRequete(nom, adresse,
+				commentaire, latitude, longitude, telephone, siteWeb, siret);
+
+		if (!messageServeur.isReponse()) {
+
+			authentification.setAlertMessageDialog(new MessageAlertDialog(
+					"Message Information", messageServeur.getMessage(), null,
+					AlertJsp.warning));
 			response.sendRedirect("MesActivites");
 			return;
-				
+
 		}
-		
-		
+
 		ProfilBean profil = authentification.getProfil();
 		FiltreRecherche filtreRecherche = authentification.getFiltre();
 
 		website.dao.PersonneDAO personneDAO = new website.dao.PersonneDAO();
 
 		if (personneDAO.updateProfilProFull(nom, adresse, latitude, longitude,
-				commentaire, profil.getId(), siteWeb, telephone,siret)) {
+				commentaire, profil.getId(), siteWeb, telephone, siret)) {
 
 			profil.setTelephone(telephone);
 			profil.setSiteWeb(siteWeb);
@@ -110,11 +113,12 @@ public class ComptePro extends HttpServlet {
 			profil.setPremiereconnexion(false);
 			filtreRecherche.setLatitude(latitude);
 			filtreRecherche.setLongitude(longitude);
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information","Compte mis � jour",null));
-			request.getRequestDispatcher("MesActivites").forward(request, response);
-	
-		//	new AlertInfoJsp("Compte mis � jour", AlertJsp.Sucess, "AcceuilPro")
-			//	.send(request, response);
+			request.setAttribute(AlertDialog.ALERT_DIALOG,
+					new MessageAlertDialog("Message Information",
+							Erreur_HTML.COMPTE_MIS_A_JOUR, null));
+			request.getRequestDispatcher("MesActivites").forward(request,
+					response);
+
 		} else {
 			new AlertInfoJsp("Un probleme est survenue", AlertJsp.Alert,
 					"AcceuilPro").send(request, response);
@@ -126,31 +130,30 @@ public class ComptePro extends HttpServlet {
 			String commentaire, double latitude, double longitude,
 			String telephone, String siteWeb, String siret) {
 		// TODO Auto-generated method stub
-	
-		
-		if (!testFormatTelephone(telephone)){
-			
-			return new MessageServeur(false,"Numero de téléphonne non conforme");
-		
+
+		if (!testFormatTelephone(telephone)) {
+
+			return new MessageServeur(false,
+					"Numero de téléphonne non conforme");
+
 		}
-	
-	return  new MessageServeur(true,"Ok");
+
+		return new MessageServeur(true, "Ok");
 	}
 
 	private boolean testFormatTelephone(String telephone) {
 		// TODO Auto-generated method stub
-		
-		if (telephone==null)
+
+		if (telephone == null)
 			return true;
-		
-		if (telephone.length()==0)return true;
-		
-		if (telephone.length()!=14)return false;
-		
-		
+
+		if (telephone.length() == 0)
+			return true;
+
+		if (telephone.length() != 14)
+			return false;
+
 		return true;
 	}
-
-	
 
 }

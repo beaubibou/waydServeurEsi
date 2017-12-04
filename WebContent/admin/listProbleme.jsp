@@ -36,6 +36,11 @@
 
 	<%@ include file="menu.jsp"%>
 	<%
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
+			
 		ArrayList<EtatProbleme> listEtatProbleme = CacheValueDAO.getListEtatProbleme();
 			FitreAdminProbleme filtreProbleme=(FitreAdminProbleme)session.getAttribute("filtreProbleme");
 			

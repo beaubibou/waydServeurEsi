@@ -54,13 +54,13 @@
          
           <div class="col-md-6">
             <div class="form-group">
-              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse mail" maxlength="<%=ParametreHtmlPro.TAILLE_MAIL_CONTACT_MAX %>"  required="required">
+              <input type="email" id="email" name="mail" class="form-control" placeholder="Adresse mail"   required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <textarea name="message" name="message" id="message" class="form-control" rows="4" placeholder="<%=ParametreHtmlPro.getHintDescriptionMessageContact() %>" maxlength="<%=ParametreHtmlPro.TAILLE_MESSAGE_CONTACT_MAX %>" required></textarea>
+          <textarea name="message" name="message" id="message" class="form-control" rows="4" required></textarea>
           <p class="help-block text-danger"></p>
         </div>
         <div id="success"></div>

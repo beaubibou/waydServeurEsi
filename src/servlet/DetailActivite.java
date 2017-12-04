@@ -1,5 +1,7 @@
 package servlet;
 
+import gcmnotification.EffaceActiviteGcm;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import threadpool.PoolThreadGCM;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
@@ -51,12 +54,23 @@ public class DetailActivite extends HttpServlet {
 			String action = (String) request.getParameter("action");
 
 			if (action == null) {// chargemetn par d�faut
+			
 				int idActivite = Integer.parseInt(request
 						.getParameter("idactivite"));
 				ActiviteBean activite = new Coordination()
 						.getActivite(idActivite);
 				request.setAttribute("activite", activite);
 
+				// Calcle de la distance par rapport au filtre
+				LOG.info("latitude"+request
+						.getParameter("latitudeFiltre"));
+				double latitudeFiltre=Double.parseDouble(request
+						.getParameter("latitudeFiltre"));
+				double longitudeFiltre=Double.parseDouble(request
+						.getParameter("longitudeFiltre"));
+				activite.setPositionRecherche(latitudeFiltre, longitudeFiltre);
+			
+				//*************************
 				switch (activite.getTypeUser()) {
 
 				case TypeUser.PRO:
@@ -86,8 +100,19 @@ public class DetailActivite extends HttpServlet {
 					idActivite = Integer.parseInt(request
 							.getParameter("idactivite"));
 
-					if (ActiviteDAO.supprimeActivite(idActivite))
+					// prepare le message GMC à envoyer
+					// Oblige de le faire avant la suppression pour connaitre les 
+					// participant et interresses
+					
+					EffaceActiviteGcm effaceGcm=new EffaceActiviteGcm(idActivite);
+				
+					if (ActiviteDAO.supprimeActivite(idActivite)){
+						
+						PoolThreadGCM.poolThread.execute(effaceGcm);
 						response.sendRedirect("ListActivite");
+						
+					}
+						
 
 					break;
 

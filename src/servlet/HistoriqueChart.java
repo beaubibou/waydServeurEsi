@@ -58,7 +58,7 @@ public class HistoriqueChart extends HttpServlet {
 
 			requete = Outils.convertStatistiqueBeanToString(StatDAO
 					.getHistoriqueMessageByAct());
-			titre = "Messages des activit�s";
+			titre = "Messages des activités";
 
 			break;
 		case "histoNbrActivite":

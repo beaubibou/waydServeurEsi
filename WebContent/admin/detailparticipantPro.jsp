@@ -65,11 +65,12 @@
 
 
 	<%
-		AuthentificationSite authentification = new AuthentificationSite(
-		request, response);
-		if (!authentification.isAuthentifieAdmin())
-			return;
-
+	AuthentificationSite authentification = new AuthentificationSite(
+			request, response);
+			if (!authentification.isAuthentifieAdmin())
+		return;
+			
+			
 		ProfilBean profil = (ProfilBean) request.getAttribute("profil");
 		ArrayList<ActiviteBean> listActivite = profil.getListActivite();
 		ArrayList<SignalementProfilBean> listSignalement = profil
