@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import wayd.ws.TextWebService;
 import website.metier.ActiviteBean;
 
 public class Activite {
@@ -237,7 +238,7 @@ public class Activite {
 
 	public  String getAgeStr(Date datenaissance,boolean afficheage)
 	{
-		if (afficheage)return "Masqu�";
+		if (afficheage)return TextWebService.NON_COMMUNIQUE;
 		if (datenaissance!=null){
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -248,18 +249,18 @@ public class Activite {
 			{
 				yeardiff = yeardiff - 1;
 			}
-			if (yeardiff<0)return "Erreur";
-			if (yeardiff==0)return "Pas d'age indiqu�";
+			if (yeardiff<0)return TextWebService.ERREUR_INCONNUE;
+			if (yeardiff==0)return TextWebService.PAS_AGE_INDIQUE;
 			return Integer.toString(yeardiff) +" ans";
 		}
 
-		return "Pas d'age indiqu�";
+		return TextWebService.PAS_AGE_INDIQUE;
 	}
 
 public String getTempsRestant(Date datefinactivite){
 		
-		if (datefinactivite==null)return "Termin�e";
-		if (new Date().after(datefinactivite))return "Activit� pass�e";
+		if (datefinactivite==null)return TextWebService.ACTIVITE_INEXISTANTE;
+		if (new Date().after(datefinactivite))return TextWebService.TERMINEE;
 		else
 		{
 		
@@ -268,7 +269,7 @@ public String getTempsRestant(Date datefinactivite){
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 		//	long diffDays = diff / (24 * 60 * 60 * 1000);
-		if (diff<0)return "Termin�e";
+		if (diff<0)return TextWebService.TERMINEE;
 			
 			return diffHours+":" +String.format("%02d", diffMinutes);
 	

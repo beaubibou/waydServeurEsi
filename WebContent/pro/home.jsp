@@ -70,13 +70,12 @@ body, html {
 }
 #jumbo {
     /* IE8 and below */
-    background: rgb(00, 54, 60);
+    background: rgb(255, 173, 64);
     /* all other browsers */
-    background: rgba(00, 54, 60, 0.5);
+    background: rgba(255, 173, 64, 0.5);
 }
 
 </style>
-
 
 </head>
 <body>
@@ -88,7 +87,7 @@ body, html {
   <div class="hero-text">
    <div class="container">
   <div class="jumbotron" id="jumbo">
-    <img src="/wayd/img/waydLogoHD.png" class="img-thumbnail" alt="Cinque Terre" style="width:30%"> 
+    <img src="/wayd/img/waydLogoHD.png"  alt="Cinque Terre" style="width:30%"> 
     <h1>Wayd professionel</h1>
     <p>Diffuser, communiquer</p>
   </div>

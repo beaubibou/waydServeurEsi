@@ -387,8 +387,11 @@ public class CacheValueDAO {
 	public ArrayList<DureeBean> getListDuree() {
 		// TODO Auto-generated method stub
 		ArrayList<DureeBean> listDuree = new ArrayList<DureeBean>();
-		for (int f = 1; f <=8 ; f++) {
-			listDuree.add(new DureeBean(f * 60, f + " Heure"));
+		
+		listDuree.add(new DureeBean( 60, 1 + " Heure"));
+		
+		for (int f = 2; f <=8 ; f++) {
+			listDuree.add(new DureeBean(f * 60, f + " Heures"));
 
 		}
 		return listDuree;

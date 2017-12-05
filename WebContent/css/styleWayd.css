@@ -26,7 +26,7 @@
 
 /* couleur de fond des pages*/
 body {
-	background-color: #E3F2FD;
+	background-color:  #f2f2f2;
 }
 /*Couleur de la barre de navigation */
 .navbar {
@@ -50,4 +50,36 @@ body {
 
 .navbar-fixed-bottom a {
 	color: #0FFF000;
+}
+
+.panel-title{
+	color: #FFF;
+	font-size: 20px;
+	font-weight: bold;
+	
+}
+.btnwayd{
+
+text-align:center;
+vertical-align:middle;
+background-color:#ffAD40;
+color:white;
+text-decoration:none
+}
+.btnwayd:hover{
+color:white;	
+background-color:#ffBD45
+}
+.text-tuto{
+	font-weight: bold;
+	color:blue;
+}
+
+.margedebut{
+	margin-top: 120px;
+}
+
+.barrerecherche{
+	
+		background-color: #ffbf00;
 }

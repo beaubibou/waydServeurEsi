@@ -1,3 +1,4 @@
+<%@page import="texthtml.pro.Erreur_HTML"%>
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -12,8 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><%=CreationActivitePlanifieeText.TITRE_ONGLET %></title>
-
+<title><%=CreationActivitePlanifieeText.TITRE_ONGLET%></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
@@ -32,7 +32,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-
 <script src="js/moment.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
@@ -42,7 +41,6 @@
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
-	<script src="js/creationActivite.js"></script>
 </head>
 <body>
 
@@ -59,39 +57,39 @@
 	%>
 
 	<%@ include file="menu.jsp"%>
-	<div class="container" style="margin-top: 30px">
-		<div class="page-header">
-			<h1><%=CreationActivitePlanifieeText.TITRE_JUMBO %></h1>
-		</div>
-		<p><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE1 %></p>
-		<p><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE2 %></p>
-	</div>
+
 
 	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+		<div id="loginbox" 	class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title"><%=CreationActivitePlanifieeText.TITRE_PANEL %></div>
+					<div class="panel-title"><%=CreationActivitePlanifieeText.TITRE_PANEL%></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
+
+
 					<form action="/wayd/AjouteActivitePlanifiee"
 						onsubmit="return valideFormulaire()" method="post">
+
 						<div class="form-group">
-							<label for="titre"><%=CreationActivitePlanifieeText.LABEL_TITRE %></label> <input type="text"
-								class="form-control" id="titre" required
+							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE1%></p>
+							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE2%></p>
+							<br>
+						</div>
+						<div class="form-group">
+							<label for="titre"><%=CreationActivitePlanifieeText.LABEL_TITRE%></label>
+							<input type="text" class="form-control" id="titre" required
 								placeholder="<%=CreationActivitePlanifieeText.getHintTitreActivite()%>"
 								maxLength="<%=CreationActivitePlanifieeText.TAILLE_TITRE_ACTIVITE_MAX%>"
 								name="titre" required>
 						</div>
-
 						<div class="form-group">
 							<div class="row">
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatedebut"><%=CreationActivitePlanifieeText.LABEL_DATE_DEBUT %></label>
+										<label for="iddatedebut"><%=CreationActivitePlanifieeText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
@@ -103,7 +101,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin"><%=CreationActivitePlanifieeText.LABEL_DATE_FIN %></label>
+										<label for="iddatefin"><%=CreationActivitePlanifieeText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
 											<input type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
@@ -113,8 +111,8 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite"><%=CreationActivitePlanifieeText.LABEL_TYPE_ACTIVITE %></label> <select
-										class="form-control" id="type" name="typeactivite">
+									<label for="typeactivite"><%=CreationActivitePlanifieeText.LABEL_TYPE_ACTIVITE%></label>
+									<select class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
 										%>
@@ -133,7 +131,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="idheuredebut"><%=CreationActivitePlanifieeText.LABEL_HEURE_DEBUT %></label>
+										<label for="idheuredebut"><%=CreationActivitePlanifieeText.LABEL_HEURE_DEBUT%></label>
 										<div class='input-group date' id='heuredebut'>
 											<input type='text' class="form-control" id="idheuredebut"
 												name="heuredebut" /> <span class="input-group-addon">
@@ -146,8 +144,8 @@
 								<div class='col-sm-4'>
 									<div class="form-group">
 
-										<label for="duree"><%=CreationActivitePlanifieeText.LABEL_DUREE %></label> <select class="form-control"
-											id="typeactivite" name="duree">
+										<label for="duree"><%=CreationActivitePlanifieeText.LABEL_DUREE%></label>
+										<select class="form-control" id="typeactivite" name="duree">
 											<%
 												for (DureeBean duree:listDuree) {
 											%>
@@ -163,14 +161,12 @@
 
 
 						</div>
-
 						<div class="form-group">
 							<div class="container" id="mescheck">
 
-								<h4><%=CreationActivitePlanifieeText.MESSAGE_CHECKBOX %></h4>
-								</br>
-								 <label class="radio-inline"> <input type="checkbox"
-									name="lundi">Lundi
+								<h4><%=CreationActivitePlanifieeText.MESSAGE_CHECKBOX%></h4>
+								<br> <label class="radio-inline"> <input
+									type="checkbox" name="lundi">Lundi
 								</label> <label class="radio-inline"> <input type="checkbox"
 									name="mardi">Mardi
 								</label> <label class="radio-inline"> <input type="checkbox"
@@ -189,14 +185,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="adresse"><%=CreationActivitePlanifieeText.LABEL_ADRESSE %></label> <input type="text"
-								class="form-control" id="adresse" required
+							<label for="adresse"><%=CreationActivitePlanifieeText.LABEL_ADRESSE%></label>
+							<input type="text" class="form-control" id="adresse" required
 								value="<%=profil.getAdresse()%>" name="adresse"
 								onkeypress="initPosition()">
 						</div>
-
 						<div class="form-group">
-							<label for="description"><%=CreationActivitePlanifieeText.LABEL_DESCRIPTION %></label>
+							<label for="description"><%=CreationActivitePlanifieeText.LABEL_DESCRIPTION%></label>
 							<textarea
 								placeholder="<%=CreationActivitePlanifieeText.getHintDescriptionActivite()%>"
 								maxlength="<%=CreationActivitePlanifieeText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
@@ -204,27 +199,21 @@
 								name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">
-							
+
 							<%=CreationActivitePlanifieeText.initNbrCaracteres()%></h5>
-
-
-
-						<button type="submit" class="btn btn-info"><%=CreationActivitePlanifieeText.LABEL_BUTTON_PROPOSEZ %></button>
-
 						<div class="form-group">
 
-							<input type="hidden" class="form-control" id="latitude"
+							<input type="text" class="form-control" id="latitude"
 								placeholder="latitude" name="latitude"
 								value=<%=profil.getLatitudeFixe()%>>
 						</div>
 						<div class="form-group">
 
-							<input type="hidden" class="form-control" id="longitude"
+							<input type="text" class="form-control" id="longitude"
 								placeholder="longitude" name="longitude"
 								value=<%=profil.getLongitudeFixe()%>>
 						</div>
-
-						<div class="form-group"></div>
+						<button type="submit" class="btnwayd btn-lg"><%=CreationActivitePlanifieeText.LABEL_BUTTON_PROPOSEZ%></button>
 
 					</form>
 
@@ -276,7 +265,7 @@
 					var circle = new google.maps.Circle({
 						center : geolocation,
 						radius : position.coords.accuracy
-					});
+					});<%@page import="texthtml.pro.Erreur_HTML"%>
 					autocomplete.setBounds(circle.getBounds());
 				});
 			}
@@ -320,87 +309,67 @@
 		});
 	</script>
 	<script>
-		function dateDiff(date1, date2) {
-			var diff = {} // Initialisation du retour
-			var tmp = date2 - date1;
-
-			tmp = Math.floor(tmp / 1000); // Nombre de secondes entre les 2 dates
-			diff.sec = tmp % 60; // Extraction du nombre de secondes
-
-			tmp = Math.floor((tmp - diff.sec) / 60); // Nombre de minutes (partie entiÃ¨re)
-			diff.min = tmp % 60; // Extraction du nombre de minutes
-
-			tmp = Math.floor((tmp - diff.min) / 60); // Nombre d'heures (entiÃ¨res)
-			diff.hour = tmp % 24; // Extraction du nombre d'heures
-
-			tmp = Math.floor((tmp - diff.hour) / 24); // Nombre de jours restants
-			diff.day = tmp;
-
-			return diff;
-		}
-
-		function heureDiff(date1, date2) {
-
-			var tmp = date2 - date1;
-
-			tmp = Math.floor(tmp / 1000) / 3600;
-
-			return tmp;
-
-		}
-
+		
 		function valideFormulaire() {
 
-			var datedebut = $('#datedebut').data('DateTimePicker').date();
-			var datefin = $('#datefin').data('DateTimePicker').date();
+		
+		var datedebut = $('#datedebut').data('DateTimePicker').date();
+		var datefin = $('#datefin').data('DateTimePicker').date();
 
-			var heuredebut = $('#heuredebut').data('DateTimePicker').date();
-			var heurefin = $('#heurefin').data('DateTimePicker').date();
+		
+		// Verifie les positions
+		latitude = document.getElementById("latitude").value;
+		longitude = document.getElementById("longitude").value;
 
-			// Verifie les positions
-			latitude = document.getElementById("latitude").value;
-			longitude = document.getElementById("longitude").value;
+		
 
-			if (latitude == 0 || longitude == 0) {
-				alert();
-				BootstrapDialog
-						.alert(<%=CreationActivitePlanifieeText.ALERT_GPS_NO_POSITION%>);
-				return false;
-			}
+	
+if (latitude == 0 || longitude == 0) {
+			
+	
+	BootstrapDialog.show({
+		message:"<%=CreationActivitePlanifieeText.ALERT_GPS_NO_POSITION%>"
+				});
+	
+			return false;
+		}
 
-			if (datedebut > datefin) {
-				BootstrapDialog
-						.alert('La date de début est superieure à la date de fin');
+		if (datedebut > datefin) {
+		
 
-				return false;
-			}
-			if (datefin < new Date()) {
-				alert("La date de fin est inférieur à la date du jour");
-				return false;
-			}
+			BootstrapDialog.show({
+				message:"<%=Erreur_HTML.DATEDEBUT_SUP_DATEFIN%>"
+						});
 
-			diffHeure = heureDiff(heuredebut, heurefin);
-			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
+			
+			return false;
+		}
+		var aujourdui=new Date();
+		aujourdui.setHours(0, 0, 0, 0);
+		if (datefin < aujourdui) {
+			
+			BootstrapDialog.show({
+				message:"<%=Erreur_HTML.DATEFIN_INF_NOW%>"
+						});
+			return false;
+		}
 
-			if (diffHeure > 8) {
-				BootstrapDialog.alert('La durée ne peut pas exéder 8 heures');
-				return false;
-			}
+		
 
-			if (diffHeure < 1) {
-				BootstrapDialog
-						.alert('La durée ne peut pas être inférieur à 1 heures');
-				return false;
-			}
+		var nbrCheck = getNbrJourCheck();
 
-			var nbrCheck = getNbrJourCheck();
-
-			if (nbrCheck == 0) {
-				BootstrapDialog.alert('Un jour doit être au moins selectionné');
-				return false;
-			}
-
-			return true;
+		if (nbrCheck == 0) {
+			BootstrapDialog.show({
+		message:"<%=Erreur_HTML.AU_MOINS_UN_JOUR_SELECTIONNE%>"
+				});
+			return false;
+		}
+		
+		
+		
+	
+		return true;
+		
 		}
 
 		function getNbrJourCheck() {
@@ -420,6 +389,7 @@
 		}
 
 		function initPosition() {
+
 			latitude = 0;
 			longitude = 0;
 			document.getElementById("latitude").value = 0;
@@ -447,7 +417,8 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + '<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>';
+		var msg = nombreCaractere + '<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>
+		';
 		$('#nbr').text(msg);
 	</script>
 </body>

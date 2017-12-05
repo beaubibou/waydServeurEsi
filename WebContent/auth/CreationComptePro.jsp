@@ -134,7 +134,7 @@
 									type="text"
 									maxlength="<%=CreationCompteProText.TAILLE_PSEUDO_MAX%>"
 									value="<%=pseudo%>" class="form-control" id="nom"
-									placeholder="Nom " name="nom" required>
+									placeholder="<%=CreationCompteProText.getHintDescriptionProfil()%>" name="nom" required>
 							</div>
 
 							<div class="form-group">
@@ -148,8 +148,8 @@
 							<div class="form-group">
 								<label for="nom"><%=CreationCompteProText.LABEL_TELEPHONE%></label>
 								<input type="text" class="form-control" id="nom"
-									placeholder="XX-XX-XX-XX-XX"
-									pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
+									placeholder="XXXXXXXXXX"
+									pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}{0-9]{2}"
 									name="telephone" value="<%=telephone%>"
 									maxlength="<%=CreationCompteProText.TAILLE_TELEPHONNE_MAX%>">
 							</div>

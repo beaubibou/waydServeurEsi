@@ -82,7 +82,7 @@
 				
 							<div class="btn-group">		
 									<a id="btn-password" onclick="envoiDemande()"
-									class="btn btn-primary">Envoyer la demande</a>
+									class="btn btnwayd ">Envoyer la demande</a>
 								 <a href="/wayd/Home"  class="btn btn-info"><span
 								  class="glyphicon glyphicon-home" ></span> Accueil</a>
 									</div>

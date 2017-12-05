@@ -9,6 +9,9 @@ public class TextWebService {
 	public static final String ACTIVITE_DESACTIVEE = "L'activité est désactivée";
 	public static final String ERREUR_INCONNUE = "Erreur inconnue";
 	public static final String ACTIVITE_INEXISTANTE = "Activité inexistante";
+	public static final String NON_COMMUNIQUE = "Non communiqué";
+	public static final String PAS_AGE_INDIQUE = "Pas d'age indiqué";
+	public static final String TERMINEE = "Terminée";
 
 	public static String PROFIL_NON_RECONNU = "Tu n'es pas reconnu";
 	public static String pasAMI = "Pas ami";

@@ -1,4 +1,5 @@
 
+<%@page import="texthtml.pro.MesActivitesProText"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 <%@page import="website.enumeration.AlertJsp"%>
@@ -63,10 +64,16 @@
 		
 	</script>
 
-	<div class="container" style="margin-top: 100px">
+	<div class="container margedebut " >
 
-		<div class="panel panel-primary"">
+		<div class="panel barrerecherche">
 			<div class="panel-heading">
+			<div class="row">
+					<div class="col-sm-12">
+					<p class="text-tuto"><%=MesActivitesProText.TUTO_LIGNE1 %></p>
+					</div>
+					</div>
+					
 				<div class="row">
 					<div class="col-sm-2">
 						<form method="post" action="MesActivites" id="formulaire"
@@ -92,8 +99,8 @@
 						</form>
 					</div>
 
-					<div class="col-sm-2 col-sm-offset-8 ">
-						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+					<div class="col-sm-2 ">
+						<button  title="<%=MesActivitesProText.INFO_SUPPRIME_SELECTION %>" href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
 					</div>
 
 
@@ -104,7 +111,7 @@
 
 		</div>
 		<table class="table table-responsive" border="3" id="matable">
-			<thead style="background-color: #2196F3;" align="center">
+			<thead class="barrerecherche" >
 				<tr>
 					<th style="width: 10%;" class="text-center">Etat</th>
 					<th class="text-center">Titre</th>
@@ -136,20 +143,34 @@
 						style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
-					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
-						class="btn btn-info btn-sm"> <span
-							class="glyphicon glyphicon-search"></span>
-					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
- 	if (!activite.isTerminee()){
- %> <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
-							class="glyphicon glyphicon-edit"></span>
-					</a>
+					<td style="vertical-align: middle;">
+					
+					
+					 <a  title="Détail" href="<%=lienDetail%>" > 
+					 	<button 
+							type="button" class="btnwayd btn-sm">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+				     	</a>
+					
+					
+					
+					 <%if (!activite.isTerminee()){ %>				
+					
+						 <a  title="Modifier" href="<%=lienEdit%>" > 
+					 	<button title="Modifier"type="button" class="btnwayd btn-sm">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+				     	</a>
 
-						<button id=<%out.println(lienEfface);%> name="supprimer"
+
+					
+					
+					
+						<button title="Supprimer" id=<%out.println(lienEfface);%> name="supprimer"
 							type="button" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%
- 	}
+						</button> <%}
  %></td>
 					<td><%=activite.getCheckHtml()%></td>
 
@@ -198,11 +219,13 @@
 	<script>
 		function litTable() {
 
+			var nbrDeligne=0;
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
 			
 					if ($('#ckAll').is(":checked")) {
 
+						nbrDeligne++;	
 					checkBox.prop("checked", true); // it is checked
 				
 						} else {
@@ -302,10 +325,10 @@
 
 				document.getElementById("idListActivites").value = listActivite;
 				DialogEffaceActivites();
-
 			}
 
 		}
+		
 	</script>
 
 </body>

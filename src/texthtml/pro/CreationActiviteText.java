@@ -13,8 +13,8 @@ public class CreationActiviteText {
 	public static String MESSAGE_JUMBO_LIGNE1 = "Proposez vos activités gratuites à la communauté. Une activité ne peut pas exéder 8 heures.";
 	public static String MESSAGE_JUMBO_LIGNE2 = "Vous pouvez planifier jusqu à 5 activités simultanément.";
 
-	public static String TITRE_PANEL = "Ajoutez une activité";
-	public static String TITRE_ONGLET = "Ajoutez une activité";
+	public static String TITRE_PANEL = "Proposez une activité";
+	public static String TITRE_ONGLET = "Proposez une activité";
 
 	public static String LABEL_DATE_DEBUT = "Date début";
 	public static String LABEL_DATE_FIN = "Date fin";

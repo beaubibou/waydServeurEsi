@@ -1,12 +1,11 @@
 
-<%@page import="website.metier.TypeEtatMessage"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
 <%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.metier.admin.FiltreJSP"%>
-<%@page import="website.metier.TypeEtatMessage"%>
-<%@page import="website.metier.MessageBean"%>
-<%@page import="texthtml.pro.MesMessagesProText"%>
+<%@page import="website.metier.TypeActiviteBean"%>
+<%@page import="website.metier.ActiviteBean"%>
+
 <%@page import="website.metier.TypeEtatActivite"%>
 <%@page import="website.metier.FiltreRecherche"%>
 <%@page import="website.metier.AuthentificationSite"%>
@@ -21,7 +20,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Mes Messages</title>
+<title>Mes activités</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -42,52 +41,46 @@
 
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 
+
 </head>
 <body>
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-		if (!authentification.isAuthentifiePro())
-			return;
-		
+			if (!authentification.isAuthentifiePro())
+		return;
+			
 		FiltreRecherche filtre=authentification.getFiltre();
-			ArrayList<TypeEtatMessage> listEtatMessage = CacheValueDAO.getListEtatMessage();
-			MenuEnum etatMenu=MenuEnum.mesmessages;
+		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+			
+		MenuEnum etatMenu=MenuEnum.mesactivites;
 	%>
 
 	<%@ include file="menu.jsp"%>
-
-	
 	<script type="text/javascript">
 		
 	<%=new AlertDialog(authentification).getMessage()%>
-	
-	
+		
 	</script>
-	
-	<div class="container margedebut" >
 
-		<div class="panel barrerecherche">
+	<div class="container" style="margin-top: 100px">
+
+		<div class="panel panel-primary"">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-sm-12">
-					<p class="text-tuto">Retrouvez les messages et les nouveautés de Wayd.</p>
-					</div>
-					</div>
-				<div class="row">
 					<div class="col-sm-2">
-						<form method="post" action="MesMessages" id="formulaire"
+						<form method="post" action="MesActivites" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
-								<select class="form-control" id="idFiltreMessage"
-									name="etatMessage">
+								<select class="form-control" id="idEtatActivite"
+									name="etatActivite">
 
 									<%
-										for (TypeEtatMessage etatMessage:listEtatMessage) {
+										for (TypeEtatActivite etatActivite:listEtatActivite) {
 									%>
-									<option value="<%=etatMessage.getId()%>"
-										<%=Outils.jspAdapterListSelected(etatMessage.getId(), filtre.getTypeMessage())%>>
-										<%=etatMessage.getLibelle()%></option>
+									<option value="<%=etatActivite.getId()%>"
+										<%=Outils.jspAdapterListSelected(etatActivite.getId(), filtre.getTypeEtatActivite())%>>
+										<%=etatActivite.getLibelle()%></option>
 									<%
 										}
 									%>
@@ -99,9 +92,10 @@
 						</form>
 					</div>
 
-					<div class="col-sm-2 ">
-						<button  title="<%=MesMessagesProText.INFO_SUPPRIME_SELECTION %> name="supprimerMessages" class="btn btn-default">Effacez</button>
+					<div class="col-sm-2 col-sm-offset-8 ">
+						<button href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
 					</div>
+
 
 				</div>
 
@@ -109,50 +103,56 @@
 			</div>
 
 		</div>
-		<table class="table table-responsive" border="3"  id="matable">
-			<thead   class="barrerecherche"  >
+		<table class="table table-responsive" border="3" id="matable">
+			<thead style="background-color: #2196F3;" align="center">
 				<tr>
-					<th  style="width:10%;"  class="text-center">Date</th>
-					<th class="text-center">Message</th>
-					
-					<th   style="width:10%;"  class="text-center"><input type="checkbox" id="ckAll">
-						<th   style="width:10%;" class="text-center">Action</th>
-				
-					
-					<th style="width:10%;"  class="text-center">Lu</th>
-				
+					<th style="width: 10%;" class="text-center">Etat</th>
+					<th class="text-center">Titre</th>
+					<th style="width: 5%;" class="text-center">Vus</th>
+					<th style="width: 20%;" class="text-center">Date</th>
+					<th style="width: 15%;" class="text-center">Action</th>
+					<th style="width: 10%;" class="text-center"><input
+						type="checkbox" id="ckAll">
 				</tr>
 			</thead>
 			<tbody
 				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 
 				<%
-					ArrayList<MessageBean> listMessage =
-					(ArrayList<MessageBean>) request.getAttribute("listMesMessages");
-																																																																			    
-							    if (listMessage!=null)
-							for (MessageBean messageBean : listMessage) {
-							String lienEfface = "/wayd/SupprimeMessage?idmessage=" + messageBean.getId();
-							String lienLecture = "/wayd/LireMessage?idmessage=" + messageBean.getId();
-						
+					ArrayList<ActiviteBean> listMesActivite =
+						(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																																	    
+						    if (listMesActivite!=null)
+						for (ActiviteBean activite : listMesActivite) {
+						String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+						String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+						String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 
 				<tr>
-				<td style="vertical-align: middle;"><%=messageBean.getDateCreationHtml()%></td>
-					
-					<td class="idMessage" id=<%=messageBean.getId()%>
-						style="vertical-align: middle;"><%=messageBean.getMessage()%></td>
-					
-					<td><%=messageBean.getCheckHtml()%></td>
-					<td><button id='<%=lienEfface%>' name='supprimer'
-							type='button' class='btn btn-danger btn-sm'>
-							<span class='glyphicon glyphicon-trash'></span>
-						</button></td>
-					<td>
-					<%=messageBean.getLuHtml(lienLecture) %>	
-					</td>
-				
+					<td><%=activite.getEtatHtml()%></td>
+					<td class="idActivite" id=<%=activite.getId()%>
+						style="vertical-align: middle;"><%=activite.getTitre()%></td>
+					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
+					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
+					<td style="vertical-align: middle;"><a href="<%=lienDetail%>"
+						class="btn btn-info btn-sm"> <span
+							class="glyphicon glyphicon-search"></span>
+					</a> <!-- Affiche le bouton effacer si pas terminée --> <%
+ 	if (!activite.isTerminee()){
+ %> <a href="<%=lienEdit%>" class="btn btn-info btn-sm"> <span
+							class="glyphicon glyphicon-edit"></span>
+					</a>
+
+						<button id=<%out.println(lienEfface);%> name="supprimer"
+							type="button" class="btn btn-danger btn-sm">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button> <%
+ 	}
+ %></td>
+					<td><%=activite.getCheckHtml()%></td>
+
 				</tr>
 				<%
 					}
@@ -161,7 +161,8 @@
 		</table>
 
 	</div>
-<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
+	<%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
+
 
 	<script>
 		$(function() {
@@ -172,23 +173,22 @@
 				var action = $(this).attr('name')
 				if (action == 'supprimer')
 					DialogEffaceActivite(lien);
-				if (action == 'supprimerMessages')
+				if (action == 'supprimerActivites')
 					effaceActivites();
-				if (action == 'lireMessage')
-					lireMessage(lien);
 
 			});
 
 			$("#ckAll").click(function() {
 
 				litTable();
+			
 			});
 		});
 
 		$(function() {
 
-			$('#idFiltreMessage').on('change', function() {
-				var selected = $(this).val();
+			$('#idEtatActivite').on('change', function() {
+
 				document.getElementById("formulaire").submit();
 			});
 
@@ -200,23 +200,26 @@
 
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
-
-				if ($('#ckAll').is(":checked")) {
+			
+					if ($('#ckAll').is(":checked")) {
 
 					checkBox.prop("checked", true); // it is checked
-				} else {
+				
+						} else {
 
 					checkBox.prop("checked", false); // it is checked
 
 				}
 
 			});
+
+		
 		}
 
-		function DialogEffaceMessages() {
+		function DialogEffaceActivites() {
 
 			BootstrapDialog.show({
-				title : 'Efface messages',
+				title : 'Efface activité',
 				message : 'Confirmez',
 				buttons : [
 
@@ -230,7 +233,7 @@
 				{
 					label : 'Oui',
 					action : function(dialog) {
-						document.getElementById("form_listMessages").submit();
+						document.getElementById("form_listActivites").submit();
 						dialog.close();
 					}
 				}
@@ -257,7 +260,7 @@
 				{
 					label : 'Oui',
 					action : function(dialog) {
-						effaceMessage(lien);
+						effaceActivite(lien);
 						dialog.close();
 					}
 				}
@@ -267,19 +270,19 @@
 
 		}
 
-		function effaceMessage(lien) {
+		function effaceActivite(lien) {
 			location.href = lien;
 		}
-				
 	</script>
 
-	<form id="form_listMessages" action="SupprimeMessages" method="post">
-		<input id="idListMessages" type="hidden" name="listMessage"></input>
+
+	<form id="form_listActivites" action="SupprimeActivites" method="post">
+		<input id="idListActivites" type="hidden" name="listActivite"></input>
 	</form>
 	<script type="text/javascript">
 		function effaceActivites() {
 
-			var listMessage = "";
+			var listActivite = "";
 			var nbrLigne = 0;
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
@@ -287,9 +290,9 @@
 
 				if (checkBox.is(":checked")) {
 
-					var id = $(this).find('.idMessage').attr('id');
+					var id = $(this).find('.idActivite').attr('id');
 					if (id != null) {
-						listMessage = listMessage + id + ";";
+						listActivite = listActivite + id + ";";
 						nbrLigne++;
 					}
 				}
@@ -297,17 +300,12 @@
 			});
 			if (nbrLigne > 0) {
 
-				document.getElementById("idListMessages").value = listMessage;
-				DialogEffaceMessages();
+				document.getElementById("idListActivites").value = listActivite;
+				DialogEffaceActivites();
 
 			}
 
 		}
-
-		function lireMessage(lien) {
-			location.href = lien;
-		}
-		
 	</script>
 
 </body>

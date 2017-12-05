@@ -54,20 +54,25 @@ public class MesActivites extends HttpServlet {
 
 			case TypeEtatActivite.ENCOURS:
 				jumbotron = new JumbotronJsp("Informations",
-						"Pas d'activité en cours", "Proposez des activites");
+						"Vous n'avez aucune activité en cours."
+						+ " N'hésiter à proposer des activités via le menu"
+						+ " <a href='/wayd/AjouteActivitePro'>Proposer. </a>", "Proposez des activites");
 				request.setAttribute("jumbotron", jumbotron);
 				break;
 
 			case TypeEtatActivite.PLANIFIEE:
 				jumbotron = new JumbotronJsp("Informations",
-						"Aucune activités planifiées", "Proposez des activites");
+						"Vous n'avez aucune activité en cours. N'hésiter à proposer"
+						+ " des activités via le menu <a href='/wayd/AjouteActivitePlanifiee'>Proposer. </a>", 
+						"Proposez des activites");
 				request.setAttribute("jumbotron", jumbotron);
 				break;
 
 			case TypeEtatActivite.TOUTES:
 				jumbotron = new JumbotronJsp("Informations",
-						"Aucune activités n'est présente",
-						"Proposez des activites");
+						"Vous n'avez aucune activité en cours."
+						+ " N'hésiter à proposer des activités via le menu"
+						+ " <a href='/wayd/AjouteActivitePro'>Proposer. </a>", "Proposez des activites");
 				request.setAttribute("jumbotron", jumbotron);
 				break;
 
@@ -89,16 +94,15 @@ public class MesActivites extends HttpServlet {
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-
 		FiltreRecherche filtre = authentification.getFiltre();
-
+		LOG.info("etat"+filtre.getTypeEtatActivite());
 		if (request.getParameter("etatActivite") != null) {
 			int etatActivite = Integer.parseInt(request
 					.getParameter("etatActivite"));
 			filtre.setTypeEtatActivite(etatActivite);
 
 		}
-
+LOG.info("etat"+filtre.getTypeEtatActivite());
 		ArrayList<ActiviteBean> listMesActivite = ActiviteDAO.getMesActivite(
 				authentification.getProfil().getId(),
 				filtre.getTypeEtatActivite());

@@ -62,7 +62,7 @@
 					</div>
 
 					<div id="success"></div>
-					<button type="submit" class="btn btn-info btn-lg"><%=ContactProText.LABEL_BUTTON_ENVOYER%></button>
+					<button type="submit" class="btnwayd btn-lg "><%=ContactProText.LABEL_BUTTON_ENVOYER%></button>
 				</form>
 			</div>
 

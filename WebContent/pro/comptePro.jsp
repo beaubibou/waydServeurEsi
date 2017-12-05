@@ -54,15 +54,7 @@
 	%>
 	<%@ include file="menu.jsp"%>
 
-
-	<div class="container" style="margin-top: 50px;">
-		<div class="page-header">
-			<h1><%=CompteProText.TITRE_JUMBO %></h1>
-		</div>
-		<p><%=CompteProText.MESSAGE_JUMBO_L1 %></p>
-
-	</div>
-	<div class="container">
+	<div class="container margedebut" >
 		<div id="loginbox" class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
@@ -81,8 +73,9 @@
 							<div class="col-sm-8">
 								<form action="/wayd/ChargePhotoPro" method="post"
 									enctype="multipart/form-data">
-									<input type="file" name="file" size="50" /> <input
-										type="submit" value="Envoyer" class="btn btn-info" />
+									<input type="file" name="file" size="50" /> 
+									<br><input
+										type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
 								</form>
 							</div>
 						</div>
@@ -105,7 +98,7 @@
 								</div>
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="typro">Compte:</label> <input type="text"
+										<label for="typro"><%=CompteProText.TYPE_COMPTE%></label> <input type="text"
 											class="form-control" disabled id="typepro"
 											value="Professionel">
 									</div>
@@ -131,9 +124,10 @@
 										<label for="tel"><%=CompteProText.LABEL_TELEPHONE %></label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="XX-XX-XX-XX-XX" name="telephone"
-										pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
+										placeholder="XXXXXXXXXX" name="telephone"
+										pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}"
 										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>"
+										required
 										value=<%=OutilsHtml.convertRequeteToString(profil.getTelephoneStr())%>>
 								</div>
 
@@ -147,7 +141,9 @@
 										<label for="siret"><%=CompteProText.LABEL_NUMERO_SIRET %></label>
 									</div>
 									<input type="text" class="form-control" id="siret"
-										maxlength="<%=CompteProText.TAILLE_SIRET_MAX%>"
+										maxlength='<%=CompteProText.TAILLE_SIRET_MAX%>'
+										pattern="[0-9]{14}"
+										
 										placeholder='<%=CompteProText.HINT_SIRET%>' name="siret"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiret())%>>
 								</div>
@@ -174,10 +170,10 @@
 						</div>
 
 						<h5 class="nbrcaracteremax" id="nbr">
-							0 Caractére sur "<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
+							0 Caractére  "<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
 						</h5>
 
-						<button type="submit" class="btn btn-info">Modifier</button>
+						<button type="submit" class="btnwayd btn-lg">Sauvegarder</button>
 
 						<div class="form-group">
 
@@ -259,6 +255,7 @@
 	<script>
 		function valideFormulaire() {
 
+			alert("lmlk");
 			latitude = document.getElementById("latitude").value;
 			longitude = document.getElementById("longitude").value;
 			if (latitude == 0 || longitude == 0) {
@@ -285,7 +282,7 @@
 				var nombreCaractere = $(this).val().length;
 				//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / <%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>';
+				var msg = nombreCaractere + '/ <%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>';
 
 												$('#nbr').text(msg);
 												// Le script qui devra calculer et afficher le nombre de mots et de caractères
@@ -296,9 +293,9 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + " Caractere(s) /"
+		var msg = nombreCaractere + "/"
 				+
-	<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
+		<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
 		;
 		$('#nbr').text(msg);
 	</script>

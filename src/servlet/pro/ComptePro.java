@@ -18,6 +18,7 @@ import com.sun.mail.handlers.text_html;
 import texthtml.pro.CommunText;
 import texthtml.pro.Erreur_HTML;
 import wayde.bean.MessageServeur;
+import website.dao.PersonneDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
@@ -82,9 +83,9 @@ public class ComptePro extends HttpServlet {
 		String telephone = request.getParameter("telephone");
 		String siteWeb = request.getParameter("siteweb");
 		String siret = request.getParameter("siret");
-
+		int idpersonne=authentification.getId();
 		MessageServeur messageServeur = testParametreRequete(nom, adresse,
-				commentaire, latitude, longitude, telephone, siteWeb, siret);
+				commentaire, latitude, longitude, telephone, siteWeb, siret,idpersonne);
 		if (!messageServeur.isReponse()) {
 
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
@@ -131,7 +132,7 @@ public class ComptePro extends HttpServlet {
 
 	private MessageServeur testParametreRequete(String nom, String adresse,
 			String commentaire, double latitude, double longitude,
-			String telephone, String siteWeb, String siret) {
+			String telephone, String siteWeb, String siret,int idPersonne) {
 		// TODO Auto-generated method stub
 
 		nom=nom.trim();
@@ -147,14 +148,13 @@ public class ComptePro extends HttpServlet {
 			return new MessageServeur(false,
 					CommunText.PSEUDO_LIMITE_A_CARATERE());
 		
-	
-		if (!testFormatTelephone(telephone)) {
+		
+		MessageServeur telephonneFormat=testFormatTelephone(telephone,idPersonne);
+		
+		if (!telephonneFormat.isReponse()) 
+			return telephonneFormat;
 
-			return new MessageServeur(false,
-					Erreur_HTML.NUMERO_TEL_NON_CONFORME);
-
-		}
-
+		
 		
 		if (commentaire!=null){
 			if (commentaire.length()>CommunText.TAILLE_DESCRIPTION_PROFIL_MAX)
@@ -167,19 +167,24 @@ public class ComptePro extends HttpServlet {
 		return new MessageServeur(true, "Ok");
 	}
 
-	private boolean testFormatTelephone(String telephone) {
+	private MessageServeur testFormatTelephone(String telephone,int idPersonne) {
 		// TODO Auto-generated method stub
 
 		if (telephone == null)
-			return true;
+			return new MessageServeur(false,Erreur_HTML.NUMERO_TELEPHONE_VIDE);
 
-		if (telephone.length() == 0)
-			return true;
+		if (telephone.isEmpty())
+			return new MessageServeur(false,Erreur_HTML.NUMERO_TELEPHONE_VIDE);
 
-		if (telephone.length() != 14)
-			return false;
 
-		return true;
+		if (telephone.length() != 10)
+			return new MessageServeur(false,Erreur_HTML.MAUVAISE_TAILLE_NUMERO_TELEPHONE);
+
+		
+		if (PersonneDAO.isTelephoneExistPersonne(telephone,idPersonne))
+			return new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
+		
+		 return new MessageServeur(true,"ok");
 	}
 
 }

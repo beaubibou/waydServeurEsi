@@ -29,13 +29,16 @@ public class JumbotronJsp {
 		
 		return  "<div class=\"container\">"
 				+ " <div class=\"jumbotron\">"
-				+ "<h1>"+ jumbotron.titre+ "</h1>"
+				+ "<h3>"+ jumbotron.titre+ "</h3>"
 				+ "<p>"+jumbotron.sousTitre+"</p></div>"
-				+"<p>"+jumbotron.message+"</p>";
+				;
+				
 		
 	}
 
 
+	
+	
 	public JumbotronJsp( String titre, String sousTitre,String message) {
 		super();
 		this.sousTitre = sousTitre;
@@ -45,8 +48,8 @@ public class JumbotronJsp {
 
 	public String getHtml() {
 
-		String  retour = "<div class=\"container\">"
-					+ " <div class=\"jumbotron\">"
+		String  retour = "<div class='container'>"
+					+ " <div class='jumbotron'>"
 					+ "<h1>"+ titre+ "</h1>"
 					+ "<p>"+sousTitre+"</p></div>"
 					+"<p>"+message+"</p>";

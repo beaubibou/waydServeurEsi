@@ -325,16 +325,19 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 
 	
 	if (PersonneDAO.isPseudoExist(pseudo))
-		new MessageServeur(false,"Le nom existe déja");
+		new MessageServeur(false,Erreur_HTML.PSEUDO_EXISTE);
 	
-	if (pwd==null)return new MessageServeur(false,"Mot de passe ne peut pas être vide");
-	if (pwd.length()<6)return new MessageServeur(false,"Le mot de passe doit faire 6 caractéres");
+	if (PersonneDAO.isTelephoneExist(telephone))
+		new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
 	
-	if (pwd1==null)return new MessageServeur(false,"Le mot de passe de confirmation n'est pas valide");
+	if (pwd==null)return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_VIDE);
+	if (pwd.length()<6)return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_6_CARACTERE);
+	
+	if (pwd1==null)return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_BIS_NOK);
 	
 	
 	if (!pwd.equals(pwd1)){
-		return new MessageServeur(false,"Le mot de passe de confirmation n'est pas valide");			
+		return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_BIS_NOK);			
 	}
 	
 	

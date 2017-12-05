@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import wayd.ws.TextWebService;
+
 
 public class ProfilNotation {
 	private static final Logger LOG = Logger.getLogger(ProfilNotation.class);
@@ -115,7 +117,7 @@ public class ProfilNotation {
 
 	public  String getAgeStr(Date datenaissance,boolean afficheage)
 	{
-		if (afficheage)return "Non communiqu�";
+		if (afficheage)return TextWebService.NON_COMMUNIQUE;
 		if (datenaissance!=null){
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
@@ -126,12 +128,12 @@ public class ProfilNotation {
 			{
 				yeardiff = yeardiff - 1;
 			}
-			if (yeardiff<0)return "Erreur";
-			if (yeardiff==0)return "Pas d'age indiqu�";
+			if (yeardiff<0)return TextWebService.ERREUR_INCONNUE;
+			if (yeardiff==0)return TextWebService.PAS_AGE_INDIQUE;
 			return Integer.toString(yeardiff) +" ans";
 		}
 
-		return "Pas d'age indiqu�";
+		return TextWebService.PAS_AGE_INDIQUE;
 	}
 
 

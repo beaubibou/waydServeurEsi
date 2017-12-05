@@ -3,8 +3,9 @@ package texthtml.pro;
 public class CompteProText {
 	
 	public static String HINT_SITEWEB="http://monsite.fr";
-	public static String HINT_SIRET="Numéro Siret";
-	public static String HINT_ADRESSE="Saissisez l'adresse";
+	public static String HINT_SIRET="Numéro de  Siret (14 chiffres) ";
+	public static String HINT_ADRESSE="Saissisez l'adresse de la structure.";
+	public static String TYPE_COMPTE="Type de compte";
 	
 	public static int TAILLE_PSEUDO_MAX = CommunText.TAILLE_PSEUDO_MAX;
 	public static int TAILLE_SITE_WEB_MAX = CommunText.TAILLE_SITE_WEB_MAX;
@@ -19,26 +20,25 @@ public class CompteProText {
 	public static String TITRE_JUMBO = "Votre compte";
 	public static String MESSAGE_JUMBO_L1 = "Renseigner votre profil";
 	
-	public static String LABEL_NOM = "Nom *";
-	public static String LABEL_SITE_WEB = "Site Web";
-	public static String LABEL_NUMERO_SIRET = "Numéro SIRET *";
-	public static String LABEL_ADRESSE = "Adresse *";
-	public static String LABEL_DESCRIPTION_PROFIL = "Description";
-	public static String LABEL_TELEPHONE = "Téléphone";
+	public static String LABEL_NOM = CommunText.LABEL_NOM;
+	
+	public static String LABEL_SITE_WEB = CommunText.LABEL_SITE_WEB;
+	public static String LABEL_NUMERO_SIRET = CommunText.LABEL_NUMERO_SIRET;
+	public static String LABEL_ADRESSE = CommunText.LABEL_ADRESSE;
+	public static String LABEL_DESCRIPTION_PROFIL =CommunText.LABEL_DESCRIPTION_PROFIL;
+	public static String LABEL_TELEPHONE = CommunText.LABEL_TELEPHONE;
 	
 	public static  String ALERT_GPS_NO_POSITION=CommunText.ALERT_GPS_NO_POSITION;
 			
 	
 	public static String getHintNomSociete() {
 
-		return "Nom de la société " + TAILLE_PSEUDO_MAX
-				+ " caractéres maximum";
+		return CommunText.getHintNomSociete();
 	}
 
 	public static String getHintDescriptionProfil() {
 
-		return "Décrivez votre activité " + TAILLE_DESCRIPTION_PROFIL_MAX
-				+ " caractéres maximum";
+		return CommunText.getHintDescriptionProfil();
 		
 	}
 	

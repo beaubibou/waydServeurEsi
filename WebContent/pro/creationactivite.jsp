@@ -1,6 +1,6 @@
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 <%@page import="texthtml.pro.CreationActiviteText"%>
-
+<%@page import="texthtml.pro.Erreur_HTML"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>><%=CreationActiviteText.TITRE_ONGLET %></title>
+<title>><%=CreationActiviteText.TITRE_ONGLET%></title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,44 +45,47 @@
 <body>
 
 	<%
-		
-	AuthentificationSite authentification=	new AuthentificationSite(request, response);
-	if (!authentification.isAuthentifiePro())
-	return;
-	
-	ProfilBean profil = authentification.getProfil();
+		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+			if (!authentification.isAuthentifiePro())
+			return;
+			
+			ProfilBean profil = authentification.getProfil();
 			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-					// Defini le li a rendre actif
+			// Defini le li a rendre actif
 		MenuEnum etatMenu=null;
 	%>
 
 	<%@ include file="menu.jsp"%>
-	<div class="container" style="margin-top: 30px">
-		<div class="page-header">
-			<h1><%=CreationActiviteText.TITRE_JUMBO %></h1>
-		</div>
-		<p><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1 %></p>
-		<p><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
-	</div>
 
-	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+
+	<div class="container" >
+		<div id="loginbox"
+			class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title"><%=CreationActiviteText.TITRE_PANEL %></div>
+					<div class="panel-title"><%=CreationActiviteText.TITRE_PANEL%></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
+
 						<div class="form-group">
-							<label for="titre"><%=CreationActiviteText.LABEL_TITRE%></label> <input type="text"
-								class="form-control" id="titre" required
+
+							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
+							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
+						<br>
+						</div>
+						
+
+						<div class="form-group">
+							<label for="titre"><%=CreationActiviteText.LABEL_TITRE%></label>
+							<input type="text" class="form-control" id="titre" required
 								placeholder="<%=CreationActiviteText.getHintTitreActivite()%>"
 								maxLength="<%=CreationActiviteText.TAILLE_TITRE_ACTIVITE_MAX%>"
 								name="titre" required>
 						</div>
+
 
 						<div class="form-group">
 							<div class="row">
@@ -111,8 +114,8 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite"><%=CreationActiviteText.LABEL_TYPE_ACTIVITE%></label> <select
-										class="form-control" id="type" name="typeactivite">
+									<label for="typeactivite"><%=CreationActiviteText.LABEL_TYPE_ACTIVITE%></label>
+									<select class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
 										%>
@@ -124,12 +127,11 @@
 
 								</div>
 							</div>
-
 						</div>
 
 						<div class="form-group">
-							<label for="adresse"><%=CreationActiviteText.LABEL_ADRESSE%></label> <input type="text"
-								class="form-control" id="adresse" required
+							<label for="adresse"><%=CreationActiviteText.LABEL_ADRESSE%></label>
+							<input type="text" class="form-control" id="adresse" required
 								value="<%=profil.getAdresse()%>" name="adresse"
 								onkeypress="initPosition()"
 								maxlength="<%=CreationActiviteText.TAILLE_ADRESSE_MAX%>">
@@ -144,11 +146,10 @@
 								name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">
-							
+
 							<%=CreationActiviteText.initNbrCaracteres()%></h5>
 
-
-						<button type="submit" class="btn btn-info">Proposer</button>
+						<button type="submit" class="btnwayd btn-lg">Proposer</button>
 
 						<div class="form-group">
 
@@ -162,9 +163,7 @@
 								placeholder="longitude" name="longitude"
 								value=<%=profil.getLongitudeFixe()%>>
 						</div>
-
-						<div class="form-group"></div>
-
+						
 					</form>
 
 				</div>
@@ -278,7 +277,7 @@
 		}
 
 		function valideFormulaire() {
-
+			
 			var datedebut = $('#datedebut').data('DateTimePicker').date();
 			var datefin = $('#datefin').data('DateTimePicker').date();
 
@@ -287,18 +286,24 @@
 			longitude = document.getElementById("longitude").value;
 
 			if (latitude == 0 || longitude == 0) {
-				alert();
-				BootstrapDialog
-						.alert('La position GPS de votre adresse n\'a pas été trouvée. Veuillez ressaisir votre adresse');
+			
+				BootstrapDialog.show({
+					message:"<%=CreationActivitePlanifieeText.ALERT_GPS_NO_POSITION%>"
+							});
+
 				return false;
 			}
 
 			if (datedebut > datefin) {
-				   BootstrapDialog.alert('La date de début est supérieure à la date de fin');
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DATEDEBUT_SUP_DATEFIN%>"
+							});
 				return false;
 			}
 			if (datefin < new Date()) {
-				   BootstrapDialog.alert('Votre date de fin est inférieur à la date du jour');
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DATEFIN_INF_NOW%>"
+							});
 				return false;
 			}
 
@@ -307,12 +312,16 @@
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			if (diffHeure > 8) {
-				   BootstrapDialog.alert('La durée ne peut pas exéder 8 heures');
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DUREE_PAS_SUPERIEUR_A%>"
+							});
 				return false;
 			}
 
 			if (diffHeure <1) {
-				   BootstrapDialog.alert('La durée ne peut pas être inférieur à 1 heures');
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DUREE_PAS_INFERIEURE_A%>"
+							});
 				return false;
 			}
 			return true;

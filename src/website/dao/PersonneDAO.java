@@ -331,6 +331,89 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		return false;
 	}
 	
+	public static boolean isTelephoneExist(String telephone) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from personne where telephone=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, telephone);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
+	
+	public static boolean isTelephoneExistPersonne(String telephone,int idPersonne) {
+		// TODO Auto-generated method stub
+
+		//Renvoi si le numero est déja utilisé par une personne différente de la personne en parametre
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from personne where telephone=? and idpersonne!=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, telephone);
+			preparedStatement.setInt(2, idPersonne);
+			
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
+	
 	public static boolean isProfilActif(int idpersonne) {
 		// TODO Auto-generated method stub
 

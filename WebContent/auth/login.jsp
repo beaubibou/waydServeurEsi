@@ -87,12 +87,12 @@
 									with Google</a> 
 					 -->			<div class="btn-group">		
 									<a id="btn-password" onclick="signPassword()"
-									class="btn btn-primary">Se connecter</a>
+									class="btn  btnwayd">Se connecter</a>
 								 <a href="/wayd/Home"  class="btn btn-info"><span
 								  class="glyphicon glyphicon-home" ></span> Accueil</a>
 									</div>
 									<a id="btn-primary" href="/wayd/auth/redemandeConfirmationMail.jsp"
-									class="btn btn-primary">Mail de confirmation non recu?</a>
+									class="btn  btnwayd">Mail de confirmation non recu?</a>
 
 							</div>
 						</div>
@@ -102,8 +102,8 @@
 							<div class="col-md-12 control">
 								<div
 									style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
-									Pas de compte! <a href="/wayd/CreerUserPro">
-										Inscrivez vous!! </a>
+									Pas de compte? <a href="/wayd/CreerUserPro">
+										Inscrivez-vous. </a>
 								</div>
 							
 							</div>

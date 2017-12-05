@@ -14,7 +14,9 @@ public class FiltreRecherche {
 	int typeAcces=0;
 	String adresse="Paris";
 	private String motCle="";
-	int typeMessage=TypeEtatMessage.TOUS;
+	int typeMessage=TypeEtatMessage.NONLU;
+	int typeEtatActivite=TypeEtatActivite.ENCOURS;
+	
 	
 	
 	public int getTypeMessage() {
@@ -25,7 +27,6 @@ public class FiltreRecherche {
 		this.typeMessage = typeMessage;
 	}
 
-	int typeEtatActivite=TypeEtatActivite.TOUTES;
 	
 	public int getTypeEtatActivite() {
 		return typeEtatActivite;
