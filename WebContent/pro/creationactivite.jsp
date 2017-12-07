@@ -67,16 +67,18 @@
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
+				
+				
 					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
 
-						<div class="form-group">
+						<div class="form-group"   style="border-bottom: 1px solid #888;">
 
 							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
 							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
-						<br>
-						</div>
 						
+						</div>
+					<br>	
 
 						<div class="form-group">
 							<label for="titre"><%=CreationActiviteText.LABEL_TITRE%></label>

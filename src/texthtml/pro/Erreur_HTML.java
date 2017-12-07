@@ -42,7 +42,9 @@ public class Erreur_HTML {
 	public static final String SIRET_VIDE = "Le SIRET doit être renseigné";
 	public static final String SIRET_MAUVAISE_TAILLE = "La numéro doit comporter 14 chiffres";
 	public static final String CREATION_COMPTE_NOK = "La création du compte a échoué";
-
+	public static final String APPLICATION_NON_DISPO_WAYDEUR = "L'application n'est pas disponible pour les waydeurs."
+			+ " Tu peux la retrouvez pour les particuliers sur le play store";
+	
 	
 	
 	

@@ -72,11 +72,13 @@
 					<form action="/wayd/AjouteActivitePlanifiee"
 						onsubmit="return valideFormulaire()" method="post">
 
-						<div class="form-group">
+						<div class="form-group"   style="border-bottom: 1px solid #888;">
+						
 							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE1%></p>
 							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE2%></p>
-							<br>
+						
 						</div>
+							<br>
 						<div class="form-group">
 							<label for="titre"><%=CreationActivitePlanifieeText.LABEL_TITRE%></label>
 							<input type="text" class="form-control" id="titre" required
@@ -203,13 +205,13 @@
 							<%=CreationActivitePlanifieeText.initNbrCaracteres()%></h5>
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="latitude"
+							<input type="hidden" class="form-control" id="latitude"
 								placeholder="latitude" name="latitude"
 								value=<%=profil.getLatitudeFixe()%>>
 						</div>
 						<div class="form-group">
 
-							<input type="text" class="form-control" id="longitude"
+							<input type="hidden" class="form-control" id="longitude"
 								placeholder="longitude" name="longitude"
 								value=<%=profil.getLongitudeFixe()%>>
 						</div>

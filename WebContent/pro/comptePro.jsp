@@ -62,13 +62,16 @@
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
-						<div class="form-group">
+						<div  style="border-bottom: 1px solid #888;">
 
 							<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L1%></p>
 								<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L2%></p>
 					
+					</div>
 						<br>
-						</div>
+					<br>
+							
+	
 					
 
 					<div class="form-group">

@@ -112,7 +112,7 @@
 			</div>
 
 		</div>
-		<table class="table table-responsive" border="3" id="matable">
+		<table class="table table-responsive " id="matable">
 			<thead class="entetetable" >
 				<tr>
 					<th style="width: 10%;" class="text-center">Etat</th>

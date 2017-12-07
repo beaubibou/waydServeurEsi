@@ -184,8 +184,10 @@ public class Connexion extends HttpServlet {
 				case ProfilBean.WAYDEUR:
 
 					session.invalidate();
-					response.sendRedirect("/wayd/auth/pageNoWaydeurSite.jsp");
-				
+					
+					request.setAttribute("message", Erreur_HTML.APPLICATION_NON_DISPO_WAYDEUR);	
+					request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);
+			
 					return;
 
 				}
