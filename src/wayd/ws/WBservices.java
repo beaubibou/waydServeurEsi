@@ -3220,12 +3220,10 @@ public class WBservices {
 				
 				// *******************Cree  ou met à jour le profil
 			    gestionUid(uid, idtoken, photostr, nom, gcmToken,email);
-
 				//***************************************
-				
 				connexion = CxoPool.getConnection();
 
-				
+			
 				PersonneDAO personnedao = new PersonneDAO(connexion);
 
 				Personne personne = personnedao.getPersonneByUID(uid);// Recherche

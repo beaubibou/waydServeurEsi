@@ -1,10 +1,6 @@
-/comparator
-/fcm
-/gcmnotification
+/comparator/
+/fcm/
+/gcmnotification/
 /log4j.xml
-/servlet
-/texthtml
-/threadpool
-/wayd
-/wayde
-/website
+/servlet/
+/wayd/

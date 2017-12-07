@@ -155,7 +155,7 @@ public class ComptePro extends HttpServlet {
 			return telephonneFormat;
 
 		
-		MessageServeur testFormatSiret=testFormatSiret(telephone,idPersonne);
+		MessageServeur testFormatSiret=testFormatSiret(siret,idPersonne);
 		
 		if (!testFormatSiret.isReponse()) 
 			return testFormatSiret;
@@ -200,7 +200,7 @@ public class ComptePro extends HttpServlet {
 			return new MessageServeur(false,Erreur_HTML.SIRET_VIDE);
 
 	
-
+LOG.info("Taille sirent"+siret.length());
 		if (siret.length() !=CommunText.TAILLE_SIRET_MAX )
 			return new MessageServeur(false,Erreur_HTML.SIRET_MAUVAISE_TAILLE);
 
