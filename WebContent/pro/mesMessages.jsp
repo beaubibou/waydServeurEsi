@@ -75,10 +75,11 @@
 					</div>
 					</div>
 				<div class="row">
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<form method="post" action="MesMessages" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
+							 <label for="idFiltreMessage">Status:</label>
 								<select class="form-control" id="idFiltreMessage"
 									name="etatMessage">
 
@@ -110,7 +111,7 @@
 
 		</div>
 		<table class="table table-responsive" border="3"  id="matable">
-			<thead   class="barrerecherche"  >
+			<thead   class="entetetable"  >
 				<tr>
 					<th  style="width:10%;"  class="text-center">Date</th>
 					<th class="text-center">Message</th>

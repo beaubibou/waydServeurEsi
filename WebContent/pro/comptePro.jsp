@@ -62,6 +62,15 @@
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
+						<div class="form-group">
+
+							<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L1%></p>
+								<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L2%></p>
+					
+						<br>
+						</div>
+					
+
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-4">
@@ -84,7 +93,20 @@
 
 					<form action="/wayd/ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
+					
+					
+					
 						<div class="form-group">
+						
+						<div class="row">
+								<div class="col-sm-2">
+									<div class="form-group">
+									<a id="btn-primary" href="/wayd/auth/changementmotdepasse.jsp"
+									class="btn  btnwayd">Changement de mot de passe</a>
+							</div>
+							</div>
+					 </div>	
+							
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
@@ -124,7 +146,7 @@
 										<label for="tel"><%=CompteProText.LABEL_TELEPHONE %></label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="XXXXXXXXXX" name="telephone"
+										placeholder="<%=CompteProText.HINT_TELEPHONE %>" name="telephone"
 										pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}"
 										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>"
 										required
@@ -142,7 +164,7 @@
 									</div>
 									<input type="text" class="form-control" id="siret"
 										maxlength='<%=CompteProText.TAILLE_SIRET_MAX%>'
-										pattern="[0-9]{14}"
+										pattern="[0-9]{<%=CompteProText.TAILLE_SIRET_MAX %>}"
 										
 										placeholder='<%=CompteProText.HINT_SIRET%>' name="siret"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiret())%>>

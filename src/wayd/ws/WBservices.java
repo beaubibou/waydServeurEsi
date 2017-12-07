@@ -44,8 +44,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
+
 import javax.naming.NamingException;
+
 import org.apache.log4j.Logger;
+
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -193,7 +196,7 @@ public class WBservices {
 					.get();
 			
 			String uid = token.getUid();
-		String email=token.getEmail();
+			String email=token.getEmail();
 			MessageServeur messageServeur=gestionUid(uid, idtoken, photostr, nom, gcmToken,email);
 
 			String loginfo = "testToken - " + (System.currentTimeMillis() - debut)
@@ -3126,6 +3129,7 @@ public class WBservices {
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 
 			Personne personne = personnedao.getPersonneJeton(idtoken);// Recherche
+			
 			// un
 
 			if (personne == null) {
@@ -3191,6 +3195,104 @@ public class WBservices {
 		return null;
 
 	}
+	
+	public Personne getPersonne(final String idtoken, final String photostr,
+			final String nom, final String gcmToken) {
+		Connection connexion = null;
+		long debut = System.currentTimeMillis();
+
+		
+		LOG.info("getPersonne");
+
+		if (FirebaseApp.getApps().isEmpty()) {
+
+			FirebaseApp.initializeApp(WBservices.optionFireBase);
+
+		}
+		
+	
+			FirebaseToken token;
+			try {
+				
+				token = FirebaseAuth.getInstance().verifyIdTokenAsync(idtoken).get();
+				String uid = token.getUid();
+				String email=token.getEmail();
+				
+				// *******************Cree  ou met à jour le profil
+			    gestionUid(uid, idtoken, photostr, nom, gcmToken,email);
+
+				//***************************************
+				
+				connexion = CxoPool.getConnection();
+
+				
+				PersonneDAO personnedao = new PersonneDAO(connexion);
+
+				Personne personne = personnedao.getPersonneByUID(uid);// Recherche
+			
+				
+				if (personne == null) {return null;}
+
+			
+					personnedao.updateChampCalculePersonne(personne.getId());// calcule
+																			// les
+																			// champs
+					personne.setMessage("Ok");
+
+					Droit droit = new PersonneDAO(connexion).getDroit(
+							personne.getId(), idtoken);
+
+					if (droit == null) {
+						personne.setMessage(TextWebService.PAS_RECONNU);
+						personne.setId(0);// echec connexion
+						return personne;
+					}
+
+					MessageServeur autorisation = droit.isDefautAccess();
+
+					if (!autorisation.isReponse()) {
+						personne.setId(0);// echec connexion
+						personne.setMessage(TextWebService.COMPTE_INACTIF);
+						return personne;
+					}
+
+					NotificationDAO notificationdao = new NotificationDAO(connexion);
+					notificationdao.addNotificationFromAvis(personne.getId());
+
+					// ******** Met les notifications existantes � pas lu **//
+					String requete = "UPDATE  notification set lu=false "
+							+ " WHERE iddestinataire=? and idtype=1";
+					PreparedStatement preparedStatement = connexion
+							.prepareStatement(requete);
+					preparedStatement.setInt(1, personne.getId());
+					preparedStatement.execute();
+					preparedStatement.close();
+
+					String loginfo = "getPersonne - "
+							+ (System.currentTimeMillis() - debut) + "ms";
+					LOG.info(loginfo);
+		
+					return personne;
+			
+				
+				
+				}
+				catch (InterruptedException | ExecutionException | SQLException | NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+		
+			
+			
+			
+		
+						
+		
+	
+
+}
+	
 
 	public int test_getNbrActiviteEncours() {
 

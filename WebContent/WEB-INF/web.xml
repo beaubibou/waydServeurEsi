@@ -723,4 +723,14 @@
     <servlet-name>MapAdmin</servlet-name>
     <url-pattern>/MapAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChangementMotDePasse</display-name>
+    <servlet-name>ChangementMotDePasse</servlet-name>
+    <servlet-class>servlet.ChangementMotDePasse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangementMotDePasse</servlet-name>
+    <url-pattern>/ChangementMotDePasse</url-pattern>
+  </servlet-mapping>
 </web-app>

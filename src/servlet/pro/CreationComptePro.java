@@ -74,7 +74,6 @@ public class CreationComptePro extends HttpServlet {
 						 commentaire,siret,telephonne, profil.getId());
 				profil.setPseudo(nom);
 				profil.setAdresse(adresse);
-				
 				profil.setCommentaire(commentaire);
 				profil.setTypeuser(ProfilBean.PRO);
 				profil.setLatitude(latitude);

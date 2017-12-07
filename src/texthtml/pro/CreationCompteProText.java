@@ -11,10 +11,12 @@ public class CreationCompteProText {
 
 	public static String HINT_ADRESSE = CommunText.HINT_ADRESSE;
 	public static String HINT_EMAIL = "Renseignez votre adresse email";
-	public static String HINT_MOT_DE_PASSE = "Mot de passe";
-	public static String HINT_MOT_DE_PASSE_BIS = "Confirmez le mot de passe";
+	public static String HINT_MOT_DE_PASSE = CommunText.HINT_MOT_DE_PASSE;
+	public static String HINT_MOT_DE_PASSE_BIS =CommunText.HINT_MOT_DE_PASSE_BIS ;
+	public static String HINT_SIRET=CommunText.HINT_SIRET;
+	public static String HINT_TELEPHONE=CommunText.HINT_TELEPHONE;
 		
-	public static String TITRE_JUMBO = "Proposez vos activités";
+	public static String TITRE_JUMBO = "Bienvenue dans l'interface WAYD";
 	public static String MESSAGE_JUMBO_LIGNE1 = "Proposez vos activités gratuites à la communauté. Une activité ne peut pas exéder 8 heures.";
 	public static String MESSAGE_JUMBO_LIGNE2 = "Vous pouvez planifier jusqu à 5 activités simultanément.";
 

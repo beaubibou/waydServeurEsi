@@ -133,7 +133,7 @@ public class Connexion extends HttpServlet {
 
 				
 				request.setAttribute("message",
-						"La crÃ©ation du compte Ã  Ã©chouÃ©e");
+						Erreur_HTML.CREATION_COMPTE_NOK);
 				request.getRequestDispatcher("commun/erreurConnection.jsp")
 						.forward(request, response);
 				return;

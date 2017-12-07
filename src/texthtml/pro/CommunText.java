@@ -6,15 +6,21 @@ public class CommunText {
 	public static final String LABEL_BUTTON_PROPOSEZ = "Proposez";
 	public static final String INFO_SUPPRIME_SELECTION ="Supprimez les selections";
 	public static int TAILLE_TITRE_ACTIVITE_MAX = 50;
+	
 	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 250;
 	public static int TAILLE_ADRESSE_MAX = 250;
 	public static String HINT_ADRESSE="Saissisez une adresse";
 	public static String HINT_TITRE="Saissisez un titre";
+	public static String HINT_TELEPHONE="XXXXXXXXXX";
+	public static final String HINT_MOT_DE_PASSE = "Saisissez le mot de passe";
+	public static final String HINT_MOT_DE_PASSE_BIS = "Ressaisir le mot de passe";
+	public static final String HINT_SIRET = "Numéro de  Siret (14 chiffres) ";
+	public static final String HINT_EMAIL = "Adresse email";
 
 	
 	public static int TAILLE_PSEUDO_MAX = 40;
 	public static int TAILLE_SITE_WEB_MAX = 100;
-	public static int TAILLE_TELEPHONNE_MAX = 14;
+	public static int TAILLE_TELEPHONNE_MAX = 10;
 	public static int TAILLE_SIRET_MAX = 14;
 	public static int TAILLE_DESCRIPTION_PROFIL_MAX = 250;
 	

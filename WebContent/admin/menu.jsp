@@ -23,6 +23,7 @@
 			<li><a href="ListProbleme">Problèmes</a></li>
 			<li><a href="ListSuggestion">Suggestions</a></li>
 			<li><a href="ListProfil">Profils</a></li>
+			<li><a href="MesActivites">Site pro</a></li>
 			<li><a href="MapAdmin">Carte</a></li>
 			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
 

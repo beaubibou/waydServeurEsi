@@ -14,17 +14,17 @@
 					class="icon-bar"></span>
 			</button>
 
-		 	<img style="margin-top: 10px;margin-right: 10px;" src="/wayd/img/waydLogoLR.png" class="img-rounded" 
+			<img style="margin-top: 10px; margin-right: 10px;"
+				src="/wayd/img/waydLogoLR.png" class="img-rounded"
 				alt="Cinque Terre" width="30" height="30">
-				
 
 		</div>
-		
+
 
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-			
-		
+
+
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.home)%>><a
 					href="/wayd/Home"><%=MenuProText.ACCUEIL%></a></li>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.moncompte)%>><a
@@ -49,22 +49,33 @@
 
 					</ul></li>
 
-				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.apropos)%>><a
-					href="/wayd/Apropos"><%=MenuProText.A_PROPOS%></a></li>
+
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a
 					href="/wayd/Contact">Contact</a></li>
-
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-
-
-
-
-
 
 				<%
 					ProfilBean profiltmp = (ProfilBean) request.getSession()
 							.getAttribute("profil");
+					if (profiltmp != null)
+						if (profiltmp.isAdmin()) {
+				%>
+
+				<li <%=MenuHtml.getActiviteClass(null,
+							MenuEnum.contact)%>><a
+					href="/wayd/Acceuil">Admin</a></li>
+
+				<%
+					}
+				%>
+
+			</ul>
+
+
+			<ul class="nav navbar-nav navbar-right">
+
+
+
+				<%
 					if (profiltmp != null) {
 				%>
 

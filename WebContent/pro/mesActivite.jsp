@@ -71,14 +71,16 @@
 			<div class="row">
 					<div class="col-sm-12">
 					<p class="text-tuto"><%=MesActivitesProText.TUTO_LIGNE1 %></p>
+					<br>
 					</div>
 					</div>
 					
 				<div class="row">
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<form method="post" action="MesActivites" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
+							 <label for="idEtatActivite">Status:</label>
 								<select class="form-control" id="idEtatActivite"
 									name="etatActivite">
 
@@ -111,7 +113,7 @@
 
 		</div>
 		<table class="table table-responsive" border="3" id="matable">
-			<thead class="barrerecherche" >
+			<thead class="entetetable" >
 				<tr>
 					<th style="width: 10%;" class="text-center">Etat</th>
 					<th class="text-center">Titre</th>

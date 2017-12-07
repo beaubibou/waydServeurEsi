@@ -1,7 +1,7 @@
 .panel-default>.panel-heading {
 	color: #333;
 	background-color: #ffbf00;
-	border-color: #000000;
+	border-color: #FFF;
 	font-weight: bold;
 	color: white;
 	font-family: Arial;
@@ -19,7 +19,7 @@
 
 /*Couleur de la barre de navigation quand menu selectionné*/
 .active a {
-	background-color: #e6ac00 !important;
+	background-color: #ffe699 !important;
 	color: #000000 !important;
 }
 
@@ -82,4 +82,11 @@ background-color:#ffBD45
 .barrerecherche{
 	
 		background-color: #ffbf00;
+	
 }
+
+.entetetable{
+		background-color: #ffe699;
+
+	}
+	

@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.auth.UserRecord.UpdateRequest;
 
 import wayd.ws.WBservices;
@@ -38,8 +39,7 @@ public class PersonneDAO {
 		if (uid == null)
 			return false;
 
-		supprimePersonneFireBase(uid,idPersonne);
-			
+		supprimePersonneFireBase(uid, idPersonne);
 
 		return true;
 
@@ -53,160 +53,151 @@ public class PersonneDAO {
 		PreparedStatement preparedStatement = null;
 		try {
 			connexion = CxoPool.getConnection();
-			String requete ="";
+			String requete = "";
 			connexion.setAutoCommit(false);
-		
+
 			requete = "DELETE FROM amelioration where  idpersonne=? ;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-		
+
 			requete = "DELETE FROM ami where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM ami where  idami=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM demandeami where  idorganisateur=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM demandeami where  idparticipant=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM message where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM message where  iddestinataire=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM messagebyact where  idemetteur=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM messagebyact where  iddestinataire=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM nbrvu where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM noter where  idpersonnenotee=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM noter where  idpersonnenotateur=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM notification where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM notification where  iddestinataire=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-	
+
 			requete = "DELETE FROM participer where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM plage where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM prefere where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM refusparticipation where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
-			//efface signaler_activité
-			
-			requete="delete from signaler_activite where idactivite in (select idactivite from activite where idpersonne=?)";
+
+			// efface signaler_activité
+
+			requete = "delete from signaler_activite where idactivite in (select idactivite from activite where idpersonne=?)";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM signaler_profil where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM refusparticipation where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
-			
+
 			requete = "DELETE FROM activite where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM personne where  idpersonne=?;";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			connexion.commit();
-			
-			
+
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -239,23 +230,22 @@ public class PersonneDAO {
 
 		}
 		return false;
-	
+
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-	
+
 	}
 
-	public static boolean supprimePersonneFireBase(String uid,int idPersonne) {
+	public static boolean supprimePersonneFireBase(String uid, int idPersonne) {
 
-		
 		try {
-	
+
 			if (FirebaseApp.getApps().isEmpty())
 				FirebaseApp.initializeApp(WBservices.optionFireBase);
-		
+
 			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
 			supprimePersonneDAO(idPersonne);
-			
+
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -265,21 +255,21 @@ public class PersonneDAO {
 			return false;
 		}
 	}
-	
-public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolean actif) {
 
-		
+	public static boolean desactivePersonneFireBase(String uid, int idPersonne,
+			boolean actif) {
+
 		try {
-	
-			
+
 			if (FirebaseApp.getApps().isEmpty())
 				FirebaseApp.initializeApp(WBservices.optionFireBase);
-		
-			UpdateRequest request=new UpdateRequest(uid);
-			
+
+			UpdateRequest request = new UpdateRequest(uid);
+
 			request.setDisabled(!actif);
-			UserRecord userRecord = FirebaseAuth.getInstance().updateUserAsync(request).get();
-			
+			UserRecord userRecord = FirebaseAuth.getInstance()
+					.updateUserAsync(request).get();
+
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -289,8 +279,7 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 			return false;
 		}
 	}
-	
-	
+
 	public static boolean isPseudoExist(String pseudo) {
 		// TODO Auto-generated method stub
 
@@ -331,6 +320,47 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		return false;
 	}
 	
+	public static boolean isSiretExist(String siret) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT siret from personne where siret=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, siret);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
+
+
 	public static boolean isTelephoneExist(String telephone) {
 		// TODO Auto-generated method stub
 
@@ -371,21 +401,24 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		return false;
 	}
 	
-	public static boolean isTelephoneExistPersonne(String telephone,int idPersonne) {
+	public static boolean isSiretExistPersonne(String siret,
+			int idPersonne) {
 		// TODO Auto-generated method stub
 
-		//Renvoi si le numero est déja utilisé par une personne différente de la personne en parametre
+		// Renvoi si le numero est déja utilisé par une personne différente de
+		// la personne en parametre
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 
 		try {
 			connexion = CxoPool.getConnection();
-			String requete = " SELECT idpersonne from personne where telephone=? and idpersonne!=? ";
+			String requete = " SELECT siret from personne where siret=? and idpersonne!=? ";
 			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.setString(1, telephone);
+			preparedStatement.setString(1, siret);
 			preparedStatement.setInt(2, idPersonne);
-			
+
 			rs = preparedStatement.executeQuery();
 
 			if (rs.next())
@@ -413,7 +446,52 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		}
 		return false;
 	}
-	
+
+	public static boolean isTelephoneExistPersonne(String telephone,
+			int idPersonne) {
+		// TODO Auto-generated method stub
+
+		// Renvoi si le numero est déja utilisé par une personne différente de
+		// la personne en parametre
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from personne where telephone=? and idpersonne!=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, telephone);
+			preparedStatement.setInt(2, idPersonne);
+
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				if (connexion != null)
+					connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
+
 	public static boolean isProfilActif(int idpersonne) {
 		// TODO Auto-generated method stub
 
@@ -422,7 +500,7 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		ResultSet rs = null;
 
 		try {
-			
+
 			connexion = CxoPool.getConnection();
 			String requete = " SELECT actif from personne where idpersonne=? ";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -430,8 +508,8 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 			rs = preparedStatement.executeQuery();
 
 			if (rs.next())
-			if (rs.getBoolean("actif")==true)
-				return true;
+				if (rs.getBoolean("actif") == true)
+					return true;
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -505,7 +583,7 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 				if (!pseudo.isEmpty())
 					requete = requete + " and prenom like ?";
 			}
-			
+
 			if (email != null) {
 				if (!email.isEmpty())
 					requete = requete + " and mail like ?";
@@ -547,21 +625,20 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 
 			// *********************************************************************
 			preparedStatement = connexion.prepareStatement(requete);
-		
-			if (typeUser != TypeUser.ADMIN) 
+
+			if (typeUser != TypeUser.ADMIN)
 				if (typeUser == TypeUser.PRO || typeUser == TypeUser.WAYDEUR) {
 					preparedStatement.setInt(index, typeUser);
 					index++;
 				}
-			
-		
+
 			if (pseudo != null) {
 				if (!pseudo.isEmpty()) {
 					preparedStatement.setString(index, pseudo);
 					index++;
 				}
 			}
-			
+
 			if (email != null) {
 				if (!email.isEmpty()) {
 					preparedStatement.setString(index, email);
@@ -613,7 +690,7 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr,mail);
+						sexeStr, mail);
 				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
@@ -700,7 +777,7 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexestr,mail);
+						sexestr, mail);
 
 			}
 			return profil;
@@ -810,13 +887,14 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
 				String mail = rs.getString("mail");
+			
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr,mail);
+						sexeStr, mail);
 
 			}
 
@@ -833,28 +911,21 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 
 	}
 
-
-
 	public static boolean activerProfilEtActivite(int idPersonne, boolean actif) {
 		// TODO Auto-generated method stub
-	
-	
+
 		String uid = PersonneDAO.getUID(idPersonne);
 
 		if (uid == null)
 			return false;
 
-		if (!desactivePersonneFireBase(uid,idPersonne,actif))
-		return false;
-		
-		
+		if (!desactivePersonneFireBase(uid, idPersonne, actif))
+			return false;
+
 		Connection connexion = null;
 
-		
 		// ACTIVE OU DESACTIVE PROFIL ET ACTIVITE
-		
-		
-		
+
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -862,17 +933,15 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
-			preparedStatement.setInt(2,idPersonne);
+			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
-		    
-			requete = "UPDATE  personne set actif=? "
-					+ " WHERE idpersonne=?";
+
+			requete = "UPDATE  personne set actif=? " + " WHERE idpersonne=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
 			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
-			
-			
+
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
@@ -897,9 +966,9 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 			}
 		}
 		return true;
-			
-		
+
 	}
+
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
 			double longitude, String commentaire, String siret,
 			String telephonne, int idpersonne) {
@@ -959,25 +1028,51 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 	public boolean updateProfilProFull(String pseudo, String adresse,
 			double latitude, double longitude, String commentaire,
 			int idpersonne, String siteWeb, String telephone, String siret) {
-		// TODO Auto-generated method stub
 
 		if (pseudo != null)
 			pseudo = pseudo.trim();
-	
+
 		if (adresse != null)
 			adresse = adresse.trim();
-	
+
 		if (siteWeb != null)
 			siteWeb = siteWeb.trim();
 
 		if (siret != null)
 			siret = siret.trim();
 
-	
-		
-		LOG.info("coomentaire avanté"+commentaire);
 		if (siteWeb != null)
 			siteWeb = siteWeb.trim();
+
+		try {
+
+			if (FirebaseApp.getApps().isEmpty())
+				FirebaseApp.initializeApp(WBservices.optionFireBase);
+
+			CreateRequest request = new CreateRequest()
+
+			.setPhoneNumber("+"+telephone).setDisplayName(pseudo);
+
+			FirebaseAuth.getInstance().createUserAsync(request).get();
+
+			updateProfilProFull(pseudo, adresse, latitude, longitude,
+					commentaire, idpersonne, siteWeb, telephone, siret);
+
+			return true;
+
+		} catch (InterruptedException | ExecutionException e) {
+
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	public boolean updateProfilProDAO(String pseudo, String adresse,
+			double latitude, double longitude, String commentaire,
+			int idpersonne, String siteWeb, String telephone, String siret) {
+		// TODO Auto-generated method stub
 
 		Connection connexion = null;
 		try {
@@ -1237,6 +1332,5 @@ public static boolean desactivePersonneFireBase(String uid,int idPersonne,boolea
 		// TODO Auto-generated method stub
 		return new ArrayList<AvisBean>();
 	}
-		
 
 }

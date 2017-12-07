@@ -299,6 +299,24 @@ public class PersonneDAO {
 		stmt.close();
 		return getPersonneDbByRs(rs);
 	}
+	
+	public Personne getPersonneByUID(String uid) throws SQLException {
+
+		Statement stmt = connexion.createStatement();
+		// System.out.println("Cherche compte personen par token:");
+
+		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
+				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
+				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
+				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,"
+				+ "rayon,admin,typeuser,siteweb,telephone,siret FROM personne where login=?";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement.setString(1, uid);
+		ResultSet rs = preparedStatement.executeQuery();
+		stmt.close();
+		return getPersonneDbByRs(rs);
+	}
 
 	public Personne getPersonneDbByRs(ResultSet rs) throws SQLException {
 		Personne personne = null;

@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@page import="texthtml.pro.MotPasseOublie"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
 <title>Mot de passe oublié</title>
 <meta charset="utf-8">
@@ -23,13 +26,12 @@
 <script src="/wayd/js/initfirebase.js"></script>
 </head>
 <body>
-
-	<div class="container">
+<div class="container">
 		<div class="page-header">
 
 			<h1>
 				<img src="/wayd/img/waydLogoHD.png" style="margin-right: 50px;"
-					class="img-rounded" alt="Cinque Terre" width="100" height="100">Réinitialiser le mot de passe
+					class="img-rounded" alt="Cinque Terre" width="100" height="100"><%=MotPasseOublie.JUMBO_TITRE %>
 			</h1>
 		</div>
 		
@@ -41,7 +43,7 @@
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Red</div>
+					<div class="panel-title"><%=MotPasseOublie.TITRE_PANEL %></div>
 
 				</div>
 
@@ -56,7 +58,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
 								type="text" class="form-control" name="email"
-								placeholder="adresse e-mail">
+								placeholder="<%=MotPasseOublie.HINT_EMAIL%>">
 						</div>
 
 
@@ -68,17 +70,16 @@
 
 								<a id="btn-password" onclick="valideFormulaire()"
 									class="btn btnwayd">Envoyer la demande </a> <a
-									href="/wayd/Home" class="btn btn-info"><span
+									href="/wayd/Home" class="btn btnwayd"><span
 									class="glyphicon glyphicon-home"></span> Accueil</a>
 							
 							</div>
 							
 						</div>
-						</form>
 				</div>
 
 
-				
+				</form>
 
 			</div>
 		</div>
@@ -118,8 +119,7 @@ auth.sendPasswordResetEmail(email).then(function() {
   BootstrapDialog.alert(errorMessage);
 });
 
-	
-	
+
 	
 }
 </script>
@@ -131,5 +131,6 @@ auth.sendPasswordResetEmail(email).then(function() {
 	}
 
 </script>
+
 </body>
 </html>

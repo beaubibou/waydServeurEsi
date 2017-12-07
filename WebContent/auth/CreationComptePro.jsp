@@ -73,12 +73,10 @@
 
 			<h1>
 				<img src="/wayd/img/waydLogoHD.png" style="margin-right: 50px;"
-					class="img-rounded" alt="Cinque Terre" width="100" height="100">Créer
-				votre compte
+					class="img-rounded" alt="Cinque Terre" width="100" height="100"><%=CreationCompteProText.TITRE_JUMBO %>
 			</h1>
 		</div>
-		<p>blablal......</p>
-
+	
 
 	</div>
 
@@ -134,13 +132,13 @@
 									type="text"
 									maxlength="<%=CreationCompteProText.TAILLE_PSEUDO_MAX%>"
 									value="<%=pseudo%>" class="form-control" id="nom"
-									placeholder="<%=CreationCompteProText.getHintDescriptionProfil()%>" name="nom" required>
+									placeholder="<%=CreationCompteProText.getHintNomSociete()%>" name="nom" required>
 							</div>
 
 							<div class="form-group">
 								<label for="nom"><%=CreationCompteProText.LABEL_NUMERO_SIRET%></label>
 								<input type="text" class="form-control" id="nom"
-									placeholder="numero siret " value="<%=siret%>" name="siret"
+									placeholder="<%=CreationCompteProText.HINT_SIRET%>" value="<%=siret%>" name="siret"
 									maxlength="<%=CreationCompteProText.TAILLE_SIRET_MAX%>"
 									required>
 							</div>
@@ -148,8 +146,8 @@
 							<div class="form-group">
 								<label for="nom"><%=CreationCompteProText.LABEL_TELEPHONE%></label>
 								<input type="text" class="form-control" id="nom"
-									placeholder="XXXXXXXXXX"
-									pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}{0-9]{2}"
+									placeholder="<%=CreationCompteProText.HINT_TELEPHONE%>"
+									pattern="[0-9]{10}"
 									name="telephone" value="<%=telephone%>"
 									maxlength="<%=CreationCompteProText.TAILLE_TELEPHONNE_MAX%>">
 							</div>

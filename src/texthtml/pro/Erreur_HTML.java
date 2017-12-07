@@ -35,6 +35,15 @@ public class Erreur_HTML {
 	public static final String AU_MOINS_UN_JOUR_SELECTIONNE="Au moins un jour doit être selectionné";
 	public static final String DUREE_PAS_SUPERIEUR_A="La durée ne doit pas excéder 8 heures";
 	public static final String DUREE_PAS_INFERIEURE_A="La durée ne peut pas être inférieur à 8 heures";
+	public static final String MOT_DE_PASSEBIS_NOK="Les mots de passe ne correspondent pas";
+	public static final String MOT_DE_PASSE_CHANGE="Le mot de passe a été changé";
+	public static final String MOT_DE_PASSE_ANCIEN_NOK="Le mot de passe n'est pas valide";
+	public static final String SIRET_EXISTE = "Le numéro SIRET existe déja";
+	public static final String SIRET_VIDE = "Le SIRET doit être renseigné";
+	public static final String SIRET_MAUVAISE_TAILLE = "La numéro doit comporter 14 chiffres";
+	public static final String CREATION_COMPTE_NOK = "La création du compte a échoué";
+
+	
 	
 	
 	

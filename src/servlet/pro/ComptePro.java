@@ -155,7 +155,12 @@ public class ComptePro extends HttpServlet {
 			return telephonneFormat;
 
 		
+		MessageServeur testFormatSiret=testFormatSiret(telephone,idPersonne);
 		
+		if (!testFormatSiret.isReponse()) 
+			return testFormatSiret;
+		
+				
 		if (commentaire!=null){
 			if (commentaire.length()>CommunText.TAILLE_DESCRIPTION_PROFIL_MAX)
 				return new MessageServeur(false,
@@ -177,7 +182,7 @@ public class ComptePro extends HttpServlet {
 			return new MessageServeur(false,Erreur_HTML.NUMERO_TELEPHONE_VIDE);
 
 
-		if (telephone.length() != 10)
+		if (telephone.length() != CommunText.TAILLE_TELEPHONNE_MAX)
 			return new MessageServeur(false,Erreur_HTML.MAUVAISE_TAILLE_NUMERO_TELEPHONE);
 
 		
@@ -187,4 +192,22 @@ public class ComptePro extends HttpServlet {
 		 return new MessageServeur(true,"ok");
 	}
 
+	
+	private MessageServeur testFormatSiret(String siret,int idPersonne) {
+		// TODO Auto-generated method stub
+
+		if (siret == null || siret.isEmpty()	)
+			return new MessageServeur(false,Erreur_HTML.SIRET_VIDE);
+
+	
+
+		if (siret.length() !=CommunText.TAILLE_SIRET_MAX )
+			return new MessageServeur(false,Erreur_HTML.SIRET_MAUVAISE_TAILLE);
+
+		
+		if (PersonneDAO.isSiretExistPersonne(siret,idPersonne))
+			return new MessageServeur(false,Erreur_HTML.SIRET_EXISTE);
+		
+		 return new MessageServeur(true,"ok");
+	}
 }

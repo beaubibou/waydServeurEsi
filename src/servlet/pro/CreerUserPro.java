@@ -327,6 +327,10 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 	if (PersonneDAO.isPseudoExist(pseudo))
 		new MessageServeur(false,Erreur_HTML.PSEUDO_EXISTE);
 	
+	if (PersonneDAO.isSiretExist(siret))
+		new MessageServeur(false,Erreur_HTML.SIRET_EXISTE);
+	
+	
 	if (PersonneDAO.isTelephoneExist(telephone))
 		new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
 	
