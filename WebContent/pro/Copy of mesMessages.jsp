@@ -43,9 +43,9 @@
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 
 </head>
-<body >
+<body>
 
-		<%
+	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
@@ -53,30 +53,32 @@
 		FiltreRecherche filtre=authentification.getFiltre();
 			ArrayList<TypeEtatMessage> listEtatMessage = CacheValueDAO.getListEtatMessage();
 			MenuEnum etatMenu=MenuEnum.mesmessages;
-		
 	%>
+
 	<%@ include file="menu.jsp"%>
 
-	<div class="container margedebut"style="width: 90%;"  >
-		<div id="loginbox" class="container " style="width: 90%;" >
-			<div class="panel panel-default">
-				<div class="panel-heading panel-heading-custom" >
-					<div class="panel-title"><%=MesMessagesProText.TITRE_PANEL %></div>
-				</div>
-				<div style="padding-top: 30px;" class="panel-body"  >
+	
+	<script type="text/javascript">
+		
+	<%=new AlertDialog(authentification).getMessage()%>
+	
+	
+	</script>
+	
+	<div class="container margedebut" >
 
-						<div  style="border-bottom: 1px solid #888;">
-
-					<p class="text-tuto"><%=MesMessagesProText.TUTO_LIGNE1 %></p>
-					
+		<div class="panel barrerecherche">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-12">
+					<p class="text-tuto">Retrouvez les messages et les nouveautés de Wayd.</p>
 					</div>
-					<br>
-					<div class="row">
+					</div>
+				<div class="row">
 					<div class="col-sm-3">
 						<form method="post" action="MesMessages" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
-						
 							 <label for="idFiltreMessage">Status:</label>
 								<select class="form-control" id="idFiltreMessage"
 									name="etatMessage">
@@ -99,21 +101,16 @@
 					</div>
 
 					<div class="col-sm-2 ">
-						<button  title="<%=MesMessagesProText.INFO_SUPPRIME_SELECTION %>" name="supprimerMessages" class="btn btn-default">Effacez</button>
+						<button  title="<%=MesMessagesProText.INFO_SUPPRIME_SELECTION %> name="supprimerMessages" class="btn btn-default">Effacez</button>
 					</div>
 
 				</div>
-						<br>
-					
-					
 
 
-				</div>
 			</div>
+
 		</div>
-		<div class="container"  style="width: 90%;" >
-	
-		<table class="table table-striped"   id="matable">
+		<table class="table table-responsive"   id="matable">
 			<thead   class="entetetable"  >
 				<tr>
 					<th  style="width:10%;"  class="text-center">Date</th>
@@ -128,7 +125,6 @@
 				</tr>
 			</thead>
 			<tbody
-			
 				style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 
 				<%
@@ -166,16 +162,7 @@
 		</table>
 
 	</div>
-		
-		
-		
-	</div>
-	
-		
-	
 <%=JumbotronJsp.getJumbotron((JumbotronJsp) request.getAttribute("jumbotron"))%>
-	
-		
 
 	<script>
 		$(function() {
