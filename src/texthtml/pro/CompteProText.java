@@ -6,6 +6,7 @@ public class CompteProText {
 	public static String HINT_SIRET=CommunText.HINT_SIRET;
 	public static String HINT_ADRESSE="Saissisez l'adresse de la structure.";
 	public static String HINT_TELEPHONE=CommunText.HINT_TELEPHONE;
+	public static String AUCUN_FICHIER_SELECTIONNE="Aucun fichier selectionné";
 	
 	public static String TYPE_COMPTE="Type de compte";
 	

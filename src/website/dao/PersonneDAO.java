@@ -1048,14 +1048,17 @@ public class PersonneDAO {
 
 			if (FirebaseApp.getApps().isEmpty())
 				FirebaseApp.initializeApp(WBservices.optionFireBase);
-
-			CreateRequest request = new CreateRequest()
-
-			.setPhoneNumber("+"+telephone).setDisplayName(pseudo);
-
-			FirebaseAuth.getInstance().createUserAsync(request).get();
-
-			updateProfilProFull(pseudo, adresse, latitude, longitude,
+	
+			String uid = PersonneDAO.getUID(idpersonne);
+			if (uid==null)return false;
+			LOG.info("uid à metter à jour"+uid );
+			UpdateRequest request = new UpdateRequest(uid)
+			.setDisplayName(pseudo);
+			LOG.info("Tenttaid"+uid );
+			FirebaseAuth.getInstance().updateUserAsync(request).get();
+		
+			LOG.info("Fin ten"+uid );
+			updateProfilProDAO(pseudo, adresse, latitude, longitude,
 					commentaire, idpersonne, siteWeb, telephone, siret);
 
 			return true;

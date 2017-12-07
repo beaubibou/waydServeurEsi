@@ -71,9 +71,7 @@
 						<br>
 					<br>
 							
-	
 					
-
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-4">
@@ -81,11 +79,10 @@
 									src=<%=Outils.getUrlPhoto(profil.getPhotostr())%>
 									class="img-thumbnail" />
 							</div>
-
 							<div class="col-sm-8">
 								<form action="/wayd/ChargePhotoPro" method="post"
-									enctype="multipart/form-data">
-									<input type="file" name="file" size="50" /> 
+									enctype="multipart/form-data" onsubmit="return valideFichier()">
+									<input type="file" name="file" size="50" id="file" /> 
 									<br><input
 										type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
 								</form>
@@ -278,14 +275,28 @@
 		async defer></script>
 
 	<script>
-		function valideFormulaire() {
+	
+	function valideFichier(){
+		
+		var monfichier;
+		monfichier=latitude = document.getElementById("file").value;
+		
+	if (monfichier==''){
+		BootstrapDialog
+		.alert("<%=CompteProText.AUCUN_FICHIER_SELECTIONNE%>");
+	return false;
+	}
+			
+	
+	}
+	function valideFormulaire() {
 
-			alert("lmlk");
+			
 			latitude = document.getElementById("latitude").value;
 			longitude = document.getElementById("longitude").value;
 			if (latitude == 0 || longitude == 0) {
 				BootstrapDialog
-						.alert('<%=CompteProText.ALERT_GPS_NO_POSITION%>');
+						.alert("<%=CompteProText.ALERT_GPS_NO_POSITION%>");
 				return false;
 			}
 		}
@@ -297,6 +308,9 @@
 			longitude = document.getElementById("longitude").value = 0;
 
 		}
+		
+		
+		
 	</script>
 
 	<script>

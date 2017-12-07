@@ -20,6 +20,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
@@ -103,6 +104,9 @@ public class ChargePhotoPro extends HttpServlet {
 
 			} catch (Exception ex) {
 				System.out.println(ex);
+				request.setAttribute("message",ex.getMessage());	
+				request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);
+			
 			}
 		} else {
 

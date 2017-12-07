@@ -139,7 +139,7 @@
 								<label for="nom"><%=CreationCompteProText.LABEL_NUMERO_SIRET%></label>
 								<input type="text" class="form-control" id="nom"
 									placeholder="<%=CreationCompteProText.HINT_SIRET%>" value="<%=siret%>" name="siret"
-									maxlength="<%=CreationCompteProText.TAILLE_SIRET_MAX%>"
+									pattern="[0-9]{<%=CreationCompteProText.TAILLE_SIRET_MAX%>}"
 									required>
 							</div>
 
@@ -149,6 +149,7 @@
 									placeholder="<%=CreationCompteProText.HINT_TELEPHONE%>"
 									pattern="[0-9]{10}"
 									name="telephone" value="<%=telephone%>"
+									required
 									maxlength="<%=CreationCompteProText.TAILLE_TELEPHONNE_MAX%>">
 							</div>
 
@@ -160,6 +161,7 @@
 								<input type="text" class="form-control" id="adresse"
 									value="<%=adresse%>" placeholder="Renseigner l'adresse"
 									name="adresse" onkeypress="initPosition()"
+									required
 									maxlength="<%=CreationCompteProText.TAILLE_ADRESSE_MAX%>">
 							</div>
 
