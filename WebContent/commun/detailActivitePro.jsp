@@ -1,3 +1,4 @@
+<%@page import="website.html.OutilsHtml"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -10,7 +11,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail activité pro</title>
+<title>Détail activité</title>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,18 +42,7 @@
 
 <link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 
-<style>
-.vcenter {
-	display: inline-block;
-	vertical-align: middle;
-	float: none;
-}
 
-.vertical-align {
-	display: flex;
-	align-items: center;
-}
-</style>
 </head>
 <body>
 
@@ -83,13 +73,9 @@
 	<%
 		}
 	%>
-	<div class="container" style="margin-top: 30px">
-		
-
-	</div>
+	
 	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+		<div id="loginbox"	class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
@@ -113,18 +99,7 @@
 									class="img-circle" class="text-center" />
 
 							</div>
-							<%
-								if (!activite.isOrganisteur(authentification.getProfil().getId())) {
-							%>
-							<div class='col-sm-8'>
-								<a class="btn btn-danger"
-									href="SignalerActivite?idActivite=<%=activite.getId()%>"
-									role="button">Signaler</a>
-							</div>
-			
-							<%
-								}
-							%>
+				
 
 					</div>
 
@@ -148,7 +123,7 @@
 							</a>
 
 							<h4 style="padding-left: 15px"><%=activite.getTitre()%></h4>
-							<h5 style="padding-left: 15px"><%=activite.getAdresse()%></h5>
+							<h5 style="padding-left: 15px"><%=OutilsHtml.convertStringHtml(activite.getAdresse())%></h5>
 							<h5 style="padding-left: 15px">
 								à
 								<%=activite.calculDistance()%></h5>
@@ -163,8 +138,7 @@
 						</br>
 						<h5>
 							Type d'activité:
-							<%=CacheValueDAO.geLibelleTypeActivite(activite
-					.getTypeactivite())%></h5>
+							<%=CacheValueDAO.geLibelleTypeActivite(activite.getTypeactivite())%></h5>
 
 
 						<h5><%=activite.getHoraireLeAHorizontal()%></h5>
@@ -175,7 +149,7 @@
 					<div class="form-group">
 						<label for="description">Description:</label>
 						<textarea disabled class="form-control" rows="5" id="description"
-							name="description"><%=activite.getLibelle()%></textarea>
+							name="description"><%=OutilsHtml.convertStringHtml(activite.getLibelle())%></textarea>
 					</div>
 
 				</div>

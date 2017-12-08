@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><%=CompteProText.TITRE_ONGLET %></title>
+<title><%=CompteProText.TITRE_ONGLET%></title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,9 +28,10 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css"/>
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css" />
 
-<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"type="text/css"/>
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
+	type="text/css" />
 
 
 <script src="js/initGoogleMap.js"></script>
@@ -54,7 +55,7 @@
 	%>
 	<%@ include file="menu.jsp"%>
 
-	<div class="container margedebut" >
+	<div class="container margedebut">
 		<div id="loginbox" class="mainbox col-md-8 col-md-offset-2 col-sm-8">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
@@ -62,16 +63,15 @@
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 
-						<div  style="border-bottom: 1px solid #888;">
+					<div style="border-bottom: 1px solid #888;">
 
-							<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L1%></p>
-								<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L2%></p>
-					
+						<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L1%></p>
+						<p class="text-tuto"><%=CompteProText.MESSAGE_JUMBO_L2%></p>
+
 					</div>
-						<br>
-					<br>
-							
-					
+					<br> <br>
+
+
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-4">
@@ -82,57 +82,77 @@
 							<div class="col-sm-8">
 								<form action="/wayd/ChargePhotoPro" method="post"
 									enctype="multipart/form-data" onsubmit="return valideFichier()">
-									<input type="file" name="file" size="50" id="file" /> 
-									<br><input
-										type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
+									<input  type="file" name="file" size="50" id="file" /> <br>
+									
+									<input type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
+
+
 								</form>
 							</div>
+
 						</div>
+
 					</div>
 
 
 					<form action="/wayd/ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
-					
-					
-					
+
+
+
 						<div class="form-group">
-						
-						<div class="row">
-								<div class="col-sm-2">
-									<div class="form-group">
-									<a id="btn-primary" href="/wayd/auth/changementmotdepasse.jsp"
-									class="btn  btnwayd">Changement de mot de passe</a>
+
+							<div class="row">
+
+								<div class="col-sm-1">
+									 <a  title="Mot de passe" href="/wayd/auth/changementmotdepasse.jsp" > 
+					 	<button 
+							type="button" class="btnwayd btn-sm">
+							<span class="glyphicon glyphicon-lock"></span>
+						</button>
+				     	</a>
+
 							</div>
+
+								<div class="col-sm-3">
+								 <a  title="Supprimer photo" 	href="/wayd/ComptePro?action=supprimerPhoto" > 
+					 	<button 
+							type="button" class="btn btn-danger btn-sm">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+				     	</a>
+						</div>
+
+
+
 							</div>
-					 </div>	
-							
+<br>
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="nom"><%=CompteProText.LABEL_NOM %></label> <input type="text"
-											class="form-control" id="nom"
+										<label for="nom"><%=CompteProText.LABEL_NOM%></label> <input
+											type="text" class="form-control" id="nom"
 											placeholder="<%=CompteProText.getHintNomSociete()%>"
-											maxlength="<%=CompteProText.TAILLE_PSEUDO_MAX%>"
-											name="nom" required
-											value="<%=profil.getPseudo()%>">
+											maxlength="<%=CompteProText.TAILLE_PSEUDO_MAX%>" name="nom"
+											required value="<%=profil.getPseudo()%>">
 									</div>
 								</div>
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="typro"><%=CompteProText.TYPE_COMPTE%></label> <input type="text"
-											class="form-control" disabled id="typepro"
+										<label for="typro"><%=CompteProText.TYPE_COMPTE%></label> <input
+											type="text" class="form-control" disabled id="typepro"
 											value="Professionel">
 									</div>
 								</div>
 
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="siteweb"><%=CompteProText.LABEL_SITE_WEB %></label>
+										<label for="siteweb"><%=CompteProText.LABEL_SITE_WEB%></label>
 									</div>
 									<input type="text" class="form-control" id="siteweb"
 										maxlength="<%=CompteProText.TAILLE_SITE_WEB_MAX%>"
@@ -140,17 +160,18 @@
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiteWebStr())%>>
 								</div>
 
-
+		
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="tel"><%=CompteProText.LABEL_TELEPHONE %></label>
+										<label for="tel"><%=CompteProText.LABEL_TELEPHONE%></label>
 									</div>
 									<input type="text" class="form-control" id="tel"
-										placeholder="<%=CompteProText.HINT_TELEPHONE %>" name="telephone"
+										placeholder="<%=CompteProText.HINT_TELEPHONE%>"
+										name="telephone"
 										pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}"
-										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>"
-										required
-										value=<%=OutilsHtml.convertRequeteToString(profil.getTelephoneStr())%>>
+										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>" required
+										value=<%=OutilsHtml.convertRequeteToString(profil
+					.getTelephoneStr())%>>
 								</div>
 
 							</div>
@@ -160,12 +181,11 @@
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
-										<label for="siret"><%=CompteProText.LABEL_NUMERO_SIRET %></label>
+										<label for="siret"><%=CompteProText.LABEL_NUMERO_SIRET%></label>
 									</div>
 									<input type="text" class="form-control" id="siret"
 										maxlength='<%=CompteProText.TAILLE_SIRET_MAX%>'
-										pattern="[0-9]{<%=CompteProText.TAILLE_SIRET_MAX %>}"
-										
+										pattern="[0-9]{<%=CompteProText.TAILLE_SIRET_MAX%>}"
 										placeholder='<%=CompteProText.HINT_SIRET%>' name="siret"
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiret())%>>
 								</div>
@@ -175,16 +195,16 @@
 
 
 						<div class="form-group">
-							<label for="adresse"><%=CompteProText.LABEL_ADRESSE %></label> <input type="text"
-								class="form-control" id="adresse"
-								placeholder='<%=CompteProText.HINT_ADRESSE %>' name="adresse" required
-								onkeypress="initPosition()"
+							<label for="adresse"><%=CompteProText.LABEL_ADRESSE%></label> <input
+								type="text" class="form-control" id="adresse"
+								placeholder='<%=CompteProText.HINT_ADRESSE%>' name="adresse"
+								required onkeypress="initPosition()"
 								maxlength="<%=CompteProText.TAILLE_ADRESSE_MAX%>"
 								value="<%=OutilsHtml.convertRequeteToString(profil.getAdresse())%>">
 						</div>
 
 						<div class="form-group">
-							<label for="description"><%=CompteProText.LABEL_DESCRIPTION_PROFIL %></label>
+							<label for="description"><%=CompteProText.LABEL_DESCRIPTION_PROFIL%></label>
 							<textarea class="form-control" rows="5" id="description"
 								name="commentaire"
 								placeholder="<%=CompteProText.getHintDescriptionProfil()%>"
@@ -192,7 +212,7 @@
 						</div>
 
 						<h5 class="nbrcaracteremax" id="nbr">
-							0 Caractére  "<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
+							0 Caractére "<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>"
 						</h5>
 
 						<button type="submit" class="btnwayd btn-lg">Sauvegarder</button>
@@ -334,7 +354,7 @@
 		var nombreCaractere = $('#description').val().length;
 		var msg = nombreCaractere + "/"
 				+
-		<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
+	<%=CompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
 		;
 		$('#nbr').text(msg);
 	</script>

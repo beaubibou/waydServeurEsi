@@ -25,6 +25,7 @@ import wayde.bean.Personne;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
+import website.html.OutilsHtml;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
@@ -382,6 +383,10 @@ public class ActiviteDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 
+		LOG.info("commmentaire "+commentaire.length());
+		
+		
+		
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -395,7 +400,8 @@ public class ActiviteDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
-			preparedStatement.setString(3, commentaire);
+			preparedStatement.setString(3, OutilsHtml.convertStringToNull(commentaire));
+		//	preparedStatement.setString(3,null);
 			preparedStatement.setTimestamp(4,
 					new java.sql.Timestamp(datedebut.getTime()));
 			preparedStatement.setTimestamp(5,

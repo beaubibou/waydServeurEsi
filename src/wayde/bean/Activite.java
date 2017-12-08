@@ -166,7 +166,8 @@ public class Activite {
 	            Date datefin, int idtypeactivite, double latitude, double longitude,String adresse,
 	            String nom,String prenom,String photo,double note,
 	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
-	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,int typeUser,int typeAcces )
+	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,
+	            int typeUser,int typeAcces )
 	        {
 	            super();
 	        	this.id=id;

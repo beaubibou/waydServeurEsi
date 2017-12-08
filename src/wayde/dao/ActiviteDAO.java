@@ -89,8 +89,8 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 			
-				if (libelle.length()==0)
-				libelle=" ";
+				//if (libelle.length()==0)
+				//libelle=" ";
 				
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,

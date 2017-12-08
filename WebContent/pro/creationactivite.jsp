@@ -140,7 +140,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="description"><%=CreationActiviteText.LABEL_DESCRIPTION%></label>
+							<label for="description"><%=CreationActiviteText.LABEL_DESCRIPTION_ACTIVITE%></label>
 							<textarea
 								placeholder="<%=CreationActiviteText.getHintDescriptionActivite()%>"
 								maxlength="<%=CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"

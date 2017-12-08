@@ -1,3 +1,6 @@
+<%@page import="website.html.OutilsHtml"%>
+<%@page import="texthtml.pro.Erreur_HTML"%>
+<%@page import="texthtml.pro.ModifierActiviteText"%>
 <%@page import="website.html.DateHtlm"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -10,7 +13,7 @@
 <%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <title>>Création activité</title>
 
@@ -44,7 +47,6 @@
 	type="text/css">
 	<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css"/>
 
-
 	
 </head>
 <body>
@@ -60,22 +62,29 @@
 			//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
 	<%@ include file="menu.jsp"%>
-	<div class="container" style="margin-top: 30px">
 
 	<div class="container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-8 col-md-offset-2 col-sm-8">
+		<div id="loginbox" 	class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Modifier une activité</div>
+					<div class="panel-title">Modifier votre activité</div>
 				</div>
 				<div style="padding-top: 30px" class="panel-body">
 					<form action="/wayd/UpdateActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
+					
+						<div class="form-group"   style="border-bottom: 1px solid #888;">
+
+							<p class="text-tuto"><%=ModifierActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
+						
+						</div>
+					<br>	
+					
+					
 						<div class="form-group">
-							<label for="titre">Titre:</label> <input type="text"
+							<label for="titre"><%=ModifierActiviteText.LABEL_TITRE%></label> <input type="text"
 								maxlength="50" class="form-control" id="titre" required
-								placeholder="Titre de l'activité " name="titre"
+								placeholder="<%=ModifierActiviteText.HINT_TITRE %>" name="titre"
 								value=<%=activite.getTitre()%>>
 						</div>
 
@@ -85,7 +94,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatedebut">Date début</label>
+										<label for="iddatedebut"><%=ModifierActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
@@ -97,7 +106,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin">Date fin</label>
+										<label for="iddatefin"><%=ModifierActiviteText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
 											<input type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
@@ -107,7 +116,7 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite">Type d'activitée:</label> <select
+									<label for="typeactivite"><%=ModifierActiviteText.LABEL_TYPE_ACTIVITE%></label> <select
 										class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
@@ -128,22 +137,27 @@
 						</div>
 
 						<div class="form-group">
-							<label for="adresse">Adresse:</label> <input type="text"
+							<label for="adresse"><%=ModifierActiviteText.LABEL_ADRESSE%></label> <input type="text"
 								class="form-control" id="adresse" required
 								value="<%=activite.getAdresse()%>" name="adresse"
 								onkeypress="initPosition()">
 						</div>
 
 						<div class="form-group">
-							<label for="description">Description:</label>
-							<textarea maxlength="200" class="form-control" rows="5"
-								id="description" name="description"></textarea>
+							<label for="description"><%=ModifierActiviteText.LABEL_DESCRIPTION_ACTIVITE%></label>
+							<textarea maxlength="<%=ModifierActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+							 class="form-control" rows="5"
+								id="description" name="description"
+								
+								placeholder="<%=ModifierActiviteText.getHintDescriptionActivite() %>"
+								><%=OutilsHtml.convertStringHtml(activite.getLibelle())%></textarea>
 						</div>
-						<h5 class="nbrcaracteremax" id="nbr">0 Caractére sur 200</h5>
+					<h5 class="nbrcaracteremax" id="nbr">
+
+							<%=ModifierActiviteText.initNbrCaracteres()%></h5>
 
 
-
-						<button type="submit" class="btn btn-info">Enregistrer</button>
+						<button type="submit" class="btn btnwayd">Enregistrer</button>
 
 						<div class="form-group">
 
@@ -169,7 +183,7 @@
 		</div>
 </div>
 
-	</div>
+
 
 	<script>
 		var placeSearch, autocomplete;
@@ -289,16 +303,16 @@
 			if (latitude == 0 || longitude == 0) {
 				alert();
 				BootstrapDialog
-						.alert('La position GPS de votre adresse n\'a pas été trouvée. Veuillez ressaisir votre adresse');
+						.alert("<%=ModifierActiviteText.ALERT_GPS_NO_POSITION%>");
 				return false;
 			}
 
 			if (datedebut > datefin) {
-				alert("date debut>datefin");
+				alert("<%=Erreur_HTML.DATEDEBUT_SUP_DATEFIN%>");
 				return false;
 			}
 			if (datefin < new Date()) {
-				alert("date fin avant maientnant");
+				alert("<%=Erreur_HTML.DATEFIN_INF_NOW%>");
 				return false;
 			}
 
@@ -307,13 +321,20 @@
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			if (diffHeure > 8) {
-				alert("La durée ne peut pas exéder 8 heures");
+				alert("<%=Erreur_HTML.DUREE_PAS_SUPERIEUR_A%>");
 				return false;
 			}
+
+			if (diffHeure < 1) {
+				alert("<%=Erreur_HTML.DUREE_PAS_INFERIEURE_A%>");
+				return false;
+			}
+			
 			return true;
 		}
 
 		function initPosition() {
+			
 			latitude = 0;
 			longitude = 0;
 			document.getElementById("latitude").value = 0;
@@ -323,26 +344,26 @@
 	</script>
 
 	<script>
-		$(document).ready(function(e) {
+	$(document).ready(function(e) {
 
-			$('#description').keyup(function() {
+		$('#description').keyup(function() {
 
-				var nombreCaractere = $(this).val().length;
-				//alert(nombreCaractere);
+			var nombreCaractere = $(this).val().length;
+			//alert(nombreCaractere);
 
-				var msg = nombreCaractere + ' Caractere(s) / 200';
+			var msg = nombreCaractere + '<%=ModifierActiviteText.getNbrCarateresDescription()%>';
 
-				$('#nbr').text(msg);
-				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+			$('#nbr').text(msg);
+			// Le script qui devra calculer et afficher le nombre de mots et de caractères
 
-			})
+		})
 
-		});
+	});
 
-		// Init le nombre de caraterces	
-		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + ' Caractere(s) / 200';
-		$('#nbr').text(msg);
+	// Init le nombre de caraterces	
+	var nombreCaractere = $('#description').val().length;
+	var msg = nombreCaractere +   '<%=ModifierActiviteText.getNbrCarateresDescription()%>';
+	$('#nbr').text(msg);
 	</script>
 </body>
 </html>

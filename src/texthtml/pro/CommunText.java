@@ -10,7 +10,7 @@ public class CommunText {
 	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 250;
 	public static int TAILLE_ADRESSE_MAX = 250;
 	public static String HINT_ADRESSE="Saissisez une adresse";
-	public static String HINT_TITRE="Saissisez un titre";
+	public static String HINT_TITRE="Saisisez un titre";
 	public static String HINT_TELEPHONE="XXXXXXXXXX";
 	public static final String HINT_MOT_DE_PASSE = "Saisissez le mot de passe";
 	public static final String HINT_MOT_DE_PASSE_BIS = "Ressaisir le mot de passe";
@@ -31,6 +31,12 @@ public class CommunText {
 	public static String LABEL_NUMERO_SIRET = "Numéro SIRET *";
 	public static String LABEL_ADRESSE = "Adresse *";
 	public static String LABEL_DESCRIPTION_PROFIL = "Description";
+	
+	public static String LABEL_DATE_DEBUT = "Date début";
+	public static String LABEL_DATE_FIN = "Date fin";
+	public static String LABEL_TYPE_ACTIVITE = "Type activité";
+	public static String LABEL_DESCRIPTION_ACTIVITE = "Description";
+	public static String LABEL_TITRE = "Titre";
 	
 	public static String getHintDescriptionProfil() {
 
@@ -59,7 +65,7 @@ public class CommunText {
 
 	public static String getNbrCarateresDescription() {
 		// TODO Auto-generated method stub
-		return  " Caractere(s) sur "+TAILLE_DESCRIPTION_ACTIVITE_MAX;
+		return  " / "+TAILLE_DESCRIPTION_ACTIVITE_MAX;
 	}
 
 

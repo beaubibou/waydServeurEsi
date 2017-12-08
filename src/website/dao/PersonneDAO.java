@@ -1182,7 +1182,7 @@ public class PersonneDAO {
 
 	}
 
-	public boolean updatePhoto(String photo, int idpersonne) {
+	public static boolean updatePhoto(String photo, int idpersonne) {
 		Connection connexion = null;
 		LOG.info("updatePhoto");
 		try {

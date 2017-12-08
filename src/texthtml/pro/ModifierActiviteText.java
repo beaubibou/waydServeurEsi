@@ -1,6 +1,6 @@
 package texthtml.pro;
 
-public class CreationActiviteText {
+public class ModifierActiviteText {
 
 	public static int TAILLE_TITRE_ACTIVITE_MAX = CommunText.TAILLE_TITRE_ACTIVITE_MAX;
 	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = CommunText.TAILLE_DESCRIPTION_ACTIVITE_MAX;
@@ -10,7 +10,7 @@ public class CreationActiviteText {
 	public static String HINT_TITRE = CommunText.HINT_TITRE;
 
 	public static String TITRE_JUMBO = "Proposez vos activités";
-	public static String MESSAGE_JUMBO_LIGNE1 = "Proposez vos activités gratuites à la communauté. Une activité ne peut pas exéder 8 heures.";
+	public static String MESSAGE_JUMBO_LIGNE1 = "Modifier vos activités. Vous pouvez supprimer vos activités via le menu Gérer.";
 	public static String MESSAGE_JUMBO_LIGNE2 = "Vous pouvez planifier jusqu à 5 activités simultanément.";
 
 	public static String TITRE_PANEL = "Proposez une activité";
@@ -22,6 +22,7 @@ public class CreationActiviteText {
 	public static String LABEL_TYPE_ACTIVITE = CommunText.LABEL_TYPE_ACTIVITE;
 	public static String LABEL_DESCRIPTION_ACTIVITE = CommunText.LABEL_DESCRIPTION_ACTIVITE;
 	public static String LABEL_TITRE = CommunText.LABEL_TITRE;
+	
 	
 	public static String ALERT_GPS_NO_POSITION = CommunText.ALERT_GPS_NO_POSITION;
 
@@ -40,7 +41,7 @@ public class CreationActiviteText {
 	public static String initNbrCaracteres() {
 
 		return "0 / "
-				+ CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX;
+				+ ModifierActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX;
 
 	}
 	public static String getNbrCarateresDescription(){

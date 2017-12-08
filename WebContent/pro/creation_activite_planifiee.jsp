@@ -60,7 +60,8 @@
 
 
 	<div class="container">
-		<div id="loginbox" 	class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
+		<div id="loginbox"
+			class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 					<div class="panel-title"><%=CreationActivitePlanifieeText.TITRE_PANEL%></div>
@@ -72,13 +73,13 @@
 					<form action="/wayd/AjouteActivitePlanifiee"
 						onsubmit="return valideFormulaire()" method="post">
 
-						<div class="form-group"   style="border-bottom: 1px solid #888;">
-						
+						<div class="form-group" style="border-bottom: 1px solid #888;">
+
 							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE1%></p>
 							<p class="text-tuto"><%=CreationActivitePlanifieeText.MESSAGE_JUMBO_LIGNE2%></p>
-						
+
 						</div>
-							<br>
+						<br>
 						<div class="form-group">
 							<label for="titre"><%=CreationActivitePlanifieeText.LABEL_TITRE%></label>
 							<input type="text" class="form-control" id="titre" required
@@ -86,7 +87,7 @@
 								maxLength="<%=CreationActivitePlanifieeText.TAILLE_TITRE_ACTIVITE_MAX%>"
 								name="titre" required>
 						</div>
-						<div class="form-group">
+						<div class="form-	group">
 							<div class="row">
 
 								<div class='col-sm-4'>
@@ -193,7 +194,7 @@
 								onkeypress="initPosition()">
 						</div>
 						<div class="form-group">
-							<label for="description"><%=CreationActivitePlanifieeText.LABEL_DESCRIPTION%></label>
+							<label for="description"><%=CreationActivitePlanifieeText.LABEL_DESCRIPTION_ACTIVITE%></label>
 							<textarea
 								placeholder="<%=CreationActivitePlanifieeText.getHintDescriptionActivite()%>"
 								maxlength="<%=CreationActivitePlanifieeText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
@@ -419,9 +420,10 @@ if (latitude == 0 || longitude == 0) {
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + '<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>
-		';
+		var msg =nombreCaractere + "<%=CreationActivitePlanifieeText.getNbrCarateresDescription()%>";
+
 		$('#nbr').text(msg);
-	</script>
+
+		</script>
 </body>
 </html>

@@ -33,5 +33,18 @@ public class OutilsHtml {
 	}
 	
 
+	// Si la chaine est vide on m'est null dans la table
+	public static String convertStringToNull(String chaine){
+		
+		if (chaine!=null)
+			if (chaine.length()==0)
+				return "";
+		
+		if (chaine==null)
+			return("");
+		
+		return chaine;
+		
+	}
 			
 }

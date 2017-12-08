@@ -1,9 +1,9 @@
-
 package servlet.pro;
 
 import gcmnotification.AcquitAllNotificationGcm;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,6 +50,7 @@ public class ComptePro extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		
 		// ********* Regle d'authentification*********************
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -57,7 +58,27 @@ public class ComptePro extends HttpServlet {
 		if (!authentification.isAuthentifiePro())
 			return;
 
+		String action = request.getParameter("action");
+	
+		if (action==null)
+		action="noAction";
+		LOG.info("aciot"+action);
+		
+		switch (action) {
+	
+		case "supprimerPhoto":
+			LOG.info("supprssion"+action);
+			
+		PersonneDAO.updatePhoto(null, authentification.getId());
+		authentification.getProfil().setPhotostr(null);
+		break;
+
+		
+		}
+
 		response.sendRedirect("pro/comptePro.jsp");
+	
+	
 
 	}
 
@@ -83,9 +104,10 @@ public class ComptePro extends HttpServlet {
 		String telephone = request.getParameter("telephone");
 		String siteWeb = request.getParameter("siteweb");
 		String siret = request.getParameter("siret");
-		int idpersonne=authentification.getId();
+		int idpersonne = authentification.getId();
 		MessageServeur messageServeur = testParametreRequete(nom, adresse,
-				commentaire, latitude, longitude, telephone, siteWeb, siret,idpersonne);
+				commentaire, latitude, longitude, telephone, siteWeb, siret,
+				idpersonne);
 		if (!messageServeur.isReponse()) {
 
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
@@ -132,82 +154,74 @@ public class ComptePro extends HttpServlet {
 
 	private MessageServeur testParametreRequete(String nom, String adresse,
 			String commentaire, double latitude, double longitude,
-			String telephone, String siteWeb, String siret,int idPersonne) {
+			String telephone, String siteWeb, String siret, int idPersonne) {
 		// TODO Auto-generated method stub
 
-		nom=nom.trim();
+		nom = nom.trim();
 		LOG.info(nom.length());
-	
-		if (nom==null || nom.isEmpty()){
-			return new MessageServeur(false,
-					Erreur_HTML.NOM_VIDE_INTERDIT);
-			
+
+		if (nom == null || nom.isEmpty()) {
+			return new MessageServeur(false, Erreur_HTML.NOM_VIDE_INTERDIT);
+
 		}
-		
-		if (nom.length()>CommunText.TAILLE_PSEUDO_MAX)
+
+		if (nom.length() > CommunText.TAILLE_PSEUDO_MAX)
 			return new MessageServeur(false,
 					CommunText.PSEUDO_LIMITE_A_CARATERE());
-		
-		
-		MessageServeur telephonneFormat=testFormatTelephone(telephone,idPersonne);
-		
-		if (!telephonneFormat.isReponse()) 
+
+		MessageServeur telephonneFormat = testFormatTelephone(telephone,
+				idPersonne);
+
+		if (!telephonneFormat.isReponse())
 			return telephonneFormat;
 
-		
-		MessageServeur testFormatSiret=testFormatSiret(siret,idPersonne);
-		
-		if (!testFormatSiret.isReponse()) 
+		MessageServeur testFormatSiret = testFormatSiret(siret, idPersonne);
+
+		if (!testFormatSiret.isReponse())
 			return testFormatSiret;
-		
-				
-		if (commentaire!=null){
-			if (commentaire.length()>CommunText.TAILLE_DESCRIPTION_PROFIL_MAX)
+
+		if (commentaire != null) {
+			if (commentaire.length() > CommunText.TAILLE_DESCRIPTION_PROFIL_MAX)
 				return new MessageServeur(false,
 						CommunText.DESCRIPTION_PROFIL_LIMITE_A_CARATERE());
-			
+
 		}
-	
-	
+
 		return new MessageServeur(true, "Ok");
 	}
 
-	private MessageServeur testFormatTelephone(String telephone,int idPersonne) {
+	private MessageServeur testFormatTelephone(String telephone, int idPersonne) {
 		// TODO Auto-generated method stub
 
 		if (telephone == null)
-			return new MessageServeur(false,Erreur_HTML.NUMERO_TELEPHONE_VIDE);
+			return new MessageServeur(false, Erreur_HTML.NUMERO_TELEPHONE_VIDE);
 
 		if (telephone.isEmpty())
-			return new MessageServeur(false,Erreur_HTML.NUMERO_TELEPHONE_VIDE);
-
+			return new MessageServeur(false, Erreur_HTML.NUMERO_TELEPHONE_VIDE);
 
 		if (telephone.length() != CommunText.TAILLE_TELEPHONNE_MAX)
-			return new MessageServeur(false,Erreur_HTML.MAUVAISE_TAILLE_NUMERO_TELEPHONE);
+			return new MessageServeur(false,
+					Erreur_HTML.MAUVAISE_TAILLE_NUMERO_TELEPHONE);
 
-		
-		if (PersonneDAO.isTelephoneExistPersonne(telephone,idPersonne))
-			return new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
-		
-		 return new MessageServeur(true,"ok");
+		if (PersonneDAO.isTelephoneExistPersonne(telephone, idPersonne))
+			return new MessageServeur(false, Erreur_HTML.TELEPHONNE_EXIST_DEJA);
+
+		return new MessageServeur(true, "ok");
 	}
 
-	
-	private MessageServeur testFormatSiret(String siret,int idPersonne) {
+	private MessageServeur testFormatSiret(String siret, int idPersonne) {
 		// TODO Auto-generated method stub
 
-		if (siret == null || siret.isEmpty()	)
-			return new MessageServeur(false,Erreur_HTML.SIRET_VIDE);
+		if (siret == null || siret.isEmpty())
+			return new MessageServeur(false, Erreur_HTML.SIRET_VIDE);
 
-	
-LOG.info("Taille sirent"+siret.length());
-		if (siret.length() !=CommunText.TAILLE_SIRET_MAX )
-			return new MessageServeur(false,Erreur_HTML.SIRET_MAUVAISE_TAILLE);
+		LOG.info("Taille sirent" + siret.length());
+		if (siret.length() != CommunText.TAILLE_SIRET_MAX)
+			return new MessageServeur(false, Erreur_HTML.SIRET_MAUVAISE_TAILLE);
 
-		
-		if (PersonneDAO.isSiretExistPersonne(siret,idPersonne))
-			return new MessageServeur(false,Erreur_HTML.SIRET_EXISTE);
-		
-		 return new MessageServeur(true,"ok");
+		if (PersonneDAO.isSiretExistPersonne(siret, idPersonne))
+			return new MessageServeur(false, Erreur_HTML.SIRET_EXISTE);
+
+		return new MessageServeur(true, "ok");
 	}
 }

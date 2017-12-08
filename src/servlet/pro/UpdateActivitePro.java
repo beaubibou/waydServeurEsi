@@ -97,6 +97,7 @@ public class UpdateActivitePro extends HttpServlet {
 			return;
 		}
 
+		
 		if (ActiviteDAO.updateActivitePro( titre,
 				 description,  dateDebut,  dateFin,  adresse,
 				 latitude,  longitude,  typeactivite,

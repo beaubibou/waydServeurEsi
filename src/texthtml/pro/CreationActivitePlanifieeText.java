@@ -17,13 +17,13 @@ public class CreationActivitePlanifieeText {
 	public static String TITRE_PANEL="Ajouter une activité";
 	public static String TITRE_ONGLET="Planifiez des activités";
 	
-	
-	public static String LABEL_DATE_DEBUT="Date début";
-	public static String LABEL_DATE_FIN="Date fin";
-	public static String LABEL_TYPE_ACTIVITE="Type activité";
-	public static String LABEL_ADRESSE="Adresse";
-	public static String LABEL_DESCRIPTION="Description";
-	public static String LABEL_TITRE="Titre";
+	public static String LABEL_ADRESSE = CommunText.LABEL_ADRESSE;
+	public static String LABEL_DATE_DEBUT = CommunText.LABEL_DATE_DEBUT;
+	public static String LABEL_DATE_FIN = CommunText.LABEL_DATE_FIN;
+	public static String LABEL_TYPE_ACTIVITE = CommunText.LABEL_TYPE_ACTIVITE;
+	public static String LABEL_DESCRIPTION_ACTIVITE = CommunText.LABEL_DESCRIPTION_ACTIVITE;
+	public static String LABEL_TITRE = CommunText.LABEL_TITRE;
+
 	public static String LABEL_HEURE_DEBUT="Heure début";
 	public static String LABEL_DUREE="Durée";
 	public static String LABEL_BUTTON_PROPOSEZ=CommunText.LABEL_BUTTON_PROPOSEZ;
@@ -43,7 +43,7 @@ public class CreationActivitePlanifieeText {
 	
 	public static String initNbrCaracteres() {
 
-		return "0 Caractére sur "+CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX;
+		return "0 / "+CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX;
 
 	
 	}
