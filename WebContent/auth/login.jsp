@@ -143,8 +143,10 @@ function popup(){
 		 
 		  }).catch(function(error) {
 			  var errorMessage = error.message;
+
+			  var errorCode = error.code;
 			  
-			  BootstrapDialog.alert(errorMessage);
+			  BootstrapDialog.alert(errorCode);
 			  // Handle error
 			});
 	  
@@ -157,7 +159,7 @@ function popup(){
 		  var email = error.email;
 		  // The firebase.auth.AuthCredential type that was used.
 		  var credential = error.credential;
-		  BootstrapDialog.alert(errorMessage);
+		  BootstrapDialog.alert(errorCode);
 		  // ...
 		});
 	
@@ -195,7 +197,20 @@ function signPassword(){
 		  var email = error.email;
 		  // The firebase.auth.AuthCredential type that was used.
 		  var credential = error.credential;
-		  BootstrapDialog.alert(errorMessage);
+
+		  if (errorCode=="auth/wrong-password")
+			  BootstrapDialog.alert("Mauvais mot de passe ou login incorrect.");
+		  else
+		  if (errorCode=="auth/user-not-found")
+			  BootstrapDialog.alert("Le compte n'existe pas.");
+
+		  else
+			  if (errorCode=="auth/user-disabled")
+				  BootstrapDialog.alert("Le compte est désactivé.");
+			  else
+			  BootstrapDialog.alert(errorMessage);
+		 
+			 
 		  // ...
 		});
 	

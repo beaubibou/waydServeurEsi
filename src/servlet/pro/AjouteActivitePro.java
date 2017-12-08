@@ -15,9 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.CommunText;
 import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
+import website.dao.ActiviteDAO;
 import website.dao.CacheValueDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
@@ -116,6 +118,18 @@ public class AjouteActivitePro extends HttpServlet {
 		}
 		
 		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
+		
+		
+		if (ActiviteDAO.getNbrActiviteProposeEnCours(authentification.getId())>=CommunText.NBR_ACTIVITE_MAX){
+		
+			authentification.setAlertMessageDialog(
+					new MessageAlertDialog("Message Information","Vous avez dépassé votre quota",null,AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+			return;
+			
+			
+		}
+		
 		int idActivite = activiteDAO.addActivitePro(authentification.getId(),
 				titre, description, dateDebut, dateFin, adresse, latitude,
 				longitude, typeactivite, ProfilBean.PRO, 2);
@@ -124,7 +138,7 @@ public class AjouteActivitePro extends HttpServlet {
 	
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
 			
-			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Activité ajoutée",null,AlertJsp.Sucess));
+			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","L'activité est ajoutée",null,AlertJsp.Sucess));
 			response.sendRedirect("MesActivites");
 			
 			

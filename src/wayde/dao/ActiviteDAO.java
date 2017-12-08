@@ -1051,7 +1051,7 @@ public class ActiviteDAO {
 
 	public int getNbrActiviteProposeEnCours(int idpersonne) throws SQLException {
 		int nbractivite = 0;
-	//	System.out.println("Calcul nombre d'activite en cours");
+	
 		String requete = "Select count(idactivite) as nbractivite  FROM activite where (  idpersonne=? and  activite.datefin>?) ;";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -1063,8 +1063,7 @@ public class ActiviteDAO {
 		if (rs.next()) {
 			nbractivite = rs.getInt("nbractivite");
 		}
-		
-
+	
 		return nbractivite ;
 
 	}

@@ -16,8 +16,8 @@ public class CommunText {
 	public static final String HINT_MOT_DE_PASSE_BIS = "Ressaisir le mot de passe";
 	public static final String HINT_SIRET = "Numéro de  Siret (14 chiffres) ";
 	public static final String HINT_EMAIL = "Adresse email";
+	public static final int NBR_ACTIVITE_MAX = 5;
 
-	
 	public static int TAILLE_PSEUDO_MAX = 40;
 	public static int TAILLE_SITE_WEB_MAX = 100;
 	public static int TAILLE_TELEPHONNE_MAX = 10;

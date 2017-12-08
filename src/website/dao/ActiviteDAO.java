@@ -1892,5 +1892,47 @@ public class ActiviteDAO {
 
 	}
 
+	
+	public static int getNbrActiviteProposeEnCours(int idpersonne)  {
+		int nbractivite = 0;
+		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+		try {
+			connexion = CxoPool.getConnection();
+	
+			String requete = "Select count(idactivite) as nbractivite"
+					+ "  FROM activite where ( idpersonne=? and  activite.datefin>?) ;";
+			 preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setTimestamp(2,
+					new java.sql.Timestamp(new Date().getTime()));
+			 rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				nbractivite = rs.getInt("nbractivite");
+			}
+		
+			
+			return nbractivite ;
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return 0;
+		}
+		finally{
+			
+			CxoPool.close(connexion, preparedStatement, rs);
+		
+		}
+
+		
+		//	System.out.println("Calcul nombre d'activite en cours");
+	
+
+	}
+
 
 }

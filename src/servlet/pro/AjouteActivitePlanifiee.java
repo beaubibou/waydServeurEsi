@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.CommunText;
 import threadpool.PoolThreadGCM;
 import wayde.bean.MessageServeur;
+import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
@@ -29,8 +31,9 @@ import website.metier.ProfilBean;
  */
 public class AjouteActivitePlanifiee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(AjouteActivitePlanifiee.class);
-	
+	private static final Logger LOG = Logger
+			.getLogger(AjouteActivitePlanifiee.class);
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -146,10 +149,21 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			return;
 
 		}
+		
+		if (ActiviteDAO.getNbrActiviteProposeEnCours(authentification.getId())>=CommunText.NBR_ACTIVITE_MAX) {
 
-		int nbrActiviteCree = ajouteActivite(authentification.getId(), titre,
+			authentification.setAlertMessageDialog(new MessageAlertDialog(
+					"Message Information",
+					"Vous avez dépassé le nombre d'activités maximum",
+					null, AlertJsp.warning));
+			response.sendRedirect("MesActivites");
+			return;
+		}
+		
+
+		int nbrActiviteCree = ajouteActivites(authentification.getId(), titre,
 				description, adresse, latitude, longitude, typeactivite,
-				dateDebut, dateFin, joursVoulus,duree);
+				dateDebut, dateFin, joursVoulus, duree);
 
 		if (nbrActiviteCree == 0) {
 
@@ -162,39 +176,52 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		}
 
 		if (nbrActiviteCree > 0) {
-
-			authentification.setAlertMessageDialog(new MessageAlertDialog(
-					"Message Information", "Vous avez crée " + nbrActiviteCree
-							+ " activités ont été crées ", null,
-					AlertJsp.Sucess));
-			response.sendRedirect("MesActivites");
-			return;
+			if (nbrActiviteCree < joursVoulus.size()) {
+				authentification.setAlertMessageDialog(new MessageAlertDialog(
+						"Message Information",
+						"Vous avez crée " + nbrActiviteCree+" sur les "+joursVoulus.size() + " demandés. Vous ne pouver pas dépasser "
+								+ CommunText.NBR_ACTIVITE_MAX+ " activités." , null,
+						AlertJsp.Sucess));
+				response.sendRedirect("MesActivites");
+				return;
+			}
+			else{
+				authentification.setAlertMessageDialog(new MessageAlertDialog(
+						"Message Information",
+						"Vous avez crée " + nbrActiviteCree+" activités" , null,
+						AlertJsp.Sucess));
+				response.sendRedirect("MesActivites");
+				return;
+				
+				
+			}
 		}
 	}
 
-	private int ajouteActivite(int idPersonne, String titre,
+	private int ajouteActivites(int idPersonne, String titre,
 			String description, String adresse, double latitude,
 			double longitude, int typeactivite, Date dateDebut, Date dateFin,
-			HashMap<Integer, String> joursVoulus,int duree) {
+			HashMap<Integer, String> joursVoulus, int duree) {
 		// TODO Auto-generated method stub
 		int nbrAjout = 0;
 		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600
 				/ 24 + 1;
 
-	
 		for (int f = 0; f <= nbrJours; f++) {
 
 			Calendar datetmp = Calendar.getInstance();
 			datetmp.setTime(dateDebut);
 			datetmp.add(Calendar.DAY_OF_MONTH, f);
-			if (joursVoulus.containsKey(datetmp.get(Calendar.DAY_OF_WEEK))) {
-
-				if (ajouteActiviteDAO(idPersonne, titre, description, adresse,
-						latitude, longitude, typeactivite, datetmp, duree))
-					nbrAjout++;
-			}
+			if (ActiviteDAO.getNbrActiviteProposeEnCours(idPersonne) < CommunText.NBR_ACTIVITE_MAX)
+				if (joursVoulus.containsKey(datetmp.get(Calendar.DAY_OF_WEEK))) {
+					if (ajouteActiviteDAO(idPersonne, titre, description,
+							adresse, latitude, longitude, typeactivite,
+							datetmp, duree))
+						nbrAjout++;
+				}
 
 		}
+
 		return nbrAjout;
 
 	}
@@ -207,7 +234,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		Calendar calFin = Calendar.getInstance();
 		calFin.setTime(dateDebut.getTime());
 		calFin.add(Calendar.MINUTE, duree);
-		
+
 		website.dao.ActiviteDAO activiteDAO = new website.dao.ActiviteDAO();
 		//
 		int idActivite = activiteDAO.addActivitePro(idPersonne, titre,

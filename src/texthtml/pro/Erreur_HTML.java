@@ -8,7 +8,7 @@ public class Erreur_HTML {
 	public static final String NON_COMMUNIQUE = "Non communiqué";
 	public static final String ACTIVITE_EXISTE_PLUS = "L'activité n'existe plus";
 	public static final String ERREUR_INCONNUE ="Une erreur est survenue";
-	public static final String ACTIVITE_SUPPRIMEE = "Lactivité a été supprimée";
+	public static final String ACTIVITE_SUPPRIMEE = "L'activité a été supprimée";
 	public static final String MESSAGE_ENVOYE = "Message envoyé";
 	public static final String PROFIL_SIGNALE = "Profil signalé";
 	public static final String COMPTE_MIS_A_JOUR = "Compte mis à jour";

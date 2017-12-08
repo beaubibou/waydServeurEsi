@@ -86,7 +86,7 @@ public class SupprimeActivites extends HttpServlet {
 			
 			if (!retour.isReponse()){
 				authentification.setAlertMessageDialog(new MessageAlertDialog(
-						"Message Information", "Une erreur est survenue", null,AlertJsp.warning));
+						"Message Information", "Une erreur est survenue", null,AlertJsp.Sucess));
 				response.sendRedirect("MesActivites");
 				return;
 			}

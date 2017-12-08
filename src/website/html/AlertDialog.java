@@ -83,6 +83,11 @@ public class AlertDialog {
 		if (messageAlertDialog == null)
 			return "";
 	
+		if (messageAlertDialog.getTypeMessage() == AlertJsp.Info) {
+
+			return "BootstrapDialog.sucess(\""+messageAlertDialog.getMessage()+"\");";
+		}
+		
 
 		if (messageAlertDialog.getTypeMessage() == AlertJsp.Sucess) {
 

@@ -50,7 +50,10 @@
 				<h4><%=ContactProText.MESSAGE_JUMBO_LIGNE1%></h4>
 			</div>
 			<br>
+			<br>
 			<div class="col-md-8 col-md-offset-2">
+			<br>
+			<br>
 				<form action="/wayd/ContactMessage" method="post">
 					<div class="row"></div>
 					<div class="form-group">
