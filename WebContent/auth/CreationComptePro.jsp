@@ -140,6 +140,7 @@
 								<input type="text" class="form-control" id="nom"
 									placeholder="<%=CreationCompteProText.HINT_SIRET%>" value="<%=siret%>" name="siret"
 									pattern="[0-9]{<%=CreationCompteProText.TAILLE_SIRET_MAX%>}"
+									maxlength="<%=CreationCompteProText.TAILLE_SIRET_MAX%>"
 									required>
 							</div>
 
@@ -191,13 +192,13 @@
 									data-sitekey="6Ld6TzgUAAAAAMx76Q_NXm3xEJ1vPa799RLMeYLn"></div>
 							</div>
 
-							<div class="btn-group">
-								<button type="submit" class="btn btn-primary">Soumettre</button>
-								<a href="/wayd/Home" class="btn btn-info" role="button"><span
+							
+								<button type="submit" class="btn btnwayd">Soumettre</button>
+								<a href="/wayd/Home" class="btn btnwayd" role="button"><span
 									class="glyphicon glyphicon-home"></span> Accueil</a>
 
 
-							</div>
+							
 						</div>
 
 					</form>
@@ -307,7 +308,7 @@
 
 		// Init le nombre de caraterces	
 		var nombreCaractere = $('#description').val().length;
-		var msg = nombreCaractere + " Caractere(s) /"
+		var msg = nombreCaractere + " / "
 				+
 	<%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
 		;

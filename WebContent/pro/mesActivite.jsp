@@ -1,4 +1,6 @@
 
+<%@page import="website.dao.PersonneDAO"%>
+<%@page import="website.metier.TableauBordBean"%>
 <%@page import="texthtml.pro.MesActivitesProText"%>
 <%@page import="java.nio.channels.SeekableByteChannel"%>
 <%@page import="website.enumeration.MenuEnum"%>
@@ -6,7 +8,6 @@
 <%@page import="website.metier.admin.FiltreJSP"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.ActiviteBean"%>
-
 <%@page import="website.metier.TypeEtatActivite"%>
 <%@page import="website.metier.FiltreRecherche"%>
 <%@page import="website.metier.AuthentificationSite"%>
@@ -48,13 +49,15 @@
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
-			if (!authentification.isAuthentifiePro())
-		return;
-			
-		FiltreRecherche filtre=authentification.getFiltre();
-		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
-			
-		MenuEnum etatMenu=MenuEnum.mesactivites;
+		if (!authentification.isAuthentifiePro())
+			return;
+		
+			FiltreRecherche filtre=authentification.getFiltre();
+			ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+		
+			MenuEnum etatMenu=MenuEnum.mesactivites;
+
+			TableauBordBean tableauBord=PersonneDAO.getTableauDeBord(authentification.getId());
 	%>
 
 	<%@ include file="menu.jsp"%>
@@ -64,25 +67,24 @@
 		
 	</script>
 
-	<div class="container margedebut " >
+	<div class="container margedebut ">
 
 		<div class="panel barrerecherche">
 			<div class="panel-heading">
-			<div class="row">
+				<div class="row">
 					<div class="col-sm-12">
-					<p class="text-tuto"><%=MesActivitesProText.TUTO_LIGNE1 %></p>
-					<br>
+						<p class="text-tuto"><%=MesActivitesProText.TUTO_LIGNE1%></p>
+						<br>
 					</div>
-					</div>
-					
+				</div>
+
 				<div class="row">
 					<div class="col-sm-3">
 						<form method="post" action="MesActivites" id="formulaire"
 							class="form-inline">
 							<div class="form-group">
-							 <label for="idEtatActivite">Status:</label>
-								<select class="form-control" id="idEtatActivite"
-									name="etatActivite">
+								<label for="idEtatActivite">Status:</label> <select
+									class="form-control" id="idEtatActivite" name="etatActivite">
 
 									<%
 										for (TypeEtatActivite etatActivite:listEtatActivite) {
@@ -102,10 +104,26 @@
 					</div>
 
 					<div class="col-sm-2 ">
-						<button  title="<%=MesActivitesProText.INFO_SUPPRIME_SELECTION %>" href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
+						<button title="<%=MesActivitesProText.INFO_SUPPRIME_SELECTION%>"
+							href="#" name="supprimerActivites" class="btn btn-default">Effacez</button>
 					</div>
 
-
+					<div class="col-sm-2">
+						<p class="text-tuto">
+							Planifiées :
+							<%=tableauBord.getNbrPlanifiee()%></p>
+					</div>
+					<div class="col-sm-2">
+						<p class="text-tuto">
+							En cours :
+							<%=tableauBord.getNbrEnCours()%></p>
+					</div>
+					<div class="col-sm-2">
+						<p class="text-tuto">
+							Terminées :
+							<%=tableauBord.getNbrFini()%></p>
+					</div>
+					
 				</div>
 
 
@@ -113,7 +131,7 @@
 
 		</div>
 		<table class="table table-responsive " id="matable">
-			<thead class="entetetable" >
+			<thead class="entetetable">
 				<tr>
 					<th style="width: 10%;" class="text-center">Etat</th>
 					<th class="text-center">Titre</th>
@@ -129,13 +147,13 @@
 
 				<%
 					ArrayList<ActiviteBean> listMesActivite =
-						(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
-																																																																	    
-						    if (listMesActivite!=null)
-						for (ActiviteBean activite : listMesActivite) {
-						String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
-						String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
-						String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+								(ArrayList<ActiviteBean>) request.getAttribute("listMesActivite");
+																																																																			    
+								    if (listMesActivite!=null)
+								for (ActiviteBean activite : listMesActivite) {
+								String lienEfface = "/wayd/SupprimeActivite?idactivite=" + activite.getId();
+								String lienDetail = "/wayd/DetailActiviteSite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
+								String lienEdit = "/wayd/ModifierActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp";
 				%>
 
 
@@ -145,34 +163,29 @@
 						style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
-					<td style="vertical-align: middle;">
-					
-					
-					 <a  title="Détail" href="<%=lienDetail%>" > 
-					 	<button 
-							type="button" class="btnwayd btn-sm">
-							<span class="glyphicon glyphicon-search"></span>
-						</button>
-				     	</a>
-					
-					
-					
-					 <%if (!activite.isTerminee()){ %>				
-					
-						 <a  title="Modifier" href="<%=lienEdit%>" > 
-					 	<button title="Modifier"type="button" class="btnwayd btn-sm">
-							<span class="glyphicon glyphicon-edit"></span>
-						</button>
-				     	</a>
+					<td style="vertical-align: middle;"><a title="Détail"
+						href="<%=lienDetail%>">
+							<button type="button" class="btnwayd btn-sm">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+					</a> <%
+ 	if (!activite.isTerminee()){
+ %> <a title="Modifier"
+						href="<%=lienEdit%>">
+							<button title="Modifier" type="button" class="btnwayd btn-sm">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+					</a>
 
 
-					
-					
-					
-						<button title="Supprimer" id=<%out.println(lienEfface);%> name="supprimer"
-							type="button" class="btn btn-danger btn-sm">
+
+
+
+						<button title="Supprimer" id=<%out.println(lienEfface);%>
+							name="supprimer" type="button" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
-						</button> <%}
+						</button> <%
+ 	}
  %></td>
 					<td><%=activite.getCheckHtml()%></td>
 
@@ -204,7 +217,7 @@
 			$("#ckAll").click(function() {
 
 				litTable();
-			
+
 			});
 		});
 
@@ -221,16 +234,16 @@
 	<script>
 		function litTable() {
 
-			var nbrDeligne=0;
+			var nbrDeligne = 0;
 			$('#matable tr').each(function() {
 				var checkBox = $(this).find('input:checkbox'); //L'index 0 permet de récupérer le contenu de la première cellule de la ligne
-			
-					if ($('#ckAll').is(":checked")) {
 
-						nbrDeligne++;	
+				if ($('#ckAll').is(":checked")) {
+
+					nbrDeligne++;
 					checkBox.prop("checked", true); // it is checked
-				
-						} else {
+
+				} else {
 
 					checkBox.prop("checked", false); // it is checked
 
@@ -238,7 +251,6 @@
 
 			});
 
-		
 		}
 
 		function DialogEffaceActivites() {
@@ -330,7 +342,6 @@
 			}
 
 		}
-		
 	</script>
 
 </body>

@@ -23,7 +23,7 @@ public class CompteProText {
 	public static String TITRE_JUMBO = "Votre compte";
 	public static String MESSAGE_JUMBO_L1 = "Renseigner votre profil, décrivez votre activité.";
 			
-	public static String MESSAGE_JUMBO_L2 = "Précisez votre adresse exacte pour être localisé par la communauté.";
+	public static String MESSAGE_JUMBO_L2 = "Préciser votre adresse exacte pour être localisé par la communauté.";
 	
 	
 	public static String LABEL_NOM = CommunText.LABEL_NOM;

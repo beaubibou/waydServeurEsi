@@ -24,6 +24,7 @@ import wayde.bean.CxoPool;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
+import website.metier.TableauBordBean;
 import website.metier.TypeEtatProfil;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
@@ -319,7 +320,7 @@ public class PersonneDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean isSiretExist(String siret) {
 		// TODO Auto-generated method stub
 
@@ -360,7 +361,6 @@ public class PersonneDAO {
 		return false;
 	}
 
-
 	public static boolean isTelephoneExist(String telephone) {
 		// TODO Auto-generated method stub
 
@@ -400,14 +400,13 @@ public class PersonneDAO {
 		}
 		return false;
 	}
-	
-	public static boolean isSiretExistPersonne(String siret,
-			int idPersonne) {
+
+	public static boolean isSiretExistPersonne(String siret, int idPersonne) {
 		// TODO Auto-generated method stub
 
 		// Renvoi si le numero est déja utilisé par une personne différente de
 		// la personne en parametre
-		
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -887,7 +886,7 @@ public class PersonneDAO {
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
 				String mail = rs.getString("mail");
-			
+
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
@@ -1048,16 +1047,17 @@ public class PersonneDAO {
 
 			if (FirebaseApp.getApps().isEmpty())
 				FirebaseApp.initializeApp(WBservices.optionFireBase);
-	
+
 			String uid = PersonneDAO.getUID(idpersonne);
-			if (uid==null)return false;
-			LOG.info("uid à metter à jour"+uid );
+			if (uid == null)
+				return false;
+			LOG.info("uid à metter à jour" + uid);
 			UpdateRequest request = new UpdateRequest(uid)
-			.setDisplayName(pseudo);
-			LOG.info("Tenttaid"+uid );
+					.setDisplayName(pseudo);
+			LOG.info("Tenttaid" + uid);
 			FirebaseAuth.getInstance().updateUserAsync(request).get();
-		
-			LOG.info("Fin ten"+uid );
+
+			LOG.info("Fin ten" + uid);
 			updateProfilProDAO(pseudo, adresse, latitude, longitude,
 					commentaire, idpersonne, siteWeb, telephone, siret);
 
@@ -1268,6 +1268,70 @@ public class PersonneDAO {
 			}
 		}
 		return true;
+	}
+
+	public static TableauBordBean getTableauDeBord(int idpersonne) {
+		TableauBordBean tdb = null;
+		Connection connexion = null;
+		ResultSet rs = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT count (idactivite) as  nbrFini FROM activite where idpersonne=? and datefin<?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setTimestamp(2,
+					new java.sql.Timestamp(new Date().getTime()));
+			rs = preparedStatement.executeQuery();
+			int nbrFini = 0;
+			while (rs.next()) {
+				nbrFini = rs.getInt("nbrFini");
+			}
+			
+			requete = "SELECT count (idactivite) as  nbrEnCours FROM activite where idpersonne=? and datefin>? and datedebut<?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setTimestamp(2,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.setTimestamp(3,
+					new java.sql.Timestamp(new Date().getTime()));
+			rs = preparedStatement.executeQuery();
+					
+			
+			int nbrEnCours = 0;
+			while (rs.next()) {
+				nbrEnCours = rs.getInt("nbrEnCours");
+			}
+
+		
+			
+			requete = "SELECT count (idactivite) as  nbrPlanifiee FROM activite where idpersonne=? and  datedebut>?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setTimestamp(2,
+					new java.sql.Timestamp(new Date().getTime()));
+
+			rs = preparedStatement.executeQuery();
+			int nbrPlanifiee = 0;
+			while (rs.next()) {
+				nbrPlanifiee = rs.getInt("nbrPlanifiee");
+			}
+			
+			CxoPool.close(connexion, preparedStatement, rs);
+		
+			return new TableauBordBean(idpersonne, nbrFini, nbrPlanifiee, nbrEnCours);
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			
+				CxoPool.close(connexion, preparedStatement, rs);
+	
+		}
+		return new TableauBordBean(idpersonne, 0, 0, 0);
 	}
 
 	public static ArrayList<AvisBean> getListAvis(int idpersonnenotee) {

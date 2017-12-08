@@ -7,6 +7,11 @@
 	font-family: Arial;
 }
 
+.panel-default{
+
+	
+}
+
 .table-responsive>.table>tbody>tr>td {
 	vertical-align: middle;
 }
@@ -63,6 +68,7 @@ body {
 text-align:center;
 vertical-align:middle;
 background-color:#ffAD40;
+border: 2px solid #ffe699 ;
 color:white;
 text-decoration:none
 }
@@ -81,7 +87,8 @@ background-color:#ffBD45
 
 .barrerecherche{
 	
-		background-color: #ffe699;
+	background-color: #ffe699;
+	border: 5px solid #fff;
 	
 }
 
@@ -90,8 +97,11 @@ background-color:#ffBD45
 		 
 
 	}
-#matable{
+.jumbotronwayd{
 	
-	border:3px;
+	background-color:#ffffff;
+	border: 5px solid #ffe699;
+	
 }
+
 	

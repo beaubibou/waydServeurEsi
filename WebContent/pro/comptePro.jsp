@@ -82,8 +82,8 @@
 							<div class="col-sm-8">
 								<form action="/wayd/ChargePhotoPro" method="post"
 									enctype="multipart/form-data" onsubmit="return valideFichier()">
-									<input  type="file" name="file" size="50" id="file" /> <br>
-									
+									<input type="file" name="file" size="50" id="file" /> <br>
+
 									<input type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
 
 
@@ -98,35 +98,33 @@
 					<form action="/wayd/ComptePro" method="post"
 						onsubmit="return valideFormulaire()">
 
-
-
 						<div class="form-group">
 
 							<div class="row">
+								
+								<div class="col-sm-1 ">
+									<a title="Mot de passe"
+										href="/wayd/auth/changementmotdepasse.jsp">
+										<button type="button" class="btn btnwayd  btn-sm">
+											<span class="glyphicon glyphicon-lock"></span>
+										</button>
+									</a>
+
+								</div>
 
 								<div class="col-sm-1">
-									 <a  title="Mot de passe" href="/wayd/auth/changementmotdepasse.jsp" > 
-					 	<button 
-							type="button" class="btnwayd btn-sm">
-							<span class="glyphicon glyphicon-lock"></span>
-						</button>
-				     	</a>
-
-							</div>
-
-								<div class="col-sm-3">
-								 <a  title="Supprimer photo" 	href="/wayd/ComptePro?action=supprimerPhoto" > 
-					 	<button 
-							type="button" class="btn btn-danger btn-sm">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-				     	</a>
-						</div>
+									<a title="Supprimer photo"
+										href="/wayd/ComptePro?action=supprimerPhoto">
+										<button type="button" class="btn btn-danger btn-sm">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</a>
+								</div>
 
 
 
 							</div>
-<br>
+							<br>
 							<div class="row">
 								<div class="col-sm-8">
 									<div class="form-group">
@@ -147,7 +145,7 @@
 
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-8">
@@ -160,7 +158,7 @@
 										value=<%=OutilsHtml.convertRequeteToString(profil.getSiteWebStr())%>>
 								</div>
 
-		
+
 								<div class="col-sm-4">
 									<div class="form-group">
 										<label for="tel"><%=CompteProText.LABEL_TELEPHONE%></label>

@@ -90,7 +90,7 @@
 						class="glyphicon glyphicon-user"></span> <%=profiltmp.getPseudo()%></a></li>
 
 				<li><a href="/wayd/Deconnexion"><span
-						class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+						class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
 
 
 				<%
@@ -98,7 +98,7 @@
 				%>
 
 				<li><a href="/wayd/Deconnexion"><span
-						class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+						class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
 				<%
 					}
 				%>

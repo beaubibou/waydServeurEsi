@@ -79,7 +79,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div style="text-align: center;" class="panel-title ">Détail
+					<div  class="panel-title ">Détail
 						activité professionelle</div>
 
 				</div>

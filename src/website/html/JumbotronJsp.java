@@ -28,14 +28,13 @@ public class JumbotronJsp {
 		if (jumbotron==null)return "";
 		
 		return  "<div class=\"container\">"
-				+ " <div class=\"jumbotron\">"
+				+ " <div class='jumbotron jumbotronwayd'>"
 				+ "<h3>"+ jumbotron.titre+ "</h3>"
 				+ "<p>"+jumbotron.sousTitre+"</p></div>"
 				;
 				
 		
 	}
-
 
 	
 	

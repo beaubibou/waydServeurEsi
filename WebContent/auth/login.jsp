@@ -67,14 +67,14 @@
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="login-username"
-								type="email" class="form-control" name="email"
+								type="email" class="form-control" name="email" value="pmestivier@club.fr"
 								 placeholder="<%=LoginTxt.HINT_EMAIL %>">
 						</div>
 
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="login-password"
-								type="password" class="form-control" name="pwd"
+								type="password" class="form-control" name="pwd" value="azerty"
 								placeholder="<%=LoginTxt.HINT_MOT_DE_PASSE%>">
 						</div>
 
