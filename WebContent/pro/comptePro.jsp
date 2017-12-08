@@ -84,10 +84,25 @@
 									enctype="multipart/form-data" onsubmit="return valideFichier()">
 									<input type="file" name="file" size="50" id="file" /> <br>
 
-									<input type="submit" value="Envoyer" class="btn btnwayd btn-sm" />
+									<input type="submit" value="Envoyer la photo" class="btn btnwayd btn-sm" />
 
 
 								</form>
+								<br>
+								<a title="Supprimer photo"
+										href="/wayd/ComptePro?action=supprimerPhoto">
+										<button type="button" class="btn btn-danger btn-sm">
+											<span class="glyphicon glyphicon-trash"> Supprimer la photo</span>
+										</button>
+									</a>
+									<br>
+									<br>
+										<a title="Mot de passe"
+										href="/wayd/auth/changementmotdepasse.jsp">
+										<button type="button" class="btn btnwayd  btn-sm">
+											<span class="glyphicon glyphicon-lock">Changer mot de passe</span>
+										</button>
+									</a>
 							</div>
 
 						</div>
@@ -103,22 +118,12 @@
 							<div class="row">
 								
 								<div class="col-sm-1 ">
-									<a title="Mot de passe"
-										href="/wayd/auth/changementmotdepasse.jsp">
-										<button type="button" class="btn btnwayd  btn-sm">
-											<span class="glyphicon glyphicon-lock"></span>
-										</button>
-									</a>
+								
 
 								</div>
 
 								<div class="col-sm-1">
-									<a title="Supprimer photo"
-										href="/wayd/ComptePro?action=supprimerPhoto">
-										<button type="button" class="btn btn-danger btn-sm">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</a>
+								
 								</div>
 
 

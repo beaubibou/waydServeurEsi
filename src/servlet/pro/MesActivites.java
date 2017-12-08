@@ -63,7 +63,7 @@ public class MesActivites extends HttpServlet {
 
 			case TypeEtatActivite.PLANIFIEE:
 				jumbotron = new JumbotronJsp("Informations",
-						"Vous n'avez aucune activité en cours. N'hésiter à proposer"
+						"Vous n'avez aucune activité planifiée. N'hésiter à proposer"
 						+ " des activités via le menu <a href='/wayd/AjouteActivitePlanifiee'>Proposer. </a>", 
 						"Proposez des activites");
 				request.setAttribute("jumbotron", jumbotron);
