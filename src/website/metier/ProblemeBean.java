@@ -12,14 +12,22 @@ public class ProblemeBean {
 	private String email;
 	private Date dateCreation;
 	private boolean lu;
+	private String pseudo;
 	
-	public ProblemeBean(int id, String probleme, String email, Date dateCreation,boolean lu) {
+	public ProblemeBean(int id, String probleme, String email,String pseudo, Date dateCreation,boolean lu) {
 		super();
 		this.id = id;
 		this.probleme = probleme;
 		this.email = email;
 		this.dateCreation = dateCreation;
 		this.lu=lu;
+		this.pseudo=pseudo;
+	}
+	public String getPseudo() {
+		return pseudo;
+	}
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 	public int getId() {
 		return id;

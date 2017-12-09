@@ -14,7 +14,7 @@ public class SuggestionBean {
 	private boolean lu;
 	
 	
-	public SuggestionBean(int id, int idPersonne, String suggestion,
+	public SuggestionBean(int id, int idPersonne,String email, String suggestion,
 			Date dateCreation,String pseudo,boolean lu) {
 		super();
 		this.id = id;
@@ -24,9 +24,11 @@ public class SuggestionBean {
 		this.pseudo=pseudo;
 		this.lu=lu;
 	}
+	
 	public int getId() {
 		return id;
 	}
+	
 	public String getPseudo() {
 		return pseudo;
 	}

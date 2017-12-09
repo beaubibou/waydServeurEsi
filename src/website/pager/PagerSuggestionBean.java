@@ -7,29 +7,30 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import website.dao.ProblemeDAO;
+import website.dao.SuggestionDAO;
 import website.metier.AmiBean;
 import website.metier.ProblemeBean;
+import website.metier.SuggestionBean;
+import website.metier.admin.FitreAdminSuggestions;
 
-public class PagerProblemeBean {
+public class PagerSuggestionBean {
 
-	private static final Logger LOG = Logger.getLogger(PagerProblemeBean.class);
+	private static final Logger LOG = Logger.getLogger(PagerSuggestionBean.class);
 	   
-	private ArrayList<ProblemeBean> listProbleme;
+	private ArrayList<SuggestionBean> listSuggestion;
 	private int pageEnCours = 0;
 	private final int maxResult = 35;
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
 
-	public PagerProblemeBean(int etatProbleme, DateTime debut, DateTime fin,
-			int pageEnCours) {
+	public PagerSuggestionBean(FitreAdminSuggestions filtre	,int pageEnCours) {
 
 		this.pageEnCours = pageEnCours;
 
 		// On recherhce les maxresult+1 si on
-		listProbleme = ProblemeDAO.getListProbleme(etatProbleme, debut, fin,
-				pageEnCours, maxResult );
+		listSuggestion = SuggestionDAO.getListSugestion(filtre,  pageEnCours,maxResult);
 
-		if (listProbleme.size()==maxResult) {
+		if (listSuggestion.size()==maxResult) {
 			hasNext = true;
 			
 		
@@ -43,13 +44,19 @@ public class PagerProblemeBean {
 
 	}
 
-	public ArrayList<ProblemeBean> getListProbleme() {
-		return listProbleme;
+	
+
+	public ArrayList<SuggestionBean> getListSuggestion() {
+		return listSuggestion;
 	}
 
-	public void setListProbleme(ArrayList<ProblemeBean> listProbleme) {
-		this.listProbleme = listProbleme;
+
+
+	public void setListSuggestion(ArrayList<SuggestionBean> listSuggestion) {
+		this.listSuggestion = listSuggestion;
 	}
+
+
 
 	public int getPageEnCours() {
 		return pageEnCours;
@@ -84,7 +91,7 @@ public class PagerProblemeBean {
 	
 		if (hasNext) {
 			int suivant = pageEnCours + 1;
-			return "ListSuggestion?page=" + suivant;
+			return "ListProbleme?page=" + suivant;
 		} else
 			return "#";
 	}
@@ -92,7 +99,7 @@ public class PagerProblemeBean {
 	public String getLienPrevioustHtml() {
 		if (hasPrevious) {
 			int previous = pageEnCours - 1;
-			return "ListSuggestion?page=" + previous;
+			return "ListProbleme?page=" + previous;
 		} else
 			return "#";
 	}

@@ -26,6 +26,7 @@ public class FitreAdminSuggestions {
 	}
 
 	public DateTime getDateDebutCreation() {
+		
 		return dateDebutCreation;
 	}
 
@@ -34,6 +35,10 @@ public class FitreAdminSuggestions {
 	}
 
 	public DateTime getDateFinCreation() {
+		
+		dateFinCreation.withHourOfDay(23).withMinuteOfHour(59)
+		.withSecondOfMinute(59);
+		
 		return dateFinCreation;
 	}
 

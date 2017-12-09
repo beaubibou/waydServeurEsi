@@ -19,6 +19,8 @@ import website.dao.SuggestionDAO;
 import website.metier.AuthentificationSite;
 import website.metier.SuggestionBean;
 import website.metier.admin.FitreAdminSuggestions;
+import website.pager.PagerProblemeBean;
+import website.pager.PagerSuggestionBean;
 
 /**
  * Servlet implementation class ListSuggestion
@@ -85,12 +87,17 @@ public class ListSuggestion extends HttpServlet {
 			e.printStackTrace();
 		}
 
-				ArrayList<SuggestionBean> listSuggestion = new ArrayList<SuggestionBean>();
-			listSuggestion = SuggestionDAO.getListSuggestion(
-					filtreSuggestion.getEtatSuggestion(),
-					filtreSuggestion.getDateDebutCreation(),
-					filtreSuggestion.getDateFinCreation());
-			request.setAttribute("listSuggestion", listSuggestion);
+		int pageAfficher = 0;
+		if (request.getParameter("page") != null)
+			pageAfficher = Integer.parseInt(request.getParameter("page"));
+		
+		PagerSuggestionBean pagerProblemeBean = new PagerSuggestionBean(
+				filtreSuggestion, pageAfficher);
+	
+		request.setAttribute("pager", pagerProblemeBean);
+		
+			
+			
 			request.getRequestDispatcher("admin/listSuggestion.jsp").forward(request,
 					response);
 

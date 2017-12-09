@@ -1,3 +1,4 @@
+<%@page import="website.pager.PagerSuggestionBean"%>
 <%@page import="website.metier.admin.FitreAdminSuggestions"%>
 <%@page import="website.metier.admin.EtatSuggestion"%>
 <%@page import="website.metier.SuggestionBean"%>
@@ -7,6 +8,7 @@
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.pager.PagerSuggestionBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -38,9 +40,15 @@
 			request, response);
 			if (!authentification.isAuthentifieAdmin())
 		return;
-	
-	ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
-		FitreAdminSuggestions filtre=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
+			
+		ArrayList<EtatSuggestion> listEtatSuggestion = CacheValueDAO.getListEtatSuggestions();
+			FitreAdminSuggestions filtreSugestion=(FitreAdminSuggestions)session.getAttribute("filtreSuggestion");
+			
+			PagerSuggestionBean pager=(PagerSuggestionBean) request
+					.getAttribute("pager");
+			System.out.print("parger"+pager);
+			
+			ArrayList<SuggestionBean> listSuggestion = pager.getListSuggestion();
 	%>
 		<div class="container" style="width: 90%;">
 <div class="panel panel-primary">	
@@ -55,7 +63,7 @@
 						for (EtatSuggestion etatSuggestion:listEtatSuggestion) {
 					%>
 					<option value="<%=etatSuggestion.getId()%>"
-						<%=Outils.jspAdapterListSelected(etatSuggestion.getId(), filtre.getEtatSuggestion())%>>
+						<%=Outils.jspAdapterListSelected(etatSuggestion.getId(), filtreSugestion.getEtatSuggestion())%>>
 						<%=etatSuggestion.getLibelle()%></option>
 					<%
 						}
@@ -109,8 +117,7 @@
 			</thead>
 			<tbody>
 				<%
-					ArrayList<SuggestionBean> listSuggestion = (ArrayList<SuggestionBean>) request.getAttribute("listSuggestion");
-		
+			
 						for (SuggestionBean suggestion : listSuggestion) {
 					String lienDetailOrganisateur = "DetailParticipant?idPersonne="
 					+ suggestion.getIdPersonne();
@@ -161,7 +168,13 @@
 			</tbody>
 		</table>
 	</div>
+ <ul class="pager">
+ 
+  <li <%=pager.isPreviousHtml()%>> <a  href="<%=pager.getLienPrevioustHtml()%>">Previous</a></li>
+ <li>Page N° <%=pager.getPageEnCours()%></li>
+  <li  <%=pager.isNextHtml()%>><a href="<%=pager.getLienNextHtml()%>">Next</a></li>
 
+</ul>
 
 	<script>
 		$(function() {
@@ -183,7 +196,7 @@
 			});
 
 			$('#datedebut').datetimepicker({
-				defaultDate : new Date('<%=filtre.getDateDebutCreation().getMonthOfYear()%>,<%=filtre.getDateDebutCreation().getDayOfMonth()%>,	<%=filtre.getDateDebutCreation().getYear()%>'),
+				defaultDate : new Date('<%=filtreSugestion.getDateDebutCreation().getMonthOfYear()%>,<%=filtreSugestion.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreSugestion.getDateDebutCreation().getYear()%>'),
 				format : 'DD/MM/YYYY'
 
 			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
@@ -192,7 +205,7 @@
 	
 			$('#datefin').datetimepicker(
 					{
-						defaultDate : new Date('<%=filtre.getDateFinCreation().getMonthOfYear()%>,<%=filtre.getDateFinCreation().getDayOfMonth()%>,	<%=filtre.getDateFinCreation().getYear()%>'),
+						defaultDate : new Date('<%=filtreSugestion.getDateFinCreation().getMonthOfYear()%>,<%=filtreSugestion.getDateFinCreation().getDayOfMonth()%>,	<%=filtreSugestion.getDateFinCreation().getYear()%>'),
 								format : 'DD/MM/YYYY'
 
 							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });

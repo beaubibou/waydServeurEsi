@@ -17,6 +17,7 @@ import wayde.bean.MessageServeur;
 import wayde.dao.ActiviteDAO;
 import website.metier.ProblemeBean;
 import website.metier.admin.EtatProbleme;
+import website.metier.admin.FiltreJSP;
 
 public class ProblemeDAO {
 	private static final Logger LOG = Logger.getLogger(ProblemeDAO.class);
@@ -31,7 +32,7 @@ public class ProblemeDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion";
+			String requete = "SELECT pseudo,email, probleme, id, d_creation,lu  FROM problemeconnexion";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();
 
@@ -39,9 +40,11 @@ public class ProblemeDAO {
 				int id = rs.getInt("id");
 				String probleme = rs.getString("probleme");
 				String email = rs.getString("email");
+				String pseudo = rs.getString("pseudo");
+				
 				Date d_creation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
-				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
+				retour.add(new ProblemeBean(id, probleme, email,pseudo, d_creation, lu));
 			}
 
 			return retour;
@@ -93,7 +96,7 @@ public class ProblemeDAO {
 				break;
 		
 			case EtatProbleme.NONCLOTOURE:
-				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+				requete = "SELECT pseudo,email, probleme, id, d_creation,lu  FROM problemeconnexion where"
 						+ " d_creation between ? and ? and lu=false order by id desc";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -110,9 +113,10 @@ public class ProblemeDAO {
 				int id = rs.getInt("id");
 				String probleme = rs.getString("probleme");
 				String email = rs.getString("email");
+				String pseudo = rs.getString("pseudo");
 				Date d_creation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
-				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
+				retour.add(new ProblemeBean(id, probleme, email,pseudo, d_creation, lu));
 			}
 			return retour;
 
@@ -126,7 +130,6 @@ public class ProblemeDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
-	
 	public static ArrayList<ProblemeBean> getListProbleme(int etatProbleme,
 			DateTime debut, DateTime fin,int page,int maxResult) {
 
@@ -145,7 +148,7 @@ public class ProblemeDAO {
 			switch (etatProbleme) {
 
 			case EtatProbleme.TOUS:
-				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+				requete = "SELECT pseudo,email, probleme, id, d_creation,lu  FROM problemeconnexion where"
 						+ " d_creation between ? and ? order by id desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -157,7 +160,7 @@ public class ProblemeDAO {
 				break;
 			
 			case EtatProbleme.CLOTURE:
-				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+				requete = "SELECT pseudo,email, probleme, id, d_creation,lu  FROM problemeconnexion where"
 						+ " d_creation between ? and ? and lu=true order by id desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -169,7 +172,7 @@ public class ProblemeDAO {
 				break;
 		
 			case EtatProbleme.NONCLOTOURE:
-				requete = "SELECT email, probleme, id, d_creation,lu  FROM problemeconnexion where"
+				requete = "SELECT pseudo,email, probleme, id, d_creation,lu  FROM problemeconnexion where"
 						+ " d_creation between ? and ? and lu=false order by id desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -189,9 +192,10 @@ public class ProblemeDAO {
 				int id = rs.getInt("id");
 				String probleme = rs.getString("probleme");
 				String email = rs.getString("email");
+				String pseudo = rs.getString("pseudo");
 				Date d_creation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
-				retour.add(new ProblemeBean(id, probleme, email, d_creation, lu));
+				retour.add(new ProblemeBean(id, probleme, email,pseudo, d_creation, lu));
 			}
 			return retour;
 

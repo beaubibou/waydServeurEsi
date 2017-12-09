@@ -22,6 +22,7 @@ import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
 import website.metier.admin.EtatProbleme;
 import website.metier.admin.EtatSuggestion;
+import website.metier.admin.FitreAdminSuggestions;
 
 public class SuggestionDAO {
 	private static final Logger LOG = Logger.getLogger(SuggestionDAO.class);
@@ -36,7 +37,7 @@ public class SuggestionDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT id,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu  FROM personne,amelioration where "
+			String requete = "SELECT id,mail,personne.idpersonne, suggestion, d_creation,personne.prenom as pseudo,amelioration.lu  FROM personne,amelioration where "
 					+ "amelioration.idpersonne=personne.idpersonne";
 
 			preparedStatement = connexion.prepareStatement(requete);
@@ -47,9 +48,10 @@ public class SuggestionDAO {
 				int idPersonne = rs.getInt("idpersonne");
 				String suggestion = rs.getString("suggestion");
 				String pseudo = rs.getString("pseudo");
+				String email = rs.getString("mail");
 				Date d_creation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
-				retour.add(new SuggestionBean(id, idPersonne, suggestion,
+				retour.add(new SuggestionBean(id, idPersonne,email, suggestion,
 						d_creation, pseudo,lu));
 			}
 
@@ -127,9 +129,10 @@ public class SuggestionDAO {
 				int idPersonne = rs.getInt("idpersonne");
 				String suggestion = rs.getString("suggestion");
 				String pseudo = rs.getString("pseudo");
+				String email = rs.getString("mail");
 				Date d_creation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
-				retour.add(new SuggestionBean(id, idPersonne, suggestion,
+				retour.add(new SuggestionBean(id, idPersonne,email, suggestion,
 						d_creation, pseudo,lu));
 			}
 
@@ -287,5 +290,94 @@ public class SuggestionDAO {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub// TODO Auto-generated method stub
 
+	}
+
+	public static ArrayList<SuggestionBean> getListSugestion(FitreAdminSuggestions filtre, int page,int maxResult) {
+	
+		int offset=(maxResult)*page;
+	
+		int etatSuggestion=filtre.getEtatSuggestion();
+		DateTime debut=filtre.getDateDebutCreation();
+		DateTime fin=filtre.getDateFinCreation();
+		
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		ArrayList<SuggestionBean> retour = new ArrayList<SuggestionBean>();
+	
+		try {
+	
+			String requete = "";
+			connexion = CxoPool.getConnection();
+	
+			switch (etatSuggestion) {
+	
+			case EtatProbleme.TOUS:
+				requete = "SELECT personne.idpersonne,prenom as pseudo,personne.mail, suggestion, id, d_creation,lu  FROM amelioration,personne "
+						+ "  where personne.idpersonne=amelioration.idpersonne and d_creation between ? and ? order by id desc  limit ?  offset ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+			
+			case EtatProbleme.CLOTURE:
+				requete = "SELECT personne.idpersonne,prenom as pseudo,personne.mail, suggestion, id, d_creation,lu  FROM amelioration,personne "
+						+ "  where personne.idpersonne=amelioration.idpersonne and lu=true and d_creation between ? and ? order by id desc  limit ?  offset ?";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+		
+			case EtatProbleme.NONCLOTOURE:
+				requete = "SELECT personne.idpersonne,prenom as pseudo,personne.mail, suggestion, id, d_creation,lu  FROM amelioration,personne "
+						+ "  where personne.idpersonne=amelioration.idpersonne and lu=false and d_creation between ? and ? order by id desc  limit ?  offset ?";
+			
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
+						.toDate().getTime()));
+				preparedStatement.setTimestamp(2, new java.sql.Timestamp(fin
+						.toDate().getTime()));
+				preparedStatement.setInt(3, maxResult);
+				preparedStatement.setInt(4, offset);
+				break;
+	
+			}
+	
+			rs = preparedStatement.executeQuery();
+	
+			
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int idPersonne = rs.getInt("idpersonne");
+				String suggestion = rs.getString("suggestion");
+				String email = rs.getString("mail");
+				String pseudo = rs.getString("pseudo");
+				Date d_creation = rs.getTimestamp("d_creation");
+				
+				boolean lu = rs.getBoolean("lu");
+				retour.add(new SuggestionBean( id,  idPersonne, email,  suggestion,
+						d_creation, pseudo, lu));
+			}
+			LOG.info(retour);
+			return retour;
+	
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+	
+			e.printStackTrace();
+			return retour;
+		} finally {
+	
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
 	}
 }
