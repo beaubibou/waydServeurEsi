@@ -274,13 +274,16 @@
 	<script>
 			function valideFormulaire() {
 
-				return true;
+				
 
 					if ((latitude == 0 || longitude == 0)) {
 					BootstrapDialog
-							.alert('<%=CreationCompteProText.ALERT_GPS_NO_POSITION%>');
+							.alert("<%=CreationCompteProText.ALERT_GPS_NO_POSITION%>");
 					return false;
 				}
+		
+		return true;	
+			
 			}
 
 			function initPosition() {

@@ -99,11 +99,11 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Pseudo</th>
-					<th>Suggestion</th>
-					<th>Date</th>
-					<th>Action</th>
-					<th>Cloturé</th>
+					<th style="width:10%;" >Pseudo</th>
+					<th >Suggestion</th>
+					<th  style="width:10%;"  class="text-center">Date</th>
+					<th  style="width:10%;"  class="text-center">Action</th>
+					<th  style="width:10%;"  class="text-center">Cloturé</th>
 
 				</tr>
 			</thead>
@@ -130,7 +130,10 @@
 					</a></td>
 
 					<td>
-						<%=suggestion.getSuggestion()%>
+						
+						<textarea disabled=true rows="3" cols="130"><%=suggestion.getSuggestion()%></textarea>
+						
+					
 
 					</td>
 

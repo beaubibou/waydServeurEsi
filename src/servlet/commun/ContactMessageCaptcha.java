@@ -1,3 +1,4 @@
+
 package servlet.commun;
 
 import gcmnotification.AcquitAllNotificationGcm;
@@ -23,6 +24,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
+import website.dao.MessageDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
 
@@ -75,28 +77,31 @@ public class ContactMessageCaptcha extends HttpServlet {
 		String reponseCaptcha = request.getParameter("g-recaptcha-response");
 
 		try {
-
+			
 			MessageServeur messageServeur = testRequete(message, email, pseudo,
 					reponseCaptcha);
+		
 			if (messageServeur.isReponse()){
 				
+				if (MessageDAO.ajouteMessageProbleme(message, email, pseudo)){
 				AlertInfoJsp alert=new AlertInfoJsp("Message Envoyé", AlertJsp.Sucess, "commun/acceuil.html");
 				request.setAttribute("alerte", alert);
 				request.getRequestDispatcher("/commun/alertNoAuth.jsp")
 				.forward(request, response);
 				return;
-				
+				}
 			}
-			else{
+			
 				
-				AlertInfoJsp alert=new AlertInfoJsp(messageServeur.getMessage(), AlertJsp.warning, "commun/acceuil.html");
+			
+			AlertInfoJsp alert=new AlertInfoJsp(messageServeur.getMessage(), AlertJsp.warning, "commun/acceuil.html");
 				request.setAttribute("alerte", alert);
 				request.getRequestDispatcher("/commun/alertNoAuth.jsp")
 				.forward(request, response);
 				return;
 				
 				
-			}
+			
 			
 
 
@@ -113,7 +118,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		
-if (message == null)
+		if (message == null)
 			return new MessageServeur(false, "Le message est incomplet");
 
 		message = message.trim();
@@ -139,6 +144,7 @@ if (message == null)
 			return new MessageServeur(false, "Cochez je ne suis pas un robot");
 
 		}
+
 
 	}
 

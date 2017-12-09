@@ -313,17 +313,6 @@ return new Integer(nbrmessagenonlu).toString();
 				preparedStatement.execute();
 				
 				preparedStatement.close();
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				connexion.commit();
 
 				return true;
@@ -353,6 +342,59 @@ return new Integer(nbrmessagenonlu).toString();
 
 	}
 	
+	public static boolean ajouteMessageProbleme(String message, String email, String  pseudo) {
+		// TODO Auto-generated method stub
+	
 		
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+
+			try {
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
+				Date datecreation = Calendar.getInstance().getTime();
+				
+				String requete = "INSERT INTO problemeconnexion( probleme, email, pseudo,d_creation)  "
+						+ "VALUES (?, ? ,?, ?);";
+				 preparedStatement = connexion.prepareStatement(
+						requete, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, message);
+				preparedStatement.setString(2, email);
+				preparedStatement.setString(3, pseudo);
+				preparedStatement.setTimestamp(4,
+						new java.sql.Timestamp(datecreation.getTime()));
+				
+				preparedStatement.execute();
+				preparedStatement.close();
+				connexion.commit();
+
+				return true;
+
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+
+				try {
+
+					if (connexion != null)
+						connexion.close();
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+			return false;
+
+	}	
+	
+	
 	
 }

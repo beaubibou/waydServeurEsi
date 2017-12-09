@@ -117,6 +117,18 @@ public class CreerUserPro extends HttpServlet {
  
 		//*******************************************************
 	
+		MessageServeur messageServeurTestRequete=testParametreRequete(pwd,pwd1,email,pseudo,siret,
+				telephone,adresse,commentaire,latitude,longitude);
+			
+		if (!messageServeurTestRequete.isReponse()){
+					
+			redirige( pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire, latitude, longitude,
+					request,response, messageServeurTestRequete.getMessage());
+				
+			return;	
+		}
+		
+		
 		String reponseCaptcha = request.getParameter("g-recaptcha-response");
 		try {
 			
@@ -138,19 +150,8 @@ public class CreerUserPro extends HttpServlet {
 			return;	
 		}
 		
-		
-
-	
-		MessageServeur messageServeurTestRequete=testParametreRequete(pwd,pwd1,email,pseudo,siret,
-				telephone,adresse,commentaire,latitude,longitude);
 			
-		if (!messageServeurTestRequete.isReponse()){
-					
-			redirige( pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire, latitude, longitude,
-					request,response, messageServeurTestRequete.getMessage());
-				
-			return;	
-		}
+		
 			
 		MessageServeur messageServeurFireBase=	creerUtilisateurFireBase(email,pwd,pseudo);
 		
@@ -161,10 +162,7 @@ public class CreerUserPro extends HttpServlet {
 			
 			if (messageCreerUserDAO.isReponse()){
 				
-//				request.setAttribute("messageAlert", messageCreerUserDAO.getMessage());
-//				request.setAttribute("typeMessage", AlertJsp.Sucess);
-//			
-//				request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+
 				
 				envoiMailConfirmation(request,response, email, pwd);
 				
@@ -323,16 +321,19 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		double longitude) {
 	// TODO Auto-generated method stub
 
+	LOG.info("Test par "+pseudo);
 	
-	if (PersonneDAO.isPseudoExist(pseudo))
-		new MessageServeur(false,Erreur_HTML.PSEUDO_EXISTE);
+	
+	
+	if (PersonneDAO.isPseudoExist(pseudo.trim()))
+		return new MessageServeur(false,Erreur_HTML.PSEUDO_EXISTE);
 	
 	if (PersonneDAO.isSiretExist(siret))
-		new MessageServeur(false,Erreur_HTML.SIRET_EXISTE);
+		return new MessageServeur(false,Erreur_HTML.SIRET_EXISTE);
 	
 	
 	if (PersonneDAO.isTelephoneExist(telephone))
-		new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
+		return new MessageServeur(false,Erreur_HTML.TELEPHONNE_EXIST_DEJA);
 	
 	if (pwd==null)return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_VIDE);
 	if (pwd.length()<6)return new MessageServeur(false,Erreur_HTML.MOT_DE_PASSE_6_CARACTERE);
