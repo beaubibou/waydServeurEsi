@@ -60,7 +60,7 @@ public class CommunText {
 	public static String getHintTitreActivite() {
 
 		return "Titre de l'activité " + TAILLE_TITRE_ACTIVITE_MAX + 
-				" caractéres maximum.";
+				" caractères maximum.";
 	}
 
 	public static String getNbrCarateresDescription() {
@@ -71,17 +71,17 @@ public class CommunText {
 
 	public static String PSEUDO_LIMITE_A_CARATERE() {
 		// TODO Auto-generated method stub
-		return "Pseudo limité à "+ TAILLE_PSEUDO_MAX+ " caractéres.";
+		return "Pseudo limité à "+ TAILLE_PSEUDO_MAX+ " caractères.";
 	}
 
 	public static String DESCRIPTION_PROFIL_LIMITE_A_CARATERE() {
 		// TODO Auto-generated method stub
-		return "La description est limitée à "+ TAILLE_DESCRIPTION_PROFIL_MAX+ " caractéres.";
+		return "La description est limitée à "+ TAILLE_DESCRIPTION_PROFIL_MAX+ " caractères.";
 	}
 	
 	public static String getHintNomSociete() {
 
 		return "Pseudo de la structure " + TAILLE_PSEUDO_MAX
-				+ " caractéres maximum";
+				+ " caractères maximum";
 	}
 }

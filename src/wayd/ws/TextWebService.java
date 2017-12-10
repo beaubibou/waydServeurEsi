@@ -16,7 +16,7 @@ public class TextWebService {
 	public static String PROFIL_NON_RECONNU = "Tu n'es pas reconnu";
 	public static String pasAMI = "Pas ami";
 	public static String PREFERENCE_SAUVEGARDEES = "Préférences sauvegardées";
-	public static String QUOTA_ACTIVITE_DEPASSE = "Tu as dépassé le nombre d'activités autorisé";
+	public static String QUOTA_ACTIVITE_DEPASSE = "Vous avez déjà une activité en cours";
 	public static String AJOUTE_SUGGESTION = "Suggestion ajoutée";
 	public static String suppressionParicipation = "Suppression participation ok";
 	public static String suppressionActivite = "Suppression activité ok";

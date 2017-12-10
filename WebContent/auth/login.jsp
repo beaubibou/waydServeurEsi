@@ -91,7 +91,7 @@
 									class="btn  btnwayd">Se connecter</a>
 							
 									<a id="btn-primary" href="/wayd/auth/redemandeConfirmationMail.jsp"
-									class="btn  btnwayd">Mail de confirmation non recu?</a>
+									class="btn  btnwayd">Mail de confirmation non reçu?</a>
 
 							
 						</div>

@@ -42,22 +42,22 @@ public class Notification {
 		switch (idtypemessage){
 		
 		case DonneAvis:
-			this.message="Penser à noter "+nompersconcernee+ " pour sa participation  "
+			this.message="Pensez à noter "+nompersconcernee+ " pour sa participation  "
 			+ " à "+titreactivite+".";
 			break;
 			
 		case RecoitAvis:
-			this.message="Vous avez recu un avis de "+nompersconcernee+ " pour votre participation à "
+			this.message="Vous avez reçu un avis de "+nompersconcernee+ " pour votre participation à "
 			+ titreactivite+".";
 		
 			break;
 			
 		case NouvelAmi:
-			this.message="Vous êtes à présent l'ami de "+nompersconcernee;
+			this.message="Vous êtes à présent dans la sphère de "+nompersconcernee;
 			break;
 			
 		case SUPPRIME_AMI:
-			this.message= nompersconcernee+ " ne souhaite plus être votre ami";
+			this.message= nompersconcernee+ " ne souhaite plus être dans votre sphère.";
 			break;
 		
 		case Supprime_Participation:
