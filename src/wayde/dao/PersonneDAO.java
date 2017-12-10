@@ -135,7 +135,6 @@ public class PersonneDAO {
 			int nbrparticipation = rs.getInt("nbrparticipation");
 			int nbrami = rs.getInt("nbrami");
 			String commentaire = rs.getString("commentaire");
-
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
 			String ville = rs.getString("ville");

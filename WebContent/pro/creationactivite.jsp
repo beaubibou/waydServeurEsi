@@ -10,7 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <title>><%=CreationActiviteText.TITRE_ONGLET%></title>
 

@@ -198,16 +198,15 @@
 			
 			
 			$('#datedebut').datetimepicker({
-				defaultDate : new Date('<%=filtreProbleme.getDateDebutCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateDebutCreation().getYear()%>'),
+				defaultDate : new Date(<%=filtreProbleme.getDateDebutCreation().getYear()%>,<%=filtreProbleme.getDateDebutCreation().getMonthOfYear()-1%>,<%=filtreProbleme.getDateDebutCreation().getDayOfMonth()%>),
 				format : 'DD/MM/YYYY'
 
 			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
 
-			var d = new Date(99,5,24)
 	
 			$('#datefin').datetimepicker(
 					{
-						defaultDate : new Date('<%=filtreProbleme.getDateFinCreation().getMonthOfYear()%>,<%=filtreProbleme.getDateFinCreation().getDayOfMonth()%>,	<%=filtreProbleme.getDateFinCreation().getYear()%>	'),
+						defaultDate : new Date(<%=filtreProbleme.getDateFinCreation().getYear()%>,<%=filtreProbleme.getDateFinCreation().getMonthOfYear()-1%>,<%=filtreProbleme.getDateFinCreation().getDayOfMonth()%>,	),
 			format : 'DD/MM/YYYY'
 
 							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
@@ -215,23 +214,11 @@
 		});
 	</script>
 	<script>
-	
-
-
-		
-		
-
-		
 
 		
 		function lireMessage(lien) {
 			location.href = lien;
 		}
-		<script>
-
-
-	
-
 	
 		
 	</script>

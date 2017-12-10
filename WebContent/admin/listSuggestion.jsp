@@ -15,23 +15,36 @@
 <html lang="en">
 <head>
 <title>List suggestions</title>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+
 <script src="js/moment.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-	<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
+</head>
+
 <body>
 
 	<%@ include file="menu.jsp"%>
@@ -196,7 +209,7 @@
 			});
 
 			$('#datedebut').datetimepicker({
-				defaultDate : new Date('<%=filtreSugestion.getDateDebutCreation().getMonthOfYear()%>,<%=filtreSugestion.getDateDebutCreation().getDayOfMonth()%>,	<%=filtreSugestion.getDateDebutCreation().getYear()%>'),
+				defaultDate : new Date(	<%=filtreSugestion.getDateDebutCreation().getYear()%>,<%=filtreSugestion.getDateDebutCreation().getMonthOfYear()%>-1,<%=filtreSugestion.getDateDebutCreation().getDayOfMonth()%>),
 				format : 'DD/MM/YYYY'
 
 			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
@@ -205,7 +218,7 @@
 	
 			$('#datefin').datetimepicker(
 					{
-						defaultDate : new Date('<%=filtreSugestion.getDateFinCreation().getMonthOfYear()%>,<%=filtreSugestion.getDateFinCreation().getDayOfMonth()%>,	<%=filtreSugestion.getDateFinCreation().getYear()%>'),
+						defaultDate : new Date(<%=filtreSugestion.getDateFinCreation().getYear()%>,<%=filtreSugestion.getDateFinCreation().getMonthOfYear()-1%>,<%=filtreSugestion.getDateFinCreation().getDayOfMonth()%>),
 								format : 'DD/MM/YYYY'
 
 							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });

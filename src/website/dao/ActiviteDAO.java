@@ -29,6 +29,7 @@ import website.html.OutilsHtml;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
+import website.metier.Outils;
 import website.metier.ParticipantBean;
 import website.metier.ProfilBean;
 import website.metier.TypeActiviteBean;
@@ -329,15 +330,15 @@ public class ActiviteDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			LOG.info("Mise a jour activite");
-
+	//		LOG.info("Mise a jour activite"+ commentaire.length());
+	
 			String requete = "UPDATE  activite set titre=?, libelle=?,  datedebut=?, datefin=?,  adresse=?,"
 					+ " latitude=?,  longitude=?,  idtypeactivite=?"
 					+ " WHERE idactivite=?";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
-			preparedStatement.setString(2, commentaire);
+			preparedStatement.setString(2, Outils.getStringStatement(commentaire));
 			preparedStatement.setTimestamp(3,
 					new java.sql.Timestamp(datedebut.getTime()));
 			preparedStatement.setTimestamp(4,
@@ -400,7 +401,7 @@ public class ActiviteDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
-			preparedStatement.setString(3, OutilsHtml.convertStringToNull(commentaire));
+			preparedStatement.setString(3, Outils.getStringStatement(commentaire));
 		//	preparedStatement.setString(3,null);
 			preparedStatement.setTimestamp(4,
 					new java.sql.Timestamp(datedebut.getTime()));

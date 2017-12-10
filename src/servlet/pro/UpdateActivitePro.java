@@ -29,7 +29,7 @@ import website.metier.Outils;
 public class UpdateActivitePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(UpdateActivitePro.class);
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -45,13 +45,13 @@ public class UpdateActivitePro extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
-			
+
 		if (!authentification.isAuthentifiePro())
 			return;
-		
+
 		response.sendRedirect("MesActivites");
 	}
 
@@ -62,31 +62,29 @@ public class UpdateActivitePro extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-		
+
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
-		// int typeaccess =
-		// Integer.parseInt(request.getParameter("typeaccess"));
+
 		int typeactivite = Integer.parseInt(request
 				.getParameter("typeactivite"));
-		int idactivite = Integer.parseInt(request
-				.getParameter("idActivite"));
+		int idactivite = Integer.parseInt(request.getParameter("idActivite"));
 
 		String datedebut = request.getParameter("debut");
 		String datefin = request.getParameter("fin");
 
 		Date dateDebut = null;
 		Date dateFin = null;
-	
+
 		try {
 			dateDebut = Outils.getDateFromString(datedebut);
 			dateFin = Outils.getDateFromString(datefin);
@@ -97,18 +95,19 @@ public class UpdateActivitePro extends HttpServlet {
 			return;
 		}
 
-		
-		if (ActiviteDAO.updateActivitePro( titre,
-				 description,  dateDebut,  dateFin,  adresse,
-				 latitude,  longitude,  typeactivite,
-				 idactivite))
-			{
-		
-			request.setAttribute(AlertDialog.ALERT_DIALOG, new MessageAlertDialog("Message Information",Erreur_HTML.ACTIVITE_MODIFIEE,null));
-			request.getRequestDispatcher("MesActivites").forward(request, response);
+		if (ActiviteDAO
+				.updateActivitePro(titre, description, dateDebut, dateFin,
+						adresse, latitude, longitude, typeactivite, idactivite)) {
+
+			request.setAttribute(AlertDialog.ALERT_DIALOG,
+					new MessageAlertDialog("Message Information",
+							Erreur_HTML.ACTIVITE_MODIFIEE, null));
+			request.getRequestDispatcher("MesActivites").forward(request,
+					response);
 
 			return;
-			};
 		}
+		;
+	}
 
 }

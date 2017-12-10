@@ -173,8 +173,7 @@
 										name="telephone"
 										pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}"
 										maxlength="<%=CompteProText.TAILLE_TELEPHONNE_MAX%>" required
-										value=<%=OutilsHtml.convertRequeteToString(profil
-					.getTelephoneStr())%>>
+										value=<%=OutilsHtml.convertRequeteToString(profil.getTelephoneStr())%>>
 								</div>
 
 							</div>

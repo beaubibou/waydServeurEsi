@@ -46,7 +46,8 @@ public class FitreAdminProbleme {
 
 
 	public DateTime getDateFinCreation() {
-		return dateFinCreation;
+		return dateFinCreation.withHourOfDay(23).withMinuteOfHour(59)
+				.withSecondOfMinute(59);
 	}
 
 

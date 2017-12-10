@@ -101,7 +101,8 @@
 					</div>
 
 					<div class="col-sm-2 ">
-						<button  title="<%=MesMessagesProText.INFO_SUPPRIME_SELECTION %> name="supprimerMessages" class="btn btn-default">Effacez</button>
+						<button  title="<%=MesMessagesProText.INFO_SUPPRIME_SELECTION %>"
+						 name="supprimerMessages" class="btn btn-default">Effacez</button>
 					</div>
 
 				</div>

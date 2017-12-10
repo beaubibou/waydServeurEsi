@@ -131,8 +131,13 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 
 	public static String getStringStatement(String chaine) {
 		// TODO Auto-generated method stub
+		
 		if (chaine==null)return null;
-		if (chaine.length()==0) return null;
+	
+		if (chaine.length()==0) {
+			
+			return null;
+		}
 		
 		return chaine;
 	}

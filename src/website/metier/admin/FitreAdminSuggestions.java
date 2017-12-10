@@ -36,13 +36,14 @@ public class FitreAdminSuggestions {
 
 	public DateTime getDateFinCreation() {
 		
-		dateFinCreation.withHourOfDay(23).withMinuteOfHour(59)
-		.withSecondOfMinute(59);
-		
-		return dateFinCreation;
+		return dateFinCreation.withHourOfDay(23).withMinuteOfHour(59)
+				.withSecondOfMinute(59);
 	}
 
 	public void setDateFinCreation(DateTime dateFinCreation) {
+		
+		
+		
 		this.dateFinCreation = dateFinCreation;
 	}
 
