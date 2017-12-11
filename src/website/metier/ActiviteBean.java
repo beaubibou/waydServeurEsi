@@ -75,8 +75,20 @@ public class ActiviteBean {
 
 	private String libelleActivite;
 
+	
 	private String typeActiviteStr;
-	private int nbrVu = 9;
+	private int nbrVu;
+
+	private int nbrInteret;
+	
+	
+	public int getNbrInteret() {
+		return nbrInteret;
+	}
+
+	public void setNbrInteret(int nbrInteret) {
+		this.nbrInteret = nbrInteret;
+	}
 
 	public int getNbrVu() {
 		return nbrVu;
@@ -319,7 +331,7 @@ public class ActiviteBean {
 			String adresse, String nom, String pseudo, String photo,
 			double note, int role, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
-			boolean afficheage, boolean affichesexe, int nbmaxwaydeur, int nbrvu) {
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur, int nbrvu,int nbr_interet) {
 
 		super();
 		this.id = id;
@@ -344,6 +356,7 @@ public class ActiviteBean {
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
 		this.nbrVu = nbrvu;
+		this.nbrInteret=nbr_interet;
 
 	}
 

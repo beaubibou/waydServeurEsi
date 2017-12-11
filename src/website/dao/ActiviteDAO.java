@@ -148,6 +148,46 @@ public class ActiviteDAO {
 		}
 		return false;
 	}
+	
+	private static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
+		// TODO Auto-generated method stub
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from interet where idpersonne=? and idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+				connexion.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return false;
+	}
 
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double NELat, double NELon, double SWLat,
@@ -844,7 +884,7 @@ public class ActiviteDAO {
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
 						+ "personne.note,personne.nbravis as totalavis,"
-						+ "activite.nbrwaydeur as nbrparticipant, nbrvu"
+						+ "activite.nbrwaydeur as nbrparticipant, nbrvu,nbr_interet"
 						+ ",personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
 						+ "   FROM personne,activite"
 						+ "  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=? and ? between datedebut and datefin order by datedebut DESC";
@@ -859,7 +899,7 @@ public class ActiviteDAO {
 			case TypeEtatActivite.TERMINEE:
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
-						+ "personne.note,personne.nbravis as totalavis, nbrvu,"
+						+ "personne.note,personne.nbravis as totalavis, nbrvu,nbr_interet,"
 						+ "activite.nbrwaydeur as nbrparticipant"
 						+ ",personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
 						+ " FROM personne,activite "
@@ -876,7 +916,7 @@ public class ActiviteDAO {
 			case TypeEtatActivite.TOUTES:
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
-						+ "personne.note,personne.nbravis as totalavis, nbrvu,"
+						+ "personne.note,personne.nbravis as totalavis, nbrvu,nbr_interet,"
 						+ "activite.nbrwaydeur as nbrparticipant,personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
 						+ " FROM personne,"
 						+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idpersonne=? order by datedebut DESC";
@@ -890,7 +930,7 @@ public class ActiviteDAO {
 			case TypeEtatActivite.PLANIFIEE:
 				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
-						+ "personne.note,personne.nbravis as totalavis, nbrvu,"
+						+ "personne.note,personne.nbravis as totalavis, nbrvu,nbr_interet,"
 						+ "activite.nbrwaydeur as nbrparticipant"
 						+ ",personne.photo,activite.idactivite,  activite.libelle,    activite.titre,   activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd"
 						+ " FROM personne,activite "
@@ -926,13 +966,15 @@ public class ActiviteDAO {
 				int totalavis = rs.getInt("totalavis");
 				int nbmaxwayd = rs.getInt("nbmaxwayd");
 				int nbrvu = rs.getInt("nbrvu");
+				int nbr_interet = rs.getInt("nbr_interet");
+				
 				// Date datefinactivite = rs.getTimestamp("d_finactivite");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, 1,
 						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, true, true, nbmaxwayd, nbrvu);
+						nbrparticipant, true, true, nbmaxwayd, nbrvu,nbr_interet);
 
 				retour.add(activite);
 			}
@@ -1933,6 +1975,65 @@ public class ActiviteDAO {
 		//	System.out.println("Calcul nombre d'activite en cours");
 	
 
+	}
+
+	public static MessageServeur addInteretActivite(int idpersonne, int idactivite,
+			int niveauInteret) {
+		// TODO Auto-generated method stub
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		
+
+		if (isInteretDejaSignale(idpersonne, idactivite))
+			return new MessageServeur(false, Erreur_HTML.INTERET_DEJA_SIGNALEE);
+
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "INSERT INTO interet("
+					+ "   idpersonne, idactivite,niveau_interet)" + "	VALUES (?,?,?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.setInt(3, niveauInteret);
+			preparedStatement.execute();
+			preparedStatement.close();
+			requete = "UPDATE activite  SET  nbr_interet=nbr_interet+1 WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			connexion.commit();
+
+		    return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
+
+
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+
+				if (connexion != null)
+					connexion.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return new MessageServeur(false, Erreur_HTML.ERREUR_INCONNUE);
+
+	
+	
 	}
 
 

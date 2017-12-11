@@ -56,6 +56,12 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 			String requete = "";
 			connexion.setAutoCommit(false);
+			
+			requete = "DELETE FROM interet where  idpersonne=? ;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
 
 			requete = "DELETE FROM amelioration where  idpersonne=? ;";
 			preparedStatement = connexion.prepareStatement(requete);

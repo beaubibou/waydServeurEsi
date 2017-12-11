@@ -49,6 +49,7 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -814,6 +815,55 @@ public class WBservices {
 
 	}
 
+	
+	public MessageServeur setInteretActivite(int idpersonne, int idactivite, int typeInteret,String jeton) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		MessageServeur retour;
+		try {
+			// connexion = CxoPool.getConnection();
+			
+			typeInteret=0;
+		
+			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+
+		//	if (!personneDAO.isAutorise(idpersonne, jeton))
+			//	return new MessageServeur(false,TextWebService.PROFIL_NON_RECONNU);
+
+			// ************************************
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			
+			retour=website.dao.ActiviteDAO.addInteretActivite(idpersonne, idactivite,typeInteret);
+						
+			// Ajoute le nbr de vu pour chaque vu de l'activit�
+
+			String loginfo = "setInteretActivite - "
+					+ (System.currentTimeMillis() - debut) + "ms";
+		
+			LOG.info(loginfo);
+
+			return retour;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+
+		}
+		
+		return new MessageServeur(false, TextWebService.ERREUR_INCONNUE);
+	}
+
+	
 	public TableauBord getTableauBord(int idpersonne) {
 		Connection connexion = null;
 		TableauBord tableaubord;

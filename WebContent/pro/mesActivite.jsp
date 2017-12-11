@@ -136,6 +136,7 @@
 					<th style="width: 10%;" class="text-center">Etat</th>
 					<th class="text-center">Titre</th>
 					<th style="width: 5%;" class="text-center">Vus</th>
+					<th style="width: 5%;" class="text-center">Interet</th>
 					<th style="width: 20%;" class="text-center">Date</th>
 					<th style="width: 15%;" class="text-center">Action</th>
 					<th style="width: 10%;" class="text-center"><input
@@ -162,6 +163,7 @@
 					<td class="idActivite" id=<%=activite.getId()%>
 						style="vertical-align: middle;"><%=activite.getTitre()%></td>
 					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrVu()%></span></td>
+					<td style="vertical-align: middle;"><span class="badge"><%=activite.getNbrInteret()%></span></td>
 					<td style="vertical-align: middle;"><%=activite.getHoraireLeA()%></td>
 					<td style="vertical-align: middle;"><a title="Détail"
 						href="<%=lienDetail%>">
@@ -176,10 +178,6 @@
 								<span class="glyphicon glyphicon-edit"></span>
 							</button>
 					</a>
-
-
-
-
 
 						<button title="Supprimer" id=<%out.println(lienEfface);%>
 							name="supprimer" type="button" class="btn btn-danger btn-sm">

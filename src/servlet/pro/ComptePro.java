@@ -62,7 +62,7 @@ public class ComptePro extends HttpServlet {
 	
 		if (action==null)
 		action="noAction";
-		LOG.info("aciot"+action);
+	
 		
 		switch (action) {
 	

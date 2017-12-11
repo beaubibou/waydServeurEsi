@@ -44,6 +44,8 @@ public class Erreur_HTML {
 	public static final String CREATION_COMPTE_NOK = "La création du compte a échoué";
 	public static final String APPLICATION_NON_DISPO_WAYDEUR = "L'application n'est pas disponible pour les waydeurs."
 			+ " Tu peux la retrouvez pour les particuliers sur le play store";
+	public static final String INTERET_DEJA_SIGNALEE = "Vous avez déjà signalé votre intéret pour cette activité";
+	public static final String INTERET_SIGNALEE = "Votre intéret a été pris en compte";
 	
 	
 	
