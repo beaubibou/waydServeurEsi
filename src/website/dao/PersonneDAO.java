@@ -586,12 +586,13 @@ public class PersonneDAO {
 
 			if (pseudo != null) {
 				if (!pseudo.isEmpty())
-					requete = requete + " and prenom like ?";
+					requete = requete + " and LOWER(prenom) like ?";
+				
 			}
 
 			if (email != null) {
 				if (!email.isEmpty())
-					requete = requete + " and mail like ?";
+					requete = requete + " and LOWER(mail) like ?";
 			}
 
 			if (etatProfil != TypeEtatProfil.TOUTES) {
@@ -639,14 +640,14 @@ public class PersonneDAO {
 
 			if (pseudo != null) {
 				if (!pseudo.isEmpty()) {
-					preparedStatement.setString(index, pseudo);
+					preparedStatement.setString(index, pseudo.toLowerCase());
 					index++;
 				}
 			}
 
 			if (email != null) {
 				if (!email.isEmpty()) {
-					preparedStatement.setString(index, email);
+					preparedStatement.setString(index, email.toLowerCase());
 					index++;
 				}
 			}

@@ -2775,6 +2775,7 @@ public class WBservices {
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
 					idpersonne, jeton);
+		
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
@@ -2782,6 +2783,7 @@ public class WBservices {
 			// ******************************************************
 
 			connexion.setAutoCommit(false);
+		
 			personnedao.updateProfilWayd(idpersonne, photostr, nom, prenom,
 					datenaissancestr, sexe, commentaire, afficheage,
 					affichesexe);
