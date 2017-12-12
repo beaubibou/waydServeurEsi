@@ -1,8 +1,8 @@
 <%@page import="website.metier.SignalementProfilBean"%>
 <%@page import="website.metier.SignalementActiviteBean"%>
 <%@page import="website.html.Etoile"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.AvisBean"%>
@@ -15,7 +15,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail Waydeur</title>
+<title>>DÃ©tail Waydeur</title>
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,7 @@
 			lienSupprimer = "EffaceParticipant?idPersonne=" + idParticipant;
 
 			if (profil.isActif()) {
-		libelleBoutonActif = "Désactiver";
+		libelleBoutonActif = "DÃ©sactiver";
 		lienBoutonActif = "DetailParticipant?inactif=true&idPersonne="
 		+ idParticipant;
 
@@ -105,7 +105,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Détail Waydeur</div>
+					<div class="panel-title">DÃ©tail Waydeur</div>
 
 				</div>
 
@@ -194,7 +194,7 @@
 									<div class="form-group">
 										<label for="description">Envoyer un message:</label>
 										<textarea class="form-control" rows="3" id="message"
-											placeholder="Envoie un message à l'utlisateur" name="message"></textarea>
+											placeholder="Envoie un message Ã  l'utlisateur" name="message"></textarea>
 									</div>
 								</div>
 								<div class='col-sm-2'>
@@ -220,7 +220,7 @@
 
 	<div class="container">
 		<button type="button" class="btn btn-info" data-toggle="collapse"
-			data-target="#activite">List des activités (<%=listActivite.size() %>)</button>
+			data-target="#activite">List des activitÃ©s (<%=listActivite.size() %>)</button>
 		<div id="activite" class="collapse">
 
 			<table class="table table-striped">
@@ -262,7 +262,7 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Signalé par</th>
+						<th>SignalÃ© par</th>
 						<th>Date</th>
 						<th>Motif</th>
 						<th>Commentaires</th>

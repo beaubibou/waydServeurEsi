@@ -2,6 +2,7 @@ package wayde.bean;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 public abstract class CxoPool {
@@ -21,67 +23,63 @@ public abstract class CxoPool {
 			SQLException {
 		// Récupération connection référencées dans le JNDI - cf
 		// context.xml
-		
+
 		Context ctx = new InitialContext();
-		try{
-			
-			DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
+		try {
+
+			DataSource source = (DataSource) ctx
+					.lookup("java:comp/env/PostgresDS");
 			return source.getConnection();
+		} catch (NamingException e) {
+
 		}
-		catch( NamingException e){
-			
-		}
-	
-		
-//		try {
-//			Class.forName("org.postgresql.Driver");
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		String url = "jdbc:postgresql://localhost:5432/wayd";
-//		String user = "postgres";
-//		String passwd = "azerty";
-//		Connection conn = DriverManager.getConnection(url, user, passwd);
-//		
-		//return conn;
+
 		return null;
-		
-		
+
 	}
 
-	public static Connection getConnection(boolean test) throws NamingException,
-			SQLException {
-		
-		
-				if (!test){
-				Context ctx = new InitialContext();
-				DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
-				return source.getConnection();
-				
+	public static Connection getConnection(boolean test)
+			throws NamingException, SQLException {
+
+		if (!test) {
+			Context ctx = new InitialContext();
+			DataSource source = (DataSource) ctx
+					.lookup("java:comp/env/PostgresDS");
+			return source.getConnection();
+
+		} else {
+
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			}
-				else{
-				
-				try {
-					Class.forName("org.postgresql.Driver");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-				String url = "jdbc:postgresql://localhost:5432/wayd";
-				String user = "postgres";
-				String passwd = "azerty";
-				Connection conn = DriverManager.getConnection(url, user, passwd);
-			
-				return conn;
-				
-			}
-	
+
+			String url = "jdbc:postgresql://localhost:5432/wayd";
+			String user = "postgres";
+			String passwd = "azerty";
+			Connection conn = DriverManager.getConnection(url, user, passwd);
+
+			return conn;
+
+		}
+
 	}
 
+	public static void rollBack(Connection connexion) {
 
+		if (connexion != null)
+			try {
+				connexion.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e));
+			}
+
+	}
 
 	public static void close(Connection connection, Statement statement,
 			ResultSet resultSet) {
@@ -91,6 +89,7 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e1));
 			}
 		if (statement != null)
 			try {
@@ -98,12 +97,33 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e1));
 			}
 		if (connection != null)
 			try {
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
+			}
+	}
+
+	public static void close(Connection connexion, Statement statement) {
+
+		if (statement != null)
+			try {
+				statement.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e1));
+			}
+		if (connexion != null)
+			try {
+				connexion.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			}
 	}
 
@@ -114,6 +134,27 @@ public abstract class CxoPool {
 				connexion.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
+			}
+	}
+
+	public static void close(PreparedStatement preparedStatement, ResultSet rs) {
+		// TODO Auto-generated method stub
+		if (rs != null)
+			try {
+				rs.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e1));
+			}
+		if (preparedStatement != null)
+			try {
+				preparedStatement.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e1));
 			}
 	}
 

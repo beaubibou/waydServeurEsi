@@ -2,18 +2,16 @@
 <%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.dao.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail activité</title>
+<title>>DÃ©tail activitÃ©</title>
 <meta charset="utf-8">
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script
@@ -86,7 +84,7 @@
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Détail activité</div>
+					<div class="panel-title">DÃ©tail activitÃ©</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -140,7 +138,7 @@
 						<div class="form-group">
 							</br>
 							<h5>
-								Catégorie:<%=activite.getLibelleActivite()%></h5>
+								CatÃ©gorie:<%=activite.getLibelleActivite()%></h5>
 							<h5><%=activite.getTempsRestant()%></h5>
 							<h5><%=activite.getBilanParticipation()%></h5>
 

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
@@ -60,6 +61,7 @@ public class Connexion extends HttpServlet {
 			CacheValueDAO.addPhotoCache(TypePhoto.Inconnu, photoStr);
 		} catch (IOException e) {
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -92,14 +94,17 @@ public class Connexion extends HttpServlet {
 
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
+		
 		LOG.info(profil.getPseudo());
+		
 		session.setAttribute("profil", profil);
-
+		
 		try {
 			response.sendRedirect("Acceuil");
 			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		return true;

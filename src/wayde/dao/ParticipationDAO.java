@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.Activite;
+import wayde.bean.CxoPool;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
 
@@ -161,14 +162,12 @@ public class ParticipationDAO {
 	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws SQLException  {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
-		Statement stmt = connexion.createStatement();
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "
 				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=?  and personne.idpersonne=activite.idpersonne";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		
 		while (rs.next()) {
 			int idpersonne=rs.getInt("idpersonne");
@@ -177,9 +176,8 @@ public class ParticipationDAO {
 			retour.add(new Personne(gcm, idpersonne,notification));
 		}
 		
-	//	System.out.println("Cherche les participants � l'activit� en "
-	//			+ (System.currentTimeMillis() - debut) + " ms");
-		
+		CxoPool.close(preparedStatement, rs);
+	
 		return retour;
 
 	}

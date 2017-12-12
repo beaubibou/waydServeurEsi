@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.dao.ActiviteDAO;
@@ -106,6 +107,7 @@ public class AlertInfoJsp {
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 	}
 }

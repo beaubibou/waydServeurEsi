@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.CommunText;
@@ -101,6 +102,7 @@ public class AjouteActivitePro extends HttpServlet {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Date non conforme",null,AlertJsp.warning));
 			response.sendRedirect("MesActivites");
 				

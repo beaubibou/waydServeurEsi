@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import com.google.firebase.FirebaseApp;
@@ -110,11 +111,11 @@ public class ParticipantDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
-			preparedStatement.close();
-			rs.close();
+			CxoPool.close(connexion, preparedStatement);
 		}
 
 	}

@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
@@ -84,24 +85,13 @@ public class ActiviteDAO {
 
 			return true;
 
-		} catch (NamingException e) {
+		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+			LOG.error( ExceptionUtils.getStackTrace(e));
+		}  finally {
 
-			try {
-
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 
 		}
 
@@ -130,20 +120,12 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -170,20 +152,12 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -248,23 +222,13 @@ public class ActiviteDAO {
 
 			}
 
-		} catch (NamingException e) {
+		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 
-			try {
-				rs.close();
-				preparedStatement.close();
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		CxoPool.close(connexion, preparedStatement, rs);
 		}
 
 		return retour;
@@ -316,11 +280,10 @@ public class ActiviteDAO {
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
-			rs.close();
-			preparedStatement.close();
-			connexion.close();
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 
@@ -354,6 +317,7 @@ public class ActiviteDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		return false;
@@ -365,7 +329,7 @@ public class ActiviteDAO {
 	public static boolean updateActivitePro(String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int idactivite) {
-
+		PreparedStatement preparedStatement=null;
 		Connection connexion = null;
 		try {
 			connexion = CxoPool.getConnection();
@@ -375,7 +339,7 @@ public class ActiviteDAO {
 			String requete = "UPDATE  activite set titre=?, libelle=?,  datedebut=?, datefin=?,  adresse=?,"
 					+ " latitude=?,  longitude=?,  idtypeactivite=?"
 					+ " WHERE idactivite=?";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
 			preparedStatement.setString(2, Outils.getStringStatement(commentaire));
@@ -396,22 +360,14 @@ public class ActiviteDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return false;
 
@@ -467,19 +423,11 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		CxoPool.close(connexion, preparedStatement, rs);
+	
 		}
 		LOG.info("Creation activite user");
 		return 0;
@@ -487,6 +435,8 @@ public class ActiviteDAO {
 
 	public static IndicateurWayd getIndicateurs() {
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
 		try {
 			connexion = CxoPool.getConnection();
 
@@ -495,9 +445,9 @@ public class ActiviteDAO {
 			// ************Calcul le nbr total d'activité
 
 			String requete = "Select count(idactivite) as nbractivite  FROM activite";
-			PreparedStatement preparedStatement = connexion
+			 preparedStatement = connexion
 					.prepareStatement(requete);
-			ResultSet rs = preparedStatement.executeQuery();
+			 rs = preparedStatement.executeQuery();
 
 			if (rs.next()) {
 				nbrTotalactivite = rs.getInt("nbractivite");
@@ -512,6 +462,8 @@ public class ActiviteDAO {
 				nbrTotalInscrit = rs.getInt("nbrinscrit");
 			}
 
+			preparedStatement.close();
+			rs.close();
 			// **************Calcul le nbr d'inscrit
 			requete = "Select count(idpersonne) as nbrparticipation  FROM participer;";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -520,6 +472,8 @@ public class ActiviteDAO {
 				nbrTotalparticipation = rs.getInt("nbrparticipation");
 			}
 
+			preparedStatement.close();
+			rs.close();
 			// **************Calcul de message non lu en stand alone;
 
 			requete = "select count(idmessage) as nbrmessage from message;";
@@ -529,6 +483,9 @@ public class ActiviteDAO {
 			if (rs.next()) {
 				nbrTotalMessage = rs.getInt("nbrmessage");
 			}
+			
+			preparedStatement.close();
+			rs.close();
 			// ***********Calcul de message non lu en stand talkgroup
 
 			requete = "select  count(idmessage) as nbrmessagebyact from messagebyact;";
@@ -537,19 +494,23 @@ public class ActiviteDAO {
 			if (rs.next()) {
 				nbrTotalMessageByAct = rs.getInt("nbrmessagebyact");
 			}
-
+			preparedStatement.close();
+			rs.close();
+			
 			return new IndicateurWayd(nbrTotalactivite, nbrTotalparticipation,
 					nbrTotalInscrit, nbrTotalMessage, nbrTotalMessageByAct);
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 		}
 
 		finally {
 
-			CxoPool.closeConnection(connexion);
+			
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 	}
@@ -623,15 +584,11 @@ public class ActiviteDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+		
 		} finally {
-			try {
-				preparedStatement.close();
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
 		return activite;
 
@@ -741,6 +698,7 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -982,6 +940,7 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -1069,6 +1028,7 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -1276,6 +1236,7 @@ public class ActiviteDAO {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -1303,6 +1264,7 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 
 		} finally {
@@ -1357,6 +1319,7 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 
 		} finally {
@@ -1412,23 +1375,11 @@ public class ActiviteDAO {
 			LOG.info(loginfo);
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
-		} catch (SQLException e) {
+		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				return new MessageServeur(false, e1.getMessage());
-
-			}
-			return new MessageServeur(false, e.getMessage());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
 		} finally {
@@ -1487,6 +1438,7 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -1660,21 +1612,11 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 			return retour;
 		} finally {
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					rs.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
 
 	}
@@ -1855,21 +1797,12 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 			return retour;
 		} finally {
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					rs.close();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+				CxoPool.close(connexion, preparedStatement, rs);
 		}
 
 	}
@@ -1907,12 +1840,8 @@ public class ActiviteDAO {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
 		} finally {
@@ -1932,7 +1861,7 @@ public class ActiviteDAO {
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
 		preparedStatement.execute();
-
+		preparedStatement.close();
 	}
 
 	
@@ -1962,6 +1891,7 @@ public class ActiviteDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			
 			return 0;
 		}
@@ -2009,24 +1939,13 @@ public class ActiviteDAO {
 		    return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
 
 
-		} catch (NamingException e) {
+		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+			LOG.error( ExceptionUtils.getStackTrace(e));
+		}finally {
 
-			try {
-
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 
 		}
 

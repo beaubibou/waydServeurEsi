@@ -8,9 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import com.sun.org.apache.bcel.internal.generic.IADD;
+
 import wayde.bean.Avis;
+import wayde.bean.CxoPool;
 
 
 public class AvisDAO {
@@ -42,15 +46,18 @@ public class AvisDAO {
 
 	}
 
-	public void addAvis(int idpersonnenotee, int idactivite, String titre,
+	public void addAvis(int idpersonnenotee,int idnotateur, int idactivite, String titre,
 			String libelle, double note) throws SQLException {
 
 		String requete = "UPDATE public.noter   SET datenotation=?, note=?, libelle=?, titre=?,  fait=? "
-				+ "WHERE idpersonnenotee=? and idactivite=? and fait=false;";
+				+ "WHERE idpersonnenotee=? and idactivite=? and idpersonnenotateur=? and fait=false;";
+	
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
+	
 		preparedStatement.setTimestamp(1,
 				new java.sql.Timestamp(new Date().getTime()));
+		
 		if (libelle.equals(""))libelle=null;
 		if (titre.equals(""))titre=null;
 		
@@ -60,8 +67,11 @@ public class AvisDAO {
 		preparedStatement.setBoolean(5, true);
 		preparedStatement.setInt(6, idpersonnenotee);
 		preparedStatement.setInt(7, idactivite);
+		preparedStatement.setInt(8, idnotateur);
+		
 		preparedStatement.execute();
 		preparedStatement.close();
+		
 	
 	}
 
@@ -113,6 +123,7 @@ public class AvisDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		}
 
@@ -185,6 +196,7 @@ public class AvisDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		}
 
@@ -348,6 +360,8 @@ public class AvisDAO {
 		preparedStatement.execute();
 		// TODO Auto-generated method stub
 
+		CxoPool.close(preparedStatement, rs);
+	
 		return ajoutami;
 	}
 	
@@ -371,5 +385,38 @@ public class AvisDAO {
 		return false;
 
 	}
+	
+	public boolean isDoubleAvis(int idpersonne, int idnotateur,int idactivite) throws SQLException {
+		
+		// Renvoi vrai si les personne se sont notées mutuellemnt
+		
+		String requete = " SELECT idnoter from noter  where ( idpersonnenotee=? and idpersonnenotateur=? and idactivite=?) "
+				+ "or  (idpersonnenotateur =? and idpersonnenotee=? and idactivite=?)";
+				
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+	
+		preparedStatement.setInt(1, idpersonne);
+		preparedStatement.setInt(2, idnotateur);
+		preparedStatement.setInt(3, idactivite);
+		
+		preparedStatement.setInt(4, idpersonne);
+		preparedStatement.setInt(5, idnotateur);
+		preparedStatement.setInt(6, idactivite);
+		
+		ResultSet rs = preparedStatement.executeQuery();
+		int retour=0;
+		while (rs.next()) {
+		retour++;	
+		}
+		
+		CxoPool.close(preparedStatement, rs);
+
+		if (retour==2)return true;
+		
+		return false;
+
+	}
+	
 
 }

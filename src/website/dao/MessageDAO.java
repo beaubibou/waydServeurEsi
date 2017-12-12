@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
@@ -43,31 +44,15 @@ public class MessageDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-
-			}
 			e.printStackTrace();
+		
+			LOG.error( ExceptionUtils.getStackTrace(e));
+		
+			CxoPool.rollBack(connexion);
+	
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return new MessageServeur(false,
 				"Erreur dans la métode supprime activité");
@@ -108,29 +93,13 @@ public class MessageDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
+			
 
 		}
 		return new MessageServeur(false,
@@ -162,30 +131,13 @@ public class MessageDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+		
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 
 		}
 		return new MessageServeur(false,
@@ -221,30 +173,13 @@ public class MessageDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (rs!=null)rs.close();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-		
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+		
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		
@@ -317,24 +252,13 @@ return new Integer(nbrmessagenonlu).toString();
 
 				return true;
 
-			} catch (NamingException e) {
+			} catch (NamingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			} finally {
 
-				try {
-
-					if (connexion != null)
-						connexion.close();
-					if (preparedStatement != null)
-						preparedStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				CxoPool.close(connexion, preparedStatement);
 
 			}
 
@@ -370,24 +294,13 @@ return new Integer(nbrmessagenonlu).toString();
 
 				return true;
 
-			} catch (NamingException e) {
+			} catch (NamingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			} finally {
 
-				try {
-
-					if (connexion != null)
-						connexion.close();
-					if (preparedStatement != null)
-						preparedStatement.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				CxoPool.close(connexion, preparedStatement);
 
 			}
 

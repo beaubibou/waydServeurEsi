@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.Notification;
@@ -112,6 +113,7 @@ public class NotificationDAO {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			}
 
 		}
@@ -158,6 +160,7 @@ public class NotificationDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -277,6 +280,7 @@ public class NotificationDAO {
 		preparedStatement.setInt(4, idactivite);
 		preparedStatement.setInt(5, idpersonne);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 		requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
@@ -290,6 +294,7 @@ public class NotificationDAO {
 		preparedStatement.setInt(4, idactivite);
 		preparedStatement.setInt(5, iddestinataire);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 

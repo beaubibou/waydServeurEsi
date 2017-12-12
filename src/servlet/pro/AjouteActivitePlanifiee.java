@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.CommunText;
@@ -128,7 +129,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
 					"Parse Date non conformes", e.getMessage(), null,
 					AlertJsp.warning));

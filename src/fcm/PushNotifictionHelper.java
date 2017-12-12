@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
@@ -101,11 +102,12 @@ public class PushNotifictionHelper {
 			while ((output = br.readLine()) != null) {
 			}
 			result = "ok";
-			LOG.info("Notification envoy�e Ok");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Nok";
-			LOG.warn("Erreur envoi Notification envoy�e Ok");
+			
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		
 
@@ -162,6 +164,7 @@ public class PushNotifictionHelper {
 			result = "ok";
 		} catch (Exception e) {
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			result = "Nok";
 		}
 	LOG.info("GCM Notification is sent successfully");

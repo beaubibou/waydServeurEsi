@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
@@ -61,6 +62,7 @@ public class SuggestionDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -142,6 +144,7 @@ public class SuggestionDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -151,6 +154,7 @@ public class SuggestionDAO {
 
 	public static boolean addSuggestion(int idPersonne, String mail, String message) {
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -158,7 +162,7 @@ public class SuggestionDAO {
 			String requete = "INSERT into amelioration(idpersonne, suggestion,mail,d_creation)"
 					+ " VALUES (?, ?,?,?)";
 
-			PreparedStatement preparedStatement = connexion.prepareStatement(
+			preparedStatement = connexion.prepareStatement(
 					requete, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.setString(2, message);
@@ -173,13 +177,9 @@ public class SuggestionDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return false;
 
@@ -205,30 +205,13 @@ public class SuggestionDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 
 		}
 		return false;
@@ -258,30 +241,14 @@ public class SuggestionDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				CxoPool.close(connexion, preparedStatement);
+			
 
 		}
 		return new MessageServeur(false,
@@ -374,6 +341,7 @@ public class SuggestionDAO {
 			// TODO Auto-generated catch block
 	
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 	

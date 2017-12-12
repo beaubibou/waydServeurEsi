@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import threadpool.PoolThreadGCM;
@@ -42,16 +43,7 @@ public class Coordination {
 
 			connexion = CxoPool.getConnection();
 
-			//Limite le nombre de participation a 2
-//			ParticipationDAO participationDAO=new ParticipationDAO(connexion);
-//			if (participationDAO.getNbrParticipation(iddemandeur)==2)
-//			{
-//				LOG.info("activite pleine");
-//				return  new MessageServeur(false, LibelleMessage.activiteFinie);
-//			}
-//			
-//				
-			ActiviteDAO activiteDAO=new  ActiviteDAO(connexion);
+		ActiviteDAO activiteDAO=new  ActiviteDAO(connexion);
 			ActiviteBean activite = activiteDAO.getActivite(idactivite);
 				
 			
@@ -104,12 +96,9 @@ public class Coordination {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
 			return new MessageServeur(false,
 					"ERREUR SURVENUE DANS METHODE addparticipation");
 
@@ -131,18 +120,14 @@ public class Coordination {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+			CxoPool.closeConnection(connexion);
 	}
+		}
 	
 	public  MessageBean effaceActivite(int idActivite) {
 
@@ -194,6 +179,7 @@ public class Coordination {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return new MessageBean(TextWebService.ERREUR_INCONNUE);
 		} finally {
 

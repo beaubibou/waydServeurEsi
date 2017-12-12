@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 public class Parametres {
@@ -25,7 +26,8 @@ public class Parametres {
 			return lDateFormat.parse(dateStr);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-		//	e.printStackTrace();
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		
 		}
 		return new Date();

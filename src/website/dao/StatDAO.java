@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
@@ -42,7 +43,9 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrMessage;
+			
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -73,6 +76,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrMessage;
 		} finally {
 
@@ -108,6 +112,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -142,6 +147,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -174,6 +180,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -206,6 +213,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -239,6 +247,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrActivite;
 		} finally {
 
@@ -271,6 +280,7 @@ public class StatDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrParticipation;
 		} finally {
 

@@ -11,13 +11,13 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
-
 import wayde.bean.Personne;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
@@ -36,20 +36,24 @@ public class ActiviteDAO {
 	public Activite getActivite(int idactivite_) {
 
 			Activite activite = null;
+			PreparedStatement preparedStatement=null;
+			ResultSet rs =null;
 
 		try {
-			Statement stmt = connexion.createStatement();
-			ResultSet rs = stmt
-					.executeQuery(" SELECT activite.datedebut,       activite.adresse,    activite.latitude,"
+		
+			String	requete=" SELECT activite.datedebut,       activite.adresse,    activite.latitude,"
 							+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,"
 							+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
 							+ "personne.nbravis as totalavis,    personne.photo,1 as role,"
 							+ "activite.idactivite,    activite.libelle,    activite.titre,"
 							+ "activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite"
 							+ ",activite.typeuser,activite.typeacces   FROM personne,"
-							+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite="
-							+ idactivite_ + ";");
-
+							+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
+							
+			preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite_);
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("idactivite");
 				int idtypeactivite = rs.getInt("idtypeactivite");
@@ -100,13 +104,15 @@ public class ActiviteDAO {
 						);
 
 			}
-			rs.close();
-			stmt.close();
+			CxoPool.close(preparedStatement, rs);
 			return activite;
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
+			CxoPool.close(preparedStatement, rs);
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		}
 
@@ -550,6 +556,7 @@ public class ActiviteDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		}
 
@@ -875,6 +882,7 @@ public class ActiviteDAO {
 			nbrmessagenonlu = rs.getInt("nbrmessagenonlu");
 		}
 
+		
 		requete = "select  count(idmessage) as nbrmessagenonlu from messagebyact m,activite a where (  m.iddestinataire=? and m.lu=false"
 				+ " and m.emis=false and a.idactivite=m.idactivite and a.datefin>?);";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -885,6 +893,7 @@ public class ActiviteDAO {
 		if (rs.next()) {
 			nbrmessagenonlu = nbrmessagenonlu + rs.getInt("nbrmessagenonlu");
 		}
+		CxoPool.close(preparedStatement, rs);
 		return nbrmessagenonlu;
 
 	}
@@ -963,6 +972,7 @@ public class ActiviteDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		return false;
@@ -1228,6 +1238,7 @@ public class ActiviteDAO {
 		}
 
 		//System.out.println(nbrnotification);
+		CxoPool.close(preparedStatement, rs);
 		return nbrnotification;
 	}
 
@@ -1245,6 +1256,7 @@ public class ActiviteDAO {
 			nbrami = rs.getInt("nbrami");
 		}
 
+		CxoPool.close(preparedStatement, rs);
 		return nbrami;
 
 	}
@@ -1377,11 +1389,12 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 
 		} finally {
 
-			CxoPool.closeConnection(connexion);
+			CxoPool.close(connexion,preparedStatement);
 		}
 
 	}

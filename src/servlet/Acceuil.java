@@ -15,6 +15,7 @@ import website.dao.StatDAO;
 import website.metier.AuthentificationSite;
 import website.metier.IndicateurWayd;
 import website.metier.admin.FitreAdminActivites;
+import website.metier.admin.FitreAdminLogs;
 import website.metier.admin.FitreAdminProbleme;
 import website.metier.admin.FitreAdminProfils;
 import website.metier.admin.FitreAdminSuggestions;
@@ -62,6 +63,9 @@ public class Acceuil extends HttpServlet {
 
 		if (session.getAttribute("filtreActivite") == null)
 			session.setAttribute("filtreActivite", new FitreAdminActivites());
+		
+		if (session.getAttribute("filtreLogs") == null)
+			session.setAttribute("filtreLogs", new FitreAdminLogs());
 
 		IndicateurWayd indicateur = ActiviteDAO.getIndicateurs();
 		indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());

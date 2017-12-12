@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import fcm.PushNotifictionHelper;
@@ -49,14 +50,9 @@ public class AddActiviteGcm implements Runnable {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
-			if (connexion != null)
-				try {
-					connexion.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			CxoPool.closeConnection(connexion);
 		}
 	}
 
@@ -80,12 +76,10 @@ public class AddActiviteGcm implements Runnable {
 			PushNotifictionHelper.sendPushNotificationSuggestionList(
 					personneinteresse, activite);
 
-		} catch (SQLException | NamingException e1) {
+		} catch (SQLException | NamingException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexiongcm);
 		}

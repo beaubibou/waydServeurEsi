@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,7 +53,7 @@ function signPassword(email,password){
 		firebase.auth().currentUser.sendEmailVerification().then(function() {
 			  // Email sent.
 
-			BootstrapDialog.alert('Bienvenue un email de confirmation vous a été envoyé', function(){
+			BootstrapDialog.alert('Bienvenue un email de confirmation vous a Ã©tÃ© envoyÃ©', function(){
 				document.location.href="auth/login.jsp";
 			});
 			

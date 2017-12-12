@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
@@ -44,6 +45,7 @@ public class TypeActiviteDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 

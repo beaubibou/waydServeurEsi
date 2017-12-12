@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
@@ -77,6 +79,7 @@ public class ListMapActivite extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		
 			

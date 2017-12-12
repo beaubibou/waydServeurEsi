@@ -1,6 +1,6 @@
 <%@page import="texthtml.pro.CreationCompteProText"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=Iutf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.html.*"%>
@@ -175,7 +175,7 @@
 							</div>
 
 							<h5 class="nbrcaracteremax" id="nbr">
-								0 Caractére sur <%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
+								0 CaractÃ©re sur <%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>
 							</h5>
 							<div class="form-group">
 
@@ -303,7 +303,7 @@
 				var msg = nombreCaractere + ' Caractere(s) / <%=CreationCompteProText.TAILLE_DESCRIPTION_PROFIL_MAX%>';
 
 												$('#nbr').text(msg);
-												// Le script qui devra calculer et afficher le nombre de mots et de caractères
+												// Le script qui devra calculer et afficher le nombre de mots et de caractÃ¨res
 
 											})
 

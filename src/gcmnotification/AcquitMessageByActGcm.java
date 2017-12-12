@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;
@@ -27,9 +28,10 @@ public class AcquitMessageByActGcm implements Runnable {
 			connexiongcm = CxoPool.getConnection();
 			new ServeurMethodes(connexiongcm)
 					.gcmUpdateNbrMessage(idPersonne);
-		} catch (SQLException | NamingException e1) {
+		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 
 			CxoPool.closeConnection(connexiongcm);

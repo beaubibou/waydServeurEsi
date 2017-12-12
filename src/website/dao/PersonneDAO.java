@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import com.google.firebase.FirebaseApp;
@@ -210,31 +211,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
-			try {
-				if (connexion != null)
-					connexion.rollback();
-				if (preparedStatement != null)
-					preparedStatement.close();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 		} finally {
 
-			try {
-				if (connexion != null)
-					connexion.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (SQLException e) {
-
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return false;
 
@@ -259,6 +241,7 @@ public class PersonneDAO {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
 	}
@@ -283,6 +266,7 @@ public class PersonneDAO {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
 	}
@@ -307,21 +291,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -347,21 +322,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -387,22 +353,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
 		return false;
 	}
@@ -432,21 +388,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -477,21 +424,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
 		return false;
@@ -519,22 +457,12 @@ public class PersonneDAO {
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-				if (connexion != null)
-					connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
 		return false;
 	}
@@ -709,6 +637,7 @@ public class PersonneDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -792,6 +721,7 @@ public class PersonneDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return profil;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -827,6 +757,7 @@ public class PersonneDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -910,6 +841,7 @@ public class PersonneDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -921,6 +853,7 @@ public class PersonneDAO {
 		// TODO Auto-generated method stub
 
 		String uid = PersonneDAO.getUID(idPersonne);
+		PreparedStatement preparedStatement=null;
 
 		if (uid == null)
 			return false;
@@ -936,7 +869,7 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE activite  SET   actif=? WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
 			preparedStatement.setInt(2, idPersonne);
@@ -952,24 +885,14 @@ public class PersonneDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 			return false;
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return true;
 
@@ -981,6 +904,7 @@ public class PersonneDAO {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
 		try {
 
 			// on met le sexe � autre
@@ -989,7 +913,7 @@ public class PersonneDAO {
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
 					+ "premiereconnexion=false,typeuser=?,latitudefixe=?,longitudefixe=?, siret=?,telephone=?,sexe=2 "
 					+ " WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+		  preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, nom);
 			preparedStatement.setString(2, adresse);
@@ -1010,22 +934,14 @@ public class PersonneDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return false;
 
@@ -1074,6 +990,7 @@ public class PersonneDAO {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
 
@@ -1085,13 +1002,14 @@ public class PersonneDAO {
 		// TODO Auto-generated method stub
 
 		Connection connexion = null;
+		PreparedStatement preparedStatement =null;
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  personne set prenom=?, adresse=?,latitude=?,longitude=?,commentaire=?,"
 					+ "siteweb=?,telephone=?,latitudefixe=?,longitudefixe=?,siret=? "
 					+ " WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, Outils.getStringStatement(pseudo));
 			preparedStatement.setString(2, Outils.getStringStatement(adresse));
@@ -1112,22 +1030,13 @@ public class PersonneDAO {
 			return true;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return false;
 
@@ -1145,6 +1054,7 @@ public class PersonneDAO {
 		pseudo = pseudo.trim();
 		commentaire = commentaire.trim();
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
 
 		LOG.info("updateProfilProFullWaydeur sexe " + sexe);
 		try {
@@ -1152,7 +1062,7 @@ public class PersonneDAO {
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  personne set prenom=?, commentaire=?,sexe=?,typeuser=?,premiereconnexion=false"
 					+ " WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, Outils.getStringStatement(pseudo));
 			preparedStatement.setString(2,
@@ -1166,24 +1076,14 @@ public class PersonneDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 			return false;
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return true;
 
@@ -1191,13 +1091,14 @@ public class PersonneDAO {
 
 	public static boolean updatePhoto(String photo, int idpersonne) {
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
 		LOG.info("updatePhoto");
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  personne set photo=?"
 					+ " WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+		    preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, photo);
 			preparedStatement.setInt(2, idpersonne);
@@ -1207,24 +1108,14 @@ public class PersonneDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 			return false;
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return true;
 
@@ -1234,13 +1125,14 @@ public class PersonneDAO {
 			String commentaire, int sexe, boolean afficheSexe,
 			boolean afficheAge, Date datenaissance, int idpersonne) {
 		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
 		LOG.info("updateProfilProFullWaydeur");
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  personne set prenom=?, adresse=?,commentaire=?,datenaissance=? ,affichesexe=?,afficheage=?,sexe=?"
 					+ " WHERE idpersonne=?";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setString(1, nom);
 			preparedStatement.setString(2, adresse);
@@ -1257,22 +1149,13 @@ public class PersonneDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 
 		} finally {
 
-			try {
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return true;
 	}
@@ -1332,7 +1215,8 @@ public class PersonneDAO {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			
 		} finally {
 			
 				CxoPool.close(connexion, preparedStatement, rs);
@@ -1387,17 +1271,10 @@ public class PersonneDAO {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		} finally {
-			try {
-				connexion.close();
-				rs.close();
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			CxoPool.close(connexion, preparedStatement);
 		}
 		return retour;
 	}

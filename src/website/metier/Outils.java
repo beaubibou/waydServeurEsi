@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 import org.apache.axis.encoding.Base64;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import sun.misc.BASE64Encoder;
@@ -115,6 +116,7 @@ public static String jspAdapterListSelected(int selectedValue,int value){
             bos.close();
         } catch (IOException e) {
             e.printStackTrace();
+        	LOG.error( ExceptionUtils.getStackTrace(e));
         }
         return imageString;
     }

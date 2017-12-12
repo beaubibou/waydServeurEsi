@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;
@@ -35,8 +36,7 @@ public class EffaceActiviteGcm implements Runnable {
 			this.idActivite=idActivite;
 		try {
 		
-			LOG.info("Preparation à envoyer par GCM la notification");
-	
+		
 			connexion = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			ParticipationDAO participationdao = new ParticipationDAO(connexion);
@@ -52,6 +52,7 @@ public class EffaceActiviteGcm implements Runnable {
 			// TODO Auto-generated catch block
 		
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}finally{
 			
 			CxoPool.closeConnection(connexion);
@@ -59,7 +60,6 @@ public class EffaceActiviteGcm implements Runnable {
 
 	
 	}
-	
 	
 	
 	@Override
@@ -86,6 +86,8 @@ public class EffaceActiviteGcm implements Runnable {
 		} catch (SQLException | NamingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e1));
+		
 		} finally {
 			CxoPool.closeConnection(connexionGcm);
 		}

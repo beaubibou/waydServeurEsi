@@ -144,6 +144,8 @@ public class CreerUserPro extends HttpServlet {
 			// TODO Auto-generated catch block
 			
 			e.printStackTrace();
+			LOG.debug( ExceptionUtils.getStackTrace(e));
+		
 			redirige( pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire, latitude, longitude,
 					request,response, "Le captcha n'est pas valide");
 				
@@ -225,6 +227,7 @@ public class CreerUserPro extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		
@@ -295,15 +298,11 @@ public class CreerUserPro extends HttpServlet {
 			
 			} catch (SQLException | NamingException e) {
 				// TODO Auto-generated catch block
-				try {
-					connexion.rollback();
-					return new MessageServeur(false,e.getMessage());
-					
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				e.printStackTrace();
+				LOG.error( ExceptionUtils.getStackTrace(e));
+				CxoPool.rollBack(connexion);
+				return new MessageServeur(false,e.getMessage());
+						
 			} // ...
 			finally {
 				CxoPool.closeConnection(connexion);
@@ -311,7 +310,6 @@ public class CreerUserPro extends HttpServlet {
 				//
 			}
 
-			return new MessageServeur(false,"Erreur pendant la créatio en base de donnée");
 		
 	}
 	

@@ -10,12 +10,14 @@ import java.util.Map;
 
 import javax.naming.NamingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.ListeValeurText;
 import wayde.bean.CxoPool;
 import website.enumeration.TypePhoto;
 import website.metier.DureeBean;
+import website.metier.LogBean;
 import website.metier.ProfilBean;
 import website.metier.QuandBean;
 import website.metier.QuantiteWaydeurBean;
@@ -24,6 +26,7 @@ import website.metier.SexeBean;
 import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
+import website.metier.TypeEtatLogs;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeEtatProfil;
 import website.metier.TypeSignalement;
@@ -89,6 +92,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -115,23 +119,12 @@ public class CacheValueDAO {
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
-			try {
-				connexion.rollback();
-
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
 		} finally {
 
-			try {
-				preparedStatement.close();
-				connexion.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CxoPool.close(connexion, preparedStatement);
 
 		}
 		return false;
@@ -165,6 +158,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -201,6 +195,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -237,6 +232,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -271,6 +267,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -309,6 +306,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return listTypeActivitePro;
 		} finally {
 
@@ -342,6 +340,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -377,6 +376,7 @@ public class CacheValueDAO {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return tousTypeActivite;
 		} finally {
 
@@ -512,6 +512,22 @@ public class CacheValueDAO {
 		listEtat.add(new TypeSignalement(TypeSignalement.PLUSDE10, ListeValeurText.PLUSDE10));
 	
 		
+		return listEtat;
+
+	}
+	
+	
+	
+	public static ArrayList<TypeEtatLogs> getListTypeEtatLogs() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatLogs> listEtat = new ArrayList<TypeEtatLogs>();
+		listEtat.add(new TypeEtatLogs(TypeEtatLogs.TOUTES,ListeValeurText.TOUS));
+		listEtat.add(new TypeEtatLogs(TypeEtatLogs.DEBUG, ListeValeurText.LOG4J_DEBUG));
+		listEtat.add(new TypeEtatLogs(TypeEtatLogs.INFO, ListeValeurText.LOG4J_INFO));
+		listEtat.add(new TypeEtatLogs(TypeEtatLogs.WARNING, ListeValeurText.LOG4J_WARNING));
+		listEtat.add(new TypeEtatLogs(TypeEtatLogs.ERROR, ListeValeurText.LOG4J_ERREUR));
+			
 		return listEtat;
 
 	}

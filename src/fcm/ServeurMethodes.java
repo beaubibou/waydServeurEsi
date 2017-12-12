@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
@@ -49,7 +50,7 @@ public class ServeurMethodes {
 		try {
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -59,20 +60,13 @@ public class ServeurMethodes {
 			com.google.android.gcm.server.Message androidMessage = new com.google.android.gcm.server.Message.Builder()
 					.timeToLive(5).addData("id", messageaenvoyer.getId())
 					.build();
-		
+
 			n.send(androidMessage, GCMid, 3);
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -105,17 +99,11 @@ public class ServeurMethodes {
 								Integer.toString(participant.getId())).build();
 				n.send(androidMessage, GCMid, 3);
 
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
-
 		}
 
 	}
@@ -151,15 +139,10 @@ public class ServeurMethodes {
 								Integer.toString(participant.getId())).build();
 				n.send(androidMessage, GCMid, 3);
 
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 		}
@@ -206,15 +189,10 @@ public class ServeurMethodes {
 								Integer.toString(participant.getId())).build();
 				n.send(androidMessage, GCMid, 3);
 
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 		}
@@ -230,7 +208,7 @@ public class ServeurMethodes {
 					.getNbrMessageNonLu(idpersonne);
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -247,17 +225,10 @@ public class ServeurMethodes {
 
 			n.send(androidMessage, GCMid, 3);
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -269,7 +240,7 @@ public class ServeurMethodes {
 			int nbrami = new ActiviteDAO(connexion).getNbrAmi(idpersonne);
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -284,17 +255,10 @@ public class ServeurMethodes {
 
 			n.send(androidMessage, GCMid, 3);
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -308,7 +272,7 @@ public class ServeurMethodes {
 
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -323,17 +287,10 @@ public class ServeurMethodes {
 					.build();
 
 			n.send(androidMessage, GCMid, 3);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -345,9 +302,10 @@ public class ServeurMethodes {
 			// Calcule le nobmre de notification
 			int nbrnotification = new ActiviteDAO(connexion)
 					.getNbrNotification(idpersonne);
+		
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -363,17 +321,10 @@ public class ServeurMethodes {
 					.build();
 
 			n.send(androidMessage, GCMid, 3);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -400,6 +351,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -428,6 +380,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -454,6 +407,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -465,10 +419,9 @@ public class ServeurMethodes {
 
 			LOG.info("GCMID" + GCMid);
 
-			if (GCMid == null)
+			if (GCMid == null || GCMid.isEmpty())
 				return;
-			if (GCMid.isEmpty())
-				return;
+			
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_NOTIFICATION));
@@ -482,6 +435,7 @@ public class ServeurMethodes {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -493,6 +447,7 @@ public class ServeurMethodes {
 			if (listpersonne.size() == 0)
 				return;
 			ArrayList<String> listpersonneGcm = getListGCM(listpersonne);
+		
 			if (listpersonneGcm.isEmpty())
 				return;
 
@@ -509,6 +464,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -539,6 +495,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -550,7 +507,8 @@ public class ServeurMethodes {
 			String GCMid;
 
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
-			if (GCMid == null)
+		
+			if (GCMid == null || GCMid.isEmpty())
 				return;
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -565,12 +523,10 @@ public class ServeurMethodes {
 					.build();
 			n.send(androidMessage, GCMid, 3);
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -599,6 +555,7 @@ public class ServeurMethodes {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -616,17 +573,10 @@ public class ServeurMethodes {
 					.addData("idactivite", Integer.toString(12)).build();
 			n.send(androidMessage, GCMid, 3);
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -659,7 +609,5 @@ public class ServeurMethodes {
 		return Math.sqrt(distance);
 
 	}
-
-	
 
 }

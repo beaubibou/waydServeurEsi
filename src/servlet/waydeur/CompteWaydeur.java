@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
@@ -91,6 +92,7 @@ public class CompteWaydeur extends HttpServlet {
 			// TODO Auto-generated catch block
 			datenaissance=new Date();
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		
 		int sexe=Integer.parseInt(request.getParameter("sexe"));

@@ -1,5 +1,5 @@
 <%@page import="website.metier.ProfilBean"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
 <nav class="navbar navbar-inverse">
@@ -25,6 +25,7 @@
 			<li><a href="ListProfil">Profils</a></li>
 			<li><a href="MesActivites">Site pro</a></li>
 			<li><a href="MapAdmin">Carte</a></li>
+			<li><a href="ListLogs">Logs</a></li>
 			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
 
 		</ul>

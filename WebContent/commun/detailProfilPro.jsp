@@ -1,6 +1,6 @@
 <%@page import="website.html.Etoile"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.AvisBean"%>
@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>>Détail professionnel</title>
+<title>>DÃ©tail professionnel</title>
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,7 +88,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
 
-					<div class="panel-title">Détail professionel</div>
+					<div class="panel-title">DÃ©tail professionel</div>
 
 				</div>
 

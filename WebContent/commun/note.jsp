@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,9 +10,6 @@
 <head>
 <title>>Note</title>
 <meta charset="utf-8">
-
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script
@@ -115,7 +112,7 @@
 								id="description" name="description"></textarea>
 						</div>
 
-						<h5 style="text-align: right;" id="nbr">0 Caractére sur 200</h5>
+						<h5 style="text-align: right;" id="nbr">0 CaractÃ©re sur 200</h5>
 						<div class="form-group">
 
 							<button type="submit" class="btn btn-info">Valider</button>
@@ -139,7 +136,7 @@
 				var msg = nombreCaractere + ' Caractere(s) / 200';
 
 				$('#nbr').text(msg);
-				// Le script qui devra calculer et afficher le nombre de mots et de caractères
+				// Le script qui devra calculer et afficher le nombre de mots et de caractÃ¨res
 
 			})
 

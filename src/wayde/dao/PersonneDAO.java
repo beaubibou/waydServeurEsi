@@ -12,10 +12,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayd.ws.TextWebService;
 import wayde.bean.Activite;
+import wayde.bean.CxoPool;
 import wayde.bean.Droit;
 import wayde.bean.MessageServeur;
 import wayde.bean.Parametres;
@@ -46,6 +48,7 @@ public class PersonneDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 		}
 
@@ -69,6 +72,7 @@ public class PersonneDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
 
@@ -230,17 +234,24 @@ public class PersonneDAO {
 	}
 
 	public String getGCMId(int idpersonne) throws Exception {
-		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche GCMID" + idpersonne);
+		
 		String requete = " SELECT gcm from personne where idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
+	
+		String gcm=null;
+		
 		if (rs.next()) {
-			return rs.getString("gcm");
+			gcm=rs.getString("gcm");
 		}
+			
+		CxoPool.close(preparedStatement, rs);
+		
+		if (gcm!=null)
+		return gcm;
+		
 		throw new Exception("Pas de GMC pour " + idpersonne);
 	}
 
@@ -277,7 +288,7 @@ public class PersonneDAO {
 				adresse = "Pas d'adresse";
 			return new ProprietePref(rayon, latitude, longitude, adresse);
 		}
-		throw new Exception("Pas de pr�f�rence pour  " + idpersonne);
+		throw new Exception("Pas de préférence pour  " + idpersonne);
 
 	}
 
@@ -494,7 +505,8 @@ public class PersonneDAO {
 		preparedStatement.setInt(2, nbravis);
 		preparedStatement.setInt(3, idpersonne);
 		preparedStatement.execute();
-		preparedStatement.close();
+	
+		CxoPool.close(preparedStatement, rs);
 
 	}
 
@@ -583,7 +595,9 @@ public class PersonneDAO {
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
+		
 		preparedStatement.close();
+		rs.close();
 		// System.out.println("cle recuepree de la personne" + cle);
 		return cle;
 	}

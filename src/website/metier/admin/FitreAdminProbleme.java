@@ -1,13 +1,7 @@
 package website.metier.admin;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.JodaTimePermission;
-
-import website.metier.AmiBean;
 
 public class FitreAdminProbleme {
 	private static final Logger LOG = Logger.getLogger(FitreAdminProbleme.class);

@@ -41,9 +41,7 @@ public class FitreAdminSuggestions {
 	}
 
 	public void setDateFinCreation(DateTime dateFinCreation) {
-		
-		
-		
+					
 		this.dateFinCreation = dateFinCreation;
 	}
 

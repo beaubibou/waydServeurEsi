@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.TypeAccess"%>
 <%@page import="website.html.*"%>
@@ -40,7 +40,7 @@
 		<div class="page-header">
 			
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Désolé. </h1>
+				alt="Cinque Terre" width="100" height="100">DÃ©solÃ©. </h1>
 		</div>
 		<p>L'application Wayd pour les non professionnels n'est disponible pour l' instant que sous android.</p>
 			

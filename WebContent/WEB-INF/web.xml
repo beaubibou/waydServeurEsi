@@ -733,4 +733,25 @@
     <servlet-name>ChangementMotDePasse</servlet-name>
     <url-pattern>/ChangementMotDePasse</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListLogs</display-name>
+    <servlet-name>ListLogs</servlet-name>
+    <servlet-class>servlet.ListLogs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListLogs</servlet-name>
+    <url-pattern>/ListLogs</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Cron</display-name>
+    <servlet-name>Cron</servlet-name>
+    <servlet-class>servlet.Cron</servlet-class>
+     <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Cron</servlet-name>
+    <url-pattern>/Cron</url-pattern>
+  </servlet-mapping>
 </web-app>
