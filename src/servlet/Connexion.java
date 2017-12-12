@@ -94,9 +94,6 @@ public class Connexion extends HttpServlet {
 
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
-		
-		LOG.info(profil.getPseudo());
-		
 		session.setAttribute("profil", profil);
 		
 		try {

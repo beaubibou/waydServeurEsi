@@ -379,9 +379,7 @@ public class ActiviteDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-
-		LOG.info("commmentaire "+commentaire.length());
-		
+	
 		
 		
 		try {

@@ -1,12 +1,6 @@
 package servlet;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
-
-import wayde.bean.CxoPool;
-import wayde.dao.AvisDAO;
+import website.dao.LogDAO;
 
 public class TacheFond implements Runnable {
 
@@ -18,10 +12,10 @@ public class TacheFond implements Runnable {
 		while (true) {
 			try {
 
-				Thread.sleep(2000);
+				Thread.sleep(20000);
 				if (stop)
 					return;
-
+			
 				doTacheFond();
 
 			} catch (InterruptedException e) {
@@ -40,21 +34,10 @@ public class TacheFond implements Runnable {
 	}
 
 	private void doTacheFond() {
+		
+	System.out.println("Nbr log"+LogDAO.getNbrLogs());
+	LogDAO.supprimeNderniersLogd();
 	
-	try {
-		Connection connexion=CxoPool.getConnection()	;
-	AvisDAO avis=new AvisDAO(connexion);
-	System.out.println(avis.isDoubleAvis(679273,  679274,449621));
-	
-	} catch (NamingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -23,6 +23,8 @@ import website.metier.admin.FitreAdminLogs;
 
 public class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
+	private static final int MAX_LOG_SIZE = 100000;
+	private static int nbrAeffacer=5000;
 
 	public static ArrayList<LogBean> getListLog(FitreAdminLogs filtre,
 			int page, int maxResult) {
@@ -136,5 +138,82 @@ public class LogDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 	}
+
+	public static int getNbrLogs(){
+		
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		
+		int nbrLog = 0;
+			try {
+				connexion = CxoPool.getConnection();
+				
+				String requete = "SELECT count(id) as nbrLog from log4j";
+				
+				preparedStatement = connexion	.prepareStatement(requete);
+			
+				ResultSet rs = preparedStatement.executeQuery();
+				
+				
+				if (rs.next()) {
+					nbrLog=rs.getInt("nbrlog");
+				}
+				
+			} catch (NamingException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+			}
+		
+			CxoPool.close(connexion, preparedStatement);
+			
+			return nbrLog;
+
+
+
+		
+	}
+	
+	public static boolean supprimeNderniersLogd() {
+		// TODO Auto-generated method stub
+
+		
+		if (getNbrLogs()<MAX_LOG_SIZE)
+			return false;
+			
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "delete from log4j where id in(SELECT id  FROM log4j order by id asc limit ? offset 0);";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, nbrAeffacer);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+		return false;
+
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+	}
+	
+	
 
 }
