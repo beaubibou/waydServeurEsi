@@ -30,6 +30,7 @@ public class SuggestionDAO {
 
 	public static ArrayList<SuggestionBean> getListSuggestion() {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -55,6 +56,8 @@ public class SuggestionDAO {
 				retour.add(new SuggestionBean(id, idPersonne,email, suggestion,
 						d_creation, pseudo,lu));
 			}
+			
+			LogDAO.LOG_DUREE("getListSuggestion", debut);
 
 			return retour;
 
@@ -73,6 +76,7 @@ public class SuggestionDAO {
 	public static ArrayList<SuggestionBean> getListSuggestion(int etatProbleme,
 			DateTime debut, DateTime fin) {
 
+		long debutlog = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -138,6 +142,7 @@ public class SuggestionDAO {
 						d_creation, pseudo,lu));
 			}
 
+			LogDAO.LOG_DUREE("getListSuggestion", debutlog);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -153,6 +158,9 @@ public class SuggestionDAO {
 	}
 
 	public static boolean addSuggestion(int idPersonne, String mail, String message) {
+		
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
 
@@ -172,6 +180,7 @@ public class SuggestionDAO {
 			preparedStatement.execute();
 			connexion.commit();
 			preparedStatement.close();
+			LogDAO.LOG_DUREE("addSuggestion", debut);
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -188,6 +197,8 @@ public class SuggestionDAO {
 	public static boolean supprime(int idSuggestion) {
 		// TODO Auto-generated method stub
 	
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 
 		PreparedStatement preparedStatement = null;
@@ -200,6 +211,7 @@ public class SuggestionDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("supprime", debut);
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -236,6 +248,8 @@ public class SuggestionDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("lireProbleme", debut);
+			
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
@@ -261,13 +275,13 @@ public class SuggestionDAO {
 
 	public static ArrayList<SuggestionBean> getListSugestion(FitreAdminSuggestions filtre, int page,int maxResult) {
 	
+		long debutlog = System.currentTimeMillis();
+		
 		int offset=(maxResult)*page;
 	
 		int etatSuggestion=filtre.getEtatSuggestion();
 		DateTime debut=filtre.getDateDebutCreation();
 		DateTime fin=filtre.getDateFinCreation();
-		
-		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -334,7 +348,9 @@ public class SuggestionDAO {
 				retour.add(new SuggestionBean( id,  idPersonne, email,  suggestion,
 						d_creation, pseudo, lu));
 			}
-			LOG.info(retour);
+		
+			LogDAO.LOG_DUREE("getListSugestion", debutlog);
+			
 			return retour;
 	
 		} catch (SQLException | NamingException e) {

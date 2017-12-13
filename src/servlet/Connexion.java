@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
@@ -79,7 +80,6 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		LOG.info("Do post Connexion");
 		
 		if (testEsi(request, response))
 		return;
@@ -92,6 +92,10 @@ public class Connexion extends HttpServlet {
 	public boolean testEsi(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		MDC.put("duree", 23);
+		LOG.debug("Test Esi");
+	
+		
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
 		session.setAttribute("profil", profil);
@@ -113,7 +117,7 @@ public class Connexion extends HttpServlet {
 			ServletException {
 
 		final HttpSession session = request.getSession();
-		LOG.info("Test token");
+	
 
 		try {
 			FirebaseToken token = FirebaseAuth.getInstance()
@@ -153,18 +157,7 @@ public class Connexion extends HttpServlet {
 
 				session.setAttribute("profil", profil);
 
-				// if (profil.isPremiereconnexion()) {
-				// try {
-				// LOG.info("premier connexion");
-				// response.sendRedirect("/wayd/auth/inscriptionPro.jsp");
-				// success = true;
-				// return;
-				// } catch (IOException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
-				//
-				// }
+			
 
 				if (profil.isAdmin()) {
 
@@ -196,11 +189,11 @@ public class Connexion extends HttpServlet {
 
 			}
 
-		} catch (InterruptedException | ExecutionException e2) {
+		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
-			e2.printStackTrace();
-
-			request.setAttribute("message", e2.getMessage());
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("commun/erreurConnection.jsp")
 					.forward(request, response);
 			return;

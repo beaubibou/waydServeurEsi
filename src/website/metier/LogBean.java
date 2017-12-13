@@ -24,10 +24,22 @@ public class LogBean {
 	private String message;
 	private String niveau_log;
 	private String location;
+	private long duree;
 	public int getId() {
 		return id;
 	}
 	
+	
+	public long getDuree() {
+		return duree;
+	}
+
+
+	public void setDuree(long duree) {
+		this.duree = duree;
+	}
+
+
 	public String getLocation() {
 		return location;
 	}
@@ -36,13 +48,15 @@ public class LogBean {
 		this.location = location;
 	}
 
-	public LogBean(int id, Date date_log, String message, String niveau_log,String location) {
+	public LogBean(int id, Date date_log, String message, String niveau_log,String location,long duree) {
 		super();
 		this.id = id;
 		this.date_log = date_log;
 		this.message = message;
 		this.niveau_log = niveau_log;
 		this.location=location;
+		this.duree=duree;
+		
 	}
 	
 	public void setId(int id) {

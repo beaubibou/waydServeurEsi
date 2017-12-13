@@ -144,7 +144,7 @@ public class CreerUserPro extends HttpServlet {
 			// TODO Auto-generated catch block
 			
 			e.printStackTrace();
-			LOG.debug( ExceptionUtils.getStackTrace(e));
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		
 			redirige( pwd, pwd1, email, pseudo, siret, telephone, adresse, commentaire, latitude, longitude,
 					request,response, "Le captcha n'est pas valide");
@@ -264,7 +264,7 @@ public class CreerUserPro extends HttpServlet {
 			// TODO Auto-generated catch block
 			
 			
-			 String s = ExceptionUtils.getStackTrace(e);
+			String s = ExceptionUtils.getStackTrace(e);
 			String erreur="Erreur inconnue";
 		
 			if (s.contains("EMAIL_EXISTS"))
@@ -319,7 +319,6 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		double longitude) {
 	// TODO Auto-generated method stub
 
-	LOG.info("Test par "+pseudo);
 	
 	
 	
@@ -380,11 +379,11 @@ private MessageServeur testParametreRequete(String pwd, String pwd1,
 		
 		if (result.toString().contains("\"success\": true"))
 			{
-			LOG.info("Captcha Ok");
+			LOG.debug("Captcha Ok");
 			return true;
 			}
 			
-		LOG.info("Captcha NOk");
+		LOG.debug("Captcha NOk");
 		return false;
 	
 		

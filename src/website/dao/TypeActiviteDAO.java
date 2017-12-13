@@ -20,6 +20,7 @@ public class TypeActiviteDAO {
 
 	public static ArrayList<TypeActiviteBean> getListTypeActivite() {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -39,6 +40,7 @@ public class TypeActiviteDAO {
 				retour.add(new TypeActiviteBean(id,libelle));
 			}
 
+			LogDAO.LOG_DUREE("getListTypeActivite", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {

@@ -58,6 +58,8 @@ public class ActiviteDAO {
 	public static boolean addNbrVu(int idpersonne, int idactivite,
 			int idorganisateur) {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
@@ -83,6 +85,8 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			connexion.commit();
 
+			LogDAO.LOG_DUREE("addNbrVu", debut);
+			
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -101,7 +105,8 @@ public class ActiviteDAO {
 
 	private static boolean isDejaVu(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
-
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -114,6 +119,8 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			rs = preparedStatement.executeQuery();
 
+			LogDAO.LOG_DUREE("isDejaVu", debut);
+			
 			if (rs.next())
 				return true;
 
@@ -134,6 +141,8 @@ public class ActiviteDAO {
 	private static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -146,6 +155,8 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			rs = preparedStatement.executeQuery();
 
+			LogDAO.LOG_DUREE("isInteretDejaSignale", debut);
+			
 			if (rs.next())
 				return true;
 
@@ -166,6 +177,9 @@ public class ActiviteDAO {
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double NELat, double NELon, double SWLat,
 			double SWlon) {
+		
+		long debut = System.currentTimeMillis();
+		
 		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -231,12 +245,15 @@ public class ActiviteDAO {
 		CxoPool.close(connexion, preparedStatement, rs);
 		}
 
+		LogDAO.LOG_DUREE("getListActiviteAjaxMap", debut);
 		return retour;
 	}
 
 	public ArrayList<ActiviteAjax> getListActiviteEncoursAjax(
 			double centreLatitude, double centreLongitude) throws SQLException {
 
+		long debut = System.currentTimeMillis();
+		
 		ActiviteAjax activite = null;
 		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
 		PreparedStatement preparedStatement = null;
@@ -286,7 +303,7 @@ public class ActiviteDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
-
+		LogDAO.LOG_DUREE("getListActiviteEncoursAjax", debut);
 		return retour;
 
 		// Cherche dans les activite
@@ -294,8 +311,13 @@ public class ActiviteDAO {
 	}
 
 	public boolean isInscrit(ActiviteBean activite, int idpersonne) {
+		
+		long debut = System.currentTimeMillis();
+		
+		
 		String requete = "SELECT  idpersonne FROM public.participer "
 				+ "where( idpersonne=? and idactivite=?);";
+		
 		PreparedStatement preparedStatement;
 		try {
 
@@ -304,11 +326,14 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, activite.getId());
 			ResultSet rs = preparedStatement.executeQuery();
 
+			LogDAO.LOG_DUREE("isInscrit", debut);
+			
 			if (rs.next()) {
-
+				rs.close();
 				preparedStatement.close();
 				return true;
 			} else {
+				rs.close();
 				preparedStatement.close();
 				return false;
 
@@ -329,6 +354,10 @@ public class ActiviteDAO {
 	public static boolean updateActivitePro(String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int idactivite) {
+		
+		long debut = System.currentTimeMillis();
+		
+		
 		PreparedStatement preparedStatement=null;
 		Connection connexion = null;
 		try {
@@ -356,6 +385,8 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("updateActivitePro", debut);
+			
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -376,6 +407,9 @@ public class ActiviteDAO {
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int typeuser, int typeaccess) {
+		
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -417,6 +451,9 @@ public class ActiviteDAO {
 			if (rs.next())
 				cle = rs.getInt("idactivite");
 
+			
+			LogDAO.LOG_DUREE("addActivitePro", debut);
+			
 			return cle;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -427,11 +464,12 @@ public class ActiviteDAO {
 		CxoPool.close(connexion, preparedStatement, rs);
 	
 		}
-		LOG.info("Creation activite user");
 		return 0;
 	}
 
 	public static IndicateurWayd getIndicateurs() {
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
 		ResultSet rs=null;
@@ -451,6 +489,8 @@ public class ActiviteDAO {
 				nbrTotalactivite = rs.getInt("nbractivite");
 			}
 
+			preparedStatement.close();
+			rs.close();
 			// ***********Calcul le nbr de participation
 
 			requete = "Select count(idpersonne) as nbrinscrit  FROM personne;";
@@ -495,6 +535,8 @@ public class ActiviteDAO {
 			preparedStatement.close();
 			rs.close();
 			
+			LogDAO.LOG_DUREE("IndicateurWayd", debut);
+	
 			return new IndicateurWayd(nbrTotalactivite, nbrTotalparticipation,
 					nbrTotalInscrit, nbrTotalMessage, nbrTotalMessageByAct);
 
@@ -520,6 +562,8 @@ public class ActiviteDAO {
 
 	public ActiviteBean getActivite(int idActivite) {
 
+		long debut = System.currentTimeMillis();
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		ActiviteBean activite = null;
@@ -576,6 +620,9 @@ public class ActiviteDAO {
 						connexion).getListPaticipant(idActivite);
 
 				activite.setListParticipant(listParticipant);
+			
+				LogDAO.LOG_DUREE("getActivite", debut);
+				
 				return activite;
 			}
 
@@ -593,6 +640,8 @@ public class ActiviteDAO {
 	}
 
 	public static ArrayList<ActiviteBean> getListActivite(int idpersonne) {
+		long debut = System.currentTimeMillis();
+		
 		ActiviteBean activite = null;
 		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
 		PreparedStatement preparedStatement = null;
@@ -702,12 +751,15 @@ public class ActiviteDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 
+		LogDAO.LOG_DUREE("getListActivite", debut);
 		return retour;
 
 	}
 
 	public static ArrayList<ActiviteBean> getMesActivite(int idpersonne,
 			int etatActivite) {
+		long debut = System.currentTimeMillis();
+		
 		ActiviteBean activite = null;
 		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
 		PreparedStatement preparedStatement = null;
@@ -953,12 +1005,17 @@ public class ActiviteDAO {
 				return o2.datedebut.compareTo(o1.datedebut);
 			}
 		});
+		
+		LogDAO.LOG_DUREE("getMesActivite", debut);
 		return retour;
 
 	}
 
 	public static ArrayList<website.metier.MessageBean> getMesMessages(
 			int idpersonne, int etatFiltreMessage) {
+	
+		long debut = System.currentTimeMillis();
+		
 		website.metier.MessageBean activite = null;
 		ArrayList<website.metier.MessageBean> retour = new ArrayList<website.metier.MessageBean>();
 		PreparedStatement preparedStatement = null;
@@ -1042,13 +1099,16 @@ public class ActiviteDAO {
 				return o2.getDateCreation().compareTo(o1.getDateCreation());
 			}
 		});
+		LogDAO.LOG_DUREE("getMesMessages", debut);
+		
 		return retour;
 
 	}
 
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
-
+		long debut = System.currentTimeMillis();
+		
 		int offset = (maxResult) * page;
 
 		int typeactivite = filtre.getTypeactivite();
@@ -1059,7 +1119,7 @@ public class ActiviteDAO {
 		double malatitude = filtre.getLatitude();
 		double malongitude = filtre.getLongitude();
 
-		System.out.println("lat "+malatitude +" lon "+malongitude);
+		
 		
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
@@ -1225,11 +1285,12 @@ public class ActiviteDAO {
 			
 				activite.setPositionRecherche(filtre.getLatitude(), filtre.getLongitude());
 				activite.setNbrVu(nbrVu);
-			
 				retour.add(activite);
 
 			}
 
+			LogDAO.LOG_DUREE("getListActivite", debut);
+			
 			return retour;
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1246,6 +1307,8 @@ public class ActiviteDAO {
 	
 	public static boolean terminerActivite(int idActivite) {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
@@ -1256,7 +1319,9 @@ public class ActiviteDAO {
 			preparedStatement.setInt(1, idActivite);
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
+			LogDAO.LOG_DUREE("terminerActivite", debut);
 			return true;
+			
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1274,6 +1339,8 @@ public class ActiviteDAO {
 
 	public static boolean supprimeActivite(int idactivite) {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
@@ -1312,6 +1379,8 @@ public class ActiviteDAO {
 
 			preparedStatement.close();
 
+			LogDAO.LOG_DUREE("supprimeActivite", debut);
+		
 			return true;
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
@@ -1368,9 +1437,8 @@ public class ActiviteDAO {
 						personneinteresse, participants, idactivite));
 			// ******************************************************************************
 
-			String loginfo = "effaceActivite - "
-					+ (System.currentTimeMillis() - debut) + "ms";
-			LOG.info(loginfo);
+			LogDAO.LOG_DUREE("effaceActivite", debut);
+			
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
 		} catch (SQLException | NamingException e) {
@@ -1394,6 +1462,9 @@ public class ActiviteDAO {
 			int compteWaydeur) {
 		// TODO Auto-generated method stub
 
+		
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		Date dateDebut = new Date();
 		Calendar calFinActivite = Calendar.getInstance();
@@ -1433,6 +1504,8 @@ public class ActiviteDAO {
 			preparedStatement.close();
 			connexion.commit();
 
+			LogDAO.LOG_DUREE("addActiviteWaydeur", debut);
+			
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1445,13 +1518,14 @@ public class ActiviteDAO {
 			Double malongitude, int rayonmetre, int idtypeactivite_,
 			String motcle, int typeUser, int commenceDans) {
 
+		long debut = System.currentTimeMillis();
+		
 		int TOUTES = -1;
 		Connection connexion = null;
 		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 
-		LOG.info("commence" + commenceDans);
 		try {
 			connexion = CxoPool.getConnection();
 			double coef = rayonmetre * 0.007 / 700;
@@ -1605,6 +1679,9 @@ public class ActiviteDAO {
 
 			rs.close();
 			preparedStatement.close();
+			
+			LogDAO.LOG_DUREE("getListActivites", debut);
+			
 			return retour;
 
 		} catch (NamingException | SQLException e) {
@@ -1619,195 +1696,12 @@ public class ActiviteDAO {
 
 	}
 
-	public ArrayList<ActiviteBean> getListActivitesold(Double malatitude,
-			Double malongitude, int rayonmetre, int idtypeactivite_,
-			String motcle, int typeUser, int commenceDans) {
-
-		Connection connexion = null;
-		ArrayList<ActiviteBean> retour = new ArrayList<ActiviteBean>();
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-
-		LOG.info("commence" + commenceDans);
-		try {
-			connexion = CxoPool.getConnection();
-			double coef = rayonmetre * 0.007 / 700;
-			double latMin = malatitude - coef;
-			double latMax = malatitude + coef;
-			double longMin = malongitude - coef;
-			double longMax = malongitude + coef;
-			ActiviteBean activite = null;
-
-			Calendar calendrierDebut = Calendar.getInstance();
-			commenceDans = (commenceDans) * 60;
-			calendrierDebut.add(Calendar.MINUTE, commenceDans);
-			Date dateRechercheDebut = calendrierDebut.getTime();
-
-			Calendar calendrierFin = Calendar.getInstance();
-			int finiDans = (commenceDans) * 60 + 60;
-			calendrierFin.add(Calendar.MINUTE, finiDans);
-			Date dateRechercheFin = calendrierFin.getTime();
-			// on remonte les activités dont le debut est comprise entre
-			// l'heure
-			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
-			// heure
-
-			// String requete =
-			// " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-			// +
-			// " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-			// + "personne.note,personne.nbravis as totalavis,personne.photo,"
-			// + "activite.nbrwaydeur as nbrparticipant,1 as role,"
-			// +
-			// "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-			// + "activite  WHERE personne.idpersonne = activite.idpersonne  "
-			// +
-			// "and (datedebut between ? and ? or datefin between ? and ? or (datedebut<=? and datefin>=?))"
-			// + " and activite.latitude between ? and ?"
-			// + " and activite.longitude between ? and ?";
-
-			String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
-					+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-					+ "personne.note,personne.nbravis as totalavis,personne.photo,"
-					+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-					+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-					+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
-					+ "and (datedebut between ? and ? or datefin between ? and ? or (datedebut<=? and datefin>=?))"
-					+ " and activite.latitude between ? and ?"
-					+ " and activite.longitude between ? and ?";
-
-			if (idtypeactivite_ != 0) {
-
-				requete = requete + " and activite.idtypeactivite=?";
-
-			}
-
-			if (motcle != null) {
-
-				if (!motcle.equals(""))
-					requete = requete
-							+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
-
-			}
-
-			if (typeUser != 0) {
-
-				requete = requete + " and activite.typeuser=?";
-
-			}
-
-			requete = requete + " ORDER BY datedebut asc;";
-
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
-					dateRechercheDebut.getTime()));
-			preparedStatement.setTimestamp(2, new java.sql.Timestamp(
-					dateRechercheFin.getTime()));
-			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
-					dateRechercheDebut.getTime()));
-			preparedStatement.setTimestamp(4, new java.sql.Timestamp(
-					dateRechercheFin.getTime()));
-			preparedStatement.setTimestamp(5, new java.sql.Timestamp(
-					dateRechercheDebut.getTime()));
-			preparedStatement.setTimestamp(6, new java.sql.Timestamp(
-					dateRechercheFin.getTime()));
-
-			preparedStatement.setDouble(7, latMin);
-			preparedStatement.setDouble(8, latMax);
-			preparedStatement.setDouble(9, longMin);
-			preparedStatement.setDouble(10, longMax);
-
-			int index = 10;
-
-			if (idtypeactivite_ != 0) {
-				index++;
-				preparedStatement.setInt(index, idtypeactivite_);
-
-			}
-
-			if (motcle != null) {
-				if (!motcle.equals("")) {
-					index++;
-					String test = "%" + motcle + "%";
-					preparedStatement.setString(index, test);
-					index++;
-					preparedStatement.setString(index, test);
-				}
-			}
-
-			if (typeUser != 0) {
-
-				index++;
-				preparedStatement.setInt(index, typeUser);
-
-			}
-
-			//
-
-			rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-
-				double latitude = rs.getDouble("latitude");
-				double longitude = rs.getDouble("longitude");
-				double distance = ServeurMethodes.getDistance(malatitude,
-						latitude, malongitude, longitude);
-				if (distance >= rayonmetre)
-					continue;
-
-				int id = rs.getInt("idactivite");
-				String libelle = rs.getString("libelle");
-				String titre = rs.getString("titre");
-				int idorganisateur = rs.getInt("idpersonne");
-				int idtypeactivite = rs.getInt("idtypeactivite");
-				int sexe = rs.getInt("sexe");
-				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				int nbrparticipant = rs.getInt("nbrparticipant");
-				Date datedebut = rs.getTimestamp("datedebut");
-				Date datefin = rs.getTimestamp("datefin");
-				String adresse = rs.getString("adresse");
-				double note = rs.getDouble("note");
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
-				if (prenom == null)
-					prenom = "";
-				String photo = rs.getString("photo");
-				int role = rs.getInt("role");
-				Date datenaissance = rs.getTimestamp("datenaissance");
-				boolean archive = false;
-				int totalavis = rs.getInt("totalavis");
-				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
-						datedebut, datefin, idtypeactivite, latitude,
-						longitude, adresse, nom, prenom, photo, note, role,
-						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, true, true, nbmaxwayd);
-				retour.add(activite);
-
-			}
-
-			rs.close();
-			preparedStatement.close();
-			return retour;
-
-		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-
-			return retour;
-		} finally {
-			
-				CxoPool.close(connexion, preparedStatement, rs);
-		}
-
-	}
 
 	public MessageServeur signalerActivite(int idpersonne, int idactivite,
 			int idmotif, String motif, String titre, String libelle) {
+	
 		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 
 		try {
@@ -1828,9 +1722,9 @@ public class ActiviteDAO {
 					motif, titre, libelle);
 			connexion.commit();
 
-			String loginfo = "signalerActivite - "
-					+ (System.currentTimeMillis() - debut) + "ms";
-			LOG.info(loginfo);
+		
+			LogDAO.LOG_DUREE("signalerActivite", debut);
+			
 
 			return new MessageServeur(true, TextWebService.activiteSignale);
 
@@ -1840,6 +1734,7 @@ public class ActiviteDAO {
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
+			
 			return new MessageServeur(false, e.getMessage());
 
 		} finally {
@@ -1851,6 +1746,9 @@ public class ActiviteDAO {
 	public void updateChampCalcule(int idactivite) throws SQLException {
 		// Met aj our le nbr participant dans activite
 
+		long debut = System.currentTimeMillis();
+		
+	
 		String requete = "UPDATE activite SET nbrwaydeur=(select  count(idpersonne)+1 "
 				+ " from participer where  idactivite=?) WHERE idactivite=?";
 
@@ -1860,10 +1758,15 @@ public class ActiviteDAO {
 		preparedStatement.setInt(2, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
+		LogDAO.LOG_DUREE("updateChampCalcule", debut);
+		
 	}
 
 	
 	public static int getNbrActiviteProposeEnCours(int idpersonne)  {
+	
+		long debut = System.currentTimeMillis();
+		
 		int nbractivite = 0;
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
@@ -1884,7 +1787,7 @@ public class ActiviteDAO {
 				nbractivite = rs.getInt("nbractivite");
 			}
 		
-			
+			LogDAO.LOG_DUREE("getNbrActiviteProposeEnCours", debut);
 			return nbractivite ;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -1900,7 +1803,6 @@ public class ActiviteDAO {
 		}
 
 		
-		//	System.out.println("Calcul nombre d'activite en cours");
 	
 
 	}
@@ -1908,6 +1810,8 @@ public class ActiviteDAO {
 	public static MessageServeur addInteretActivite(int idpersonne, int idactivite,
 			int niveauInteret) {
 		// TODO Auto-generated method stub
+		
+		long debut = System.currentTimeMillis();
 		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -1934,6 +1838,8 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			connexion.commit();
 
+			LogDAO.LOG_DUREE("addInteretActivite", debut);
+			
 		    return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
 
 

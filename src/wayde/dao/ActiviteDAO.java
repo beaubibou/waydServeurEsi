@@ -175,8 +175,7 @@ public class ActiviteDAO {
 			boolean notification=rs.getBoolean("notification");
 			double distance = ServeurMethodes.getDistance(actlatitude,
 					personnelatitude, actlongitude, personnelongitude);
-		//	System.out.println("Rayon " + rayon + " distance " + distance);
-
+	
 			if (idpersonne != activite.getIdorganisateur() && distance <= rayon)
 				listpersonne.add(new Personne(gcm, idpersonne,notification));
 		}
@@ -189,6 +188,7 @@ public class ActiviteDAO {
 
 	public void addActivite(Activite activite) throws SQLException {
 
+		
 		String requete = "INSERT INTO activite("
 				+ "   titre, libelle,datedebut, "
 				+ " datefin, adresse, latitude, longitude, actif,"
@@ -220,7 +220,7 @@ public class ActiviteDAO {
 		if (rs.next())
 			cle = rs.getInt("idactivite");
 		preparedStatement.close();
-		// System.out.println("cle gener�e" + cle);
+		rs.close();
 		activite.setId(cle);
 
 	}
@@ -249,13 +249,12 @@ public class ActiviteDAO {
 	public ArrayList<Activite> getListActiviteAvenir(double malatitude,
 			double malongitude, int rayonmetre, int idtypeactivite_,
 			String motcle, int commencedans) throws SQLException {
-		// System.out.println("motcle:" + motcle);
+	
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
-		// System.out.println(latMin + "," + latMax + "coef:" + coef);
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 		Calendar calendrier = Calendar.getInstance();
@@ -336,7 +335,6 @@ public class ActiviteDAO {
 
 		rs.close();
 		preparedStatement.close();
-		// System.out.println("Activite total:" + total);
 		return retour;
 
 	}
@@ -348,15 +346,13 @@ public class ActiviteDAO {
 	public ArrayList<Activite> getListActiviteAvenirNocritere(
 			double malatitude, double malongitude, int rayonmetre,
 			String motcle, int commencedans) throws SQLException {
-		// System.out.println("Getlist activiet avenir sans crite activite:"
-		// + motcle);
-
+		
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
-		// System.out.println(latMin + "," + latMax + "coef:" + coef);
+
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 		Calendar calendrier = Calendar.getInstance();
@@ -375,8 +371,7 @@ public class ActiviteDAO {
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-		// System.out.println(new Date());
-
+	
 		preparedStatement.setTimestamp(1, new java.sql.Timestamp(calendrier
 				.getTime().getTime()));
 
@@ -439,7 +434,6 @@ public class ActiviteDAO {
 		}
 		rs.close();
 		preparedStatement.close();
-		// System.out.println("Activite total:" + total);
 		return retour;
 
 	}
@@ -694,7 +688,6 @@ public class ActiviteDAO {
 	public void RemoveActivite(int idactivite)
 			throws SQLException {
 		
-	//	System.out.println("Effacement d'une activite");
 			
 		String requete = "DELETE FROM demandeami where ( idactivite=? );";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
@@ -732,7 +725,6 @@ public class ActiviteDAO {
 	public void RemoveOnlyActivite(int idactivite)
 			throws SQLException {
 		
-	//	System.out.println("Effacement d'une activite");
 			
 		String requete  = "DELETE FROM activite where ( idactivite=? );";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
@@ -795,8 +787,7 @@ public class ActiviteDAO {
 			int role = rs.getInt("role");
 			int sexe = rs.getInt("sexe");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
-			//Date datefinactivite = rs.getTimestamp("d_finactivite");
-		//	System.out.println(datefinactivite);
+	
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 		
@@ -1112,8 +1103,7 @@ public class ActiviteDAO {
 		double latMax = proprietepreference.getLatitude() + coef;
 		double longMin = proprietepreference.getLongitude() - coef;
 		double longMax = proprietepreference.getLongitude() + coef;
-		// System.out.println("Recuperation TDB de " + idpersonne);
-		// System.out.println("Calcul nombre d'activite en cours");
+	
 		String requete = "Select count(idactivite) as nbractivite  FROM activite where (  idpersonne=? and  activite.datefin>?) ;";
 
 		PreparedStatement preparedStatement = connexion
@@ -1127,7 +1117,8 @@ public class ActiviteDAO {
 			nbractivite = rs.getInt("nbractivite");
 		}
 
-		// System.out.println("Calcul nombre de participation en cours");
+		// Calcul nombre de participation en cours
+		
 		requete = "Select count(participer.idpersonne) as nbrparticipation  FROM activite,participer where  participer.idactivite=activite.idactivite"
 				+ " and  participer.idpersonne=? and activite.datefin>? ;";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -1140,7 +1131,7 @@ public class ActiviteDAO {
 			nbrparticipation = rs.getInt("nbrparticipation");
 		}
 
-		// System.out.println("Calcul de message non lu en stand alone");
+		//Calcul de message non lu en stand alone
 
 		requete = "select  count(idmessage) as nbrmessagenonlu from message where (  iddestinataire=? and lu=false and emis=false);";
 
@@ -1150,7 +1141,7 @@ public class ActiviteDAO {
 		if (rs.next()) {
 			nbrmessagenonlu = rs.getInt("nbrmessagenonlu");
 		}
-		// System.out.println("Calcul de message non lu en stand talkgroup");
+		//"Calcul de message non lu en stand talkgroup
 
 		requete = "select  count(idmessage) as nbrmessagenonlu from messagebyact m,activite a where (  m.iddestinataire=? and m.lu=false"
 				+ " and m.emis=false and a.idactivite=m.idactivite and a.datefin>?);";
@@ -1193,7 +1184,7 @@ public class ActiviteDAO {
 			if (distance <= proprietepreference.getRayon())
 				nbrsuggestion++;
 		}
-		// System.out.println("Compte le nbr de suggestion" + nbrsuggestion);
+		//Compte le nbr de suggestion" + nbrsuggestion
 
 		requete = "select  count(iddestinataire) as nbrnotification from notification where (  iddestinataire=? and lu=false);";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -1205,7 +1196,7 @@ public class ActiviteDAO {
 		}
 
 		preparedStatement.close();
-
+		rs.close();
 		requete = "select  count(idpersonne) as nbrami from ami where  idpersonne=?;";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
@@ -1216,8 +1207,9 @@ public class ActiviteDAO {
 		}
 
 		preparedStatement.close();
-		// System.out.println("Compte le nbr de notification" +
-		// nbrnotification);
+		rs.close();
+		
+		// Compte le nbr de notification"
 		return new TableauBord(nbrmessagenonlu, nbrparticipation + nbractivite,
 				nbrsuggestion, nbrnotification, nbrami);
 	}
@@ -1463,7 +1455,6 @@ public class ActiviteDAO {
 		
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-		//System.out.println(new Date());
 		preparedStatement.setInt(1, idtypeactivite_);
 		preparedStatement.setTimestamp(2, new java.sql.Timestamp(calendrier
 				.getTime().getTime()));
@@ -1524,7 +1515,6 @@ public class ActiviteDAO {
 
 		rs.close();
 		preparedStatement.close();
-		// System.out.println("Activite total:" + total);
 		return retour;
 
 		

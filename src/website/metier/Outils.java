@@ -27,7 +27,9 @@ public class Outils {
 
 	public static String jspAdapterCheked(boolean value){
 		
+		LOG.info("etat"+value);
 		if (value)return "checked";
+	
 		return "";
 		
 	}

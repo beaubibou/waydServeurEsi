@@ -116,7 +116,6 @@ public class PersonneDAO {
 	public Profil getFullProfil(int idpersonne) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche compte personen par Id" + idpersonne);
 		String requete = " SELECT personne.note,personne.nbravis,"
 				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 				+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -154,8 +153,7 @@ public class PersonneDAO {
 			int sexe = rs.getInt("sexe");
 			double note = rs.getDouble("note");
 
-			// System.out.println("Note" + note);
-
+			
 			Profil profil = new Profil(id, nom, prenom, ville, datecreation,
 					datenaissance, nbravis, sexe, nbractivite,
 					nbrparticipation, nbrami, note, photo, affichesexe,
@@ -169,7 +167,7 @@ public class PersonneDAO {
 	public ProfilPro getFullProfilPro(int idpersonne) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche compte personen par Id" + idpersonne);
+	
 		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,siteweb,"
 				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne)  as nbractivite"
 				+ "   FROM personne where idpersonne=?";
@@ -192,8 +190,7 @@ public class PersonneDAO {
 			int nbractivite = rs.getInt("nbractivite");
 			if (photo == null)
 				photo = "";
-			// System.out.println("Note" + note);
-
+	
 			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret,
 					telephone, datecreation.getTime(), nbractivite, photo,
 					commentaire, siteweb);
@@ -207,7 +204,7 @@ public class PersonneDAO {
 
 	public Personne getUnProfil(int idpersonne) throws SQLException {
 		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche compte personen par Id" + idpersonne);
+	
 		String requete = " SELECT  notification,note, nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,"
 				+ "nbrecheccnx, datecreation,  datenaissance,latitude,longitude, sexe,affichesexe,afficheage"
@@ -233,7 +230,7 @@ public class PersonneDAO {
 		return getDroitDbByRs(rs);
 	}
 
-	public String getGCMId(int idpersonne) throws Exception {
+	public String getGCMId(int idpersonne) throws SQLException {
 		
 		String requete = " SELECT gcm from personne where idpersonne=?";
 		PreparedStatement preparedStatement = connexion
@@ -249,10 +246,10 @@ public class PersonneDAO {
 			
 		CxoPool.close(preparedStatement, rs);
 		
-		if (gcm!=null)
+		
 		return gcm;
 		
-		throw new Exception("Pas de GMC pour " + idpersonne);
+	
 	}
 
 	public String test_getToken(int idpersonne) throws Exception {
@@ -295,8 +292,7 @@ public class PersonneDAO {
 	public Personne getPersonneJeton(String idtoken) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche compte personen par token:");
-
+	
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
@@ -313,8 +309,7 @@ public class PersonneDAO {
 	public Personne getPersonneByUID(String uid) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-		// System.out.println("Cherche compte personen par token:");
-
+	
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
@@ -364,14 +359,13 @@ public class PersonneDAO {
 			String siret = rs.getString("siret");
 			String tel = rs.getString("telephone");
 
-			// System.out.println("Note" + note);
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, nbrecheccnx, datecreation, datenaissance,
 					photo, sexe, mail, cleactivation, note, totalavis,
 					commentaire, afficheage, affichesexe, premiereconnexion,
 					rayonrecherche, admin, latitude, longitude, notification,
 					typeUser, siteWeb, siret, tel);
-			// System.out.println("Trouv�");
+		
 			rs.close();
 			return personne;
 
@@ -417,8 +411,7 @@ public class PersonneDAO {
 			String siret = rs.getString("siret");
 			String tel = rs.getString("telephone");
 
-			// System.out.println("Note" + note);
-
+		
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
@@ -590,7 +583,6 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(23, true);// affiche age
 
 		preparedStatement.execute();
-		// System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
 		if (rs.next())
@@ -598,7 +590,6 @@ public class PersonneDAO {
 		
 		preparedStatement.close();
 		rs.close();
-		// System.out.println("cle recuepree de la personne" + cle);
 		return cle;
 	}
 
@@ -651,13 +642,11 @@ public class PersonneDAO {
 		preparedStatement.setString(28, siret);// affiche age
 		preparedStatement.setString(29, siteweb);// affiche age
 		preparedStatement.execute();
-		// System.out.println("Cree compte generique ");
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
 		preparedStatement.close();
-		// System.out.println("cle recuepree de la personne" + cle);
 		return cle;
 	}
 
@@ -675,11 +664,9 @@ public class PersonneDAO {
 		String idtoken = "jeton" + jeton;
 		Random ran = new Random();
 		double te = (ran.nextInt(8000) + 42000);
-		// double te = (ran.nextInt(200) + 43700);
 		double latitude = te / 1000;
 
 		te = (ran.nextInt(6500));
-		// te = (ran.nextInt(200)+3800);
 		double longitude = te / 1000;
 
 		String photo = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBA"
@@ -766,15 +753,11 @@ public class PersonneDAO {
 		preparedStatement.setBoolean(20, false);// affiche age
 		preparedStatement.setBoolean(21, false);// affiche age
 		preparedStatement.execute();
-		// System.out.println("Cree compte generique " + nom + " " + pseudo +
-		// " "
-		// + latitude + " " + longitude);
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
 		preparedStatement.close();
-		// System.out.println("cle recuepree de la personne" + cle);
 		return cle;
 	}
 

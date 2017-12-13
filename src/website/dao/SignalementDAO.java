@@ -26,6 +26,8 @@ public class SignalementDAO {
 	public static ArrayList<SignalementProfilBean> getListSignalement(
 			int idpersonne) {
 
+
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -57,7 +59,7 @@ public class SignalementDAO {
 						idinformateur, pseudoSignale, pseudoInfo, d_creation,
 						idmotif, motif, libelle));
 			}
-
+			LogDAO.LOG_DUREE("getListSignalement", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -75,6 +77,8 @@ public class SignalementDAO {
 	public static ArrayList<SignalementActiviteBean> getListSignalementActivite(
 			int idActivite) {
 
+
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -114,7 +118,7 @@ public class SignalementDAO {
 						idinformateur,  pseudoInfo, d_creation,
 						idmotif, motif, libelle));
 			}
-
+			LogDAO.LOG_DUREE("getListSignalementActivite", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -130,6 +134,8 @@ public class SignalementDAO {
 	}
 
 	public static ArrayList<SignalementCount> getCountSignalementBy() {
+
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -151,7 +157,7 @@ public class SignalementDAO {
 				String pseudo = rs.getString("pseudo");
 				retour.add(new SignalementCount(idpersonnesignalee, nbr, pseudo));
 			}
-
+			LogDAO.LOG_DUREE("getCountSignalementBy", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -169,6 +175,8 @@ public class SignalementDAO {
 	public static MessageServeur addSignalement(int idpersonne, int idsignalee,
 			int idmotif, String motif) {
 
+
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -191,11 +199,14 @@ public class SignalementDAO {
 					new java.sql.Timestamp(new Date().getTime()));
 			preparedStatement.execute();
 			connexion.commit();
-
+			LogDAO.LOG_DUREE("addSignalement", debut);
 			return new MessageServeur(true, Erreur_HTML.ACTIVITE_SIGNALEE);
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			
 			return new MessageServeur(false, e.getMessage());
 
 		} finally {

@@ -100,7 +100,7 @@ public class ListSuggestion extends HttpServlet {
 		
 			
 			
-			request.getRequestDispatcher("admin/listSuggestion.jsp").forward(request,
+		request.getRequestDispatcher("admin/listSuggestion.jsp").forward(request,
 					response);
 
 		

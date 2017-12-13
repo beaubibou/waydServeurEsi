@@ -104,9 +104,6 @@ public class AvisDAO {
 				String nomnotateur = rs.getString("nom");
 				String prenomnotateur = rs.getString("prenom");
 				String photonotateur = rs.getString("photo");
-			
-			//	System.out.println("avistire"+avistitre);
-			
 				
 				avis = new Avis(idnoter, idactivite, idpersonnenotee,
 						idpersonnenotateur, avistitre, avislibelle,
@@ -133,7 +130,7 @@ public class AvisDAO {
 
 	public  int getidPersonneNote(int idnoter) throws Exception {
 		Statement stmt = connexion.createStatement();
-		//System.out.println("Cherche la personne note" + idnoter);
+	
 		String requete = " SELECT idpersonnenotee from noter where idnoter=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -206,9 +203,7 @@ public class AvisDAO {
 	public Avis getDetailAvis(int idactivite, int idnotateur,
 			int idpersonnenotee) throws SQLException {
 
-	//	System.out.println("Rechereche idactivite" + idactivite + " nottaeur "
-			//	+ idnotateur + " idpersonne notee " + idpersonnenotee);
-		Avis avis = null;
+			Avis avis = null;
 
 		String requete = " SELECT   activite.titre as titreactivite,personne.prenom,      personne.nom,    personne.photo,"
 					+ "noter.idactivite,  noter.idpersonnenotateur,noter.idpersonnenotee,noter.idnoter,noter.titre,"
@@ -225,7 +220,6 @@ public class AvisDAO {
 			preparedStatement.setInt(2, idnotateur);
 			preparedStatement.setInt(3, idpersonnenotee);
 			ResultSet rs = preparedStatement.executeQuery();
-		//	System.out.println("klk");
 			while (rs.next()) {
 				String avistitre = rs.getString("titre");
 				if (avistitre.equals("''"))avistitre="l";
@@ -321,7 +315,6 @@ public class AvisDAO {
 			if (!isAmiFrom(idparticipant,idorganisateur)){
 			requete = "INSERT INTO ami(idpersonne, idami,d_creation)  VALUES (?, ?, ?);";
 		    
-	//		System.out.println("Ajotue ami"+idparticipant+" "+idorganisateur);
 			preparedStatement = connexion.prepareStatement(requete,
 					Statement.RETURN_GENERATED_KEYS);
 
@@ -334,7 +327,7 @@ public class AvisDAO {
 			}
 			
 			if (!isAmiFrom(idorganisateur, idparticipant)){
-				//System.out.println("Ajotue ami"+idorganisateur+" "+idparticipant);
+	
 			requete =  " INSERT INTO ami(idpersonne, idami,d_creation)  VALUES (?, ?, ?);";
 		
 			preparedStatement.setInt(1, idorganisateur);

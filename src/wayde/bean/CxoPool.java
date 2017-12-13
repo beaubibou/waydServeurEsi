@@ -31,7 +31,8 @@ public abstract class CxoPool {
 					.lookup("java:comp/env/PostgresDS");
 			return source.getConnection();
 		} catch (NamingException e) {
-
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		return null;

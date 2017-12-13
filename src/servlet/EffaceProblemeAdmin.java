@@ -33,7 +33,7 @@ public class EffaceProblemeAdmin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	
-		LOG.info("Efface probleme admin");
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		

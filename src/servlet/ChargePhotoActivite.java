@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import website.dao.CacheValueDAO;
@@ -52,7 +53,7 @@ public class ChargePhotoActivite extends HttpServlet {
 		if (!authentification.isAuthentifieAdmin())
 			return;
 	
-		LOG.info("doGet");
+	
 		ArrayList<TypeActiviteBean> listPhotoTypeActivite=CacheValueDAO.getListTypeActiviteBeanFull();
 		
 		request.setAttribute("listPhotoTypeActivite", listPhotoTypeActivite);
@@ -119,7 +120,8 @@ public class ChargePhotoActivite extends HttpServlet {
 				}
 
 			} catch (Exception ex) {
-				System.out.println(ex);
+				ex.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(ex));
 			}
 		} else {
 

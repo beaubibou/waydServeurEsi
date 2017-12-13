@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
@@ -117,7 +118,8 @@ public class ChargePhotoWaydeur extends HttpServlet {
 				}
 
 			} catch (Exception ex) {
-				System.out.println(ex);
+				ex.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(ex));
 			}
 		} else {
 

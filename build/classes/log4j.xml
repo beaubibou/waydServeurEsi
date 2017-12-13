@@ -21,18 +21,20 @@
         <param name="Password" value="azerty" /> 
         <layout class="org.apache.log4j.PatternLayout"> 
             <param name="ConversionPattern" 
-              value="INSERT INTO log4j (log_date, log_level, log_location, log_message,duree) VALUES ( '%d{yyyy-MM-dd HH:mm:ss}','%p', '%C;%L', '%m',2 )" 
+              value="INSERT INTO log4j (log_date, log_level, log_location, log_message,duree) VALUES ( '%d{yyyy-MM-dd HH:mm:ss}','%p', '%C;%L', '%m',0 )" 
             /> 
         </layout> 
     </appender> 
 
 
   <root>
-    <level value="INFO" />
+  
+   	 <level value="INFO" />
   	 <appender-ref ref="stdout" />
-    <appender-ref ref="util" />
-    <appender-ref ref="jdbcAppender" />
-    
+     <appender-ref ref="jdbcAppender" />
+       
   </root>
+  
+  
 
 </log4j:configuration>

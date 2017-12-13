@@ -61,7 +61,7 @@ public class ListProbleme extends HttpServlet {
 
 		String action=(String) request.getParameter("action");
 		
-		LOG.info("clos message");
+	
 		// ******************ACTION EN FONCTION DE LA DEMANDE
 		doAction(action,request);
 		// *****************************************************
@@ -122,12 +122,11 @@ public class ListProbleme extends HttpServlet {
 		
 		case "clos":
 		
-			LOG.info("in action clos message");
-			
+		
 
 			if (request.getParameter("idmessage") != null) {
 				idMessage = Integer.parseInt(request.getParameter("idmessage"));
-				LOG.info("idmessage="+idMessage);
+			
 				
 			}
 

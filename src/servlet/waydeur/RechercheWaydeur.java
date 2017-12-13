@@ -96,14 +96,7 @@ public class RechercheWaydeur extends HttpServlet {
 		filtre.setAdresse(adresse);
 		filtre.setMotCle(motcle);
 		filtre.setAdresse(adresse);// ************************************
-		
-//		LOG.info("type activite" + typeactivite);
-//		LOG.info("type user" + typeuser);
-//		LOG.info("commence" + commence);
-//		LOG.info("rayon" + rayon);
-//		LOG.info("latitude" + latitude);
-//		LOG.info("longitude" + longitude);
-//		LOG.info("mot cle" + motcle);
+
 
 		rayon = rayon * 1000;
 		

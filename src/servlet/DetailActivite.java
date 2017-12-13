@@ -62,8 +62,7 @@ public class DetailActivite extends HttpServlet {
 				request.setAttribute("activite", activite);
 
 				// Calcle de la distance par rapport au filtre
-				LOG.info("latitude"+request
-						.getParameter("latitudeFiltre"));
+			
 				double latitudeFiltre=Double.parseDouble(request
 						.getParameter("latitudeFiltre"));
 				double longitudeFiltre=Double.parseDouble(request

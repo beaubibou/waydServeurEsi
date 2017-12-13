@@ -49,7 +49,6 @@ public class PushNotifictionHelper {
 		ArrayList<String> listpersonneGcm =getListGCMNotification(listpersonne);
 	
 		String loginfo = "sendPushNotificationSuggestionList - Taille list personne GCMinterresee " +listpersonneGcm.size() ;
-		LOG.info(loginfo);
 		
 		if (listpersonneGcm.isEmpty())return "";
 		String result = "";
@@ -156,19 +155,14 @@ public class PushNotifictionHelper {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					(conn.getInputStream())));
 
-//			String output;
-//			System.out.println("Output from Server .... \n");
-//			while ((output = br.readLine()) != null) {
-//				System.out.println(output);
-//			}
+
 			result = "ok";
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			result = "Nok";
 		}
-	LOG.info("GCM Notification is sent successfully");
-
+	
 		return result;
 
 	}

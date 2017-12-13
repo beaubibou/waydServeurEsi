@@ -128,8 +128,10 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
+		
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
 					"Parse Date non conformes", e.getMessage(), null,
 					AlertJsp.warning));

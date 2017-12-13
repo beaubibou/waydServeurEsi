@@ -34,6 +34,9 @@ public class ParticipantDAO {
 
 	public ArrayList<ParticipantBean> getListPaticipant(int idactivite)
 			throws SQLException {
+	
+		long debut = System.currentTimeMillis();
+		
 		ParticipantBean participant = null;
 		ArrayList<ParticipantBean> retour = new ArrayList<ParticipantBean>();
 		PreparedStatement preparedStatement = null;
@@ -105,6 +108,7 @@ public class ParticipantDAO {
 						note, photostr, datenaissance, afficheage, affichesexe,typeuser,admin);
 				retour.add(0, participant);
 			}
+			LogDAO.LOG_DUREE("getListParticipant", debut);
 			return retour;
 
 		} catch (SQLException e) {

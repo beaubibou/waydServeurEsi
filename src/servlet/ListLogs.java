@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import website.dao.LogDAO;
 import website.metier.AuthentificationSite;
 import website.metier.admin.FitreAdminLogs;
 import website.metier.admin.FitreAdminProfils;
@@ -29,7 +30,7 @@ import website.pager.PagerSuggestionBean;
 public class ListLogs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ListLogs.class);
-	
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -60,11 +61,20 @@ public class ListLogs extends HttpServlet {
 		DateTime dateDebut = filtreLogs.getDateCreationDebut();
 		DateTime dateFin = filtreLogs.getDateCreationFin();
 
+		
+		if (request.getParameter("logPerf") != null) 
+		{
+			LogDAO.setETAT_PERF(Integer.parseInt((String) request
+					.getParameter("logPerf")));
+		}
+		
+	
+		
 		if (request.getParameter("etatLogs") != null) {
 			etatLogs = Integer.parseInt((String) request
 					.getParameter("etatLogs"));
 			filtreLogs.setNiveau_log(etatLogs);
-			System.out.println(etatLogs);
+		
 		}
 
 		try {
@@ -87,20 +97,20 @@ public class ListLogs extends HttpServlet {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		int pageAfficher = 0;
 		if (request.getParameter("page") != null)
 			pageAfficher = Integer.parseInt(request.getParameter("page"));
 
-		PagerLogsBean pagerLogsBean = new PagerLogsBean(
-				filtreLogs, pageAfficher);
+		PagerLogsBean pagerLogsBean = new PagerLogsBean(filtreLogs,
+				pageAfficher);
 
 		request.setAttribute("pager", pagerLogsBean);
 
-		request.getRequestDispatcher("admin/listLogs.jsp").forward(
-				request, response);
+		request.getRequestDispatcher("admin/listLogs.jsp").forward(request,
+				response);
 
 	}
 

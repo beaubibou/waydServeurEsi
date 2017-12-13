@@ -21,6 +21,8 @@ public class AmiDAO {
 
 	public static ArrayList<AmiBean> getListAmi(int idpersonne) {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -47,6 +49,7 @@ public class AmiDAO {
 						depuisle, note));
 			}
 
+			LogDAO.LOG_DUREE("gestListAmi", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {

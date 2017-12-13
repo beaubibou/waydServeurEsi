@@ -20,6 +20,8 @@ public class StatDAO {
 
 	public static int getNbrMessageDuJour() {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -37,6 +39,7 @@ public class StatDAO {
 				
 			}
 
+			LogDAO.LOG_DUREE("getNbrMessageDuJour", debut);
 			return nbrMessage;
 
 		} catch (SQLException | NamingException e) {
@@ -53,6 +56,8 @@ public class StatDAO {
 	}
 	public static int getNbrMessageByActDuJour() {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -69,6 +74,7 @@ public class StatDAO {
 				 nbrMessage = rs.getInt("nbrMessage");
 				
 			}
+			LogDAO.LOG_DUREE("getNbrMessageByActDuJour", debut);
 
 			return nbrMessage;
 
@@ -87,6 +93,8 @@ public class StatDAO {
 	
 	public static ArrayList<StatistiqueBean> getHistoriqueMessageByAct() {
 
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -105,7 +113,7 @@ public class StatDAO {
 				String date = rs.getString("date");
 				retour.add(new StatistiqueBean(date,id));
 			}
-
+			LogDAO.LOG_DUREE("getHistoriqueMessageByAct", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -123,7 +131,8 @@ public class StatDAO {
 	
 	
 	public static ArrayList<StatistiqueBean> getHistoriqueMessage() {
-
+		
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -141,6 +150,7 @@ public class StatDAO {
 				retour.add(new StatistiqueBean(date,id));
 			}
 
+			LogDAO.LOG_DUREE("getHistoriqueMessage", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -157,6 +167,7 @@ public class StatDAO {
 	
 	public static ArrayList<StatistiqueBean> getHistoriqueActivite() {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -173,7 +184,8 @@ public class StatDAO {
 				String date = rs.getString("date");
 				retour.add(new StatistiqueBean(date,id));
 			}
-
+			
+			LogDAO.LOG_DUREE("getHistoriqueActivite", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -189,7 +201,7 @@ public class StatDAO {
 	}
 	
 	public static ArrayList<StatistiqueBean> getHistoriqueParticipation() {
-
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -207,6 +219,7 @@ public class StatDAO {
 				retour.add(new StatistiqueBean(date,id));
 			}
 
+			LogDAO.LOG_DUREE("getHistoriqueParticipation", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -223,7 +236,7 @@ public class StatDAO {
 	
 	
 	public static int getNbrActiviteDuJour() {
-
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -241,6 +254,7 @@ public class StatDAO {
 				
 			}
 
+			LogDAO.LOG_DUREE("getNbrActiviteDuJour", debut);
 			return nbrActivite;
 
 		} catch (SQLException | NamingException e) {
@@ -257,7 +271,7 @@ public class StatDAO {
 	
 	
 	public static int getNbrParticipationDuJour() {
-
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -274,6 +288,7 @@ public class StatDAO {
 				nbrParticipation = rs.getInt("nbrParticipation");
 				
 			}
+			LogDAO.LOG_DUREE("getNbrParticipationDuJour", debut);
 			return nbrParticipation;
 
 		} catch (SQLException | NamingException e) {

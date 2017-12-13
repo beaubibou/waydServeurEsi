@@ -18,6 +18,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
@@ -95,7 +96,7 @@ public class ChargePhotoPro extends HttpServlet {
 						
 						String stringPhoto = Outils.encodeToString(imBuff,
 								"jpeg");
-						new PersonneDAO().updatePhoto(stringPhoto, profil.getId());
+						PersonneDAO.updatePhoto(stringPhoto, profil.getId());
 						profil.setPhotostr(stringPhoto);
 						response.sendRedirect("ComptePro");
 
@@ -103,7 +104,8 @@ public class ChargePhotoPro extends HttpServlet {
 				}
 
 			} catch (Exception ex) {
-				System.out.println(ex);
+				ex.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(ex));
 				request.setAttribute("message",ex.getMessage());	
 				request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);
 			

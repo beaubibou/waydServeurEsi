@@ -59,7 +59,7 @@
 			
 			PagerSuggestionBean pager=(PagerSuggestionBean) request
 					.getAttribute("pager");
-			System.out.print("parger"+pager);
+		
 			
 			ArrayList<SuggestionBean> listSuggestion = pager.getListSuggestion();
 	%>

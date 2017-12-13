@@ -39,17 +39,18 @@ public class MessageDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("effaceMessage", debut);
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-		
-			LOG.error( ExceptionUtils.getStackTrace(e));
-		
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
 			CxoPool.rollBack(connexion);
-	
+
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
@@ -88,18 +89,20 @@ public class MessageDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+
+			LogDAO.LOG_DUREE("effaceMessages", debut);
+
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
-			
 
 		}
 		return new MessageServeur(false,
@@ -111,6 +114,7 @@ public class MessageDAO {
 	}
 
 	public static MessageServeur lireMessage(int idMessage) {
+
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -126,15 +130,16 @@ public class MessageDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("lireMessage", debut);
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-		
+
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
@@ -148,16 +153,17 @@ public class MessageDAO {
 
 	}
 
-	public static String getNbrMessageNonLu(int idPersonne){
-		
+	public static String getNbrMessageNonLu(int idPersonne) {
+
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		PreparedStatement preparedStatement = null;
-		ResultSet rs=null;
-		int nbrmessagenonlu=0;
+		ResultSet rs = null;
+		int nbrmessagenonlu = 0;
 		try {
 			connexion = CxoPool.getConnection();
-		
+
 			String requete = "select  count(idmessage) as nbrmessagenonlu from message"
 					+ " where (  iddestinataire=? and lu=false and emis=false);";
 
@@ -168,146 +174,144 @@ public class MessageDAO {
 				nbrmessagenonlu = rs.getInt("nbrmessagenonlu");
 			}
 			
+			LogDAO.LOG_DUREE("getNbrMessageNonLu", debut);
+
 			return new Integer(nbrmessagenonlu).toString();
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-		
+
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement, rs);
 
 		}
-		
-return new Integer(nbrmessagenonlu).toString();
+
+		return new Integer(nbrmessagenonlu).toString();
 
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub// TODO Auto-generated method stub
-	
-		
-		
-	
-		
-		
-		
+
 	}
 
 	public static void ajouteMessageETclore(String message, int idPersonne,
 			int idEmetteur) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public static boolean ajouteMessage(String message, int idDestinataire, int idEmetteur) {
+	public static boolean ajouteMessage(String message, int idDestinataire,
+			int idEmetteur) {
 		// TODO Auto-generated method stub
+		long debut = System.currentTimeMillis();
+
 		String iddiscussion;
-	
+
 		if (idEmetteur < idDestinataire)
 			iddiscussion = "" + idEmetteur + "-" + idDestinataire;
 		else
 			iddiscussion = "" + idDestinataire + "-" + idEmetteur;
 
-		
-			Connection connexion = null;
-			PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
 
-			try {
-				connexion = CxoPool.getConnection();
-				connexion.setAutoCommit(false);
-				Date datecreation = Calendar.getInstance().getTime();
-				
-				String requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  "
-						+ "VALUES (?, ?, ?, ?,?,?,true,true);";
-				 preparedStatement = connexion.prepareStatement(
-						requete, Statement.RETURN_GENERATED_KEYS);
-				preparedStatement.setString(1, message);
-				preparedStatement.setInt(2, idEmetteur);
-				preparedStatement.setTimestamp(3,
-						new java.sql.Timestamp(datecreation.getTime()));
-				preparedStatement.setInt(4,0);
-				preparedStatement.setInt(5, idDestinataire);
-				preparedStatement.setString(6,iddiscussion);
-				preparedStatement.execute();
-							preparedStatement.close();
-				
-				requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
-				
-				preparedStatement = connexion.prepareStatement(requete,
-						Statement.RETURN_GENERATED_KEYS);
-				preparedStatement.setString(1, message);
-				preparedStatement.setInt(2, idEmetteur);
-				preparedStatement.setTimestamp(3,
-						new java.sql.Timestamp(datecreation.getTime()));
-				preparedStatement.setInt(4, 0);
-				preparedStatement.setInt(5, idDestinataire);
-				preparedStatement.setString(6, iddiscussion);
-				preparedStatement.execute();
-				
-				preparedStatement.close();
-				connexion.commit();
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			Date datecreation = Calendar.getInstance().getTime();
 
-				return true;
+			String requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  "
+					+ "VALUES (?, ?, ?, ?,?,?,true,true);";
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, message);
+			preparedStatement.setInt(2, idEmetteur);
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, 0);
+			preparedStatement.setInt(5, idDestinataire);
+			preparedStatement.setString(6, iddiscussion);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-			} catch (NamingException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
-			} finally {
+			requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
 
-				CxoPool.close(connexion, preparedStatement);
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, message);
+			preparedStatement.setInt(2, idEmetteur);
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, 0);
+			preparedStatement.setInt(5, idDestinataire);
+			preparedStatement.setString(6, iddiscussion);
+			preparedStatement.execute();
 
-			}
+			preparedStatement.close();
+			connexion.commit();
+			
+			LogDAO.LOG_DUREE("ajouteMessage", debut);
+			return true;
 
-			return false;
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+		return false;
 
 	}
-	
-	public static boolean ajouteMessageProbleme(String message, String email, String  pseudo) {
+
+	public static boolean ajouteMessageProbleme(String message, String email,
+			String pseudo) {
 		// TODO Auto-generated method stub
-	
-		
-			Connection connexion = null;
-			PreparedStatement preparedStatement = null;
 
-			try {
-				connexion = CxoPool.getConnection();
-				connexion.setAutoCommit(false);
-				Date datecreation = Calendar.getInstance().getTime();
-				
-				String requete = "INSERT INTO problemeconnexion( probleme, email, pseudo,d_creation)  "
-						+ "VALUES (?, ? ,?, ?);";
-				 preparedStatement = connexion.prepareStatement(
-						requete, Statement.RETURN_GENERATED_KEYS);
-				preparedStatement.setString(1, message);
-				preparedStatement.setString(2, email);
-				preparedStatement.setString(3, pseudo);
-				preparedStatement.setTimestamp(4,
-						new java.sql.Timestamp(datecreation.getTime()));
-				
-				preparedStatement.execute();
-				preparedStatement.close();
-				connexion.commit();
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
 
-				return true;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			Date datecreation = Calendar.getInstance().getTime();
 
-			} catch (NamingException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
-			} finally {
+			String requete = "INSERT INTO problemeconnexion( probleme, email, pseudo,d_creation)  "
+					+ "VALUES (?, ? ,?, ?);";
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, message);
+			preparedStatement.setString(2, email);
+			preparedStatement.setString(3, pseudo);
+			preparedStatement.setTimestamp(4, new java.sql.Timestamp(
+					datecreation.getTime()));
 
-				CxoPool.close(connexion, preparedStatement);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("ajouteMessageProbleme", debut);
+			return true;
 
-			}
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
 
-			return false;
+			CxoPool.close(connexion, preparedStatement);
 
-	}	
-	
-	
-	
+		}
+
+		return false;
+
+	}
+
 }

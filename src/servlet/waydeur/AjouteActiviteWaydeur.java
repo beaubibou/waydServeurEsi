@@ -64,7 +64,6 @@ public class AjouteActiviteWaydeur extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		LOG.info("doPost");
 		HttpSession session = request.getSession();
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 

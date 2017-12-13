@@ -67,7 +67,6 @@ public class ComptePro extends HttpServlet {
 		switch (action) {
 	
 		case "supprimerPhoto":
-			LOG.info("supprssion"+action);
 			
 		PersonneDAO.updatePhoto(null, authentification.getId());
 		authentification.getProfil().setPhotostr(null);
@@ -158,8 +157,7 @@ public class ComptePro extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		nom = nom.trim();
-		LOG.info(nom.length());
-
+	
 		if (nom == null || nom.isEmpty()) {
 			return new MessageServeur(false, Erreur_HTML.NOM_VIDE_INTERDIT);
 
@@ -215,7 +213,7 @@ public class ComptePro extends HttpServlet {
 		if (siret == null || siret.isEmpty())
 			return new MessageServeur(false, Erreur_HTML.SIRET_VIDE);
 
-		LOG.info("Taille sirent" + siret.length());
+	
 		if (siret.length() != CommunText.TAILLE_SIRET_MAX)
 			return new MessageServeur(false, Erreur_HTML.SIRET_MAUVAISE_TAILLE);
 

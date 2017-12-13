@@ -417,8 +417,6 @@ public class ServeurMethodes {
 
 			String GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
-			LOG.info("GCMID" + GCMid);
-
 			if (GCMid == null || GCMid.isEmpty())
 				return;
 			

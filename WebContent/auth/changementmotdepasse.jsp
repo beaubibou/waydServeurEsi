@@ -40,7 +40,7 @@
 			return;
 
 		String email = authentification.getProfil().getEmail();
-		System.out.println(email);
+		
 	%>
 
 	<div class="container">

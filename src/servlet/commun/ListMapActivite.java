@@ -44,8 +44,6 @@ public class ListMapActivite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-		LOG.info("doGet");
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		
@@ -67,8 +65,7 @@ public class ListMapActivite extends HttpServlet {
 		// mettre la requete
 		
 			String json = new Gson().toJson(listActiviteAjax);
-//			for (ActiviteAjax activiteAjax:listActiviteAjax)
-//				System.out.println(activiteAjax);
+
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);

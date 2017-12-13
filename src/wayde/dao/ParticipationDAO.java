@@ -139,8 +139,8 @@ public class ParticipationDAO {
 	}
 
 	public  int getOrganisteur(int idactivite) throws Exception {
+	
 		Statement stmt = connexion.createStatement();
-		//System.out.println("Cherche l'organisateur de" + idactivite);
 		String requete = " SELECT idpersonne from activite where idactivite=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -185,7 +185,6 @@ public class ParticipationDAO {
 	public  int  getNombreParticipant(int idactivite,int personne) throws Exception {
 
 		Statement stmt = connexion.createStatement();
-	//	System.out.println("Cherche touts participants � l'activit�"+ idactivite);
 		String requete = "select count (idpersonne) as nbrparticipant from participer where idpersonne=? and idactivite=?";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, personne);
@@ -206,7 +205,7 @@ public class ParticipationDAO {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		Statement stmt = connexion.createStatement();
-	//	System.out.println("Cherche touts participants � l'activit�"+ idactivite);
+	
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
 				+ "	and personne.idpersonne=participer.idpersonne and  personne.idpersonne!=? union "
 				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=? "

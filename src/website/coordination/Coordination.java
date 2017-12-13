@@ -24,6 +24,7 @@ import wayde.dao.MessageDAO;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import website.dao.ActiviteDAO;
+import website.dao.LogDAO;
 import website.dao.MessageBean;
 import website.metier.ActiviteBean;
 
@@ -32,7 +33,7 @@ public class Coordination {
 
 	public MessageServeur addParticipation(int iddemandeur, int idorganisateur,
 			int idactivite) {
-	
+
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		try {
@@ -43,22 +44,22 @@ public class Coordination {
 
 			connexion = CxoPool.getConnection();
 
-		ActiviteDAO activiteDAO=new  ActiviteDAO(connexion);
+			ActiviteDAO activiteDAO = new ActiviteDAO(connexion);
 			ActiviteBean activite = activiteDAO.getActivite(idactivite);
-				
-			
-			
+
 			if (activite == null)
-				return new MessageServeur(false, TextWebService.ACTIVITE_INEXISTANTE);
+				return new MessageServeur(false,
+						TextWebService.ACTIVITE_INEXISTANTE);
 
 			if (activite.isTerminee())
-				return new MessageServeur(false, TextWebService.ACTIVITE_TERMINEE);
+				return new MessageServeur(false,
+						TextWebService.ACTIVITE_TERMINEE);
 
 			if (activite.isComplete())
 				return new MessageServeur(false,
 						TextWebService.activiteComplete);
 
-			if (activite.isInscrit( iddemandeur)) {
+			if (activite.isInscrit(iddemandeur)) {
 				return new MessageServeur(false,
 						TextWebService.activiteDejaInscrit);
 			}
@@ -86,19 +87,17 @@ public class Coordination {
 
 			// new AddParticipationGcm(listparticipant, idactivite).start();
 
-			PoolThreadGCM.poolThread.execute(new AddParticipationGcm(					listparticipant, idactivite));
+			PoolThreadGCM.poolThread.execute(new AddParticipationGcm(
+					listparticipant, idactivite));
 
-			String loginfo = "addParticipation - "
-					+ (System.currentTimeMillis() - debut) + "ms";
-			LOG.info(loginfo);
-
+			LogDAO.LOG_DUREE("addParticipation", debut);
 			return new MessageServeur(true, TextWebService.activiteInscription);
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-			
+
 			return new MessageServeur(false,
 					"ERREUR SURVENUE DANS METHODE addparticipation");
 
@@ -107,48 +106,46 @@ public class Coordination {
 		}
 
 	}
-	
-	public ActiviteBean getActivite(int idActivite){
-		
-		Connection connexion =null;
+
+	public ActiviteBean getActivite(int idActivite) {
+
+		Connection connexion = null;
 		try {
-			 connexion = CxoPool.getConnection();
-		
+			connexion = CxoPool.getConnection();
+
 			return new ActiviteDAO(connexion).getActivite(idActivite);
-		
+
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 
 		} finally {
 
 			CxoPool.closeConnection(connexion);
-	}
 		}
-	
-	public  MessageBean effaceActivite(int idActivite) {
+	}
+
+	public MessageBean effaceActivite(int idActivite) {
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-	
 
 		try {
 
 			connexion = CxoPool.getConnection();
 
-			ActiviteBean activite =  new ActiviteDAO(connexion).getActivite(idActivite);
+			ActiviteBean activite = new ActiviteDAO(connexion)
+					.getActivite(idActivite);
 
 			if (!activite.isActive()) {
 
 				return new MessageBean(TextWebService.ACTIVITE_DESACTIVEE);
 			}
-			
-			
-			
+
 			String requete = "DELETE FROM demandeami where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idActivite);
@@ -179,7 +176,7 @@ public class Coordination {
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return new MessageBean(TextWebService.ERREUR_INCONNUE);
 		} finally {
 

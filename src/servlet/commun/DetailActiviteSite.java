@@ -42,8 +42,7 @@ public class DetailActiviteSite extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		LOG.info("doGet");
-
+	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 

@@ -26,6 +26,7 @@ import website.metier.SexeBean;
 import website.metier.TypeAccess;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
+import website.metier.TypeEtatLogPerf;
 import website.metier.TypeEtatLogs;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeEtatProfil;
@@ -532,6 +533,16 @@ public class CacheValueDAO {
 
 	}
 
+	public static ArrayList<TypeEtatLogPerf> getListTypeEtatLogPerf() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatLogPerf> listEtat = new ArrayList<TypeEtatLogPerf>();
+		listEtat.add(new TypeEtatLogPerf(TypeEtatLogPerf.ACTIVE,ListeValeurText.ACTIVE));
+		listEtat.add(new TypeEtatLogPerf(TypeEtatLogPerf.DESACTIVE, ListeValeurText.DESACTIVE));
+				
+		return listEtat;
+
+	}
 
 	public static String getPhotoTypeActivite(Integer idType) {
 

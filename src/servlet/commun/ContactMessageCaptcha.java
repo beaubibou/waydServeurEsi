@@ -167,10 +167,8 @@ public class ContactMessageCaptcha extends HttpServlet {
 		 post.setEntity(new UrlEncodedFormEntity(urlParameters));
 		
 		 HttpResponse response = client.execute(post);
-		 LOG.info("\nSending 'POST' request to URL : " + url);
+			
 		
-		
-		 // System.out.println(oj.toString());
 		
 		 BufferedReader rd = new BufferedReader(new InputStreamReader(response
 		 .getEntity().getContent()));
@@ -183,10 +181,11 @@ public class ContactMessageCaptcha extends HttpServlet {
 		 }
 		
 		 if (result.toString().contains("\"success\": true")){
-		LOG.info("Captcha ok");
+			 LOG.debug("Captch OK");
 			 return true;
 		 }
-		 LOG.info("Captcha refusé");
+	
+		 LOG.debug("Captch NOK");
 		 return false;
 
 	

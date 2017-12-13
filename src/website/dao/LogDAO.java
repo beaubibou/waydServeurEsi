@@ -12,23 +12,40 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.TypeLiteral;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.joda.time.DateTime;
 
+import sun.rmi.runtime.Log;
 import wayde.bean.CxoPool;
 import website.metier.LogBean;
 import website.metier.ProblemeBean;
+import website.metier.TypeEtatLogPerf;
 import website.metier.TypeEtatLogs;
 import website.metier.admin.EtatProbleme;
 import website.metier.admin.FitreAdminLogs;
 
-public class LogDAO {
+public  class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
 	private static final int MAX_LOG_SIZE = 100000;
-	private static int nbrAeffacer=5000;
+	public static int nbrAeffacer=10000;
+	public final  static long TPS_WARNING_REQUETE=5;
+
+	public static int ETAT_PERF=TypeEtatLogPerf.DESACTIVE;
+
+	
+	public static int getETAT_PERF() {
+		return ETAT_PERF;
+	}
+
+	public static void setETAT_PERF(int eTAT_PERF) {
+		ETAT_PERF = eTAT_PERF;
+	}
 
 	public static ArrayList<LogBean> getListLog(FitreAdminLogs filtre,
 			int page, int maxResult) {
 
+		long debutlog = System.currentTimeMillis();
+		
 		int offset = (maxResult) * page;
 
 		Connection connexion = null;
@@ -48,7 +65,7 @@ public class LogDAO {
 			switch (etatNiveauLog) {
 
 			case TypeEtatLogs.TOUTES:
-				requete = "SELECT  id,log_date,log_level, log_location,log_message  FROM log4j where"
+				requete = "SELECT  duree,id,log_date,log_level, log_location,log_message  FROM log4j where"
 						+ " log_date between ? and ? order by log_date desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -60,7 +77,7 @@ public class LogDAO {
 				break;
 
 			case TypeEtatLogs.DEBUG:
-				requete = "SELECT  id,log_date,log_level, log_location,log_message  FROM log4j where"
+				requete = "SELECT  duree,id,log_date,log_level, log_location,log_message  FROM log4j where"
 						+ " log_date between ? and ? and log_level='DEBUG' order by log_date desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -73,7 +90,7 @@ public class LogDAO {
 
 			case TypeEtatLogs.INFO:
 
-				requete = "SELECT  id,log_date,log_level, log_location,log_message  FROM log4j where"
+				requete = "SELECT  duree,id,log_date,log_level, log_location,log_message  FROM log4j where"
 						+ " log_date between ? and ? and log_level='INFO' order by log_date desc  limit ?  offset ?";
 
 				preparedStatement = connexion.prepareStatement(requete);
@@ -86,7 +103,7 @@ public class LogDAO {
 				break;
 
 			case TypeEtatLogs.WARNING:
-				requete = "SELECT  id,log_date,log_level, log_location,log_message  FROM log4j where"
+				requete = "SELECT  duree,id,log_date,log_level, log_location,log_message  FROM log4j where"
 						+ " log_date between ? and ? and log_level='WARN' order by log_date desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -98,7 +115,7 @@ public class LogDAO {
 				break;
 			case TypeEtatLogs.ERROR:
 		
-				requete = "SELECT id,log_date,log_level, log_location,log_message  FROM log4j where"
+				requete = "SELECT duree,id,log_date,log_level, log_location,log_message  FROM log4j where"
 						+ " log_date between ? and ? and log_level='ERROR' order by log_date desc  limit ?  offset ?";
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setTimestamp(1, new java.sql.Timestamp(debut
@@ -115,14 +132,16 @@ public class LogDAO {
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
+				long duree=rs.getLong("duree");
 				String log_location = rs.getString("log_location");
 				String log_level = rs.getString("log_level");
 				String log_message = rs.getString("log_message");
 				Date date_log = rs.getTimestamp("log_date");
 				
-				retour.add(new LogBean(id,date_log,log_message,log_level,log_location));
+				retour.add(new LogBean(id,date_log,log_message,log_level,log_location,duree));
 			}
 			
+			LogDAO.LOG_DUREE("getListLog", debutlog);
 			
 			return retour;
 
@@ -141,6 +160,7 @@ public class LogDAO {
 
 	public static int getNbrLogs(){
 		
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		PreparedStatement preparedStatement = null;
@@ -163,11 +183,14 @@ public class LogDAO {
 			} catch (NamingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			
+				
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			}
 		
 			CxoPool.close(connexion, preparedStatement);
 			
+			LogDAO.LOG_DUREE("getNbrLogs", debut);
+		
 			return nbrLog;
 
 
@@ -178,6 +201,7 @@ public class LogDAO {
 	public static boolean supprimeNderniersLogd() {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		
 		if (getNbrLogs()<MAX_LOG_SIZE)
 			return false;
@@ -194,6 +218,7 @@ public class LogDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("suprrimeNdernierLog", debut);
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -213,6 +238,26 @@ public class LogDAO {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 	}
+	
+	public static void LOG_DUREE(String string, long debut) {
+		// TODO Auto-generated method stub
+		long duree = System.currentTimeMillis() - debut;	
+	if (ETAT_PERF==TypeEtatLogPerf.ACTIVE){
+		
+		String message = string +" - " + duree + "ms";
+		MDC.put("duree", duree);
+		LOG.info(message);
+	}
+	
+	if (duree>=TPS_WARNING_REQUETE){
+		
+		String message = string +" - " + duree + "ms";
+		MDC.put("duree", duree);
+		LOG.info(message);
+	}
+	
+	}
+	
 	
 	
 

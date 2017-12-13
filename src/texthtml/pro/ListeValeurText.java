@@ -7,6 +7,8 @@ public class ListeValeurText {
 	public static final String LOG4J_INFO = "Info";
 	public static final String LOG4J_ERREUR = "Erreur";
 	public static final String LOG4J_WARNING = "Warning";
+	public static final String DESACTIVE = "Désactivé";
+	public static final String ACTIVE = "Activé";
 	public static String TOUTES="Toutes";
 	public static String ENCOURS="En cours";
 	public static String PLANIFIEES="Planifiées";

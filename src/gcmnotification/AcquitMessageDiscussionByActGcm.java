@@ -29,7 +29,7 @@ public class AcquitMessageDiscussionByActGcm implements Runnable {
 					.gcmUpdateNbrMessage(idDestinataire);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {

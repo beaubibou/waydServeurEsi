@@ -29,7 +29,7 @@ public class AcquitAllNotificationGcm implements Runnable{
 					.gcmUpdateNotification(idPersonne);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			

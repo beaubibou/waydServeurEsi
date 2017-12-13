@@ -92,8 +92,7 @@ public class Outils {
 			message.setText("Votre mot de passe:" +
 					mdp);
 			Transport.send(message);
-		//	System.out.println("Mail envoye �"+mailof);
-
+		
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

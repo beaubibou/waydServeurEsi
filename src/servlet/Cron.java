@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 import threadpool.PoolThreadGCM;
 
@@ -38,7 +39,12 @@ public class Cron extends HttpServlet {
 	}
 
 	public void destroy() {
-		tacheFond.setStop(true);
+	tacheFond.setStop(true);
+	LOG.info(PoolThreadGCM.poolThread.getActiveCount());
+	PoolThreadGCM.poolThread.purge();
+	PoolThreadGCM.poolThread.shutdown();
+	
+		
 	}
 
 	/**
@@ -54,7 +60,8 @@ public class Cron extends HttpServlet {
 		
 		super.init();
 		// Initialistion de l'application 
-		LOG.info("Lancement du cron pour ini application dans la classes CRON");
+	//	MDC.put("duree", 3);
+		LOG.info("Redemerrage application - Lancement du cron ");
 		cronTache=new Thread(tacheFond);
 		cronTache.start();
 		

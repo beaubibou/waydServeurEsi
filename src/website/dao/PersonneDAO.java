@@ -36,6 +36,7 @@ public class PersonneDAO {
 
 	public static boolean supprimePersonne(int idPersonne) {
 		// TODO Auto-generated method stub
+		long debut = System.currentTimeMillis();
 		String uid = PersonneDAO.getUID(idPersonne);
 
 		if (uid == null)
@@ -43,13 +44,14 @@ public class PersonneDAO {
 
 		supprimePersonneFireBase(uid, idPersonne);
 
+		LogDAO.LOG_DUREE("supprimePersonne", debut);
 		return true;
 
 	}
 
 	private static boolean supprimePersonneDAO(int idPersonne) {
 		// TODO Auto-generated method stub
-
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		PreparedStatement preparedStatement = null;
@@ -205,7 +207,9 @@ public class PersonneDAO {
 			preparedStatement.close();
 
 			connexion.commit();
-
+			
+			LogDAO.LOG_DUREE("supprimePersonneDAO", debut);
+		
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -227,6 +231,7 @@ public class PersonneDAO {
 
 	public static boolean supprimePersonneFireBase(String uid, int idPersonne) {
 
+		long debut = System.currentTimeMillis();
 		try {
 
 			if (FirebaseApp.getApps().isEmpty())
@@ -234,7 +239,9 @@ public class PersonneDAO {
 
 			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
 			supprimePersonneDAO(idPersonne);
-
+		
+			LogDAO.LOG_DUREE("supprimePersonneFireBase", debut);
+			
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -249,6 +256,7 @@ public class PersonneDAO {
 	public static boolean desactivePersonneFireBase(String uid, int idPersonne,
 			boolean actif) {
 
+		long debut = System.currentTimeMillis();
 		try {
 
 			if (FirebaseApp.getApps().isEmpty())
@@ -257,9 +265,10 @@ public class PersonneDAO {
 			UpdateRequest request = new UpdateRequest(uid);
 
 			request.setDisabled(!actif);
-			UserRecord userRecord = FirebaseAuth.getInstance()
-					.updateUserAsync(request).get();
+			 FirebaseAuth.getInstance().updateUserAsync(request).get();
 
+			 LogDAO.LOG_DUREE("desactivePersonneFireBase", debut);
+				
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -274,6 +283,7 @@ public class PersonneDAO {
 	public static boolean isPseudoExist(String pseudo) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -285,6 +295,9 @@ public class PersonneDAO {
 			preparedStatement.setString(1, pseudo);
 			rs = preparedStatement.executeQuery();
 
+			 LogDAO.LOG_DUREE("isPseudoExist", debut);
+				
+			
 			if (rs.next())
 				return true;
 
@@ -305,6 +318,7 @@ public class PersonneDAO {
 	public static boolean isSiretExist(String siret) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -315,7 +329,8 @@ public class PersonneDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, siret);
 			rs = preparedStatement.executeQuery();
-
+			LogDAO.LOG_DUREE("isSiretExist", debut);
+				
 			if (rs.next())
 				return true;
 
@@ -336,6 +351,7 @@ public class PersonneDAO {
 	public static boolean isTelephoneExist(String telephone) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -346,7 +362,8 @@ public class PersonneDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, telephone);
 			rs = preparedStatement.executeQuery();
-
+			LogDAO.LOG_DUREE("isTelephoneExist", debut);
+			
 			if (rs.next())
 				return true;
 
@@ -369,6 +386,7 @@ public class PersonneDAO {
 		// Renvoi si le numero est déja utilisé par une personne différente de
 		// la personne en parametre
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -379,9 +397,10 @@ public class PersonneDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, siret);
 			preparedStatement.setInt(2, idPersonne);
-
 			rs = preparedStatement.executeQuery();
-
+		
+			LogDAO.LOG_DUREE("isSiretExistPersonne", debut);
+			
 			if (rs.next())
 				return true;
 
@@ -405,6 +424,7 @@ public class PersonneDAO {
 
 		// Renvoi si le numero est déja utilisé par une personne différente de
 		// la personne en parametre
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -417,7 +437,8 @@ public class PersonneDAO {
 			preparedStatement.setInt(2, idPersonne);
 
 			rs = preparedStatement.executeQuery();
-
+			LogDAO.LOG_DUREE("isTelephoneExistPersonne", debut);
+			
 			if (rs.next())
 				return true;
 
@@ -438,6 +459,7 @@ public class PersonneDAO {
 	public static boolean isProfilActif(int idpersonne) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -449,7 +471,8 @@ public class PersonneDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			rs = preparedStatement.executeQuery();
-
+			LogDAO.LOG_DUREE("isProfilActif", debut);
+			
 			if (rs.next())
 				if (rs.getBoolean("actif") == true)
 					return true;
@@ -470,6 +493,7 @@ public class PersonneDAO {
 	public static ArrayList<ProfilBean> getListProfil(FitreAdminProfils filtre,
 			int page, int maxResult) {
 
+		long debut = System.currentTimeMillis();
 		int offset = (maxResult) * page;
 		int typeUser = filtre.getTypeUser();
 		String pseudo = filtre.getPseudo();
@@ -631,6 +655,8 @@ public class PersonneDAO {
 
 			}
 
+			LogDAO.LOG_DUREE("getListProfil", debut);
+			
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -648,6 +674,7 @@ public class PersonneDAO {
 
 	public static ProfilBean getFullProfil(int idpersonne) {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -657,8 +684,7 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 
 			Statement stmt = connexion.createStatement();
-			// System.out.println("Cherche compte personen par Id" +
-			// idpersonne);
+		
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -694,7 +720,6 @@ public class PersonneDAO {
 				double note = rs.getDouble("note");
 				boolean admin = rs.getBoolean("admin");
 				int typeuser = rs.getInt("typeuser");
-				// System.out.println("Note" + note);
 				boolean premiereconnexion = rs.getBoolean("premiereconnexion");
 				double latitude = rs.getDouble("latitude");
 				double longitude = rs.getDouble("longitude");
@@ -715,6 +740,7 @@ public class PersonneDAO {
 						sexestr, mail);
 
 			}
+			LogDAO.LOG_DUREE("getFullProfil", debut);
 			return profil;
 
 		} catch (SQLException | NamingException e) {
@@ -731,6 +757,7 @@ public class PersonneDAO {
 
 	public static String getUID(int idpersonne) {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -751,6 +778,7 @@ public class PersonneDAO {
 				uid = rs.getString("login");
 
 			}
+			LogDAO.LOG_DUREE("getUID", debut);
 			return uid;
 
 		} catch (SQLException | NamingException e) {
@@ -767,6 +795,7 @@ public class PersonneDAO {
 
 	public static ProfilBean getFullProfilByUid(String uid) {
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -776,8 +805,7 @@ public class PersonneDAO {
 			connexion = CxoPool.getConnection();
 
 			Statement stmt = connexion.createStatement();
-			// System.out.println("Cherche compte personen par Id" +
-			// idpersonne);
+		
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -835,6 +863,7 @@ public class PersonneDAO {
 
 			}
 
+			LogDAO.LOG_DUREE("getFullProfilByUid", debut);
 			return profil;
 
 		} catch (SQLException | NamingException e) {
@@ -852,6 +881,8 @@ public class PersonneDAO {
 	public static boolean activerProfilEtActivite(int idPersonne, boolean actif) {
 		// TODO Auto-generated method stub
 
+		
+		long debut = System.currentTimeMillis();
 		String uid = PersonneDAO.getUID(idPersonne);
 		PreparedStatement preparedStatement=null;
 
@@ -874,13 +905,16 @@ public class PersonneDAO {
 			preparedStatement.setBoolean(1, actif);
 			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
-
+			preparedStatement.close();
+			
 			requete = "UPDATE  personne set actif=? " + " WHERE idpersonne=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setBoolean(1, actif);
 			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
-
+			
+			LogDAO.LOG_DUREE("activerProfilEtActivite", debut);
+			
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
@@ -903,6 +937,7 @@ public class PersonneDAO {
 			String telephonne, int idpersonne) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
 		try {
@@ -930,6 +965,8 @@ public class PersonneDAO {
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
+			LogDAO.LOG_DUREE("updateProfilPro", debut);
+			
 			return true;
 
 		} catch (NamingException | SQLException e) {
@@ -951,6 +988,7 @@ public class PersonneDAO {
 			double latitude, double longitude, String commentaire,
 			int idpersonne, String siteWeb, String telephone, String siret) {
 
+		long debut = System.currentTimeMillis();
 		if (pseudo != null)
 			pseudo = pseudo.trim();
 
@@ -974,16 +1012,17 @@ public class PersonneDAO {
 			String uid = PersonneDAO.getUID(idpersonne);
 			if (uid == null)
 				return false;
-			LOG.info("uid à metter à jour" + uid);
 			UpdateRequest request = new UpdateRequest(uid)
 					.setDisplayName(pseudo);
-			LOG.info("Tenttaid" + uid);
+		
 			FirebaseAuth.getInstance().updateUserAsync(request).get();
 
-			LOG.info("Fin ten" + uid);
+		
 			updateProfilProDAO(pseudo, adresse, latitude, longitude,
 					commentaire, idpersonne, siteWeb, telephone, siret);
 
+			LogDAO.LOG_DUREE("updateProfilProFull", debut);
+			
 			return true;
 
 		} catch (InterruptedException | ExecutionException e) {
@@ -1001,6 +1040,7 @@ public class PersonneDAO {
 			int idpersonne, String siteWeb, String telephone, String siret) {
 		// TODO Auto-generated method stub
 
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement =null;
 		try {
@@ -1026,7 +1066,10 @@ public class PersonneDAO {
 			preparedStatement.setInt(11, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
+			LogDAO.LOG_DUREE("updateProfilProDAO", debut);
+		
 			connexion.commit();
+			
 			return true;
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -1042,21 +1085,16 @@ public class PersonneDAO {
 
 	}
 
-	public void updateProfilAssociation(String nom, String adresse,
-			double latitude, double longitude, int typeuser) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	public boolean updateProfilWaydeur(String pseudo, int sexe,
 			String commentaire, int idpersonne) {
 
+		long debut = System.currentTimeMillis();
 		pseudo = pseudo.trim();
 		commentaire = commentaire.trim();
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
 
-		LOG.info("updateProfilProFullWaydeur sexe " + sexe);
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -1072,6 +1110,9 @@ public class PersonneDAO {
 			preparedStatement.setInt(5, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
+		
+			LogDAO.LOG_DUREE("updateProfilWaydeur", debut);
+			
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
@@ -1090,9 +1131,9 @@ public class PersonneDAO {
 	}
 
 	public static boolean updatePhoto(String photo, int idpersonne) {
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
-		LOG.info("updatePhoto");
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -1104,6 +1145,8 @@ public class PersonneDAO {
 			preparedStatement.setInt(2, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
+			LogDAO.LOG_DUREE("updatePhoto", debut);
+			
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
@@ -1124,9 +1167,11 @@ public class PersonneDAO {
 	public boolean updateProfilProFullWaydeur(String nom, String adresse,
 			String commentaire, int sexe, boolean afficheSexe,
 			boolean afficheAge, Date datenaissance, int idpersonne) {
+	
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
-		LOG.info("updateProfilProFullWaydeur");
+	
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -1145,6 +1190,8 @@ public class PersonneDAO {
 			preparedStatement.setInt(8, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
+			LogDAO.LOG_DUREE("updateProfilProFullWaydeur", debut);
+			
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
@@ -1161,7 +1208,8 @@ public class PersonneDAO {
 	}
 
 	public static TableauBordBean getTableauDeBord(int idpersonne) {
-		TableauBordBean tdb = null;
+	
+		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ResultSet rs = null;
 		PreparedStatement preparedStatement = null;
@@ -1178,6 +1226,8 @@ public class PersonneDAO {
 			while (rs.next()) {
 				nbrFini = rs.getInt("nbrFini");
 			}
+			CxoPool.close(preparedStatement, rs);	
+			
 			
 			requete = "SELECT count (idactivite) as  nbrEnCours FROM activite where idpersonne=? and datefin>? and datedebut<?";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -1186,14 +1236,16 @@ public class PersonneDAO {
 					new java.sql.Timestamp(new Date().getTime()));
 			preparedStatement.setTimestamp(3,
 					new java.sql.Timestamp(new Date().getTime()));
+		
 			rs = preparedStatement.executeQuery();
-					
 			
 			int nbrEnCours = 0;
 			while (rs.next()) {
 				nbrEnCours = rs.getInt("nbrEnCours");
 			}
 
+			CxoPool.close(preparedStatement, rs);	
+			
 		
 			
 			requete = "SELECT count (idactivite) as  nbrPlanifiee FROM activite where idpersonne=? and  datedebut>?";
@@ -1208,8 +1260,9 @@ public class PersonneDAO {
 				nbrPlanifiee = rs.getInt("nbrPlanifiee");
 			}
 			
-			CxoPool.close(connexion, preparedStatement, rs);
 		
+			LogDAO.LOG_DUREE("getTableauDeBord", debut);
+			
 			return new TableauBordBean(idpersonne, nbrFini, nbrPlanifiee, nbrEnCours);
 
 		} catch (SQLException | NamingException e) {
@@ -1226,6 +1279,9 @@ public class PersonneDAO {
 	}
 
 	public static ArrayList<AvisBean> getListAvis(int idpersonnenotee) {
+		
+		long debut = System.currentTimeMillis();
+		
 		AvisBean avis = null;
 		ArrayList<AvisBean> retour = new ArrayList<AvisBean>();
 		Connection connexion = null;
@@ -1265,7 +1321,7 @@ public class PersonneDAO {
 				retour.add(avis);
 
 			}
-
+			LogDAO.LOG_DUREE("getListAvis", debut);
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -1279,9 +1335,6 @@ public class PersonneDAO {
 		return retour;
 	}
 
-	public static ArrayList<AvisBean> getListAvisAfter(int id, int lastIndex) {
-		// TODO Auto-generated method stub
-		return new ArrayList<AvisBean>();
-	}
+	
 
 }

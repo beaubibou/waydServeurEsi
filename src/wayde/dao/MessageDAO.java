@@ -109,13 +109,7 @@ public class MessageDAO {
 	
 		preparedStatement.close();
 
-		// ResultSet rs=preparedStatement.getGeneratedKeys();
-		// int idmessage=0;
-
-		// if (rs != null && rs.next()) {
-		// idmessage = rs.getInt("idmessage");
-		// }
-		// System.out.println("************"+idmessage);
+		
 
 		requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
 		preparedStatement = connexion.prepareStatement(requete,
@@ -138,7 +132,6 @@ public class MessageDAO {
 	public void RemoveMessage(int idpersonne, int[] listmessage)
 			throws SQLException {
 		PreparedStatement preparedStatement = null;
-	//	System.out.println("Effacement de message");
 		for (int f = 0; f < listmessage.length; f++)
 
 		{
@@ -205,8 +198,7 @@ public class MessageDAO {
 
 	public void LitMessage(int idpersonne, int idmessage) throws SQLException {
 		PreparedStatement preparedStatement = null;
-		//System.out.println("Lecture d'un message");
-
+		
 		String requete = "UPDATE  message set lu=true  "
 				+ " WHERE idmessage=? ";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -217,8 +209,7 @@ public class MessageDAO {
 	}
 	public void LitMessageByAct(int idpersonne, int idmessage) throws SQLException {
 		PreparedStatement preparedStatement = null;
-	//	System.out.println("Lecture d'un message d'une activite");
-
+	
 		String requete = "UPDATE  messagebyact set lu=true  "
 				+ " WHERE idmessage=? ";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -231,7 +222,7 @@ public class MessageDAO {
 	public void RemoveUnMessage(int idpersonne, int idmessage)
 			throws SQLException {
 		PreparedStatement preparedStatement = null;
-	//	System.out.println("Effacement un message d'une personne "+ idpersonne);
+	
 		String requete = "DELETE FROM recoit where ( idmessage=? and idpersonne=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idmessage);
@@ -362,7 +353,6 @@ public class MessageDAO {
 					
 				 corps = rs.getString("corps");
 				 datecreation=rs.getTimestamp("datecreation");
-		//		 System.out.println("corps"+corps);	
 				
 				 return new Message( corps,datecreation);
 			}
@@ -562,7 +552,7 @@ public class MessageDAO {
 	public  ArrayList<Message> getListMessageBefore(int iddestinataire,
 			int idemetteur,int idxmessage) throws SQLException {
 		Message message = null;
-//System.out.println("recuepre message avant"+idxmessage);
+
 		ArrayList<Message> retour = new ArrayList<Message>();
 
 		String requete = "select p.prenom,p.nom,p.idpersonne,m.corps,m.idmessage, m.datecreation"
@@ -817,9 +807,7 @@ public class MessageDAO {
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idxmessage);
 		ResultSet rs = preparedStatement.executeQuery();
-	//	System.out
-		//		.println("********************Recupere tous DAO les  message � partir de  ");
-
+	
 		while (rs.next()) {
 			String sujet = rs.getString("sujet");
 			String corps = rs.getString("corps");

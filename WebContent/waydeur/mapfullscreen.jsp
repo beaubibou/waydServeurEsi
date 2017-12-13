@@ -33,8 +33,7 @@
 
 	<%
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-		//	ArrayList<ActiviteAjax> listMesActivite = (ArrayList<ActiviteAjax>) request.getAttribute("listMesActivite");
-		//	System.out.println("nbr actié"+listMesActivite.size());
+	
 	%>
 
 

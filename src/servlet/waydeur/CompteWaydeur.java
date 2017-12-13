@@ -69,8 +69,7 @@ public class CompteWaydeur extends HttpServlet {
 		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
 		
 		
-		LOG.info("doPost");
-		if (profil == null) {
+			if (profil == null) {
 			response.sendRedirect("auth/login.jsp");
 			return;
 		}

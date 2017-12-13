@@ -72,9 +72,7 @@ public class PreferenceDAO {
 
 	public void addPreference(int idpersonne, int idtypeactivite[],
 			Boolean[] active) throws SQLException {
-		// TODO Auto-generated method stub
-		//System.out.println("Ajoute met a jour la pr�f�rence DAO");
-
+	
 		String requete = "DELETE FROM prefere WHERE prefere.idpersonne=? ";
 
 		PreparedStatement preparedStatement = connexion
@@ -104,9 +102,7 @@ public class PreferenceDAO {
 	
 	public void addPreferences(int idpersonne, int listpreferences[])
 			throws SQLException {
-		// TODO Auto-generated method stub
-		//System.out.println("Ajoute preference DAO" + listpreferences.length);
-
+	
 		String requete = "DELETE FROM prefere WHERE idpersonne=? ";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -114,16 +110,12 @@ public class PreferenceDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		// GERE LES CAS OU IL N Y A AUCUNCE PREFERENCE
-		//System.out.println("Ajoute preference DAO1");
 		if (listpreferences[0] == 0)
 			return;
-		//System.out.println("Ajoute preference DAO2");
 		for (int f = 0; f < listpreferences.length; f++)
 
 		{
-		//	System.out.println("ajoute preference" + idpersonne);
-
+	
 			requete = "INSERT INTO prefere  (idpersonne,idtypeactivite)	VALUES (?,?)";
 
 			preparedStatement = connexion.prepareStatement(requete);
