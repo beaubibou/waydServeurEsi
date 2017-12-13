@@ -1812,10 +1812,8 @@ public class ActiviteDAO {
 		// TODO Auto-generated method stub
 		
 		long debut = System.currentTimeMillis();
-		
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-
 		
 
 		if (isInteretDejaSignale(idpersonne, idactivite))

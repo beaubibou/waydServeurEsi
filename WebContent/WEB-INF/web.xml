@@ -748,7 +748,7 @@
     <display-name>Cron</display-name>
     <servlet-name>Cron</servlet-name>
     <servlet-class>servlet.Cron</servlet-class>
-     <load-on-startup>0</load-on-startup>
+    <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>Cron</servlet-name>

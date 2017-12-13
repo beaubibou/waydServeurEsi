@@ -821,8 +821,10 @@ public class WBservices {
 	public MessageServeur addInteretActivite(int idpersonne, int idactivite,
 			int typeInteret, String jeton) {
 		long debut = System.currentTimeMillis();
+	
 		Connection connexion = null;
-
+			LOG.info("add interet"+"personne:"+idpersonne+"-idactivite: "+idactivite+" jeton:"+ jeton);
+	
 		MessageServeur retour;
 		try {
 			// connexion = CxoPool.getConnection();
@@ -835,9 +837,9 @@ public class WBservices {
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 
-			// if (!personneDAO.isAutorise(idpersonne, jeton))
-			// return new
-			// MessageServeur(false,TextWebService.PROFIL_NON_RECONNU);
+			 if (!personneDAO.isAutorise(idpersonne, jeton))
+			 return new
+			 MessageServeur(false,TextWebService.PROFIL_NON_RECONNU);
 
 			// ************************************
 		

@@ -28,7 +28,7 @@ public  class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
 	private static final int MAX_LOG_SIZE = 100000;
 	public static int nbrAeffacer=10000;
-	public final  static long TPS_WARNING_REQUETE=5;
+	public final  static long TPS_WARNING_REQUETE=20;
 
 	public static int ETAT_PERF=TypeEtatLogPerf.DESACTIVE;
 
@@ -253,7 +253,7 @@ public  class LogDAO {
 		
 		String message = string +" - " + duree + "ms";
 		MDC.put("duree", duree);
-		LOG.info(message);
+		LOG.warn(message);
 	}
 	
 	}
