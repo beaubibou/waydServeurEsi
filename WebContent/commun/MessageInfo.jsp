@@ -12,7 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
 
-<title>Insert title here</title>
+<title>Information</title>
 </head>
 <body>
 

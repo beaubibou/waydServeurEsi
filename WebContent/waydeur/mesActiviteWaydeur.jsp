@@ -40,12 +40,14 @@
 
 
 	<%
-		AuthentificationSite authentification=	new AuthentificationSite(request, response);
+	
+	AuthentificationSite authentification=	new AuthentificationSite(request, response);
 			if (!authentification.isAuthentifieWaydeur())
 		return;
 			
 			FiltreRecherche filtre=authentification.getFiltre();
 		ArrayList<TypeEtatActivite> listEtatActivite = CacheValueDAO.getListEtatActivite();
+		return;
 	%>
 
 

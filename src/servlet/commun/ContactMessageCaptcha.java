@@ -1,4 +1,3 @@
-
 package servlet.commun;
 
 import gcmnotification.AcquitAllNotificationGcm;
@@ -25,11 +24,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
 import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
 import website.dao.MessageDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
+import website.html.MessageAlertDialog;
 
 import com.google.firebase.FirebaseApp;
 
@@ -38,8 +39,9 @@ import com.google.firebase.FirebaseApp;
  */
 public class ContactMessageCaptcha extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(ContactMessageCaptcha.class);
-	
+	private static final Logger LOG = Logger
+			.getLogger(ContactMessageCaptcha.class);
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -80,44 +82,46 @@ public class ContactMessageCaptcha extends HttpServlet {
 		String reponseCaptcha = request.getParameter("g-recaptcha-response");
 
 		try {
-			
+
 			MessageServeur messageServeur = testRequete(message, email, pseudo,
 					reponseCaptcha);
+
+			if (messageServeur.isReponse()) {
+
+				if (MessageDAO.ajouteMessageProbleme(message, email, pseudo)) {
 		
-			if (messageServeur.isReponse()){
-				
-				if (MessageDAO.ajouteMessageProbleme(message, email, pseudo)){
-				AlertInfoJsp alert=new AlertInfoJsp("Message Envoyé", AlertJsp.Sucess, "commun/acceuil.html");
-				request.setAttribute("alerte", alert);
-				request.getRequestDispatcher("/commun/alertNoAuth.jsp")
-				.forward(request, response);
-				return;
+					String messageAlert ="Le message a été pris en compte.";
+					// response.sendRedirect("/commun/acceuil.jsp");
+					request.setAttribute("message", messageAlert);
+					request.getRequestDispatcher("/commun/informationMessage.jsp").forward(request, response);
+					return;
 				}
 			}
-			
-			AlertInfoJsp alert=new AlertInfoJsp(messageServeur.getMessage(), AlertJsp.warning, "commun/acceuil.html");
-				request.setAttribute("alerte", alert);
-				request.getRequestDispatcher("/commun/alertNoAuth.jsp")
-				.forward(request, response);
-				return;
-			
 
+			
+			String messageAlert =messageServeur.getMessage();
+			// response.sendRedirect("/commun/acceuil.jsp");
+			request.setAttribute("message", messageAlert);
+			request.getRequestDispatcher("/commun/informationMessage.jsp").forward(request, response);
+			
+			return;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-			request.getRequestDispatcher("/commun/alertNoAuth.jsp");
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			String messageAlert =Erreur_HTML.ERREUR_INCONNUE;
+			// response.sendRedirect("/commun/acceuil.jsp");
+			request.setAttribute("message", messageAlert);
+			request.getRequestDispatcher("/commun/informationMessage.jsp").forward(request, response);
 		}
 
-	
 	}
 
 	private MessageServeur testRequete(String message, String email,
 			String pseudo, String reponseCaptcha) throws Exception {
 		// TODO Auto-generated method stub
 
-		
 		if (message == null)
 			return new MessageServeur(false, "Le message est incomplet");
 
@@ -131,75 +135,67 @@ public class ContactMessageCaptcha extends HttpServlet {
 
 		email = email.trim();
 
-		
 		if (email.isEmpty())
 			return new MessageServeur(false, "Le mail est incomplet");
 
 		if (isCaptcha(reponseCaptcha)) {
 
 			return new MessageServeur(true, "Le mail est incomplet");
-		} 
-		else 
-		{
+		
+		} else {
+			
 			return new MessageServeur(false, "Cochez je ne suis pas un robot");
 
 		}
 
-
 	}
 
-	private boolean isCaptcha(String reponseCaptcha)  {
+	private boolean isCaptcha(String reponseCaptcha) {
 
-		 String url = "https://www.google.com/recaptcha/api/siteverify";
-		
-		 HttpClient client = new DefaultHttpClient();
-		 HttpPost post = new HttpPost(url);
-		
-		 // add header
-		
-		 List<BasicNameValuePair> urlParameters = new
-		 ArrayList<BasicNameValuePair>();
-		
-		 urlParameters.add(new BasicNameValuePair("secret",
-		 "6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
-		 urlParameters.add(new BasicNameValuePair("response",
-		 reponseCaptcha));
-		
-		 try {
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+
+		// add header
+
+		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+
+		urlParameters.add(new BasicNameValuePair("secret",
+				"6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));
+		urlParameters.add(new BasicNameValuePair("response", reponseCaptcha));
+
+		try {
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
-			 HttpResponse response = client.execute(post);
-				
-				
-				
-			 BufferedReader rd = new BufferedReader(new InputStreamReader(response
-			 .getEntity().getContent()));
-			
-			 StringBuffer result = new StringBuffer();
-			 String line = "";
-			 while ((line = rd.readLine()) != null) {
-			 result.append(line);
-			
-			 }
-			
-			 if (result.toString().contains("\"success\": true")){
-				 LOG.debug("Captch OK");
-				 return true;
-			 }
-		
-			 
+			HttpResponse response = client.execute(post);
+
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent()));
+
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+
+			}
+
+			if (result.toString().contains("\"success\": true")) {
+				LOG.debug("Captch OK");
+				return true;
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-		
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
+	
 		
 		}
+
 		
-		 LOG.debug("Captch NOK");
-		 return false;
-		
-	
+		return false;
+
 	}
 
 }

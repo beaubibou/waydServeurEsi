@@ -1,5 +1,5 @@
 
-
+<%return; %>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#ffd740;">
 	<div class="container-fluid">
 		<div class="navbar-header">

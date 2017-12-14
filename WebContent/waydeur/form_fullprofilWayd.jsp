@@ -54,6 +54,7 @@
 			
 			ProfilBean profil=authentification.getProfil();
 			ArrayList<SexeBean> listSexe= CacheValueDAO.getListSexe();
+			return;
 	%>
 	<%@ include file="menuWaydeur.jsp"%>
 

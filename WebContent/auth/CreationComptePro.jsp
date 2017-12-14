@@ -1,5 +1,5 @@
 <%@page import="texthtml.pro.CreationCompteProText"%>
-<%@ page language="java" contentType="text/html; charset=Iutf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.TypeUser"%>
 <%@page import="website.metier.TypeAccess"%>
@@ -11,7 +11,7 @@
 <html>
 <head>
 <title>Renseignements</title>
-<meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link

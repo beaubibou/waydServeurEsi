@@ -2,7 +2,6 @@ package website.html;
 
 import org.apache.log4j.Logger;
 
-import wayde.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 
 public class MessageAlertDialog {

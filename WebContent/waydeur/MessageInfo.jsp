@@ -16,8 +16,11 @@
 </head>
 <body>
 <%@ include file="menuWaydeur.jsp"%>
-<%String  titre = (String) request.getAttribute("titre");
-String  message = (String) request.getAttribute("message"); %>
+<%
+
+String  titre = (String) request.getAttribute("titre");
+String  message = (String) request.getAttribute("message");
+	return;%>
 
 <div class="container">
   <h3><%=titre %></h3>

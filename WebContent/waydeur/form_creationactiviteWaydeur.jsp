@@ -44,9 +44,12 @@
 
 
 	<%
-		ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActiviteWaydeur();
+	
+	ArrayList<TypeActiviteBean> listTypeActivite=new CacheValueDAO().getListTypeActiviteWaydeur();
 			ArrayList<DureeBean> listDuree=new CacheValueDAO().getListDuree();
 			ArrayList<QuantiteWaydeurBean> listQuantiteWaydeur=new CacheValueDAO().getListQuantiteWaydeur();
+			
+			return; 
 	%>
 <div class="container">
   <div class="page-header">

@@ -36,6 +36,8 @@
 <div id="services" class="text-center">
   
   <%@ include file="menuWaydeur.jsp"%>
+  
+  <%return; %>
   </br>
   <div class="container" style="background-color: #FFD54F;">
     <div class="col-md-10 col-md-offset-1 section-title">

@@ -32,8 +32,9 @@
 
 
 	<%
-		ProfilBean profil = (ProfilBean) session.getAttribute("profil");
-	
+		
+	ProfilBean profil = (ProfilBean) session.getAttribute("profil");
+	return;
 	%>
 
 

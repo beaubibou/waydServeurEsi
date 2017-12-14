@@ -30,7 +30,7 @@ public  class LogDAO {
 	public static int nbrAeffacer=10000;
 	public final  static long TPS_WARNING_REQUETE=20;
 
-	public static int ETAT_PERF=TypeEtatLogPerf.DESACTIVE;
+	public static int ETAT_PERF=TypeEtatLogPerf.ACTIVE;
 
 	
 	public static int getETAT_PERF() {

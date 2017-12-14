@@ -39,7 +39,7 @@
 <div id="contact" class="text-center">
   
    <%@ include file="menuWaydeur.jsp"%>
-
+ <%return; %>
   <div class="container" style="background-color: #FFD54F;">
     <div class="section-title center">
       
