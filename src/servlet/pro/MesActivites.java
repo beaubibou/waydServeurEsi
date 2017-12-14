@@ -1,7 +1,5 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,18 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
-
 import website.dao.ActiviteDAO;
-import website.dao.PersonneDAO;
-import website.html.AlertDialog;
 import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
-import website.metier.ProfilBean;
 import website.metier.TypeEtatActivite;
 
 /**

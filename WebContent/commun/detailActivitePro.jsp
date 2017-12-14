@@ -46,7 +46,6 @@
 </head>
 <body>
 
-
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);

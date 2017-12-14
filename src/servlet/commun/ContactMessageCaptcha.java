@@ -6,6 +6,7 @@ import gcmnotification.AcquitAllNotificationGcm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -93,8 +95,6 @@ public class ContactMessageCaptcha extends HttpServlet {
 				}
 			}
 			
-				
-			
 			AlertInfoJsp alert=new AlertInfoJsp(messageServeur.getMessage(), AlertJsp.warning, "commun/acceuil.html");
 				request.setAttribute("alerte", alert);
 				request.getRequestDispatcher("/commun/alertNoAuth.jsp")
@@ -107,6 +107,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
+			request.getRequestDispatcher("/commun/alertNoAuth.jsp");
 		}
 
 	
@@ -147,7 +148,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 
 	}
 
-	private boolean isCaptcha(String reponseCaptcha) throws Exception {
+	private boolean isCaptcha(String reponseCaptcha)  {
 
 		 String url = "https://www.google.com/recaptcha/api/siteverify";
 		
@@ -164,30 +165,40 @@ public class ContactMessageCaptcha extends HttpServlet {
 		 urlParameters.add(new BasicNameValuePair("response",
 		 reponseCaptcha));
 		
-		 post.setEntity(new UrlEncodedFormEntity(urlParameters));
-		
-		 HttpResponse response = client.execute(post);
+		 try {
+			post.setEntity(new UrlEncodedFormEntity(urlParameters));
+			 HttpResponse response = client.execute(post);
+				
+				
+				
+			 BufferedReader rd = new BufferedReader(new InputStreamReader(response
+			 .getEntity().getContent()));
 			
+			 StringBuffer result = new StringBuffer();
+			 String line = "";
+			 while ((line = rd.readLine()) != null) {
+			 result.append(line);
+			
+			 }
+			
+			 if (result.toString().contains("\"success\": true")){
+				 LOG.debug("Captch OK");
+				 return true;
+			 }
+		
+			 
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
 		
 		
-		 BufferedReader rd = new BufferedReader(new InputStreamReader(response
-		 .getEntity().getContent()));
+		}
 		
-		 StringBuffer result = new StringBuffer();
-		 String line = "";
-		 while ((line = rd.readLine()) != null) {
-		 result.append(line);
-		
-		 }
-		
-		 if (result.toString().contains("\"success\": true")){
-			 LOG.debug("Captch OK");
-			 return true;
-		 }
-	
 		 LOG.debug("Captch NOK");
 		 return false;
-
+		
 	
 	}
 

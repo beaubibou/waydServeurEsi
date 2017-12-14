@@ -41,7 +41,7 @@ public class TacheFond implements Runnable {
 
 	private void doTacheFond() {
 		
-	System.out.println("Nbr log"+LogDAO.getNbrLogs());
+	//System.out.println("Nbr log"+LogDAO.getNbrLogs());
 	LogDAO.supprimeNderniersLogd();
 	
 	}

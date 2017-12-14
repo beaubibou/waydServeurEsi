@@ -119,7 +119,6 @@
 						</div>
 					</div>
 
-
 					<div class="form-group">
 						<label for="idEtatProbleme">LogPerf</label> <select
 							data-style="btn-primary" class="form-control"
@@ -136,7 +135,16 @@
 							%>
 
 						</select>
+						
 					</div>
+						<div class="form-group">
+						<p>Nrb Logs: <%=LogDAO.getNbrLogs()%></p>
+						<p>Taille: <%=LogDAO.getTailleBase()%></p>
+					
+						</div>
+						
+					
+						
 					
 					<button type="submit" class="btn btn-info">Recherchez</button>
 

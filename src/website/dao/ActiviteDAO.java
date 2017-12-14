@@ -1429,15 +1429,14 @@ public class ActiviteDAO {
 
 			activitedao.RemoveOnlyActivite(idactivite);
 			connexion.commit();
-
+		
+			LogDAO.LOG_DUREE("effaceActivite", debut);
 			// ************ Si l'activité est en cours je brodact via
 			// GCM*******************
 			if (activite.isEnCours())
 				PoolThreadGCM.poolThread.execute(new EffaceActiviteGcm(
 						personneinteresse, participants, idactivite));
 			// ******************************************************************************
-
-			LogDAO.LOG_DUREE("effaceActivite", debut);
 			
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 

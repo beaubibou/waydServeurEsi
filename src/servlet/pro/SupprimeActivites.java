@@ -72,7 +72,7 @@ public class SupprimeActivites extends HttpServlet {
 		
 		{
 	
-		
+	
 		int idActivite = Integer.parseInt(activiteStr);
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
 			

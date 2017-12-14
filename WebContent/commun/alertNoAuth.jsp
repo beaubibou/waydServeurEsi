@@ -22,10 +22,8 @@
 <body>
 
 
-
-
 	<%
-	
+
 
 		AlertInfoJsp alerte = (AlertInfoJsp) request.getAttribute("alerte");
 	%>

@@ -158,6 +158,50 @@ public  class LogDAO {
 		}
 	}
 
+	
+	
+	
+public static String  getTailleBase(){
+		
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		
+		String taille="";
+			try {
+				connexion = CxoPool.getConnection();
+				
+				String requete = "select pg_size_pretty(pg_database_size('wayd')) as taille;";
+				
+				preparedStatement = connexion	.prepareStatement(requete);
+			
+				ResultSet rs = preparedStatement.executeQuery();
+				
+				
+				if (rs.next()) {
+					taille=rs.getString("taille");
+				}
+				
+			} catch (NamingException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				LOG.error( ExceptionUtils.getStackTrace(e));
+			}
+		
+			CxoPool.close(connexion, preparedStatement);
+			
+			LogDAO.LOG_DUREE("getTailleBase", debut);
+		
+			return taille;
+
+
+
+		
+	}
+	
+	
 	public static int getNbrLogs(){
 		
 		long debut = System.currentTimeMillis();
