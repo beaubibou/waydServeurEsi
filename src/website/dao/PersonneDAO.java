@@ -500,8 +500,8 @@ public class PersonneDAO {
 		String email = filtre.getEmail();
 		int etatProfil = filtre.getEtatProfil();
 		int typeSignalement = filtre.getTypeSignalement();
-		pseudo = pseudo.replace("*", "%");
-		email = email.replace("*", "%");
+	//	pseudo = pseudo.replace("*", "%");
+	//	email = email.replace("*", "%");
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;

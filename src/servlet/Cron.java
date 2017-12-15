@@ -63,6 +63,7 @@ public class Cron extends HttpServlet {
 	//	MDC.put("duree", 3);
 		LOG.info("Redemerrage application - Lancement du cron ");
 		cronTache=new Thread(tacheFond);
+		cronTache.setName("THREAD-CRON");
 		cronTache.start();
 		
 	}

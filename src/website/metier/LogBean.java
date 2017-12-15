@@ -1,17 +1,8 @@
 package website.metier;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
-
-import texthtml.pro.Erreur_HTML;
-import wayde.bean.Parametres;
-import website.dao.CacheValueDAO;
-import website.enumeration.TypePhoto;
-import website.html.MessageAlertDialog;
 
 public class LogBean {
 	private static final Logger LOG = Logger.getLogger(LogBean.class);

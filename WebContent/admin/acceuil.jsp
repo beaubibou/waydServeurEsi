@@ -34,10 +34,9 @@
 	<h1 align="center">
 		Bienvenue <%=profil.getPseudo()%>
 	</h1>
-	
 
 	
-	</div>
+
 	<div class="container">
 		<h3>Statistiques</h3>
 		<ul class="list-group">

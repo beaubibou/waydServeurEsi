@@ -26,7 +26,6 @@ import wayde.bean.Personne;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
-import website.html.OutilsHtml;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
 import website.metier.IndicateurWayd;
@@ -413,8 +412,6 @@ public class ActiviteDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-	
-		
 		
 		try {
 			connexion = CxoPool.getConnection();
@@ -448,6 +445,7 @@ public class ActiviteDAO {
 			connexion.commit();
 			rs = preparedStatement.getGeneratedKeys();
 			int cle = 0;
+		
 			if (rs.next())
 				cle = rs.getInt("idactivite");
 

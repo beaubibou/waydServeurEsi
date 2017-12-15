@@ -754,4 +754,14 @@
     <servlet-name>Cron</servlet-name>
     <url-pattern>/Cron</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StatLog</display-name>
+    <servlet-name>StatLog</servlet-name>
+    <servlet-class>servlet.StatLog</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatLog</servlet-name>
+    <url-pattern>/StatLog</url-pattern>
+  </servlet-mapping>
 </web-app>

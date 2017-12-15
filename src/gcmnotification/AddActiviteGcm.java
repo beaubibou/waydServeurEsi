@@ -41,6 +41,7 @@ public class AddActiviteGcm implements Runnable {
 	
 		Connection connexion = null;
 		try {
+			
 			connexion = CxoPool.getConnection();
 			Activite activiteTemp = new ActiviteDAO(connexion)
 					.getActivite(idactivite);

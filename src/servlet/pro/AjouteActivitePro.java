@@ -138,6 +138,7 @@ public class AjouteActivitePro extends HttpServlet {
 	
 		if (idActivite != 0) {
 	
+		
 			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(idActivite));
 			
 			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","L'activité est ajoutée",null,AlertJsp.Sucess));

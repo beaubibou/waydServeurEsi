@@ -19,6 +19,8 @@
 		</div>
 		<ul class="nav navbar-nav">
 
+			<li><a href="Acceuil">Stats</a></li>
+			
 			<li><a href="ListActivite">Activités</a></li>
 			<li><a href="ListProbleme">Problèmes</a></li>
 			<li><a href="ListSuggestion">Suggestions</a></li>
@@ -26,6 +28,7 @@
 			<li><a href="MesActivites">Site pro</a></li>
 			<li><a href="MapAdmin">Carte</a></li>
 			<li><a href="ListLogs">Logs</a></li>
+			<li><a href="StatLog">StatLogs</a></li>
 			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
 
 		</ul>

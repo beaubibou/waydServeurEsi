@@ -60,7 +60,10 @@ public class ListLogs extends HttpServlet {
 		int etatLogs = filtreLogs.getNiveau_log();
 		DateTime dateDebut = filtreLogs.getDateCreationDebut();
 		DateTime dateFin = filtreLogs.getDateCreationFin();
-
+		
+		if (request.getParameter("methode") != null) {
+			filtreLogs.setMethode(request.getParameter("methode"));
+		}
 		
 		if (request.getParameter("logPerf") != null) 
 		{
@@ -68,7 +71,6 @@ public class ListLogs extends HttpServlet {
 					.getParameter("logPerf")));
 		}
 		
-	
 		
 		if (request.getParameter("etatLogs") != null) {
 			etatLogs = Integer.parseInt((String) request

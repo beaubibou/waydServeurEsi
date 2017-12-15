@@ -137,14 +137,22 @@
 						</select>
 						
 					</div>
+					<div class="form-group">
+					
+					
+						<div class="form-group">
+						<label for="Methode">Methode</label> <input type="text"
+							class="form-control" id="methode" name="methode"
+							value="<%=filtreLogs.getMethode()%>">
+						</div>	
+					
+						
+						</div>
+					
 						<div class="form-group">
 						<p>Nrb Logs: <%=LogDAO.getNbrLogs()%></p>
 						<p>Taille: <%=LogDAO.getTailleBase()%></p>
-					
-						</div>
-						
-					
-						
+					</div>
 					
 					<button type="submit" class="btn btn-info">Recherchez</button>
 
