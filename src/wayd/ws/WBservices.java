@@ -1426,6 +1426,7 @@ public class WBservices {
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
+		
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
@@ -1492,10 +1493,12 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 
 			AmiDAO amidao = new AmiDAO(connexion);
+		
+			
 			Droit droit = new PersonneDAO(connexion)
 					.getDroit(idemetteur, jeton);
 
-			if (droit == null)
+			if (droit == null) 
 				return new RetourMessage(new Date().getTime(),
 						RetourMessage.NON_AUTORISE, idemetteur);
 
@@ -2206,6 +2209,7 @@ public class WBservices {
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
+			
 				return autorise;
 			}
 

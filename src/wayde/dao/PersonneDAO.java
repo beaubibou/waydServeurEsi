@@ -27,9 +27,11 @@ import wayde.bean.Profil;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProfilPro;
 import wayde.bean.ProprietePref;
+import wayde.bean.RetourMessage;
+import website.dao.LogDAO;
 
 public class PersonneDAO {
-	
+
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
 
 	Connection connexion;
@@ -43,18 +45,26 @@ public class PersonneDAO {
 		Droit droit;
 		try {
 			droit = getDroit(idpersonne, jeton);
-			if (droit == null)
-				return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
+			if (droit == null) {
+
+				LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+						+ idpersonne + " - Jeton:" + jeton);
+
+				return new MessageServeur(false,
+						TextWebService.PROFIL_NON_RECONNU);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 		}
 
 		return droit.isDefautAccess();
 
 	}
+	
+	
 
 	public boolean isAutorise(int idDemandeur, String jeton) {
 
@@ -63,8 +73,11 @@ public class PersonneDAO {
 		try {
 
 			droit = getDroit(idDemandeur, jeton);
-			if (droit == null)
+			if (droit == null) {
+				LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+						+ idDemandeur + " - Jeton:" + jeton);
 				return false;
+			}
 
 			MessageServeur autorisation = droit.isDefautAccess();
 			return autorisation.isReponse();
@@ -72,7 +85,7 @@ public class PersonneDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return false;
 		}
 
@@ -98,8 +111,9 @@ public class PersonneDAO {
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-
-		return getPersonneDbByRs(rs);
+		Personne personne = getPersonneDbByRs(rs);
+		rs.close();
+		return personne;
 
 	}
 
@@ -153,7 +167,6 @@ public class PersonneDAO {
 			int sexe = rs.getInt("sexe");
 			double note = rs.getDouble("note");
 
-			
 			Profil profil = new Profil(id, nom, prenom, ville, datecreation,
 					datenaissance, nbravis, sexe, nbractivite,
 					nbrparticipation, nbrami, note, photo, affichesexe,
@@ -161,13 +174,16 @@ public class PersonneDAO {
 			rs.close();
 			return profil;
 		}
+
+		if (rs != null)
+			rs.close();
 		return null;
 	}
 
 	public ProfilPro getFullProfilPro(int idpersonne) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-	
+
 		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,siteweb,"
 				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne)  as nbractivite"
 				+ "   FROM personne where idpersonne=?";
@@ -190,7 +206,7 @@ public class PersonneDAO {
 			int nbractivite = rs.getInt("nbractivite");
 			if (photo == null)
 				photo = "";
-	
+
 			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret,
 					telephone, datecreation.getTime(), nbractivite, photo,
 					commentaire, siteweb);
@@ -204,7 +220,7 @@ public class PersonneDAO {
 
 	public Personne getUnProfil(int idpersonne) throws SQLException {
 		Statement stmt = connexion.createStatement();
-	
+
 		String requete = " SELECT  notification,note, nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,"
 				+ "nbrecheccnx, datecreation,  datenaissance,latitude,longitude, sexe,affichesexe,afficheage"
@@ -214,7 +230,9 @@ public class PersonneDAO {
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-		return getUnProfilDbByRs(rs);
+		Personne personne = getUnProfilDbByRs(rs);
+		rs.close();
+		return personne;
 	}
 
 	public Droit getDroit(int idpersonne, String jeton) throws SQLException {
@@ -227,29 +245,29 @@ public class PersonneDAO {
 		preparedStatement.setString(2, jeton);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-		return getDroitDbByRs(rs);
+		Droit droit = getDroitDbByRs(rs);
+		rs.close();
+		return droit;
 	}
 
 	public String getGCMId(int idpersonne) throws SQLException {
-		
+
 		String requete = " SELECT gcm from personne where idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-	
-		String gcm=null;
-		
+
+		String gcm = null;
+
 		if (rs.next()) {
-			gcm=rs.getString("gcm");
+			gcm = rs.getString("gcm");
 		}
-			
+
 		CxoPool.close(preparedStatement, rs);
-		
-		
+
 		return gcm;
-		
-	
+
 	}
 
 	public String test_getToken(int idpersonne) throws Exception {
@@ -292,7 +310,7 @@ public class PersonneDAO {
 	public Personne getPersonneJeton(String idtoken) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-	
+
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
@@ -303,13 +321,15 @@ public class PersonneDAO {
 		preparedStatement.setString(1, idtoken);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-		return getPersonneDbByRs(rs);
+		Personne personne = getPersonneDbByRs(rs);
+		rs.close();
+		return personne;
 	}
-	
+
 	public Personne getPersonneByUID(String uid) throws SQLException {
 
 		Statement stmt = connexion.createStatement();
-	
+
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
@@ -320,7 +340,9 @@ public class PersonneDAO {
 		preparedStatement.setString(1, uid);
 		ResultSet rs = preparedStatement.executeQuery();
 		stmt.close();
-		return getPersonneDbByRs(rs);
+		Personne personne = getPersonneDbByRs(rs);
+		rs.close();
+		return personne;
 	}
 
 	public Personne getPersonneDbByRs(ResultSet rs) throws SQLException {
@@ -365,11 +387,13 @@ public class PersonneDAO {
 					commentaire, afficheage, affichesexe, premiereconnexion,
 					rayonrecherche, admin, latitude, longitude, notification,
 					typeUser, siteWeb, siret, tel);
-		
+
 			rs.close();
 			return personne;
 
 		}
+		if (rs != null)
+			rs.close();
 		return null;
 	}
 
@@ -411,7 +435,6 @@ public class PersonneDAO {
 			String siret = rs.getString("siret");
 			String tel = rs.getString("telephone");
 
-		
 			personne = new Personne(id, login, pwd, nom, prenom, ville, actif,
 					verrouille, 0, datecreation, datenaissance, photo, sexe,
 					mail, "cleactivation", note, totalavis, commentaire,
@@ -423,6 +446,8 @@ public class PersonneDAO {
 			return personne;
 
 		}
+		if (rs != null)
+			rs.close();
 		return null;
 	}
 
@@ -498,7 +523,7 @@ public class PersonneDAO {
 		preparedStatement.setInt(2, nbravis);
 		preparedStatement.setInt(3, idpersonne);
 		preparedStatement.execute();
-	
+
 		CxoPool.close(preparedStatement, rs);
 
 	}
@@ -528,7 +553,8 @@ public class PersonneDAO {
 	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
-			String photostr, String nom, String gcmToken,String email) throws SQLException {
+			String photostr, String nom, String gcmToken, String email)
+			throws SQLException {
 
 		// efface le GCMTOKEN de tous les utilisateurs. Permet dans le cas de
 		// l'utlsation de plusieurs
@@ -552,7 +578,7 @@ public class PersonneDAO {
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, nom);
-		preparedStatement.setString(2, "waydeur"+System.currentTimeMillis());
+		preparedStatement.setString(2, "waydeur" + System.currentTimeMillis());
 		preparedStatement.setString(3, iduser);
 		preparedStatement.setString(4, null);
 		preparedStatement.setString(5, email);
@@ -587,16 +613,17 @@ public class PersonneDAO {
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
-		
+
 		preparedStatement.close();
 		rs.close();
 		return cle;
 	}
 
 	public int addComptePro(String uudi, String pseudo, String email,
-			String adresse, String siret, String telephonne,String commentaire,String siteweb, double latitude,
+			String adresse, String siret, String telephonne,
+			String commentaire, String siteweb, double latitude,
 			double longitude) throws SQLException {
-	
+
 		String requete = "";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -607,7 +634,7 @@ public class PersonneDAO {
 				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser,"
 				+ "adresse,longitudefixe,latitudefixe,telephone,siret,siteweb,admin)"
 				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?,false);";
-	
+
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, pseudo);
@@ -762,7 +789,7 @@ public class PersonneDAO {
 	}
 
 	public void updateJeton(String iduser, String idtoken, String photostr,
-			String nom, String gcmToken,String email) throws SQLException {
+			String nom, String gcmToken, String email) throws SQLException {
 
 		String requete = "UPDATE  personne set gcm=? WHERE gcm=?;";
 		PreparedStatement preparedStatement = connexion

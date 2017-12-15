@@ -30,6 +30,7 @@ public class LogDAO {
 	private static final int MAX_LOG_SIZE = 100000;
 	public static int nbrAeffacer = 10000;
 	public final static long TPS_WARNING_REQUETE = 20;
+	public static final String MESSAGE_PAS_AUTHENTIFIE = "Accés réfusé";
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
 
