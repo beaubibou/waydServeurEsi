@@ -63,12 +63,17 @@ public class DetailActivite extends HttpServlet {
 
 				// Calcle de la distance par rapport au filtre
 			
+				if (request
+						.getParameter("latitudeFiltre")!=null && request
+						.getParameter("longitudeFiltre")!=null){
 				double latitudeFiltre=Double.parseDouble(request
 						.getParameter("latitudeFiltre"));
 				double longitudeFiltre=Double.parseDouble(request
 						.getParameter("longitudeFiltre"));
 				activite.setPositionRecherche(latitudeFiltre, longitudeFiltre);
-			
+				}
+				else
+					activite.setPositionRecherche(authentification.getProfil().getLatitudeFixe(),authentification.getProfil().getLongitudeFixe());
 				//*************************
 				switch (activite.getTypeUser()) {
 

@@ -28,6 +28,7 @@ import gcmnotification.UpdateNotificationGcm;
 import gcmnotification.UpdatePositionGcm;
 import gcmnotification.UpdatePreferenceGcm;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -110,22 +111,30 @@ public class WBservices {
 			"dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
 	public static FirebaseOptions optionFireBase;
+	public final static String cheminUnixBoulotCle="/home/devel/perso/cle.json";
+	public final static String cheminWindowsCle="d:/cle.json";
+	public final static String cheminProdCle="/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json";
 
+	
 	static {
-
+			boolean chargement=false;
 		if (optionFireBase == null) {
 
 			try {
 
-				FileInputStream serviceAccount = new FileInputStream(
-						"/home/devel/perso/cle.json");
+				File f = new File(cheminUnixBoulotCle);
+		
+				if (f.exists()){
+		
+					FileInputStream serviceAccount = new FileInputStream(cheminUnixBoulotCle);
 
 				optionFireBase = new FirebaseOptions.Builder()
 						.setCredentials(
 								GoogleCredentials.fromStream(serviceAccount))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
 						.build();
-
+				chargement=true;
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -136,16 +145,18 @@ public class WBservices {
 		if (optionFireBase == null) {
 
 			try {
-
-				FileInputStream serviceAccount = new FileInputStream(
-						"d:/cle.json");
+				File f = new File(cheminWindowsCle);
+				if (f.exists()){
+				FileInputStream serviceAccount = new FileInputStream(cheminWindowsCle);
 
 				optionFireBase = new FirebaseOptions.Builder()
 						.setCredentials(
 								GoogleCredentials.fromStream(serviceAccount))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
 						.build();
+				chargement=true;
 
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -156,15 +167,18 @@ public class WBservices {
 		if (optionFireBase == null) {
 
 			try {
-
-				FileInputStream serviceAccount = new FileInputStream(
-						"/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json");
+				File f = new File(cheminProdCle);
+				if (f.exists()){
+		
+				FileInputStream serviceAccount = new FileInputStream(cheminProdCle);
 
 				optionFireBase = new FirebaseOptions.Builder()
 						.setCredentials(
 								GoogleCredentials.fromStream(serviceAccount))
 						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
 						.build();
+				chargement=true;
+				}
 			} catch (IOException e) {
 		
 				e.printStackTrace();
@@ -172,6 +186,10 @@ public class WBservices {
 			}
 		}
 
+		if (chargement==false){
+			
+			LOG.error("Le fichier cle.json n a pas pu etre chargé.");
+		}
 	}
 
 	public void envoyerMail() {
