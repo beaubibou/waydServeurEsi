@@ -27,7 +27,7 @@ import website.metier.admin.FitreAdminLogs;
 
 public class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
-	private static final int MAX_LOG_SIZE = 100000;
+	private static final int MAX_LOG_SIZE = 40000;
 	public static int nbrAeffacer = 10000;
 	public final static long TPS_WARNING_REQUETE = 20;
 	public static final String MESSAGE_PAS_AUTHENTIFIE = "Accés réfusé";
