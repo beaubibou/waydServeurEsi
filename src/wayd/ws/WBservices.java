@@ -841,7 +841,6 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 	
 		Connection connexion = null;
-			LOG.info("add interet"+"personne:"+idpersonne+"-idactivite: "+idactivite+" jeton:"+ jeton);
 	
 		MessageServeur retour;
 		try {

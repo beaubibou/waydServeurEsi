@@ -93,7 +93,7 @@ public class DetailParticipant extends HttpServlet {
 			idParticipant = Integer.parseInt((String) request
 					.getAttribute("idPersonne"));
 
-		LOG.info("idparritci"+idParticipant);
+		
 		// Creation de l'objet profil complet ami+activit�
 		ProfilBean profilBean = PersonneDAO.getFullProfil(idParticipant);
 		ArrayList<AmiBean> listAmi = AmiDAO.getListAmi(idParticipant);

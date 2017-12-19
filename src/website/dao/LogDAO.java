@@ -328,14 +328,14 @@ public class LogDAO {
 		if (ETAT_PERF == TypeEtatLogPerf.ACTIVE) {
 
 			String message = string + " - " + duree + "ms";
-			MDC.put("duree", duree);
+		//	MDC.put("duree", duree);
 			LOG.info(message);
 		}
 
 		if (duree >= TPS_WARNING_REQUETE) {
 
 			String message = string + " - " + duree + "ms";
-			MDC.put("duree", duree);
+		//	MDC.put("duree", duree);
 			LOG.warn(message);
 		}
 
@@ -402,7 +402,7 @@ public class LogDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-			LOG.info("kkkkkkkkkkkkkkkkkkkkk");
+		
 			String dateStr = rs.getString("jour");
 			int duree = rs.getInt("duree");
 			retour.add(new CountLogInfo(dateStr, Integer.toString(duree), 0));
@@ -454,7 +454,7 @@ public class LogDAO {
 				updateStatement.setInt(1, duree);
 				updateStatement.setInt(2, id);
 				updateStatement.addBatch();
-		//	LOG.info("mise à jour "+id);	
+			
 			}
 			updateStatement.executeBatch();
 			connexion.commit();
