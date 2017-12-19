@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import website.dao.ActiviteDAO;
+import website.dao.LogDAO;
 import website.dao.StatDAO;
 import website.metier.AuthentificationSite;
 import website.metier.IndicateurWayd;
@@ -67,6 +68,7 @@ public class Acceuil extends HttpServlet {
 		if (session.getAttribute("filtreLogs") == null)
 			session.setAttribute("filtreLogs", new FitreAdminLogs());
 
+		LogDAO.prepareStatPerf();
 		IndicateurWayd indicateur = ActiviteDAO.getIndicateurs();
 		indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
 		indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());

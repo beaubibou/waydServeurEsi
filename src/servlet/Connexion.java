@@ -52,18 +52,7 @@ public class Connexion extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		if (FirebaseApp.getApps().isEmpty())
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File(getServletContext().getRealPath("/")
-					+ "img/inconnu.jpg"));
-			String photoStr = Outils.encodeToString(img, "jpg");
-			CacheValueDAO.addPhotoCache(TypePhoto.Inconnu, photoStr);
-		} catch (IOException e) {
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-		}
+	
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -81,8 +70,8 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-//	if (testEsi(request, response))
-//	return;
+	if (testEsi(request, response))
+return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -92,8 +81,7 @@ public class Connexion extends HttpServlet {
 	public boolean testEsi(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		MDC.put("duree", 23);
-		LOG.debug("Test Esi");
+	
 	
 		
 		final HttpSession session = request.getSession();

@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.reflect.TypeLiteral;
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
@@ -352,7 +353,7 @@ public class LogDAO {
 			connexion = CxoPool.getConnection();
 
 			String requete = "SELECT to_char(log_date,'dd/mm/yyyy') as datestring,count(*) as nbr, log_level"
-					+ "  FROM log4j group by to_char(log_date,'dd/mm/yyyy'), log_level order by to_char(log_date,'dd/mm/yyyy') desc";
+					+ "  FROM log4j group by datestring, log_level order by datestring desc";
 
 			preparedStatement = connexion.prepareStatement(requete);
 
@@ -362,6 +363,7 @@ public class LogDAO {
 				int nbr = rs.getInt("nbr");
 				String dateStr = rs.getString("datestring");
 				String log_level = rs.getString("log_level");
+				
 				retour.add(new CountLogInfo(dateStr, log_level, nbr));
 			}
 
@@ -377,6 +379,112 @@ public class LogDAO {
 		LogDAO.LOG_DUREE("getStatLogs", debut);
 
 		return retour;
+
+	}
+	
+	public static ArrayList<CountLogInfo> avgTpsRequeteJour() {
+
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		ArrayList<CountLogInfo> retour = new ArrayList<CountLogInfo>();
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "select avg(duree) as duree,to_char(log_date,'dd/mm/yyyy') as jour "
+					+ "from log4j "
+					+ "where log_message like '% - %' and duree>=0 group by jour order by jour desc";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+			LOG.info("kkkkkkkkkkkkkkkkkkkkk");
+			String dateStr = rs.getString("jour");
+			int duree = rs.getInt("duree");
+			retour.add(new CountLogInfo(dateStr, Integer.toString(duree), 0));
+			}
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+		CxoPool.close(connexion, preparedStatement);
+
+		LogDAO.LOG_DUREE("getStatLogs", debut);
+
+		return retour;
+
+	}
+	
+	public static void prepareStatPerf(){
+		
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		PreparedStatement preparedStatement = null;
+		PreparedStatement updateStatement = null;
+		ResultSet rs=null;
+		
+		
+		try {
+			connexion = CxoPool.getConnection();
+
+			connexion.setAutoCommit(false);
+			String requete = "SELECT log_message, id FROM log4j where log_message"
+					+ " like '% - %' and log_level='INFO' and duree=-1";
+			
+			String updateRequete = "update log4j set duree=? where id=?";
+
+			preparedStatement = connexion.prepareStatement(requete);
+			updateStatement=connexion.prepareStatement(updateRequete);
+		
+			 rs = preparedStatement.executeQuery();
+						
+			while (rs.next()) {
+				String log_message = rs.getString("log_message");
+				int duree=getIntegers(log_message);
+				int id=rs.getInt("id");
+				updateStatement.setInt(1, duree);
+				updateStatement.setInt(2, id);
+				updateStatement.addBatch();
+		//	LOG.info("mise à jour "+id);	
+			}
+			updateStatement.executeBatch();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+		
+		CxoPool.close(connexion, preparedStatement,rs);
+		CxoPool.close(connexion, updateStatement);
+		LogDAO.LOG_DUREE("prepareStatPerf", debut);
+
+		
+	}
+	public static int getIntegers(String str) {
+
+		String retour = "0";
+
+		for (int f = 0; f < str.length(); f++) {
+
+			String charac = str.substring(f, f + 1);
+			if (NumberUtils.isParsable(charac))
+							retour = retour + charac;
+		}
+		
+		return Integer.parseInt(retour);
 
 	}
 

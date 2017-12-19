@@ -21,15 +21,16 @@
 
 			<li><a href="Acceuil">Stats</a></li>
 			
-			<li><a href="ListActivite">Activités</a></li>
-			<li><a href="ListProbleme">Problèmes</a></li>
-			<li><a href="ListSuggestion">Suggestions</a></li>
-			<li><a href="ListProfil">Profils</a></li>
-			<li><a href="MesActivites">Site pro</a></li>
-			<li><a href="MapAdmin">Carte</a></li>
-			<li><a href="ListLogs">Logs</a></li>
-			<li><a href="StatLog">StatLogs</a></li>
-			<li><a href="DeconnexionAdmin">Déconnexion</a></li>
+			<li><a href="/wayd/ListActivite">Activités</a></li>
+			<li><a href="/wayd/ListProbleme">Problèmes</a></li>
+			<li><a href="/wayd/ListSuggestion">Suggestions</a></li>
+			<li><a href="/wayd/ListProfil">Profils</a></li>
+			<li><a href="/wayd/MesActivites">Site pro</a></li>
+			<li><a href="/wayd/MapAdmin">Carte</a></li>
+			<li><a href="/wayd/ListLogs">Logs</a></li>
+			<li><a href="/wayd/StatLog">StatLogs</a></li>
+			<li><a href="admin/AVGtmpRequeteParjour.jsp">Performence</a></li>
+			<li><a href="/wayd/DeconnexionAdmin">Déconnexion</a></li>
 
 		</ul>
 
