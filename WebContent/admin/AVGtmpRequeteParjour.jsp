@@ -74,7 +74,7 @@
 			<thead>
 				<tr>
 					<th style="width: 10%;">Date</th>
-					<th style="width: 10%;">Tps</th>
+					<th style="width: 10%;">Tps moyen</th>
 				
 
 
@@ -88,7 +88,7 @@
 				<tr >
 
 					<td ><%=countLogInfo.getDate()%></td>
-					<td><%=countLogInfo.getLog_level()%></td>
+					<td><%=countLogInfo.getLog_level() %> ms</td>
 				</tr>
 					<%
 						}
