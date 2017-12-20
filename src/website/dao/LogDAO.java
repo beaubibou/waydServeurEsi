@@ -28,9 +28,10 @@ import website.metier.admin.FitreAdminLogs;
 
 public class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
-	private static final int MAX_LOG_SIZE = 40000;
-	public static int nbrAeffacer = 10000;
-	public final static long TPS_WARNING_REQUETE = 20;
+	public static  int MAX_LOG_SIZE = 40000;
+	public static int NBR_LOG_A_EFFACER = 10000;
+	public static int TPS_WARNING_REQUETE = 18;
+	public static int TPS_ECHATILLONNAGE = 23;
 	public static final String MESSAGE_PAS_AUTHENTIFIE = "Accés réfusé";
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
@@ -188,13 +189,10 @@ public class LogDAO {
 				String log_level = rs.getString("log_level");
 				String log_message = rs.getString("log_message");
 				Date date_log = rs.getTimestamp("log_date");
-
 				retour.add(new LogBean(id, date_log, log_message, log_level,
 						log_location, duree));
 			}
-
 			LogDAO.LOG_DUREE("getListLogDetail", debutlog);
-
 			return retour;
 
 		} catch (SQLException | NamingException e) {
@@ -297,7 +295,7 @@ public class LogDAO {
 			connexion.setAutoCommit(false);
 			String requete = "delete from log4j where id in(SELECT id  FROM log4j order by id asc limit ? offset 0);";
 			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.setInt(1, nbrAeffacer);
+			preparedStatement.setInt(1, NBR_LOG_A_EFFACER);
 			preparedStatement.execute();
 			preparedStatement.close();
 			connexion.commit();
@@ -446,30 +444,38 @@ public class LogDAO {
 			updateStatement=connexion.prepareStatement(updateRequete);
 		
 			 rs = preparedStatement.executeQuery();
-						
+			
 			while (rs.next()) {
+			
 				String log_message = rs.getString("log_message");
 				int duree=getIntegers(log_message);
 				int id=rs.getInt("id");
 				updateStatement.setInt(1, duree);
 				updateStatement.setInt(2, id);
 				updateStatement.addBatch();
+				
 			
 			}
+			
 			updateStatement.executeBatch();
 			connexion.commit();
+			LogDAO.LOG_DUREE("prepareStatPerf", debut);
 
+		
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
-
 		
-		CxoPool.close(connexion, preparedStatement,rs);
-		CxoPool.close(connexion, updateStatement);
-		LogDAO.LOG_DUREE("prepareStatPerf", debut);
+		finally{
+			CxoPool.close(connexion, preparedStatement,rs);
+			CxoPool.close(connexion, updateStatement);
+			
+		}
+		
+			
 
 		
 	}

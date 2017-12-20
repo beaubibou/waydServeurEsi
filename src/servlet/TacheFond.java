@@ -16,8 +16,9 @@ public class TacheFond implements Runnable {
 		// TODO Auto-generated method stub
 		while (true) {
 			try {
-
-				Thread.sleep(20000);
+		
+				Thread.sleep(LogDAO.TPS_ECHATILLONNAGE*1000);
+		
 				if (stop)
 					return;
 			

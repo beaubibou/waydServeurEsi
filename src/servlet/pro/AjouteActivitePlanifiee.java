@@ -181,7 +181,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			if (nbrActiviteCree < nbrJoursVoulus) {
 				authentification.setAlertMessageDialog(new MessageAlertDialog(
 						"Message Information",
-						"Vous avez crée " + nbrActiviteCree+" sur les "+nbrJoursVoulus + " demandés. Vous ne pouver pas dépasser "
+						"Vous avez crée " + nbrActiviteCree+" sur les "+nbrJoursVoulus + " demandées. Vous ne pouver pas dépasser "
 								+ CommunText.NBR_ACTIVITE_MAX+ " activités." , null,
 						AlertJsp.Sucess));
 				response.sendRedirect("MesActivites");
@@ -204,7 +204,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			HashMap<Integer, String> joursVoulus){
 		
 		int nbrJoursVoulus=0;
-		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600;
+		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600	/ 24 + 1;
 		for (int f = 0; f <= nbrJours; f++) {
 
 			Calendar datetmp = Calendar.getInstance();
@@ -226,8 +226,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			HashMap<Integer, String> joursVoulus, int duree) {
 		// TODO Auto-generated method stub
 		int nbrAjout = 0;
-		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600
-				/ 24 + 1;
+		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600/ 24 + 1;
 
 		for (int f = 0; f <= nbrJours; f++) {
 

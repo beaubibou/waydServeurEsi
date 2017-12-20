@@ -18,24 +18,25 @@ import org.apache.log4j.Logger;
 public abstract class CxoPool {
 
 	private static final Logger LOG = Logger.getLogger(CxoPool.class);
+	private static Context ctx;
+	static {
+		try {
+			ctx = new InitialContext();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+	}
 
 	public static Connection getConnection() throws NamingException,
 			SQLException {
 		// Récupération connection référencées dans le JNDI - cf
 		// context.xml
-
-		Context ctx = new InitialContext();
-		try {
-
-			DataSource source = (DataSource) ctx
-					.lookup("java:comp/env/PostgresDS");
-			return source.getConnection();
-		} catch (NamingException e) {
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-		}
-
-		return null;
+		
+		DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
+		return source.getConnection();
 
 	}
 
@@ -55,7 +56,7 @@ public abstract class CxoPool {
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 			String url = "jdbc:postgresql://localhost:5432/wayd";
@@ -90,7 +91,7 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e1));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (statement != null)
 			try {
@@ -98,14 +99,14 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e1));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (connection != null)
 			try {
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
 
@@ -117,14 +118,14 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e1));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (connexion != null)
 			try {
 				connexion.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
 
@@ -135,7 +136,7 @@ public abstract class CxoPool {
 				connexion.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
 
@@ -147,7 +148,7 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e1));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (preparedStatement != null)
 			try {
@@ -155,7 +156,7 @@ public abstract class CxoPool {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e1));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 	}
 

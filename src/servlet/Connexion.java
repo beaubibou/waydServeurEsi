@@ -35,7 +35,7 @@ import com.google.firebase.auth.FirebaseToken;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(Connexion.class);
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -52,7 +52,7 @@ public class Connexion extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-	
+
 	}
 
 	protected void doGet(HttpServletRequest request,
@@ -69,9 +69,9 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-//	if (testEsi(request, response))
-//return;
+
+		if (testEsi(request, response))
+			return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -83,13 +83,13 @@ public class Connexion extends HttpServlet {
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
 		session.setAttribute("profil", profil);
-		
+
 		try {
 			response.sendRedirect("Acceuil");
-			} catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		return true;
@@ -101,29 +101,26 @@ public class Connexion extends HttpServlet {
 			ServletException {
 
 		final HttpSession session = request.getSession();
-	
 
 		try {
 			FirebaseToken token = FirebaseAuth.getInstance()
 					.verifyIdTokenAsync(idtoken).get();
 			String uid = token.getUid();
-			
-//			if (!token.isEmailVerified()){
-//				request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
-//				request.getRequestDispatcher("commun/erreurConnection.jsp")
-//						.forward(request, response);	
-//				return;
-//				
-//			}
-//			
-			
+
+			// if (!token.isEmailVerified()){
+			// request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
+			// request.getRequestDispatcher("commun/erreurConnection.jsp")
+			// .forward(request, response);
+			// return;
+			//
+			// }
+			//
+
 			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 
 			if (profil == null) {
 
-				
-				request.setAttribute("message",
-						Erreur_HTML.CREATION_COMPTE_NOK);
+				request.setAttribute("message", Erreur_HTML.CREATION_COMPTE_NOK);
 				request.getRequestDispatcher("commun/erreurConnection.jsp")
 						.forward(request, response);
 				return;
@@ -133,7 +130,8 @@ public class Connexion extends HttpServlet {
 			if (profil != null) {
 
 				if (!profil.isActif()) {
-					request.setAttribute("message",Erreur_HTML.ERR_COMPTE_DESACTIVTE);
+					request.setAttribute("message",
+							Erreur_HTML.ERR_COMPTE_DESACTIVTE);
 					request.getRequestDispatcher("commun/erreurConnection.jsp")
 							.forward(request, response);
 					return;
@@ -141,10 +139,8 @@ public class Connexion extends HttpServlet {
 
 				session.setAttribute("profil", profil);
 
-			
-
 				if (profil.isAdmin()) {
-			
+
 					response.sendRedirect("Acceuil");
 					return;
 
@@ -156,16 +152,18 @@ public class Connexion extends HttpServlet {
 					session.setAttribute("profil", profil);
 
 					response.sendRedirect("AcceuilPro");
-					
+
 					return;
 
 				case ProfilBean.WAYDEUR:
 
 					session.invalidate();
-					
-					request.setAttribute("message", Erreur_HTML.APPLICATION_NON_DISPO_WAYDEUR);	
-					request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);
-			
+
+					request.setAttribute("message",
+							Erreur_HTML.APPLICATION_NON_DISPO_WAYDEUR);
+					request.getRequestDispatcher("pro/messageInfo.jsp")
+							.forward(request, response);
+
 					return;
 
 				}
@@ -175,7 +173,7 @@ public class Connexion extends HttpServlet {
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("commun/erreurConnection.jsp")
 					.forward(request, response);
@@ -183,7 +181,5 @@ public class Connexion extends HttpServlet {
 		}
 
 	}
-
-
 
 }

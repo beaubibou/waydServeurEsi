@@ -29,6 +29,7 @@
 			<li><a href="/wayd/ListLogs">Logs</a></li>
 			<li><a href="/wayd/StatLog">StatLogs</a></li>
 			<li><a href="/wayd/admin/AVGtmpRequeteParjour.jsp">Performence</a></li>
+			<li><a href="/wayd/admin/paramAdmin.jsp">Paramétres</a></li>
 			<li><a href="/wayd/DeconnexionAdmin">Déconnexion</a></li>
 
 		</ul>

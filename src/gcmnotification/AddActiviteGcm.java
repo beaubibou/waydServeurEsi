@@ -67,8 +67,10 @@ public class AddActiviteGcm implements Runnable {
 			if (!activite.isEnCours())return;
 			connexiongcm = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexiongcm);
+		
 			final ArrayList<Personne> personneinteresse = activitedao
 					.getListPersonneInterresse(activite);
+		
 			ServeurMethodes serveurmethode = new ServeurMethodes(connexiongcm);
 			serveurmethode.gcmUpdateNbrActivite(idOrganisateur);
 			serveurmethode.gcmPushInterressByactivite(personneinteresse,
