@@ -111,29 +111,30 @@ public class WBservices {
 			"dd-MM HH:mm:ss");
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
 	public static FirebaseOptions optionFireBase;
-	public final static String cheminUnixBoulotCle="/home/devel/perso/cle.json";
-	public final static String cheminWindowsCle="d:/cle.json";
-	public final static String cheminProdCle="/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json";
+	public final static String cheminUnixBoulotCle = "/home/devel/perso/cle.json";
+	public final static String cheminWindowsCle = "d:/cle.json";
+	public final static String cheminProdCle = "/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json";
 
-	
 	static {
-			boolean chargement=false;
+		boolean chargement = false;
 		if (optionFireBase == null) {
 
 			try {
 
 				File f = new File(cheminUnixBoulotCle);
-		
-				if (f.exists()){
-		
-					FileInputStream serviceAccount = new FileInputStream(cheminUnixBoulotCle);
 
-				optionFireBase = new FirebaseOptions.Builder()
-						.setCredentials(
-								GoogleCredentials.fromStream(serviceAccount))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-						.build();
-				chargement=true;
+				if (f.exists()) {
+
+					FileInputStream serviceAccount = new FileInputStream(
+							cheminUnixBoulotCle);
+
+					optionFireBase = new FirebaseOptions.Builder()
+							.setCredentials(
+									GoogleCredentials
+											.fromStream(serviceAccount))
+							.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
+							.build();
+					chargement = true;
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -146,15 +147,17 @@ public class WBservices {
 
 			try {
 				File f = new File(cheminWindowsCle);
-				if (f.exists()){
-				FileInputStream serviceAccount = new FileInputStream(cheminWindowsCle);
+				if (f.exists()) {
+					FileInputStream serviceAccount = new FileInputStream(
+							cheminWindowsCle);
 
-				optionFireBase = new FirebaseOptions.Builder()
-						.setCredentials(
-								GoogleCredentials.fromStream(serviceAccount))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-						.build();
-				chargement=true;
+					optionFireBase = new FirebaseOptions.Builder()
+							.setCredentials(
+									GoogleCredentials
+											.fromStream(serviceAccount))
+							.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
+							.build();
+					chargement = true;
 
 				}
 			} catch (IOException e) {
@@ -168,26 +171,28 @@ public class WBservices {
 
 			try {
 				File f = new File(cheminProdCle);
-				if (f.exists()){
-		
-				FileInputStream serviceAccount = new FileInputStream(cheminProdCle);
+				if (f.exists()) {
 
-				optionFireBase = new FirebaseOptions.Builder()
-						.setCredentials(
-								GoogleCredentials.fromStream(serviceAccount))
-						.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
-						.build();
-				chargement=true;
+					FileInputStream serviceAccount = new FileInputStream(
+							cheminProdCle);
+
+					optionFireBase = new FirebaseOptions.Builder()
+							.setCredentials(
+									GoogleCredentials
+											.fromStream(serviceAccount))
+							.setDatabaseUrl("https://wayd-c0414.firebaseio.com")
+							.build();
+					chargement = true;
 				}
 			} catch (IOException e) {
-		
+
 				e.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
 
-		if (chargement==false){
-			
+		if (chargement == false) {
+
 			LOG.error("Le fichier cle.json n a pas pu etre chargé.");
 		}
 	}
@@ -221,7 +226,7 @@ public class WBservices {
 
 			return messageServeur.isReponse();
 		} catch (InterruptedException | ExecutionException e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return false;
@@ -232,7 +237,7 @@ public class WBservices {
 	private MessageServeur gestionUid(String uid, String idtoken,
 			String photostr, String nom, String gcmToken, String email) {
 		// TODO Auto-generated
-	
+
 		Connection connexion = null;
 		try {
 			connexion = CxoPool.getConnection();
@@ -255,7 +260,7 @@ public class WBservices {
 			return new MessageServeur(true, "ok");
 
 		} catch (SQLException | NamingException e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
@@ -280,6 +285,7 @@ public class WBservices {
 		try {
 			connexion = CxoPool.getConnection();
 
+		
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			if (!personneDAO.isAutorise(idDemandeur, jeton))
 				return null;
@@ -301,7 +307,7 @@ public class WBservices {
 			return avis;
 
 		} catch (SQLException | NamingException e) {
-		
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
@@ -341,7 +347,7 @@ public class WBservices {
 					.execute(new UpdatePreferenceGcm(idpersonne));
 
 		} catch (SQLException | NamingException e) {
-	
+
 			CxoPool.rollBack(connexion);
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -380,7 +386,7 @@ public class WBservices {
 			return (Ami[]) retour.toArray(new Ami[retour.size()]);
 
 		} catch (SQLException | NamingException e) {
-		
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
@@ -412,7 +418,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("getListParticipant", debut);
 
 		} catch (SQLException | NamingException e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
@@ -444,10 +450,10 @@ public class WBservices {
 			retour = preferencedao.getLisPreferences(idpersonne);
 
 		} catch (SQLException | NamingException e) {
-				
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-		
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -470,9 +476,9 @@ public class WBservices {
 			listPhotoWaydeur = personneDao.getListPhotoWaydeur(idpersonne);
 
 		} catch (SQLException | NamingException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -503,10 +509,10 @@ public class WBservices {
 			}
 
 		} catch (SQLException | NamingException e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -536,7 +542,7 @@ public class WBservices {
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
-			
+
 		} finally {
 
 			CxoPool.closeConnection(connexion);
@@ -565,9 +571,8 @@ public class WBservices {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
-		}
-		finally {
+
+		} finally {
 			CxoPool.closeConnection(connexion);
 		}
 
@@ -600,7 +605,7 @@ public class WBservices {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -684,7 +689,7 @@ public class WBservices {
 
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -717,7 +722,7 @@ public class WBservices {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -748,7 +753,7 @@ public class WBservices {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -839,9 +844,9 @@ public class WBservices {
 	public MessageServeur addInteretActivite(int idpersonne, int idactivite,
 			int typeInteret, String jeton) {
 		long debut = System.currentTimeMillis();
-	
+
 		Connection connexion = null;
-	
+
 		MessageServeur retour;
 		try {
 			// connexion = CxoPool.getConnection();
@@ -854,12 +859,12 @@ public class WBservices {
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 
-			 if (!personneDAO.isAutorise(idpersonne, jeton))
-			 return new
-			 MessageServeur(false,TextWebService.PROFIL_NON_RECONNU);
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return new MessageServeur(false,
+						TextWebService.PROFIL_NON_RECONNU);
 
 			// ************************************
-		
+
 			retour = website.dao.ActiviteDAO.addInteretActivite(idpersonne,
 					idactivite, typeInteret);
 
@@ -930,7 +935,7 @@ public class WBservices {
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -958,10 +963,10 @@ public class WBservices {
 			listavis = avisdao.getListAvis(idpersonnenotee);
 
 		} catch (SQLException | NamingException e) {
-		
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-		
+
 		} finally {
 
 			CxoPool.closeConnection(connexion);
@@ -996,10 +1001,10 @@ public class WBservices {
 			}
 
 		} catch (Exception e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-		
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -1049,7 +1054,7 @@ public class WBservices {
 		} catch (NumberFormatException | SQLException | NamingException e1) {
 			e1.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e1));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -1090,7 +1095,7 @@ public class WBservices {
 			}
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
-	
+
 			e1.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e1));
 		} finally {
@@ -1134,7 +1139,7 @@ public class WBservices {
 			}
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
-	
+
 			e1.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e1));
 		} finally {
@@ -1175,7 +1180,7 @@ public class WBservices {
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -1213,7 +1218,7 @@ public class WBservices {
 			}
 
 		} catch (SQLException | NamingException e) {
-		
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
@@ -1244,7 +1249,7 @@ public class WBservices {
 				retour.add(new TypeActivite(typeactivitedb));
 
 		} catch (SQLException | NamingException e) {
-	
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
@@ -1281,7 +1286,7 @@ public class WBservices {
 		} catch (SQLException | NamingException e) {
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-		
+
 		} finally {
 
 			CxoPool.close(connexion, stmt, rs);
@@ -1420,7 +1425,7 @@ public class WBservices {
 			return new MessageServeur(true, Integer.toString(activite.getId()));
 
 		} catch (SQLException | NamingException e) {
-		
+
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
@@ -1443,7 +1448,7 @@ public class WBservices {
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
-		
+
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
@@ -1508,26 +1513,22 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
 
 			AmiDAO amidao = new AmiDAO(connexion);
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+
+			// Droit droit = new PersonneDAO(connexion)
+			// .getDroit(idemetteur, jeton);
+
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					idemetteur, jeton);
 		
-			
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idemetteur, jeton);
-
-			if (droit == null) 
+			if (!autorise.isReponse()) {
 				return new RetourMessage(new Date().getTime(),
 						RetourMessage.NON_AUTORISE, idemetteur);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return new RetourMessage(new Date().getTime(),
-						RetourMessage.NON_AUTORISE, idemetteur);
-
 			}
 
-			connexion.setAutoCommit(false);
 			// Plutot que d'informer le destinataire du changement du nombre de
 			// message,
 			// on calcule le nouveau nbr de message du destinataire et on lui
@@ -1574,26 +1575,38 @@ public class WBservices {
 		Message message = new Message(idemetteur, corps, idactivite, 0);
 
 		try {
+		
 			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
 
 			ParticipationDAO participationdao = new ParticipationDAO(connexion);
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idemetteur, jeton);
-
-			if (droit == null)
+		
+			PersonneDAO personneDAO=new PersonneDAO(connexion);
+		
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					idemetteur, jeton);
+		
+			if (!autorise.isReponse()) {
 				return new RetourMessage(new Date().getTime(),
 						RetourMessage.NON_AUTORISE, idemetteur);
-			// return new MessageServeur(false, "Tu n'es pas reconnu");
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return new RetourMessage(new Date().getTime(),
-						RetourMessage.NON_AUTORISE, idemetteur);
-				// return autorisation;
 			}
+			//Droit droit = new PersonneDAO(connexion)
+			//		.getDroit(idemetteur, jeton);
 
-			connexion.setAutoCommit(false);
+//			if (droit == null)
+//				return new RetourMessage(new Date().getTime(),
+//						RetourMessage.NON_AUTORISE, idemetteur);
+//			// return new MessageServeur(false, "Tu n'es pas reconnu");
+//
+//			MessageServeur autorisation = droit.isDefautAccess();
+//
+//			if (!autorisation.isReponse()) {
+//				return new RetourMessage(new Date().getTime(),
+//						RetourMessage.NON_AUTORISE, idemetteur);
+//				// return autorisation;
+//			}
+
+		
 
 			ArrayList<Personne> listparticipant = participationdao
 					.getListPartipantActivite(idactivite);
@@ -2226,7 +2239,7 @@ public class WBservices {
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
-			
+
 				return autorise;
 			}
 
@@ -2351,6 +2364,7 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personnedao = new PersonneDAO(connexion);
+
 			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
@@ -2415,6 +2429,7 @@ public class WBservices {
 
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					iddemandeur, jeton);
+		
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
@@ -3401,7 +3416,7 @@ public class WBservices {
 
 			String loginfo = "test_init - "
 					+ (System.currentTimeMillis() - debut) + "ms";
-		
+
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3518,14 +3533,11 @@ public class WBservices {
 
 		long debut = System.currentTimeMillis();
 
-	
-
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 
-	
 		try {
 			connexion = CxoPool.getConnection();
 			double coef = rayonmetre * 0.007 / 700;
@@ -3585,14 +3597,14 @@ public class WBservices {
 			}
 
 			if (!motcle.isEmpty()) {
-			
+
 				requete = requete
 						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
 
 			}
 
 			if (typeUser != 0) {
-			
+
 				requete = requete + " and activite.typeuser=?";
 
 			}
@@ -3619,7 +3631,7 @@ public class WBservices {
 			}
 
 			if (typeactivite != -1) {
-							index++;
+				index++;
 				preparedStatement.setInt(index, typeactivite);
 
 			}
@@ -3634,7 +3646,7 @@ public class WBservices {
 			}
 
 			if (typeUser != 0) {
-			
+
 				index++;
 				preparedStatement.setInt(index, typeUser);
 

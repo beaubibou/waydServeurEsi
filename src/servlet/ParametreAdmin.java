@@ -1,4 +1,4 @@
-package servlet.pro;
+package servlet;
 
 import java.io.IOException;
 
@@ -44,9 +44,8 @@ public class ParametreAdmin extends HttpServlet {
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 
-		if (!authentification.isAuthentifiePro())
+		if (!authentification.isAuthentifieAdmin())
 			return;
-	
 				
 		int maxLogs = Integer.parseInt(request
 				.getParameter("maxLogs"));
@@ -59,6 +58,10 @@ public class ParametreAdmin extends HttpServlet {
 
 		int echantillonage = Integer.parseInt(request
 				.getParameter("echantillonage"));
+		
+		int tpscalculperf = Integer.parseInt(request
+				.getParameter("tpscalculperf"));
+
 
 		LOG.info("mxlog"+maxLogs);
 		LOG.info("logsupp"+nbrLogSupprimer);
@@ -69,6 +72,8 @@ public class ParametreAdmin extends HttpServlet {
 		LogDAO.NBR_LOG_A_EFFACER=nbrLogSupprimer;
 		LogDAO.TPS_WARNING_REQUETE=tempsWarning;
 		LogDAO.TPS_ECHATILLONNAGE=echantillonage;
+		LogDAO.TPS_CALCUL_PERFOMENCE=tpscalculperf;
+		
 
 		response.sendRedirect("admin/paramAdmin.jsp");
 		

@@ -33,6 +33,7 @@ public class LogDAO {
 	public static int TPS_WARNING_REQUETE = 18;
 	public static int TPS_ECHATILLONNAGE = 23;
 	public static final String MESSAGE_PAS_AUTHENTIFIE = "Accés réfusé";
+	public static long TPS_CALCUL_PERFOMENCE = 60;
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
 
@@ -391,7 +392,7 @@ public class LogDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = "select avg(duree) as duree,to_char(log_date,'dd/mm/yyyy') as jour "
+			String requete = "select avg(duree) as duree,to_char(log_date,'dd/mm/yyyy HH24:MI') as jour "
 					+ "from log4j "
 					+ "where log_message like '% - %' and duree>=0 group by jour order by jour desc";
 

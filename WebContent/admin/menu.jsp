@@ -14,12 +14,12 @@
 							+ profil.getPseudo() + "</a>");
 				}
 			%>
-			<a class="navbar-brand" href="Acceuil">WAYD</a>
+			<a class="navbar-brand" href="/wayd/Acceuil">WAYD</a>
 
 		</div>
 		<ul class="nav navbar-nav">
 
-			<li><a href="/wayd/Acceuil">Stats</a></li>
+		
 			<li><a href="/wayd/ListActivite">Activités</a></li>
 			<li><a href="/wayd/ListProbleme">Problèmes</a></li>
 			<li><a href="/wayd/ListSuggestion">Suggestions</a></li>

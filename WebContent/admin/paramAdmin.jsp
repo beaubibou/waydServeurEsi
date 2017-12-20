@@ -86,6 +86,12 @@
     <input   value='<%=LogDAO.TPS_ECHATILLONNAGE%>' type="number" class="form-control" id="echantillonage" name="echantillonage">
   </div>
   
+   <div class="form-group">
+    <label for="tpscalculperf">Période calcul performance</label>
+    <input   value='<%=LogDAO.TPS_CALCUL_PERFOMENCE%>' type="number" class="form-control" id="tpscalculperf" name="tpscalculperf">
+  </div>
+  
+  
     
   <div class="checkbox">
     <label><input type="checkbox"> Remember me</label>

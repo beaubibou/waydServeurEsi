@@ -768,7 +768,7 @@
     <description></description>
     <display-name>ParametreAdmin</display-name>
     <servlet-name>ParametreAdmin</servlet-name>
-    <servlet-class>servlet.pro.ParametreAdmin</servlet-class>
+    <servlet-class>servlet.ParametreAdmin</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ParametreAdmin</servlet-name>

@@ -80,7 +80,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 
 				if (MessageDAO.ajouteMessageProbleme(message, email, pseudo)) {
 		
-					String messageAlert ="Le message a été pris en compte.";
+					String messageAlert ="Votre message a été pris en compte.";
 					// response.sendRedirect("/commun/acceuil.jsp");
 					request.setAttribute("message", messageAlert);
 					request.getRequestDispatcher("/commun/informationMessage.jsp").forward(request, response);
@@ -112,6 +112,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 			String pseudo, String reponseCaptcha) throws Exception {
 		// TODO Auto-generated method stub
 
+	
 		if (message == null)
 			return new MessageServeur(false, "Le message est incomplet");
 

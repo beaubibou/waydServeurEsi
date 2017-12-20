@@ -61,7 +61,7 @@
 			request, response);
 			if (!authentification.isAuthentifieAdmin())
 		return;
-			LogDAO.prepareStatPerf();
+		
 		ArrayList<CountLogInfo> listCountInfo = LogDAO.avgTpsRequeteJour();
 		
 			//LogDAO.LOG_PERF_REQUETE=true;

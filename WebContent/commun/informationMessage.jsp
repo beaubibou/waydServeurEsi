@@ -15,7 +15,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
-<title>Erreur</title>
+<title>Information</title>
 </head>
 <body>
 <% String message=(String)request.getAttribute("message"); %>
@@ -28,7 +28,7 @@
 			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
 				alt="Cinque Terre" width="100" height="100">Information</h1>
 		</div>
-		<p><%=message %></p>
+		<h3><%=message %></H3>
 		
 	
 	</div>

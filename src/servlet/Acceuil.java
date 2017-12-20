@@ -68,7 +68,7 @@ public class Acceuil extends HttpServlet {
 		if (session.getAttribute("filtreLogs") == null)
 			session.setAttribute("filtreLogs", new FitreAdminLogs());
 
-		LogDAO.prepareStatPerf();
+	
 		IndicateurWayd indicateur = ActiviteDAO.getIndicateurs();
 		indicateur.setNbrMessageByActDuJour(StatDAO.getNbrMessageByActDuJour());
 		indicateur.setNbrMessageDuJour(StatDAO.getNbrMessageDuJour());
