@@ -19,7 +19,6 @@
 		</div>
 		<ul class="nav navbar-nav">
 
-		
 			<li><a href="/wayd/ListActivite">Activités</a></li>
 			<li><a href="/wayd/ListProbleme">Problèmes</a></li>
 			<li><a href="/wayd/ListSuggestion">Suggestions</a></li>
@@ -28,7 +27,7 @@
 			<li><a href="/wayd/MapAdmin">Carte</a></li>
 			<li><a href="/wayd/ListLogs">Logs</a></li>
 			<li><a href="/wayd/StatLog">StatLogs</a></li>
-			<li><a href="/wayd/admin/AVGtmpRequeteParjour.jsp">Performence</a></li>
+			<li><a href="/wayd/admin/AVGtmpRequeteParjour.jsp">Performance</a></li>
 			<li><a href="/wayd/admin/paramAdmin.jsp">Paramétres</a></li>
 			<li><a href="/wayd/DeconnexionAdmin">Déconnexion</a></li>
 
