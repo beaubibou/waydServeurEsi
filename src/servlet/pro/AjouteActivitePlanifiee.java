@@ -96,9 +96,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		Date dateFin = null;
 
 		if (request.getParameter("lundi") != null) {
-
 			joursVoulus.put(2, "lundi");
-
 		}
 
 		if (request.getParameter("mardi") != null)
@@ -163,6 +161,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			return;
 		}
 		
+		int nbrJoursVoulus=getNrbJoursVoulus(dateDebut, dateFin, joursVoulus);
 
 		int nbrActiviteCree = ajouteActivites(authentification.getId(), titre,
 				description, adresse, latitude, longitude, typeactivite,
@@ -179,10 +178,10 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		}
 
 		if (nbrActiviteCree > 0) {
-			if (nbrActiviteCree < joursVoulus.size()) {
+			if (nbrActiviteCree < nbrJoursVoulus) {
 				authentification.setAlertMessageDialog(new MessageAlertDialog(
 						"Message Information",
-						"Vous avez crée " + nbrActiviteCree+" sur les "+joursVoulus.size() + " demandés. Vous ne pouver pas dépasser "
+						"Vous avez crée " + nbrActiviteCree+" sur les "+nbrJoursVoulus + " demandés. Vous ne pouver pas dépasser "
 								+ CommunText.NBR_ACTIVITE_MAX+ " activités." , null,
 						AlertJsp.Sucess));
 				response.sendRedirect("MesActivites");
@@ -201,6 +200,26 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 		}
 	}
 
+	private int getNrbJoursVoulus(Date dateDebut, Date dateFin,
+			HashMap<Integer, String> joursVoulus){
+		
+		int nbrJoursVoulus=0;
+		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600;
+		for (int f = 0; f <= nbrJours; f++) {
+
+			Calendar datetmp = Calendar.getInstance();
+			datetmp.setTime(dateDebut);
+			datetmp.add(Calendar.DAY_OF_MONTH, f);
+				if (joursVoulus.containsKey(datetmp.get(Calendar.DAY_OF_WEEK))) {
+					nbrJoursVoulus++;
+				
+				}
+
+		}
+
+		return nbrJoursVoulus;		
+		
+	}
 	private int ajouteActivites(int idPersonne, String titre,
 			String description, String adresse, double latitude,
 			double longitude, int typeactivite, Date dateDebut, Date dateFin,

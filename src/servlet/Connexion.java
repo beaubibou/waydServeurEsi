@@ -70,8 +70,8 @@ public class Connexion extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-	if (testEsi(request, response))
-return;
+//	if (testEsi(request, response))
+//return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
@@ -80,10 +80,6 @@ return;
 
 	public boolean testEsi(HttpServletRequest request,
 			HttpServletResponse response) {
-
-	
-	
-		
 		final HttpSession session = request.getSession();
 		ProfilBean profil = PersonneDAO.getFullProfilByUid("papa");
 		session.setAttribute("profil", profil);
@@ -148,9 +144,8 @@ return;
 			
 
 				if (profil.isAdmin()) {
-
+			
 					response.sendRedirect("Acceuil");
-				
 					return;
 
 				}

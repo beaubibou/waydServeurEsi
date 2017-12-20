@@ -83,8 +83,8 @@ public class Cron extends HttpServlet {
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
-		LogDAO.prepareStatPerf();
-		
+LogDAO.prepareStatPerf();
+//		
 		LOG.info("Redemerrage application - Lancement du cron ");
 		cronTache=new Thread(tacheFond);
 		cronTache.setName("THREAD-CRON");

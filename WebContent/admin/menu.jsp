@@ -19,8 +19,7 @@
 		</div>
 		<ul class="nav navbar-nav">
 
-			<li><a href="Acceuil">Stats</a></li>
-			
+			<li><a href="/wayd/Acceuil">Stats</a></li>
 			<li><a href="/wayd/ListActivite">Activités</a></li>
 			<li><a href="/wayd/ListProbleme">Problèmes</a></li>
 			<li><a href="/wayd/ListSuggestion">Suggestions</a></li>

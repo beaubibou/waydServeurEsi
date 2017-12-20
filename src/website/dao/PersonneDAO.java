@@ -1021,7 +1021,7 @@ public class PersonneDAO {
 			updateProfilProDAO(pseudo, adresse, latitude, longitude,
 					commentaire, idpersonne, siteWeb, telephone, siret);
 
-			LogDAO.LOG_DUREE("updateProfilProFull", debut);
+			
 			
 			return true;
 

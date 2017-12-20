@@ -404,8 +404,8 @@ public class LogDAO {
 			while (rs.next()) {
 		
 			String dateStr = rs.getString("jour");
-			int duree = rs.getInt("duree");
-			retour.add(new CountLogInfo(dateStr, Integer.toString(duree), 0));
+			double duree = rs.getDouble("duree");
+			retour.add(new CountLogInfo(dateStr, Double.toString(duree), 0));
 			}
 
 		} catch (NamingException | SQLException e) {
@@ -417,7 +417,7 @@ public class LogDAO {
 
 		CxoPool.close(connexion, preparedStatement);
 
-		LogDAO.LOG_DUREE("getStatLogs", debut);
+		LogDAO.LOG_DUREE("avgTpsRequeteJour", debut);
 
 		return retour;
 
