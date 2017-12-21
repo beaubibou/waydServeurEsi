@@ -61,12 +61,6 @@ public class ParametreAdmin extends HttpServlet {
 		
 		int tpscalculperf = Integer.parseInt(request
 				.getParameter("tpscalculperf"));
-
-
-		LOG.info("mxlog"+maxLogs);
-		LOG.info("logsupp"+nbrLogSupprimer);
-		LOG.info("tpswarn"+tempsWarning);
-		LOG.info("echanti"+echantillonage);
 		
 		LogDAO.MAX_LOG_SIZE=maxLogs;
 		LogDAO.NBR_LOG_A_EFFACER=nbrLogSupprimer;

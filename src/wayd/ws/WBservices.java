@@ -503,6 +503,7 @@ public class WBservices {
 			ParticipantDAO participantDAO = new ParticipantDAO(connexion);
 			ArrayList<Participant> listParticipants = participantDAO
 					.getListPaticipant(idactivite);
+			
 			for (Participant participant : listParticipants) {
 				listPhotoWaydeur.add(new PhotoWaydeur(participant.getId(),
 						participant.getPhotostr()));
@@ -1069,6 +1070,7 @@ public class WBservices {
 	public Activite[] getListActiviteAvenir(int idpersonne, String latitudestr,
 			String longitudestr, int rayon, int idtypeactivite, String motcle,
 			int commencedans, String jeton) {
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -3485,17 +3487,26 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 
 			SignalementDAO signalementdao = new SignalementDAO(connexion);
-			Droit droit = new PersonneDAO(connexion)
-					.getDroit(idpersonne, jeton);
-
-			if (droit == null)
-				return new MessageServeur(false,
-						TextWebService.PROFIL_NON_RECONNU);
-
-			MessageServeur autorisation = droit.isDefautAccess();
-
-			if (!autorisation.isReponse()) {
-				return autorisation;
+		
+//			Droit droit = new PersonneDAO(connexion)
+//					.getDroit(idpersonne, jeton);
+//
+//			if (droit == null)
+//				return new MessageServeur(false,
+//						TextWebService.PROFIL_NON_RECONNU);
+//
+//			MessageServeur autorisation = droit.isDefautAccess();
+//
+//			if (!autorisation.isReponse()) {
+//				return autorisation;
+//			}
+			
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return  new MessageServeur(false,TextWebService.PROFIL_NON_RECONNU);
+		
 			}
 			// Verfiie que le signalement est unique
 			if (signalementdao.isSignalerProfil(idpersonne, idsignalement))
@@ -3540,6 +3551,15 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
+			
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+					idPersonne, jeton);
+			if (!autorise.isReponse()) {
+				return  null;
+	
+			}
+			
 			double coef = rayonmetre * 0.007 / 700;
 			double latMin = malatitude - coef;
 			double latMax = malatitude + coef;

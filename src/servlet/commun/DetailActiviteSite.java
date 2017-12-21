@@ -79,11 +79,9 @@ public class DetailActiviteSite extends HttpServlet {
 		request.setAttribute("activite", activite);
 
 		// recuepre les coordonnes du filtre pour le calcul de la distance
-		LOG.info("type acitivteé"+activite.getTypeUser());
 		
 		switch (activite.getTypeUser()) {
 		case ProfilBean.PRO:
-			LOG.info("cas rpo"+activite.getTypeUser());
 			
 			request.getRequestDispatcher("/commun/detailActivitePro.jsp")
 					.forward(request, response);
@@ -91,7 +89,6 @@ public class DetailActiviteSite extends HttpServlet {
 			break;
 
 		case ProfilBean.WAYDEUR:
-			LOG.info("cas waydeur"+activite.getTypeUser());
 			
 			request.getRequestDispatcher("/commun/detailActiviteWaydeur.jsp")
 					.forward(request, response);

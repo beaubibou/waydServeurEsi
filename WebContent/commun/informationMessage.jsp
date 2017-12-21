@@ -25,9 +25,10 @@
 <div class="container">
 	<div class="page-header">
 			
-			<h1 ><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
-				alt="Cinque Terre" width="100" height="100">Information</h1>
+			<h1 ><a href="/wayd/commun/accueil.jsp"><img src="/wayd/img/waydLogoHD.png" style="margin-right:50px;" class="img-rounded"
+				alt="Cinque Terre" width="100" height="100"></a>Information</h1>
 		</div>
+		
 		<h3><%=message %></H3>
 		
 	

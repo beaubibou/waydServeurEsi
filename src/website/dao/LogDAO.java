@@ -324,6 +324,7 @@ public class LogDAO {
 	public static void LOG_DUREE(String string, long debut) {
 		// TODO Auto-generated method stub
 		long duree = System.currentTimeMillis() - debut;
+	
 		if (ETAT_PERF == TypeEtatLogPerf.ACTIVE) {
 
 			String message = string + " - " + duree + "ms";
