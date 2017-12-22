@@ -41,17 +41,17 @@ public class SupprimeActiviteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 	
 		if (true)return;
-	AuthentificationSite authentification = new AuthentificationSite(
+	
+		AuthentificationSite authentification = new AuthentificationSite(
 			request, response);
-	if (!authentification.isAuthentifieWaydeur())
+	
+		if (!authentification.isAuthentifieWaydeur())
 		return;
 
 	int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 
 	ActiviteBean activite = new Coordination().getActivite(idActivite);
-	
-	
-	
+		
 
 	if (activite.getIdorganisateur() == authentification.getId()) {
 		new Coordination().effaceActivite(idActivite);
