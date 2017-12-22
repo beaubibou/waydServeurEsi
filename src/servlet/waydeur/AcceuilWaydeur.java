@@ -41,6 +41,7 @@ public class AcceuilWaydeur extends HttpServlet {
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 
+		if (true)return;
 		if (!authentification.isAuthentifieWaydeur())
 			return;
 

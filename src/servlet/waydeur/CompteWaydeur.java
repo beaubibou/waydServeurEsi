@@ -44,6 +44,7 @@ public class CompteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 	
 		// ********* Regle d'authentification*********************
+		if (true)return;
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieWaydeur())
@@ -62,7 +63,7 @@ public class CompteWaydeur extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		
+		if (true)return;
 		
 		HttpSession session = request.getSession();
 		

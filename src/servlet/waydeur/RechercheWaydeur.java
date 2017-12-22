@@ -38,6 +38,7 @@ public class RechercheWaydeur extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
+		if (true)return;
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieWaydeur())
@@ -65,7 +66,7 @@ public class RechercheWaydeur extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 	
 		// **********************************ATUHENTIFICIATION
-		
+		if (true)return;
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieWaydeur())
