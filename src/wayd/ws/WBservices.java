@@ -464,7 +464,7 @@ public class WBservices {
 
 	}
 
-	public PhotoWaydeur[] getListPhotoWaydeur(int idpersonne[]) {
+	public PhotoWaydeur[] getListPhotoWaydeur(int iddemandeur,String jeton,int idpersonne[]) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<PhotoWaydeur>();
@@ -500,6 +500,11 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
+			
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+			
 			ParticipantDAO participantDAO = new ParticipantDAO(connexion);
 			ArrayList<Participant> listParticipants = participantDAO
 					.getListPaticipant(idactivite);
@@ -525,7 +530,7 @@ public class WBservices {
 
 	}
 
-	public PhotoWaydeur getPhotoWaydeur(int idpersonne) {
+	public PhotoWaydeur getPhotoWaydeur(int iddemandeur,String jeton,int idpersonne) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 
@@ -534,6 +539,10 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 			PersonneDAO personneDao = new PersonneDAO(connexion);
 
+			if (!personneDao.isAutorise(iddemandeur, jeton))
+				return null;
+			
+			
 			LogDAO.LOG_DUREE("getPhotoWaydeur", debut);
 
 			return personneDao.getPhotoWaydeur(idpersonne);
@@ -2960,7 +2969,7 @@ public class WBservices {
 
 	}
 
-	public ProfilNotation getProfilNotation(int notateur, int idpersonne,
+	public ProfilNotation getProfilNotation(int iddemandeur,String jeton,int notateur, int idpersonne,
 			int idactivite) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2968,6 +2977,11 @@ public class WBservices {
 		try {
 			connexion = CxoPool.getConnection();
 			PersonneDAO personnedao = new PersonneDAO(connexion);
+			
+			if (!personnedao.isAutorise(iddemandeur, jeton))
+				return null;
+		
+			
 			ProfilNotation profil = personnedao.getProfilNotation(notateur,
 					idpersonne, idactivite);
 
