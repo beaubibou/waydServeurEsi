@@ -8,18 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-
 import javax.naming.NamingException;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.auth.UserRecord.CreateRequest;
-import com.google.firebase.auth.UserRecord.UpdateRequest;
-
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.metier.AvisBean;
@@ -30,6 +21,9 @@ import website.metier.TypeEtatProfil;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.FitreAdminProfils;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord.UpdateRequest;
 
 public class PersonneDAO {
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
@@ -151,6 +145,12 @@ public class PersonneDAO {
 			preparedStatement.close();
 
 			requete = "DELETE FROM participer where  idpersonne=?;";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM participer where  participer.idactivite in (select activite.idactivite from activite where activite.idpersonne=?) ";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idPersonne);
 			preparedStatement.execute();

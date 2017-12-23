@@ -1312,7 +1312,7 @@ public class ActiviteDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
-			String requete = "UPDATE public.activite   SET     datefin=current_timestamp,datefin=current_timestamp WHERE idactivite=?";
+			String requete = "UPDATE public.activite  SET  datefin=current_timestamp WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idActivite);
 			preparedStatement.executeUpdate();

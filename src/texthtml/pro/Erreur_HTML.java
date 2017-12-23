@@ -16,7 +16,7 @@ public class Erreur_HTML {
 	public static final String CREATION_COMPTE = "Votre compte a été crée" ;
 	public static final String ACTIVITE_MODIFIEE = "Activité modifiée";
 	public static final String MASQUE = "Masqué";
-	public static final String ACTIVITE_SIGNALEE = "Activité signalé";
+	public static final String ACTIVITE_SIGNALEE = "Activité signalée";
 	public static final String EN_COURS = "En cours";
 	public static final String ACTIVITE_TERMINEE = "Activité terminée";
 	public static final String TERMINEE = "Terminée";

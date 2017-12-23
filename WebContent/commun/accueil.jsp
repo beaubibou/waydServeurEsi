@@ -207,7 +207,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <input name="email" type="email" id="email" class="form-control" placeholder="Adresse e-mail" required="required">
+              <input name="email" type="email" id="email" class="form-control" placeholder="Adresse email" required="required">
               <p class="help-block text-danger"></p>
             </div>
           </div>
