@@ -70,6 +70,14 @@ public class Activite {
 
 	private int nbmaxwaydeur;
 
+	private boolean interet;
+	public boolean isInteret() {
+		return interet;
+	}
+
+	public void setInteret(boolean interet) {
+		this.interet = interet;
+	}
 
 	public int getTypeUser() {
 		return typeUser;

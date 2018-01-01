@@ -383,8 +383,8 @@ public class AvisDAO {
 		
 		// Renvoi vrai si les personne se sont notées mutuellemnt
 		
-		String requete = " SELECT idnoter from noter  where ( idpersonnenotee=? and idpersonnenotateur=? and idactivite=?) "
-				+ "or  (idpersonnenotateur =? and idpersonnenotee=? and idactivite=?)";
+		String requete = " SELECT idnoter from noter  where ( idpersonnenotee=? and idpersonnenotateur=? and idactivite=? and fait=true) "
+				+ "or  (idpersonnenotateur =? and idpersonnenotee=? and idactivite=? and fait=true)";
 				
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);

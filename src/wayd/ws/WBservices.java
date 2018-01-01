@@ -810,7 +810,6 @@ public class WBservices {
 		Connection connexion = null;
 
 		try {
-			// connexion = CxoPool.getConnection();
 			connexion = CxoPool.getConnection();
 
 			// *****************Securite*****************
@@ -827,6 +826,7 @@ public class WBservices {
 			if (activite != null) {
 				activite.defineOrganisateur(idpersonne);//
 				activitedao.isInscrit(activite, idpersonne);
+				activite.setInteret(activitedao.isDejaInteret(idpersonne, idactivite));
 				website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,
 						activite.getIdorganisateur());
 
@@ -849,6 +849,50 @@ public class WBservices {
 
 		}
 
+	}
+	public MessageServeur isDejaInteret(int idpersonne, int idactivite,
+			int typeInteret, String jeton){
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+
+		MessageServeur retour;
+		try {
+		
+			typeInteret = 0;
+
+			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return new MessageServeur(false,
+						TextWebService.PROFIL_NON_RECONNU);
+
+			// ************************************
+	
+			boolean isdejaInteret = website.dao.ActiviteDAO.isInteretDejaSignale(idpersonne, idactivite);
+			// Ajoute le nbr de vu pour chaque vu de l'activit�
+		
+			LogDAO.LOG_DUREE("isDejaInteret", debut);
+		
+			return  new MessageServeur(isdejaInteret,"ok" );
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+
+		}
+
+		return new MessageServeur(false, TextWebService.ERREUR_INCONNUE);
+	
 	}
 
 	public MessageServeur addInteretActivite(int idpersonne, int idactivite,
@@ -1023,6 +1067,40 @@ public class WBservices {
 
 		return (Activite[]) listActivite.toArray(new Activite[listActivite
 				.size()]);
+
+	}
+	
+	public String[] getListPhotoActivite(int iddemandeur, int idactivite,
+			String jeton) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		ArrayList<String> listPhoto = new ArrayList<String>();
+
+		try {
+			connexion = CxoPool.getConnection();
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(iddemandeur, jeton))
+				return null;
+
+			// ************************************
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			listPhoto = activitedao.getListPhotoActivite(idactivite);
+			
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+
+		LogDAO.LOG_DUREE("getListPhotoActivite", debut);
+
+		return (String[]) listPhoto.toArray(new String[listPhoto.size()]);
 
 	}
 

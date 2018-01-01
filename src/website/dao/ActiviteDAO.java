@@ -54,6 +54,111 @@ public class ActiviteDAO {
 
 	}
 
+	public static boolean addPhotoActivite(String photo, int idactivite) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "INSERT INTO photo_activite(idactivite, photo)  VALUES ( ?, ?)";
+
+		    preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.setString(2, photo);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			LogDAO.LOG_DUREE("ajoutePhotoActivite", debut);
+			
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return false;
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return true;
+
+	}
+	
+	public static boolean supprimePhotoActivite(int id, int idactivite) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "delete from photo_activite where id=? and idactivite=?";
+		    preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			LogDAO.LOG_DUREE("supprimePhotoActivite", debut);
+			
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return false;
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return true;
+
+	}
+	
+	public static int getNbrPhoto(int idactivite) {
+
+		long debut = System.currentTimeMillis();
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		int nbrPhoto=0;
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = " SELECT count( *) as nbrPhoto  FROM activite_photo where idactivite=?" ;
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				nbrPhoto = rs.getInt("nbrPhoto");
+			
+			}
+
+			LogDAO.LOG_DUREE("getNbrPhoto", debut);
+			return nbrPhoto;
+
+		} catch (SQLException | NamingException e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			return nbrPhoto;
+			
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+	}
 	public static boolean addNbrVu(int idpersonne, int idactivite,
 			int idorganisateur) {
 
@@ -137,7 +242,7 @@ public class ActiviteDAO {
 		return false;
 	}
 	
-	private static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
+	public static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
 
 		long debut = System.currentTimeMillis();

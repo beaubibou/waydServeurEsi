@@ -243,6 +243,45 @@ public class LogDAO {
 		return taille;
 
 	}
+	public static int getNbrConnexionActivtePostGres() {
+
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		ResultSet rs =null;
+
+		PreparedStatement preparedStatement = null;
+
+		int taille = 0;
+		try {
+			connexion = CxoPool.getConnection();
+
+			String requete = "SELECT count(*)as nbr FROM pg_catalog.pg_stat_activity";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				taille = rs.getInt("nbr");
+			}
+			
+			
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+		finally{
+			CxoPool.close(connexion, preparedStatement,rs);	
+		}
+
+
+		LogDAO.LOG_DUREE("getNbrConnexionActivtePostGres", debut);
+
+		return taille;
+
+	}
 
 	public static int getNbrLogs() {
 
@@ -488,9 +527,14 @@ public class LogDAO {
 		for (int f = 0; f < str.length(); f++) {
 
 			String charac = str.substring(f, f + 1);
-			if (NumberUtils.isParsable(charac))
-							retour = retour + charac;
+			if (NumberUtils.isParsable(charac)){
+				retour = retour + charac;
+				if (retour.length()>5)
+					return 0;
+			}
+							
 		}
+		
 		
 		return Integer.parseInt(retour);
 

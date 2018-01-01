@@ -152,6 +152,7 @@
 						<div class="form-group">
 						<p>Nrb Logs: <%=LogDAO.getNbrLogs()%></p>
 						<p>Taille: <%=LogDAO.getTailleBase()%></p>
+						<p>Cx PostGres: <%=LogDAO.getNbrConnexionActivtePostGres()%></p>
 					</div>
 					
 					<button type="submit" class="btn btn-info">Recherchez</button>

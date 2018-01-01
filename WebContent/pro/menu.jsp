@@ -23,7 +23,7 @@
 
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-
+			<%	ProfilBean profiltmp = (ProfilBean) request.getSession().getAttribute("profil"); %>
 
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.home)%>><a
 					href="/wayd/Home"><%=MenuProText.ACCUEIL%></a></li>
@@ -49,13 +49,15 @@
 
 					</ul></li>
 
-
+<%
+					if (profiltmp != null) {
+				%>
 				<li <%=MenuHtml.getActiviteClass(etatMenu, MenuEnum.contact)%>><a
 					href="/wayd/Contact">Contact</a></li>
 
+			<%} %>
 				<%
-					ProfilBean profiltmp = (ProfilBean) request.getSession()
-							.getAttribute("profil");
+				
 					if (profiltmp != null)
 						if (profiltmp.isAdmin()) {
 				%>
