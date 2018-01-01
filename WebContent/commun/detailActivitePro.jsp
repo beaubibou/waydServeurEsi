@@ -1,3 +1,4 @@
+<%@page import="website.metier.PhotoActiviteBean"%>
 <%@page import="website.html.OutilsHtml"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
@@ -49,6 +50,8 @@
 				.getAttribute("activite");
 		ArrayList<ParticipantBean> listParticipant = activite
 				.getListParticipant();
+		ArrayList<PhotoActiviteBean> listPhoto=(ArrayList<PhotoActiviteBean>)request.getAttribute("listPhoto");
+		
 		MenuEnum etatMenu=null;
 	%>
 
@@ -137,6 +140,66 @@
 				</div>
 			</div>
 		</div>
+		
+					<%
+					if (listPhoto!=null && !listPhoto.isEmpty())
+				    {
+				%>
+
+				<h2>Photos</h2>
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+     
+     <%if (listPhoto.size()>0)
+    	 for (int f=1;f<listPhoto.size();f++){
+    	 %>
+     			
+      <li data-target="#myCarousel" data-slide-to="<%=f%>"></li>
+    <%} %>
+    </ol>
+ 
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+
+
+						<div class="item active">
+
+							<img src=<%=Outils.getUrlPhoto(listPhoto.get(0).getPhoto())%>
+								style="width: 100%;">
+				
+						</div>
+
+						<%
+							for (int f=1;f<listPhoto.size();f++) {
+						%>
+						<div class="item">
+							<img src=<%=Outils.getUrlPhoto(listPhoto.get(f).getPhoto())%>
+								style="width: 100%;" >
+						
+						</div>
+
+						<%
+							}
+						%>
+
+
+						<!-- Left and right controls -->
+						<a class="left carousel-control" href="#myCarousel"
+							data-slide="prev"> <span
+							class="glyphicon glyphicon-chevron-left"></span> <span
+							class="sr-only">Previous</span>
+						</a> <a class="right carousel-control" href="#myCarousel"
+							data-slide="next"> <span
+							class="glyphicon glyphicon-chevron-right"></span> <span
+							class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+				<%
+					}
+				%>
 	</div>
 
 

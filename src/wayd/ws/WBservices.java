@@ -67,6 +67,7 @@ import wayde.bean.Notification;
 import wayde.bean.Participant;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
+import wayde.bean.PhotoActivite;
 import wayde.bean.Preference;
 import wayde.bean.Profil;
 import wayde.bean.PhotoWaydeur;
@@ -1070,12 +1071,12 @@ public class WBservices {
 
 	}
 	
-	public String[] getListPhotoActivite(int iddemandeur, int idactivite,
+	public PhotoActivite[] getListPhotoActivite(int iddemandeur, int idactivite,
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<String> listPhoto = new ArrayList<String>();
-
+		ArrayList<PhotoActivite> listPhoto = new ArrayList<PhotoActivite>();
+LOG.info("couc");
 		try {
 			connexion = CxoPool.getConnection();
 			// *****************Securite*****************
@@ -1100,7 +1101,7 @@ public class WBservices {
 
 		LogDAO.LOG_DUREE("getListPhotoActivite", debut);
 
-		return (String[]) listPhoto.toArray(new String[listPhoto.size()]);
+		return (PhotoActivite[]) listPhoto.toArray(new PhotoActivite[listPhoto.size()]);
 
 	}
 

@@ -19,6 +19,7 @@ import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
 import wayde.bean.Personne;
+import wayde.bean.PhotoActivite;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
 import website.dao.LogDAO;
@@ -183,12 +184,12 @@ public class ActiviteDAO {
 
 	}
 
-	public ArrayList<String> getListPhotoActivite(int idactivite)
+	public ArrayList<PhotoActivite> getListPhotoActivite(int idactivite)
 			throws SQLException {
 
-		ArrayList<String> listPhotos = new ArrayList<String>();
+		ArrayList<PhotoActivite> listPhotos = new ArrayList<PhotoActivite>();
 
-		String requete = "SELECT photo from photo_activite where idactivite=?";
+		String requete = "SELECT photo,id,idactivite from photo_activite where idactivite=?";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -197,11 +198,13 @@ public class ActiviteDAO {
 
 		ResultSet rs = preparedStatement.executeQuery();
 
-		String photo;
+		 
 
 		while (rs.next()) {
-			photo = rs.getString("photo");
-			listPhotos.add(photo);
+			String	photo = rs.getString("photo");
+			int id=rs.getInt("id");
+			int idActivite=rs.getInt("idactivite");
+			listPhotos.add(new PhotoActivite(id, idActivite, photo));
 		}
 		rs.close();
 		preparedStatement.close();
@@ -725,7 +728,7 @@ public class ActiviteDAO {
 
 	public void RemoveOnlyActivite(int idactivite) throws SQLException {
 
-		String requete = "DELETE FROM activite where ( idactivite=? );";
+		String requete = "DELETE FROM photo_activite where ( idactivite=? );";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
@@ -733,6 +736,18 @@ public class ActiviteDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 
+		
+		 requete = "DELETE FROM activite where ( idactivite=? );";
+		 preparedStatement = connexion
+				.prepareStatement(requete);
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setInt(1, idactivite);
+		preparedStatement.execute();
+		preparedStatement.close();
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 

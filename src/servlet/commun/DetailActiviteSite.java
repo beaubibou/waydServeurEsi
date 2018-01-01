@@ -1,6 +1,7 @@
 package servlet.commun;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import website.html.AlertInfoJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
+import website.metier.PhotoActiviteBean;
 import website.metier.ProfilBean;
 
 /**
@@ -60,6 +62,7 @@ public class DetailActiviteSite extends HttpServlet {
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 	
 		ActiviteBean activite = new Coordination().getActivite(idActivite);
+		ArrayList<PhotoActiviteBean>listPhotoActivite=ActiviteDAO.getListPhotoActivite(idActivite);
 		
 		if (activite==null){
 			
@@ -77,7 +80,8 @@ public class DetailActiviteSite extends HttpServlet {
 		ActiviteDAO.addNbrVu(authentification.getId(), idActivite,activite.getIdorganisateur());
 		
 		request.setAttribute("activite", activite);
-
+		request.setAttribute("listPhoto", listPhotoActivite);
+	
 		// recuepre les coordonnes du filtre pour le calcul de la distance
 		
 		switch (activite.getTypeUser()) {
