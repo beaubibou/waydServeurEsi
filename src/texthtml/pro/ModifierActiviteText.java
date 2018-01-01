@@ -8,7 +8,9 @@ public class ModifierActiviteText {
 
 	public static String HINT_ADRESSE = CommunText.HINT_ADRESSE;
 	public static String HINT_TITRE = CommunText.HINT_TITRE;
-
+	public static String AUCUN_FICHIER_SELECTIONNE="Aucune image selectionnée";
+	public static String NBR_MESSAGE_IMAGE_MAX="Le maximum d'image autorisé est de 3.";
+	
 	public static String TITRE_JUMBO = "Proposez vos activités";
 	public static String MESSAGE_JUMBO_LIGNE1 = "Modifier vos activités. Vous pouvez supprimer vos activités via le menu Gérer.";
 	public static String MESSAGE_JUMBO_LIGNE2 = "Vous pouvez planifier jusqu à 5 activités simultanément.";

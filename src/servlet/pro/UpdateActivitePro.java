@@ -68,7 +68,8 @@ public class UpdateActivitePro extends HttpServlet {
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-
+	
+	
 		String titre = request.getParameter("titre");
 		String adresse = request.getParameter("adresse");
 		String description = request.getParameter("description");

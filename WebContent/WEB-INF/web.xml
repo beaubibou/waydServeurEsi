@@ -774,4 +774,24 @@
     <servlet-name>ParametreAdmin</servlet-name>
     <url-pattern>/ParametreAdmin</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjoutePhotoActivite</display-name>
+    <servlet-name>AjoutePhotoActivite</servlet-name>
+    <servlet-class>servlet.pro.AjoutePhotoActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjoutePhotoActivite</servlet-name>
+    <url-pattern>/AjoutePhotoActivite</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SupprimePhotoActivite</display-name>
+    <servlet-name>SupprimePhotoActivite</servlet-name>
+    <servlet-class>servlet.pro.SupprimePhotoActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimePhotoActivite</servlet-name>
+    <url-pattern>/SupprimePhotoActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

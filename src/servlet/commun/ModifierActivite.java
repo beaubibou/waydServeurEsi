@@ -1,6 +1,7 @@
 package servlet.commun;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
+import website.metier.PhotoActiviteBean;
 import website.metier.ProfilBean;
 
 /**
@@ -52,8 +54,9 @@ public class ModifierActivite extends HttpServlet {
 		int idActivite = Integer.parseInt(request.getParameter("idactivite"));
 
 		ActiviteBean activiteBean = new Coordination().getActivite(idActivite);
-		
-		
+		ArrayList<PhotoActiviteBean>listPhotoActivite=ActiviteDAO.getListPhotoActivite(idActivite);
+			
+	
 		if (activiteBean==null){
 			
 		switch(authentification.getProfil().getTypeuser()){
@@ -78,6 +81,8 @@ public class ModifierActivite extends HttpServlet {
 		case ProfilBean.PRO:
 
 			request.setAttribute("activite", activiteBean);
+			request.setAttribute("listPhoto", listPhotoActivite);
+			
 			request.getRequestDispatcher("/pro/modifierActivitePro.jsp")
 					.forward(request, response);
 
@@ -95,7 +100,7 @@ public class ModifierActivite extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

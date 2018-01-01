@@ -1,23 +1,18 @@
-<%@page import="website.metier.PhotoActiviteBean"%>
-<%@page import="website.html.OutilsHtml"%>
+<%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
+<%@page import="texthtml.pro.CreationActiviteText"%>
 <%@page import="texthtml.pro.Erreur_HTML"%>
-<%@page import="texthtml.pro.ModifierActiviteText"%>
-<%@page import="website.html.DateHtlm"%>
-<%@page import="website.metier.ActiviteBean"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>
 <%@page import="website.metier.TypeAccess"%>
-<%@page import="website.metier.Outils"%>
-<%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.dao.*"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="texthtml.pro.CompteProText"%>
+<%@page import="website.metier.AuthentificationSite"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<title>>Création activité</title>
+<title>><%=CreationActiviteText.TITRE_ONGLET%></title>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,74 +32,60 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 
-
 <script src="js/moment.js"></script>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
 	rel="stylesheet" type="text/css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<link href="/wayd/css/style.css" rel="stylesheet" type="text/css">
+<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css">
 <link href="/wayd/css/nbrcaractere.css" rel="stylesheet" media="all"
 	type="text/css">
-<link href="/wayd/css/styleWayd.css" rel="stylesheet" type="text/css" />
-
-
 </head>
 <body>
 
 	<%
 		AuthentificationSite authentification=	new AuthentificationSite(request, response);
 			if (!authentification.isAuthentifiePro())
-		return;
+			return;
 			
-		ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
-		ActiviteBean activite=(ActiviteBean)request.getAttribute("activite");
-		ArrayList<PhotoActiviteBean> listPhoto=(ArrayList<PhotoActiviteBean>)request.getAttribute("listPhoto");
+			ProfilBean profil = authentification.getProfil();
+			ArrayList<TypeActiviteBean> listTypeActivite=CacheValueDAO.getListTypeActivitePro();
+			// Defini le li a rendre actif
 		MenuEnum etatMenu=null;
-		//ArrayList<TypeAccess> listTypeAccess=CacheValueDAO.getListTypeAccess();
 	%>
+
 	<%@ include file="menu.jsp"%>
 
-	<div class="container">
+
+	<div class="container" >
 		<div id="loginbox"
 			class="mainbox col-md-8 col-md-offset-2 col-sm-8 margedebut">
 			<div class="panel panel-default">
 				<div class="panel-heading panel-heading-custom">
-					<div class="panel-title">Modifier votre activité</div>
+					<div class="panel-title"><%=CreationActiviteText.TITRE_PANEL%></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
-					<div class="form-group" style="border-bottom: 1px solid #888;">
-
-						<p class="text-tuto"><%=ModifierActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
-
-					</div>
-					<div class="form-group">
-
-						<form
-							action="/wayd/AjoutePhotoActivite?idActivite=<%=activite.getId()%>"
-							method="post" enctype="multipart/form-data"
-							onsubmit="return valideFichier()">
-							<input type="file" name="file" size="50" id="file" /> <br>
-							<input type="submit" value="Envoyer la photo"
-								class="btn btnwayd btn-sm" />
-
-						</form>
-					</div>
-
-
-
-					<form action="/wayd/UpdateActivitePro"
+				
+				
+					<form action="/wayd/AjouteActivitePro"
 						onsubmit="return valideFormulaire()" method="post">
 
-						<br>
+						<div class="form-group"   style="border-bottom: 1px solid #888;">
+
+							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
+							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
+						
+						</div>
+					<br>	
 
 						<div class="form-group">
-							<label for="titre"><%=ModifierActiviteText.LABEL_TITRE%></label>
-							<input type="text" maxlength="50" class="form-control" id="titre"
-								required placeholder="<%=ModifierActiviteText.HINT_TITRE%>"
-								name="titre" value=<%=activite.getTitre()%>>
+							<label for="titre"><%=CreationActiviteText.LABEL_TITRE%></label>
+							<input type="text" class="form-control" id="titre" required
+								placeholder="<%=CreationActiviteText.getHintTitreActivite()%>"
+								maxLength="<%=CreationActiviteText.TAILLE_TITRE_ACTIVITE_MAX%>"
+								name="titre" required>
 						</div>
 
 
@@ -113,7 +94,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatedebut"><%=ModifierActiviteText.LABEL_DATE_DEBUT%></label>
+										<label for="iddatedebut"><%=CreationActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
 											<input type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
@@ -125,7 +106,7 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin"><%=ModifierActiviteText.LABEL_DATE_FIN%></label>
+										<label for="iddatefin"><%=CreationActiviteText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
 											<input type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
@@ -135,16 +116,12 @@
 									</div>
 								</div>
 								<div class='col-sm-4'>
-									<label for="typeactivite"><%=ModifierActiviteText.LABEL_TYPE_ACTIVITE%></label>
+									<label for="typeactivite"><%=CreationActiviteText.LABEL_TYPE_ACTIVITE%></label>
 									<select class="form-control" id="type" name="typeactivite">
 										<%
 											for (TypeActiviteBean typeactivite:listTypeActivite) {
 										%>
-
-										<option value="<%=typeactivite.id%>"
-											<%=Outils.jspAdapterListSelected(typeactivite.getId(), activite.getTypeactivite())%>><%=typeactivite.getLibelle()%></option>
-
-
+										<option value="<%=typeactivite.getId()%>"><%=typeactivite.getLibelle()%></option>
 										<%
 											}
 										%>
@@ -152,134 +129,53 @@
 
 								</div>
 							</div>
-
 						</div>
 
 						<div class="form-group">
-							<label for="adresse"><%=ModifierActiviteText.LABEL_ADRESSE%></label>
+							<label for="adresse"><%=CreationActiviteText.LABEL_ADRESSE%></label>
 							<input type="text" class="form-control" id="adresse" required
-								value="<%=activite.getAdresse()%>" name="adresse"
-								onkeypress="initPosition()">
+								value="<%=profil.getAdresse()%>" name="adresse"
+								onkeypress="initPosition()"
+								maxlength="<%=CreationActiviteText.TAILLE_ADRESSE_MAX%>">
 						</div>
 
 						<div class="form-group">
-							<label for="description"><%=ModifierActiviteText.LABEL_DESCRIPTION_ACTIVITE%></label>
+							<label for="description"><%=CreationActiviteText.LABEL_DESCRIPTION_ACTIVITE%></label>
 							<textarea
-								maxlength="<%=ModifierActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
+								placeholder="<%=CreationActiviteText.getHintDescriptionActivite()%>"
+								maxlength="<%=CreationActiviteText.TAILLE_DESCRIPTION_ACTIVITE_MAX%>"
 								class="form-control" rows="5" id="description"
-								name="description"
-								placeholder="<%=ModifierActiviteText.getHintDescriptionActivite()%>"><%=OutilsHtml.convertStringHtml(activite.getLibelle())%></textarea>
+								name="description"></textarea>
 						</div>
 						<h5 class="nbrcaracteremax" id="nbr">
 
-							<%=ModifierActiviteText.initNbrCaracteres()%></h5>
+							<%=CreationActiviteText.initNbrCaracteres()%></h5>
 
-
-						<button type="submit" class="btn btnwayd">Enregistrer</button>
+						<button type="submit" class="btnwayd btn-lg">Proposer</button>
 
 						<div class="form-group">
 
 							<input type="hidden" class="form-control" id="latitude"
 								placeholder="latitude" name="latitude"
-								value=<%=activite.getLatitude()%>>
+								value=<%=profil.getLatitudeFixe()%>>
 						</div>
 						<div class="form-group">
 
 							<input type="hidden" class="form-control" id="longitude"
 								placeholder="longitude" name="longitude"
-								value=<%=activite.getLongitude()%>>
+								value=<%=profil.getLongitudeFixe()%>>
 						</div>
-						<input type="hidden" name="idActivite"
-							value="<%=activite.getId()%>">
-
-						<div class="form-group"></div>
-
+						
 					</form>
 
-
-
 				</div>
-				<%
-					if (listPhoto!=null && !listPhoto.isEmpty())
-				    {
-				%>
-
-				<h2>Vos photos</h2>
-				<div id="myCarousel" class="carousel slide" data-ride="carousel">
-					<!-- Indicators
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
- -->
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner">
-
-
-						<div class="item active">
-
-							<img src=<%=Outils.getUrlPhoto(listPhoto.get(0).getPhoto())%>
-								style="width: 100%;" class="img-thumbnail">
-
-							<div align="center">
-								<a href='<%=listPhoto.get(0).getLienSuppression()%>'
-									class="btn btn-alert "> <span
-									class="glyphicon glyphicon-trash">Supprimer</span>
-								</a>
-
-							</div>
-
-
-
-						</div>
-
-						<%
-							for (int f=1;f<listPhoto.size();f++) {
-						%>
-						<div class="item">
-							<img src=<%=Outils.getUrlPhoto(listPhoto.get(f).getPhoto())%>
-								style="width: 100%;" class="img-thumbnail">
-						
-						<div align="center">
-								<a href='<%=listPhoto.get(f).getLienSuppression()%>'
-									class="btn btn-alert "> <span
-									class="glyphicon glyphicon-trash">Supprimer</span>
-								</a>
-
-							</div>
-
-						</div>
-
-						<%
-							}
-						%>
-
-
-						<!-- Left and right controls -->
-						<a class="left carousel-control" href="#myCarousel"
-							data-slide="prev"> <span
-							class="glyphicon glyphicon-chevron-left"></span> <span
-							class="sr-only">Previous</span>
-						</a> <a class="right carousel-control" href="#myCarousel"
-							data-slide="next"> <span
-							class="glyphicon glyphicon-chevron-right"></span> <span
-							class="sr-only">Next</span>
-						</a>
-					</div>
-				</div>
-				<%
-					}
-				%>
 			</div>
-
 		</div>
 
 
+	</div>
 
-
-
-		<script>
+	<script>
 		var placeSearch, autocomplete;
 		var componentForm = {
 			street_number : 'short_name',
@@ -328,34 +224,31 @@
 		}
 	</script>
 
-		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
-			async defer></script>
-		<script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
+		async defer></script>
+	<script>
 		$(function() {
 
-			var dateDebut =
-	<%=DateHtlm.getDateHtml(activite.getDatedebut())%>
-		;
-			var dateFin =
-	<%=DateHtlm.getDateHtml(activite.getDatefin())%>
-		;
-
 			$('#datedebut').datetimepicker({
-				defaultDate : dateDebut,
+				defaultDate : new Date,
 				format : 'DD/MM/YYYY HH:mm'
 
 			});
 
-			$('#datefin').datetimepicker({
-				defaultDate : dateFin,
-				format : 'DD/MM/YYYY HH:mm'
+			var heure = new Date().getHours() + 3;
 
-			});
+			$('#datefin').datetimepicker(
+					{
+						defaultDate : moment(new Date()).hours(heure)
+								.minutes(0).seconds(0).milliseconds(0),
+						format : 'DD/MM/YYYY HH:mm'
+
+					});
 
 		});
 	</script>
-		<script>
+	<script>
 		function dateDiff(date1, date2) {
 			var diff = {} // Initialisation du retour
 			var tmp = date2 - date1;
@@ -386,7 +279,7 @@
 		}
 
 		function valideFormulaire() {
-
+			
 			var datedebut = $('#datedebut').data('DateTimePicker').date();
 			var datefin = $('#datefin').data('DateTimePicker').date();
 
@@ -395,18 +288,24 @@
 			longitude = document.getElementById("longitude").value;
 
 			if (latitude == 0 || longitude == 0) {
-				alert();
-				BootstrapDialog
-						.alert("<%=ModifierActiviteText.ALERT_GPS_NO_POSITION%>");
+			
+				BootstrapDialog.show({
+					message:"<%=CreationActivitePlanifieeText.ALERT_GPS_NO_POSITION%>"
+							});
+
 				return false;
 			}
 
 			if (datedebut > datefin) {
-				alert("<%=Erreur_HTML.DATEDEBUT_SUP_DATEFIN%>");
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DATEDEBUT_SUP_DATEFIN%>"
+							});
 				return false;
 			}
 			if (datefin < new Date()) {
-				alert("<%=Erreur_HTML.DATEFIN_INF_NOW%>");
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DATEFIN_INF_NOW%>"
+							});
 				return false;
 			}
 
@@ -415,73 +314,51 @@
 			// Condition Ã  rajouter pour le nbr d'heure max de l'activitÃ©
 
 			if (diffHeure > 8) {
-				alert("<%=Erreur_HTML.DUREE_PAS_SUPERIEUR_A%>");
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DUREE_PAS_SUPERIEUR_A%>"
+							});
 				return false;
 			}
 
-			if (diffHeure < 1) {
-				alert("<%=Erreur_HTML.DUREE_PAS_INFERIEURE_A%>");
+			if (diffHeure <1) {
+				BootstrapDialog.show({
+					message:"<%=Erreur_HTML.DUREE_PAS_INFERIEURE_A%>"
+							});
 				return false;
 			}
-			
 			return true;
 		}
 
 		function initPosition() {
-			
 			latitude = 0;
 			longitude = 0;
 			document.getElementById("latitude").value = 0;
 			longitude = document.getElementById("longitude").value = 0;
 
 		}
-		
-		function valideFichier(){
-			
-			var monfichier;
-			var nbrActivite;
-			nbrActivite=<%=ActiviteDAO.getNbrPhoto(activite.getId())%>;
-			monfichier=latitude = document.getElementById("file").value;
-			
-		if (monfichier==''){
-			BootstrapDialog
-			.alert("<%=ModifierActiviteText.AUCUN_FICHIER_SELECTIONNE%>");
-		return false;
-		}
-				
-		
-		if (nbrActivite==3){
-			
-			BootstrapDialog
-			.alert("<%=ModifierActiviteText.NBR_MESSAGE_IMAGE_MAX%>");
-		return false;
-			
-		}
-		return true;
-		}
 	</script>
 
-		<script>
-	$(document).ready(function(e) {
+	<script>
+		$(document).ready(function(e) {
 
-		$('#description').keyup(function() {
+			$('#description').keyup(function() {
 
-			var nombreCaractere = $(this).val().length;
-			//alert(nombreCaractere);
+				var nombreCaractere = $(this).val().length;
+				//alert(nombreCaractere);
 
-			var msg = nombreCaractere + '<%=ModifierActiviteText.getNbrCarateresDescription()%>';
+				var msg = nombreCaractere + '<%=CreationActiviteText.getNbrCarateresDescription()%>';
 
-			$('#nbr').text(msg);
-			// Le script qui devra calculer et afficher le nombre de mots et de caractères
+				$('#nbr').text(msg);
+				// Le script qui devra calculer et afficher le nombre de mots et de caractères
 
-		})
+			})
 
-	});
+		});
 
-	// Init le nombre de caraterces	
-	var nombreCaractere = $('#description').val().length;
-	var msg = nombreCaractere +   '<%=ModifierActiviteText.getNbrCarateresDescription()%>';
-			$('#nbr').text(msg);
-		</script>
+		// Init le nombre de caraterces	
+		var nombreCaractere = $('#description').val().length;
+		var msg = nombreCaractere +   '<%=CreationActiviteText.getNbrCarateresDescription()%>';
+		$('#nbr').text(msg);
+	</script>
 </body>
 </html>
