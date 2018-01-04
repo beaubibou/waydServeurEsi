@@ -8,9 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
+
 import javax.naming.NamingException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
 import website.metier.AvisBean;
@@ -18,9 +21,11 @@ import website.metier.Outils;
 import website.metier.ProfilBean;
 import website.metier.TableauBordBean;
 import website.metier.TypeEtatProfil;
+import website.metier.TypeEtatValide;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.FitreAdminProfils;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord.UpdateRequest;
@@ -500,6 +505,7 @@ public class PersonneDAO {
 		String email = filtre.getEmail();
 		int etatProfil = filtre.getEtatProfil();
 		int typeSignalement = filtre.getTypeSignalement();
+		int etatValide=filtre.getEtatValide();
 	//	pseudo = pseudo.replace("*", "%");
 	//	email = email.replace("*", "%");
 
@@ -517,7 +523,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
+					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,valide,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,"
 					+ "premiereconnexion,latitude,longitude,adresse,siteweb,telephone,"
@@ -557,6 +563,18 @@ public class PersonneDAO {
 
 				}
 			}
+			
+			if (etatValide!=TypeEtatValide.TOUS){
+				switch (etatValide) {
+				case TypeEtatValide.EN_ATTENTE:
+					requete = requete + " and valide=false";
+					break;
+				case TypeEtatValide.VALIDE:
+					requete = requete + " and valide=true";
+
+				}
+				
+			}
 
 			switch (typeSignalement) {
 
@@ -579,6 +597,8 @@ public class PersonneDAO {
 				break;
 			}
 
+			
+			
 			requete = requete + " order by datecreation desc limit ?  offset ?";
 
 			// *********************************************************************
@@ -642,13 +662,14 @@ public class PersonneDAO {
 				String siret = rs.getString("siret");
 				String sexeStr = rs.getString("sexeStr");
 				String mail = rs.getString("mail");
+				boolean valide = rs.getBoolean("valide");
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr, mail);
+						sexeStr, mail,valide);
 				profil.setNbrSignalement(nbrSignalement);
 
 				retour.add(profil);
@@ -689,7 +710,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
+					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,valide,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire, photo,typeuser,premiereconnexion,latitude,longitude,adresse"
 					+ ",siteweb,telephone,latitudefixe,longitudefixe,siret,sexe.libelle as sexeStr "
@@ -731,13 +752,16 @@ public class PersonneDAO {
 				String siret = rs.getString("siret");
 				String sexestr = rs.getString("sexeStr");
 				String mail = rs.getString("mail");
+				boolean valide = rs.getBoolean("valide");
+				
+				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexestr, mail);
+						sexestr, mail,valide);
 
 			}
 			LogDAO.LOG_DUREE("getFullProfil", debut);
@@ -810,7 +834,7 @@ public class PersonneDAO {
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 					+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
 					+ "(SELECT COUNT(*) FROM ami where idpersonne=personne.idpersonne ) as nbrami,"
-					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,"
+					+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,admin,valide,"
 					+ "nbrecheccnx, datecreation,  datenaissance, sexe,affichesexe, afficheage,"
 					+ "  mail, cleactivation,commentaire,"
 					+ "typeuser,photo,premiereconnexion,latitude,longitude,adresse,sexe.libelle as sexeStr "
@@ -852,14 +876,15 @@ public class PersonneDAO {
 				double longitudeFixe = rs.getDouble("longitudefixe");
 				String siret = rs.getString("siret");
 				String mail = rs.getString("mail");
-
+				boolean valide = rs.getBoolean("valide");
+				
 				profil = new ProfilBean(id, nom, prenom, datecreation,
 						datenaissance, nbravis, sexe, nbractivite,
 						nbrparticipation, nbrami, note, photo, affichesexe,
 						afficheage, commentaire, actif, admin, typeuser,
 						premiereconnexion, latitude, longitude, adresse,
 						siteWeb, telephone, latitudeFixe, longitudeFixe, siret,
-						sexeStr, mail);
+						sexeStr, mail,valide);
 
 			}
 
@@ -913,9 +938,50 @@ public class PersonneDAO {
 			preparedStatement.setInt(2, idPersonne);
 			preparedStatement.execute();
 			
-			LogDAO.LOG_DUREE("activerProfilEtActivite", debut);
 			
 			connexion.commit();
+			LogDAO.LOG_DUREE("activerProfilEtActivite", debut);
+			
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return false;
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return true;
+
+	}
+	
+	public static boolean valideCompte(int idPersonne, boolean actif) {
+		// TODO Auto-generated method stub
+
+		
+		long debut = System.currentTimeMillis();
+		PreparedStatement preparedStatement=null;
+		Connection connexion = null;
+
+		// ACTIVE OU DESACTIVE PROFIL ET ACTIVITE
+
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE personne SET   valide=? WHERE idpersonne=?";
+			preparedStatement = connexion
+					.prepareStatement(requete);
+			preparedStatement.setBoolean(1, actif);
+			preparedStatement.setInt(2, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+				
+			connexion.commit();
+			
+			LogDAO.LOG_DUREE("valideCompte", debut);
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block

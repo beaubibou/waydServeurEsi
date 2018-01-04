@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import website.metier.AmiBean;
+import website.metier.TypeEtatValide;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
@@ -18,6 +19,7 @@ public class FitreAdminProfils {
 	int typeUser;
 	int etatProfil;
 	int typeSignalement;
+	int etatValide;
 
 	public FitreAdminProfils() {
 
@@ -28,8 +30,23 @@ public class FitreAdminProfils {
 		typeUser = TypeUser.TOUS;
 		etatProfil = EtatProfil.TOUS;
 		typeSignalement = TypeSignalement.TOUS;
+		etatValide=TypeEtatValide.TOUS;
 
 	}
+
+	
+
+	public int getEtatValide() {
+		return etatValide;
+	}
+
+
+
+	public void setEtatValide(int etatValide) {
+		this.etatValide = etatValide;
+	}
+
+
 
 	public int getTypeSignalement() {
 		return typeSignalement;

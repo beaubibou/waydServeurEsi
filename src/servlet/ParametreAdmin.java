@@ -6,9 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
-
+import servlet.pro.CreerUserPro;
 import website.dao.LogDAO;
 import website.metier.AuthentificationSite;
 
@@ -18,7 +17,7 @@ import website.metier.AuthentificationSite;
 public class ParametreAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ParametreAdmin.class);
-	
+
 	  
     /**
      * @see HttpServlet#HttpServlet()
@@ -61,6 +60,16 @@ public class ParametreAdmin extends HttpServlet {
 		
 		int tpscalculperf = Integer.parseInt(request
 				.getParameter("tpscalculperf"));
+		
+		if (request.getParameter("verifieEmail")==null ||request.getParameter("verifieEmail").isEmpty()){
+			Connexion.verifieEmail=false;
+		}
+		else
+		{
+			Connexion.verifieEmail=true;
+		}
+		
+		
 		
 		LogDAO.MAX_LOG_SIZE=maxLogs;
 		LogDAO.NBR_LOG_A_EFFACER=nbrLogSupprimer;

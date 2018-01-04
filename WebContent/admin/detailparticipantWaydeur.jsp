@@ -135,9 +135,9 @@
 					<div class="form-group">
 
 						<div class="row vertical-align">
-							<div class='col-sm-4'>
+							<div class='col-sm-6'>
 
-								<img height="300" width="300"
+								<img height="600" width="600"
 									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
 									class="img-thumbnail" class="text-center" />
 

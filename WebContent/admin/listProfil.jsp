@@ -1,3 +1,4 @@
+<%@page import="website.metier.TypeEtatValide"%>
 <%@page import="website.metier.TypeEtatProfil"%>
 <%@page import="website.pager.PagerProfilBean"%>
 <%@page import="website.metier.TypeUser"%>
@@ -39,6 +40,7 @@
 		
 		ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUserAdmin();
 		ArrayList<TypeEtatProfil> listEtatProfil=CacheValueDAO.getListEtatProfil();
+		ArrayList<TypeEtatValide> listEtatValide=CacheValueDAO.getListEtatValide();
 		ArrayList<TypeSignalement> listTypeSignalementProfil=CacheValueDAO.getListTypeSignalementProfil();
 		PagerProfilBean pager=(PagerProfilBean) request
 			.getAttribute("pager");
@@ -101,6 +103,25 @@
 						</select>
 					</div>
 
+
+					<div class="form-group">
+						<label for="typeEtatValide">Validation du compte</label> <select
+							data-style="btn-primary" class="form-control" id="typeEtatValide"
+							name="etatProfilValide">
+
+							<%
+								for (TypeEtatValide typeEtatValide:listEtatValide) {
+							%>
+							<option value="<%=typeEtatValide.getId()%>"
+								<%=Outils.jspAdapterListSelected(typeEtatValide.getId(), filtre.getEtatValide())%>>
+								<%=typeEtatValide.getLibelle()%></option>
+							<%
+								}
+							%>
+
+						</select>
+					</div>
+
 					<div class="form-group">
 						<label for="typeSignalement">Signalement</label> <select
 							data-style="btn-primary" class="form-control"
@@ -133,6 +154,7 @@
 					<th style="width: 15%;" class="text-center">photo</th>
 					<th style="width: 5%;" class="text-center">User</th>
 					<th class="text-center">Mail</th>
+					<th class="text-center">Validation</th>
 					<th style="width: 15%;" class="text-center">Date création</th>
 					<th style="width: 5%;" class="text-center">Action</th>
 					<th style="width: 20%;" class="text-center">Signalement</th>
@@ -150,6 +172,8 @@
 						+"&formInit=listProfil";
 						
 						String lienActivation =profil.getLienActive();
+						String lienValidation =profil.getLienValidationCompte();
+						
 				%>
 
 				<tr>
@@ -168,8 +192,11 @@
 
 					<td><a href=<%=lien%>><%=profil.getPseudo()%></a></td>
 					<td><a href=<%=lien%>><%=profil.getEmail()%></a></td>
-
-
+					<%if (profil.isValide()){ %>
+					<td>Compte Validé</td>
+					<%} else{ %>
+					<td><a href=<%=lienValidation%>>Valider </br> ce compte</a></td>
+					<%} %>
 					<td><%=profil.getDatecreationStr()%></td>
 					<td>
 						<button id='<%=lienMessage%>' name='envoiMessage' type='button'

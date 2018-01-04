@@ -118,6 +118,7 @@ public class ChargePhotoPro extends HttpServlet {
 	
 	public static BufferedImage resize(BufferedImage img, int newW, int newH) throws IOException {
 		  return Thumbnails.of(img).forceSize(newW, newH).outputQuality(1).asBufferedImage();
+		 
 		}
 	
 	}

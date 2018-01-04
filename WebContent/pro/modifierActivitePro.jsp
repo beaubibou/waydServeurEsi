@@ -78,6 +78,7 @@
 					<div class="form-group" style="border-bottom: 1px solid #888;">
 
 						<p class="text-tuto"><%=ModifierActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
+						<p class="text-tuto"><%=ModifierActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
 
 					</div>
 					<div class="form-group">

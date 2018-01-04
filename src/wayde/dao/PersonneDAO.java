@@ -632,8 +632,8 @@ public class PersonneDAO {
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
 				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser,"
-				+ "adresse,longitudefixe,latitudefixe,telephone,siret,siteweb,admin)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?,false);";
+				+ "adresse,longitudefixe,latitudefixe,telephone,siret,siteweb,admin,valide)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?,false,false);";
 
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);

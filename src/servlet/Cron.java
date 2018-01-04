@@ -3,8 +3,10 @@ package servlet;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import threadpool.PoolThreadGCM;
 import wayd.ws.WBservices;
+import wayde.bean.CxoPool;
 import website.dao.CacheValueDAO;
 import website.dao.LogDAO;
 import website.enumeration.TypePhoto;
@@ -50,6 +53,9 @@ public class Cron extends HttpServlet {
 	LOG.info(PoolThreadGCM.poolThread.getActiveCount());
 	PoolThreadGCM.poolThread.purge();
 	PoolThreadGCM.poolThread.shutdown();
+	
+	
+	
 	
 		
 	}

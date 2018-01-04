@@ -46,6 +46,8 @@ public class Erreur_HTML {
 			+ " Tu peux la retrouvez pour les particuliers sur le play store";
 	public static final String INTERET_DEJA_SIGNALEE = "Vous avez déjà signalé votre intéret pour cette activité";
 	public static final String INTERET_SIGNALEE = "Votre intéret a été pris en compte";
+	public static final Object ERREUR_INCONNUE_CONNEXION = "Une erreur inconnue est survenue. Nous vous invitons à remplir le formulaire de contact sur wayd.fr";
+	public static final Object MESSAGE_VALIDATION_ATTENTE = "Votre inscription est en cours de validation. Vous recevrez un mail de confirmation.</br></br> L'équipe WAYD.";
 	
 	
 	

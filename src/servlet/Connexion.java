@@ -1,31 +1,19 @@
 package servlet;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
-
 import texthtml.pro.Erreur_HTML;
-import wayd.ws.WBservices;
-import website.dao.CacheValueDAO;
 import website.dao.PersonneDAO;
-import website.enumeration.TypePhoto;
-import website.metier.Outils;
 import website.metier.ProfilBean;
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 
@@ -35,6 +23,7 @@ import com.google.firebase.auth.FirebaseToken;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(Connexion.class);
+	public static boolean verifieEmail=true;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -106,21 +95,22 @@ public class Connexion extends HttpServlet {
 			FirebaseToken token = FirebaseAuth.getInstance()
 					.verifyIdTokenAsync(idtoken).get();
 			String uid = token.getUid();
-
-			// if (!token.isEmailVerified()){
-			// request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
-			// request.getRequestDispatcher("commun/erreurConnection.jsp")
-			// .forward(request, response);
-			// return;
-			//
-			// }
-			//
+			
+			if (verifieEmail)
+			if (!token.isEmailVerified()){
+			 request.setAttribute("message","Votre adresse mail n'est pas vérifiée");
+			 request.getRequestDispatcher("commun/erreurConnection.jsp")
+			 .forward(request, response);
+			 return;
+			
+			 }
+			
 
 			ProfilBean profil = PersonneDAO.getFullProfilByUid(uid);
 
 			if (profil == null) {
 
-				request.setAttribute("message", Erreur_HTML.CREATION_COMPTE_NOK);
+				request.setAttribute("message", Erreur_HTML.ERREUR_INCONNUE_CONNEXION);
 				request.getRequestDispatcher("commun/erreurConnection.jsp")
 						.forward(request, response);
 				return;
@@ -135,8 +125,18 @@ public class Connexion extends HttpServlet {
 					request.getRequestDispatcher("commun/erreurConnection.jsp")
 							.forward(request, response);
 					return;
+				
+					
 				}
-
+				
+				if (!profil.isValide()) {
+					request.setAttribute("message",
+							Erreur_HTML.MESSAGE_VALIDATION_ATTENTE);
+					request.getRequestDispatcher("commun/erreurConnection.jsp")
+							.forward(request, response);
+					return;	
+				}
+				
 				session.setAttribute("profil", profil);
 
 				if (profil.isAdmin()) {

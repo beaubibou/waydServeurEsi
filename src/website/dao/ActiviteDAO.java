@@ -1602,6 +1602,7 @@ public class ActiviteDAO {
 		calFinActivite.setTime(dateDebut);
 		calFinActivite.add(Calendar.MINUTE, duree);
 		Date datefinActivite = calFinActivite.getTime();
+		PreparedStatement preparedStatement=null;
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1612,7 +1613,7 @@ public class ActiviteDAO {
 					+ " idtypeactivite,datecreation,typeuser,typeacces,nbmaxwayd,nbrvu )"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
 
-			PreparedStatement preparedStatement = connexion.prepareStatement(
+			 preparedStatement = connexion.prepareStatement(
 					requete, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
@@ -1641,6 +1642,9 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
+		}finally
+		{
+			CxoPool.closeConnection(connexion);
 		}
 
 	}

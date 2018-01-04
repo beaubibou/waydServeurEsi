@@ -30,6 +30,7 @@ import website.metier.TypeEtatLogPerf;
 import website.metier.TypeEtatLogs;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeEtatProfil;
+import website.metier.TypeEtatValide;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.EtatProbleme;
@@ -498,6 +499,19 @@ public class CacheValueDAO {
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, ListeValeurText.TOUS));
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.ACTIF, ListeValeurText.ACTIF));
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.INACTIF,ListeValeurText.INACTIF));
+		
+		return listEtat;
+
+	}
+	
+	public static ArrayList<TypeEtatValide> getListEtatValide() {
+		// TODO Auto-generated method stub
+
+		ArrayList<TypeEtatValide> listEtat = new ArrayList<TypeEtatValide>();
+		listEtat.add(new TypeEtatValide(TypeEtatValide.VALIDE, ListeValeurText.VALIDE));
+		listEtat.add(new TypeEtatValide(TypeEtatValide.EN_ATTENTE, ListeValeurText.EN_ATTENTE));
+		listEtat.add(new TypeEtatValide(TypeEtatValide.TOUS, ListeValeurText.TOUS));
+			
 		
 		return listEtat;
 

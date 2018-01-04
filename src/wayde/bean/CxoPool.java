@@ -22,6 +22,7 @@ public abstract class CxoPool {
 	static {
 		try {
 			ctx = new InitialContext();
+			
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,6 +130,7 @@ public abstract class CxoPool {
 			}
 	}
 
+	
 	public static void closeConnection(Connection connexion) {
 
 		if (connexion != null)

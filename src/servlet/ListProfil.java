@@ -102,7 +102,17 @@ public class ListProfil extends HttpServlet {
 
 			PersonneDAO.activerProfilEtActivite(idPersonne, true);
 	
-			break;	
+			break;
+			
+			case "validecompte":
+				
+				if (request.getParameter("idPersonne") != null) {
+					idPersonne = Integer.parseInt(request.getParameter("idPersonne"));
+				}
+
+				PersonneDAO.valideCompte(idPersonne, true);
+				
+				
 		}
 	}
 
@@ -133,8 +143,16 @@ public class ListProfil extends HttpServlet {
 			int etatUser = Integer.parseInt(request.getParameter("etatProfil"));
 			filtre.setEtatProfil(etatUser);
 		}
+		
+		
+		if (request.getParameter("etatProfilValide") != null) {
+			int etatProfilValide = Integer.parseInt(request.getParameter("etatProfilValide"));
+			filtre.setEtatValide(etatProfilValide);
+		}
 	
-
+		
+		
+		
 		if (request.getParameter("pseudo") != null) {
 			filtre.setPseudo(request.getParameter("pseudo"));
 		}

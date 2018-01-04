@@ -70,6 +70,7 @@ public class ProfilBean {
 	private String siret;
 	private FiltreRecherche filtreRecherche;
 	private int nbrSignalement;
+	private boolean valide;
 
 	public int getNbrSignalement() {
 		return nbrSignalement;
@@ -250,7 +251,7 @@ public String getTypeUserHTML(){
 			boolean actif, boolean admin, int typeuser,
 			boolean premiereconnexion, double latitude, double longitude,
 			String adresse, String siteWeb, String telephone,
-			double latitudeFixe, double longitudeFixe, String siret,String sexeStr,String email) {
+			double latitudeFixe, double longitudeFixe, String siret,String sexeStr,String email,boolean valide) {
 		super();
 			
 		this.id = id;
@@ -283,6 +284,7 @@ public String getTypeUserHTML(){
 		this.siret = siret;
 		this.sexeStr=sexeStr;
 		this.email=email;
+		this.valide=valide;
 		filtreRecherche = new FiltreRecherche();
 		filtreRecherche.setLatitude(latitudeFixe);
 		filtreRecherche.setLongitude(longitudeFixe);
@@ -530,6 +532,13 @@ public String getTypeUserHTML(){
 		return "";
 		
 	}
+	
+	
+	public String getLienValidationCompte(){
+		
+		return "/wayd/ListProfil?idPersonne=" +id+"&action=validecompte";
+		
+	}
 	@Override
 	public String toString() {
 		return "ProfilBean [id=" + id + ", nom=" + nom + ", pseudo=" + pseudo
@@ -544,6 +553,14 @@ public String getTypeUserHTML(){
 				+ ", listSignalement=" + listSignalement + ", latitude="
 				+ latitude + ", longitude=" + longitude + ", adresse="
 				+ adresse + "]";
+	}
+
+	public boolean isValide() {
+		return valide;
+	}
+
+	public void setValide(boolean valide) {
+		this.valide = valide;
 	}
 
 	public boolean isPro() {

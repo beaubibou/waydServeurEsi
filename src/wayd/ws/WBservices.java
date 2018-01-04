@@ -1076,7 +1076,7 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		ArrayList<PhotoActivite> listPhoto = new ArrayList<PhotoActivite>();
-LOG.info("couc");
+
 		try {
 			connexion = CxoPool.getConnection();
 			// *****************Securite*****************
@@ -1987,7 +1987,10 @@ LOG.info("couc");
 			// SECURITE*************************************
 			connexion = CxoPool.getConnection();
 
+			
+			
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {

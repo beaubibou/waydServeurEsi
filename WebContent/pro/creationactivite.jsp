@@ -76,6 +76,7 @@
 
 							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE1%></p>
 							<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE2%></p>
+								<p class="text-tuto"><%=CreationActiviteText.MESSAGE_JUMBO_LIGNE3%></p>
 						
 						</div>
 					<br>	

@@ -1,3 +1,5 @@
+<%@page import="servlet.pro.CreerUserPro"%>
+<%@page import="servlet.Connexion"%>
 <%@page import="website.metier.CountLogInfo"%>
 <%@page import="website.metier.TypeEtatLogPerf"%>
 <%@page import="website.dao.LogDAO"%>
@@ -58,47 +60,58 @@
 	<%@ include file="menu.jsp"%>
 	<%
 		AuthentificationSite authentification = new AuthentificationSite(
-			request, response);
-			if (!authentification.isAuthentifieAdmin())
-		return;
-		
-			//LogDAO.LOG_PERF_REQUETE=true;
+				request, response);
+		if (!authentification.isAuthentifieAdmin())
+			return;
+		boolean verifieemail = Connexion.verifieEmail;
+		//boolean desativeCompte = CreerUserPro.compteDesactiveParDefaut;
+
+		//LogDAO.LOG_PERF_REQUETE=true;
 	%>
-<div class="container">
-  <h2>Paramétres</h2>
- <form action="/wayd/ParametreAdmin" method="post">
-  <div class="form-group">
-    <label for="maxLogs">Nbr logs max</label>
-    <input name="maxLogs" value='<%=LogDAO.MAX_LOG_SIZE %>' type="number" class="form-control" id="maxlogs">
-  </div>
-  <div class="form-group">
-    <label for="nbrLogSupprimer">Nbr log à supprimer</label>
-    <input  value='<%=LogDAO.NBR_LOG_A_EFFACER %>'  type="number" class="form-control" id="nbrLogSupprimer" name="nbrLogSupprimer">
-  </div>
-  
-    <div class="form-group">
-    <label for="tempsWarning">Tps warning requete</label>
-    <input  value='<%=LogDAO.TPS_WARNING_REQUETE%>'  type="number" class="form-control" id="tempsWarning" name="tempsWarning">
-  </div>
-  
-  <div class="form-group">
-    <label for="echantillonage">Période verification log(seconde)</label>
-    <input   value='<%=LogDAO.TPS_ECHATILLONNAGE%>' type="number" class="form-control" id="echantillonage" name="echantillonage">
-  </div>
-  
-   <div class="form-group">
-    <label for="tpscalculperf">Période calcul performance</label>
-    <input   value='<%=LogDAO.TPS_CALCUL_PERFOMENCE%>' type="number" class="form-control" id="tpscalculperf" name="tpscalculperf">
-  </div>
-  
-  
-    
-  <div class="checkbox">
-    <label><input type="checkbox"> Remember me</label>
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form> 
-</div>
+	<div class="container">
+		<h2>Paramétres</h2>
+		<form action="/wayd/ParametreAdmin" method="post">
+			<div class="form-group">
+				<label for="maxLogs">Nbr logs max</label> <input name="maxLogs"
+					value='<%=LogDAO.MAX_LOG_SIZE%>' type="number"
+					class="form-control" id="maxlogs">
+			</div>
+			<div class="form-group">
+				<label for="nbrLogSupprimer">Nbr log à supprimer</label> <input
+					value='<%=LogDAO.NBR_LOG_A_EFFACER%>' type="number"
+					class="form-control" id="nbrLogSupprimer" name="nbrLogSupprimer">
+			</div>
+
+			<div class="form-group">
+				<label for="tempsWarning">Tps warning requete</label> <input
+					value='<%=LogDAO.TPS_WARNING_REQUETE%>' type="number"
+					class="form-control" id="tempsWarning" name="tempsWarning">
+			</div>
+
+			<div class="form-group">
+				<label for="echantillonage">Période verification
+					log(seconde)</label> <input value='<%=LogDAO.TPS_ECHATILLONNAGE%>'
+					type="number" class="form-control" id="echantillonage"
+					name="echantillonage">
+			</div>
+
+			<div class="form-group">
+				<label for="tpscalculperf">Période calcul performance</label> <input
+					value='<%=LogDAO.TPS_CALCUL_PERFOMENCE%>' type="number"
+					class="form-control" id="tpscalculperf" name="tpscalculperf">
+			</div>
+
+
+
+			<div class="checkbox">
+				<label><input name="verifieEmail" type="checkbox"
+					<%=Outils.jspAdapterCheked(verifieemail)%>> Verifier les
+					emails</label>
+			</div>
+			
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
 
 </body>
 

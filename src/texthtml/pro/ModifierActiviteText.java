@@ -13,7 +13,7 @@ public class ModifierActiviteText {
 	
 	public static String TITRE_JUMBO = "Proposez vos activités";
 	public static String MESSAGE_JUMBO_LIGNE1 = "Modifier vos activités. Vous pouvez supprimer vos activités via le menu Gérer.";
-	public static String MESSAGE_JUMBO_LIGNE2 = "Vous pouvez planifier jusqu à 5 activités simultanément.";
+	public static String MESSAGE_JUMBO_LIGNE2 = "N'hesitez pas à ajouter des photos.";
 
 	public static String TITRE_PANEL = "Proposez une activité";
 	public static String TITRE_ONGLET = "Proposez une activité";

@@ -28,7 +28,7 @@ import website.metier.admin.FitreAdminLogs;
 
 public class LogDAO {
 	private static final Logger LOG = Logger.getLogger(LogDAO.class);
-	public static  int MAX_LOG_SIZE = 400000;
+	public static int MAX_LOG_SIZE = 400000;
 	public static int NBR_LOG_A_EFFACER = 10000;
 	public static int TPS_WARNING_REQUETE = 20;
 	public static int TPS_ECHATILLONNAGE = 30;
@@ -156,7 +156,8 @@ public class LogDAO {
 		}
 	}
 
-	public static ArrayList<LogBean> getListLogDetail(String date, String logLevel) {
+	public static ArrayList<LogBean> getListLogDetail(String date,
+			String logLevel) {
 
 		long debutlog = System.currentTimeMillis();
 
@@ -177,7 +178,6 @@ public class LogDAO {
 
 			preparedStatement = connexion.prepareStatement(requete);
 
-		
 			preparedStatement.setString(1, date);
 			preparedStatement.setString(2, logLevel);
 
@@ -243,11 +243,12 @@ public class LogDAO {
 		return taille;
 
 	}
+
 	public static int getNbrConnexionActivtePostGres() {
 
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ResultSet rs =null;
+		ResultSet rs = null;
 
 		PreparedStatement preparedStatement = null;
 
@@ -264,18 +265,14 @@ public class LogDAO {
 			if (rs.next()) {
 				taille = rs.getInt("nbr");
 			}
-			
-			
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
-		finally{
-			CxoPool.close(connexion, preparedStatement,rs);	
-		}
-
 
 		LogDAO.LOG_DUREE("getNbrConnexionActivtePostGres", debut);
 
@@ -309,10 +306,10 @@ public class LogDAO {
 			e.printStackTrace();
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
+			
+		} finally {
+			CxoPool.close(connexion, preparedStatement);
 		}
-
-		CxoPool.close(connexion, preparedStatement);
-
 		LogDAO.LOG_DUREE("getNbrLogs", debut);
 
 		return nbrLog;
@@ -363,18 +360,18 @@ public class LogDAO {
 	public static void LOG_DUREE(String string, long debut) {
 		// TODO Auto-generated method stub
 		long duree = System.currentTimeMillis() - debut;
-	
+
 		if (ETAT_PERF == TypeEtatLogPerf.ACTIVE) {
 
 			String message = string + " - " + duree + "ms";
-		//	MDC.put("duree", duree);
+			// MDC.put("duree", duree);
 			LOG.info(message);
 		}
 
 		if (duree >= TPS_WARNING_REQUETE) {
 
 			String message = string + " - " + duree + "ms";
-		//	MDC.put("duree", duree);
+			// MDC.put("duree", duree);
 			LOG.warn(message);
 		}
 
@@ -402,7 +399,7 @@ public class LogDAO {
 				int nbr = rs.getInt("nbr");
 				String dateStr = rs.getString("datestring");
 				String log_level = rs.getString("log_level");
-				
+
 				retour.add(new CountLogInfo(dateStr, log_level, nbr));
 			}
 
@@ -412,15 +409,15 @@ public class LogDAO {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
-
+finally{
 		CxoPool.close(connexion, preparedStatement);
-
+}
 		LogDAO.LOG_DUREE("getStatLogs", debut);
 
 		return retour;
 
 	}
-	
+
 	public static ArrayList<CountLogInfo> avgTpsRequeteJour() {
 
 		long debut = System.currentTimeMillis();
@@ -441,10 +438,10 @@ public class LogDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-		
-			String dateStr = rs.getString("jour");
-			double duree = rs.getDouble("duree");
-			retour.add(new CountLogInfo(dateStr, Double.toString(duree), 0));
+
+				String dateStr = rs.getString("jour");
+				double duree = rs.getDouble("duree");
+				retour.add(new CountLogInfo(dateStr, Double.toString(duree), 0));
 			}
 
 		} catch (NamingException | SQLException e) {
@@ -453,73 +450,68 @@ public class LogDAO {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
-
+finally{
 		CxoPool.close(connexion, preparedStatement);
-
+}
 		LogDAO.LOG_DUREE("avgTpsRequeteJour", debut);
 
 		return retour;
 
 	}
-	
-	public static void prepareStatPerf(){
-		
+
+	public static void prepareStatPerf() {
+
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
 		PreparedStatement preparedStatement = null;
 		PreparedStatement updateStatement = null;
-		ResultSet rs=null;
-		
-		
+		ResultSet rs = null;
+
 		try {
 			connexion = CxoPool.getConnection();
 
 			connexion.setAutoCommit(false);
 			String requete = "SELECT log_message, id FROM log4j where log_message"
 					+ " like '% - %' and log_level='INFO' and duree=-1";
-			
+
 			String updateRequete = "update log4j set duree=? where id=?";
 
 			preparedStatement = connexion.prepareStatement(requete);
-			updateStatement=connexion.prepareStatement(updateRequete);
-		
-			 rs = preparedStatement.executeQuery();
-			
+			updateStatement = connexion.prepareStatement(updateRequete);
+
+			rs = preparedStatement.executeQuery();
+
 			while (rs.next()) {
-			
+
 				String log_message = rs.getString("log_message");
-				int duree=getIntegers(log_message);
-				int id=rs.getInt("id");
+				int duree = getIntegers(log_message);
+				int id = rs.getInt("id");
 				updateStatement.setInt(1, duree);
 				updateStatement.setInt(2, id);
 				updateStatement.addBatch();
-				
-			
+
 			}
-			
+
 			updateStatement.executeBatch();
 			connexion.commit();
 			LogDAO.LOG_DUREE("prepareStatPerf", debut);
 
-		
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
-		
-		finally{
-			CxoPool.close(connexion, preparedStatement,rs);
-			CxoPool.close(connexion, updateStatement);
-			
-		}
-		
-			
 
-		
+		finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+			CxoPool.close(connexion, updateStatement);
+
+		}
+
 	}
+
 	public static int getIntegers(String str) {
 
 		String retour = "0";
@@ -527,15 +519,14 @@ public class LogDAO {
 		for (int f = 0; f < str.length(); f++) {
 
 			String charac = str.substring(f, f + 1);
-			if (NumberUtils.isParsable(charac)){
+			if (NumberUtils.isParsable(charac)) {
 				retour = retour + charac;
-				if (retour.length()>5)
+				if (retour.length() > 5)
 					return 0;
 			}
-							
+
 		}
-		
-		
+
 		return Integer.parseInt(retour);
 
 	}
