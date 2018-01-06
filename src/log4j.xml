@@ -18,7 +18,7 @@
         <param name="URL" value="jdbc:postgresql:wayd" /> 
         <param name="Driver" value="org.postgresql.Driver" /> 
         <param name="User" value="postgres" /> 
-        <param name="Password" value="azerty" /> 
+        <param name="Password" value="6HamPol20N6HamPol20N" /> 
         <layout class="org.apache.log4j.PatternLayout"> 
             <param name="ConversionPattern" 
               value="INSERT INTO log4j (log_date, log_level, log_location, log_message,duree) VALUES ( '%d{yyyy-MM-dd HH:mm:ss}','%p', '%C;%L', '%m',-1)" 

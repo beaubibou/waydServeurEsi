@@ -34,95 +34,103 @@
  </ns1:service>
  <ns1:service name="WBservices" provider="java:RPC" style="wrapped" use="literal">
   <ns3:operation name="getVersion" qname="ns1:getVersion" returnQName="ns1:getVersionReturn" returnType="ns2:Version" soapAction="" xmlns:ns1="http://ws.wayd" xmlns:ns2="http://bean.wayde" xmlns:ns3="http://xml.apache.org/axis/wsdd/"/>
-  <ns1:operation name="addMessage" qname="ns3:addMessage" returnQName="ns3:addMessageReturn" returnType="ns4:RetourMessage" soapAction="" xmlns:ns3="http://ws.wayd" xmlns:ns4="http://bean.wayde">
-   <ns1:parameter qname="ns3:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns3:corps" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns3:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getIndicateurs" qname="ns3:getIndicateurs" returnQName="ns3:getIndicateursReturn" returnType="ns4:IndicateurWayd" soapAction="" xmlns:ns3="http://ws.wayd" xmlns:ns4="http://bean.wayde">
+   <ns1:parameter qname="ns3:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns3:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="envoyerMail" qname="ns5:envoyerMail" soapAction="" xmlns:ns5="http://ws.wayd"/>
-  <ns1:operation name="testToken" qname="ns6:testToken" returnQName="ns6:testTokenReturn" returnType="xsd:boolean" soapAction="" xmlns:ns6="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns6:idtoken" type="xsd:string"/>
-   <ns1:parameter qname="ns6:photostr" type="xsd:string"/>
-   <ns1:parameter qname="ns6:nom" type="xsd:string"/>
-   <ns1:parameter qname="ns6:gcmToken" type="xsd:string"/>
+  <ns1:operation name="getPhotoWaydeur" qname="ns5:getPhotoWaydeur" returnQName="ns5:getPhotoWaydeurReturn" returnType="ns6:PhotoWaydeur" soapAction="" xmlns:ns5="http://ws.wayd" xmlns:ns6="http://bean.wayde">
+   <ns1:parameter qname="ns5:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns5:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns5:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="isDejaInteret" qname="ns7:isDejaInteret" returnQName="ns7:isDejaInteretReturn" returnType="ns8:MessageServeur" soapAction="" xmlns:ns7="http://ws.wayd" xmlns:ns8="http://bean.wayde">
+  <ns1:operation name="getActivite" qname="ns7:getActivite" returnQName="ns7:getActiviteReturn" returnType="ns8:Activite" soapAction="" xmlns:ns7="http://ws.wayd" xmlns:ns8="http://bean.wayde">
    <ns1:parameter qname="ns7:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns7:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns7:typeInteret" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns7:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getTableauBord" qname="ns9:getTableauBord" returnQName="ns9:getTableauBordReturn" returnType="ns10:TableauBord" soapAction="" xmlns:ns10="http://bean.wayde" xmlns:ns9="http://ws.wayd">
+  <ns1:operation name="isDejaInteret" qname="ns9:isDejaInteret" returnQName="ns9:isDejaInteretReturn" returnType="ns10:MessageServeur" soapAction="" xmlns:ns10="http://bean.wayde" xmlns:ns9="http://ws.wayd">
    <ns1:parameter qname="ns9:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns9:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns9:typeInteret" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns9:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListAvis" qname="ns11:getListAvis" returnQName="ns11:getListAvisReturn" returnType="ns12:Avis" soapAction="" xmlns:ns11="http://ws.wayd" xmlns:ns12="http://bean.wayde">
-   <ns1:parameter qname="ns11:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns11:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updatePreference" qname="ns11:updatePreference" returnQName="ns11:updatePreferenceReturn" returnType="ns12:MessageServeur" soapAction="" xmlns:ns11="http://ws.wayd" xmlns:ns12="http://bean.wayde">
+   <ns1:parameter qname="ns11:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns11:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns11:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns11:active" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns11:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getDiscussion" qname="ns13:getDiscussion" returnQName="ns13:getDiscussionReturn" returnType="ns14:Message" soapAction="" xmlns:ns13="http://ws.wayd" xmlns:ns14="http://bean.wayde">
-   <ns1:parameter qname="ns13:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns13:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getAvis" qname="ns13:getAvis" returnQName="ns13:getAvisReturn" returnType="ns14:Avis" soapAction="" xmlns:ns13="http://ws.wayd" xmlns:ns14="http://bean.wayde">
+   <ns1:parameter qname="ns13:idnoter" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:idnotateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:idDemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns13:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getActivite" qname="ns15:getActivite" returnQName="ns15:getActiviteReturn" returnType="ns16:Activite" soapAction="" xmlns:ns15="http://ws.wayd" xmlns:ns16="http://bean.wayde">
+  <ns1:operation name="getListAmi" qname="ns15:getListAmi" returnQName="ns15:getListAmiReturn" returnType="ns16:Ami" soapAction="" xmlns:ns15="http://ws.wayd" xmlns:ns16="http://bean.wayde">
+   <ns1:parameter qname="ns15:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns15:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns15:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns15:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListAmi" qname="ns17:getListAmi" returnQName="ns17:getListAmiReturn" returnType="ns18:Ami" soapAction="" xmlns:ns17="http://ws.wayd" xmlns:ns18="http://bean.wayde">
-   <ns1:parameter qname="ns17:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns17:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getDiscussion" qname="ns17:getDiscussion" returnQName="ns17:getDiscussionReturn" returnType="ns18:Message" soapAction="" xmlns:ns17="http://ws.wayd" xmlns:ns18="http://bean.wayde">
+   <ns1:parameter qname="ns17:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns17:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns17:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getIndicateurs" qname="ns19:getIndicateurs" returnQName="ns19:getIndicateursReturn" returnType="ns20:IndicateurWayd" soapAction="" xmlns:ns19="http://ws.wayd" xmlns:ns20="http://bean.wayde"/>
-  <ns1:operation name="getPhotoWaydeur" qname="ns21:getPhotoWaydeur" returnQName="ns21:getPhotoWaydeurReturn" returnType="ns22:PhotoWaydeur" soapAction="" xmlns:ns21="http://ws.wayd" xmlns:ns22="http://bean.wayde">
-   <ns1:parameter qname="ns21:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns21:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getTableauBord" qname="ns19:getTableauBord" returnQName="ns19:getTableauBordReturn" returnType="ns20:TableauBord" soapAction="" xmlns:ns19="http://ws.wayd" xmlns:ns20="http://bean.wayde">
+   <ns1:parameter qname="ns19:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns19:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="effaceMessage" qname="ns21:effaceMessage" returnQName="ns21:effaceMessageReturn" returnType="ns22:MessageServeur" soapAction="" xmlns:ns21="http://ws.wayd" xmlns:ns22="http://bean.wayde">
    <ns1:parameter qname="ns21:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns21:listmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns21:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updatePreference" qname="ns23:updatePreference" returnQName="ns23:updatePreferenceReturn" returnType="ns24:MessageServeur" soapAction="" xmlns:ns23="http://ws.wayd" xmlns:ns24="http://bean.wayde">
-   <ns1:parameter qname="ns23:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns23:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns23:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns23:active" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns23:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addPrbConnexion" qname="ns23:addPrbConnexion" returnQName="ns23:addPrbConnexionReturn" returnType="ns24:MessageServeur" soapAction="" xmlns:ns23="http://ws.wayd" xmlns:ns24="http://bean.wayde">
+   <ns1:parameter qname="ns23:probleme" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns23:email" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getAvis" qname="ns25:getAvis" returnQName="ns25:getAvisReturn" returnType="ns26:Avis" soapAction="" xmlns:ns25="http://ws.wayd" xmlns:ns26="http://bean.wayde">
-   <ns1:parameter qname="ns25:idnoter" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns25:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns25:idnotateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns25:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns25:idDemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addSuggestion" qname="ns25:addSuggestion" returnQName="ns25:addSuggestionReturn" returnType="ns26:MessageServeur" soapAction="" xmlns:ns25="http://ws.wayd" xmlns:ns26="http://bean.wayde">
+   <ns1:parameter qname="ns25:suggestion" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns25:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns25:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addMessageByAct" qname="ns27:addMessageByAct" returnQName="ns27:addMessageByActReturn" returnType="ns28:RetourMessage" soapAction="" xmlns:ns27="http://ws.wayd" xmlns:ns28="http://bean.wayde">
-   <ns1:parameter qname="ns27:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns27:corps" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns27:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addActivitePro" qname="ns27:addActivitePro" returnQName="ns27:addActiviteProReturn" returnType="ns28:MessageServeur" soapAction="" xmlns:ns27="http://ws.wayd" xmlns:ns28="http://bean.wayde">
+   <ns1:parameter qname="ns27:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:adresse" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:dateDebut" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns27:DateFin" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns27:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceMessage" qname="ns29:effaceMessage" returnQName="ns29:effaceMessageReturn" returnType="ns30:MessageServeur" soapAction="" xmlns:ns29="http://ws.wayd" xmlns:ns30="http://bean.wayde">
-   <ns1:parameter qname="ns29:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns29:listmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addMessageByAct" qname="ns29:addMessageByAct" returnQName="ns29:addMessageByActReturn" returnType="ns30:RetourMessage" soapAction="" xmlns:ns29="http://ws.wayd" xmlns:ns30="http://bean.wayde">
+   <ns1:parameter qname="ns29:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:corps" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns29:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceAmi" qname="ns31:effaceAmi" returnQName="ns31:effaceAmiReturn" returnType="ns32:MessageServeur" soapAction="" xmlns:ns31="http://ws.wayd" xmlns:ns32="http://bean.wayde">
-   <ns1:parameter qname="ns31:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns31:idami" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addActivite" qname="ns31:addActivite" returnQName="ns31:addActiviteReturn" returnType="ns32:MessageServeur" soapAction="" xmlns:ns31="http://ws.wayd" xmlns:ns32="http://bean.wayde">
+   <ns1:parameter qname="ns31:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:dureebalise" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:adresse" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:nbmaxwaydeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns31:dureeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns31:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addActivitePro" qname="ns33:addActivitePro" returnQName="ns33:addActiviteProReturn" returnType="ns34:MessageServeur" soapAction="" xmlns:ns33="http://ws.wayd" xmlns:ns34="http://bean.wayde">
-   <ns1:parameter qname="ns33:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:adresse" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:dateDebut" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns33:DateFin" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListAvis" qname="ns33:getListAvis" returnQName="ns33:getListAvisReturn" returnType="ns34:Avis" soapAction="" xmlns:ns33="http://ws.wayd" xmlns:ns34="http://bean.wayde">
+   <ns1:parameter qname="ns33:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns33:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns33:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:operation name="getListActivites" qname="ns35:getListActivites" returnQName="ns35:getListActivitesReturn" returnType="ns36:Activite" soapAction="" xmlns:ns35="http://ws.wayd" xmlns:ns36="http://bean.wayde">
@@ -139,135 +147,135 @@
    <ns1:parameter qname="ns35:commenceDans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns35:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addActivite" qname="ns37:addActivite" returnQName="ns37:addActiviteReturn" returnType="ns38:MessageServeur" soapAction="" xmlns:ns37="http://ws.wayd" xmlns:ns38="http://bean.wayde">
-   <ns1:parameter qname="ns37:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceActivite" qname="ns37:effaceActivite" returnQName="ns37:effaceActiviteReturn" returnType="ns38:MessageServeur" soapAction="" xmlns:ns37="http://ws.wayd" xmlns:ns38="http://bean.wayde">
    <ns1:parameter qname="ns37:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:dureebalise" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:adresse" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:nbmaxwaydeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns37:dureeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns37:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns37:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addSuggestion" qname="ns39:addSuggestion" returnQName="ns39:addSuggestionReturn" returnType="ns40:MessageServeur" soapAction="" xmlns:ns39="http://ws.wayd" xmlns:ns40="http://bean.wayde">
-   <ns1:parameter qname="ns39:suggestion" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns39:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addParticipation" qname="ns39:addParticipation" returnQName="ns39:addParticipationReturn" returnType="ns40:MessageServeur" soapAction="" xmlns:ns39="http://ws.wayd" xmlns:ns40="http://bean.wayde">
+   <ns1:parameter qname="ns39:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns39:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns39:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns39:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addPrbConnexion" qname="ns41:addPrbConnexion" returnQName="ns41:addPrbConnexionReturn" returnType="ns42:MessageServeur" soapAction="" xmlns:ns41="http://ws.wayd" xmlns:ns42="http://bean.wayde">
-   <ns1:parameter qname="ns41:probleme" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns41:email" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceDiscussion" qname="ns41:effaceDiscussion" returnQName="ns41:effaceDiscussionReturn" returnType="ns42:MessageServeur" soapAction="" xmlns:ns41="http://ws.wayd" xmlns:ns42="http://bean.wayde">
+   <ns1:parameter qname="ns41:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns41:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns41:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceActivite" qname="ns43:effaceActivite" returnQName="ns43:effaceActiviteReturn" returnType="ns44:MessageServeur" soapAction="" xmlns:ns43="http://ws.wayd" xmlns:ns44="http://bean.wayde">
-   <ns1:parameter qname="ns43:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns43:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceAmi" qname="ns43:effaceAmi" returnQName="ns43:effaceAmiReturn" returnType="ns44:MessageServeur" soapAction="" xmlns:ns43="http://ws.wayd" xmlns:ns44="http://bean.wayde">
+   <ns1:parameter qname="ns43:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns43:idami" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns43:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceDiscussion" qname="ns45:effaceDiscussion" returnQName="ns45:effaceDiscussionReturn" returnType="ns46:MessageServeur" soapAction="" xmlns:ns45="http://ws.wayd" xmlns:ns46="http://bean.wayde">
-   <ns1:parameter qname="ns45:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns45:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateProfilWayd" qname="ns45:updateProfilWayd" returnQName="ns45:updateProfilWaydReturn" returnType="ns46:MessageServeur" soapAction="" xmlns:ns45="http://ws.wayd" xmlns:ns46="http://bean.wayde">
+   <ns1:parameter qname="ns45:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:nom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:prenom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:datenaissancestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:sexe" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:commentaire" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:afficheage" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:affichesexe" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns45:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getFullProfil" qname="ns47:getFullProfil" returnQName="ns47:getFullProfilReturn" returnType="ns48:Profil" soapAction="" xmlns:ns47="http://ws.wayd" xmlns:ns48="http://bean.wayde">
-   <ns1:parameter qname="ns47:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateProfilPro" qname="ns47:updateProfilPro" returnQName="ns47:updateProfilProReturn" returnType="ns48:MessageServeur" soapAction="" xmlns:ns47="http://ws.wayd" xmlns:ns48="http://bean.wayde">
+   <ns1:parameter qname="ns47:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns47:pseudo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns47:commentaire" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns47:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns47:tel" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns47:siret" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns47:siteweb" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns47:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getFullProfilPro" qname="ns49:getFullProfilPro" returnQName="ns49:getFullProfilProReturn" returnType="ns50:ProfilPro" soapAction="" xmlns:ns49="http://ws.wayd" xmlns:ns50="http://bean.wayde">
-   <ns1:parameter qname="ns49:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateActivite" qname="ns49:updateActivite" returnQName="ns49:updateActiviteReturn" returnType="ns50:MessageServeur" soapAction="" xmlns:ns49="http://ws.wayd" xmlns:ns50="http://bean.wayde">
    <ns1:parameter qname="ns49:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns49:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns49:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns49:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns49:nbrmax" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns49:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addAvis" qname="ns51:addAvis" returnQName="ns51:addAvisReturn" returnType="ns52:MessageServeur" soapAction="" xmlns:ns51="http://ws.wayd" xmlns:ns52="http://bean.wayde">
+  <ns1:operation name="updateGCM" qname="ns51:updateGCM" returnQName="ns51:updateGCMReturn" returnType="ns52:MessageServeur" soapAction="" xmlns:ns51="http://ws.wayd" xmlns:ns52="http://bean.wayde">
    <ns1:parameter qname="ns51:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:notestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns51:demandeami" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns51:gcm" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns51:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateProfilWayd" qname="ns53:updateProfilWayd" returnQName="ns53:updateProfilWaydReturn" returnType="ns54:MessageServeur" soapAction="" xmlns:ns53="http://ws.wayd" xmlns:ns54="http://bean.wayde">
-   <ns1:parameter qname="ns53:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:nom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:prenom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:datenaissancestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updatePseudo" qname="ns53:updatePseudo" returnQName="ns53:updatePseudoReturn" returnType="ns54:MessageServeur" soapAction="" xmlns:ns53="http://ws.wayd" xmlns:ns54="http://bean.wayde">
+   <ns1:parameter qname="ns53:pseudo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns53:datenaissance" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns53:sexe" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:commentaire" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns53:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:afficheage" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns53:affichesexe" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns53:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updatePseudo" qname="ns55:updatePseudo" returnQName="ns55:updatePseudoReturn" returnType="ns56:MessageServeur" soapAction="" xmlns:ns55="http://ws.wayd" xmlns:ns56="http://bean.wayde">
-   <ns1:parameter qname="ns55:pseudo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns55:datenaissance" type="xsd:long" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns55:sexe" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitMessage" qname="ns55:acquitMessage" returnQName="ns55:acquitMessageReturn" returnType="ns56:MessageServeur" soapAction="" xmlns:ns55="http://ws.wayd" xmlns:ns56="http://bean.wayde">
    <ns1:parameter qname="ns55:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns55:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns55:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateProfilPro" qname="ns57:updateProfilPro" returnQName="ns57:updateProfilProReturn" returnType="ns58:MessageServeur" soapAction="" xmlns:ns57="http://ws.wayd" xmlns:ns58="http://bean.wayde">
-   <ns1:parameter qname="ns57:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:pseudo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:commentaire" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getFullProfilPro" qname="ns57:getFullProfilPro" returnQName="ns57:getFullProfilProReturn" returnType="ns58:ProfilPro" soapAction="" xmlns:ns57="http://ws.wayd" xmlns:ns58="http://bean.wayde">
+   <ns1:parameter qname="ns57:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns57:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:tel" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:siret" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:siteweb" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns57:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitMessage" qname="ns59:acquitMessage" returnQName="ns59:acquitMessageReturn" returnType="ns60:MessageServeur" soapAction="" xmlns:ns59="http://ws.wayd" xmlns:ns60="http://bean.wayde">
-   <ns1:parameter qname="ns59:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns59:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns59:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getPersonne" qname="ns59:getPersonne" returnQName="ns59:getPersonneReturn" returnType="ns60:Personne" soapAction="" xmlns:ns59="http://ws.wayd" xmlns:ns60="http://bean.wayde">
+   <ns1:parameter qname="ns59:idtoken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns59:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns59:nom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns59:gcmToken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addParticipation" qname="ns61:addParticipation" returnQName="ns61:addParticipationReturn" returnType="ns62:MessageServeur" soapAction="" xmlns:ns61="http://ws.wayd" xmlns:ns62="http://bean.wayde">
+  <ns1:operation name="getFullProfil" qname="ns61:getFullProfil" returnQName="ns61:getFullProfilReturn" returnType="ns62:Profil" soapAction="" xmlns:ns61="http://ws.wayd" xmlns:ns62="http://bean.wayde">
    <ns1:parameter qname="ns61:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns61:idorganisateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns61:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns61:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns61:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateGCM" qname="ns63:updateGCM" returnQName="ns63:updateGCMReturn" returnType="ns64:MessageServeur" soapAction="" xmlns:ns63="http://ws.wayd" xmlns:ns64="http://bean.wayde">
+  <ns1:operation name="addAvis" qname="ns63:addAvis" returnQName="ns63:addAvisReturn" returnType="ns64:MessageServeur" soapAction="" xmlns:ns63="http://ws.wayd" xmlns:ns64="http://bean.wayde">
    <ns1:parameter qname="ns63:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns63:gcm" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:idpersonnenotee" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:notestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns63:demandeami" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns63:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getPersonne" qname="ns65:getPersonne" returnQName="ns65:getPersonneReturn" returnType="ns66:Personne" soapAction="" xmlns:ns65="http://ws.wayd" xmlns:ns66="http://bean.wayde">
-   <ns1:parameter qname="ns65:idtoken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns65:photostr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns65:nom" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns65:gcmToken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_addCompte" qname="ns65:test_addCompte" returnQName="ns65:test_addCompteReturn" returnType="xsd:int" soapAction="" xmlns:ns65="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns65:jeton" type="xsd:long"/>
   </ns1:operation>
-  <ns1:operation name="tesgcm" qname="ns67:tesgcm" soapAction="" xmlns:ns67="http://ws.wayd">
-   <ns1:parameter qname="ns67:gmcToken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getActivites" qname="ns66:getActivites" returnQName="ns66:getActivitesReturn" returnType="ns67:Activite" soapAction="" xmlns:ns66="http://ws.wayd" xmlns:ns67="http://bean.wayde">
+   <ns1:parameter qname="ns66:idPersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:rayonmetre" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:typeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:typeUser" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:commenceDans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns66:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateActivite" qname="ns68:updateActivite" returnQName="ns68:updateActiviteReturn" returnType="ns69:MessageServeur" soapAction="" xmlns:ns68="http://ws.wayd" xmlns:ns69="http://bean.wayde">
-   <ns1:parameter qname="ns68:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:nbrmax" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_init" qname="ns68:test_init" soapAction="" xmlns:ns68="http://ws.wayd">
+   <ns1:parameter qname="ns68:mdp" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="signalerActivite" qname="ns70:signalerActivite" returnQName="ns70:signalerActiviteReturn" returnType="ns71:MessageServeur" soapAction="" xmlns:ns70="http://ws.wayd" xmlns:ns71="http://bean.wayde">
-   <ns1:parameter qname="ns70:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:idmotif" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:motif" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns70:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="tesgcm" qname="ns69:tesgcm" soapAction="" xmlns:ns69="http://ws.wayd">
+   <ns1:parameter qname="ns69:gmcToken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="test_GetToken" qname="ns72:test_GetToken" returnQName="ns72:test_GetTokenReturn" returnType="xsd:string" soapAction="" xmlns:ns72="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns72:idpersonne" type="xsd:int"/>
+  <ns1:operation name="test_GetToken" qname="ns70:test_GetToken" returnQName="ns70:test_GetTokenReturn" returnType="xsd:string" soapAction="" xmlns:ns70="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns70:idpersonne" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="test_DonneAvis" qname="ns73:test_DonneAvis" soapAction="" xmlns:ns73="http://ws.wayd">
-   <ns1:parameter qname="ns73:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns73:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_DonneAvis" qname="ns71:test_DonneAvis" soapAction="" xmlns:ns71="http://ws.wayd">
+   <ns1:parameter qname="ns71:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns71:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="signalerActivite" qname="ns72:signalerActivite" returnQName="ns72:signalerActiviteReturn" returnType="ns73:MessageServeur" soapAction="" xmlns:ns72="http://ws.wayd" xmlns:ns73="http://bean.wayde">
+   <ns1:parameter qname="ns72:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:idmotif" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:motif" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:titre" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:libelle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns72:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:operation name="signalerProfil" qname="ns74:signalerProfil" returnQName="ns74:signalerProfilReturn" returnType="ns75:MessageServeur" soapAction="" xmlns:ns74="http://ws.wayd" xmlns:ns75="http://bean.wayde">
    <ns1:parameter qname="ns74:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
@@ -276,21 +284,17 @@
    <ns1:parameter qname="ns74:motif" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns74:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="test_addCompte" qname="ns76:test_addCompte" returnQName="ns76:test_addCompteReturn" returnType="xsd:int" soapAction="" xmlns:ns76="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns76:jeton" type="xsd:long"/>
+  <ns1:operation name="testToken" qname="ns76:testToken" returnQName="ns76:testTokenReturn" returnType="xsd:boolean" soapAction="" xmlns:ns76="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns76:idtoken" type="xsd:string"/>
+   <ns1:parameter qname="ns76:photostr" type="xsd:string"/>
+   <ns1:parameter qname="ns76:nom" type="xsd:string"/>
+   <ns1:parameter qname="ns76:gcmToken" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="test_init" qname="ns77:test_init" soapAction="" xmlns:ns77="http://ws.wayd">
-   <ns1:parameter qname="ns77:mdp" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="getActivites" qname="ns78:getActivites" returnQName="ns78:getActivitesReturn" returnType="ns79:Activite" soapAction="" xmlns:ns78="http://ws.wayd" xmlns:ns79="http://bean.wayde">
-   <ns1:parameter qname="ns78:idPersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:rayonmetre" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:typeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:typeUser" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns78:commenceDans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="envoyerMail" qname="ns77:envoyerMail" soapAction="" xmlns:ns77="http://ws.wayd"/>
+  <ns1:operation name="addMessage" qname="ns78:addMessage" returnQName="ns78:addMessageReturn" returnType="ns79:RetourMessage" soapAction="" xmlns:ns78="http://ws.wayd" xmlns:ns79="http://bean.wayde">
+   <ns1:parameter qname="ns78:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns78:corps" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns78:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns78:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:operation name="updatePosition" qname="ns80:updatePosition" returnQName="ns80:updatePositionReturn" returnType="ns81:MessageServeur" soapAction="" xmlns:ns80="http://ws.wayd" xmlns:ns81="http://bean.wayde">
@@ -299,186 +303,186 @@
    <ns1:parameter qname="ns80:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns80:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="test_termineActivite" qname="ns82:test_termineActivite" soapAction="" xmlns:ns82="http://ws.wayd">
-   <ns1:parameter qname="ns82:mdp" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListParticipant" qname="ns82:getListParticipant" returnQName="ns82:getListParticipantReturn" returnType="ns83:Participant" soapAction="" xmlns:ns82="http://ws.wayd" xmlns:ns83="http://bean.wayde">
+   <ns1:parameter qname="ns82:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns82:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns82:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="test_GetPersonneAlea" qname="ns83:test_GetPersonneAlea" returnQName="ns83:test_GetPersonneAleaReturn" returnType="ns84:Personne" soapAction="" xmlns:ns83="http://ws.wayd" xmlns:ns84="http://bean.wayde"/>
-  <ns1:operation name="test_getPremierId" qname="ns85:test_getPremierId" returnQName="ns85:test_getPremierIdReturn" returnType="xsd:int" soapAction="" xmlns:ns85="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="test_getDernierId" qname="ns86:test_getDernierId" returnQName="ns86:test_getDernierIdReturn" returnType="xsd:int" soapAction="" xmlns:ns86="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getListPhotoWaydeurByAct" qname="ns87:getListPhotoWaydeurByAct" returnQName="ns87:getListPhotoWaydeurByActReturn" returnType="ns88:PhotoWaydeur" soapAction="" xmlns:ns87="http://ws.wayd" xmlns:ns88="http://bean.wayde">
-   <ns1:parameter qname="ns87:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns87:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns87:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListPreferences" qname="ns84:getListPreferences" returnQName="ns84:getListPreferencesReturn" returnType="ns85:Preference" soapAction="" xmlns:ns84="http://ws.wayd" xmlns:ns85="http://bean.wayde">
+   <ns1:parameter qname="ns84:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns84:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns84:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getDiscussionByAct" qname="ns89:getDiscussionByAct" returnQName="ns89:getDiscussionByActReturn" returnType="ns90:Message" soapAction="" xmlns:ns89="http://ws.wayd" xmlns:ns90="http://bean.wayde">
-   <ns1:parameter qname="ns89:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns89:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns89:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListDiscussion" qname="ns86:getListDiscussion" returnQName="ns86:getListDiscussionReturn" returnType="ns87:Discussion" soapAction="" xmlns:ns86="http://ws.wayd" xmlns:ns87="http://bean.wayde">
+   <ns1:parameter qname="ns86:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns86:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns86:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListNotificationAfter" qname="ns91:getListNotificationAfter" returnQName="ns91:getListNotificationAfterReturn" returnType="ns92:Notification" soapAction="" xmlns:ns91="http://ws.wayd" xmlns:ns92="http://bean.wayde">
-   <ns1:parameter qname="ns91:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns91:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns91:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListNotification" qname="ns88:getListNotification" returnQName="ns88:getListNotificationReturn" returnType="ns89:Notification" soapAction="" xmlns:ns88="http://ws.wayd" xmlns:ns89="http://bean.wayde">
+   <ns1:parameter qname="ns88:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns88:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns88:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListParticipant" qname="ns93:getListParticipant" returnQName="ns93:getListParticipantReturn" returnType="ns94:Participant" soapAction="" xmlns:ns93="http://ws.wayd" xmlns:ns94="http://bean.wayde">
-   <ns1:parameter qname="ns93:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns93:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns93:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getDiscussionByAct" qname="ns90:getDiscussionByAct" returnQName="ns90:getDiscussionByActReturn" returnType="ns91:Message" soapAction="" xmlns:ns90="http://ws.wayd" xmlns:ns91="http://bean.wayde">
+   <ns1:parameter qname="ns90:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns90:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns90:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListDiscussion" qname="ns95:getListDiscussion" returnQName="ns95:getListDiscussionReturn" returnType="ns96:Discussion" soapAction="" xmlns:ns95="http://ws.wayd" xmlns:ns96="http://bean.wayde">
-   <ns1:parameter qname="ns95:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns95:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns95:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListMessageAfter" qname="ns92:getListMessageAfter" returnQName="ns92:getListMessageAfterReturn" returnType="ns93:Message" soapAction="" xmlns:ns92="http://ws.wayd" xmlns:ns93="http://bean.wayde">
+   <ns1:parameter qname="ns92:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns92:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns92:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListPreferences" qname="ns97:getListPreferences" returnQName="ns97:getListPreferencesReturn" returnType="ns98:Preference" soapAction="" xmlns:ns97="http://ws.wayd" xmlns:ns98="http://bean.wayde">
-   <ns1:parameter qname="ns97:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns97:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns97:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListNotificationAfter" qname="ns94:getListNotificationAfter" returnQName="ns94:getListNotificationAfterReturn" returnType="ns95:Notification" soapAction="" xmlns:ns94="http://ws.wayd" xmlns:ns95="http://bean.wayde">
+   <ns1:parameter qname="ns94:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns94:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns94:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListPhotoWaydeur" qname="ns99:getListPhotoWaydeur" returnQName="ns99:getListPhotoWaydeurReturn" returnType="ns100:PhotoWaydeur" soapAction="" xmlns:ns100="http://bean.wayde" xmlns:ns99="http://ws.wayd">
-   <ns1:parameter qname="ns99:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns99:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns99:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListPhotoWaydeurByAct" qname="ns96:getListPhotoWaydeurByAct" returnQName="ns96:getListPhotoWaydeurByActReturn" returnType="ns97:PhotoWaydeur" soapAction="" xmlns:ns96="http://ws.wayd" xmlns:ns97="http://bean.wayde">
+   <ns1:parameter qname="ns96:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns96:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns96:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListMessageAfter" qname="ns101:getListMessageAfter" returnQName="ns101:getListMessageAfterReturn" returnType="ns102:Message" soapAction="" xmlns:ns101="http://ws.wayd" xmlns:ns102="http://bean.wayde">
-   <ns1:parameter qname="ns101:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns101:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns101:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListPhotoWaydeur" qname="ns98:getListPhotoWaydeur" returnQName="ns98:getListPhotoWaydeurReturn" returnType="ns99:PhotoWaydeur" soapAction="" xmlns:ns98="http://ws.wayd" xmlns:ns99="http://bean.wayde">
+   <ns1:parameter qname="ns98:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns98:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns98:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListNotification" qname="ns103:getListNotification" returnQName="ns103:getListNotificationReturn" returnType="ns104:Notification" soapAction="" xmlns:ns103="http://ws.wayd" xmlns:ns104="http://bean.wayde">
-   <ns1:parameter qname="ns103:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns103:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns103:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListMessageAfterByAct" qname="ns100:getListMessageAfterByAct" returnQName="ns100:getListMessageAfterByActReturn" returnType="ns101:Message" soapAction="" xmlns:ns100="http://ws.wayd" xmlns:ns101="http://bean.wayde">
+   <ns1:parameter qname="ns100:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns100:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns100:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns100:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListActivitePref" qname="ns105:getListActivitePref" returnQName="ns105:getListActivitePrefReturn" returnType="ns106:Activite" soapAction="" xmlns:ns105="http://ws.wayd" xmlns:ns106="http://bean.wayde">
-   <ns1:parameter qname="ns105:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns105:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns105:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListActivitePref" qname="ns102:getListActivitePref" returnQName="ns102:getListActivitePrefReturn" returnType="ns103:Activite" soapAction="" xmlns:ns102="http://ws.wayd" xmlns:ns103="http://bean.wayde">
+   <ns1:parameter qname="ns102:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns102:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns102:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListMessageAfterByAct" qname="ns107:getListMessageAfterByAct" returnQName="ns107:getListMessageAfterByActReturn" returnType="ns108:Message" soapAction="" xmlns:ns107="http://ws.wayd" xmlns:ns108="http://bean.wayde">
-   <ns1:parameter qname="ns107:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns107:idxmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns107:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns107:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListActiviteAvenir" qname="ns104:getListActiviteAvenir" returnQName="ns104:getListActiviteAvenirReturn" returnType="ns105:Activite" soapAction="" xmlns:ns104="http://ws.wayd" xmlns:ns105="http://bean.wayde">
+   <ns1:parameter qname="ns104:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:commencedans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns104:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceParticipation" qname="ns109:effaceParticipation" returnQName="ns109:effaceParticipationReturn" returnType="ns110:MessageServeur" soapAction="" xmlns:ns109="http://ws.wayd" xmlns:ns110="http://bean.wayde">
-   <ns1:parameter qname="ns109:idDemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns109:idAeffacer" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns109:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns109:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListTypeActivite" qname="ns106:getListTypeActivite" returnQName="ns106:getListTypeActiviteReturn" returnType="ns107:TypeActivite" soapAction="" xmlns:ns106="http://ws.wayd" xmlns:ns107="http://bean.wayde"/>
+  <ns1:operation name="getListActiviteAvenirNocritere" qname="ns108:getListActiviteAvenirNocritere" returnQName="ns108:getListActiviteAvenirNocritereReturn" returnType="ns109:Activite" soapAction="" xmlns:ns108="http://ws.wayd" xmlns:ns109="http://bean.wayde">
+   <ns1:parameter qname="ns108:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:commencedans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns108:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addInteretActivite" qname="ns111:addInteretActivite" returnQName="ns111:addInteretActiviteReturn" returnType="ns112:MessageServeur" soapAction="" xmlns:ns111="http://ws.wayd" xmlns:ns112="http://bean.wayde">
-   <ns1:parameter qname="ns111:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns111:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns111:typeInteret" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns111:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getListPhotoActivite" qname="ns110:getListPhotoActivite" returnQName="ns110:getListPhotoActiviteReturn" returnType="ns111:PhotoActivite" soapAction="" xmlns:ns110="http://ws.wayd" xmlns:ns111="http://bean.wayde">
+   <ns1:parameter qname="ns110:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns110:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns110:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListActiviteAvenirNocritere" qname="ns113:getListActiviteAvenirNocritere" returnQName="ns113:getListActiviteAvenirNocritereReturn" returnType="ns114:Activite" soapAction="" xmlns:ns113="http://ws.wayd" xmlns:ns114="http://bean.wayde">
-   <ns1:parameter qname="ns113:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:commencedans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns113:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceParticipation" qname="ns112:effaceParticipation" returnQName="ns112:effaceParticipationReturn" returnType="ns113:MessageServeur" soapAction="" xmlns:ns112="http://ws.wayd" xmlns:ns113="http://bean.wayde">
+   <ns1:parameter qname="ns112:idDemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns112:idAeffacer" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns112:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns112:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getMesActiviteEncours" qname="ns115:getMesActiviteEncours" returnQName="ns115:getMesActiviteEncoursReturn" returnType="ns116:Activite" soapAction="" xmlns:ns115="http://ws.wayd" xmlns:ns116="http://bean.wayde">
-   <ns1:parameter qname="ns115:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns115:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns115:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getMesActiviteArchive" qname="ns114:getMesActiviteArchive" returnQName="ns114:getMesActiviteArchiveReturn" returnType="ns115:Activite" soapAction="" xmlns:ns114="http://ws.wayd" xmlns:ns115="http://bean.wayde">
+   <ns1:parameter qname="ns114:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns114:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns114:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListTypeActivite" qname="ns117:getListTypeActivite" returnQName="ns117:getListTypeActiviteReturn" returnType="ns118:TypeActivite" soapAction="" xmlns:ns117="http://ws.wayd" xmlns:ns118="http://bean.wayde"/>
-  <ns1:operation name="getListPhotoActivite" qname="ns119:getListPhotoActivite" returnQName="ns119:getListPhotoActiviteReturn" returnType="ns120:PhotoActivite" soapAction="" xmlns:ns119="http://ws.wayd" xmlns:ns120="http://bean.wayde">
-   <ns1:parameter qname="ns119:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns119:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns119:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addInteretActivite" qname="ns116:addInteretActivite" returnQName="ns116:addInteretActiviteReturn" returnType="ns117:MessageServeur" soapAction="" xmlns:ns116="http://ws.wayd" xmlns:ns117="http://bean.wayde">
+   <ns1:parameter qname="ns116:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns116:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns116:typeInteret" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns116:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getListActiviteAvenir" qname="ns121:getListActiviteAvenir" returnQName="ns121:getListActiviteAvenirReturn" returnType="ns122:Activite" soapAction="" xmlns:ns121="http://ws.wayd" xmlns:ns122="http://bean.wayde">
-   <ns1:parameter qname="ns121:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:latitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:longitudestr" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:rayon" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:idtypeactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:motcle" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:commencedans" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns121:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getMesActiviteEncours" qname="ns118:getMesActiviteEncours" returnQName="ns118:getMesActiviteEncoursReturn" returnType="ns119:Activite" soapAction="" xmlns:ns118="http://ws.wayd" xmlns:ns119="http://bean.wayde">
+   <ns1:parameter qname="ns118:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns118:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns118:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getMesActiviteArchive" qname="ns123:getMesActiviteArchive" returnQName="ns123:getMesActiviteArchiveReturn" returnType="ns124:Activite" soapAction="" xmlns:ns123="http://ws.wayd" xmlns:ns124="http://bean.wayde">
-   <ns1:parameter qname="ns123:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns123:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns123:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitMessageDiscussionByAct" qname="ns120:acquitMessageDiscussionByAct" returnQName="ns120:acquitMessageDiscussionByActReturn" returnType="ns121:MessageServeur" soapAction="" xmlns:ns120="http://ws.wayd" xmlns:ns121="http://bean.wayde">
+   <ns1:parameter qname="ns120:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns120:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns120:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getPersonnebyToken" qname="ns125:getPersonnebyToken" returnQName="ns125:getPersonnebyTokenReturn" returnType="ns126:Personne" soapAction="" xmlns:ns125="http://ws.wayd" xmlns:ns126="http://bean.wayde">
-   <ns1:parameter qname="ns125:idtoken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getProfilNotation" qname="ns122:getProfilNotation" returnQName="ns122:getProfilNotationReturn" returnType="ns123:ProfilNotation" soapAction="" xmlns:ns122="http://ws.wayd" xmlns:ns123="http://bean.wayde">
+   <ns1:parameter qname="ns122:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns122:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns122:notateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns122:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns122:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceMessageEmis" qname="ns127:effaceMessageEmis" returnQName="ns127:effaceMessageEmisReturn" returnType="ns128:MessageServeur" soapAction="" xmlns:ns127="http://ws.wayd" xmlns:ns128="http://bean.wayde">
-   <ns1:parameter qname="ns127:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns127:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns127:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitNotification" qname="ns124:acquitNotification" returnQName="ns124:acquitNotificationReturn" returnType="ns125:MessageServeur" soapAction="" xmlns:ns124="http://ws.wayd" xmlns:ns125="http://bean.wayde">
+   <ns1:parameter qname="ns124:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns124:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns124:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitNotification" qname="ns129:acquitNotification" returnQName="ns129:acquitNotificationReturn" returnType="ns130:MessageServeur" soapAction="" xmlns:ns129="http://ws.wayd" xmlns:ns130="http://bean.wayde">
-   <ns1:parameter qname="ns129:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns129:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns129:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateNotificationPref" qname="ns126:updateNotificationPref" returnQName="ns126:updateNotificationPrefReturn" returnType="ns127:MessageServeur" soapAction="" xmlns:ns126="http://ws.wayd" xmlns:ns127="http://bean.wayde">
+   <ns1:parameter qname="ns126:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns126:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns126:notification" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitMessageDiscussionByAct" qname="ns131:acquitMessageDiscussionByAct" returnQName="ns131:acquitMessageDiscussionByActReturn" returnType="ns132:MessageServeur" soapAction="" xmlns:ns131="http://ws.wayd" xmlns:ns132="http://bean.wayde">
-   <ns1:parameter qname="ns131:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns131:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns131:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceMessageRecuByAct" qname="ns128:effaceMessageRecuByAct" returnQName="ns128:effaceMessageRecuByActReturn" returnType="ns129:MessageServeur" soapAction="" xmlns:ns128="http://ws.wayd" xmlns:ns129="http://bean.wayde">
+   <ns1:parameter qname="ns128:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns128:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns128:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceMessageEmisByAct" qname="ns133:effaceMessageEmisByAct" returnQName="ns133:effaceMessageEmisByActReturn" returnType="ns134:MessageServeur" soapAction="" xmlns:ns133="http://ws.wayd" xmlns:ns134="http://bean.wayde">
-   <ns1:parameter qname="ns133:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns133:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns133:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getPersonnebyToken" qname="ns130:getPersonnebyToken" returnQName="ns130:getPersonnebyTokenReturn" returnType="ns131:Personne" soapAction="" xmlns:ns130="http://ws.wayd" xmlns:ns131="http://bean.wayde">
+   <ns1:parameter qname="ns130:idtoken" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateNotificationPref" qname="ns135:updateNotificationPref" returnQName="ns135:updateNotificationPrefReturn" returnType="ns136:MessageServeur" soapAction="" xmlns:ns135="http://ws.wayd" xmlns:ns136="http://bean.wayde">
-   <ns1:parameter qname="ns135:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns135:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns135:notification" type="xsd:boolean" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_getNbrActiviteEncours" qname="ns132:test_getNbrActiviteEncours" returnQName="ns132:test_getNbrActiviteEncoursReturn" returnType="xsd:int" soapAction="" xmlns:ns132="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_getPremierId" qname="ns133:test_getPremierId" returnQName="ns133:test_getPremierIdReturn" returnType="xsd:int" soapAction="" xmlns:ns133="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitMessageByAct" qname="ns134:acquitMessageByAct" returnQName="ns134:acquitMessageByActReturn" returnType="ns135:MessageServeur" soapAction="" xmlns:ns134="http://ws.wayd" xmlns:ns135="http://bean.wayde">
+   <ns1:parameter qname="ns134:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns134:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns134:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitMessageDiscussion" qname="ns137:acquitMessageDiscussion" returnQName="ns137:acquitMessageDiscussionReturn" returnType="ns138:MessageServeur" soapAction="" xmlns:ns137="http://ws.wayd" xmlns:ns138="http://bean.wayde">
-   <ns1:parameter qname="ns137:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns137:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns137:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitAllNotification" qname="ns136:acquitAllNotification" returnQName="ns136:acquitAllNotificationReturn" returnType="ns137:MessageServeur" soapAction="" xmlns:ns136="http://ws.wayd" xmlns:ns137="http://bean.wayde">
+   <ns1:parameter qname="ns136:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns136:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitAllNotification" qname="ns139:acquitAllNotification" returnQName="ns139:acquitAllNotificationReturn" returnType="ns140:MessageServeur" soapAction="" xmlns:ns139="http://ws.wayd" xmlns:ns140="http://bean.wayde">
-   <ns1:parameter qname="ns139:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns139:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceMessageEmis" qname="ns138:effaceMessageEmis" returnQName="ns138:effaceMessageEmisReturn" returnType="ns139:MessageServeur" soapAction="" xmlns:ns138="http://ws.wayd" xmlns:ns139="http://bean.wayde">
+   <ns1:parameter qname="ns138:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns138:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns138:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceMessageRecu" qname="ns141:effaceMessageRecu" returnQName="ns141:effaceMessageRecuReturn" returnType="ns142:MessageServeur" soapAction="" xmlns:ns141="http://ws.wayd" xmlns:ns142="http://bean.wayde">
-   <ns1:parameter qname="ns141:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns141:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns141:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateNotification" qname="ns140:updateNotification" returnQName="ns140:updateNotificationReturn" returnType="ns141:MessageServeur" soapAction="" xmlns:ns140="http://ws.wayd" xmlns:ns141="http://bean.wayde">
+   <ns1:parameter qname="ns140:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns140:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceNotificationRecu" qname="ns143:effaceNotificationRecu" returnQName="ns143:effaceNotificationRecuReturn" returnType="ns144:MessageServeur" soapAction="" xmlns:ns143="http://ws.wayd" xmlns:ns144="http://bean.wayde">
-   <ns1:parameter qname="ns143:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns143:idnotification" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns143:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="acquitMessageDiscussion" qname="ns142:acquitMessageDiscussion" returnQName="ns142:acquitMessageDiscussionReturn" returnType="ns143:MessageServeur" soapAction="" xmlns:ns142="http://ws.wayd" xmlns:ns143="http://bean.wayde">
+   <ns1:parameter qname="ns142:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns142:idemetteur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns142:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="effaceMessageRecuByAct" qname="ns145:effaceMessageRecuByAct" returnQName="ns145:effaceMessageRecuByActReturn" returnType="ns146:MessageServeur" soapAction="" xmlns:ns145="http://ws.wayd" xmlns:ns146="http://bean.wayde">
-   <ns1:parameter qname="ns145:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns145:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns145:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceNotificationRecu" qname="ns144:effaceNotificationRecu" returnQName="ns144:effaceNotificationRecuReturn" returnType="ns145:MessageServeur" soapAction="" xmlns:ns144="http://ws.wayd" xmlns:ns145="http://bean.wayde">
+   <ns1:parameter qname="ns144:iddestinataire" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns144:idnotification" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns144:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateNotification" qname="ns147:updateNotification" returnQName="ns147:updateNotificationReturn" returnType="ns148:MessageServeur" soapAction="" xmlns:ns147="http://ws.wayd" xmlns:ns148="http://bean.wayde">
-   <ns1:parameter qname="ns147:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns147:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceMessageRecu" qname="ns146:effaceMessageRecu" returnQName="ns146:effaceMessageRecuReturn" returnType="ns147:MessageServeur" soapAction="" xmlns:ns146="http://ws.wayd" xmlns:ns147="http://bean.wayde">
+   <ns1:parameter qname="ns146:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns146:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns146:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="acquitMessageByAct" qname="ns149:acquitMessageByAct" returnQName="ns149:acquitMessageByActReturn" returnType="ns150:MessageServeur" soapAction="" xmlns:ns149="http://ws.wayd" xmlns:ns150="http://bean.wayde">
-   <ns1:parameter qname="ns149:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns149:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns149:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="effaceMessageEmisByAct" qname="ns148:effaceMessageEmisByAct" returnQName="ns148:effaceMessageEmisByActReturn" returnType="ns149:MessageServeur" soapAction="" xmlns:ns148="http://ws.wayd" xmlns:ns149="http://bean.wayde">
+   <ns1:parameter qname="ns148:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns148:idmessage" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns148:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getProfilNotation" qname="ns151:getProfilNotation" returnQName="ns151:getProfilNotationReturn" returnType="ns152:ProfilNotation" soapAction="" xmlns:ns151="http://ws.wayd" xmlns:ns152="http://bean.wayde">
-   <ns1:parameter qname="ns151:iddemandeur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns151:jeton" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns151:notateur" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns151:idpersonne" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns151:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_GetPersonneAlea" qname="ns150:test_GetPersonneAlea" returnQName="ns150:test_GetPersonneAleaReturn" returnType="ns151:Personne" soapAction="" xmlns:ns150="http://ws.wayd" xmlns:ns151="http://bean.wayde"/>
+  <ns1:operation name="test_getDernierId" qname="ns152:test_getDernierId" returnQName="ns152:test_getDernierIdReturn" returnType="xsd:int" soapAction="" xmlns:ns152="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="test_termineActivite" qname="ns153:test_termineActivite" soapAction="" xmlns:ns153="http://ws.wayd">
+   <ns1:parameter qname="ns153:mdp" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns153:idactivite" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="test_getNbrActiviteEncours" qname="ns153:test_getNbrActiviteEncours" returnQName="ns153:test_getNbrActiviteEncoursReturn" returnType="xsd:int" soapAction="" xmlns:ns153="http://ws.wayd" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:parameter name="allowedMethods" value="addActivitePro acquitMessageDiscussion acquitMessageByAct signalerActivite getListTypeActivite test_addCompte addActivite getPersonne getListPhotoWaydeur testToken getFullProfilPro getIndicateurs getListPreferences addMessage getPersonnebyToken getListActivites addSuggestion test_getNbrActiviteEncours test_GetPersonneAlea getListParticipant getListDiscussion effaceMessageRecu tesgcm effaceMessageRecuByAct effaceDiscussion test_GetToken getPhotoWaydeur addParticipation getListMessageAfter getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo addPrbConnexion effaceActivite updateNotificationPref getMesActiviteEncours effaceMessageEmis getListAmi addInteretActivite isDejaInteret addMessageByAct getListNotification getListPhotoActivite getActivites test_init acquitNotification getTableauBord effaceAmi updateNotification getFullProfil acquitMessageDiscussionByAct updateActivite acquitMessage getListActivitePref getListAvis envoyerMail getActivite updateGCM signalerProfil test_getPremierId getMesActiviteArchive getProfilNotation getVersion addAvis getListPhotoWaydeurByAct getListMessageAfterByAct updatePosition getListNotificationAfter updateProfilPro updateProfilWayd getListActiviteAvenir getAvis test_DonneAvis test_getDernierId effaceNotificationRecu effaceMessage test_termineActivite getDiscussion updatePreference acquitAllNotification"/>
+  <ns1:parameter name="allowedMethods" value="addActivitePro acquitMessageByAct acquitMessageDiscussion signalerActivite getListTypeActivite test_addCompte addActivite getPersonne getListPhotoWaydeur getFullProfilPro testToken getIndicateurs getListPreferences addMessage getPersonnebyToken getListActivites addSuggestion test_getNbrActiviteEncours test_GetPersonneAlea getListParticipant getListDiscussion effaceMessageRecu tesgcm effaceMessageRecuByAct effaceDiscussion test_GetToken getPhotoWaydeur addParticipation getListMessageAfter getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo addPrbConnexion effaceActivite updateNotificationPref getMesActiviteEncours effaceMessageEmis getListAmi addInteretActivite isDejaInteret addMessageByAct getListNotification getListPhotoActivite getActivites test_init acquitNotification getTableauBord effaceAmi updateNotification getFullProfil acquitMessageDiscussionByAct updateActivite acquitMessage getListActivitePref getListAvis envoyerMail getActivite updateGCM signalerProfil test_getPremierId getMesActiviteArchive getProfilNotation getVersion addAvis getListPhotoWaydeurByAct getListMessageAfterByAct updatePosition getListNotificationAfter updateProfilPro updateProfilWayd getListActiviteAvenir getAvis test_DonneAvis test_getDernierId effaceNotificationRecu effaceMessage test_termineActivite updatePreference getDiscussion acquitAllNotification"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="WBservices"/>
   <ns1:parameter name="className" value="wayd.ws.WBservices"/>

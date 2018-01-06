@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.bean.Participant;
 
 public class ParticipantDAO {
@@ -49,15 +50,16 @@ public class ParticipantDAO {
 			participant = new Participant(id, pseudo, nbravis, sexe, note, photostr,  datenaissance, afficheage, affichesexe);
 			retour.add(participant);
 		}
-		
-		 requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,personne.nbravis,personne.sexe,personne.note,"
+		CxoPool.close(preparedStatement, rs);
+	
+		requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,personne.nbravis,personne.sexe,personne.note,"
 				+ "personne.datenaissance,personne.afficheage,personne.affichesexe from personne,activite where personne.idpersonne=activite.idpersonne"
 				+ " and activite.idactivite=?  ";
 		 preparedStatement = connexion
 				.prepareStatement(requete);
 
 		preparedStatement.setInt(1, idactivite);
-		 rs = preparedStatement.executeQuery();
+		rs = preparedStatement.executeQuery();
 		 
 		while (rs.next()) {
 			int id = rs.getInt("idpersonne");
@@ -76,8 +78,7 @@ public class ParticipantDAO {
 		
 		
 
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 
 		return retour;
 

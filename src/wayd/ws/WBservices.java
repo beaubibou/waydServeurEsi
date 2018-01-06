@@ -1,6 +1,5 @@
 package wayd.ws;
 
-import fcm.PushNotifictionHelper;
 import fcm.ServeurMethodes;
 import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AcquitMessageByActGcm;
@@ -30,7 +29,6 @@ import gcmnotification.UpdatePreferenceGcm;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,16 +41,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
 
-import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -68,21 +63,19 @@ import wayde.bean.Participant;
 import wayde.bean.Participation;
 import wayde.bean.Personne;
 import wayde.bean.PhotoActivite;
+import wayde.bean.PhotoWaydeur;
 import wayde.bean.Preference;
 import wayde.bean.Profil;
-import wayde.bean.PhotoWaydeur;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProfilPro;
 import wayde.bean.RetourMessage;
 import wayde.bean.TableauBord;
 import wayde.bean.TypeActivite;
 import wayde.bean.Version;
-import wayde.beandatabase.AvisaDonnerDb;
 import wayde.beandatabase.TypeActiviteDb;
 import wayde.dao.ActiviteDAO;
 import wayde.dao.AmiDAO;
 import wayde.dao.AvisDAO;
-import wayde.dao.AvisaDonnerDAO;
 import wayde.dao.DiscussionDAO;
 import wayde.dao.MessageDAO;
 import wayde.dao.NotificationDAO;
@@ -94,7 +87,6 @@ import wayde.dao.SignalementDAO;
 import wayde.dao.SuggestionDAO;
 import wayde.dao.TypeActiviteDAO;
 import website.dao.LogDAO;
-import website.metier.ActiviteBean;
 import website.metier.ProfilBean;
 
 import com.google.auth.oauth2.GoogleCredentials;
@@ -102,7 +94,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.tasks.OnSuccessListener;
 
 import comparator.DiscussionDateComparator;
 
@@ -206,32 +197,33 @@ public class WBservices {
 
 	public boolean testToken(final String idtoken, final String photostr,
 			final String nom, final String gcmToken) {
-		long debut = System.currentTimeMillis();
+		//long debut = System.currentTimeMillis();
 
-		if (FirebaseApp.getApps().isEmpty()) {
-
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
-
-		}
-
-		try {
-			FirebaseToken token = FirebaseAuth.getInstance()
-					.verifyIdTokenAsync(idtoken).get();
-
-			String uid = token.getUid();
-			String email = token.getEmail();
-			MessageServeur messageServeur = gestionUid(uid, idtoken, photostr,
-					nom, gcmToken, email);
-
-			LogDAO.LOG_DUREE("testToken", debut);
-
-			return messageServeur.isReponse();
-		} catch (InterruptedException | ExecutionException e) {
-
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return false;
-		}
+//		if (FirebaseApp.getApps().isEmpty()) {
+//
+//			FirebaseApp.initializeApp(WBservices.optionFireBase);
+//
+//		}
+//
+//		try {
+//			FirebaseToken token = FirebaseAuth.getInstance()
+//					.verifyIdTokenAsync(idtoken).get();
+//
+//			String uid = token.getUid();
+//			String email = token.getEmail();
+//			MessageServeur messageServeur = gestionUid(uid, idtoken, photostr,
+//					nom, gcmToken, email);
+//
+//			LogDAO.LOG_DUREE("testToken", debut);
+//
+//			return messageServeur.isReponse();
+//		} catch (InterruptedException | ExecutionException e) {
+//
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return false;
+//		}
+		return false;
 
 	}
 
@@ -307,7 +299,7 @@ public class WBservices {
 
 			return avis;
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -347,7 +339,7 @@ public class WBservices {
 			PoolThreadGCM.poolThread
 					.execute(new UpdatePreferenceGcm(idpersonne));
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			CxoPool.rollBack(connexion);
 			e.printStackTrace();
@@ -839,7 +831,7 @@ public class WBservices {
 
 			return activite;
 
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -943,7 +935,7 @@ public class WBservices {
 		return new MessageServeur(false, TextWebService.ERREUR_INCONNUE);
 	}
 
-	public TableauBord getTableauBord(int idpersonne) {
+	public TableauBord getTableauBord(int idpersonne,String jeton) {
 		Connection connexion = null;
 		TableauBord tableaubord;
 
@@ -957,8 +949,13 @@ public class WBservices {
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			tableaubord = activitedao.getTableauBord(idpersonne);
 
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+		
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return null;
+			
 			LogDAO.LOG_DUREE("getTableauBord", debut);
-
+			CxoPool.closeConnection(connexion);
 			return tableaubord;
 
 		} catch (Exception e) {
@@ -972,7 +969,7 @@ public class WBservices {
 
 	}
 
-	public IndicateurWayd getIndicateurs() {
+	public IndicateurWayd getIndicateurs(int idpersonne,String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		IndicateurWayd indicateurs;
@@ -980,6 +977,10 @@ public class WBservices {
 		try {
 			connexion = CxoPool.getConnection();
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			if (!personneDAO.isAutorise(idpersonne, jeton))
+				return null;
+			
 			indicateurs = activitedao.getIndicateurs();
 
 			LogDAO.LOG_DUREE("getIndicateurs", debut);
@@ -1017,7 +1018,7 @@ public class WBservices {
 			AvisDAO avisdao = new AvisDAO(connexion);
 			listavis = avisdao.getListAvis(idpersonnenotee);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1448,7 +1449,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("addActivite", debut);
 			return new MessageServeur(true, Integer.toString(activite.getId()));
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 
 			e.printStackTrace();
@@ -1514,7 +1515,7 @@ public class WBservices {
 
 			return new MessageServeur(true, Integer.toString(activite.getId()));
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1551,7 +1552,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.AJOUTE_SUGGESTION);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1640,7 +1641,7 @@ public class WBservices {
 			return new RetourMessage(new Date().getTime(), idmessage,
 					idemetteur);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1723,7 +1724,7 @@ public class WBservices {
 					idemetteur);
 			// return new MessageServeur(true, "" + idmessage);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1811,7 +1812,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.suppressionParicipation);
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1835,7 +1836,7 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
-
+			
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			NotificationDAO notificationdao = new NotificationDAO(connexion);
 			ParticipationDAO participationdao = new ParticipationDAO(connexion);
@@ -1849,7 +1850,7 @@ public class WBservices {
 			if (activite.isTerminee())
 				return new MessageServeur(false,
 						TextWebService.ACTIVITE_TERMINEE);
-
+		
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idorganisateur, jeton);
@@ -1866,10 +1867,17 @@ public class WBservices {
 					.getListPartipantActivite(idactivite);
 
 			activitedao.RemoveActivite(idactivite);
+			
+		
 			notificationdao.addNotification(participants,
 					Notification.Supprime_Activite, 0, idorganisateur);
+		
+			LOG.info("efaf acrtiii");
+		
 			discussiondao.effaceDiscussionTouteActivite(idactivite);
+		
 			connexion.commit();
+			connexion.close();
 			// new EffaceActiviteGcm(personneinteresse, participants,
 			// idactivite)
 			// .start();
@@ -1880,7 +1888,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1919,7 +1927,7 @@ public class WBservices {
 
 			return new MessageServeur(true, "Suppressin ok");
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1963,7 +1971,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("effaceMessageRecu", debut);
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2009,7 +2017,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("effaceMessageRecuByAct", debut);
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2054,7 +2062,7 @@ public class WBservices {
 			return new MessageServeur(true,
 					TextWebService.suppressionNotifiaction);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2098,7 +2106,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.suppressionAmi);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2139,7 +2147,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("effaceMessageEmisByAct", debut);
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2179,7 +2187,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("effaceMessageEmis", debut);
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2219,7 +2227,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.suppressionDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2262,7 +2270,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2306,7 +2314,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2349,7 +2357,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2392,7 +2400,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2436,7 +2444,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2477,7 +2485,7 @@ public class WBservices {
 
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2572,7 +2580,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("addParticipation", debut);
 
 			return new MessageServeur(true, TextWebService.activiteInscription);
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2648,7 +2656,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.notationValidee);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2820,6 +2828,7 @@ public class WBservices {
 			LogDAO.LOG_DUREE("updateNotification", debut);
 
 			connexion.commit();
+			
 			// new UpdateNotificationGcm(idpersonne).start();
 			PoolThreadGCM.poolThread.execute(new UpdateNotificationGcm(
 					idpersonne));
@@ -3071,7 +3080,7 @@ public class WBservices {
 
 			return profil;
 
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -3140,7 +3149,7 @@ public class WBservices {
 
 			}
 
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -3165,7 +3174,7 @@ public class WBservices {
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
 
 		}
-
+		PreparedStatement preparedStatement=null;
 		FirebaseToken token;
 		try {
 
@@ -3215,64 +3224,66 @@ public class WBservices {
 			// ******** Met les notifications existantes � pas lu **//
 			String requete = "UPDATE  notification set lu=false "
 					+ " WHERE iddestinataire=? and idtype=1";
-			PreparedStatement preparedStatement = connexion
+			preparedStatement = connexion
 					.prepareStatement(requete);
 			preparedStatement.setInt(1, personne.getId());
 			preparedStatement.execute();
-			preparedStatement.close();
-
+		
 			LogDAO.LOG_DUREE("getPersonne", debut);
 
 			return personne;
 
-		} catch (InterruptedException | ExecutionException | SQLException
-				| NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		}
 
+		finally{
+			
+			CxoPool.close(connexion,preparedStatement);
+		}
 	}
 
 	public int test_getNbrActiviteEncours() {
 
 		Connection connexion = null;
 		int nbractivite = 0;
-		try {
-			connexion = CxoPool.getConnection();
-			String requete = "Select count(idactivite) as nbractivite  FROM activite where  activite.datefin>? ;";
-			PreparedStatement preparedStatement = connexion
-					.prepareStatement(requete);
-
-			preparedStatement.setTimestamp(1,
-					new java.sql.Timestamp(new Date().getTime()));
-			ResultSet rs = preparedStatement.executeQuery();
-
-			if (rs.next()) {
-				nbractivite = rs.getInt("nbractivite");
-			}
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return 0;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		try {
+//			connexion = CxoPool.getConnection();
+//			String requete = "Select count(idactivite) as nbractivite  FROM activite where  activite.datefin>? ;";
+//			PreparedStatement preparedStatement = connexion
+//					.prepareStatement(requete);
+//
+//			preparedStatement.setTimestamp(1,
+//					new java.sql.Timestamp(new Date().getTime()));
+//			ResultSet rs = preparedStatement.executeQuery();
+//
+//			if (rs.next()) {
+//				nbractivite = rs.getInt("nbractivite");
+//			}
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return 0;
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 		return nbractivite;
 	}
 
 	public void tesgcm(String gmcToken) {
-
-		try {
-			PushNotifictionHelper.sendPushNotificationTo(gmcToken);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-		}
+			
+//		try {
+//			PushNotifictionHelper.sendPushNotificationTo(gmcToken);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//		}
 
 	}
 
@@ -3280,37 +3291,37 @@ public class WBservices {
 
 		Connection connexion = null;
 		int premierId = 0;
-		try {
-			connexion = CxoPool.getConnection();
-			String requete = "select min (idpersonne) as minid from personne";
-			PreparedStatement preparedStatement = connexion
-					.prepareStatement(requete);
-			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
-				premierId = rs.getInt("minid");
-			}
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return 0;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		try {
+//			connexion = CxoPool.getConnection();
+//			String requete = "select min (idpersonne) as minid from personne";
+//			PreparedStatement preparedStatement = connexion
+//					.prepareStatement(requete);
+//			ResultSet rs = preparedStatement.executeQuery();
+//			if (rs.next()) {
+//				premierId = rs.getInt("minid");
+//			}
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return 0;
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 		return premierId;
 	}
 
 	public void test_termineActivite(String mdp, int idactivite) {
 
-		long debut = System.currentTimeMillis();
-
-		if (mdp.compareTo("mestivierphilippe") != 0)
-			return;
-
-		ActiviteDAO.terminerActivite(idactivite);
-
-		LogDAO.LOG_DUREE("test_termineActivite", debut);
+//		long debut = System.currentTimeMillis();
+//
+//		if (mdp.compareTo("mestivierphilippe") != 0)
+//			return;
+//
+//		ActiviteDAO.terminerActivite(idactivite);
+//
+//		LogDAO.LOG_DUREE("test_termineActivite", debut);
 
 	}
 
@@ -3318,23 +3329,23 @@ public class WBservices {
 
 		Connection connexion = null;
 		int dernierId = 0;
-		try {
-			connexion = CxoPool.getConnection();
-			String requete = "select max (idpersonne) as maxid from personne";
-			PreparedStatement preparedStatement = connexion
-					.prepareStatement(requete);
-			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {
-				dernierId = rs.getInt("maxid");
-			}
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return 0;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		try {
+//			connexion = CxoPool.getConnection();
+//			String requete = "select max (idpersonne) as maxid from personne";
+//			PreparedStatement preparedStatement = connexion
+//					.prepareStatement(requete);
+//			ResultSet rs = preparedStatement.executeQuery();
+//			if (rs.next()) {
+//				dernierId = rs.getInt("maxid");
+//			}
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return 0;
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 		return dernierId;
 	}
@@ -3342,188 +3353,190 @@ public class WBservices {
 	public Personne test_GetPersonneAlea() {
 		long debut = System.currentTimeMillis();
 
-		Connection connexion = null;
-		try {
-
-			connexion = CxoPool.getConnection();
-			PersonneDAO personnedao = new PersonneDAO(connexion);
-			Personne personne = personnedao.test_GetPersonneAle();
-
-			LogDAO.LOG_DUREE("test_GetPersonneAlea", debut);
-
-			return personne;
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return null;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		Connection connexion = null;
+//		try {
+//
+//			connexion = CxoPool.getConnection();
+//			PersonneDAO personnedao = new PersonneDAO(connexion);
+//			Personne personne = personnedao.test_GetPersonneAle();
+//
+//			LogDAO.LOG_DUREE("test_GetPersonneAlea", debut);
+//
+//			return personne;
+//
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return null;
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
+		return null;
 
 	}
 
 	public String test_GetToken(int idpersonne) {
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
+//		long debut = System.currentTimeMillis();
+//		Connection connexion = null;
+//
+//		try {
+//			connexion = CxoPool.getConnection();
+//			PersonneDAO personnedao = new PersonneDAO(connexion);
+//			LogDAO.LOG_DUREE("test_GetToken", debut);
+//
+//			return personnedao.test_getToken(idpersonne);
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			return null;
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
-		try {
-			connexion = CxoPool.getConnection();
-			PersonneDAO personnedao = new PersonneDAO(connexion);
-			LogDAO.LOG_DUREE("test_GetToken", debut);
-
-			return personnedao.test_getToken(idpersonne);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			return null;
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
+		return null;
 	}
 
 	public void test_DonneAvis(int idpersonne, String jeton) {
-		Connection connexion = null;
-		try {
-			connexion = CxoPool.getConnection();
-
-			AvisaDonnerDAO avisadonner = new AvisaDonnerDAO(connexion);
-
-			ArrayList<AvisaDonnerDb> listavisAdonner = avisadonner
-					.getListAvisaDonner(idpersonne);
-			if (listavisAdonner.size() != 0) {
-
-				AvisaDonnerDb avis = listavisAdonner.get(new Random(System
-						.currentTimeMillis()).nextInt(listavisAdonner.size()));
-				int idpersonnenotee = avis.getIdpersonnenotee();
-				int idactivite = avis.getIdactivite();
-				addAvis(idpersonne, idpersonnenotee, idactivite, "Titre"
-						+ System.currentTimeMillis(),
-						"Libelle" + System.currentTimeMillis(), "3.2", true,
-						jeton);
-			}
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		Connection connexion = null;
+//		try {
+//			connexion = CxoPool.getConnection();
+//
+//			AvisaDonnerDAO avisadonner = new AvisaDonnerDAO(connexion);
+//
+//			ArrayList<AvisaDonnerDb> listavisAdonner = avisadonner
+//					.getListAvisaDonner(idpersonne);
+//			if (listavisAdonner.size() != 0) {
+//
+//				AvisaDonnerDb avis = listavisAdonner.get(new Random(System
+//						.currentTimeMillis()).nextInt(listavisAdonner.size()));
+//				int idpersonnenotee = avis.getIdpersonnenotee();
+//				int idactivite = avis.getIdactivite();
+//				addAvis(idpersonne, idpersonnenotee, idactivite, "Titre"
+//						+ System.currentTimeMillis(),
+//						"Libelle" + System.currentTimeMillis(), "3.2", true,
+//						jeton);
+//			}
+//
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 	}
 
 	public int test_addCompte(long jeton) {
-		Connection connexion = null;
-
-		try {
-			// for (int f=0;f<500;f++)
-			connexion = CxoPool.getConnection();
-			PersonneDAO personnedao = new PersonneDAO(connexion);
-			return personnedao.TestaddCompteGenerique(jeton);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		Connection connexion = null;
+//
+//		try {
+//			// for (int f=0;f<500;f++)
+//			connexion = CxoPool.getConnection();
+//			PersonneDAO personnedao = new PersonneDAO(connexion);
+//			return personnedao.TestaddCompteGenerique(jeton);
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 		return 0;
 	}
 
 	public void test_init(String mdp) {
-		Connection connexion = null;
-
-		if (mdp.compareTo("mestivierphilippe") != 0)
-			return;
-
-		try {
-			// for (int f=0;f<500;f++)
-			long debut = System.currentTimeMillis();
-			connexion = CxoPool.getConnection();
-			connexion.setAutoCommit(false);
-			String requete = "delete from noter";
-			PreparedStatement preparedStatement = connexion
-					.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from amelioration";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from prefere";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from ami";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from notification";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from demandeami";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from participer";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from messagebyact ";
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from message";
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from activite ";
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			requete = "delete from personne  ";
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.execute();
-			preparedStatement.close();
-
-			connexion.commit();
-
-			String loginfo = "test_init - "
-					+ (System.currentTimeMillis() - debut) + "ms";
-
-		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
+//		Connection connexion = null;
+//
+//		if (mdp.compareTo("mestivierphilippe") != 0)
+//			return;
+//
+//		try {
+//			// for (int f=0;f<500;f++)
+//			long debut = System.currentTimeMillis();
+//			connexion = CxoPool.getConnection();
+//			connexion.setAutoCommit(false);
+//			String requete = "delete from noter";
+//			PreparedStatement preparedStatement = connexion
+//					.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from amelioration";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from prefere";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from ami";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from notification";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from demandeami";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from participer";
+//			preparedStatement = connexion.prepareStatement(requete);
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from messagebyact ";
+//			preparedStatement = connexion.prepareStatement(requete);
+//
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from message";
+//			preparedStatement = connexion.prepareStatement(requete);
+//
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from activite ";
+//			preparedStatement = connexion.prepareStatement(requete);
+//
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			requete = "delete from personne  ";
+//			preparedStatement = connexion.prepareStatement(requete);
+//
+//			preparedStatement.execute();
+//			preparedStatement.close();
+//
+//			connexion.commit();
+//
+//			String loginfo = "test_init - "
+//					+ (System.currentTimeMillis() - debut) + "ms";
+//
+//		} catch (SQLException | NamingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			LOG.error(ExceptionUtils.getStackTrace(e));
+//			CxoPool.rollBack(connexion);
+//
+//		} finally {
+//			CxoPool.closeConnection(connexion);
+//		}
 
 	}
 
@@ -3560,7 +3573,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.activiteSignale);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -3618,7 +3631,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.profilSignale);
 
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3826,7 +3839,7 @@ public class WBservices {
 			return (Activite[]) listActivite.toArray(new Activite[listActivite
 					.size()]);
 
-		} catch (NamingException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));

@@ -10,9 +10,10 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import wayde.bean.Ami;
+import wayde.bean.CxoPool;
 
 public class AmiDAO {
-	
+
 	private static final Logger LOG = Logger.getLogger(AmiDAO.class);
 
 	Connection connexion;
@@ -38,16 +39,16 @@ public class AmiDAO {
 			String nom = rs.getString("nom");
 			String login = rs.getString("login");
 			String prenom = rs.getString("prenom");
-			if (prenom==null)prenom="";
+			if (prenom == null)
+				prenom = "";
 			String photostr = rs.getString("photo");
 			Date depuisle = rs.getDate("d_creation");
-			double note=rs.getDouble("note");
-			ami = new Ami(photostr, prenom, nom, login, id,depuisle,note);
+			double note = rs.getDouble("note");
+			ami = new Ami(photostr, prenom, nom, login, id, depuisle, note);
 			retour.add(ami);
 		}
 
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 
 		return retour;
 
@@ -70,22 +71,21 @@ public class AmiDAO {
 
 	public boolean isAmiFrom(int idpersonne, int idami) throws SQLException {
 		// Renvoi si id ami appartient aux ami de idpersonne
-
+		boolean retour=false;
 		String requete = " SELECT idami from ami  where idpersonne=? and idami=?  ";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-	
+
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idami);
 		ResultSet rs = preparedStatement.executeQuery();
-		while (rs.next()) {
-			rs.close();
-			preparedStatement.close();
-			return true;
+		if (rs.next()) {
+			
+			retour= true;
 		}
-		rs.close();
-		preparedStatement.close();
-		return false;
+		CxoPool.close(preparedStatement, rs);
+		return retour;
+
 
 	}
 

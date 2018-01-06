@@ -40,54 +40,37 @@ public class PersonneDAO {
 
 	}
 
-	public MessageServeur isAutoriseMessageServeur(int idpersonne, String jeton) {
+	public MessageServeur isAutoriseMessageServeur(int idpersonne, String jeton)
+			throws Exception {
 
 		Droit droit;
-		try {
-			droit = getDroit(idpersonne, jeton);
-			if (droit == null) {
 
-				LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
-						+ idpersonne + " - Jeton:" + jeton);
+		droit = getDroit(idpersonne, jeton);
 
-				return new MessageServeur(false,
-						TextWebService.PROFIL_NON_RECONNU);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+		if (droit == null) {
+			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+					+ idpersonne + " - Jeton:" + jeton);
+
 			return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
 		}
 
 		return droit.isDefautAccess();
 
 	}
-	
-	
 
-	public boolean isAutorise(int idDemandeur, String jeton) {
+	public boolean isAutorise(int idDemandeur, String jeton)
+			throws SQLException {
 
 		Droit droit = null;
-		;
-		try {
-
-			droit = getDroit(idDemandeur, jeton);
-			if (droit == null) {
-				LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
-						+ idDemandeur + " - Jeton:" + jeton);
-				return false;
-			}
-
-			MessageServeur autorisation = droit.isDefautAccess();
-			return autorisation.isReponse();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+		droit = getDroit(idDemandeur, jeton);
+		if (droit == null) {
+			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+					+ idDemandeur + " - Jeton:" + jeton);
 			return false;
 		}
+
+		MessageServeur autorisation = droit.isDefautAccess();
+		return autorisation.isReponse();
 
 	}
 
@@ -96,7 +79,6 @@ public class PersonneDAO {
 	}
 
 	public Personne getPersonneId(int idpersonne) throws SQLException {
-		Statement stmt = connexion.createStatement();
 		// System.out.println("Cherche compte personen par Id" + idpersonne);
 		String requete = " SELECT personne.notification,personne.note,"
 				+ "personne.nbravis as totalavis,"
@@ -107,18 +89,17 @@ public class PersonneDAO {
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		Personne personne = getPersonneDbByRs(rs);
-		rs.close();
+
+		CxoPool.close(preparedStatement, rs);
 		return personne;
 
 	}
 
 	public ProfilNotation getProfilNotation(int notateur, int idpersonne,
-			int idactivite) throws SQLException {
+			int idactivite) throws Exception {
 
 		boolean isAmi = new AmiDAO(connexion).isAmiFrom(notateur, idpersonne);
 		Profil profil = getFullProfil(idpersonne);
@@ -129,7 +110,8 @@ public class PersonneDAO {
 
 	public Profil getFullProfil(int idpersonne) throws SQLException {
 
-		Statement stmt = connexion.createStatement();
+		Profil profil = null;
+
 		String requete = " SELECT personne.note,personne.nbravis,"
 				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
 				+ "(SELECT COUNT(*) FROM participer where idpersonne=personne.idpersonne ) as nbrparticipation,"
@@ -143,7 +125,6 @@ public class PersonneDAO {
 
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 
 		if (rs.next()) {
 			int id = rs.getInt("idpersonne");
@@ -167,23 +148,20 @@ public class PersonneDAO {
 			int sexe = rs.getInt("sexe");
 			double note = rs.getDouble("note");
 
-			Profil profil = new Profil(id, nom, prenom, ville, datecreation,
+			profil = new Profil(id, nom, prenom, ville, datecreation,
 					datenaissance, nbravis, sexe, nbractivite,
 					nbrparticipation, nbrami, note, photo, affichesexe,
 					afficheage, commentaire);
-			rs.close();
-			return profil;
+
 		}
 
-		if (rs != null)
-			rs.close();
-		return null;
+		CxoPool.close(preparedStatement, rs);
+		return profil;
 	}
 
 	public ProfilPro getFullProfilPro(int idpersonne) throws SQLException {
 
-		Statement stmt = connexion.createStatement();
-
+		ProfilPro profilPro = null;
 		String requete = " SELECT prenom,telephone,adresse,siret,idpersonne,commentaire, photo,datecreation,siteweb,"
 				+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne)  as nbractivite"
 				+ "   FROM personne where idpersonne=?";
@@ -207,19 +185,17 @@ public class PersonneDAO {
 			if (photo == null)
 				photo = "";
 
-			ProfilPro profilPro = new ProfilPro(id, prenom, adresse, siret,
-					telephone, datecreation.getTime(), nbractivite, photo,
-					commentaire, siteweb);
-			rs.close();
-			stmt.close();
+			profilPro = new ProfilPro(id, prenom, adresse, siret, telephone,
+					datecreation.getTime(), nbractivite, photo, commentaire,
+					siteweb);
 
-			return profilPro;
 		}
-		return null;
+
+		CxoPool.close(preparedStatement, rs);
+		return profilPro;
 	}
 
 	public Personne getUnProfil(int idpersonne) throws SQLException {
-		Statement stmt = connexion.createStatement();
 
 		String requete = " SELECT  notification,note, nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,"
@@ -229,24 +205,24 @@ public class PersonneDAO {
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
+
 		Personne personne = getUnProfilDbByRs(rs);
-		rs.close();
+
+		CxoPool.close(preparedStatement, rs);
 		return personne;
 	}
 
 	public Droit getDroit(int idpersonne, String jeton) throws SQLException {
 
-		Statement stmt = connexion.createStatement();
+		// Statement stmt = connexion.createStatement();
 		String requete = " SELECT  idpersonne,verrouille,admin,actif from personne where idpersonne=? and jeton=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setString(2, jeton);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		Droit droit = getDroitDbByRs(rs);
-		rs.close();
+		CxoPool.close(preparedStatement, rs);
 		return droit;
 	}
 
@@ -271,64 +247,70 @@ public class PersonneDAO {
 	}
 
 	public String test_getToken(int idpersonne) throws Exception {
-		Statement stmt = connexion.createStatement();
+		String jeton = null;
 		String requete = " SELECT jeton from personne where idpersonne=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
+
 		if (rs.next()) {
-			return rs.getString("jeton");
+			jeton = rs.getString("jeton");
 		}
-		throw new Exception("Pas de jeton pour " + idpersonne);
+		CxoPool.close(preparedStatement, rs);
+		return jeton;
+
 	}
 
 	public ProprietePref getProprietePref(int idpersonne) throws Exception {
-		Statement stmt = connexion.createStatement();
+		// Statement stmt = connexion.createStatement();
+
+		ProprietePref retour = null;
 		String requete = " SELECT latitude,longitude,rayon,adressepref from personne where idpersonne=?";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 
 		if (rs.next()) {
 			double longitude = rs.getDouble("longitude");
 			double latitude = rs.getDouble("latitude");
 			int rayon = rs.getInt("rayon");
 			String adresse = rs.getString("adressepref");
+
 			if (adresse == null)
 				adresse = "Pas d'adresse";
-			return new ProprietePref(rayon, latitude, longitude, adresse);
+
+			CxoPool.close(preparedStatement, rs);
+
+			retour = new ProprietePref(rayon, latitude, longitude, adresse);
 		}
-		throw new Exception("Pas de préférence pour  " + idpersonne);
+
+		CxoPool.close(preparedStatement, rs);
+		return retour;
 
 	}
 
 	public Personne getPersonneJeton(String idtoken) throws SQLException {
-
-		Statement stmt = connexion.createStatement();
 
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
 				+ "nbrecheccnx, datecreation, datenaissance, sexe,longitude,latitude,"
 				+ "  mail, cleactivation, photo,affichesexe,afficheage,premiereconnexion,"
 				+ "rayon,admin,typeuser,siteweb,telephone,siret FROM personne where jeton=?";
+
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setString(1, idtoken);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		Personne personne = getPersonneDbByRs(rs);
-		rs.close();
+		CxoPool.close(preparedStatement, rs);
+
 		return personne;
 	}
 
 	public Personne getPersonneByUID(String uid) throws SQLException {
-
-		Statement stmt = connexion.createStatement();
 
 		String requete = " SELECT personne.notification,personne.note,personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
@@ -339,9 +321,10 @@ public class PersonneDAO {
 				.prepareStatement(requete);
 		preparedStatement.setString(1, uid);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
+
 		Personne personne = getPersonneDbByRs(rs);
-		rs.close();
+
+		CxoPool.close(preparedStatement, rs);
 		return personne;
 	}
 
@@ -388,13 +371,8 @@ public class PersonneDAO {
 					rayonrecherche, admin, latitude, longitude, notification,
 					typeUser, siteWeb, siret, tel);
 
-			rs.close();
-			return personne;
-
 		}
-		if (rs != null)
-			rs.close();
-		return null;
+		return personne;
 	}
 
 	public Personne getUnProfilDbByRs(ResultSet rs) throws SQLException {
@@ -442,13 +420,8 @@ public class PersonneDAO {
 					admin, latitude, longitude, notification, typeUser,
 					siteWeb, siret, tel);
 
-			rs.close();
-			return personne;
-
 		}
-		if (rs != null)
-			rs.close();
-		return null;
+		return personne;
 	}
 
 	public Droit getDroitDbByRs(ResultSet rs) throws SQLException {
@@ -462,15 +435,8 @@ public class PersonneDAO {
 
 			droit = new Droit(idpersonne, admin, verrouille, actif);
 
-			rs.close();
-
-			return droit;
-
 		}
-		// A CHANGER pour les test
-		return null;
-
-		// return new Droit(1, false, false, true);
+		return droit;
 	}
 
 	public void updatePersonne(Personne personne) throws SQLException {
@@ -516,6 +482,9 @@ public class PersonneDAO {
 			note = rs.getDouble("note");
 			nbravis = rs.getInt("nbravis");
 		}
+
+		CxoPool.close(preparedStatement, rs);
+
 		requete = "UPDATE public.personne   SET note=?, nbravis=?"
 				+ " WHERE idpersonne=?;";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -523,8 +492,7 @@ public class PersonneDAO {
 		preparedStatement.setInt(2, nbravis);
 		preparedStatement.setInt(3, idpersonne);
 		preparedStatement.execute();
-
-		CxoPool.close(preparedStatement, rs);
+		preparedStatement.close();
 
 	}
 
@@ -572,8 +540,8 @@ public class PersonneDAO {
 		Date datecreation = Calendar.getInstance().getTime();
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
 				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
-				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,3);";
+				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser,valide)"
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,3,true);";
 		String commentaire = null;
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
@@ -614,8 +582,7 @@ public class PersonneDAO {
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
 
-		preparedStatement.close();
-		rs.close();
+		CxoPool.close(preparedStatement, rs);
 		return cle;
 	}
 
@@ -673,7 +640,8 @@ public class PersonneDAO {
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
-		preparedStatement.close();
+
+		CxoPool.close(preparedStatement, rs);
 		return cle;
 	}
 
@@ -834,6 +802,7 @@ public class PersonneDAO {
 			}
 
 			else {
+				
 				requete = "UPDATE  personne set jeton=?,nom=?,gcm=? "
 						+ " WHERE login=?";
 				preparedStatement = connexion.prepareStatement(requete);
@@ -985,20 +954,23 @@ public class PersonneDAO {
 	}
 
 	public boolean isLoginExist(String login) throws SQLException {
+		
+		boolean retour=false;
 		String requete = "SELECT login  FROM personne where login=?;";
 		PreparedStatement preparedStatement;
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setString(1, login);
 		ResultSet rs = preparedStatement.executeQuery();
+	
 		if (rs.next()) {
-			preparedStatement.close();
-			return true;
-		} else {
-			preparedStatement.close();
+			
+			retour= true;
+		} 
+		
+		CxoPool.close(preparedStatement, rs);
+		return retour;
 
-			return false;
-
-		}
+		
 
 		// TODO Auto-generated method stub
 	}
@@ -1016,7 +988,7 @@ public class PersonneDAO {
 
 		}
 
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 
 		return photo;
 
@@ -1024,7 +996,7 @@ public class PersonneDAO {
 	}
 
 	public boolean isPseudoExist(String pseudo) throws SQLException {
-
+		boolean retour=false;
 		String requete = "SELECT prenom  FROM personne "
 				+ "where LOWER(prenom)=?;";
 
@@ -1035,14 +1007,12 @@ public class PersonneDAO {
 		ResultSet rs = preparedStatement.executeQuery();
 
 		if (rs.next()) {
-			preparedStatement.close();
-			return true;
-		} else {
-			preparedStatement.close();
+			retour=true;
+		} 
+		CxoPool.close(preparedStatement, rs);
+			return retour;
 
-			return false;
-
-		}
+		
 
 		// TODO Auto-generated method stub
 	}
@@ -1073,10 +1043,11 @@ public class PersonneDAO {
 		// rs.close();
 		// preparedStatement.close();
 
-		Random ran = new Random();
-		int idAlea = ran.nextInt(1400000) + 6260;
-
-		return getPersonneId(idAlea - 1);
+//		Random ran = new Random();
+//		int idAlea = ran.nextInt(1400000) + 6260;
+//
+//		return getPersonneId(idAlea - 1);
+		return null;
 	}
 
 	public ArrayList<PhotoWaydeur> getListPhotoWaydeur(int idpersonne[])
@@ -1104,8 +1075,7 @@ public class PersonneDAO {
 			retour.add(new PhotoWaydeur(id, photo));
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 		return retour;
 	}
 
@@ -1124,8 +1094,7 @@ public class PersonneDAO {
 			retour = new PhotoWaydeur(id, photo);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 
 		return retour;
 	}

@@ -140,26 +140,25 @@ public class ParticipationDAO {
 
 	public  int getOrganisteur(int idactivite) throws Exception {
 	
-		Statement stmt = connexion.createStatement();
+		int retour=0;
 		String requete = " SELECT idpersonne from activite where idactivite=?";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 	
 		if (rs.next()) {
-			return rs.getInt("idpersonne");
+			retour= rs.getInt("idpersonne");
 		}
-		throw new Exception(
-				"Methode: getOrganisateur - Pas d'organisateur pour l activite "
-						+ idactivite);
+		CxoPool.close(preparedStatement, rs);
+		return retour;
+	
 
 	}
 
 	
 
-	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws SQLException  {
+	public  ArrayList<Personne> getListPartipantActivite(int idactivite) throws Exception  {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=? 	and personne.idpersonne=participer.idpersonne  union "
@@ -184,18 +183,19 @@ public class ParticipationDAO {
 
 	public  int  getNombreParticipant(int idactivite,int personne) throws Exception {
 
-		Statement stmt = connexion.createStatement();
+		int retour =0;
 		String requete = "select count (idpersonne) as nbrparticipant from participer where idpersonne=? and idactivite=?";
 		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, personne);
 		preparedStatement.setInt(2, idactivite);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		
 		if (rs.next()) {
-			return rs.getInt("nbrparticipant")+1;
+			retour= rs.getInt("nbrparticipant")+1;
 		}
-		return 0;
+		
+		CxoPool.close(preparedStatement, rs);
+		return retour;
 
 	}
 
@@ -204,8 +204,7 @@ public class ParticipationDAO {
 	public  ArrayList<Personne> getListPartipantActiviteExpect(int idactivite,int idexpect) throws SQLException  {
 
 		ArrayList<Personne> retour = new ArrayList<Personne>();
-		Statement stmt = connexion.createStatement();
-	
+		
 		String requete = " SELECT personne.notification,personne.idpersonne,personne.gcm from participer,personne where idactivite=?"
 				+ "	and personne.idpersonne=participer.idpersonne and  personne.idpersonne!=? union "
 				+ "SELECT personne.notification,personne.idpersonne,personne.gcm from activite,personne where idactivite=? "
@@ -216,7 +215,6 @@ public class ParticipationDAO {
 		preparedStatement.setInt(3, idactivite);
 		preparedStatement.setInt(4, idexpect);
 		ResultSet rs = preparedStatement.executeQuery();
-		stmt.close();
 		
 		while (rs.next()) {
 			int idpersonne=rs.getInt("idpersonne");
@@ -224,6 +222,7 @@ public class ParticipationDAO {
 			boolean notification=rs.getBoolean("notification");
 			retour.add(new Personne(gcm, idpersonne,notification));
 		}
+		CxoPool.close(preparedStatement, rs);
 		return retour;
 
 	}
@@ -267,8 +266,7 @@ public class ParticipationDAO {
 			nbr=nbr+1;
 		}
 
-		preparedStatement.close();
-
+		CxoPool.close(preparedStatement, rs);
 		// Cherche dans les activite
 
 		return nbr;

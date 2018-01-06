@@ -704,7 +704,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			Statement stmt = connexion.createStatement();
 		
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
@@ -720,8 +719,7 @@ public class PersonneDAO {
 
 			preparedStatement.setInt(1, idpersonne);
 			rs = preparedStatement.executeQuery();
-			stmt.close();
-
+		
 			if (rs.next()) {
 				int id = rs.getInt("idpersonne");
 				int nbravis = rs.getInt("nbravis");
@@ -764,7 +762,11 @@ public class PersonneDAO {
 						sexestr, mail,valide);
 
 			}
+			
 			LogDAO.LOG_DUREE("getFullProfil", debut);
+			
+			CxoPool.close(preparedStatement, rs);
+			
 			return profil;
 
 		} catch (SQLException | NamingException e) {
@@ -790,19 +792,19 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			Statement stmt = connexion.createStatement();
+		
 			String requete = " SELECT login FROM personne where idpersonne=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			rs = preparedStatement.executeQuery();
-			stmt.close();
-
+		
 			String uid = null;
 			if (rs.next()) {
 				uid = rs.getString("login");
 
 			}
 			LogDAO.LOG_DUREE("getUID", debut);
+			CxoPool.close(preparedStatement, rs);
 			return uid;
 
 		} catch (SQLException | NamingException e) {
@@ -828,7 +830,6 @@ public class PersonneDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			Statement stmt = connexion.createStatement();
 		
 			String requete = " SELECT personne.note,personne.nbravis,"
 					+ "(SELECT COUNT(*) FROM activite where idpersonne=personne.idpersonne ) as nbractivite,"
@@ -844,7 +845,7 @@ public class PersonneDAO {
 
 			preparedStatement.setString(1, uid);
 			rs = preparedStatement.executeQuery();
-			stmt.close();
+		
 
 			if (rs.next()) {
 				int id = rs.getInt("idpersonne");
@@ -889,6 +890,7 @@ public class PersonneDAO {
 			}
 
 			LogDAO.LOG_DUREE("getFullProfilByUid", debut);
+		
 			return profil;
 
 		} catch (SQLException | NamingException e) {

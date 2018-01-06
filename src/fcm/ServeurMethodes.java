@@ -1,28 +1,18 @@
 package fcm;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import wayde.bean.Personne;
 import wayde.bean.TableauBord;
 import wayde.dao.ActiviteDAO;
 import wayde.dao.PersonneDAO;
 
 import com.google.android.gcm.server.Sender;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.tasks.OnSuccessListener;
 
 public class ServeurMethodes {
 	static String key_gcm = "AIzaSyCpwBa7gclZ9H1oRi0jRZ-tVj2nTWfnrRI";
@@ -112,16 +102,17 @@ public class ServeurMethodes {
 
 		String GCMid;
 		// A OPTIMISER
+		ActiviteDAO activitedao = new ActiviteDAO(connexion);
+		PersonneDAO personneDAO = new PersonneDAO(connexion);
+	
 
 		for (Personne participant : listparticipant) {
 
 			try {
 				int nbrmessagenonlu;
 
-				nbrmessagenonlu = new ActiviteDAO(connexion)
-						.getNbrMessageNonLu(participant.getId());
-				GCMid = new PersonneDAO(connexion)
-						.getGCMId(participant.getId());
+				nbrmessagenonlu = activitedao.getNbrMessageNonLu(participant.getId());
+				GCMid =personneDAO.getGCMId(participant.getId());
 
 				if (GCMid == null)
 					continue;
@@ -155,7 +146,7 @@ public class ServeurMethodes {
 		String GCMid;
 		// A OPTIMISER
 		ActiviteDAO activitedao = new ActiviteDAO(connexion);
-
+		PersonneDAO personneDAO = new PersonneDAO(connexion);
 		for (Personne participant : listparticipant) {
 
 			try {
@@ -163,8 +154,7 @@ public class ServeurMethodes {
 				TableauBord tdb = activitedao.getTableauBord(participant
 						.getId());
 
-				GCMid = new PersonneDAO(connexion)
-						.getGCMId(participant.getId());
+				GCMid = personneDAO.getGCMId(participant.getId());
 
 				if (GCMid == null)
 					continue;
@@ -302,7 +292,7 @@ public class ServeurMethodes {
 			// Calcule le nobmre de notification
 			int nbrnotification = new ActiviteDAO(connexion)
 					.getNbrNotification(idpersonne);
-		
+
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
 
 			if (GCMid == null || GCMid.isEmpty())
@@ -419,7 +409,6 @@ public class ServeurMethodes {
 
 			if (GCMid == null || GCMid.isEmpty())
 				return;
-			
 
 			PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
 					Integer.toString(PushAndroidMessage.UPDATE_NOTIFICATION));
@@ -445,7 +434,7 @@ public class ServeurMethodes {
 			if (listpersonne.size() == 0)
 				return;
 			ArrayList<String> listpersonneGcm = getListGCM(listpersonne);
-		
+
 			if (listpersonneGcm.isEmpty())
 				return;
 
@@ -505,7 +494,7 @@ public class ServeurMethodes {
 			String GCMid;
 
 			GCMid = new PersonneDAO(connexion).getGCMId(idpersonne);
-		
+
 			if (GCMid == null || GCMid.isEmpty())
 				return;
 

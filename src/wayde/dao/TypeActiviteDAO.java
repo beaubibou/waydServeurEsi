@@ -20,6 +20,7 @@ public class TypeActiviteDAO {
 	}
 
 	public  ArrayList<TypeActiviteDb> getListTypeActivite() throws SQLException {
+		
 		TypeActiviteDb typeactivitedb = null;
 		ArrayList<TypeActiviteDb> retour=new ArrayList<TypeActiviteDb>();
 		  

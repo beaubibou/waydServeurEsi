@@ -61,6 +61,7 @@ public class ActiviteDAO {
 		ArrayList<PhotoActiviteBean> listPhotos = new ArrayList<PhotoActiviteBean>();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
+		ResultSet rs=null;
 		try {
 			connexion = CxoPool.getConnection();
 
@@ -70,7 +71,7 @@ public class ActiviteDAO {
 
 			preparedStatement.setInt(1, idactivite);
 
-			ResultSet rs = preparedStatement.executeQuery();
+			 rs = preparedStatement.executeQuery();
 
 			
 
@@ -93,7 +94,7 @@ public class ActiviteDAO {
 
 		} finally {
 
-			CxoPool.close(connexion, preparedStatement);
+			CxoPool.close(connexion, preparedStatement,rs);
 		}
 
 	}
@@ -226,12 +227,14 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
+			
 			requete = "UPDATE activite  SET  nbrvu=nbrvu+1 WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
+			preparedStatement.close();
 			connexion.commit();
-
+			CxoPool.closeConnection(connexion);
 			LogDAO.LOG_DUREE("addNbrVu", debut);
 
 			return true;
@@ -253,7 +256,7 @@ public class ActiviteDAO {
 	private static boolean isDejaVu(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
 		long debut = System.currentTimeMillis();
-
+		boolean retour=false;
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -269,7 +272,11 @@ public class ActiviteDAO {
 			LogDAO.LOG_DUREE("isDejaVu", debut);
 
 			if (rs.next())
-				return true;
+				retour=true;
+			
+			CxoPool.close(connexion, preparedStatement, rs);
+		
+			return retour;
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -330,6 +337,7 @@ public class ActiviteDAO {
 		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
+		Connection connexion=null;
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1480,8 +1488,26 @@ public class ActiviteDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
+			
+			String requete = "DELETE FROM interet where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM nbrvu where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM photo_activite where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-			String requete = "DELETE FROM demandeami where ( idactivite=? );";
+			requete = "DELETE FROM demandeami where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
@@ -1575,7 +1601,7 @@ public class ActiviteDAO {
 
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
-		} catch (SQLException | NamingException e) {
+		} catch ( Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));

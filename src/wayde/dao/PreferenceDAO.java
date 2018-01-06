@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.bean.Preference;
 
 public class PreferenceDAO {
@@ -34,8 +35,9 @@ public class PreferenceDAO {
 			preferencedb = new Preference(idpersonne, idtypeactivite);
 			retour.add(preferencedb);
 		}
-		rs.close();
+		
 		stmt.close();
+		rs.close();
 		return retour;
 
 	}
@@ -64,8 +66,7 @@ public class PreferenceDAO {
 			retour.add(preference);
 		}
 
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement,rs);
 		return retour;
 
 	}
@@ -117,7 +118,6 @@ public class PreferenceDAO {
 		{
 	
 			requete = "INSERT INTO prefere  (idpersonne,idtypeactivite)	VALUES (?,?)";
-
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setInt(2, listpreferences[f]);

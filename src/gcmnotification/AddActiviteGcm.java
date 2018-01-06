@@ -1,22 +1,16 @@
 package gcmnotification;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import javax.naming.NamingException;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-
-import fcm.PushNotifictionHelper;
-import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ActiviteDAO;
 import website.metier.ActiviteBean;
+import fcm.PushNotifictionHelper;
+import fcm.ServeurMethodes;
 
 public class AddActiviteGcm implements Runnable {
 	Activite activite;
@@ -48,7 +42,7 @@ public class AddActiviteGcm implements Runnable {
 			this.idOrganisateur = activiteTemp.getIdorganisateur();
 			this.activite = activiteTemp;
 
-		} catch (NamingException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
@@ -79,7 +73,7 @@ public class AddActiviteGcm implements Runnable {
 			PushNotifictionHelper.sendPushNotificationSuggestionList(
 					personneinteresse, activite);
 
-		} catch (SQLException | NamingException | IOException e1) {
+		} catch ( Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e1));

@@ -300,6 +300,7 @@ public class LogDAO {
 			if (rs.next()) {
 				nbrLog = rs.getInt("nbrlog");
 			}
+			CxoPool.close(connexion, preparedStatement);
 
 		} catch (NamingException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -334,8 +335,8 @@ public class LogDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, NBR_LOG_A_EFFACER);
 			preparedStatement.execute();
-			preparedStatement.close();
 			connexion.commit();
+			CxoPool.close(connexion, preparedStatement);
 			LogDAO.LOG_DUREE("suprrimeNdernierLog", debut);
 			return true;
 

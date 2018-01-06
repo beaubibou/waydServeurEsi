@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.beandatabase.AvisaDonnerDb;
 
 public class AvisaDonnerDAO {
@@ -20,7 +21,7 @@ public class AvisaDonnerDAO {
 	public  AvisaDonnerDAO(Connection connexion){
 		this.connexion=connexion;
 	}
-	public  ArrayList<AvisaDonnerDb> getListAvisaDonner(int idpersonne) throws SQLException {
+	public  ArrayList<AvisaDonnerDb> getListAvisaDonner(int idpersonne) throws Exception {
 		
 		AvisaDonnerDb avisadonnerdb = null;
 		ArrayList<AvisaDonnerDb> retour = new ArrayList<AvisaDonnerDb>();
@@ -54,8 +55,7 @@ public class AvisaDonnerDAO {
 				retour.add(avisadonnerdb);
 
 			}
-			rs.close();
-			preparedStatement.close();
+			CxoPool.close(preparedStatement, rs);
 		
 			return retour;
 

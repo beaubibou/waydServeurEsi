@@ -12,6 +12,7 @@ import java.util.Date;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.bean.Notification;
 import wayde.bean.Personne;
 import wayde.beandatabase.AvisaDonnerDb;
@@ -22,7 +23,7 @@ public class NotificationDAO {
 	Connection connexion;
 
 	public NotificationDAO() {
-		
+
 	}
 
 	public NotificationDAO(Connection connexion) {
@@ -44,47 +45,44 @@ public class NotificationDAO {
 		preparedStatement.setInt(4, idactivite);
 		preparedStatement.setInt(5, idpersonne);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
-	
-	
-	public void addNotification(ArrayList<Personne> listpersonne, int idtype, int idactivite,
-			int idpersonne) throws SQLException {
 
-		PreparedStatement preparedStatement ;
+	public void addNotification(ArrayList<Personne> listpersonne, int idtype,
+			int idactivite, int idpersonne) throws Exception {
+
+		PreparedStatement preparedStatement = null;
 		String requete;
-		
-		for (Personne personne:listpersonne)
-		{
-		if (personne.getId()!=idpersonne)	{// Ne met pas de notification � l'emtteur
-		requete = "INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
-				+ " VALUES (?, ?, ?, ?,? ,false)";
-			 preparedStatement = connexion.prepareStatement(
-				requete, Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.setInt(1, personne.getId());
-		preparedStatement.setInt(2, idtype);
-		Date datecreation = Calendar.getInstance().getTime();
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
-		preparedStatement.setInt(4, idactivite);
-		preparedStatement.setInt(5, idpersonne);
-		preparedStatement.execute();
-		
-		
-		
+
+		for (Personne personne : listpersonne) {
+			if (personne.getId() != idpersonne) {// Ne met pas de notification �
+													// l'emtteur
+				requete = "INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
+						+ " VALUES (?, ?, ?, ?,? ,false)";
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, personne.getId());
+				preparedStatement.setInt(2, idtype);
+				Date datecreation = Calendar.getInstance().getTime();
+				preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+						datecreation.getTime()));
+				preparedStatement.setInt(4, idactivite);
+				preparedStatement.setInt(5, idpersonne);
+				preparedStatement.execute();
+				preparedStatement.close();
+
+			}
 		}
-		}
+
 	}
-	
-	
-	
-	
+
 	public void addNotifiRappelAnoter(int idDestinataire, int idactivite,
-			int idpersonneAnoter,Date datecreation) throws SQLException {
-	
+			int idpersonneAnoter, Date datecreation) throws SQLException {
+
 		String requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
-		
+
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
 
@@ -95,36 +93,39 @@ public class NotificationDAO {
 		preparedStatement.setInt(4, idactivite);
 		preparedStatement.setInt(5, idpersonneAnoter);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 
-	public void addNotificationFromAvis(
-			 int idpersonne) throws SQLException {
+	public void addNotificationFromAvis(int idpersonne) throws Exception {
 
 		// ************Recuperles avis � donner pour les activite � noter
 		AvisaDonnerDAO avisadonnerdao = new AvisaDonnerDAO(connexion);
-		ArrayList<AvisaDonnerDb> listavisadonner=avisadonnerdao.getListAvisaDonner(idpersonne);
-			
+		ArrayList<AvisaDonnerDb> listavisadonner = avisadonnerdao
+				.getListAvisaDonner(idpersonne);
+
 		for (AvisaDonnerDb avisadonner : listavisadonner) {
-			try {
-				if (!isDemandeAvisExist(idpersonne, avisadonner.getIdpersonnenotee(), avisadonner.getIdactivite()))
+
+			if (!isDemandeAvisExist(idpersonne,
+					avisadonner.getIdpersonnenotee(),
+					avisadonner.getIdactivite()))
+				
 				addNotifiRappelAnoter(idpersonne, avisadonner.getIdactivite(),
-						avisadonner.getIdpersonnenotee(),avisadonner.getDateDebutActivite());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error( ExceptionUtils.getStackTrace(e));
-			}
+						avisadonner.getIdpersonnenotee(),
+						avisadonner.getDateDebutActivite());
 
 		}
 
 	}
 
-	// *******************Renvoi faux si la demande d'avis de notation n'existe pas dans la talbe des notification
-	public boolean isDemandeAvisExist(int idDestinataire,int idPersonneAnoter,int idActivite) throws SQLException {
+	// *******************Renvoi faux si la demande d'avis de notation n'existe
+	// pas dans la talbe des notification
+	public boolean isDemandeAvisExist(int idDestinataire, int idPersonneAnoter,
+			int idActivite) throws SQLException {
 
-		String requete = "SELECT idactivite  FROM notification " +
-		"where idpersonne=? and iddestinataire=? and idactivite=? and idtype=1;";
+		boolean retour = false;
+		String requete = "SELECT idactivite  FROM notification "
+				+ "where idpersonne=? and iddestinataire=? and idactivite=? and idtype=1;";
 		PreparedStatement preparedStatement;
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idPersonneAnoter);
@@ -133,23 +134,24 @@ public class NotificationDAO {
 		ResultSet rs = preparedStatement.executeQuery();
 
 		if (rs.next()) {
-			preparedStatement.close();
-			return true;
-		} else {
-			preparedStatement.close();
-			return false;
+
+			retour = true;
 		}
+
+		CxoPool.close(preparedStatement, rs);
+		return retour;
 
 		// TODO Auto-generated method stub
 	}
+
 	public void removeNotificationAnoter(int idpersonne, int idpersonnenotee,
-			int idactivite) {// Efface un message dans la table notificiation
+			int idactivite) throws Exception {// Efface un message dans la table notificiation
 		// utilis� apr�s a voir d�pos� un avis
 
 		String requete = "Delete from notification where iddestinataire=? and idtype=?"
 				+ " and idactivite=? and idpersonne=?;";
-			PreparedStatement preparedStatement;
-		try {
+		PreparedStatement preparedStatement;
+		
 			preparedStatement = connexion.prepareStatement(requete,
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
@@ -157,11 +159,8 @@ public class NotificationDAO {
 			preparedStatement.setInt(3, idactivite);
 			preparedStatement.setInt(4, idpersonnenotee);
 			preparedStatement.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-		}
+			preparedStatement.close();
+		
 
 	}
 
@@ -194,20 +193,19 @@ public class NotificationDAO {
 			int idnotification = rs.getInt("idnotification");
 
 			Notification notification = new Notification(idactivite, idtype,
-					idpersonneconcernee, idpersonne, pseudo,
-					titreactivite, datecreation, lu,idnotification);
+					idpersonneconcernee, idpersonne, pseudo, titreactivite,
+					datecreation, lu, idnotification);
 			retour.add(notification);
 
 		}
-		rs.close();
-		preparedStatement.close();
-
+	
+		CxoPool.close(preparedStatement, rs);
 		return retour;
 
 	}
 
-	public ArrayList<Notification> getListNotificationAfter(int idpersonne,int idnotification)
-			throws SQLException {
+	public ArrayList<Notification> getListNotificationAfter(int idpersonne,
+			int idnotification) throws SQLException {
 
 		ArrayList<Notification> retour = new ArrayList<Notification>();
 
@@ -220,7 +218,7 @@ public class NotificationDAO {
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idnotification);
-		
+
 		ResultSet rs = preparedStatement.executeQuery();
 
 		while (rs.next()) {
@@ -238,12 +236,11 @@ public class NotificationDAO {
 
 			Notification notification = new Notification(idactivite, idtype,
 					idpersonneconcernee, idpersonne, nompersconcernee,
-					titreactivite, datecreation, lu,idnotifications);
+					titreactivite, datecreation, lu, idnotifications);
 			retour.add(notification);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
 
 		return retour;
 
@@ -251,7 +248,7 @@ public class NotificationDAO {
 
 	public void litNotification(int idpersonne) throws SQLException {
 		PreparedStatement preparedStatement = null;
-		
+
 		String requete = "UPDATE  notification set lu=true  "
 				+ " WHERE iddestinataire=?";
 
@@ -260,13 +257,11 @@ public class NotificationDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 
-
 	}
 
 	public void addNotificationAjoutAmi(int iddestinataire, int idactivite,
 			int idpersonne) throws SQLException {
 
-		
 		String requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
@@ -298,22 +293,21 @@ public class NotificationDAO {
 
 	}
 
-	public void effaceNotification(int iddestinataire, int idnotification) throws SQLException {
-			PreparedStatement preparedStatement = null;
-			String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
-		preparedStatement = connexion
-				.prepareStatement(requete);
+	public void effaceNotification(int iddestinataire, int idnotification)
+			throws SQLException {
+		PreparedStatement preparedStatement = null;
+		String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
+		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idnotification);
 		preparedStatement.setInt(2, iddestinataire);
 		preparedStatement.execute();
 		preparedStatement.close();
 
-	
-	
 	}
 
-	public void addNotificationSupAmi(int idpersonne, int idami) throws SQLException {
-	
+	public void addNotificationSupAmi(int idpersonne, int idami)
+			throws SQLException {
+
 		String requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
@@ -327,21 +321,20 @@ public class NotificationDAO {
 		preparedStatement.setInt(4, 0);
 		preparedStatement.setInt(5, idpersonne);
 		preparedStatement.execute();
+		preparedStatement.close();
 
-		
-		
 	}
 
-	public void LitNotification(int idpersonne, int idnotification) throws SQLException {
-			PreparedStatement preparedStatement = null;
-			String requete = "UPDATE  notification set lu=true  "
-					+ " WHERE idnotification=? and iddestinataire=? ";
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.setInt(1, idnotification);
-			preparedStatement.setInt(2, idpersonne);
-			preparedStatement.execute();
-			preparedStatement.close();
-
+	public void LitNotification(int idpersonne, int idnotification)
+			throws SQLException {
+		PreparedStatement preparedStatement = null;
+		String requete = "UPDATE  notification set lu=true  "
+				+ " WHERE idnotification=? and iddestinataire=? ";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setInt(1, idnotification);
+		preparedStatement.setInt(2, idpersonne);
+		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 

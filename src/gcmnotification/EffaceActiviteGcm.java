@@ -48,7 +48,7 @@ public class EffaceActiviteGcm implements Runnable {
 			this.idActivite=idActivite;
 		
 			
-		} catch (NamingException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 		
 			e.printStackTrace();
@@ -67,6 +67,7 @@ public class EffaceActiviteGcm implements Runnable {
 		Connection connexionGcm = null;
 		try {
 			connexionGcm = CxoPool.getConnection();
+			
 			ServeurMethodes serveurmethode = new ServeurMethodes(
 					connexionGcm);
 
@@ -80,7 +81,7 @@ public class EffaceActiviteGcm implements Runnable {
 					idActivite);
 			serveurmethode.gcmEffaceSuggestion(personneInterresse,
 					idActivite);
-			new ServeurMethodes(connexionGcm)
+			serveurmethode
 					.envoiAndroidUpdateNotification(participants);
 
 		} catch (SQLException | NamingException e1) {
@@ -89,6 +90,7 @@ public class EffaceActiviteGcm implements Runnable {
 			LOG.error( ExceptionUtils.getStackTrace(e1));
 		
 		} finally {
+			
 			CxoPool.closeConnection(connexionGcm);
 		}
 

@@ -12,8 +12,10 @@ import java.util.Date;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.bean.Discussion;
 import wayde.bean.Message;
+import wayde.bean.MessageServeur;
 import wayde.bean.Personne;
 
 
@@ -49,7 +51,9 @@ public class MessageDAO {
 		int cle = 0;
 		if (rs.next())
 			cle = rs.getInt("idmessage");
-		preparedStatement.close();
+		
+		CxoPool.close(preparedStatement,rs);
+	
 		for (Personne participant : listpersonne) {
 
 			if (participant.getId() != idemetteur) {
@@ -63,9 +67,10 @@ public class MessageDAO {
 				preparedStatement.setInt(4, message.getIdactivite());
 				preparedStatement.setInt(5, participant.getId());
 				preparedStatement.execute();
+				preparedStatement.close();
 			}
 		}
-		preparedStatement.close();
+	
 
 		return cle;
 
@@ -107,8 +112,7 @@ public class MessageDAO {
 		if (rs.next())
 			cle = rs.getInt("idmessage");
 	
-		preparedStatement.close();
-
+		CxoPool.close(preparedStatement, rs);
 		
 
 		requete = "INSERT INTO message( corps, idpersonne, datecreation,idactivite,iddestinataire,iddiscussion,lu,emis)  VALUES (?, ?, ?, ?,?,?,false,false);";
@@ -140,9 +144,10 @@ public class MessageDAO {
 			preparedStatement.setInt(1, listmessage[f]);
 			preparedStatement.setInt(2, idpersonne);
 			preparedStatement.execute();
+			preparedStatement.close();
 
 		}
-		preparedStatement.close();
+		
 
 	}
 
@@ -290,8 +295,7 @@ public class MessageDAO {
 
 	public  Message getMessage(int idmessage) throws SQLException {
 		Message message = null;
-		try {
-
+	
 			String requete = " SELECT  personne.prenom,personne.nom,message.datecreation,message.sujet,message.corps,"
 					+ "message.idpersonne, recoit.lu,recoit.archive,recoit.supprime "
 					+ "from personne,recoit,message "
@@ -319,29 +323,21 @@ public class MessageDAO {
 				message = new Message(idmessage, nomemetteur,
 						prenomemetteur, idmetteur, sujet, corps, datecreation,
 						lu, archive, supprime,  0);
-				return message;
+				
 
 			}
-			rs.close();
-			preparedStatement.close();
+			CxoPool.close(preparedStatement, rs);
+			return  message;
+
 	
-			return null;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
-
-		}
-
-		return null;
 	}
 
 	// Renvoi le dernier message d'un chat sur une discussion
 	public  Message getLastMessageByAct(int idactivite) throws SQLException {
 	
+		Message retour=new Message("Bienvenue!! ",new Date());
 		
-			String requete = " SELECT  corps,datecreation from messagebyact where idmessage="
+		String requete = " SELECT  corps,datecreation from messagebyact where idmessage="
 					+ "( select (max(idmessage) )from messagebyact where idactivite=?)";
 			PreparedStatement preparedStatement = connexion
 					.prepareStatement(requete);
@@ -354,14 +350,12 @@ public class MessageDAO {
 				 corps = rs.getString("corps");
 				 datecreation=rs.getTimestamp("datecreation");
 				
-				 return new Message( corps,datecreation);
+				 retour= new Message( corps,datecreation);
 			}
 		
-			;
-			rs.close();
-			preparedStatement.close();
-	
-			return new Message("Bienvenue!! ",new Date());
+			CxoPool.close(preparedStatement, rs);
+		
+			return retour;
 			
 
 		
@@ -408,9 +402,8 @@ public class MessageDAO {
 			retour.add(messagedb);
 
 		}
-		rs.close();
-		preparedStatement.close();
-	
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -452,8 +445,8 @@ public class MessageDAO {
 			retour.add(message);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -544,8 +537,8 @@ public class MessageDAO {
 			retour.add(discussion);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -592,9 +585,8 @@ public class MessageDAO {
 			retour.add(message);
 
 		}
-		rs.close();
-		preparedStatement.close();
-	
+		CxoPool.close(preparedStatement, rs);
+			
 		return retour;
 
 	}
@@ -641,9 +633,8 @@ public class MessageDAO {
 			retour.add(0,message);
 
 		}
-		rs.close();
-		preparedStatement.close();
-	
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -689,8 +680,8 @@ public class MessageDAO {
 			retour.add(0,message);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -735,8 +726,8 @@ public class MessageDAO {
 			retour.add(message);
 
 		}
-		rs.close();
-		preparedStatement.close();
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -781,9 +772,8 @@ public class MessageDAO {
 			retour.add(message);
 
 		}
-		rs.close();
-		preparedStatement.close();
-
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -829,9 +819,8 @@ public class MessageDAO {
 			retour.add(message);
 
 		}
-		rs.close();
-		preparedStatement.close();
-
+		CxoPool.close(preparedStatement, rs);
+		
 		return retour;
 
 	}
@@ -848,6 +837,7 @@ public class MessageDAO {
 		preparedStatement.setInt(1, iddestinataire);
 		preparedStatement.setInt(2, idemetteur);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 		// Efface les mesages que j'ai emis pour l'emetteur
 		requete = "delete  from message  where (idpersonne=? and emis=true and iddestinataire=?)";

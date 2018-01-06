@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 
 
+
 import org.apache.log4j.Logger;
 
+import wayde.bean.CxoPool;
 import wayde.beandatabase.DefinitionPreferenceDb;
 
 
@@ -50,8 +52,8 @@ public class DefinintionPreferenceDAO {
 
 	
 			}
-			rs.close();
-			preparedStatement.close();
+			
+			CxoPool.close(preparedStatement, rs);
 	
 			return defPrefdb;
 	}

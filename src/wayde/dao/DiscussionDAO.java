@@ -62,16 +62,18 @@ public class DiscussionDAO {
 		preparedStatement.setInt(4, idpersonne);
 	
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 	
-	public void effaceDiscussionTouteActivite(int idactivite) throws SQLException {
+	public void effaceDiscussionTouteActivite(int idactivite) throws Exception {
 	
 		String requete = "Delete from messagebyact where idactivite=? ;";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 	
@@ -89,6 +91,7 @@ public class DiscussionDAO {
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idpersonne);
 		preparedStatement.execute();
+		preparedStatement.close();
 
 	}
 

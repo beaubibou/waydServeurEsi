@@ -19,10 +19,11 @@ public abstract class CxoPool {
 
 	private static final Logger LOG = Logger.getLogger(CxoPool.class);
 	private static Context ctx;
+	
 	static {
 		try {
 			ctx = new InitialContext();
-			
+			 
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,41 +36,40 @@ public abstract class CxoPool {
 			SQLException {
 		// Récupération connection référencées dans le JNDI - cf
 		// context.xml
-		
-		DataSource source = (DataSource) ctx.lookup("java:comp/env/PostgresDS");
+		DataSource source=(DataSource) ctx.lookup("java:comp/env/PostgresDS");
 		return source.getConnection();
 
 	}
 
-	public static Connection getConnection(boolean test)
-			throws NamingException, SQLException {
-
-		if (!test) {
-			Context ctx = new InitialContext();
-			DataSource source = (DataSource) ctx
-					.lookup("java:comp/env/PostgresDS");
-			return source.getConnection();
-
-		} else {
-
-			try {
-				Class.forName("org.postgresql.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			}
-
-			String url = "jdbc:postgresql://localhost:5432/wayd";
-			String user = "postgres";
-			String passwd = "azerty";
-			Connection conn = DriverManager.getConnection(url, user, passwd);
-
-			return conn;
-
-		}
-
-	}
+//	public static Connection getConnection(boolean test)
+//			throws NamingException, SQLException {
+//
+//		if (!test) {
+//			Context ctx = new InitialContext();
+//			DataSource source = (DataSource) ctx
+//					.lookup("java:comp/env/PostgresDS");
+//			return source.getConnection();
+//
+//		} else {
+//
+//			try {
+//				Class.forName("org.postgresql.Driver");
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				LOG.error(ExceptionUtils.getStackTrace(e));
+//			}
+//
+//			String url = "jdbc:postgresql://localhost:5432/wayd";
+//			String user = "postgres";
+//			String passwd = "6HamPol20N6HamPol20N";
+//			Connection conn = DriverManager.getConnection(url, user, passwd);
+//
+//			return conn;
+//
+//		}
+//
+//	}
 
 	public static void rollBack(Connection connexion) {
 

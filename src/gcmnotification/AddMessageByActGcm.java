@@ -38,7 +38,7 @@ public class AddMessageByActGcm implements Runnable{
 			new ServeurMethodes(connexionGcm)
 					.gcmUpdateNbrMessageByAct(listparticipant);
 
-		} catch (SQLException | NamingException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e1));

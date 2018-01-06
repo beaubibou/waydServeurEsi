@@ -23,7 +23,7 @@
 
 		<Resource name="PostgresDS" auth="Container" type="javax.sql.DataSource"
 		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost:5432/wayd"
-		username="postgres" password="azerty" maxActive="30" maxIdle="10" maxWait="-1"  />	
+		username="postgres" password="6HamPol20N6HamPol20N" maxActive="30" maxIdle="10" maxWait="-1"  />	
 		
 		<!-- maxActive="20" maxIdle="10" maxWait="-1" /> -->
 

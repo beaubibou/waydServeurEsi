@@ -83,7 +83,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="ancienMdp"
 								type="password" class="form-control" name="ancienMdp"
-								value="azerty"
+								
 								placeholder="<%=ChangemetMotDePasse.HINT_ANCIEN_MOT_DE_PASSE%>">
 						</div>
 
@@ -91,7 +91,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-user"></i></span> <input id="motDePasse"
 								type="password" class="form-control" name="motDePasse"
-								value="azerty"
+								
 								placeholder="<%=ChangemetMotDePasse.HINT_MOT_DE_PASSE%>">
 						</div>
 
@@ -101,7 +101,7 @@
 							<span class="input-group-addon"><i
 								class="glyphicon glyphicon-lock"></i></span> <input id="motDePasseBis"
 								type="password" class="form-control" name="motDePasseBis"
-								value="azerty"
+								
 								placeholder="<%=ChangemetMotDePasse.HINT_MOT_DE_PASSE_BIS%>">
 						</div>
 

@@ -28,6 +28,7 @@ public class EffaceAmiGcm implements Runnable {
 		try {
 			connexionGcm = CxoPool.getConnection();
 			ServeurMethodes serveurmethode = new ServeurMethodes(connexionGcm);
+		
 			serveurmethode.gcmUpdateNotification(idAmi);
 			serveurmethode.gcmUpdateNbrAmi(idPersonne);
 			serveurmethode.gcmUpdateNbrAmi(idAmi);

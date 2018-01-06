@@ -92,7 +92,7 @@ public class Coordination {
 
 			LogDAO.LOG_DUREE("addParticipation", debut);
 			return new MessageServeur(true, TextWebService.activiteInscription);
-		} catch (SQLException | NamingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
