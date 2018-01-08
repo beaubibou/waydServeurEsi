@@ -1,3 +1,4 @@
+<%@page import="website.metier.Outils"%>
 <%@page import="website.metier.AuthentificationSite"%>
 
 <!DOCTYPE html>
@@ -157,7 +158,7 @@
 		}
 	<!--	google.maps.event.addDomListener(window, 'load', init_map);-->
 	</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&callback=init_map"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%=Outils.getCleMap()%>&callback=init_map"
     async defer></script>
     
     	<script>

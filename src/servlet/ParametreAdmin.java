@@ -6,10 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
-import servlet.pro.CreerUserPro;
+
 import website.dao.LogDAO;
 import website.metier.AuthentificationSite;
+import website.metier.Outils;
 
 /**
  * Servlet implementation class ParametreAdmin
@@ -67,6 +69,14 @@ public class ParametreAdmin extends HttpServlet {
 		else
 		{
 			Connexion.verifieEmail=true;
+		}
+		
+		if (request.getParameter("clemapadmin")==null ||request.getParameter("clemapadmin").isEmpty()){
+			Outils.clemapadmin=false;
+		}
+		else
+		{
+			Outils.clemapadmin=true;
 		}
 		
 		

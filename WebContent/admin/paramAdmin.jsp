@@ -64,6 +64,9 @@
 		if (!authentification.isAuthentifieAdmin())
 			return;
 		boolean verifieemail = Connexion.verifieEmail;
+		boolean clemapadmin=Outils.clemapadmin;
+		
+				
 		//boolean desativeCompte = CreerUserPro.compteDesactiveParDefaut;
 
 		//LogDAO.LOG_PERF_REQUETE=true;
@@ -107,6 +110,11 @@
 				<label><input name="verifieEmail" type="checkbox"
 					<%=Outils.jspAdapterCheked(verifieemail)%>> Verifier les
 					emails</label>
+			</div>
+			
+			<div class="checkbox">
+				<label><input name="clemapadmin" type="checkbox"
+					<%=Outils.jspAdapterCheked(clemapadmin)%>> Cle map admin</label>
 			</div>
 			
 			<button type="submit" class="btn btn-default">Submit</button>

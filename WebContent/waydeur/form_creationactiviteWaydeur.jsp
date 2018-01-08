@@ -5,6 +5,7 @@
 <%@page import="website.metier.QuantiteWaydeurBean"%>
 <%@page import="website.metier.DureeBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
+<%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
@@ -221,7 +222,7 @@
 	</script>
 
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&libraries=places&callback=initAutocomplete"
+		src="https://maps.googleapis.com/maps/api/js?key=<%=Outils.getCleMap()%>&libraries=places&callback=initAutocomplete"
 		async defer></script>
 	<script>
 		$(function() {

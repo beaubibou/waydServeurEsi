@@ -1,6 +1,7 @@
 <%@page import="website.metier.ActiviteAjax"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="website.metier.Outils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -166,7 +167,7 @@
 		google.maps.event.addDomListener(window, 'load', init_map);
 	</script>
 	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2TO9-HtrUmagi0JTZn6YSN0QLbsoVkTg&callback=initMap">
+		src="https://maps.googleapis.com/maps/api/js?key=<%=Outils.getCleMap()%>&callback=initMap">
 		
 	</script>
 

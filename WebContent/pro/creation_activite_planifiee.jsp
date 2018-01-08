@@ -10,6 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.DureeBean"%>
+<%@page import="website.metier.Outils"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,7 +277,7 @@
 	</script>
 
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc&libraries=places&callback=initAutocomplete"
+		src="https://maps.googleapis.com/maps/api/js?key=<%=Outils.getCleMap()%>&libraries=places&callback=initAutocomplete"
 		async defer></script>
 	<script>
 		$(function() {

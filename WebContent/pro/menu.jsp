@@ -5,6 +5,7 @@
 <%@page import="website.enumeration.*"%>
 <%@page import="website.dao.MessageDAO"%>
 <%@page import="website.metier.AuthentificationSite"%>
+<%@page import="website.metier.Outils"%>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="menupro">
 	<div class="container-fluid">
 		<div class="navbar-header">

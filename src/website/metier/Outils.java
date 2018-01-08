@@ -20,35 +20,45 @@ import sun.misc.BASE64Encoder;
 
 public class Outils {
 	private static final Logger LOG = Logger.getLogger(Outils.class);
-	   
+
 	public static int nbrLigneParPage = 6;
 	public static int nbrMaxPagination = 8;
+	public static boolean clemapadmin = true;
+	public static String mapKeyProduction = "AIzaSyA_K_75z5BiALmZbNnEHlP7Y7prhXd-vAc";
+	public static String mapKeyTest = "AIzaSyD_kmPW9DeHyzFFU4wO1VT-PGYjYkAPvho";
 
+	public static String getCleMap() {
 
-	public static String jspAdapterCheked(boolean value){
-		
+		if (clemapadmin)
+			return mapKeyProduction;
 	
-		if (value)return "checked";
-	
-		return "";
-		
+		return mapKeyTest;
 	}
-	
-public static String jspAdapterListSelected(int selectedValue,int value){
-		
-		if (value==selectedValue)return "selected";
+
+	public static String jspAdapterCheked(boolean value) {
+
+		if (value)
+			return "checked";
+
 		return "";
-		
+
 	}
-	
-	
+
+	public static String jspAdapterListSelected(int selectedValue, int value) {
+
+		if (value == selectedValue)
+			return "selected";
+		return "";
+
+	}
+
 	public static Date getDateFromString(String datestr) throws ParseException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Date d = sdf.parse(datestr);
 		Calendar caldate = Calendar.getInstance();
 		caldate.setTime(d);
-		
+
 		return caldate.getTime();
 	}
 
@@ -93,57 +103,60 @@ public static String jspAdapterListSelected(int selectedValue,int value){
 		}
 
 		retour.delete(retour.length() - 1, retour.length());
-		
+
 		return retour.toString();
 	}
-	
+
 	public static String getUrlPhoto(String photo) {
 
-		if (photo==null)photo="";
+		if (photo == null)
+			photo = "";
 		byte[] bytes = Base64.decode(photo);
 		String urlPhoto = "data:image/jpeg;base64," + Base64.encode(bytes);
 
 		return urlPhoto;
 	}
-	
+
 	public static String encodeToString(BufferedImage image, String type) {
-        String imageString = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
- 
-        try {
-            ImageIO.write(image, type, bos);
-            byte[] imageBytes = bos.toByteArray();
-            BASE64Encoder encoder = new BASE64Encoder();
-            imageString = encoder.encode(imageBytes);
-            bos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        	LOG.error( ExceptionUtils.getStackTrace(e));
-        }
-        return imageString;
-    }
-	
-	public String jspAdapterCheked(Boolean value){
-		if (value==null)return "";
-		
-		if (value.booleanValue()==false)
+		String imageString = null;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+		try {
+			ImageIO.write(image, type, bos);
+			byte[] imageBytes = bos.toByteArray();
+			BASE64Encoder encoder = new BASE64Encoder();
+			imageString = encoder.encode(imageBytes);
+			bos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+		return imageString;
+	}
+
+	public String jspAdapterCheked(Boolean value) {
+		if (value == null)
 			return "";
-	
+
+		if (value.booleanValue() == false)
+			return "";
+
 		return "checked";
-		
+
 	}
 
 	public static String getStringStatement(String chaine) {
 		// TODO Auto-generated method stub
-		
-		if (chaine==null)return null;
-	
-		if (chaine.length()==0) {
-			
+
+		if (chaine == null)
+			return null;
+
+		if (chaine.length() == 0) {
+
 			return null;
 		}
-		
+
 		return chaine;
 	}
-	
+
 }
