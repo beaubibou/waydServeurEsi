@@ -77,8 +77,7 @@
 				<li><a href="#services" class="page-scroll">Professionels</a></li>
 				<li><a href="#download" class="page-scroll">Téléchargement</a></li>
 				<li><a href="#contact" class="page-scroll">Contact</a></li>
-				<li><a href="/wayd/auth/CreationComptePro.jsp"
-					class="page-scroll">Inscription</a></li>
+				
 				<li><a href="/wayd/pro/home.jsp" class="page-scroll">Site
 						Wayd Pro</a></li>
 
@@ -116,7 +115,7 @@
         <div class="about-text">
           <h3>Avec Wayd Community, fini l'ennui !</h3>
           <p>Vous arrive-t-il de ne pas savoir quoi faire ? </p>
-          <p>Née d'une attente d'une heure à rien faire dans une gare en attendant un train, Wayd Community vous propose des activités à faire, réelement à proximitées, immédiatement et en fonction de vos envies. Alors juste pour tailler le bout de gras avec un waydeur, faire un petit footing avec une waydeuse ou encore pour obtenir de l'aide : <br> <br> Bienvenue sur Wayd !</p>
+          <p>Née d'une attente d'une heure à ne rien faire dans une gare en attendant un train, Wayd Community vous propose des activités à faire, réelement à proximitées, immédiatement et en fonction de vos envies. Alors juste pour tailler le bout de gras avec un waydeur, faire un petit footing avec une waydeuse ou encore pour obtenir de l'aide : <br> <br> Bienvenue sur Wayd !</p>
           <div class="list-style">
             <div class="col-lg-6 col-sm-6 col-xs-12">
               <ul>
@@ -157,7 +156,7 @@
       </div>
       <div class="col-xs-6 col-md-3"> <i class="fa fa-umbrella"></i>
         <h4>Simplicité</h4>
-        <p>L'interface pro de Wayd vous permet de publier simplement eten  moins de 2 minutes vos activités afin d'offrir du contenu aux membres de Wayd.</p>
+        <p>L'interface pro de Wayd vous permet de publier simplement et en  moins de 2 minutes vos activités afin d'offrir du contenu aux membres de Wayd.</p>
       </div>
       <div class="col-xs-6 col-md-3"> <i class="fa fa-gears"></i>
         <h4>Efficacité</h4>
@@ -182,7 +181,7 @@
 	  
 	  <br>
 	  <p> </p>
-      <p><a href="https://play.google.com/store/apps/details?id=com.snapchat.android&hl=en&referrer=snapchat.com%2Fdownload"> <img src="/wayd/commun/img/googleplay.png"></img></a></p>
+      <p><a href="https://play.google.com/store/apps/details?id=com.application.wayd&hl=fr"> <img src="/wayd/commun/img/googleplay.png"></img></a></p>
           
     </div>
   </div>

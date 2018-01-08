@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import javax.naming.NamingException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
@@ -519,6 +521,45 @@ public class PersonneDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 	}
+	
+	public static MessageServeur gestionUid(String uid, String idtoken,
+			String photostr, String nom, String gcmToken, String email) {
+		// TODO Auto-generated
+
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+
+			if (!personnedao.isLoginExist(uid)) {
+				personnedao.addCompteGenerique(uid, idtoken, photostr, nom,
+						gcmToken, email);
+			}
+
+			else {
+
+				personnedao.updateJeton(uid, idtoken, photostr, nom, gcmToken,
+						email);
+
+			}
+			connexion.commit();
+
+			return new MessageServeur(true, "ok");
+
+		} catch (SQLException | NamingException e) {
+
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+		}
+		// ...
+		finally {
+			CxoPool.closeConnection(connexion);
+		}
+		return new MessageServeur(false, "ok");
+
+	}
 
 	public int addCompteGenerique(String iduser, String idtoken,
 			String photostr, String nom, String gcmToken, String email)
@@ -579,6 +620,7 @@ public class PersonneDAO {
 		preparedStatement.execute();
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
+		
 		if (rs.next())
 			cle = rs.getInt("idpersonne");
 

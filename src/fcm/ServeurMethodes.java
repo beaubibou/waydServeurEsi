@@ -74,7 +74,7 @@ public class ServeurMethodes {
 						.getId());
 				GCMid = personneDAO.getGCMId(participant.getId());
 
-				if (GCMid == null)
+				if (GCMid == null ||GCMid.isEmpty() )
 					continue;
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -114,7 +114,7 @@ public class ServeurMethodes {
 				nbrmessagenonlu = activitedao.getNbrMessageNonLu(participant.getId());
 				GCMid =personneDAO.getGCMId(participant.getId());
 
-				if (GCMid == null)
+				if (GCMid == null ||GCMid.isEmpty())
 					continue;
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
@@ -156,7 +156,7 @@ public class ServeurMethodes {
 
 				GCMid = personneDAO.getGCMId(participant.getId());
 
-				if (GCMid == null)
+				if (GCMid == null || GCMid.isEmpty())
 					continue;
 
 				PushAndroidMessage messageaenvoyer = new PushAndroidMessage(
