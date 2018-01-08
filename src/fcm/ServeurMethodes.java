@@ -34,6 +34,7 @@ public class ServeurMethodes {
 
 	public void envoiAndroidRefreshTDB(int idpersonne) {
 		String GCMid;
+	
 		if (idpersonne == 0)
 			return;
 
