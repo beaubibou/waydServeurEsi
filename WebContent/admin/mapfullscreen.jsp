@@ -135,7 +135,7 @@
 				markersMap.push(var_marker);
 
 				//	var info = getInfoWindow("titre", "contenu", "lien", "");
-				var lien = "DetailActiviteSite?idactivite=" + activite.id;
+				var lien = "DetailActivite?idactivite=" + activite.id;
 				var contentString = getContent(activite.titre,
 						activite.libelle, lien, "");
 				var info = new google.maps.InfoWindow({
