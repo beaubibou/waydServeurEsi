@@ -1,11 +1,5 @@
 package website.metier;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.apache.axis.encoding.Base64;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import fcm.ServeurMethodes;

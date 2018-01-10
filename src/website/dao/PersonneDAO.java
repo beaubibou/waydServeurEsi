@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
+import website.metier.ActiviteAjax;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
@@ -24,6 +25,7 @@ import website.metier.TypeEtatProfil;
 import website.metier.TypeEtatValide;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
+import website.metier.UserAjax;
 import website.metier.admin.FitreAdminProfils;
 
 import com.google.firebase.FirebaseApp;
@@ -47,6 +49,64 @@ public class PersonneDAO {
 		return true;
 
 	}
+	
+	public ArrayList<UserAjax> getListUserAjaxMap(double malatitude,
+			double malongitude, double NELat, double NELon, double SWLat,
+			double SWlon) {
+
+		long debut = System.currentTimeMillis();
+
+		ArrayList<UserAjax> retour = new ArrayList<UserAjax>();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection connexion=null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			double latMin = SWLat;
+			double latMax = NELat;
+			double longMin = SWlon;
+			double longMax = NELon;
+			UserAjax userAjax = null;
+
+			String requete = " SELECT idpersonne,prenom,latitude,longitude,photo from personne where latitude between ? and ?"
+					+ " and longitude between ? and ? FETCH FIRST 40 ROWS ONLY;";
+
+			preparedStatement = connexion.prepareStatement(requete);
+		
+			preparedStatement.setDouble(1, latMin);
+			preparedStatement.setDouble(2, latMax);
+			preparedStatement.setDouble(3, longMin);
+			preparedStatement.setDouble(4, longMax);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				double latitude = rs.getDouble("latitude");
+				double longitude = rs.getDouble("longitude");
+				String pseudo = rs.getString("prenom");
+				String photo = rs.getString("photo");
+				int idpersonne = rs.getInt("idpersonne");
+				
+				userAjax = new UserAjax(idpersonne,pseudo,latitude,longitude,photo);
+				retour.add(userAjax);
+
+			}
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+		LogDAO.LOG_DUREE("getListActiviteAjaxMap", debut);
+		return retour;
+	}
+
 
 	private static boolean supprimePersonneDAO(int idPersonne) {
 		// TODO Auto-generated method stub

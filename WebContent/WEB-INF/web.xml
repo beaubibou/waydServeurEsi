@@ -794,4 +794,24 @@
     <servlet-name>SupprimePhotoActivite</servlet-name>
     <url-pattern>/SupprimePhotoActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapUserList</display-name>
+    <servlet-name>MapUserList</servlet-name>
+    <servlet-class>servlet.MapUserList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapUserList</servlet-name>
+    <url-pattern>/MapUserList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MapUser</display-name>
+    <servlet-name>MapUser</servlet-name>
+    <servlet-class>servlet.MapUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MapUser</servlet-name>
+    <url-pattern>/MapUser</url-pattern>
+  </servlet-mapping>
 </web-app>

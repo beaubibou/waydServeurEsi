@@ -1,29 +1,20 @@
 package servlet.commun;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import com.google.gson.Gson;
-
-import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteAjax;
 import website.metier.AuthentificationSite;
+
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class ListMapActivite
@@ -47,7 +38,7 @@ public class ListMapActivite extends HttpServlet {
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		
-		if (!authentification.isAuthentifie())
+		if (!authentification.isAuthentifieAdmin())
 			return;
 		
 		

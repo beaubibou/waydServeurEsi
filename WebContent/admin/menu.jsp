@@ -24,7 +24,16 @@
 			<li><a href="/wayd/ListSuggestion">Suggestions</a></li>
 			<li><a href="/wayd/ListProfil">Profils</a></li>
 			<li><a href="/wayd/MesActivites">Site pro</a></li>
-			<li><a href="/wayd/MapAdmin">Carte</a></li>
+		
+		 <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cartes
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+			<li><a href="/wayd/MapAdmin">Carte Activites</a></li>
+			<li><a href="/wayd/MapUser">Carte User</a></li>
+		    </ul>
+      </li>	
+			
 			<li><a href="/wayd/ListLogs">Logs</a></li>
 			<li><a href="/wayd/StatLog">StatLogs</a></li>
 			<li><a href="/wayd/admin/AVGtmpRequeteParjour.jsp">Performance</a></li>
