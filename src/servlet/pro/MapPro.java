@@ -1,10 +1,6 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
-
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import website.dao.ActiviteDAO;
-import website.metier.ActiviteAjax;
 import website.metier.AuthentificationSite;
 
 /**

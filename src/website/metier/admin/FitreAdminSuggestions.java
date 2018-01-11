@@ -1,11 +1,7 @@
 package website.metier.admin;
 
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-
-import website.metier.AmiBean;
 
 public class FitreAdminSuggestions {
 

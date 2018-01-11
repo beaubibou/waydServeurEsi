@@ -2,8 +2,6 @@ package website.html;
 
 import org.apache.log4j.Logger;
 
-import wayde.dao.ActiviteDAO;
-
 
 
 public class JumbotronJsp {

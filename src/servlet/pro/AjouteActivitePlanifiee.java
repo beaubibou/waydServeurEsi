@@ -1,6 +1,5 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AddActiviteGcm;
 
 import java.io.IOException;

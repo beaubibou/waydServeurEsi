@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
 import website.dao.PersonneDAO;
-import website.enumeration.MenuEnum;
 import website.html.MessageAlertDialog;
 
 public class AuthentificationSite {

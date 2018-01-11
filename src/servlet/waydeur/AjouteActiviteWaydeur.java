@@ -1,7 +1,6 @@
 package servlet.waydeur;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,13 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
-import website.dao.CacheValueDAO;
 import website.metier.AuthentificationSite;
-import website.metier.DureeBean;
 import website.metier.ProfilBean;
-import website.metier.QuantiteWaydeurBean;
-import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class AjouteActiviteWaydeur

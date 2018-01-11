@@ -8,10 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-
-import com.sun.org.apache.bcel.internal.generic.IADD;
 
 import wayde.bean.Avis;
 import wayde.bean.CxoPool;

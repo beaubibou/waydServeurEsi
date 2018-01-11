@@ -8,18 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.SendResult;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
-
 import texthtml.pro.Erreur_HTML;
 import website.dao.ActiviteDAO;
-import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
-import website.html.AlertInfoJsp;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;

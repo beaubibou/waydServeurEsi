@@ -14,7 +14,6 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import fcm.ServeurMethodes;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
@@ -23,6 +22,7 @@ import wayde.bean.PhotoActivite;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
 import website.dao.LogDAO;
+import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
 	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);

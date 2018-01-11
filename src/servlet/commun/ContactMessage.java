@@ -10,14 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
-import wayd.ws.WBservices;
 import website.dao.SuggestionDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
-import website.metier.SuggestionBean;
 
 /**
  * Servlet implementation class ContactMessage

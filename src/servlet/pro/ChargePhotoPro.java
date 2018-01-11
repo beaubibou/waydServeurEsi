@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -21,8 +20,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import texthtml.pro.Erreur_HTML;
-import wayd.ws.WBservices;
 import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;

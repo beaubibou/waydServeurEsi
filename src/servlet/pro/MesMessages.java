@@ -1,7 +1,5 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,11 +12,9 @@ import org.apache.log4j.Logger;
 
 import website.dao.ActiviteDAO;
 import website.html.JumbotronJsp;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.MessageBean;
-import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
 
 /**

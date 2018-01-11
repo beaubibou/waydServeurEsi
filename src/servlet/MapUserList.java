@@ -11,10 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import servlet.commun.ListMapActivite;
-import website.dao.ActiviteDAO;
 import website.dao.PersonneDAO;
-import website.metier.ActiviteAjax;
 import website.metier.AuthentificationSite;
 import website.metier.UserAjax;
 

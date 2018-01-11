@@ -2,8 +2,10 @@ package gcmnotification;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;

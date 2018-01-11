@@ -2,7 +2,6 @@ package servlet.commun;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
-import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;

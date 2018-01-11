@@ -2,7 +2,6 @@ package servlet.waydeur;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -14,12 +13,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
-import website.dao.CacheValueDAO;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
-import website.metier.SexeBean;
 
 /**
  * Servlet implementation class CompteWaydeur

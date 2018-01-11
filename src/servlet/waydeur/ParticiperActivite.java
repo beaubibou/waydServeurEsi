@@ -6,15 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import website.coordination.Coordination;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
-import website.metier.ProfilBean;
 
 /**
  * Servlet implementation class ParticiperActivite

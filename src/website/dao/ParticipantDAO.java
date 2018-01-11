@@ -6,21 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
-
-import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-
-import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
-import wayde.dao.ActiviteDAO;
 import website.metier.ParticipantBean;
-import website.metier.ProfilBean;
 
 public class ParticipantDAO {
 	private static final Logger LOG = Logger.getLogger(ParticipantDAO.class);

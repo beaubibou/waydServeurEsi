@@ -17,8 +17,6 @@ import texthtml.pro.ListeValeurText;
 import wayde.bean.CxoPool;
 import website.enumeration.TypePhoto;
 import website.metier.DureeBean;
-import website.metier.LogBean;
-import website.metier.ProfilBean;
 import website.metier.QuandBean;
 import website.metier.QuantiteWaydeurBean;
 import website.metier.RayonBean;

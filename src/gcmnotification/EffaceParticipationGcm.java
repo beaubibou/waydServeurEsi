@@ -9,9 +9,9 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
+import fcm.ServeurMethodes;
 
 public class EffaceParticipationGcm implements Runnable {
 	private static final Logger LOG = Logger.getLogger(EffaceParticipationGcm.class);

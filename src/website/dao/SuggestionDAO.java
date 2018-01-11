@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.naming.NamingException;
@@ -17,9 +16,6 @@ import org.joda.time.DateTime;
 
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
-import wayde.dao.ActiviteDAO;
-import website.metier.ActiviteBean;
-import website.metier.ProfilBean;
 import website.metier.SuggestionBean;
 import website.metier.admin.EtatProbleme;
 import website.metier.admin.EtatSuggestion;

@@ -1,23 +1,15 @@
 package servlet.waydeur;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.CxoPool;
-import website.dao.ActiviteDAO;
-import website.metier.ActiviteAjax;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
-import website.metier.ProfilBean;
 
 /**
  * Servlet implementation class MapWaydeur

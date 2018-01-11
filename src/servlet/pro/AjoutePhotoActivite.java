@@ -21,7 +21,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import website.dao.ActiviteDAO;
-import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;

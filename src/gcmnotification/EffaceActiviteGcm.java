@@ -9,13 +9,11 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ActiviteDAO;
-import wayde.dao.DiscussionDAO;
-import wayde.dao.NotificationDAO;
 import wayde.dao.ParticipationDAO;
+import fcm.ServeurMethodes;
 
 public class EffaceActiviteGcm implements Runnable {
 	private static final Logger LOG = Logger.getLogger(EffaceActiviteGcm.class);

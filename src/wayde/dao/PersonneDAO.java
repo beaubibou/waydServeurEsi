@@ -29,7 +29,6 @@ import wayde.bean.Profil;
 import wayde.bean.ProfilNotation;
 import wayde.bean.ProfilPro;
 import wayde.bean.ProprietePref;
-import wayde.bean.RetourMessage;
 import website.dao.LogDAO;
 
 public class PersonneDAO {

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.CxoPool;
 import website.metier.AuthentificationSite;
 
 /**

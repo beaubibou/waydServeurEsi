@@ -10,10 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-
-import website.dao.PersonneDAO;
-import website.enumeration.AlertJsp;
-import website.html.AlertInfoJsp;
 import website.metier.ProfilBean;
 
 /**

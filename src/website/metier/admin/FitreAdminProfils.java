@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import website.metier.AmiBean;
 import website.metier.TypeEtatValide;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;

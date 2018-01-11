@@ -13,7 +13,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
-import wayde.dao.ActiviteDAO;
 import website.metier.AmiBean;
 
 public class AmiDAO {

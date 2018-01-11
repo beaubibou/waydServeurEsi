@@ -1,7 +1,5 @@
 package servlet.commun;
 
-import gcmnotification.AcquitAllNotificationGcm;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -13,13 +11,10 @@ import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
 import wayde.bean.MessageServeur;
-import website.coordination.Coordination;
-import website.dao.ActiviteDAO;
 import website.dao.PersonneDAO;
 import website.dao.SignalementDAO;
 import website.enumeration.AlertJsp;
 import website.html.AlertInfoJsp;
-import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 

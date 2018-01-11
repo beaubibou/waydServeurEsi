@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import wayde.bean.MessageServeur;
 import website.dao.ActiviteDAO;
-import website.dao.MessageDAO;
-import website.enumeration.AlertJsp;
-import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
 
 /**

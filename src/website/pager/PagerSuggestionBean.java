@@ -1,15 +1,10 @@
 package website.pager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 
-import website.dao.ProblemeDAO;
 import website.dao.SuggestionDAO;
-import website.metier.AmiBean;
-import website.metier.ProblemeBean;
 import website.metier.SuggestionBean;
 import website.metier.admin.FitreAdminSuggestions;
 

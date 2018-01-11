@@ -5,8 +5,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import wayde.dao.ActiviteDAO;
-
 public class DateHtlm {
 	private static final Logger LOG = Logger.getLogger(DateHtlm.class);
 

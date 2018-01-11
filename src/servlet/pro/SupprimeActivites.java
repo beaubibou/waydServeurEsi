@@ -1,7 +1,5 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -15,7 +13,6 @@ import wayde.bean.MessageServeur;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
-import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;

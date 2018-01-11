@@ -8,8 +8,8 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
+import fcm.ServeurMethodes;
 
 public class EffaceMessageGcm implements Runnable {
 

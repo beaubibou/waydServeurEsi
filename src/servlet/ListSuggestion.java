@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,11 +15,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import website.dao.SuggestionDAO;
 import website.metier.AuthentificationSite;
-import website.metier.SuggestionBean;
 import website.metier.admin.FitreAdminSuggestions;
-import website.pager.PagerProblemeBean;
 import website.pager.PagerSuggestionBean;
 
 /**

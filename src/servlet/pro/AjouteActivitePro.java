@@ -4,35 +4,25 @@ import gcmnotification.AddActiviteGcm;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import texthtml.pro.CommunText;
 import threadpool.PoolThreadGCM;
-import wayd.ws.WBservices;
 import wayde.bean.MessageServeur;
 import website.dao.ActiviteDAO;
-import website.dao.CacheValueDAO;
 import website.enumeration.AlertJsp;
-import website.html.AlertDialog;
-import website.html.AlertInfoJsp;
 import website.html.MessageAlertDialog;
 import website.metier.AuthentificationSite;
-import website.metier.DureeBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
-import website.metier.QuantiteWaydeurBean;
-import website.metier.TypeAccess;
-import website.metier.TypeActiviteBean;
 
 /**
  * Servlet implementation class AjouteActivite

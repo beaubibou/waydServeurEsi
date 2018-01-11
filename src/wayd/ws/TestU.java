@@ -3,8 +3,6 @@ package wayd.ws;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import wayde.bean.CxoPool;
 import wayde.bean.Droit;
 import wayde.bean.MessageServeur;

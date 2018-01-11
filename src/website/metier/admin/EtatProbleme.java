@@ -2,8 +2,6 @@ package website.metier.admin;
 
 import org.apache.log4j.Logger;
 
-import website.metier.AmiBean;
-
 public class EtatProbleme {
 
 	private static final Logger LOG = Logger.getLogger(EtatProbleme.class);

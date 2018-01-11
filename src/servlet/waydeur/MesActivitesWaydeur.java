@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
 import website.dao.ActiviteDAO;
 import website.html.JumbotronJsp;
 import website.metier.ActiviteBean;

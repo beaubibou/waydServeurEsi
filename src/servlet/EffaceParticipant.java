@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import website.dao.ParticipantDAO;
 import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 

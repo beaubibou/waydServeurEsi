@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 import javax.naming.NamingException;
 
@@ -94,7 +93,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-
 import comparator.DiscussionDateComparator;
 
 public class WBservices {

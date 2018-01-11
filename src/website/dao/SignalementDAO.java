@@ -15,10 +15,9 @@ import org.apache.log4j.Logger;
 import texthtml.pro.Erreur_HTML;
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
-import wayde.dao.ActiviteDAO;
 import website.metier.SignalementActiviteBean;
-import website.metier.SignalementProfilBean;
 import website.metier.SignalementCount;
+import website.metier.SignalementProfilBean;
 
 public class SignalementDAO {
 	private static final Logger LOG = Logger.getLogger(SignalementDAO.class);

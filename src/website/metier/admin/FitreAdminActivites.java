@@ -2,7 +2,6 @@ package website.metier.admin;
 
 import org.apache.log4j.Logger;
 
-import website.metier.AmiBean;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeSignalement;

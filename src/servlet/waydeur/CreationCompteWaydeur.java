@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import wayde.bean.CxoPool;
 import website.metier.ProfilBean;
 
 /**

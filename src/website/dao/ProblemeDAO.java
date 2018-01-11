@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.naming.NamingException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
 import website.metier.ProblemeBean;

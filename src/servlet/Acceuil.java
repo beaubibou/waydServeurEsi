@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import website.dao.ActiviteDAO;
-import website.dao.LogDAO;
 import website.dao.StatDAO;
 import website.metier.AuthentificationSite;
 import website.metier.IndicateurWayd;

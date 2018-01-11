@@ -4,15 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import wayd.ws.WBservices;
-import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.Participation;
 import wayde.bean.Personne;

@@ -1,33 +1,26 @@
 package servlet.pro;
 
-import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.EffaceActiviteGcm;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
 import wayde.bean.MessageServeur;
-import wayde.bean.Personne;
 import website.coordination.Coordination;
 import website.dao.ActiviteDAO;
-import website.dao.MessageBean;
 import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
-import website.html.AlertInfoJsp;
 import website.html.MessageAlertDialog;
 import website.metier.ActiviteBean;
 import website.metier.AuthentificationSite;
-import website.metier.ProfilBean;
 
 /**
  * Servlet implementation class SupprimeActivite

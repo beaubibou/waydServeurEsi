@@ -1,18 +1,14 @@
 package website.metier;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.axis.encoding.Base64;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
-import servlet.DetailActivite;
 import texthtml.pro.Erreur_HTML;
 import website.dao.CacheValueDAO;
 import website.enumeration.TypePhoto;

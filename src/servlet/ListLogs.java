@@ -18,11 +18,7 @@ import org.joda.time.format.DateTimeFormatter;
 import website.dao.LogDAO;
 import website.metier.AuthentificationSite;
 import website.metier.admin.FitreAdminLogs;
-import website.metier.admin.FitreAdminProfils;
-import website.metier.admin.FitreAdminSuggestions;
 import website.pager.PagerLogsBean;
-import website.pager.PagerProfilBean;
-import website.pager.PagerSuggestionBean;
 
 /**
  * Servlet implementation class ListLogs

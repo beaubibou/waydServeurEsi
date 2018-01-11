@@ -1,18 +1,15 @@
 package gcmnotification;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import fcm.ServeurMethodes;
 import wayde.bean.CxoPool;
 import wayde.bean.Personne;
 import wayde.dao.ParticipationDAO;
+import fcm.ServeurMethodes;
 
 public class AddMessageByActGcm implements Runnable{
 	private static final Logger LOG = Logger.getLogger(AddMessageByActGcm.class);

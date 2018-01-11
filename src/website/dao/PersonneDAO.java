@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +15,6 @@ import org.apache.log4j.Logger;
 
 import wayd.ws.WBservices;
 import wayde.bean.CxoPool;
-import website.metier.ActiviteAjax;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;

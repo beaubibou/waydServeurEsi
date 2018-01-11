@@ -11,19 +11,14 @@ import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.commons.lang3.reflect.TypeLiteral;
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
 import org.joda.time.DateTime;
 
-import sun.rmi.runtime.Log;
 import wayde.bean.CxoPool;
 import website.metier.CountLogInfo;
 import website.metier.LogBean;
-import website.metier.ProblemeBean;
 import website.metier.TypeEtatLogPerf;
 import website.metier.TypeEtatLogs;
-import website.metier.admin.EtatProbleme;
 import website.metier.admin.FitreAdminLogs;
 
 public class LogDAO {

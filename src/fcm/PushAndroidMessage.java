@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import servlet.ChargePhotoActivite;
-
 public class PushAndroidMessage {
 private static final Logger LOG = Logger.getLogger(PushAndroidMessage.class);
 
