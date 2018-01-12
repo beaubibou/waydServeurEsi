@@ -30,14 +30,14 @@
         <parameter qname="pns:idpersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
+      <operation name="supprimerCompte" qname="operNS:supprimerCompte" xmlns:operNS="http://ws.wayd" returnQName="retNS:supprimerCompteReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:MessageServeur" xmlns:rtns="http://bean.wayde" soapAction="" >
+        <parameter qname="pns:idPersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="updatePosition" qname="operNS:updatePosition" xmlns:operNS="http://ws.wayd" returnQName="retNS:updatePositionReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:MessageServeur" xmlns:rtns="http://bean.wayde" soapAction="" >
         <parameter qname="pns:idpersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:latitudestr" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:longitudestr" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-        <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-      </operation>
-      <operation name="supprimerCompte" qname="operNS:supprimerCompte" xmlns:operNS="http://ws.wayd" returnQName="retNS:supprimerCompteReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:MessageServeur" xmlns:rtns="http://bean.wayde" soapAction="" >
-        <parameter qname="pns:idPersonne" xmlns:pns="http://ws.wayd" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:jeton" xmlns:pns="http://ws.wayd" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="getAvis" qname="operNS:getAvis" xmlns:operNS="http://ws.wayd" returnQName="retNS:getAvisReturn" xmlns:retNS="http://ws.wayd" returnType="rtns:Avis" xmlns:rtns="http://bean.wayde" soapAction="" >

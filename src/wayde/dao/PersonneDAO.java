@@ -51,12 +51,12 @@ public class PersonneDAO {
 		
 		
 		if (droit == null) {
-			LOG.info(LogDAO.PERSONNE_INEXISTANTANE +" "+idpersonne);
+			LOG.info(LogDAO.PERSONNE_INEXISTANTANE +" : "+idpersonne);
 			return new MessageServeur(false, TextWebService.PERSONNE_INEXISTANTE);
 		}
 
 		if (!droit.isJetonOk(jeton)) {
-			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+			LOG.info(LogDAO.JETON_NON_VALIDE + " - idpersonne:"
 					+ idpersonne + " - Jeton:" + jeton);
 			return new MessageServeur(false, TextWebService.JETON_NON_VALIDE);
 		}
@@ -74,13 +74,13 @@ public class PersonneDAO {
 		
 		if (droit == null) {
 			LOG.info(LogDAO.PERSONNE_INEXISTANTANE + 
-					+ idDemandeur + " - Jeton:" + jeton);
+					" : "+ idDemandeur);
 			return false;
 			
 		}
 		
 		if (!droit.isJetonOk(jeton)) {
-			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+			LOG.info(LogDAO.JETON_NON_VALIDE + " - idpersonne:"
 					+ idDemandeur + " - Jeton:" + jeton);
 			return false;
 		}

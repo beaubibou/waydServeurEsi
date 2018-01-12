@@ -38,6 +38,21 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="supprimerCompte">
+    <complexType>
+     <sequence>
+      <element name="idPersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="supprimerCompteResponse">
+    <complexType>
+     <sequence>
+      <element name="supprimerCompteReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="updatePosition">
     <complexType>
      <sequence>
@@ -52,21 +67,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="updatePositionReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="supprimerCompte">
-    <complexType>
-     <sequence>
-      <element name="idPersonne" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="supprimerCompteResponse">
-    <complexType>
-     <sequence>
-      <element name="supprimerCompteReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -2701,18 +2701,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePosition">
-
-         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="supprimerCompte">
 
          <wsdl:input message="impl:supprimerCompteRequest" name="supprimerCompteRequest">
@@ -2720,6 +2708,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:supprimerCompteResponse" name="supprimerCompteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePosition">
+
+         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
 
        </wsdl:output>
 
@@ -3571,24 +3571,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePosition">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updatePositionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updatePositionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="supprimerCompte">
 
          <wsdlsoap:operation soapAction=""/>
@@ -3600,6 +3582,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="supprimerCompteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePosition">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updatePositionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updatePositionResponse">
 
             <wsdlsoap:body use="literal"/>
 
