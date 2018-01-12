@@ -47,6 +47,9 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import reponsevaleur.Erreur;
+import reponsevaleur.ListActivitesRV;
+import servlet.ListActivite;
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -93,6 +96,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+
 import comparator.DiscussionDateComparator;
 
 public class WBservices {
@@ -187,7 +191,7 @@ public class WBservices {
 		}
 	}
 
-	public MessageServeur supprimerCompte(int idPersonne, String jeton){
+	public MessageServeur supprimerCompte(int idPersonne, String jeton) {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
@@ -196,25 +200,23 @@ public class WBservices {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			
-			
 
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idPersonne, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
-		
-			boolean retour=website.dao.PersonneDAO.supprimePersonne(idPersonne);
-		
+
+			boolean retour = website.dao.PersonneDAO
+					.supprimePersonne(idPersonne);
+
 			LogDAO.LOG_DUREE("supprimerCompte", debut);
-			
+
 			if (retour)
-			return new MessageServeur(true, "ok");
+				return new MessageServeur(true, "ok");
 			else
-			return new MessageServeur(false, "Une erreur est survenue");
-			
-		
+				return new MessageServeur(false, "Une erreur est survenue");
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -224,7 +226,7 @@ public class WBservices {
 
 			CxoPool.closeConnection(connexion);
 		}
-		
+
 	}
 
 	public Avis getAvis(int idnoter, int idactivite, int idnotateur,
@@ -1122,6 +1124,66 @@ public class WBservices {
 
 	}
 
+	public ListActivitesRV getListActivitesRV(int idpersonne, String latitudestr,
+			String longitudestr, int rayon, int idtypeactivite, String motcle,
+			long debutActivite, long finActivite, int typeUser,
+			int accessActivite, int commenceDans, String jeton) {
+
+		// commenceDans en minutes
+		// accessActivite payante/gratuite
+		// typeUser pro/asso/waydeur
+
+		
+		long debut = System.currentTimeMillis();
+		
+		ListActivitesRV retour=new ListActivitesRV();
+	
+		Connection connexion = null;
+
+		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	
+		try {
+			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+		
+			if (!personneDAO.isAutorise(idpersonne, jeton)){
+				listErreurs.add(new Erreur(1, "Pas authentifié"));
+				retour.initErreurs(listErreurs);
+				return retour;
+			}
+			// ********************************************************
+
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+			listActivite = activitedao.getListActivites(
+					Double.valueOf(latitudestr), Double.valueOf(longitudestr),
+					rayon, idtypeactivite, motcle, debutActivite, finActivite,
+					typeUser, accessActivite, commenceDans);
+
+			for (Activite activite : listActivite) {
+				activite.defineOrganisateur(idpersonne);
+			}
+
+		} catch (NumberFormatException | SQLException | NamingException e1) {
+			e1.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e1));
+			listErreurs.add(new Erreur(2, e1.getMessage()));
+
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+		LogDAO.LOG_DUREE("getListActivites", debut);
+		retour.initActivite(listActivite);
+		retour.initErreurs(listErreurs);
+
+		return  retour;
+		
+
+	}
+
 	public Activite[] getListActiviteAvenir(int idpersonne, String latitudestr,
 			String longitudestr, int rayon, int idtypeactivite, String motcle,
 			int commencedans, String jeton) {
@@ -1299,7 +1361,7 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
-		
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			if (!personneDAO.isAutorise(idpersonne, jeton))
 				return null;
@@ -3100,11 +3162,16 @@ public class WBservices {
 																		// champs
 			personne.setMessage("Ok");
 
-			Droit droit = new PersonneDAO(connexion).getDroit(personne.getId(),
-					idtoken);
+			Droit droit = new PersonneDAO(connexion).getDroit(personne.getId());
 
 			if (droit == null) {
-				personne.setMessage(TextWebService.PAS_RECONNU);
+				personne.setMessage(TextWebService.PERSONNE_INEXISTANTE);
+				personne.setId(0);// echec connexion
+				return personne;
+			}
+			
+			if (!droit.isJetonOk(idtoken)) {
+				personne.setMessage(TextWebService.JETON_NON_VALIDE);
 				personne.setId(0);// echec connexion
 				return personne;
 			}

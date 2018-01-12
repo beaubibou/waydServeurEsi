@@ -336,14 +336,21 @@ public class TestU {
 				personne.setMessage("Ok");
 
 				Droit droit = new PersonneDAO(connexion).getDroit(
-						personne.getId(), idtoken);
+						personne.getId());
 
 				if (droit == null) {
-					personne.setMessage(TextWebService.PAS_RECONNU);
+					personne.setMessage(TextWebService.PERSONNE_INEXISTANTE);
 					personne.setId(0);// echec connexion
 					return personne;
 				}
+				
 
+				if (!droit.isJetonOk(idtoken)) {
+					personne.setMessage(TextWebService.JETON_NON_VALIDE);
+					personne.setId(0);// echec connexion
+					return personne;
+				}
+				
 				MessageServeur autorisation = droit.isDefautAccess();
 
 				if (!autorisation.isReponse()) {

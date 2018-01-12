@@ -28,6 +28,8 @@ public class LogDAO {
 	public static int TPS_WARNING_REQUETE = 20;
 	public static int TPS_ECHATILLONNAGE = 30;
 	public static final String MESSAGE_PAS_AUTHENTIFIE = "Accés réfusé";
+	public static final String MESSAGE_JETON_NON_VALIDE = "Jeton non valide";
+	public static final String PERSONNE_INEXISTANTANE = "La personne n'existe";
 	public static long TPS_CALCUL_PERFOMENCE = 60;
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;

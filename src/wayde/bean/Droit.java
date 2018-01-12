@@ -8,18 +8,36 @@ public class Droit {
 
 	private int idpersonne;
 	private boolean admin, verrouille, actif;
+	private String jeton;
 
 	public Droit() {
 
 	}
 
 	public Droit(int idpersonne, boolean admin, boolean verrouille,
-			boolean actif) {
+			boolean actif,String jeton) {
 		super();
 		this.idpersonne = idpersonne;
 		this.admin = admin;
 		this.verrouille = verrouille;
 		this.actif = actif;
+		this.jeton=jeton;
+	}
+
+	
+	public boolean isJetonOk(String jeton){
+		
+		if (this.jeton.equals(jeton))return true;
+		
+		return false;
+		
+	}
+	public String getJeton() {
+		return jeton;
+	}
+
+	public void setJeton(String jeton) {
+		this.jeton = jeton;
 	}
 
 	public boolean isActif() {

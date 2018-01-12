@@ -46,15 +46,20 @@ public class PersonneDAO {
 
 		Droit droit;
 
-		droit = getDroit(idpersonne, jeton);
+		droit = getDroit(idpersonne);
 
+		
+		
 		if (droit == null) {
-			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
-					+ idpersonne + " - Jeton:" + jeton);
-
-			return new MessageServeur(false, TextWebService.PROFIL_NON_RECONNU);
+			LOG.info(LogDAO.PERSONNE_INEXISTANTANE +" "+idpersonne);
+			return new MessageServeur(false, TextWebService.PERSONNE_INEXISTANTE);
 		}
 
+		if (!droit.isJetonOk(jeton)) {
+			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
+					+ idpersonne + " - Jeton:" + jeton);
+			return new MessageServeur(false, TextWebService.JETON_NON_VALIDE);
+		}
 		return droit.isDefautAccess();
 
 	}
@@ -63,8 +68,18 @@ public class PersonneDAO {
 			throws SQLException {
 
 		Droit droit = null;
-		droit = getDroit(idDemandeur, jeton);
+		
+		droit = getDroit(idDemandeur);
+		
+		
 		if (droit == null) {
+			LOG.info(LogDAO.PERSONNE_INEXISTANTANE + 
+					+ idDemandeur + " - Jeton:" + jeton);
+			return false;
+			
+		}
+		
+		if (!droit.isJetonOk(jeton)) {
 			LOG.info(LogDAO.MESSAGE_PAS_AUTHENTIFIE + " - idpersonne:"
 					+ idDemandeur + " - Jeton:" + jeton);
 			return false;
@@ -109,6 +124,7 @@ public class PersonneDAO {
 
 	}
 
+	 
 	public Profil getFullProfil(int idpersonne) throws SQLException {
 
 		Profil profil = null;
@@ -213,14 +229,14 @@ public class PersonneDAO {
 		return personne;
 	}
 
-	public Droit getDroit(int idpersonne, String jeton) throws SQLException {
+	public Droit getDroit(int idpersonne) throws SQLException {
 
 		// Statement stmt = connexion.createStatement();
-		String requete = " SELECT  idpersonne,verrouille,admin,actif from personne where idpersonne=? and jeton=?";
+		String requete = " SELECT  jeton,idpersonne,verrouille,admin,actif from personne where idpersonne=? ";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setString(2, jeton);
+		
 		ResultSet rs = preparedStatement.executeQuery();
 		Droit droit = getDroitDbByRs(rs);
 		CxoPool.close(preparedStatement, rs);
@@ -433,8 +449,8 @@ public class PersonneDAO {
 			boolean actif = rs.getBoolean("actif");
 			boolean verrouille = rs.getBoolean("verrouille");
 			boolean admin = rs.getBoolean("admin");
-
-			droit = new Droit(idpersonne, admin, verrouille, actif);
+			String jeton=rs.getString("jeton");
+			droit = new Droit(idpersonne, admin, verrouille, actif,jeton);
 
 		}
 		return droit;
