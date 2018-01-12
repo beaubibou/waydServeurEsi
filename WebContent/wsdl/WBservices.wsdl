@@ -6,21 +6,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   <schema elementFormDefault="qualified" targetNamespace="http://ws.wayd" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://bean.wayde"/>
    <import namespace="http://reponsevaleur"/>
-   <element name="getVersion">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getVersionResponse">
-    <complexType>
-     <sequence>
-      <element name="getVersionReturn" type="tns1:Version"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="addMessage">
     <complexType>
      <sequence>
@@ -38,20 +23,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updatePosition">
+   <element name="getVersion">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="updatePositionResponse">
+   <element name="getVersionResponse">
     <complexType>
      <sequence>
-      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
+      <element name="getVersionReturn" type="tns1:Version"/>
      </sequence>
     </complexType>
    </element>
@@ -640,7 +623,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="addActivitePro">
+   <element name="addActiviteProRV">
     <complexType>
      <sequence>
       <element name="titre" type="xsd:string"/>
@@ -656,10 +639,10 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="addActiviteProResponse">
+   <element name="addActiviteProRVResponse">
     <complexType>
      <sequence>
-      <element name="addActiviteProReturn" type="tns1:MessageServeur"/>
+      <element name="addActiviteProRVReturn" type="tns2:MessageServeurRV"/>
      </sequence>
     </complexType>
    </element>
@@ -872,6 +855,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="acquitMessageDiscussionRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idemetteur" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageDiscussionRVReturn" type="tns2:MessageServeurRV"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="acquitMessageDiscussion">
     <complexType>
      <sequence>
@@ -885,6 +884,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="acquitMessageDiscussionReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionByActRV">
+    <complexType>
+     <sequence>
+      <element name="iddestinataire" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageDiscussionByActRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageDiscussionByActRVReturn" type="tns2:MessageServeurRV"/>
      </sequence>
     </complexType>
    </element>
@@ -932,6 +947,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="acquitMessageReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageByActRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageByActRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageByActRVReturn" type="tns2:MessageServeurRV"/>
      </sequence>
     </complexType>
    </element>
@@ -1095,6 +1126,23 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="updateNotificationPrefReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updatePosition">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updatePositionResponse">
+    <complexType>
+     <sequence>
+      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -1275,22 +1323,75 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="acquitMessageRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitMessageRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitMessageRVReturn" type="tns2:MessageServeurRV"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitNotificationRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idmessage" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitNotificationRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitNotificationRVReturn" type="tns2:MessageServeurRV"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addAvisRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="idpersonnenotee" type="xsd:int"/>
+      <element name="idactivite" type="xsd:int"/>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="notestr" type="xsd:string"/>
+      <element name="demandeami" type="xsd:boolean"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addAvisRVResponse">
+    <complexType>
+     <sequence>
+      <element name="addAvisRVReturn" type="tns2:MessageServeurRV"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://bean.wayde" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://ws.wayd"/>
    <import namespace="http://reponsevaleur"/>
-   <complexType name="Version">
-    <sequence>
-     <element name="majeur" type="xsd:int"/>
-     <element name="mineur" type="xsd:int"/>
-     <element name="version" type="xsd:int"/>
-    </sequence>
-   </complexType>
    <complexType name="RetourMessage">
     <sequence>
      <element name="datecreation" type="xsd:long"/>
      <element name="id" type="xsd:int"/>
      <element name="idemetteur" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="Version">
+    <sequence>
+     <element name="majeur" type="xsd:int"/>
+     <element name="mineur" type="xsd:int"/>
+     <element name="version" type="xsd:int"/>
     </sequence>
    </complexType>
    <complexType name="MessageServeur">
@@ -1585,6 +1686,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   </schema>
  </wsdl:types>
 
+   <wsdl:message name="acquitMessageDiscussionByActRVResponse">
+
+      <wsdl:part element="impl:acquitMessageDiscussionByActRVResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getVersionRequest">
 
       <wsdl:part element="impl:getVersion" name="parameters">
@@ -1745,6 +1854,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitNotificationRVResponse">
+
+      <wsdl:part element="impl:acquitNotificationRVResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getListPhotoActiviteResponse">
 
       <wsdl:part element="impl:getListPhotoActiviteResponse" name="parameters">
@@ -1788,6 +1905,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getListNotificationResponse">
 
       <wsdl:part element="impl:getListNotificationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitMessageDiscussionByActRVRequest">
+
+      <wsdl:part element="impl:acquitMessageDiscussionByActRV" name="parameters">
 
       </wsdl:part>
 
@@ -1865,6 +1990,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="addAvisRVRequest">
+
+      <wsdl:part element="impl:addAvisRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="updateProfilWaydRequest">
 
       <wsdl:part element="impl:updateProfilWayd" name="parameters">
@@ -1876,6 +2009,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="acquitMessageByActResponse">
 
       <wsdl:part element="impl:acquitMessageByActResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitMessageByActRVRequest">
+
+      <wsdl:part element="impl:acquitMessageByActRV" name="parameters">
 
       </wsdl:part>
 
@@ -1929,6 +2070,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="addActiviteProRVRequest">
+
+      <wsdl:part element="impl:addActiviteProRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="effaceMessageRecuRequest">
 
       <wsdl:part element="impl:effaceMessageRecu" name="parameters">
@@ -1953,17 +2102,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getAvisResponse">
+   <wsdl:message name="getListAvisResponse">
 
-      <wsdl:part element="impl:getAvisResponse" name="parameters">
+      <wsdl:part element="impl:getListAvisResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getListAvisResponse">
+   <wsdl:message name="getAvisResponse">
 
-      <wsdl:part element="impl:getListAvisResponse" name="parameters">
+      <wsdl:part element="impl:getAvisResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1988,6 +2137,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="acquitNotificationRequest">
 
       <wsdl:part element="impl:acquitNotification" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addAvisRVResponse">
+
+      <wsdl:part element="impl:addAvisRVResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2057,6 +2214,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitMessageByActRVResponse">
+
+      <wsdl:part element="impl:acquitMessageByActRVResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getPhotoWaydeurRequest">
 
       <wsdl:part element="impl:getPhotoWaydeur" name="parameters">
@@ -2113,6 +2278,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitMessageRVRequest">
+
+      <wsdl:part element="impl:acquitMessageRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="signalerProfilResponse">
 
       <wsdl:part element="impl:signalerProfilResponse" name="parameters">
@@ -2140,6 +2313,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="acquitMessageResponse">
 
       <wsdl:part element="impl:acquitMessageResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitMessageDiscussionRVResponse">
+
+      <wsdl:part element="impl:acquitMessageDiscussionRVResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2257,6 +2438,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitMessageRVResponse">
+
+      <wsdl:part element="impl:acquitMessageRVResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getListTypeActiviteRequest">
 
       <wsdl:part element="impl:getListTypeActivite" name="parameters">
@@ -2321,25 +2510,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addActiviteProRequest">
-
-      <wsdl:part element="impl:addActivitePro" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="getDiscussionResponse">
 
       <wsdl:part element="impl:getDiscussionResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addActiviteProResponse">
-
-      <wsdl:part element="impl:addActiviteProResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2401,17 +2574,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="effaceMessageEmisRequest">
+   <wsdl:message name="getListTypeActiviteResponse">
 
-      <wsdl:part element="impl:effaceMessageEmis" name="parameters">
+      <wsdl:part element="impl:getListTypeActiviteResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getListTypeActiviteResponse">
+   <wsdl:message name="effaceMessageEmisRequest">
 
-      <wsdl:part element="impl:getListTypeActiviteResponse" name="parameters">
+      <wsdl:part element="impl:effaceMessageEmis" name="parameters">
 
       </wsdl:part>
 
@@ -2497,9 +2670,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="acquitNotificationRVRequest">
+
+      <wsdl:part element="impl:acquitNotificationRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getListActivitePrefRequest">
 
       <wsdl:part element="impl:getListActivitePref" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitMessageDiscussionRVRequest">
+
+      <wsdl:part element="impl:acquitMessageDiscussionRV" name="parameters">
 
       </wsdl:part>
 
@@ -2540,6 +2729,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getListActivitesRVRequest">
 
       <wsdl:part element="impl:getListActivitesRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addActiviteProRVResponse">
+
+      <wsdl:part element="impl:addActiviteProRVResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2755,18 +2952,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="WBservices">
 
-      <wsdl:operation name="getVersion">
-
-         <wsdl:input message="impl:getVersionRequest" name="getVersionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getVersionResponse" name="getVersionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="addMessage">
 
          <wsdl:input message="impl:addMessageRequest" name="addMessageRequest">
@@ -2779,13 +2964,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePosition">
+      <wsdl:operation name="getVersion">
 
-         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
+         <wsdl:input message="impl:getVersionRequest" name="getVersionRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
+         <wsdl:output message="impl:getVersionResponse" name="getVersionResponse">
 
        </wsdl:output>
 
@@ -3187,13 +3372,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addActivitePro">
+      <wsdl:operation name="addActiviteProRV">
 
-         <wsdl:input message="impl:addActiviteProRequest" name="addActiviteProRequest">
+         <wsdl:input message="impl:addActiviteProRVRequest" name="addActiviteProRVRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:addActiviteProResponse" name="addActiviteProResponse">
+         <wsdl:output message="impl:addActiviteProRVResponse" name="addActiviteProRVResponse">
 
        </wsdl:output>
 
@@ -3355,6 +3540,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="acquitMessageDiscussionRV">
+
+         <wsdl:input message="impl:acquitMessageDiscussionRVRequest" name="acquitMessageDiscussionRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageDiscussionRVResponse" name="acquitMessageDiscussionRVResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="acquitMessageDiscussion">
 
          <wsdl:input message="impl:acquitMessageDiscussionRequest" name="acquitMessageDiscussionRequest">
@@ -3362,6 +3559,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:acquitMessageDiscussionResponse" name="acquitMessageDiscussionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussionByActRV">
+
+         <wsdl:input message="impl:acquitMessageDiscussionByActRVRequest" name="acquitMessageDiscussionByActRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageDiscussionByActRVResponse" name="acquitMessageDiscussionByActRVResponse">
 
        </wsdl:output>
 
@@ -3398,6 +3607,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:acquitMessageResponse" name="acquitMessageResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageByActRV">
+
+         <wsdl:input message="impl:acquitMessageByActRVRequest" name="acquitMessageByActRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageByActRVResponse" name="acquitMessageByActRVResponse">
 
        </wsdl:output>
 
@@ -3506,6 +3727,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:updateNotificationPrefResponse" name="updateNotificationPrefResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePosition">
+
+         <wsdl:input message="impl:updatePositionRequest" name="updatePositionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
 
        </wsdl:output>
 
@@ -3631,29 +3864,47 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="acquitMessageRV">
+
+         <wsdl:input message="impl:acquitMessageRVRequest" name="acquitMessageRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitMessageRVResponse" name="acquitMessageRVResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitNotificationRV">
+
+         <wsdl:input message="impl:acquitNotificationRVRequest" name="acquitNotificationRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitNotificationRVResponse" name="acquitNotificationRVResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addAvisRV">
+
+         <wsdl:input message="impl:addAvisRVRequest" name="addAvisRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addAvisRVResponse" name="addAvisRVResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="WBservicesSoapBinding" type="impl:WBservices">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="getVersion">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getVersionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getVersionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="addMessage">
 
@@ -3673,17 +3924,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updatePosition">
+      <wsdl:operation name="getVersion">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updatePositionRequest">
+         <wsdl:input name="getVersionRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updatePositionResponse">
+         <wsdl:output name="getVersionResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4285,17 +4536,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addActivitePro">
+      <wsdl:operation name="addActiviteProRV">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="addActiviteProRequest">
+         <wsdl:input name="addActiviteProRVRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="addActiviteProResponse">
+         <wsdl:output name="addActiviteProRVResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4537,6 +4788,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="acquitMessageDiscussionRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageDiscussionRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageDiscussionRVResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="acquitMessageDiscussion">
 
          <wsdlsoap:operation soapAction=""/>
@@ -4548,6 +4817,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="acquitMessageDiscussionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageDiscussionByActRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageDiscussionByActRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageDiscussionByActRVResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4602,6 +4889,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="acquitMessageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageByActRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageByActRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageByActRVResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4764,6 +5069,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="updateNotificationPrefResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updatePosition">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updatePositionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updatePositionResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4944,6 +5267,60 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="acquitAllNotificationRVResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitMessageRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitMessageRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitMessageRVResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitNotificationRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitNotificationRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitNotificationRVResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addAvisRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addAvisRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addAvisRVResponse">
 
             <wsdlsoap:body use="literal"/>
 
