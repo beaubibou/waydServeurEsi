@@ -2,6 +2,8 @@ package wayde.bean;
 
 import org.apache.log4j.Logger;
 
+import reponsevaleur.MessageServeurRV;
+
 public class Droit {
 
 	private static final Logger LOG = Logger.getLogger(Droit.class);
@@ -15,23 +17,24 @@ public class Droit {
 	}
 
 	public Droit(int idpersonne, boolean admin, boolean verrouille,
-			boolean actif,String jeton) {
+			boolean actif, String jeton) {
 		super();
 		this.idpersonne = idpersonne;
 		this.admin = admin;
 		this.verrouille = verrouille;
 		this.actif = actif;
-		this.jeton=jeton;
+		this.jeton = jeton;
 	}
 
-	
-	public boolean isJetonOk(String jeton){
-		
-		if (this.jeton.equals(jeton))return true;
-		
+	public boolean isJetonOk(String jeton) {
+
+		if (this.jeton.equals(jeton))
+			return true;
+
 		return false;
-		
+
 	}
+
 	public String getJeton() {
 		return jeton;
 	}
@@ -73,8 +76,8 @@ public class Droit {
 	}
 
 	public MessageServeur isAddActivite() {
-	
-	//	return new MessageServeur(true, "Ok");
+
+		// return new MessageServeur(true, "Ok");
 		if (!actif)
 			return new MessageServeur(false, "Votre compte n'est plus actif");
 		if (verrouille)
@@ -86,7 +89,6 @@ public class Droit {
 	public MessageServeur isDefautAccess() {// Test uniquement que le compte,est
 											// actif est pas verrouille
 
-	
 		if (!actif)
 			return new MessageServeur(false, "Votre compte n'est plus actif");
 		if (verrouille)
@@ -95,21 +97,33 @@ public class Droit {
 		return new MessageServeur(true, "Ok");
 	}
 
+	public MessageServeurRV isDefautAccessRV() {// Test uniquement que le
+												// compte,est
+		// actif est pas verrouille
+
+		if (!actif)
+			return new MessageServeurRV(false, "Votre compte n'est plus actif");
+		if (verrouille)
+			return new MessageServeurRV(false, "Votre compte est plus verrouille");
+
+		return new MessageServeurRV(true, "Ok");
+	}
+
 	public MessageServeur isEffaceActivite(Activite activite, int idpersonne) {
 
-	//	return new MessageServeur(true, "Ok");
+		// return new MessageServeur(true, "Ok");
 		if (!actif)
 			return new MessageServeur(false, "Votre compte n'est plus actif");
 		if (verrouille)
 			return new MessageServeur(false, "Votre compte est plus verrouille");
 
 		if (admin)
-		return new MessageServeur(true, "Ok");
+			return new MessageServeur(true, "Ok");
 
 		if (!admin && activite.isOganisateurActivite(idpersonne))
 			return new MessageServeur(true, "Ok");
 
-	return new MessageServeur(false, "Ok");
+		return new MessageServeur(false, "Ok");
 
 	}
 

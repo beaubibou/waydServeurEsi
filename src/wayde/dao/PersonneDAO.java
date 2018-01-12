@@ -17,6 +17,9 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import reponsevaleur.Erreur;
+import reponsevaleur.ErreurReponseValeur;
+import reponsevaleur.MessageServeurRV;
 import wayd.ws.TextWebService;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
@@ -61,6 +64,44 @@ public class PersonneDAO {
 			return new MessageServeur(false, TextWebService.JETON_NON_VALIDE);
 		}
 		return droit.isDefautAccess();
+
+	}
+	
+	public MessageServeurRV isAutoriseMessageServeurRV(int idpersonne, String jeton)
+			throws Exception {
+
+		Droit droit;
+
+		droit = getDroit(idpersonne);
+
+		
+		
+		if (droit == null) {
+			
+			LOG.info(LogDAO.PERSONNE_INEXISTANTANE +" : "+idpersonne);
+			ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
+			listErreurs.add(ErreurReponseValeur.ERR_PERSONNE_INEXISTANTE);
+		
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, TextWebService.PERSONNE_INEXISTANTE);
+			messageServeurRV.initErreurs(listErreurs);
+			
+			return messageServeurRV;
+		}
+
+		if (!droit.isJetonOk(jeton)) {
+			LOG.info(LogDAO.JETON_NON_VALIDE + " - idpersonne:"
+					+ idpersonne + " - Jeton:" + jeton);
+	
+			ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+			listErreurs.add(ErreurReponseValeur.ERR_JETON_INVALIDE);
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, TextWebService.JETON_NON_VALIDE);
+			messageServeurRV.initErreurs(listErreurs);
+			return messageServeurRV;
+			
+		
+		}
+		return droit.isDefautAccessRV();
 
 	}
 

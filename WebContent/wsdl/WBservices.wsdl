@@ -6,6 +6,21 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   <schema elementFormDefault="qualified" targetNamespace="http://ws.wayd" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://bean.wayde"/>
    <import namespace="http://reponsevaleur"/>
+   <element name="getVersion">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getVersionResponse">
+    <complexType>
+     <sequence>
+      <element name="getVersionReturn" type="tns1:Version"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="addMessage">
     <complexType>
      <sequence>
@@ -23,18 +38,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getVersion">
+   <element name="updatePosition">
     <complexType>
      <sequence>
       <element name="idpersonne" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
       <element name="jeton" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getVersionResponse">
+   <element name="updatePositionResponse">
     <complexType>
      <sequence>
-      <element name="getVersionReturn" type="tns1:Version"/>
+      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -50,23 +67,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="supprimerCompteReturn" type="tns1:MessageServeur"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updatePosition">
-    <complexType>
-     <sequence>
-      <element name="idpersonne" type="xsd:int"/>
-      <element name="latitudestr" type="xsd:string"/>
-      <element name="longitudestr" type="xsd:string"/>
-      <element name="jeton" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updatePositionResponse">
-    <complexType>
-     <sequence>
-      <element name="updatePositionReturn" type="tns1:MessageServeur"/>
      </sequence>
     </complexType>
    </element>
@@ -613,6 +613,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="addActiviteReturn" type="tns1:MessageServeur"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addActiviteRV">
+    <complexType>
+     <sequence>
+      <element name="titre" type="xsd:string"/>
+      <element name="libelle" type="xsd:string"/>
+      <element name="idorganisateur" type="xsd:int"/>
+      <element name="dureebalise" type="xsd:int"/>
+      <element name="idtypeactivite" type="xsd:int"/>
+      <element name="latitudestr" type="xsd:string"/>
+      <element name="longitudestr" type="xsd:string"/>
+      <element name="adresse" type="xsd:string"/>
+      <element name="nbmaxwaydeur" type="xsd:int"/>
+      <element name="dureeactivite" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addActiviteRVResponse">
+    <complexType>
+     <sequence>
+      <element name="addActiviteRVReturn" type="tns2:MessageServeurRV"/>
      </sequence>
     </complexType>
    </element>
@@ -1236,22 +1260,37 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="acquitAllNotificationRV">
+    <complexType>
+     <sequence>
+      <element name="idpersonne" type="xsd:int"/>
+      <element name="jeton" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acquitAllNotificationRVResponse">
+    <complexType>
+     <sequence>
+      <element name="acquitAllNotificationRVReturn" type="tns2:MessageServeurRV"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://bean.wayde" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://ws.wayd"/>
    <import namespace="http://reponsevaleur"/>
-   <complexType name="RetourMessage">
-    <sequence>
-     <element name="datecreation" type="xsd:long"/>
-     <element name="id" type="xsd:int"/>
-     <element name="idemetteur" type="xsd:int"/>
-    </sequence>
-   </complexType>
    <complexType name="Version">
     <sequence>
      <element name="majeur" type="xsd:int"/>
      <element name="mineur" type="xsd:int"/>
      <element name="version" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="RetourMessage">
+    <sequence>
+     <element name="datecreation" type="xsd:long"/>
+     <element name="id" type="xsd:int"/>
+     <element name="idemetteur" type="xsd:int"/>
     </sequence>
    </complexType>
    <complexType name="MessageServeur">
@@ -1536,6 +1575,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="erreurs" nillable="true" type="impl:ArrayOf_tns2_Erreur"/>
     </sequence>
    </complexType>
+   <complexType name="MessageServeurRV">
+    <sequence>
+     <element name="erreurs" nillable="true" type="impl:ArrayOf_tns2_Erreur"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="reponse" type="xsd:boolean"/>
+    </sequence>
+   </complexType>
   </schema>
  </wsdl:types>
 
@@ -1654,6 +1700,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="updateNotificationPrefRequest">
 
       <wsdl:part element="impl:updateNotificationPref" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addActiviteRVRequest">
+
+      <wsdl:part element="impl:addActiviteRV" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addActiviteRVResponse">
+
+      <wsdl:part element="impl:addActiviteRVResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1846,6 +1908,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="addSuggestionResponse">
 
       <wsdl:part element="impl:addSuggestionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitAllNotificationRVResponse">
+
+      <wsdl:part element="impl:acquitAllNotificationRVResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2331,17 +2401,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getListTypeActiviteResponse">
+   <wsdl:message name="effaceMessageEmisRequest">
 
-      <wsdl:part element="impl:getListTypeActiviteResponse" name="parameters">
+      <wsdl:part element="impl:effaceMessageEmis" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="effaceMessageEmisRequest">
+   <wsdl:message name="getListTypeActiviteResponse">
 
-      <wsdl:part element="impl:effaceMessageEmis" name="parameters">
+      <wsdl:part element="impl:getListTypeActiviteResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2390,6 +2460,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getActivitesResponse">
 
       <wsdl:part element="impl:getActivitesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acquitAllNotificationRVRequest">
+
+      <wsdl:part element="impl:acquitAllNotificationRV" name="parameters">
 
       </wsdl:part>
 
@@ -2677,18 +2755,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="WBservices">
 
-      <wsdl:operation name="addMessage">
-
-         <wsdl:input message="impl:addMessageRequest" name="addMessageRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addMessageResponse" name="addMessageResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getVersion">
 
          <wsdl:input message="impl:getVersionRequest" name="getVersionRequest">
@@ -2701,13 +2767,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="supprimerCompte">
+      <wsdl:operation name="addMessage">
 
-         <wsdl:input message="impl:supprimerCompteRequest" name="supprimerCompteRequest">
+         <wsdl:input message="impl:addMessageRequest" name="addMessageRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:supprimerCompteResponse" name="supprimerCompteResponse">
+         <wsdl:output message="impl:addMessageResponse" name="addMessageResponse">
 
        </wsdl:output>
 
@@ -2720,6 +2786,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:updatePositionResponse" name="updatePositionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="supprimerCompte">
+
+         <wsdl:input message="impl:supprimerCompteRequest" name="supprimerCompteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:supprimerCompteResponse" name="supprimerCompteResponse">
 
        </wsdl:output>
 
@@ -3092,6 +3170,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:addActiviteResponse" name="addActiviteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addActiviteRV">
+
+         <wsdl:input message="impl:addActiviteRVRequest" name="addActiviteRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addActiviteRVResponse" name="addActiviteRVResponse">
 
        </wsdl:output>
 
@@ -3529,29 +3619,23 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="acquitAllNotificationRV">
+
+         <wsdl:input message="impl:acquitAllNotificationRVRequest" name="acquitAllNotificationRVRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acquitAllNotificationRVResponse" name="acquitAllNotificationRVResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="WBservicesSoapBinding" type="impl:WBservices">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="addMessage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addMessageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addMessageResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="getVersion">
 
@@ -3571,17 +3655,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="supprimerCompte">
+      <wsdl:operation name="addMessage">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="supprimerCompteRequest">
+         <wsdl:input name="addMessageRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="supprimerCompteResponse">
+         <wsdl:output name="addMessageResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -3600,6 +3684,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="updatePositionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="supprimerCompte">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="supprimerCompteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="supprimerCompteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4158,6 +4260,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="addActiviteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addActiviteRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addActiviteRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addActiviteRVResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4806,6 +4926,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getActivitesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acquitAllNotificationRV">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acquitAllNotificationRVRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acquitAllNotificationRVResponse">
 
             <wsdlsoap:body use="literal"/>
 

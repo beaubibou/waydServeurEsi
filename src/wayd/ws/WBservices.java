@@ -48,7 +48,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import reponsevaleur.Erreur;
+import reponsevaleur.ErreurReponseValeur;
 import reponsevaleur.ListActivitesRV;
+import reponsevaleur.MessageServeurRV;
 import servlet.ListActivite;
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
@@ -456,11 +458,11 @@ public class WBservices {
 		try {
 
 			connexion = CxoPool.getConnection();
-
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
+	
 			if (!personneDAO.isAutorise(iddemandeur, jeton))
 				return null;
-
+	
 			ParticipantDAO participantDAO = new ParticipantDAO(connexion);
 			ArrayList<Participant> listParticipants = participantDAO
 					.getListPaticipant(idactivite);
@@ -814,7 +816,7 @@ public class WBservices {
 
 		Connection connexion = null;
 
-		MessageServeur retour;
+		
 		try {
 
 			typeInteret = 0;
@@ -1454,7 +1456,7 @@ public class WBservices {
 
 			double latitude = Double.parseDouble(latitudestr);
 			double longitude = Double.parseDouble(longitudestr);
-			Date datedebut, datebalise, datefinActivite;
+			Date datedebut,  datefinActivite;
 			datedebut = new Date();
 			// Calendar calBalise = Calendar.getInstance();
 			// calBalise.setTime(datedebut);
@@ -1502,21 +1504,113 @@ public class WBservices {
 		}
 
 	}
+	
+	public MessageServeurRV addActiviteRV(String titre, String libelle,
+			int idorganisateur, int dureebalise, int idtypeactivite,
+			String latitudestr, String longitudestr, String adresse,
+			int nbmaxwaydeur, int dureeactivite, String jeton)
+			throws ParseException {
 
-	public MessageServeur addActivitePro(String titre, String libelle,
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+		Activite activite=null;
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
+
+		try {
+			connexion = CxoPool.getConnection();
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+		
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+					idorganisateur, jeton);
+					
+			if (!autorise.isReponse()) {
+				
+				return autorise;
+			}
+
+			connexion.setAutoCommit(false);
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
+
+			double latitude = Double.parseDouble(latitudestr);
+			double longitude = Double.parseDouble(longitudestr);
+			Date datedebut,  datefinActivite;
+			datedebut = new Date();
+		
+			Calendar calFinActivite = Calendar.getInstance();
+			calFinActivite.setTime(datedebut);
+			calFinActivite.add(Calendar.MINUTE, dureeactivite);
+			datefinActivite = calFinActivite.getTime();
+
+			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
+			
+				listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
+				MessageServeurRV messageServeur=new MessageServeurRV(false,	TextWebService.QUOTA_ACTIVITE_DEPASSE); 
+				messageServeur.initErreurs(listErreurs);
+		
+				return messageServeur;
+			}
+
+			activite = new Activite(titre, libelle, idorganisateur,
+					datedebut, idtypeactivite, latitude, longitude, adresse,
+					true, nbmaxwaydeur, datefinActivite, ProfilBean.WAYDEUR);
+
+			// ****************Ajoute l'activite*****************************
+
+			activitedao.addActivite(activite);
+			connexion.commit();
+
+			// new AddActiviteGcm(activite, idorganisateur).start();
+
+			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,
+					idorganisateur));
+
+			
+			LogDAO.LOG_DUREE("addActivite", debut);
+	
+			MessageServeurRV messageServeur=new MessageServeurRV(true, Integer.toString(activite.getId())); 
+			messageServeur.initErreurs(listErreurs);
+			return  messageServeur;
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+		
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			MessageServeurRV messageServeur=new MessageServeurRV(false,	e.getMessage()); 
+			messageServeur.initErreurs(listErreurs);
+		
+			return messageServeur;
+
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+		}
+		
+		
+		
+	}
+
+	public MessageServeurRV addActiviteProRV(String titre, String libelle,
 			int idorganisateur, int idtypeactivite, String latitudestr,
 			String longitudestr, String adresse, Long dateDebut, Long DateFin,
 			String jeton) throws ParseException {
 
 		long debut = System.currentTimeMillis();
-
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
 		Connection connexion = null;
 
 		try {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
 					idorganisateur, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
@@ -1532,8 +1626,11 @@ public class WBservices {
 			datefinActivite = new Date(DateFin);
 
 			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
-				return new MessageServeur(false,
-						TextWebService.QUOTA_ACTIVITE_DEPASSE);
+				listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
+				MessageServeurRV messageServeur=new MessageServeurRV(false,	TextWebService.QUOTA_ACTIVITE_DEPASSE); 
+				messageServeur.initErreurs(listErreurs);
+		
+				return messageServeur;
 			}
 
 			Activite activite = new Activite(titre, libelle, idorganisateur,
@@ -1552,7 +1649,10 @@ public class WBservices {
 
 			LogDAO.LOG_DUREE("addActivitePro", debut);
 
-			return new MessageServeur(true, Integer.toString(activite.getId()));
+			MessageServeurRV messageServeur=new MessageServeurRV(true, Integer.toString(activite.getId())); 
+			messageServeur.initErreurs(listErreurs);
+			return  messageServeur;
+
 
 		} catch (Exception e) {
 
@@ -1560,7 +1660,11 @@ public class WBservices {
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
-			return new MessageServeur(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			MessageServeurRV messageServeur=new MessageServeurRV(false,	e.getMessage()); 
+			messageServeur.initErreurs(listErreurs);
+			return messageServeur;
+		
 
 		} finally {
 
@@ -2274,19 +2378,21 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitMessageDiscussion(int idpersonne,
+	public MessageServeurRV acquitMessageDiscussionRV(int idpersonne,
 			int idemetteur, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
+		
 		try {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
@@ -2302,34 +2408,43 @@ public class WBservices {
 					idpersonne));
 			LogDAO.LOG_DUREE("acquitMessageDiscussion", debut);
 
-			return new MessageServeur(true,
-					TextWebService.acquittementMessageDiscussion);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-			return new MessageServeur(false, e.getMessage());
+
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
 
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
 
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+		
 	}
 
-	public MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
+	public MessageServeurRV acquitMessageDiscussionByActRV(int iddestinataire,
 			int idactivite, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
 		try {
 
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
 					iddestinataire, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
@@ -2346,19 +2461,26 @@ public class WBservices {
 
 			LogDAO.LOG_DUREE("acquitMessageDiscussionByAct", debut);
 
-			return new MessageServeur(true,
-					TextWebService.acquittementMessageDiscussion);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-			return new MessageServeur(false, e.getMessage());
+		
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
 
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+		
 	}
 
 	public MessageServeur acquitAllNotification(int idpersonne, String jeton) {
@@ -2447,17 +2569,17 @@ public class WBservices {
 
 	}
 
-	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
+	public MessageServeurRV acquitMessageByActRV(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
-
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
 		Connection connexion = null;
 
 		try {
 			connexion = CxoPool.getConnection();
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
 					idpersonne, jeton);
 
 			if (!autorise.isReponse()) {
@@ -2476,18 +2598,28 @@ public class WBservices {
 
 			LogDAO.LOG_DUREE("acquitMessageByAct", debut);
 
-			return new MessageServeur(true,
-					TextWebService.acquittementMessageDiscussion);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
-			return new MessageServeur(false, e.getMessage());
+			
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
 
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
+		
+
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+
+		
 
 	}
 
@@ -3508,6 +3640,386 @@ public class WBservices {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 
+	}
+
+	public MessageServeurRV acquitAllNotificationRV(int idpersonne, String jeton) {
+		// lit les message d'une discussion en bloc pour un emetteur et un
+		// destinataire
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
+	
+		try {
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+		
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+					idpersonne, jeton);
+		
+			if (!autorise.isReponse()) {
+	
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+			NotificationDAO notificationdao = new NotificationDAO(connexion);
+			notificationdao.litNotification(idpersonne);
+			connexion.commit();
+	
+			// new AcquitAllNotificationGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitAllNotificationGcm(
+					idpersonne));
+	
+			LogDAO.LOG_DUREE("acquitAllNotification", debut);
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+		
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
+	
+		} finally {
+	
+			CxoPool.closeConnection(connexion);
+	
+		}
+		
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+	
+	}
+
+	public MessageServeurRV acquitMessageRV(int idpersonne, int idmessage,
+			String jeton) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		try {
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			MessageDAO messagedao = new MessageDAO(connexion);
+	
+			connexion.setAutoCommit(false);
+			messagedao.LitMessage(idpersonne, idmessage);
+			connexion.commit();
+	
+			// new AcquitMessageGcm(idpersonne).start();
+	
+			PoolThreadGCM.poolThread.execute(new AcquitMessageGcm(idpersonne));
+	
+			LogDAO.LOG_DUREE("acquitMessage", debut);
+	
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+		
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+		
+		
+	
+	}
+
+	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
+			String jeton) {
+		long debut = System.currentTimeMillis();
+	
+		Connection connexion = null;
+	
+		try {
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					idpersonne, jeton);
+	
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+			MessageDAO messagedao = new MessageDAO(connexion);
+			messagedao.LitMessageByAct(idpersonne, idmessage);
+			connexion.commit();
+	
+			// new AcquitMessageByActGcm(idpersonne).start();
+	
+			PoolThreadGCM.poolThread.execute(new AcquitMessageByActGcm(
+					idpersonne));
+	
+			LogDAO.LOG_DUREE("acquitMessageByAct", debut);
+	
+			return new MessageServeur(true,
+					TextWebService.acquittementMessageDiscussion);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return new MessageServeur(false, e.getMessage());
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+	
+	}
+
+	public MessageServeur acquitMessageDiscussion(int idpersonne,
+			int idemetteur, String jeton) {
+		// lit les message d'une discussion en bloc pour un emetteur et un
+		// destinataire apres la fermeture de la liste des messages.
+	
+		Connection connexion = null;
+		long debut = System.currentTimeMillis();
+	
+		try {
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+			MessageDAO messagedao = new MessageDAO(connexion);
+			messagedao.LitMessageDiscussion(idpersonne, idemetteur);
+			connexion.commit();
+	
+			// new AcquitMessageDiscussionGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitMessageDiscussionGcm(
+					idpersonne));
+			LogDAO.LOG_DUREE("acquitMessageDiscussion", debut);
+	
+			return new MessageServeur(true,
+					TextWebService.acquittementMessageDiscussion);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return new MessageServeur(false, e.getMessage());
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+	
+	}
+
+	public MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
+			int idactivite, String jeton) {
+		// lit les message d'une discussion en bloc pour un emetteur et un
+		// destinataire apres la fermeture de la liste des messages.
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+	
+		try {
+	
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
+					iddestinataire, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+			MessageDAO messagedao = new MessageDAO(connexion);
+			messagedao.LitMessageDiscussionByAct(iddestinataire, idactivite);
+			connexion.commit();
+	
+			// new AcquitMessageDiscussionByActGcm(iddestinataire).start();
+			PoolThreadGCM.poolThread
+					.execute(new AcquitMessageDiscussionByActGcm(iddestinataire));
+	
+			LogDAO.LOG_DUREE("acquitMessageDiscussionByAct", debut);
+	
+			return new MessageServeur(true,
+					TextWebService.acquittementMessageDiscussion);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			return new MessageServeur(false, e.getMessage());
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+	
+	}
+
+	public MessageServeurRV acquitNotificationRV(int idpersonne, int idmessage,
+			String jeton) {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		
+		try {
+			connexion = CxoPool.getConnection();
+	
+			PersonneDAO personnedao = new PersonneDAO(connexion);
+	
+			MessageServeurRV autorise = personnedao.isAutoriseMessageServeurRV(
+					idpersonne, jeton);
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+	
+			NotificationDAO notificationdao = new NotificationDAO(connexion);
+			notificationdao.LitNotification(idpersonne, idmessage);
+			connexion.commit();
+			// new AcquitNotificationGcm(idpersonne).start();
+			PoolThreadGCM.poolThread.execute(new AcquitNotificationGcm(
+					idpersonne));
+	
+			LogDAO.LOG_DUREE("acquitNotification", debut);
+	
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+	
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+		
+			return messageServeurRV;
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+	
+		}
+		
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+		
+	}
+
+	public MessageServeurRV addAvisRV(int idpersonne, int idpersonnenotee,
+			int idactivite, String titre, String libelle, String notestr,
+			boolean demandeami, String jeton) {
+		long debut = System.currentTimeMillis();
+	
+		Connection connexion = null;
+		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
+		double note = Double.parseDouble(notestr);
+	
+		try {
+	
+			connexion = CxoPool.getConnection();
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+					idpersonne, jeton);
+		
+			if (!autorise.isReponse()) {
+				return autorise;
+			}
+	
+			connexion.setAutoCommit(false);
+			AvisDAO avisdao = new AvisDAO(connexion);
+			NotificationDAO notificationdao = new NotificationDAO(connexion);
+	
+			avisdao.addAvis(idpersonnenotee, idpersonne, idactivite, titre,
+					libelle, note);// Ajoute
+	
+			new PersonneDAO(connexion)
+					.updateChampCalculePersonne(idpersonnenotee);
+			avisdao.updateDemande(idpersonne, idpersonnenotee, idactivite,
+					demandeami); //
+	
+			boolean ajoutami = avisdao.gestionAmi(idpersonne, idpersonnenotee,
+					idactivite);
+	
+			notificationdao.removeNotificationAnoter(idpersonne,
+					idpersonnenotee, idactivite);
+	
+			// Envoi la notification si les 2 ont notés
+	
+			if (avisdao.isDoubleAvis(idpersonne, idpersonnenotee, idactivite)) {
+	
+				notificationdao.addNotification(idpersonnenotee,
+						Notification.RecoitAvis, idactivite, idpersonne); //
+	
+				notificationdao.addNotification(idpersonne,
+						Notification.RecoitAvis, idactivite, idpersonnenotee); //
+			}
+	
+			if (ajoutami) // Envoi au 2 personne le
+				// fait quelles soient amies
+				notificationdao.addNotificationAjoutAmi(idpersonnenotee,
+						idactivite, idpersonne);
+	
+			connexion.commit();
+	
+			// new AddAvisGcm(idpersonnenotee, idpersonne).start();
+	
+			PoolThreadGCM.poolThread.execute(new AddAvisGcm(idpersonnenotee,
+					idpersonne));
+	
+			LogDAO.LOG_DUREE("addAvis", debut);
+	
+			
+	
+		} catch (Exception e) {
+	
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+			
+			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
+			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+			messageServeurRV.initErreurs(listErreurs);
+			return messageServeurRV;
+	
+		} finally {
+			CxoPool.closeConnection(connexion);
+		}
+		
+		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
+		messageServeurRV.initErreurs(listErreurs);
+		return messageServeurRV;
+		
+	
 	}
 
 }

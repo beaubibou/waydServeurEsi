@@ -10,24 +10,24 @@
       <parameter name="className" value="wayd.ws.WBservices"/>
       <parameter name="wsdlPortType" value="WBservices"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getVersion" qname="operNS:getVersion" returnQName="retNS:getVersionReturn" returnType="rtns:Version" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addMessage" qname="operNS:addMessage" returnQName="retNS:addMessageReturn" returnType="rtns:RetourMessage" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:corps" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getVersion" qname="operNS:getVersion" returnQName="retNS:getVersionReturn" returnType="rtns:Version" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="supprimerCompte" qname="operNS:supprimerCompte" returnQName="retNS:supprimerCompteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePosition" qname="operNS:updatePosition" returnQName="retNS:updatePositionReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="supprimerCompte" qname="operNS:supprimerCompte" returnQName="retNS:supprimerCompteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getAvis" qname="operNS:getAvis" returnQName="retNS:getAvisReturn" returnType="rtns:Avis" soapAction="">
@@ -213,6 +213,19 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addActivite" qname="operNS:addActivite" returnQName="retNS:addActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureebalise" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:adresse" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbmaxwaydeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureeactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="addActiviteRV" qname="operNS:addActiviteRV" returnQName="retNS:addActiviteRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
@@ -449,11 +462,16 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commenceDans" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="effaceMessageRecu signalerActivite getListNotification getTableauBord getListActivites addPrbConnexion updatePreference getListPhotoWaydeurByAct getListTypeActivite getAvis addSuggestion getListAvis getListActivitePref getDiscussionByAct acquitMessageDiscussion getPhotoWaydeur updateActivite getFullProfil acquitMessage getListDiscussion getDiscussion getFullProfilPro getListParticipant effaceParticipation effaceMessage effaceAmi getMesActiviteArchive addMessageByAct addParticipation updateNotificationPref acquitNotification addInteretActivite signalerProfil isDejaInteret effaceMessageEmis acquitMessageByAct updateProfilPro updatePseudo getListPhotoWaydeur getListPreferences getListPhotoActivite getListActiviteAvenirNocritere getListActivitesRV getProfilNotation getVersion supprimerCompte getListNotificationAfter getListMessageAfter updateProfilWayd getListActiviteAvenir addActivitePro getActivites updateNotification getIndicateurs getListMessageAfterByAct getListAmi effaceDiscussion updatePosition effaceMessageEmisByAct effaceMessageRecuByAct effaceActivite addActivite addAvis acquitAllNotification getMesActiviteEncours getPersonne effaceNotificationRecu addMessage updateGCM acquitMessageDiscussionByAct getActivite"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitAllNotificationRV" qname="operNS:acquitAllNotificationRV" returnQName="retNS:acquitAllNotificationRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="effaceMessageRecu signalerActivite getListNotification getTableauBord getListActivites addPrbConnexion updatePreference getListPhotoWaydeurByAct getListTypeActivite getAvis addSuggestion getListAvis getListActivitePref acquitAllNotificationRV getDiscussionByAct acquitMessageDiscussion getPhotoWaydeur updateActivite getFullProfil acquitMessage getListDiscussion getDiscussion getFullProfilPro getListParticipant effaceParticipation effaceMessage effaceAmi getMesActiviteArchive addMessageByAct addParticipation updateNotificationPref acquitNotification addInteretActivite signalerProfil effaceMessageEmis isDejaInteret acquitMessageByAct updateProfilPro updatePseudo getListPhotoWaydeur getListPreferences getListPhotoActivite getListActiviteAvenirNocritere getListActivitesRV getProfilNotation getVersion supprimerCompte getListNotificationAfter getListMessageAfter updateProfilWayd getListActiviteAvenir addActivitePro getActivites updateNotification addActiviteRV getIndicateurs getListMessageAfterByAct getListAmi effaceDiscussion updatePosition effaceMessageEmisByAct effaceMessageRecuByAct effaceActivite addActivite addAvis acquitAllNotification getMesActiviteEncours getPersonne effaceNotificationRecu addMessage updateGCM acquitMessageDiscussionByAct getActivite"/>
 
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Profil" type="java:wayde.bean.Profil" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:RetourMessage" type="java:wayde.bean.RetourMessage" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Activite" type="java:wayde.bean.Activite" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://reponsevaleur" qname="ns:MessageServeurRV" type="java:reponsevaleur.MessageServeurRV" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Avis" type="java:wayde.bean.Avis" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Notification" type="java:wayde.bean.Notification" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Discussion" type="java:wayde.bean.Discussion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
