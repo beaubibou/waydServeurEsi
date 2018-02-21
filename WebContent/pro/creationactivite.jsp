@@ -1,7 +1,7 @@
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 <%@page import="texthtml.pro.CreationActiviteText"%>
 <%@page import="texthtml.pro.Erreur_HTML"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>
@@ -15,7 +15,7 @@
 <head>
 <title>><%=CreationActiviteText.TITRE_ONGLET%></title>
 
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -8,7 +8,7 @@
 <%@page import="java.util.*"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="org.joda.time.DateTime"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">

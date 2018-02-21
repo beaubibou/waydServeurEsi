@@ -2,7 +2,7 @@
 <%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="website.metier.AuthentificationSite"%>

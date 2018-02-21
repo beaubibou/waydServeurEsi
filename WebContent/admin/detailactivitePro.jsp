@@ -2,7 +2,7 @@
 <%@page import="website.metier.SignalementActiviteBean"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.metier.ProfilBean"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ParticipantBean"%>
 <%@page import="website.metier.Outils"%>

@@ -36,7 +36,6 @@ public class AjouteActivitePro extends HttpServlet {
 	 */
 	public AjouteActivitePro() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,7 +44,6 @@ public class AjouteActivitePro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
@@ -62,8 +60,7 @@ public class AjouteActivitePro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifiePro())
@@ -74,8 +71,6 @@ public class AjouteActivitePro extends HttpServlet {
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
-		// int typeaccess =
-		// Integer.parseInt(request.getParameter("typeaccess"));
 		int typeactivite = Integer.parseInt(request
 				.getParameter("typeactivite"));
 
@@ -90,8 +85,6 @@ public class AjouteActivitePro extends HttpServlet {
 			dateFin = Outils.getDateFromString(datefin);
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			authentification.setAlertMessageDialog( new MessageAlertDialog("Message Information","Date non conforme",null,AlertJsp.warning));
 			response.sendRedirect("MesActivites");

@@ -4,7 +4,7 @@
 <%@page import="texthtml.pro.ModifierActiviteText"%>
 <%@page import="website.html.DateHtlm"%>
 <%@page import="website.metier.ActiviteBean"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>

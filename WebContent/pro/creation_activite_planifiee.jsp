@@ -1,7 +1,7 @@
 <%@page import="texthtml.pro.Erreur_HTML"%>
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>

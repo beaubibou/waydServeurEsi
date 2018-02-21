@@ -14,7 +14,7 @@
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="website.html.*"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 
 

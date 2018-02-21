@@ -4,7 +4,7 @@
 <%@page import="website.metier.ActiviteBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.AuthentificationSite"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">

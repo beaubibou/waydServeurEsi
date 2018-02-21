@@ -34,23 +34,20 @@ public class Connexion extends HttpServlet {
 	 */
 
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-
+	
 		super.init(config);
 
 	}
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 
 	}
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+	
 		doPost(request, response);
 	}
 
@@ -60,8 +57,7 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
+	
 	if (testEsi(request, response))
 		return;
 
@@ -79,8 +75,6 @@ public class Connexion extends HttpServlet {
 		try {
 			response.sendRedirect("Acceuil");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -174,8 +168,6 @@ public class Connexion extends HttpServlet {
 			}
 
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("commun/erreurConnection.jsp")

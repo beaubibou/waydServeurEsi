@@ -579,6 +579,7 @@ public class ActiviteDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
+			LOG.info("Mon titre"+titre);
 			preparedStatement.setString(3,
 					Outils.getStringStatement(commentaire));
 			// preparedStatement.setString(3,null);

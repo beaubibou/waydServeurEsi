@@ -1,7 +1,7 @@
 <%@page import="website.metier.SignalementProfilBean"%>
 <%@page import="website.metier.SignalementActiviteBean"%>
 <%@page import="website.html.Etoile"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.ProfilBean"%>
