@@ -1,5 +1,7 @@
 package website.html;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.log4j.Logger;
 
 public class OutilsHtml {
@@ -46,5 +48,16 @@ public class OutilsHtml {
 		return chaine;
 		
 	}
+public static String convertISO85591(String chaine){
+		
+		if (chaine==null)return null;
+		try {
+			return  new String ( chaine.getBytes("ISO-8859-1"),"UTF-8"  );
+		} catch (UnsupportedEncodingException e) {
+		
 			
+			e.printStackTrace();
+			return "Conversion impossible";
+		}
+	}
 }

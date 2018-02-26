@@ -9,7 +9,7 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.pager.PagerSuggestionBean"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -210,7 +210,9 @@
 
 			$('#datedebut').datetimepicker({
 				defaultDate : new Date(	<%=filtreSugestion.getDateDebutCreation().getYear()%>,<%=filtreSugestion.getDateDebutCreation().getMonthOfYear()%>-1,<%=filtreSugestion.getDateDebutCreation().getDayOfMonth()%>),
-				format : 'DD/MM/YYYY'
+				format : 'DD/MM/YYYY',
+				focusOnShow: false,
+				  ignoreReadonly: true
 
 			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
 
@@ -219,7 +221,9 @@
 			$('#datefin').datetimepicker(
 					{
 						defaultDate : new Date(<%=filtreSugestion.getDateFinCreation().getYear()%>,<%=filtreSugestion.getDateFinCreation().getMonthOfYear()-1%>,<%=filtreSugestion.getDateFinCreation().getDayOfMonth()%>),
-								format : 'DD/MM/YYYY'
+								format : 'DD/MM/YYYY',
+								focusOnShow: false,
+								  ignoreReadonly: true
 
 							}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
 

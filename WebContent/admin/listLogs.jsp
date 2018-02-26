@@ -15,7 +15,7 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.pager.PagerSuggestionBean"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +100,7 @@
 					<div class="form-group">
 						<label for="iddatedebut">Date debut</label>
 						<div class='input-group date' id='datedebut'>
-							<input type='text' class="form-control" id="iddatedebut"
+							<input readonly style="background-color:white;" type='text' class="form-control" id="iddatedebut"
 								name="debut" /> <span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -112,7 +112,7 @@
 					<div class="form-group">
 						<label for="iddatefin">Date fin</label>
 						<div class='input-group date' id="datefin">
-							<input type='text' class="form-control" id="iddatefin" name="fin" />
+							<input readonly style="background-color:white;" type='text' class="form-control" id="iddatefin" name="fin" />
 							<span class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -246,7 +246,9 @@
 		- 1,
 	<%=filtreLogs.getDateCreationDebut().getDayOfMonth()%>
 		),
-								format : 'DD/MM/YYYY'
+								format : 'DD/MM/YYYY',
+								focusOnShow: false,
+								  ignoreReadonly: true
 
 							}).on('dp.change', function(e) {
 						document.getElementById("formulaire").submit();
@@ -262,7 +264,9 @@
 		,
 	<%=filtreLogs.getDateCreationFin().getDayOfMonth()%>
 		),
-								format : 'DD/MM/YYYY'
+								format : 'DD/MM/YYYY',
+								focusOnShow: false,
+								  ignoreReadonly: true
 
 							}).on('dp.change', function(e) {
 						document.getElementById("formulaire").submit();

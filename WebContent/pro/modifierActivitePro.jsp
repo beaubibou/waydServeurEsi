@@ -116,7 +116,7 @@
 									<div class="form-group">
 										<label for="iddatedebut"><%=ModifierActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
-											<input type='text' class="form-control" id="iddatedebut"
+											<input readonly type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -128,7 +128,7 @@
 									<div class="form-group">
 										<label for="iddatefin"><%=ModifierActiviteText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
-											<input type='text' class="form-control" id="iddatefin"
+											<input readonly type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>

@@ -2,8 +2,8 @@
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="website.metier.Outils"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -100,7 +100,7 @@
 				}
 			});
 
-			// 		On  à poser un listener sur le changement de centrer - CE changement le déclence
+			// 		On  Ã  poser un listener sur le changement de centrer - CE changement le dÃ©clence
 			var_map.setCenter(var_location);
 
 		}

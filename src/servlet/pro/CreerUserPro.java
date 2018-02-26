@@ -32,6 +32,7 @@ import wayde.bean.MessageServeur;
 import website.dao.PersonneDAO;
 import website.enumeration.AlertJsp;
 import website.html.MessageAlertDialog;
+import website.html.OutilsHtml;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,11 +96,11 @@ public class CreerUserPro extends HttpServlet {
 		String pwd = request.getParameter("pwd");
 		String pwd1 = request.getParameter("pwd1");
 		String email = request.getParameter("email");
-		String pseudo = request.getParameter("nom");
+		String pseudo =OutilsHtml.convertISO85591( request.getParameter("nom"));
 		String siret = request.getParameter("siret");
 		String telephone = request.getParameter("telephone");
-		String adresse = request.getParameter("adresse");
-		String commentaire = request.getParameter("commentaire");
+		String adresse =OutilsHtml.convertISO85591( request.getParameter("adresse"));
+		String commentaire =OutilsHtml.convertISO85591( request.getParameter("commentaire"));
 		String siteweb = request.getParameter("siteweb");
 		double latitude = 0;
 		double longitude = 0;

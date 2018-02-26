@@ -1,7 +1,7 @@
 <%@page import="texthtml.pro.Erreur_HTML"%>
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>
@@ -11,6 +11,7 @@
 <%@page import="website.metier.AuthentificationSite"%>
 <%@page import="website.metier.DureeBean"%>
 <%@page import="website.metier.Outils"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,7 +96,7 @@
 									<div class="form-group">
 										<label for="iddatedebut"><%=CreationActivitePlanifieeText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
-											<input type='text' class="form-control" id="iddatedebut"
+											<input readonly style="background-color:white;" type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -105,9 +106,9 @@
 
 								<div class='col-sm-4'>
 									<div class="form-group">
-										<label for="iddatefin"><%=CreationActivitePlanifieeText.LABEL_DATE_FIN%></label>
+										<label  for="iddatefin"><%=CreationActivitePlanifieeText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
-											<input type='text' class="form-control" id="iddatefin"
+											<input readonly style="background-color:white;" type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -137,7 +138,7 @@
 									<div class="form-group">
 										<label for="idheuredebut"><%=CreationActivitePlanifieeText.LABEL_HEURE_DEBUT%></label>
 										<div class='input-group date' id='heuredebut'>
-											<input type='text' class="form-control" id="idheuredebut"
+											<input readonly style="background-color:white;" type='text' class="form-control" id="idheuredebut"
 												name="heuredebut" /> <span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>

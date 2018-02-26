@@ -23,6 +23,7 @@ import wayde.bean.MessageServeur;
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 import website.html.MessageAlertDialog;
+import website.html.OutilsHtml;
 import website.metier.AuthentificationSite;
 import website.metier.ProfilBean;
 
@@ -76,10 +77,11 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 
 		HashMap<Integer, String> joursVoulus = new HashMap<Integer, String>();
 
-		String titre = request.getParameter("titre");
-		String adresse = request.getParameter("adresse");
-		String description = request.getParameter("description");
+		String titre = OutilsHtml.convertISO85591(request.getParameter("titre"));
+		String adresse =OutilsHtml.convertISO85591( request.getParameter("adresse"));
+		String description = OutilsHtml.convertISO85591(request.getParameter("description"));
 
+		
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));

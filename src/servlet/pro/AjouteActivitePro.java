@@ -20,6 +20,7 @@ import wayde.bean.MessageServeur;
 import website.dao.ActiviteDAO;
 import website.enumeration.AlertJsp;
 import website.html.MessageAlertDialog;
+import website.html.OutilsHtml;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 import website.metier.ProfilBean;
@@ -65,9 +66,10 @@ public class AjouteActivitePro extends HttpServlet {
 				request, response);
 		if (!authentification.isAuthentifiePro())
 			return;
-		String titre = request.getParameter("titre");
-		String adresse = request.getParameter("adresse");
-		String description = request.getParameter("description");
+		String titre = OutilsHtml.convertISO85591(request.getParameter("titre"));
+		String adresse = OutilsHtml.convertISO85591(request.getParameter("adresse"));
+		String description =OutilsHtml.convertISO85591( request.getParameter("description"));
+		
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));

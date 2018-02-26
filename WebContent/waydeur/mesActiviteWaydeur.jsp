@@ -9,7 +9,7 @@
 <%@page import="website.metier.Outils"%>
 <%@page import="website.dao.CacheValueDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
 <!DOCTYPE html>

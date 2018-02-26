@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import website.html.OutilsHtml;
 import website.metier.ProfilBean;
 
 /**
@@ -33,9 +34,12 @@ public class CreationComptePro extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String nom = request.getParameter("nom");
-		String adresse = request.getParameter("adresse");
-		String commentaire = request.getParameter("commentaire");
+		String nom = OutilsHtml.convertISO85591(request.getParameter("nom"));
+		String adresse =OutilsHtml.convertISO85591( request.getParameter("adresse"));
+		String commentaire =OutilsHtml.convertISO85591( request.getParameter("commentaire"));
+		
+		
+		
 		String siret=request.getParameter("siret");
 		String telephonne=request.getParameter("telephone");
 		

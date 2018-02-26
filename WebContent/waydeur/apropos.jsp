@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,26 +41,26 @@
   </br>
   <div class="container" style="background-color: #FFD54F;">
     <div class="col-md-10 col-md-offset-1 section-title">
-      <h2>Besoin de visibilité ?</h2>
+      <h2>Besoin de visibilitÃ© ?</h2>
       <hr>
-      <p>Wayd vous offre un moyen gratuit, simple et efficace pour valoriser votre activité.</p>
+      <p>Wayd vous offre un moyen gratuit, simple et efficace pour valoriser votre activitÃ©.</p>
     </div>
     <div class="row">
       <div class="col-xs-6 col-md-3"> <i class="fa fa-home"></i>
-        <h4>Gratuité</h4>
-        <p>Pour valoriser votre activité, vous organisez des activités gratuites ? Wayd vous permet, gratuitement, de communiquer dessus.</p>
+        <h4>GratuitÃ©</h4>
+        <p>Pour valoriser votre activitÃ©, vous organisez des activitÃ©s gratuites ? Wayd vous permet, gratuitement, de communiquer dessus.</p>
       </div>
       <div class="col-xs-6 col-md-3"> <i class="fa fa-umbrella"></i>
-        <h4>Simplicité</h4>
-        <p>L'interface pro de Wayd vous permet de publier simplement eten  moins de 2 minutes vos activités afin d'offrir du contenu aux membres de Wayd.</p>
+        <h4>SimplicitÃ©</h4>
+        <p>L'interface pro de Wayd vous permet de publier simplement eten  moins de 2 minutes vos activitÃ©s afin d'offrir du contenu aux membres de Wayd.</p>
       </div>
       <div class="col-xs-6 col-md-3"> <i class="fa fa-gears"></i>
-        <h4>Efficacité</h4>
-        <p>Un concept efficace qui permet d'offrir aux Waydeurs à proximité, et qui cherche quelque-chose à faire, une vision de ce que proposez. </p>
+        <h4>EfficacitÃ©</h4>
+        <p>Un concept efficace qui permet d'offrir aux Waydeurs Ã  proximitÃ©, et qui cherche quelque-chose Ã  faire, une vision de ce que proposez. </p>
       </div>
       <div class="col-xs-6 col-md-3"> <i class="fa fa-language"></i>
-        <h4>Evolutivité</h4>
-        <p>Une plateforme qui évoluera en fonction des besoins des Waydeurs et de vos besoins de communications.</p>
+        <h4>EvolutivitÃ©</h4>
+        <p>Une plateforme qui Ã©voluera en fonction des besoins des Waydeurs et de vos besoins de communications.</p>
       </div>
     </div>
   </div>

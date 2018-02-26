@@ -1,7 +1,7 @@
 <%@page import="texthtml.pro.CreationActivitePlanifieeText"%>
 <%@page import="texthtml.pro.CreationActiviteText"%>
 <%@page import="texthtml.pro.Erreur_HTML"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@page import="website.metier.ProfilBean"%>
 <%@page import="website.metier.TypeActiviteBean"%>
@@ -15,7 +15,7 @@
 <head>
 <title>><%=CreationActiviteText.TITRE_ONGLET%></title>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -98,7 +98,7 @@
 									<div class="form-group">
 										<label for="iddatedebut"><%=CreationActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
-											<input type='text' class="form-control" id="iddatedebut"
+											<input readonly style="background-color:white;" type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -110,7 +110,7 @@
 									<div class="form-group">
 										<label for="iddatefin"><%=CreationActiviteText.LABEL_DATE_FIN%></label>
 										<div class='input-group date' id="datefin">
-											<input type='text' class="form-control" id="iddatefin"
+											<input readonly style="background-color:white;" type='text' class="form-control" id="iddatefin"
 												name="fin" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>

@@ -17,6 +17,7 @@ import website.enumeration.AlertJsp;
 import website.html.AlertDialog;
 import website.html.AlertInfoJsp;
 import website.html.MessageAlertDialog;
+import website.html.OutilsHtml;
 import website.metier.AuthentificationSite;
 import website.metier.FiltreRecherche;
 import website.metier.ProfilBean;
@@ -88,9 +89,11 @@ public class ComptePro extends HttpServlet {
 		if (!authentification.isAuthentifiePro())
 			return;
 
-		String nom = request.getParameter("nom");
-		String adresse = request.getParameter("adresse");
-		String commentaire = request.getParameter("commentaire");
+		String nom =OutilsHtml.convertISO85591(request.getParameter("nom"));
+		String adresse = OutilsHtml.convertISO85591(request.getParameter("adresse"));
+		String commentaire =OutilsHtml.convertISO85591( request.getParameter("commentaire"));
+		
+		
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));

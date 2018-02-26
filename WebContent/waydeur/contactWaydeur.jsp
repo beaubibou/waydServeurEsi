@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     <%@page import="website.html.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -45,7 +45,7 @@
       
       <h2>Contactez-nous</h2>
       <hr>
-      <h4>Une question, un problème ? Vous pouvez nous contacter via le formulaire ci-dessous ou à l'adresse contact@wayd.fr</h4>
+      <h4>Une question, un problÃ¨me ? Vous pouvez nous contacter via le formulaire ci-dessous ou Ã  l'adresse contact@wayd.fr</h4>
     </div>
     </br>
     <div class="col-md-8 col-md-offset-2">

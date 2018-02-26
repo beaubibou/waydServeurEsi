@@ -16,6 +16,7 @@ import texthtml.pro.Erreur_HTML;
 import website.dao.ActiviteDAO;
 import website.html.AlertDialog;
 import website.html.MessageAlertDialog;
+import website.html.OutilsHtml;
 import website.metier.AuthentificationSite;
 import website.metier.Outils;
 
@@ -65,9 +66,10 @@ public class UpdateActivitePro extends HttpServlet {
 			return;
 	
 	
-		String titre = request.getParameter("titre");
-		String adresse = request.getParameter("adresse");
-		String description = request.getParameter("description");
+		String titre = OutilsHtml.convertISO85591(request.getParameter("titre"));
+		String adresse = OutilsHtml.convertISO85591(request.getParameter("adresse"));
+		String description = OutilsHtml.convertISO85591(request.getParameter("description"));
+	
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
