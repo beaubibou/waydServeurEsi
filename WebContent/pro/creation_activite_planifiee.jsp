@@ -13,7 +13,7 @@
 <%@page import="website.metier.Outils"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <title><%=CreationActivitePlanifieeText.TITRE_ONGLET%></title>
 <meta charset="utf-8">
@@ -287,7 +287,10 @@
 					{
 						defaultDate : moment(new Date()).hours(0).minutes(0)
 								.seconds(0).milliseconds(0),
-						format : 'DD/MM/YYYY'
+						format : 'DD/MM/YYYY',
+						focusOnShow: false,
+						  ignoreReadonly: true
+
 
 					});
 
@@ -295,19 +298,28 @@
 					{
 						defaultDate : moment(new Date()).hours(0).minutes(0)
 								.seconds(0).milliseconds(0),
-						format : 'DD/MM/YYYY'
+						format : 'DD/MM/YYYY',
+						focusOnShow: false,
+						  ignoreReadonly: true
+
 
 					});
 
 			$('#heuredebut').datetimepicker({
 				defaultDate : new Date,
-				format : 'HH:mm'
+				format : 'HH:mm',
+				focusOnShow: false,
+				  ignoreReadonly: true
+
 
 			});
 
 			$('#heurefin').datetimepicker({
 				defaultDate : new Date,
-				format : 'HH:mm'
+				format : 'HH:mm',
+				focusOnShow: false,
+				  ignoreReadonly: true
+
 
 			});
 

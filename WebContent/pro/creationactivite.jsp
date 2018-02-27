@@ -98,7 +98,7 @@
 									<div class="form-group">
 										<label for="iddatedebut"><%=CreationActiviteText.LABEL_DATE_DEBUT%></label>
 										<div class='input-group date' id='datedebut'>
-											<input readonly style="background-color:white;" type='text' class="form-control" id="iddatedebut"
+											<input  s style="background-color:white;"  readonly type='text' class="form-control" id="iddatedebut"
 												name="debut" /> <span class="input-group-addon"> <span
 												class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -235,7 +235,9 @@
 
 			$('#datedebut').datetimepicker({
 				defaultDate : new Date,
-				format : 'DD/MM/YYYY HH:mm'
+				format : 'DD/MM/YYYY HH:mm',
+				focusOnShow: false,
+				  ignoreReadonly: true
 
 			});
 
@@ -245,7 +247,9 @@
 					{
 						defaultDate : moment(new Date()).hours(heure)
 								.minutes(0).seconds(0).milliseconds(0),
-						format : 'DD/MM/YYYY HH:mm'
+						format : 'DD/MM/YYYY HH:mm',
+						focusOnShow: false,
+						  ignoreReadonly: true
 
 					});
 

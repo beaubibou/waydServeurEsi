@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@page import="website.enumeration.AlertJsp"%>
 <%@page import="website.html.AlertInfoJsp"%>
 <%@page import="website.metier.QuandBean"%>
@@ -17,8 +18,7 @@
 <%@page import="website.dao.CacheValueDAO"%>
 
 
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+
 <%return; %>
 
 <!DOCTYPE html>
