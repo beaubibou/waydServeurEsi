@@ -21,6 +21,8 @@ public class ProfilBean {
 	public final static int ASSOCIATION = 2;
 	public final static int WAYDEUR = 3;
 
+	public final static int CARPEDIEM = 4;
+
 	public double getLatitudeFixe() {
 		return latitudeFixe;
 	}
@@ -408,12 +410,23 @@ public String getTypeUserHTML(){
 	public String getPhotostr() {
 		
 		if (photostr == null)
-			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+			return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 
 		if (photostr.equals("")) {
-			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+			return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 		}
-		return photostr;
+		
+		if (photostr.contains("https:"))
+			return photostr;
+		
+		
+		if (photostr.contains("http:"))
+			return photostr;
+		
+		return	Outils.getUrlPhoto(photostr);
+		
+		
+	
 	}
 
 	public void setPhotostr(String photostr) {

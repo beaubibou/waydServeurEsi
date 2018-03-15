@@ -233,12 +233,23 @@ public class ActiviteBean {
 	public String getPhoto() {
 
 		if (photo == null)
-			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+			 return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 
 		if (photo.equals("")) {
-			return CacheValueDAO.getPhoto(TypePhoto.Inconnu);
+			 return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 		}
-		return photo;
+		
+		
+		if (photo.contains("https:"))
+			return photo;
+		
+		
+		if (photo.contains("http:"))
+			return photo;
+		
+		return	Outils.getUrlPhoto(photo);
+		
+	
 
 	}
 

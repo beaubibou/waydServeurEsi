@@ -68,6 +68,7 @@
 
 
 
+
 	<div class="container">
 		<div id="loginbox" style="margin-top: 50px;"
 			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -137,7 +138,7 @@
 							<div class='col-sm-4'>
 
 								<img height="300" width="300"
-									src=<%out.println(Outils.getUrlPhoto(activite.getPhoto()));%>
+									src=<%=activite.getPhoto()%>
 									class="img-thumbnail" class="text-center" />
 
 							</div>

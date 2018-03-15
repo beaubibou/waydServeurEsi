@@ -113,7 +113,6 @@ public class DetailParticipant extends HttpServlet {
 
 					@Override
 					public int compare(ActiviteBean o1, ActiviteBean o2) {
-						// TODO Auto-generated method stub
 						return o2.getDatedebut().compareTo(o1.getDatefin());
 					}
 				});
@@ -129,6 +128,11 @@ public class DetailParticipant extends HttpServlet {
 
 		case TypeUser.WAYDEUR:
 			request.getRequestDispatcher("admin/detailparticipantWaydeur.jsp")
+					.forward(request, response);
+			break;
+			
+		case TypeUser.CARPEDIEM:
+			request.getRequestDispatcher("admin/detailparticipantPro.jsp")
 					.forward(request, response);
 			break;
 

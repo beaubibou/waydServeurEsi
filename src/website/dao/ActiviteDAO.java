@@ -2002,7 +2002,7 @@ public class ActiviteDAO {
 			preparedStatement.setDouble(6, longitude);
 			preparedStatement.setDouble(7, latitudeFixe);
 			preparedStatement.setDouble(8, longitudeFixe);
-			preparedStatement.setInt(9, ProfilBean.PRO);
+			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 			preparedStatement.setInt(10,1);
 			preparedStatement.execute();
 			
@@ -2026,7 +2026,7 @@ public class ActiviteDAO {
 			preparedStatement.setTimestamp(6, new java.sql.Timestamp(fin.getTime()));
 			preparedStatement.setInt(7, idpersonne);
 			preparedStatement.setString(8, libelle);
-			preparedStatement.setInt(9, ProfilBean.PRO);
+			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 			preparedStatement.setBoolean(10, true);
 			preparedStatement.setInt(11, 2);
 			preparedStatement.setInt(12, 5);
@@ -2093,8 +2093,7 @@ public class ActiviteDAO {
 			return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 

@@ -139,7 +139,7 @@
 							<div class='col-sm-4'>
 
 								<img height="300" width="300"
-									src=<%out.println(Outils.getUrlPhoto(profil.getPhotostr()));%>
+									src=<%=profil.getPhotostr()%>
 									class="img-thumbnail" class="text-center" />
 
 							</div>
@@ -224,7 +224,7 @@
 				<tbody>
 					<%
 						for (ActiviteBean activite : listActivite) {
-																													String lien = "DetailActivite?idactivite=" + activite.getId();
+				String lien = "DetailActivite?idactivite=" + activite.getId();
 					%>
 
 					<tr>

@@ -182,7 +182,7 @@
 					style="background-color: #FFFFFF; text-align: center; vertical-align: middle;">
 					<%
 						if (listActivite!=null)
-																for (ActiviteBean activite : listActivite) {
+					for (ActiviteBean activite : listActivite) {
 					String lien = "DetailActivite?idactivite=" + activite.getId()+"&from=listActivite.jsp"
 							+"&latitudeFiltre="+pager.getFiltAdminActivites().getLatitude()+
 							"&longitudeFiltre="+pager.getFiltAdminActivites().getLongitude();
@@ -193,7 +193,7 @@
 						<td>
 
 							<div class="clearfix">
-								<img height="100" width="100" src=<%=activite.getUrlPhoto()%>
+								<img height="100" width="100" src=<%=activite.getPhoto()%>
 									class="img-thumbnail pull-left ">
 
 								<p>

@@ -87,6 +87,11 @@ public class DetailActivite extends HttpServlet {
 					request.getRequestDispatcher("admin/detailactiviteWaydeur.jsp")
 							.forward(request, response);
 					break;
+					
+				case TypeUser.CARPEDIEM:
+					request.getRequestDispatcher("admin/detailactivitePro.jsp")
+							.forward(request, response);
+					break;
 				}
 
 			} else
