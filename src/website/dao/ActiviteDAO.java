@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,6 +29,7 @@ import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
 import website.metier.ActiviteAjax;
 import website.metier.ActiviteBean;
+import website.metier.ActiviteCarpeDiem;
 import website.metier.IndicateurWayd;
 import website.metier.Outils;
 import website.metier.ParticipantBean;
@@ -582,7 +584,6 @@ public class ActiviteDAO {
 			LOG.info("Mon titre"+titre);
 			preparedStatement.setString(3,
 					Outils.getStringStatement(commentaire));
-			// preparedStatement.setString(3,null);
 			preparedStatement.setTimestamp(4,
 					new java.sql.Timestamp(datedebut.getTime()));
 			preparedStatement.setTimestamp(5,
@@ -608,7 +609,6 @@ public class ActiviteDAO {
 
 			return cle;
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
@@ -750,8 +750,7 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 				String adresse = rs.getString("adresse");
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+			
 				int totalavis = rs.getInt("totalavis");
 				int nbrVu = rs.getInt("nbrvu");
 				String libelleActivite = rs.getString("libelleActivite");
@@ -775,7 +774,6 @@ public class ActiviteDAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
@@ -1910,8 +1908,7 @@ public class ActiviteDAO {
 		String requete = "UPDATE activite SET nbrwaydeur=(select  count(idpersonne)+1 "
 				+ " from participer where  idactivite=?) WHERE idactivite=?";
 
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
+		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
 		preparedStatement.execute();
@@ -1946,8 +1943,7 @@ public class ActiviteDAO {
 			LogDAO.LOG_DUREE("getNbrActiviteProposeEnCours", debut);
 			return nbractivite;
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 			return 0;
@@ -1959,10 +1955,114 @@ public class ActiviteDAO {
 
 	}
 
+	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite) {
+		
+		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite.getId())))
+		return;
+	
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+		
+			//****************** Recuperation valeur***********************
+			
+			String prenom=activite.getName();
+			String login=String.valueOf(activite.getId());
+			String photo=activite.getImage();
+			String ville=activite.getVille();
+			double latitude=activite.getLat();
+			double longitude=activite.getLng();
+			double latitudeFixe=activite.getLat();
+			double longitudeFixe=activite.getLng();
+			
+		
+			Date debut=activite.getDateDebut();
+			Date fin=activite.getDateFin();
+			String libelle=activite.getDescription();
+			String titre=activite.getName();
+			String adresse=activite.getAddress()+ " "+activite.getNomLieu();
+		
+			//****************** Recuperation valeur***********************
+			
+			
+			
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			
+			String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
+			preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
+		
+			preparedStatement.setString(1, prenom);
+			preparedStatement.setString(2, login);
+			preparedStatement.setString(3, ville);
+			preparedStatement.setString(4, photo);
+			preparedStatement.setDouble(5, latitude);
+			preparedStatement.setDouble(6, longitude);
+			preparedStatement.setDouble(7, latitudeFixe);
+			preparedStatement.setDouble(8, longitudeFixe);
+			preparedStatement.setInt(9, ProfilBean.PRO);
+			preparedStatement.setInt(10,1);
+			preparedStatement.execute();
+			
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+			int idpersonne = 0;
+			if (rs.next())
+				idpersonne = rs.getInt("idpersonne");
+			
+			preparedStatement.close();
+				
+			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
+					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite)"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, titre);
+			preparedStatement.setString(2, adresse);
+			preparedStatement.setDouble(3, latitude);
+			preparedStatement.setDouble(4, longitude);
+			preparedStatement.setTimestamp(5, new java.sql.Timestamp(debut.getTime()));
+			preparedStatement.setTimestamp(6, new java.sql.Timestamp(fin.getTime()));
+			preparedStatement.setInt(7, idpersonne);
+			preparedStatement.setString(8, libelle);
+			preparedStatement.setInt(9, ProfilBean.PRO);
+			preparedStatement.setBoolean(10, true);
+			preparedStatement.setInt(11, 2);
+			preparedStatement.setInt(12, 5);
+			preparedStatement.execute();
+			connexion.commit();
+
+		
+			
+
+		} catch (NamingException | SQLException | ParseException e) {
+
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+		
+
+		
+		
+		
+	
+	}
+	
+	
 	public static MessageServeur addInteretActivite(int idpersonne,
 			int idactivite, int niveauInteret) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;

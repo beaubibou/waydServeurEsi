@@ -59,6 +59,8 @@ public class DetailActivite extends HttpServlet {
 						.getParameter("idactivite"));
 				ActiviteBean activite = new Coordination()
 						.getActivite(idActivite);
+				System.out.println("id acitivte"+idActivite);
+				System.out.println("idacti"+activite);
 				request.setAttribute("activite", activite);
 
 				// Calcle de la distance par rapport au filtre

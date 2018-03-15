@@ -48,6 +48,36 @@ public class PersonneDAO {
 
 	}
 	
+	
+public static boolean isLoginExist(String login)  {
+		
+	Connection connexion = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet rs = null;
+
+	try {
+		connexion = CxoPool.getConnection();
+		String requete = " SELECT idpersonne from personne where login=? ";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setString(1, login);
+		rs = preparedStatement.executeQuery();
+	
+		if (rs.next())
+			return true;
+
+	} catch (NamingException | SQLException e) {
+			LOG.error( ExceptionUtils.getStackTrace(e));
+	}
+
+	finally {
+
+		CxoPool.close(connexion, preparedStatement, rs);
+
+	}
+	return false;
+
+	
+	}
 	public ArrayList<UserAjax> getListUserAjaxMap(double malatitude,
 			double malongitude, double NELat, double NELon, double SWLat,
 			double SWlon) {
@@ -93,8 +123,6 @@ public class PersonneDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
@@ -107,7 +135,6 @@ public class PersonneDAO {
 
 
 	private static boolean supprimePersonneDAO(int idPersonne) {
-		// TODO Auto-generated method stub
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -344,8 +371,7 @@ public class PersonneDAO {
 	}
 
 	public static boolean isPseudoExist(String pseudo) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -365,9 +391,7 @@ public class PersonneDAO {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {

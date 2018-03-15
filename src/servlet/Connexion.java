@@ -58,8 +58,8 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 	
-//	if (testEsi(request, response))
-//		return;
+	if (testEsi(request, response))
+		return;
 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);

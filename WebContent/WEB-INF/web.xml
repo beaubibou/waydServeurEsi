@@ -814,4 +814,14 @@
     <servlet-name>MapUser</servlet-name>
     <url-pattern>/MapUser</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ImportCarpeDiem</display-name>
+    <servlet-name>ImportCarpeDiem</servlet-name>
+    <servlet-class>servlet.ImportCarpeDiem</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImportCarpeDiem</servlet-name>
+    <url-pattern>/ImportCarpeDiem</url-pattern>
+  </servlet-mapping>
 </web-app>

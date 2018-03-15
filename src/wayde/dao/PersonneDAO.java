@@ -1068,9 +1068,7 @@ public class PersonneDAO {
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		
-
-		// TODO Auto-generated method stub
+	
 	}
 
 	public String isPhotoExist(String login) throws SQLException {
