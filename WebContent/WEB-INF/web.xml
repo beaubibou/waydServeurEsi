@@ -824,4 +824,14 @@
     <servlet-name>ImportCarpeDiem</servlet-name>
     <url-pattern>/ImportCarpeDiem</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EffaceActiviteCarpediem</display-name>
+    <servlet-name>EffaceActiviteCarpediem</servlet-name>
+    <servlet-class>servlet.EffaceActiviteCarpediem</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EffaceActiviteCarpediem</servlet-name>
+    <url-pattern>/EffaceActiviteCarpediem</url-pattern>
+  </servlet-mapping>
 </web-app>

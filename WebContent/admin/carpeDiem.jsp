@@ -64,31 +64,33 @@
 		if (!authentification.isAuthentifieAdmin())
 			return;
 		boolean verifieemail = Connexion.verifieEmail;
-		boolean clemapadmin=Outils.clemapadmin;
-		
-				
+		boolean clemapadmin = Outils.clemapadmin;
+
 		//boolean desativeCompte = CreerUserPro.compteDesactiveParDefaut;
 
 		//LogDAO.LOG_PERF_REQUETE=true;
 	%>
 	<div class="container">
 		<h2>Paramétres</h2>
-		
+
 		<form action="/wayd/ImportCarpeDiem" method="post">
-	
+
 			<div class="form-group">
-				<label for="maxLogs">Date</label> <input name="date"
-					 type="text" placeholder="jj.mm.yyyy"
-					class="form-control" id="maxlogs">
+				<label for="maxLogs">Date</label> <input name="date" type="text"
+					placeholder="jj.mm.yyyy" class="form-control" id="maxlogs">
 			</div>
 			<div class="form-group">
-				<label for="nbrLogSupprimer">Ville</label> <input
-					 type="text"
-					class="form-control"  name="ville">
+				<label for="nbrLogSupprimer">Ville</label> <input type="text"
+					class="form-control" name="ville">
 			</div>
 
-			
+
 			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+
+		<form action="/wayd/EffaceActiviteCarpediem" method="post">
+
+		<button type="submit" class="btn btn-default">Efface</button>
 		</form>
 	</div>
 

@@ -64,13 +64,13 @@ public class ActiviteDAO {
 
 	}
 
-	public static ArrayList<PhotoActiviteBean> getListPhotoActivite(int idactivite)
-			 {
+	public static ArrayList<PhotoActiviteBean> getListPhotoActivite(
+			int idactivite) {
 
 		ArrayList<PhotoActiviteBean> listPhotos = new ArrayList<PhotoActiviteBean>();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet rs=null;
+		ResultSet rs = null;
 		try {
 			connexion = CxoPool.getConnection();
 
@@ -80,15 +80,13 @@ public class ActiviteDAO {
 
 			preparedStatement.setInt(1, idactivite);
 
-			 rs = preparedStatement.executeQuery();
-
-			
+			rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-			String 	photo = rs.getString("photo");
-			int id=	rs.getInt("id");
-			int idActivite=rs.getInt("idactivite");
-			listPhotos.add(new PhotoActiviteBean(id, idActivite, photo));
+				String photo = rs.getString("photo");
+				int id = rs.getInt("id");
+				int idActivite = rs.getInt("idactivite");
+				listPhotos.add(new PhotoActiviteBean(id, idActivite, photo));
 			}
 			rs.close();
 			preparedStatement.close();
@@ -103,7 +101,7 @@ public class ActiviteDAO {
 
 		} finally {
 
-			CxoPool.close(connexion, preparedStatement,rs);
+			CxoPool.close(connexion, preparedStatement, rs);
 		}
 
 	}
@@ -171,7 +169,7 @@ public class ActiviteDAO {
 
 			CxoPool.close(connexion, preparedStatement);
 		}
-		return new MessageServeur(true,"ok");
+		return new MessageServeur(true, "ok");
 
 	}
 
@@ -236,7 +234,7 @@ public class ActiviteDAO {
 			preparedStatement.setInt(2, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "UPDATE activite  SET  nbrvu=nbrvu+1 WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
@@ -265,7 +263,7 @@ public class ActiviteDAO {
 	private static boolean isDejaVu(int idpersonne, int idactivite) {
 		// TODO Auto-generated method stub
 		long debut = System.currentTimeMillis();
-		boolean retour=false;
+		boolean retour = false;
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -281,10 +279,10 @@ public class ActiviteDAO {
 			LogDAO.LOG_DUREE("isDejaVu", debut);
 
 			if (rs.next())
-				retour=true;
-			
+				retour = true;
+
 			CxoPool.close(connexion, preparedStatement, rs);
-		
+
 			return retour;
 
 		} catch (NamingException | SQLException e) {
@@ -346,7 +344,7 @@ public class ActiviteDAO {
 		ArrayList<ActiviteAjax> retour = new ArrayList<ActiviteAjax>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		Connection connexion=null;
+		Connection connexion = null;
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -588,7 +586,7 @@ public class ActiviteDAO {
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
-			LOG.info("Mon titre"+titre);
+			LOG.info("Mon titre" + titre);
 			preparedStatement.setString(3,
 					Outils.getStringStatement(commentaire));
 			preparedStatement.setTimestamp(4,
@@ -757,7 +755,7 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 				String adresse = rs.getString("adresse");
-			
+
 				int totalavis = rs.getInt("totalavis");
 				int nbrVu = rs.getInt("nbrvu");
 				String libelleActivite = rs.getString("libelleActivite");
@@ -789,6 +787,41 @@ public class ActiviteDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 		return activite;
+
+	}
+
+	public static void effaceTouteCarpeDiem() {
+	
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection connexion = null;
+
+		try {
+			
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "delete from activite where idpersonne in (select idpersonne from personne where typeuser=4)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			requete = "delete from personne where typeuser=4";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
 
 	}
 
@@ -1494,19 +1527,19 @@ public class ActiviteDAO {
 
 		try {
 			connexion = CxoPool.getConnection();
-			
+
 			String requete = "DELETE FROM interet where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM nbrvu where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			requete = "DELETE FROM photo_activite where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
@@ -1559,7 +1592,6 @@ public class ActiviteDAO {
 
 			CxoPool.closeConnection(connexion);
 		}
-	
 
 	}
 
@@ -1606,7 +1638,7 @@ public class ActiviteDAO {
 
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
-		} catch ( Exception e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -1633,7 +1665,7 @@ public class ActiviteDAO {
 		calFinActivite.setTime(dateDebut);
 		calFinActivite.add(Calendar.MINUTE, duree);
 		Date datefinActivite = calFinActivite.getTime();
-		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement = null;
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1644,8 +1676,8 @@ public class ActiviteDAO {
 					+ " idtypeactivite,datecreation,typeuser,typeacces,nbmaxwayd,nbrvu )"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
 
-			 preparedStatement = connexion.prepareStatement(
-					requete, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setString(2, titre);
 			preparedStatement.setString(3, commentaire);
@@ -1673,8 +1705,7 @@ public class ActiviteDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
-		}finally
-		{
+		} finally {
 			CxoPool.closeConnection(connexion);
 		}
 
@@ -1851,8 +1882,7 @@ public class ActiviteDAO {
 			return retour;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 			return retour;
@@ -1893,8 +1923,6 @@ public class ActiviteDAO {
 
 		} catch (SQLException | NamingException e) {
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -1914,7 +1942,8 @@ public class ActiviteDAO {
 		String requete = "UPDATE activite SET nbrwaydeur=(select  count(idpersonne)+1 "
 				+ " from participer where  idactivite=?) WHERE idactivite=?";
 
-		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
 		preparedStatement.execute();
@@ -1949,7 +1978,7 @@ public class ActiviteDAO {
 			LogDAO.LOG_DUREE("getNbrActiviteProposeEnCours", debut);
 			return nbractivite;
 		} catch (NamingException | SQLException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 			return 0;
@@ -1962,46 +1991,47 @@ public class ActiviteDAO {
 	}
 
 	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite) {
-		
-		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite.getId())))
-		return;
-	
+
+		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
+				.getId())))
+			return;
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		
-		try {
-		
-			//****************** Recuperation valeur***********************
-			
-			String prenom=activite.getName();
-			String login=String.valueOf(activite.getId());
-			String urlphoto=activite.getImage();
-			String ville=activite.getVille();
-			double latitude=activite.getLat();
-			double longitude=activite.getLng();
-			double latitudeFixe=activite.getLat();
-			double longitudeFixe=activite.getLng();
-			
-		
-			Date debut=activite.getDateDebut();
-			Date fin=activite.getDateFin();
-			String libelle=activite.getDescription();
-			String titre=activite.getName();
-			String adresse=activite.getAddress()+ " "+activite.getNomLieu();
-		
-			//****************** Recuperation valeur***********************
-			URL url = new URL(urlphoto);
-			BufferedImage imBuff = ImageIO.read(url);
-			String photo = encodeToString(imBuff, "jpeg");
 
-			
+		try {
+
+			// ****************** Recuperation valeur***********************
+
+			String prenom = activite.getName();
+			String login = String.valueOf(activite.getId());
+			String urlphoto = activite.getImage();
+			String ville = activite.getVille();
+			double latitude = activite.getLat();
+			double longitude = activite.getLng();
+			double latitudeFixe = activite.getLat();
+			double longitudeFixe = activite.getLng();
+
+			Date debut = activite.getDateDebut();
+			Date fin = activite.getDateFin();
+			String libelle = activite.getDescription();
+			String titre = activite.getName();
+			String adresse = activite.getAddress() + " "
+					+ activite.getNomLieu();
+
+			// ****************** Recuperation valeur***********************
+			URL url = new URL(urlphoto);
+		//	BufferedImage imBuff = ImageIO.read(url);
+		//	String photo = encodeToString(imBuff, "jpeg");
+			String photo="oooooooo";
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			
+
 			String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
-			preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-		
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
+
 			preparedStatement.setString(1, prenom);
 			preparedStatement.setString(2, login);
 			preparedStatement.setString(3, ville);
@@ -2011,27 +2041,29 @@ public class ActiviteDAO {
 			preparedStatement.setDouble(7, latitudeFixe);
 			preparedStatement.setDouble(8, longitudeFixe);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			preparedStatement.setInt(10,1);
+			preparedStatement.setInt(10, 1);
 			preparedStatement.execute();
-			
+
 			ResultSet rs = preparedStatement.getGeneratedKeys();
 			int idpersonne = 0;
 			if (rs.next())
 				idpersonne = rs.getInt("idpersonne");
-			
+
 			preparedStatement.close();
-				
+
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
 					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite)"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-			
+
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
 			preparedStatement.setString(2, adresse);
 			preparedStatement.setDouble(3, latitude);
 			preparedStatement.setDouble(4, longitude);
-			preparedStatement.setTimestamp(5, new java.sql.Timestamp(debut.getTime()));
-			preparedStatement.setTimestamp(6, new java.sql.Timestamp(fin.getTime()));
+			preparedStatement.setTimestamp(5,
+					new java.sql.Timestamp(debut.getTime()));
+			preparedStatement.setTimestamp(6,
+					new java.sql.Timestamp(fin.getTime()));
 			preparedStatement.setInt(7, idpersonne);
 			preparedStatement.setString(8, libelle);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
@@ -2041,32 +2073,24 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			connexion.commit();
 
-		
-			
-
 		} catch (NamingException | SQLException | ParseException | IOException e) {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			try {
 				connexion.rollback();
 			} catch (SQLException e1) {
+
 				e1.printStackTrace();
 			}
-		
+
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
 
 		}
 
-		
-
-		
-		
-		
-	
 	}
-	
+
 	public static String encodeToString(BufferedImage image, String type) {
 		String imageString = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -2083,10 +2107,10 @@ public class ActiviteDAO {
 		}
 		return imageString;
 	}
-	
+
 	public static MessageServeur addInteretActivite(int idpersonne,
 			int idactivite, int niveauInteret) {
-	
+
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -2117,7 +2141,7 @@ public class ActiviteDAO {
 			return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
 
 		} catch (NamingException | SQLException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 

@@ -7,67 +7,85 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import website.dao.ActiviteDAO;
-import website.metier.ActiviteCarpeDiem;
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import website.dao.ActiviteDAO;
+import website.metier.ActiviteCarpeDiem;
+
 public class ImportCarpe {
 
 	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<ActiviteCarpeDiem>();
 	ActiviteCarpeDiem activite;
-
-	public ImportCarpe(String date, String ville) throws IOException {
-
+	StringBuilder log=new StringBuilder();
+	
+	public String importActivites(String date, String ville){
+		
 		activite = new ActiviteCarpeDiem();
 
 		StringBuilder parsedContentFromUrl = new StringBuilder();
 
-		// String urlString = "http://lyon.carpediem.cd/events/?dt=14.03.2018";
 		String urlString = "http://" + ville + ".carpediem.cd/events/?dt="
-				+ "date";
+				+ date;
+		log.append("Recherche sur "+ville+ ":"+ date+"\n");
+		log.append("Url de recherche+ "+urlString+"\n");
+		URL url;
+		try {
+			url = new URL(urlString);
+			URLConnection uc;
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			uc.getInputStream();
 
-		URL url = new URL(urlString);
-		URLConnection uc;
-		uc = url.openConnection();
-		uc.addRequestProperty("User-Agent",
-				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-		uc.connect();
-		uc.getInputStream();
+			BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
+			int ch;
+			while ((ch = in.read()) != -1) {
+				parsedContentFromUrl.append((char) ch);
 
-		BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
-		int ch;
-		while ((ch = in.read()) != -1) {
-			parsedContentFromUrl.append((char) ch);
+				Source source = new Source(
+						convertISO85591(parsedContentFromUrl.toString()));
 
-			Source source = new Source(
-					convertISO85591(parsedContentFromUrl.toString()));
+				source.fullSequentialParse();
 
-			source.fullSequentialParse();
+				List<Element> h2Elements = source.getAllElements("span");
 
-			List<Element> h2Elements = source.getAllElements("span");
+				for (Element element : h2Elements) {
 
-			for (Element element : h2Elements) {
+					instancieActivite(element, activite);
 
-				instancieActivite(element, activite);
+				}
 
+				for (ActiviteCarpeDiem activiteCarpe : listActivite) {
+					System.out.println(activiteCarpe.toString());
+
+					getDetailActivite(activiteCarpe);
+
+					ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+
+					System.out.println(activiteCarpe.toString());
+
+				}
 			}
-
-			for (ActiviteCarpeDiem activiteCarpe : listActivite) {
-				System.out.println(activiteCarpe.toString());
-
-				getDetailActivite(activiteCarpe);
-
-				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
-
-				System.out.println(activiteCarpe.toString());
-
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.append(ExceptionUtils.getStackTrace(e));
+			return log.toString();
 		}
+		
+		return log.toString();
+		
+	}
+	
+	public ImportCarpe() throws IOException {
+
+		
 
 	}
 
@@ -161,6 +179,7 @@ public class ImportCarpe {
 		}
 
 		if (activite.isComplete()) {
+			log.append("Ajote une activite "+"\n");
 			listActivite.add(activite);
 			activite = new ActiviteCarpeDiem();
 		}
@@ -169,12 +188,6 @@ public class ImportCarpe {
 	public static String convertISO85591(String chaine) {
 
 		try {
-
-			String retour = new String(chaine.getBytes("ISO-8859-1"), "UTF-8");
-
-			retour = new String(chaine.getBytes("ISO-8859-1"));
-
-			retour = new String(chaine.getBytes("utf-8"));
 
 			return new String(chaine.getBytes("ISO-8859-1"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -188,7 +201,7 @@ public class ImportCarpe {
 
 		boolean debut = false;
 		String retour = "";
-		for (int f = start; f < start + 50; f++) {
+		for (int f = start; f < start + 200; f++) {
 
 			String nombre = String.valueOf(chaine.charAt(f));
 			System.out.println(nombre);
