@@ -798,8 +798,7 @@ public class WBservices {
 			return activite;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -842,8 +841,7 @@ public class WBservices {
 			return new MessageServeur(isdejaInteret, "ok");
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1575,9 +1573,6 @@ public class WBservices {
 
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		
@@ -1696,8 +1691,7 @@ public class WBservices {
 			return new MessageServeur(true, TextWebService.AJOUTE_SUGGESTION);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 

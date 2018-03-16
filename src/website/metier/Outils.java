@@ -128,7 +128,7 @@ public class Outils {
 			imageString = encoder.encode(imageBytes);
 			bos.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 		return imageString;
@@ -146,8 +146,7 @@ public class Outils {
 	}
 
 	public static String getStringStatement(String chaine) {
-		// TODO Auto-generated method stub
-
+	
 		if (chaine == null)
 			return null;
 

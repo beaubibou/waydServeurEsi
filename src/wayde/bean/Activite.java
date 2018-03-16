@@ -231,16 +231,15 @@ public class Activite {
 		this.nomorganisateur=activiteBean.getNomorganisateur();
 		this.prenomorganisateur=activiteBean.getPseudo();
 		this.photo=activiteBean.getPhoto();
-		this.typeUser=typeUser;
-		this.typeAcces=typeAcces;
-		this.nbmaxwaydeur=nbmaxwaydeur;
+		this.typeUser=activiteBean.getTypeUser();
+		this.typeAcces=activiteBean.getTypeAccess();
+		this.nbmaxwaydeur=activiteBean.getNbmaxwaydeur();
 		if (this.titre.equals(""))this.titre=" ";
 		
 	
 	}
 
 	private long getSeTermine(Date finActivite) {// calcul en miliseconde le temps avant la fin
-		// TODO Auto-generated method stub
 		return  finActivite.getTime()-new Date().getTime();
 		
 	}

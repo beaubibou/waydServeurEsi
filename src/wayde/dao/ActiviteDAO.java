@@ -100,6 +100,7 @@ public class ActiviteDAO {
 					affichesexe, nbmaxwayd, typeUser, typeAcces);
 
 		}
+		
 		CxoPool.close(preparedStatement, rs);
 		return activite;
 

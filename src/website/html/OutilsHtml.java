@@ -50,7 +50,9 @@ public class OutilsHtml {
 	}
 public static String convertISO85591(String chaine){
 		
-		if (chaine==null)return null;
+		if (chaine==null)
+			return null;
+	
 		try {
 			return  new String ( chaine.getBytes("ISO-8859-1"),"UTF-8"  );
 		} catch (UnsupportedEncodingException e) {
