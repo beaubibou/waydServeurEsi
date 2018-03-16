@@ -1,5 +1,10 @@
 package website.dao;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +17,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.naming.NamingException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import sun.misc.BASE64Encoder;
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
 import wayd.ws.TextWebService;
@@ -1552,8 +1559,7 @@ public class ActiviteDAO {
 
 			CxoPool.closeConnection(connexion);
 		}
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+	
 
 	}
 
@@ -1969,7 +1975,7 @@ public class ActiviteDAO {
 			
 			String prenom=activite.getName();
 			String login=String.valueOf(activite.getId());
-			String photo=activite.getImage();
+			String urlphoto=activite.getImage();
 			String ville=activite.getVille();
 			double latitude=activite.getLat();
 			double longitude=activite.getLng();
@@ -1984,8 +1990,10 @@ public class ActiviteDAO {
 			String adresse=activite.getAddress()+ " "+activite.getNomLieu();
 		
 			//****************** Recuperation valeur***********************
-			
-			
+			URL url = new URL(urlphoto);
+			BufferedImage imBuff = ImageIO.read(url);
+			String photo = encodeToString(imBuff, "jpeg");
+
 			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -2036,15 +2044,15 @@ public class ActiviteDAO {
 		
 			
 
-		} catch (NamingException | SQLException | ParseException e) {
+		} catch (NamingException | SQLException | ParseException | IOException e) {
 
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			try {
 				connexion.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			LOG.error(ExceptionUtils.getStackTrace(e));
+		
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
@@ -2059,6 +2067,22 @@ public class ActiviteDAO {
 	
 	}
 	
+	public static String encodeToString(BufferedImage image, String type) {
+		String imageString = null;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+		try {
+			ImageIO.write(image, type, bos);
+			byte[] imageBytes = bos.toByteArray();
+			BASE64Encoder encoder = new BASE64Encoder();
+			imageString = encoder.encode(imageBytes);
+			bos.close();
+		} catch (IOException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+		return imageString;
+	}
 	
 	public static MessageServeur addInteretActivite(int idpersonne,
 			int idactivite, int niveauInteret) {

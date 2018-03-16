@@ -1,5 +1,7 @@
 package website.dao;
 
+import gcmnotification.EffaceActiviteGcm;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +15,15 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import texthtml.pro.Erreur_HTML;
+import threadpool.PoolThreadGCM;
+import wayd.ws.TextWebService;
 import wayd.ws.WBservices;
+import wayde.bean.Activite;
 import wayde.bean.CxoPool;
+import wayde.bean.MessageServeur;
+import wayde.bean.Personne;
+import wayde.dao.ParticipationDAO;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
@@ -47,6 +56,50 @@ public class PersonneDAO {
 		return true;
 
 	}
+	
+	public static boolean supprimePersonneBase(int idPersonne) {
+	
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			
+			
+			String requete = " delete from activite where idpersonne=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = " delete from personne where idpersonne=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idPersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+				LOG.error( ExceptionUtils.getStackTrace(e));
+		}
+
+		finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+
+		}
+		return false;
+
+
+
+	}
+	
+	
 	
 	
 public static boolean isLoginExist(String login)  {
