@@ -77,8 +77,9 @@ public class ImportCarpeDiem extends HttpServlet {
 			for (int nbrJours = 0; nbrJours < 10; nbrJours++) {
 
 				DateTime date1 = date.plusDays(nbrJours);
-
-				System.out.println(getFormatDate(date1) + " " + ville);
+				String dateEventStr=getFormatDate(date1) ;
+				new ImportCarpe(dateEventStr,ville);
+			
 
 			}
 		}
@@ -86,8 +87,8 @@ public class ImportCarpeDiem extends HttpServlet {
 	}
 
 	private String getFormatDate(DateTime dt) {
+		
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
-
 		return fmt.print(dt);
 
 	}
