@@ -45,7 +45,7 @@ public class ActiviteDAO {
 				+ "personne.nbravis as totalavis,    personne.photo,1 as role,"
 				+ "activite.idactivite,    activite.libelle,    activite.titre,"
 				+ "activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite"
-				+ ",activite.typeuser,activite.typeacces   FROM personne,"
+				+ ",activite.typeuser,activite.typeacces,activite.descriptionall   FROM personne,"
 				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
 
 		preparedStatement = connexion.prepareStatement(requete);
@@ -66,6 +66,7 @@ public class ActiviteDAO {
 			double note = rs.getDouble("note");
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
+			String fulldescription = rs.getString("descriptionall");
 			Date datenaissance = rs.getTimestamp("datenaissance");
 			boolean afficheage = rs.getBoolean("afficheage");
 			boolean affichesexe = rs.getBoolean("affichesexe");
@@ -97,7 +98,7 @@ public class ActiviteDAO {
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
-					affichesexe, nbmaxwayd, typeUser, typeAcces);
+					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription);
 
 		}
 		
@@ -332,7 +333,7 @@ public class ActiviteDAO {
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,null);
 			retour.add(activite);
 
 		}
@@ -425,7 +426,7 @@ public class ActiviteDAO {
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,null);
 
 			retour.add(activite);
 
@@ -524,11 +525,12 @@ public class ActiviteDAO {
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 
+			String fullDescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,fullDescriptionNull);
 
 			retour.add(activite);
 
@@ -591,12 +593,12 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-
+			String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
 			retour.add(activite);
 
 		}
@@ -646,12 +648,12 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-
+			String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces);
+					typeUser, typeAcces,fulldescriptionNull);
 
 			retour.add(activite);
 
@@ -803,12 +805,12 @@ public class ActiviteDAO {
 
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-
+String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
 			retour.add(activite);
 
 		}
@@ -856,11 +858,12 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces);
+					typeUser, typeAcces,fulldescriptionNull);
 			retour.add(activite);
 
 		}
@@ -1524,12 +1527,12 @@ public class ActiviteDAO {
 			boolean archive = false;
 			int totalavis = rs.getInt("totalavis");
 			int typeAcces = rs.getInt("typeacces");
-
+			String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
 			retour.add(activite);
 
 		}

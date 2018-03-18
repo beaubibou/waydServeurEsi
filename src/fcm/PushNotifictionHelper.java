@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import wayde.bean.Activite;
@@ -44,7 +45,7 @@ public class PushNotifictionHelper {
 
 	public synchronized static String sendPushNotificationSuggestionList(
 			ArrayList<Personne> listpersonne, Activite activite)
-			throws IOException {
+			throws IOException, JSONException {
 
 		ArrayList<String> listpersonneGcm =getListGCMNotification(listpersonne);
 	
@@ -115,7 +116,7 @@ public class PushNotifictionHelper {
 	}
 
 	public static String sendPushNotificationTo(String deviceToken)
-			throws IOException {
+			throws IOException, JSONException {
 		String result = "";
 		URL url = new URL(API_URL_FCM);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();

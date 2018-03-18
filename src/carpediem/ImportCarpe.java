@@ -1,12 +1,17 @@
 package carpediem;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Element;
@@ -14,6 +19,8 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
@@ -22,70 +29,85 @@ public class ImportCarpe {
 
 	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<ActiviteCarpeDiem>();
 	ActiviteCarpeDiem activite;
-	StringBuilder log=new StringBuilder();
-	
-	public String importActivites(String date, String ville){
-		
-		activite = new ActiviteCarpeDiem();
+	StringBuilder log = new StringBuilder();
 
-		StringBuilder parsedContentFromUrl = new StringBuilder();
-
-		String urlString = "http://" + ville + ".carpediem.cd/events/?dt="
-				+ date;
-		log.append("Recherche sur "+ville+ ":"+ date+"\n");
-		log.append("Url de recherche+ "+urlString+"\n");
-		URL url;
-		try {
-			url = new URL(urlString);
-			URLConnection uc;
-			uc = url.openConnection();
-			uc.addRequestProperty("User-Agent",
+	public void importActivitesByPage(String date, String ville)
+			throws IOException, JSONException {
+		int page = 0;
+		Integer status;
+		do {
+			System.out.println("*********************CHARGE ***********PAGE"
+					+ ville + "N°page:" + page);
+			page++;
+			String ur = "http://" + ville + ".carpediem.cd/events/?" + date;
+			String post = "mode=load_content&page=" + page + "&_csrf=getCsrf()";
+			URL url = new URL(ur);
+			URLConnection conn = url.openConnection();
+			conn.addRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-			uc.connect();
-			uc.getInputStream();
+			// conn.connect();
 
-			BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
+			conn.setDoOutput(true);
+			OutputStreamWriter writer = new OutputStreamWriter(
+					conn.getOutputStream());
+			writer.write(post);
+			writer.flush();
+
+			StringBuilder parsedContentFromUrl = new StringBuilder();
+
+			BufferedInputStream in = new BufferedInputStream(
+					conn.getInputStream());
 			int ch;
-			while ((ch = in.read()) != -1) {
+			while ((ch = in.read()) != -1)
 				parsedContentFromUrl.append((char) ch);
 
-				Source source = new Source(
-						convertISO85591(parsedContentFromUrl.toString()));
+			JSONObject json = new JSONObject(parsedContentFromUrl.toString());
 
-				source.fullSequentialParse();
+			status = (Integer) json.get("status");
+			String reponse = (String) json.get("html");
 
-				List<Element> h2Elements = source.getAllElements("span");
+			if (status == 1)
+				charge(reponse);
 
-				for (Element element : h2Elements) {
+		} while (status == 1 && page < 30);
 
-					instancieActivite(element, activite);
+		System.out.println("^^^^^^^^^^^^^^^^termieé");
+	}
 
-				}
+	public void charge(String sourcehtml) throws IOException {
 
-				for (ActiviteCarpeDiem activiteCarpe : listActivite) {
-					System.out.println(activiteCarpe.toString());
+		activite = new ActiviteCarpeDiem();
 
-					getDetailActivite(activiteCarpe);
+		Source source = new Source(sourcehtml);
 
-					ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+		source.fullSequentialParse();
 
-					System.out.println(activiteCarpe.toString());
+		List<Element> h2Elements = source.getAllElements("span");
 
-				}
+		for (Element element : h2Elements) {
+
+			instancieActivite(element, activite);
+
+		}
+
+		for (ActiviteCarpeDiem activiteCarpe : listActivite) {
+			try {
+				getDetailActivite(activiteCarpe);
+				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+				System.out.println("********ajout activite****************");
+			} catch (Exception e) {
+				System.out.println("Detail de l'activite non dispobnile");
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			log.append(ExceptionUtils.getStackTrace(e));
-			return log.toString();
 		}
 		
-		return log.toString();
-		
-	}
-	
-	public ImportCarpe() throws IOException {
+		listActivite.clear();
 
-		
+	}
+
+	
+
+	public ImportCarpe() throws IOException {
 
 	}
 
@@ -93,8 +115,11 @@ public class ImportCarpe {
 			throws IOException {
 
 		StringBuilder parsedContentFromUrl = new StringBuilder();
-		String urlString = activiteCarpe.getUrl();
-		URL url = new URL(urlString);
+		String urlString = activiteCarpe.getUrl().replace(
+				"carpediem.cd/events", "carpediem.cd/events/");
+		URL url;
+
+		url = new URL(urlString);
 		URLConnection uc;
 		uc = url.openConnection();
 		uc.addRequestProperty("User-Agent",
@@ -103,28 +128,55 @@ public class ImportCarpe {
 		uc.getInputStream();
 		BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
 		int ch;
-		while ((ch = in.read()) != -1) {
+		while ((ch = in.read()) != -1)
 			parsedContentFromUrl.append((char) ch);
+		
+	
+		String description=getFullDescrition(parsedContentFromUrl);
+	
+		activiteCarpe.setFulldescription(description);
+		
+		int start = parsedContentFromUrl.indexOf("id:");
+		String numberStr = getNumber(parsedContentFromUrl, start);
+		int id = Integer.parseInt(numberStr);
 
-			int start = parsedContentFromUrl.indexOf("id:");
-			String numberStr = getNumber(parsedContentFromUrl, start);
-			int id = Integer.parseInt(numberStr);
+		start = parsedContentFromUrl.indexOf("lat:");
+		numberStr = getNumber(parsedContentFromUrl, start);
+		double lat = Double.parseDouble(numberStr);
 
-			start = parsedContentFromUrl.indexOf("lat:");
-			numberStr = getNumber(parsedContentFromUrl, start);
-			double lat = Double.parseDouble(numberStr);
+		start = parsedContentFromUrl.indexOf("lng:");
+		numberStr = getNumber(parsedContentFromUrl, start);
+		double lng = Double.parseDouble(numberStr);
 
-			start = parsedContentFromUrl.indexOf("lng:");
-			numberStr = getNumber(parsedContentFromUrl, start);
-			double lng = Double.parseDouble(numberStr);
-
-			activiteCarpe.setId(id);
-			activiteCarpe.setLat(lat);
-			activiteCarpe.setLng(lng);
-
-		}
+		activiteCarpe.setId(id);
+		activiteCarpe.setLat(lat);
+		activiteCarpe.setLng(lng);
+		
+		
 
 	}
+	public String getFullDescrition(StringBuilder parsedContentFromUrl){
+		
+	
+		String[] mo= convertISO85591(parsedContentFromUrl.toString()).split("<br/>");
+		String tmpdescription="";
+		for (int f=1;f<mo.length-1;f++){
+			
+			tmpdescription=tmpdescription+mo[f];
+		}
+		String description=tmpdescription;
+		int debutBalise=tmpdescription.indexOf("<a");
+		int finBalise=tmpdescription.indexOf("</a>");
+		
+		System.out.println(finBalise);
+		
+		if (debutBalise!=-1 && finBalise!=-1){
+			description=new StringBuilder(tmpdescription).delete(debutBalise, finBalise+4).toString();
+			
+		}
+		return description;
+	}
+	
 
 	public void instancieActivite(Element element, ActiviteCarpeDiem activite) {
 
@@ -136,7 +188,7 @@ public class ImportCarpe {
 			return;
 
 		String attribute = idAttribute.getValue();
-
+		// System.out.println(attribute);
 		switch (attribute) {
 
 		case "startDate":
@@ -177,12 +229,14 @@ public class ImportCarpe {
 		default:
 
 		}
-
 		if (activite.isComplete()) {
-			log.append("Ajote une activite "+"\n");
-			listActivite.add(activite);
-			activite = new ActiviteCarpeDiem();
+
+			listActivite.add(new ActiviteCarpeDiem(activite));
+
+			activite.reset();
+			return;
 		}
+
 	}
 
 	public static String convertISO85591(String chaine) {
@@ -201,10 +255,11 @@ public class ImportCarpe {
 
 		boolean debut = false;
 		String retour = "";
-		for (int f = start; f < start + 200; f++) {
+		for (int f = start; f < start + 50; f++) {
 
 			String nombre = String.valueOf(chaine.charAt(f));
-			System.out.println(nombre);
+			// System.out.println(nombre);
+
 			if (nombre.equals(".")) {
 				retour = retour + nombre;
 				continue;
@@ -228,5 +283,44 @@ public class ImportCarpe {
 
 		return retour;
 	}
+public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException{
+	
+	String ur = activiteCarpe.getUrl().replace(
+			"carpediem.cd/events", "carpediem.cd/events/");
+	
+	URL url = new URL(ur);
+	URLConnection conn = url.openConnection();
+	conn.addRequestProperty("User-Agent",
+			"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+	// conn.connect();
 
+	conn.setDoOutput(true);
+	OutputStreamWriter writer = new OutputStreamWriter(
+			conn.getOutputStream());
+
+	writer.flush();
+
+	StringBuilder parsedContentFromUrl = new StringBuilder();
+
+	BufferedInputStream in = new BufferedInputStream(
+			conn.getInputStream());
+	int ch;
+	while ((ch = in.read()) != -1)
+		parsedContentFromUrl.append((char) ch);
+	
+//	Source source = new Source(parsedContentFromUrl.toString());
+//
+//	source.fullSequentialParse();
+//
+//	List<Element> h2Elements = source.getAllElements("span");
+//	
+//	for (Element element:h2Elements){
+//		
+//		getFullDescription(element,activiteCarpe);
+//		
+//		
+//	}
+
+	
+}
 }

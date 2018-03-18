@@ -69,6 +69,10 @@ public class Activite {
 	public long finidans;
 
 	private int nbmaxwaydeur;
+	
+	public int payante;
+	
+	String fulldescrition;
 
 	private boolean interet;
 	public boolean isInteret() {
@@ -175,7 +179,7 @@ public class Activite {
 	            String nom,String prenom,String photo,double note,
 	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
 	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,
-	            int typeUser,int typeAcces )
+	            int typeUser,int typeAcces ,String fulldescription)
 	        {
 	            super();
 	        	this.id=id;
@@ -208,6 +212,7 @@ public class Activite {
 	    		this.typeUser=typeUser;
 	    		this.typeAcces=typeAcces;
 	    		this.nbmaxwaydeur=nbmaxwaydeur;
+	    		this.fulldescrition=fulldescription;
 	    		if (this.titre.equals(""))this.titre=" ";
 	    			
 	    		

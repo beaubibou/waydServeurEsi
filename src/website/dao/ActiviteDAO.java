@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -800,11 +801,22 @@ public class ActiviteDAO {
 			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			String requete = "delete from activite where idpersonne in (select idpersonne from personne where typeuser=4)";
+			
+			String requete = "delete from nbrvu where idactivite in (select idactivite from activite where typeuser=4)";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.execute();
 			preparedStatement.close();
-
+			
+			requete = "delete from interet where idactivite in (select idactivite from activite where typeuser=4)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+			requete = "delete from activite where idpersonne in (select idpersonne from personne where typeuser=4)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+			preparedStatement.close();
 			requete = "delete from personne where typeuser=4";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.execute();
@@ -1990,7 +2002,7 @@ public class ActiviteDAO {
 
 	}
 
-	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite) {
+	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite) throws IOException {
 
 		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
 				.getId())))
@@ -2005,8 +2017,9 @@ public class ActiviteDAO {
 
 			String prenom = activite.getName();
 			String login = String.valueOf(activite.getId());
-			String urlphoto = activite.getImage();
+			String photoUrl = activite.getImage();
 			String ville = activite.getVille();
+			String fulldescription=activite.getFulldescription();
 			double latitude = activite.getLat();
 			double longitude = activite.getLng();
 			double latitudeFixe = activite.getLat();
@@ -2018,12 +2031,19 @@ public class ActiviteDAO {
 			String titre = activite.getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
-
+			URLConnection uc;
+			URL url = new URL(photoUrl);
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+			//	BufferedImage imBuff = ImageIO.read(url);
+			String photo = encodeToString(imBuff, "jpeg");
+			//	String photo="oooooooo";
 			// ****************** Recuperation valeur***********************
-			URL url = new URL(urlphoto);
-		//	BufferedImage imBuff = ImageIO.read(url);
-		//	String photo = encodeToString(imBuff, "jpeg");
-			String photo="oooooooo";
+			
+			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 
@@ -2042,6 +2062,7 @@ public class ActiviteDAO {
 			preparedStatement.setDouble(8, longitudeFixe);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 			preparedStatement.setInt(10, 1);
+		
 			preparedStatement.execute();
 
 			ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -2052,9 +2073,9 @@ public class ActiviteDAO {
 			preparedStatement.close();
 
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite)"
-					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-
+					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall)"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			System.out.println("d============="+fulldescription);
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
 			preparedStatement.setString(2, adresse);
@@ -2070,10 +2091,11 @@ public class ActiviteDAO {
 			preparedStatement.setBoolean(10, true);
 			preparedStatement.setInt(11, 2);
 			preparedStatement.setInt(12, 5);
+			preparedStatement.setString(13, fulldescription);
 			preparedStatement.execute();
 			connexion.commit();
 
-		} catch (NamingException | SQLException | ParseException | IOException e) {
+		} catch (NamingException | SQLException | ParseException e) {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			try {

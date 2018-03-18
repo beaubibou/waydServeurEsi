@@ -21,9 +21,18 @@ public class ActiviteCarpeDiem {
 	String ville;
 	double lat,lng;
 	int id;
+	private String fulldescription;
 	
 
 	
+	public String getFulldescription() {
+		return fulldescription;
+	}
+
+	public void setFulldescription(String fulldescription) {
+		this.fulldescription = fulldescription;
+	}
+
 	public ActiviteCarpeDiem(String startDate, String endDate, String image,
 			String description, String url, String name, String address,
 			String nomLieu, String ville, double lat, double lng, int id) {
@@ -43,8 +52,51 @@ public class ActiviteCarpeDiem {
 	}
 
 	public ActiviteCarpeDiem() {
-	
+		this.startDate = null;
+		this.endDate = null;
+		this.image = null;
+		this.description = null;
+		this.url = null;
+		this.name = null;
+		this.address = null;
+		this.nomLieu = null;
+		this.ville = null;
+		this.lat = 0;
+		this.lng = 0;
+		this.id = 0;
 	}
+	public void reset(){
+		this.startDate = null;
+		this.endDate = null;
+		this.image = null;
+		this.description = null;
+		this.url = null;
+		this.name = null;
+		this.address = null;
+		this.nomLieu = null;
+		this.ville = null;
+		this.lat = 0;
+		this.lng = 0;
+		this.id = 0;
+		
+	}
+	public ActiviteCarpeDiem(ActiviteCarpeDiem activite) {
+		this.startDate = activite.startDate;
+		this.endDate = activite.endDate;
+		this.image = activite.image;
+		this.description = activite.description;
+		this.url = activite.url;
+		this.name = activite.name;
+		this.address = activite.address;
+		this.nomLieu =activite.nomLieu;
+		this.ville = activite.ville;
+		this.lat = activite.lat;
+		this.lng = activite.lng;
+		this.id = activite.id;
+		
+		
+	}
+	
 
 	public String getVille() {
 		return ville;
@@ -179,6 +231,7 @@ public class ActiviteCarpeDiem {
 	    return formatter.parse(endDate);
 	
 	}
+
 	
 		
 }

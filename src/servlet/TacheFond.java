@@ -12,6 +12,7 @@ public class TacheFond implements Runnable {
 	public boolean stop = false;
 	private static final Logger LOG = Logger.getLogger(TacheFond.class);
 	private Date debut=new Date();
+	private Date debutCarpediem=new Date();
 
 	@Override
 	public void run() {
@@ -28,6 +29,8 @@ public class TacheFond implements Runnable {
 				debut=new Date();
 				LogDAO.prepareStatPerf();
 				}
+				
+				
 				doTacheFond();
 
 			} catch (InterruptedException e) {

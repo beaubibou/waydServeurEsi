@@ -32,6 +32,8 @@ public class LogDAO {
 	public static final String PERSONNE_INEXISTANTANE = "personne inconnue";
 	public static final String JETON_NON_VALIDE = "Jeton invalide";
 	public static long TPS_CALCUL_PERFOMENCE = 60;
+	public static int HEURE=3600;
+	public static long TPS_IMPORTCARPEDIEM = 4*HEURE;
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
 

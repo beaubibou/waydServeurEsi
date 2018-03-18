@@ -3610,7 +3610,7 @@ public class WBservices {
 						longitude, adresse, nom, prenom, photo, note, role,
 						archive, totalavis, datenaissance, sexe,
 						nbrparticipant, afficheage, affichesexe, nbmaxwayd,
-						typeuser, 0);
+						typeuser, 0,null);
 
 				listActivite.add(activite);
 
