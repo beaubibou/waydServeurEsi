@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -22,6 +24,7 @@ import website.metier.AuthentificationSite;
  */
 public class ImportCarpeDiem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = Logger.getLogger(ImportCarpeDiem.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -99,7 +102,7 @@ public class ImportCarpeDiem extends HttpServlet {
 						importCarpe.importActivitesByPage(dateEventStr, ville);
 					} catch (JSONException e) {
 						
-						e.printStackTrace();
+						LOG.error(ExceptionUtils.getStackTrace(e));
 					}
 			
 			}

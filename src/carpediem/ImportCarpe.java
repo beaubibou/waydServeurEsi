@@ -19,13 +19,16 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fcm.PushAndroidMessage;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
 public class ImportCarpe {
+	private static final Logger LOG = Logger.getLogger(ImportCarpe.class);
 
 	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<ActiviteCarpeDiem>();
 	ActiviteCarpeDiem activite;
@@ -36,7 +39,7 @@ public class ImportCarpe {
 		int page = 0;
 		Integer status;
 		do {
-			System.out.println("*********************CHARGE ***********PAGE"
+			LOG.info("*********************CHARGE ***********PAGE"
 					+ ville + "N°page:" + page);
 			page++;
 			String ur = "http://" + ville + ".carpediem.cd/events/?" + date;
@@ -70,7 +73,7 @@ public class ImportCarpe {
 
 		} while (status == 1 && page < 30);
 
-		System.out.println("^^^^^^^^^^^^^^^^termieé");
+	
 	}
 
 	public void charge(String sourcehtml) throws IOException {
@@ -93,10 +96,10 @@ public class ImportCarpe {
 			try {
 				getDetailActivite(activiteCarpe);
 				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
-				System.out.println("********ajout activite****************");
+				LOG.info("Activite ajoutée");
 			} catch (Exception e) {
-				System.out.println("Detail de l'activite non dispobnile");
-				e.printStackTrace();
+				LOG.error("Detail activite non disponible");
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
 		
@@ -167,7 +170,7 @@ public class ImportCarpe {
 		int debutBalise=tmpdescription.indexOf("<a");
 		int finBalise=tmpdescription.indexOf("</a>");
 		
-		System.out.println(finBalise);
+	
 		
 		if (debutBalise!=-1 && finBalise!=-1){
 			description=new StringBuilder(tmpdescription).delete(debutBalise, finBalise+4).toString();
@@ -187,7 +190,7 @@ public class ImportCarpe {
 			return;
 
 		String attribute = idAttribute.getValue();
-		// System.out.println(attribute);
+	
 		switch (attribute) {
 
 		case "startDate":
@@ -257,8 +260,7 @@ public class ImportCarpe {
 		for (int f = start; f < start + 50; f++) {
 
 			String nombre = String.valueOf(chaine.charAt(f));
-			// System.out.println(nombre);
-
+		
 			if (nombre.equals(".")) {
 				retour = retour + nombre;
 				continue;
@@ -291,7 +293,6 @@ public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException{
 	URLConnection conn = url.openConnection();
 	conn.addRequestProperty("User-Agent",
 			"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-	// conn.connect();
 
 	conn.setDoOutput(true);
 	OutputStreamWriter writer = new OutputStreamWriter(
@@ -306,19 +307,6 @@ public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException{
 	int ch;
 	while ((ch = in.read()) != -1)
 		parsedContentFromUrl.append((char) ch);
-	
-//	Source source = new Source(parsedContentFromUrl.toString());
-//
-//	source.fullSequentialParse();
-//
-//	List<Element> h2Elements = source.getAllElements("span");
-//	
-//	for (Element element:h2Elements){
-//		
-//		getFullDescription(element,activiteCarpe);
-//		
-//		
-//	}
 
 	
 }
