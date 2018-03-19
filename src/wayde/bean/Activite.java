@@ -79,6 +79,22 @@ public class Activite {
 		return interet;
 	}
 
+	public int getPayante() {
+		return payante;
+	}
+
+	public void setPayante(int payante) {
+		this.payante = payante;
+	}
+
+	public String getFulldescrition() {
+		return fulldescrition;
+	}
+
+	public void setFulldescrition(String fulldescrition) {
+		this.fulldescrition = fulldescrition;
+	}
+
 	public void setInteret(boolean interet) {
 		this.interet = interet;
 	}
