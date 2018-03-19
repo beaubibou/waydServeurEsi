@@ -70,7 +70,7 @@ public class Activite {
 
 	private int nbmaxwaydeur;
 	
-	public int payante;
+	public int gratuite;
 	
 	String fulldescrition;
 
@@ -79,13 +79,19 @@ public class Activite {
 		return interet;
 	}
 
-	public int getPayante() {
-		return payante;
+	
+
+	public int getGratuite() {
+		return gratuite;
 	}
 
-	public void setPayante(int payante) {
-		this.payante = payante;
+
+
+	public void setGratuite(int gratuite) {
+		this.gratuite = gratuite;
 	}
+
+
 
 	public String getFulldescrition() {
 		return fulldescrition;
@@ -195,7 +201,7 @@ public class Activite {
 	            String nom,String prenom,String photo,double note,
 	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
 	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,
-	            int typeUser,int typeAcces ,String fulldescription)
+	            int typeUser,int typeAcces ,String fulldescription,int gratuit)
 	        {
 	            super();
 	        	this.id=id;
@@ -230,6 +236,7 @@ public class Activite {
 	    		this.nbmaxwaydeur=nbmaxwaydeur;
 	    		this.fulldescrition=fulldescription;
 	    		if (this.titre.equals(""))this.titre=" ";
+	    		this.gratuite=gratuit;
 	    			
 	    		
 	        }

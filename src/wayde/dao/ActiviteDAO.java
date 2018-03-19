@@ -22,6 +22,7 @@ import wayde.bean.PhotoActivite;
 import wayde.bean.ProprietePref;
 import wayde.bean.TableauBord;
 import website.dao.LogDAO;
+import website.metier.TypeGratuitActivite;
 import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
@@ -45,7 +46,7 @@ public class ActiviteDAO {
 				+ "personne.nbravis as totalavis,    personne.photo,1 as role,"
 				+ "activite.idactivite,    activite.libelle,    activite.titre,"
 				+ "activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite"
-				+ ",activite.typeuser,activite.typeacces,activite.descriptionall   FROM personne,"
+				+ ",activite.typeuser,activite.typeacces,activite.descriptionall,activite.gratuit   FROM personne,"
 				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
 
 		preparedStatement = connexion.prepareStatement(requete);
@@ -90,15 +91,16 @@ public class ActiviteDAO {
 
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			int gratuit = rs.getInt("gratuit");
 
-			// if (libelle.length()==0)
-			// libelle=" ";
+		
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
-					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription);
+					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription,gratuit);
+
 
 		}
 		
@@ -202,8 +204,8 @@ public class ActiviteDAO {
 		String requete = "INSERT INTO activite("
 				+ "   titre, libelle,datedebut, "
 				+ " datefin, adresse, latitude, longitude, actif,"
-				+ "idtypeactivite,idpersonne,datecreation,nbmaxwayd,nbrwaydeur,typeuser)"
-				+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "idtypeactivite,idpersonne,datecreation,nbmaxwayd,nbrwaydeur,typeuser,gratuit)"
+				+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
@@ -224,6 +226,7 @@ public class ActiviteDAO {
 		preparedStatement.setInt(12, activite.getNbmaxwaydeur());
 		preparedStatement.setInt(13, activite.getNbrparticipant());
 		preparedStatement.setInt(14, activite.getTypeUser());
+		preparedStatement.setInt(15, TypeGratuitActivite.GRATUIT);
 		preparedStatement.execute();
 		ResultSet rs = preparedStatement.getGeneratedKeys();
 		int cle = 0;
@@ -267,7 +270,7 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
@@ -328,12 +331,13 @@ public class ActiviteDAO {
 
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			int gratuit = rs.getInt("gratuit");
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,null);
+					nbmaxwayd, typeUser, typeAcces,null,gratuit);
 			retour.add(activite);
 
 		}
@@ -358,7 +362,7 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT activite.datedebut,      activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,      activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,personne.datenaissance  ,    personne.idpersonne,    "
 				+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
@@ -421,12 +425,14 @@ public class ActiviteDAO {
 
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			int gratuit = rs.getInt("gratuit");
+
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,null);
+					nbmaxwayd, typeUser, typeAcces,null,gratuit);
 
 			retour.add(activite);
 
@@ -455,7 +461,7 @@ public class ActiviteDAO {
 		double longMax = proprietepreference.getLongitude() + coef;
 
 		// Modifcation des requets pour n'avoir que les suggestions en cours
-		String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
 				+ " activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,"
 				+ "personne.datenaissance,activite.typeuser,activite.typeacces,  "
 				+ " personne.note,personne.nbravis as totalavis,"
@@ -524,13 +530,15 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			int gratuit = rs.getInt("gratuit");
+
 
 			String fullDescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fullDescriptionNull);
+					nbmaxwayd, typeUser, typeAcces,fullDescriptionNull,gratuit);
 
 			retour.add(activite);
 
@@ -548,7 +556,7 @@ public class ActiviteDAO {
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 
-		String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom, personne.datenaissance  ,   personne.sexe,    personne.nom,    personne.idpersonne, "
 				+ "personne.note,0 as role,"
 				+ "personne.nbravis as totalavis,"
@@ -593,12 +601,14 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
+			int gratuit = rs.getInt("gratuit");
+
 			String fulldescriptionNull=null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
 			retour.add(activite);
 
 		}
@@ -607,7 +617,7 @@ public class ActiviteDAO {
 
 		// Cherche dans les activite
 
-		requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+		requete = " SELECT activite.datedebut,activite.gratuit,        activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom,  personne.datenaissance,  personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ " personne.note,personne.nbravis as totalavis ,"
 				+ "activite.nbrwaydeur as nbrparticipant,   personne.photo,"
@@ -649,11 +659,13 @@ public class ActiviteDAO {
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 			String fulldescriptionNull=null;
+			int gratuit = rs.getInt("gratuit");
+
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces,fulldescriptionNull);
+					typeUser, typeAcces,fulldescriptionNull,gratuit);
 
 			retour.add(activite);
 
@@ -760,7 +772,7 @@ public class ActiviteDAO {
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 
-		String requete = "SELECT activite.datedebut,activite.adresse,activite.latitude,"
+		String requete = "SELECT activite.gratuit,activite.datedebut,activite.adresse,activite.latitude,"
 				+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
 				+ "personne.note,0 as role,"
 				+ "personne.nbravis as totalavis,"
@@ -806,11 +818,13 @@ public class ActiviteDAO {
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 String fulldescriptionNull=null;
+int gratuit = rs.getInt("gratuit");
+
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
 			retour.add(activite);
 
 		}
@@ -818,7 +832,7 @@ String fulldescriptionNull=null;
 		CxoPool.close(preparedStatement, rs);
 		// Cherche dans les activite
 
-		requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+		requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom,personne.datenaissance,    personne.sexe,    personne.nom,    personne.idpersonne,   "
 				+ "personne.note,personne.nbravis as totalavis,"
 				+ "activite.nbrwaydeur as nbrparticipant"
@@ -859,11 +873,13 @@ String fulldescriptionNull=null;
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 			String fulldescriptionNull=null;
+			int gratuit = rs.getInt("gratuit");
+
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces,fulldescriptionNull);
+					typeUser, typeAcces,fulldescriptionNull,gratuit);
 			retour.add(activite);
 
 		}
@@ -1439,13 +1455,12 @@ String fulldescriptionNull=null;
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
-		// System.out.println(latMin + "," + latMax + "coef:" + coef);
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commenceDans);
 
-		String requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
@@ -1517,8 +1532,6 @@ String fulldescriptionNull=null;
 			double note = rs.getDouble("note");
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
-			// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
 			if (prenom == null)
 				prenom = "";
 			String photo = rs.getString("photo");
@@ -1528,11 +1541,13 @@ String fulldescriptionNull=null;
 			int totalavis = rs.getInt("totalavis");
 			int typeAcces = rs.getInt("typeacces");
 			String fulldescriptionNull=null;
+			int gratuit = rs.getInt("gratuit");
+
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull);
+					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
 			retour.add(activite);
 
 		}
@@ -1542,6 +1557,7 @@ String fulldescriptionNull=null;
 
 	}
 
+	
 	public void addActivitePro(String titre, String libelle,
 			int idorganisateur, int idtypeactivite, String latitudestr,
 			String longitudestr, String adresse, Long debut, Long fin) {

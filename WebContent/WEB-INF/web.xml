@@ -834,4 +834,14 @@
     <servlet-name>EffaceActiviteCarpediem</servlet-name>
     <url-pattern>/EffaceActiviteCarpediem</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ModifieActivite</display-name>
+    <servlet-name>ModifieActivite</servlet-name>
+    <servlet-class>servlet.ModifieActivite</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifieActivite</servlet-name>
+    <url-pattern>/ModifieActivite</url-pattern>
+  </servlet-mapping>
 </web-app>

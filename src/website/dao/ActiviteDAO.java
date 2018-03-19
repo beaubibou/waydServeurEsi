@@ -46,6 +46,7 @@ import website.metier.ProfilBean;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatMessage;
+import website.metier.TypeGratuitActivite;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.FitreAdminActivites;
@@ -94,8 +95,7 @@ public class ActiviteDAO {
 			return listPhotos;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return listPhotos;
@@ -127,8 +127,7 @@ public class ActiviteDAO {
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return false;
@@ -160,8 +159,7 @@ public class ActiviteDAO {
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
@@ -199,9 +197,7 @@ public class ActiviteDAO {
 			return nbrPhoto;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return nbrPhoto;
 
@@ -248,8 +244,7 @@ public class ActiviteDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
@@ -262,7 +257,6 @@ public class ActiviteDAO {
 	}
 
 	private static boolean isDejaVu(int idpersonne, int idactivite) {
-		// TODO Auto-generated method stub
 		long debut = System.currentTimeMillis();
 		boolean retour = false;
 		Connection connexion = null;
@@ -287,8 +281,6 @@ public class ActiviteDAO {
 			return retour;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -301,7 +293,6 @@ public class ActiviteDAO {
 	}
 
 	public static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
-		// TODO Auto-generated method stub
 
 		long debut = System.currentTimeMillis();
 
@@ -563,6 +554,41 @@ public class ActiviteDAO {
 		return false;
 
 	}
+	public static boolean setGratuite(int idactivite,int gratuit) {
+
+		long debut = System.currentTimeMillis();
+
+		PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			// LOG.info("Mise a jour activite"+ commentaire.length());
+
+			String requete = "UPDATE  activite set gratuit=? WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, gratuit);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("setGratuit", debut);
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
 
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
@@ -724,7 +750,7 @@ public class ActiviteDAO {
 
 		String requete = " SELECT activite.datedebut,       activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,    personne.idpersonne,"
-				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
+				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,descriptionall,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
 				+ "activite.titre,activite.nbrwaydeur as nbrparticipant ,activite.nbmaxwayd,activite.nbrvu,   activite.datefin, activite.idtypeactivite,"
 				+ "activite.typeuser,activite.typeacces,type_activite.nom as libelleActivite,activite.adresse   FROM personne,"
@@ -756,9 +782,10 @@ public class ActiviteDAO {
 				int typeUser = rs.getInt("typeuser");
 				int typeAcces = rs.getInt("typeacces");
 				String adresse = rs.getString("adresse");
-
+				String descriptionall = rs.getString("descriptionall");
 				int totalavis = rs.getInt("totalavis");
 				int nbrVu = rs.getInt("nbrvu");
+				int gratuit = rs.getInt("gratuit");
 				String libelleActivite = rs.getString("libelleActivite");
 				int nbrSignalement = 0;
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
@@ -766,7 +793,7 @@ public class ActiviteDAO {
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement);
+						nbrSignalement,descriptionall,gratuit);
 				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
@@ -1317,7 +1344,7 @@ public class ActiviteDAO {
 		int etatActivite = filtre.getEtatActivite();
 		double malatitude = filtre.getLatitude();
 		double malongitude = filtre.getLongitude();
-
+		int gratuit=filtre.getGratuit();
 		double coef = rayonmetre * 0.007 / 700;
 		double latMin = malatitude - coef;
 		double latMax = malatitude + coef;
@@ -1340,7 +1367,7 @@ public class ActiviteDAO {
 					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
 					+ "activite.idpersonne,    activite.datecreation,    activite.nbrwaydeur as nbrparticipant,    activite.nbmaxwayd,    activite.d_finactivite,"
 					+ "activite.typeacces,    activite.typeuser,activite.nbrvu,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
-					+ "type_activite.nom as libelleActivite "
+					+ "type_activite.nom as libelleActivite,descriptionall,gratuit "
 					+ " FROM activite"
 					+ " LEFT JOIN ( SELECT count(*) AS nbrsignalement, signaler_activite.idactivite "
 					+ " FROM signaler_activite  GROUP BY signaler_activite.idactivite) tablesignalement ON activite.idactivite = tablesignalement.idactivite"
@@ -1361,8 +1388,15 @@ public class ActiviteDAO {
 				requete = requete + " and activite.typeuser=? ";
 
 			}
+			
+			if (gratuit != TypeGratuitActivite.TOUS) {// on trie sur l'activité
+
+				requete = requete + " and activite.gratuit=? ";
+
+			}
 
 			switch (etatActivite) {
+			
 
 			case TypeEtatActivite.ENCOURS:
 
@@ -1428,7 +1462,16 @@ public class ActiviteDAO {
 				index++;
 
 			}
+			
+			if (gratuit != TypeGratuitActivite.TOUS) {// on trie sur l'activité
 
+				preparedStatement.setInt(index, gratuit);
+				index++;
+
+			}
+
+			
+			
 			preparedStatement.setInt(index, maxResult);
 			index++;
 			preparedStatement.setInt(index, offset);
@@ -1467,15 +1510,17 @@ public class ActiviteDAO {
 
 				String libelleActivite = rs.getString("libelleActivite");
 				String adresse = rs.getString("adresse");
+				String descriptionall = rs.getString("descriptionall");
 				int nbrSignalement = rs.getInt("nbrsignalement");
 				int nbrVu = rs.getInt("nbrvu");
+				int gratuite = rs.getInt("gratuit");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement);
+						nbrSignalement,descriptionall,gratuite);
 
 				activite.setPositionRecherche(filtre.getLatitude(),
 						filtre.getLongitude());
@@ -1488,8 +1533,7 @@ public class ActiviteDAO {
 
 			return retour;
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {

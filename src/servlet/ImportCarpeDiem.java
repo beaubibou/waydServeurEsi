@@ -98,15 +98,14 @@ public class ImportCarpeDiem extends HttpServlet {
 				 try {
 						importCarpe.importActivitesByPage(dateEventStr, ville);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 			
 			}
 		}
 
-	//	System.out.println("****************"+totalLog.toString());
-	}
+		}
 
 	private String getFormatDate(DateTime dt) {
 

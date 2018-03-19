@@ -20,6 +20,8 @@ public class ActiviteBean {
 
 	public static int GRATUIT = 1;
 	public static int PAYANT = 2;
+	public static int GRATUITE_INCONNU = 0;
+	
 
 	String titre;
 
@@ -71,13 +73,35 @@ public class ActiviteBean {
 
 	private String libelleActivite;
 
-	
 	private String typeActiviteStr;
 	private int nbrVu;
 
 	private int nbrInteret;
+
+	String fulldescription;
+
+	private int gratuite;
+
 	
+	public int getGratuite() {
+		return gratuite;
+	}
+
+	public void setGratuite(int gratuite) {
+		this.gratuite = gratuite;
+	}
+
+	public String getFulldescription() {
+		System.out.println(fulldescription);
+		return fulldescription;
+	}
+
+	public void setFulldescription(String fulldescription) {
+		this.fulldescription = fulldescription;
+	}
+
 	
+
 	public int getNbrInteret() {
 		return nbrInteret;
 	}
@@ -233,23 +257,21 @@ public class ActiviteBean {
 	public String getPhoto() {
 
 		if (photo == null)
-			 return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
+			return Outils
+					.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 
 		if (photo.equals("")) {
-			 return Outils.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
+			return Outils
+					.getUrlPhoto(CacheValueDAO.getPhoto(TypePhoto.Inconnu));
 		}
-		
-		
+
 		if (photo.contains("https:"))
 			return photo;
-		
-		
+
 		if (photo.contains("http:"))
 			return photo;
-		
-		return	Outils.getUrlPhoto(photo);
-		
-	
+
+		return Outils.getUrlPhoto(photo);
 
 	}
 
@@ -338,7 +360,8 @@ public class ActiviteBean {
 			String adresse, String nom, String pseudo, String photo,
 			double note, int role, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
-			boolean afficheage, boolean affichesexe, int nbmaxwaydeur, int nbrvu,int nbr_interet) {
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
+			int nbrvu, int nbr_interet) {
 
 		super();
 		this.id = id;
@@ -363,7 +386,7 @@ public class ActiviteBean {
 		this.idorganisateur = idorganisateur;
 		this.adresse = adresse;
 		this.nbrVu = nbrvu;
-		this.nbrInteret=nbr_interet;
+		this.nbrInteret = nbr_interet;
 
 	}
 
@@ -381,7 +404,7 @@ public class ActiviteBean {
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
 			int typeUser, int typeAcces, String libelleActivite,
-			String adresse, int nbrSignalement) {
+			String adresse, int nbrSignalement, String fulldescription,int gratuit) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -406,8 +429,8 @@ public class ActiviteBean {
 		this.libelleActivite = libelleActivite;
 		this.adresse = adresse;
 		this.nbrSignalement = nbrSignalement;
-		// TODO Auto-generated constructor stub
-
+		this.fulldescription = fulldescription;
+		this.gratuite=gratuit;
 	}
 
 	public int getNbrSignalement() {
@@ -419,8 +442,6 @@ public class ActiviteBean {
 	}
 
 	private long getSeTermine(Date finActivite) {// calcul en miliseconde le
-													// temps avant la fin
-		// TODO Auto-generated method stub
 		return finActivite.getTime() - new Date().getTime();
 
 	}

@@ -26,7 +26,6 @@ public class ListActivite extends HttpServlet {
 	 */
 	public ListActivite() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -35,7 +34,6 @@ public class ListActivite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -73,18 +71,17 @@ public class ListActivite extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 		
 	}
 
 	private void metAjourFiltre(HttpServletRequest request,
 			HttpServletResponse response, FitreAdminActivites filtreActivite) {
-		// TODO Auto-generated method stub
 		if (request.getParameter("rayon") != null) {
 			int rayon = Integer.parseInt(request.getParameter("rayon"));
 			filtreActivite.setRayon(rayon);
 		}
+		
 		
 		if (request.getParameter("typeUser") != null) {
 			int typeUser = Integer.parseInt(request
@@ -128,6 +125,10 @@ public class ListActivite extends HttpServlet {
 			filtreActivite.setVille(autocomplete);
 		}
 		
+		if (request.getParameter("gratuit") != null) {
+			int gratuit = Integer.parseInt(request.getParameter("gratuit"));
+			filtreActivite.setGratuit(gratuit);
+		}
 		
 
 	}

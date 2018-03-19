@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
+import website.metier.TypeGratuitActivite;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 
@@ -16,7 +17,15 @@ public class FitreAdminActivites {
 	int typeUser;
 	int typeSignalement;
 	int etatActivite;
+	int gratuit;
 	
+	
+	public int getGratuit() {
+		return gratuit;
+	}
+	public void setGratuit(int gratuit) {
+		this.gratuit = gratuit;
+	}
 	public int getTypeSignalement() {
 		return typeSignalement;
 	}
@@ -90,6 +99,6 @@ public class FitreAdminActivites {
 		typeUser=TypeUser.TOUS;
 		typeSignalement=TypeSignalement.TOUS;
 		this.etatActivite=TypeEtatActivite.TOUTES;
-		
+		this.gratuit=TypeGratuitActivite.GRATUITE_INCONNU;
 	}
 }

@@ -55,9 +55,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -91,8 +89,6 @@ public class ServeurMethodes {
 				n.send(androidMessage, GCMid, 3);
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
@@ -132,9 +128,7 @@ public class ServeurMethodes {
 				n.send(androidMessage, GCMid, 3);
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e));
+					LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 		}
@@ -181,9 +175,7 @@ public class ServeurMethodes {
 				n.send(androidMessage, GCMid, 3);
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e));
+					LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 		}
@@ -217,8 +209,6 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
@@ -247,8 +237,6 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
@@ -279,9 +267,7 @@ public class ServeurMethodes {
 
 			n.send(androidMessage, GCMid, 3);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 	}
@@ -313,9 +299,7 @@ public class ServeurMethodes {
 
 			n.send(androidMessage, GCMid, 3);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -340,9 +324,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -369,8 +351,6 @@ public class ServeurMethodes {
 			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
@@ -396,9 +376,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
 
@@ -421,8 +399,6 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
@@ -450,8 +426,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -481,8 +456,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, listpersonneGcm, 3);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -512,8 +486,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -541,8 +514,7 @@ public class ServeurMethodes {
 					.addData("message", "Nouvelle Activite").build();
 			n.send(androidMessage, listgcm, 3);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 	}
@@ -562,8 +534,7 @@ public class ServeurMethodes {
 			n.send(androidMessage, GCMid, 3);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 

@@ -536,8 +536,7 @@ public class WBservices {
 			listmessage = messagedao.getDiscussion(iddestinataire, idemetteur);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -888,8 +887,6 @@ public class WBservices {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -927,9 +924,7 @@ public class WBservices {
 			return tableaubord;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -956,7 +951,6 @@ public class WBservices {
 			return indicateurs;
 
 		} catch (SQLException | NamingException e) {
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 
@@ -988,7 +982,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1026,7 +1019,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1060,7 +1052,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1110,7 +1101,6 @@ public class WBservices {
 			}
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
-			e1.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e1));
 
 		} finally {
@@ -1168,7 +1158,6 @@ public class WBservices {
 			}
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
-			e1.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e1));
 			listErreurs.add(new Erreur(2, e1.getMessage()));
 
@@ -3418,8 +3407,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
@@ -3431,6 +3418,7 @@ public class WBservices {
 	}
 
 	public Activite[] getActivites(int idPersonne, String latitudestr,
+		
 			String longitudestr, int rayonmetre, int typeactivite,
 			String motcle, int typeUser, int commenceDans, String jeton) {
 		double malatitude = Double.valueOf(latitudestr);
@@ -3479,7 +3467,7 @@ public class WBservices {
 			// Renvoi les imm�diates
 			if (commenceDans == 0) {
 
-				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+				requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
 						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
@@ -3494,7 +3482,7 @@ public class WBservices {
 			// datefinde rechere et maintenant
 			else {
 				// Requete N�2
-				requete = " SELECT activite.datedebut,        activite.adresse,    activite.latitude,"
+				requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
 						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
 						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
 						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
@@ -3594,9 +3582,6 @@ public class WBservices {
 				String prenom = rs.getString("prenom");
 				boolean afficheage = rs.getBoolean("afficheage");
 				boolean affichesexe = rs.getBoolean("affichesexe");
-
-				// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
 				if (prenom == null)
 					prenom = "";
 				String photo = rs.getString("photo");
@@ -3605,12 +3590,14 @@ public class WBservices {
 				boolean archive = false;
 				int totalavis = rs.getInt("totalavis");
 				int typeuser = rs.getInt("typeuser");
+				int gratuit = rs.getInt("gratuit");
+				
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, role,
 						archive, totalavis, datenaissance, sexe,
 						nbrparticipant, afficheage, affichesexe, nbmaxwayd,
-						typeuser, 0,null);
+						typeuser, 0,null,gratuit);
 
 				listActivite.add(activite);
 
@@ -3625,8 +3612,6 @@ public class WBservices {
 					.size()]);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return (Activite[]) listActivite.toArray(new Activite[listActivite
 					.size()]);
@@ -3662,16 +3647,13 @@ public class WBservices {
 			notificationdao.litNotification(idpersonne);
 			connexion.commit();
 	
-			// new AcquitAllNotificationGcm(idpersonne).start();
 			PoolThreadGCM.poolThread.execute(new AcquitAllNotificationGcm(
 					idpersonne));
 	
 			LogDAO.LOG_DUREE("acquitAllNotification", debut);
 	
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		
 			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
@@ -3721,9 +3703,7 @@ public class WBservices {
 	
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
 			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
@@ -3906,8 +3886,6 @@ public class WBservices {
 	
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 	
@@ -3995,9 +3973,7 @@ public class WBservices {
 	
 		} catch (Exception e) {
 	
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
 			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());

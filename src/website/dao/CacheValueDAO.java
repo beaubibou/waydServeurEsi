@@ -29,6 +29,7 @@ import website.metier.TypeEtatLogs;
 import website.metier.TypeEtatMessage;
 import website.metier.TypeEtatProfil;
 import website.metier.TypeEtatValide;
+import website.metier.TypeGratuitActivite;
 import website.metier.TypeSignalement;
 import website.metier.TypeUser;
 import website.metier.admin.EtatProbleme;
@@ -46,6 +47,9 @@ public class CacheValueDAO {
 	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<EtatProbleme>();
 	static ArrayList<EtatSuggestion> listTypeEtatSuggestion = new ArrayList<EtatSuggestion>();
 	static ArrayList<TypeActiviteBean> tousTypeActivite = new ArrayList<TypeActiviteBean>();
+	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActivite = new ArrayList<TypeGratuitActivite>();
+	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActiviteREQUETE = new ArrayList<TypeGratuitActivite>();
+
 	
 	
 	
@@ -58,7 +62,6 @@ public class CacheValueDAO {
 	}
 
 	private static void initMapPhotoActivite() {
-		// TODO Auto-generated method stub
 		for (TypeActiviteBean typeActivite : getListTypeActiviteBeanFull())
 			mapTypeActivite.put(typeActivite.id, typeActivite);
 
@@ -89,10 +92,7 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -118,8 +118,6 @@ public class CacheValueDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		} finally {
@@ -155,9 +153,6 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -192,9 +187,7 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -229,9 +222,7 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -264,9 +255,7 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -303,9 +292,7 @@ public class CacheValueDAO {
 			return listTypeActivitePro;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return listTypeActivitePro;
 		} finally {
@@ -337,9 +324,7 @@ public class CacheValueDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -398,8 +383,7 @@ public class CacheValueDAO {
 	}
 
 	public ArrayList<QuantiteWaydeurBean> getListQuantiteWaydeur() {
-		// TODO AlistTypeEtatProblemeuto-generated method stub
-
+	
 		ArrayList<QuantiteWaydeurBean> listQuantite = new ArrayList<QuantiteWaydeurBean>();
 		for (int f = 1; f < 9; f++) {
 			listQuantite.add(new QuantiteWaydeurBean(f, f + " Waydeur"));
@@ -408,7 +392,6 @@ public class CacheValueDAO {
 	}
 
 	public static ArrayList<TypeSignalement> getListTypeSignalementActivite() {
-		// TODO Auto-generated method stub
 	
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
 		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, ListeValeurText.TOUS));
@@ -422,6 +405,38 @@ public class CacheValueDAO {
 	
 	}
 
+	public static ArrayList<TypeGratuitActivite> getListGratuitActiviteRequete() {
+		
+		if (ListTypeGRATUITActiviteREQUETE.isEmpty()){
+			ListTypeGRATUITActiviteREQUETE.add(new TypeGratuitActivite(TypeGratuitActivite.GRATUITE_INCONNU,  ListeValeurText.GRATUITE_INCONNU));
+			ListTypeGRATUITActiviteREQUETE.add(new TypeGratuitActivite(TypeGratuitActivite.GRATUIT,  ListeValeurText.GRATUIT));
+			ListTypeGRATUITActiviteREQUETE.add(new TypeGratuitActivite(TypeGratuitActivite.PAYANT,  ListeValeurText.PAYANT));
+			ListTypeGRATUITActiviteREQUETE.add(new TypeGratuitActivite(TypeGratuitActivite.TOUS,  ListeValeurText.TOUTES));
+		}
+		
+		
+		
+		
+		return ListTypeGRATUITActiviteREQUETE;
+	}
+	
+	public static ArrayList<TypeGratuitActivite> getListGratuitActivite() {
+
+		
+		
+		if (ListTypeGRATUITActivite.isEmpty()){
+			ListTypeGRATUITActivite.add(new TypeGratuitActivite(TypeGratuitActivite.GRATUITE_INCONNU,  ListeValeurText.GRATUITE_INCONNU));
+			ListTypeGRATUITActivite.add(new TypeGratuitActivite(TypeGratuitActivite.GRATUIT,  ListeValeurText.GRATUIT));
+			ListTypeGRATUITActivite.add(new TypeGratuitActivite(TypeGratuitActivite.PAYANT,  ListeValeurText.PAYANT));
+	
+		}
+		
+		
+		
+		
+		return ListTypeGRATUITActivite;
+	}
+	
 	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
 		// TODO Auto-generated method stub
 
