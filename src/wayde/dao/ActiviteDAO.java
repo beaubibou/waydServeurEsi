@@ -27,43 +27,26 @@ import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
 	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);
-	
-private static String REQ_ACTIVITE=
-		"activite.datedebut,"
-		+ "activite.adresse,"
-		+ "activite.latitude,"
-		+ "activite.longitude,"
-		+ "activite.idactivite,"
-		+ "activite.libelle,"
-		+ "activite.titre,"
-		+ "activite.nbrwaydeur,"
-		+ "activite.nbmaxwayd,"
-		+ "activite.datefin,"
-		+ "activite.idtypeactivite,"
-		+ "activite.typeuser,"
-		+ "activite.typeacces,"
-		+ "activite.descriptionall,"
-		+ "activite.gratuit,"
-		+ "personne.prenom,"
-		+ "personne.sexe,"
-		+ "personne.nom,"
-		+ "personne.idpersonne,"
-		+ "personne.affichesexe,"
-		+ "personne.afficheage,"
-		+ "personne.datenaissance,"
-		+ "personne.note,"
-		+ "personne.nbravis as totalavis,"
-		+ "personne.photo,"
-		+ "1 as role,";
-	
+
+	private static String REQ_ACTIVITE = "activite.datedebut,"
+			+ "activite.adresse," + "activite.latitude,"
+			+ "activite.longitude," + "activite.idactivite,"
+			+ "activite.libelle," + "activite.titre," + "activite.nbrwaydeur,"
+			+ "activite.nbmaxwayd," + "activite.datefin,"
+			+ "activite.idtypeactivite," + "activite.typeuser,"
+			+ "activite.typeacces," + "activite.descriptionall,"
+			+ "activite.gratuit," + "personne.prenom," + "personne.sexe,"
+			+ "personne.nom," + "personne.idpersonne,"
+			+ "personne.affichesexe," + "personne.afficheage,"
+			+ "personne.datenaissance," + "personne.note,"
+			+ "personne.nbravis as totalavis," + "personne.photo,"
+			+ "1 as role,";
 
 	Connection connexion;
-	
 
 	public ActiviteDAO(Connection connexion) {
 		this.connexion = connexion;
 	}
-	
 
 	public Activite getActivite(int idactivite_) throws Exception {
 
@@ -83,8 +66,7 @@ private static String REQ_ACTIVITE=
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite_);
 		rs = preparedStatement.executeQuery();
-		
-		
+
 		while (rs.next()) {
 			int id = rs.getInt("idactivite");
 			int idtypeactivite = rs.getInt("idtypeactivite");
@@ -126,25 +108,23 @@ private static String REQ_ACTIVITE=
 			int typeAcces = rs.getInt("typeacces");
 			int gratuit = rs.getInt("gratuit");
 
-		
-
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
-					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription,gratuit);
-
+					affichesexe, nbmaxwayd, typeUser, typeAcces,
+					fulldescription, gratuit);
 
 		}
-		
+
 		CxoPool.close(preparedStatement, rs);
 		return activite;
 
 	}
-	
-	public Activite getActiviteByRS(ResultSet rs) throws SQLException{
-		
-		if (rs==null)
+
+	public Activite getActiviteByRS(ResultSet rs) throws SQLException {
+
+		if (rs == null)
 			return null;
 		int id = rs.getInt("idactivite");
 		int idtypeactivite = rs.getInt("idtypeactivite");
@@ -186,12 +166,12 @@ private static String REQ_ACTIVITE=
 		int typeAcces = rs.getInt("typeacces");
 		int gratuit = rs.getInt("gratuit");
 
-		return  new Activite(id, titre, libelle, idorganisateur,
-					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
-					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
-					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription,gratuit);
-		
+		return new Activite(id, titre, libelle, idorganisateur, datedebut,
+				datefin, idtypeactivite, latitude, longitude, adresse, nom,
+				prenom, photo, note, role, archive, totalavis, datenaissance,
+				sexe, nbrparticipant, afficheage, affichesexe, nbmaxwayd,
+				typeUser, typeAcces, fulldescription, gratuit);
+
 	}
 
 	public ArrayList<Personne> getListPersonneInterresse(Activite activite)
@@ -395,10 +375,10 @@ private static String REQ_ACTIVITE=
 				+ " and activite.latitude between ? and ?"
 				+ " and activite.longitude between ? and ?"
 				+ " and (UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
-	
+
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-	
+
 		preparedStatement.setInt(1, idtypeactivite_);
 		preparedStatement.setTimestamp(2, new java.sql.Timestamp(calendrier
 				.getTime().getTime()));
@@ -451,7 +431,7 @@ private static String REQ_ACTIVITE=
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,null,gratuit);
+					nbmaxwayd, typeUser, typeAcces, null, gratuit);
 			retour.add(activite);
 
 		}
@@ -476,30 +456,18 @@ private static String REQ_ACTIVITE=
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT "
-				+ " activite.gratuit,"
-				+ " activite.datedebut,"
-				+ " activite.adresse, "
-				+ " activite.latitude,"
-				+ " activite.longitude,"
-				+ " personne.prenom, "
-				+ " personne.sexe,"
-				+ " personne.nom,"
-				+ " personne.datenaissance,"
-				+ " personne.idpersonne,"
-				+ " personne.note,"
-				+ " personne.nbravis as totalavis  ,"
+		String requete = " SELECT " + " activite.gratuit,"
+				+ " activite.datedebut," + " activite.adresse, "
+				+ " activite.latitude," + " activite.longitude,"
+				+ " personne.prenom, " + " personne.sexe," + " personne.nom,"
+				+ " personne.datenaissance," + " personne.idpersonne,"
+				+ " personne.note," + " personne.nbravis as totalavis  ,"
 				+ " personne.photo,"
-				+ " activite.nbrwaydeur as nbrparticipant,"
-				+ " 1 as role,"
-				+ " activite.idactivite,"
-				+ " activite.libelle,  "
-				+ " activite.titre,"
-				+ " activite.datefin,"
-				+ " activite.idtypeactivite,"
-				+ " activite.nbmaxwayd,"
-				+ " activite.typeuser,"
-				+ " activite.typeacces  FROM personne,"
+				+ " activite.nbrwaydeur as nbrparticipant," + " 1 as role,"
+				+ " activite.idactivite," + " activite.libelle,  "
+				+ " activite.titre," + " activite.datefin,"
+				+ " activite.idtypeactivite," + " activite.nbmaxwayd,"
+				+ " activite.typeuser," + " activite.typeacces  FROM personne,"
 				+ " activite  WHERE (personne.idpersonne = activite.idpersonne"
 				+ " and activite.actif=true"
 				+ " and ? between datedebut and datefin"
@@ -554,19 +522,18 @@ private static String REQ_ACTIVITE=
 			int role = rs.getInt("role");
 			boolean archive = false;
 			Date datenaissance = rs.getTimestamp("datenaissance");
-		
+
 			int totalavis = rs.getInt("totalavis");
 
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 			int gratuit = rs.getInt("gratuit");
 
-
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,null,gratuit);
+					nbmaxwayd, typeUser, typeAcces, null, gratuit);
 
 			retour.add(activite);
 
@@ -683,13 +650,13 @@ private static String REQ_ACTIVITE=
 			int typeAcces = rs.getInt("typeacces");
 			int gratuit = rs.getInt("gratuit");
 
-
-			String fullDescriptionNull=null;
+			String fullDescriptionNull = null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fullDescriptionNull,gratuit);
+					nbmaxwayd, typeUser, typeAcces, fullDescriptionNull,
+					gratuit);
 
 			retour.add(activite);
 
@@ -754,12 +721,13 @@ private static String REQ_ACTIVITE=
 			int typeAcces = rs.getInt("typeacces");
 			int gratuit = rs.getInt("gratuit");
 
-			String fulldescriptionNull=null;
+			String fulldescriptionNull = null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
+					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
+					gratuit);
 			retour.add(activite);
 
 		}
@@ -809,14 +777,14 @@ private static String REQ_ACTIVITE=
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-			String fulldescriptionNull=null;
+			String fulldescriptionNull = null;
 			int gratuit = rs.getInt("gratuit");
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces,fulldescriptionNull,gratuit);
+					typeUser, typeAcces, fulldescriptionNull, gratuit);
 
 			retour.add(activite);
 
@@ -836,27 +804,26 @@ private static String REQ_ACTIVITE=
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		preparedStatement = connexion
-				.prepareStatement(requete);
+		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "DELETE FROM nbrvu where ( idactivite=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "DELETE FROM interet where ( idactivite=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "DELETE FROM public.participer where ( idactivite=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
@@ -877,9 +844,6 @@ private static String REQ_ACTIVITE=
 
 		preparedStatement.close();
 
-		
-		
-
 	}
 
 	public void RemoveOnlyActivite(int idactivite) throws SQLException {
@@ -891,14 +855,14 @@ private static String REQ_ACTIVITE=
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "DELETE FROM nbrvu where ( idactivite=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-		
+
 		requete = "DELETE FROM interet where ( idactivite=? );";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement = connexion.prepareStatement(requete);
@@ -913,7 +877,6 @@ private static String REQ_ACTIVITE=
 		preparedStatement.execute();
 		preparedStatement.close();
 
-
 	}
 
 	public ArrayList<Activite> getMesActiviteArchive(int idpersonne)
@@ -921,15 +884,24 @@ private static String REQ_ACTIVITE=
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 
-		String requete = "SELECT activite.gratuit,activite.datedebut,activite.adresse,activite.latitude,"
-				+ "activite.longitude,personne.prenom,personne.sexe,personne.nom,  personne.datenaissance,personne.idpersonne, "
-				+ "personne.note,0 as role,"
-				+ "personne.nbravis as totalavis,"
-				+ "activite.nbrwaydeur as nbrparticipant,    personne.photo,"
-				+ "personne.photo,activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite, activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
-				+ "activite,participer  WHERE (personne.idpersonne=activite.idpersonne and "
-				+ "activite.idactivite = participer.idactivite "
-				+ " and participer.idpersonne=? and activite.datefin<? ) ORDER BY datedebut DESC";
+		String requete = "SELECT " + " activite.gratuit,"
+				+ " activite.datedebut," + " activite.adresse,"
+				+ " activite.latitude," + " activite.longitude,"
+				+ " personne.prenom," + " personne.sexe," + " personne.nom,"
+				+ " personne.datenaissance," + " personne.idpersonne,"
+				+ " personne.note," + " 0 as role,"
+				+ " personne.nbravis as totalavis,"
+				+ " activite.nbrwaydeur as nbrparticipant,"
+				+ " personne.photo," + " personne.photo,"
+				+ " activite.idactivite," + " activite.libelle,"
+				+ " activite.titre," + " activite.datefin,"
+				+ " activite.idtypeactivite," + " activite.nbmaxwayd,"
+				+ " activite.typeuser," + " activite.typeacces "
+				+ " FROM personne,activite,participer"
+				+ "  WHERE (personne.idpersonne=activite.idpersonne and "
+				+ " activite.idactivite = participer.idactivite "
+				+ " and participer.idpersonne=? and activite.datefin<? )"
+				+ " ORDER BY datedebut DESC";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -963,17 +935,17 @@ private static String REQ_ACTIVITE=
 			int role = rs.getInt("role");
 			int sexe = rs.getInt("sexe");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
-
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-String fulldescriptionNull=null;
-int gratuit = rs.getInt("gratuit");
+			String fulldescriptionNull = null;
+			int gratuit = rs.getInt("gratuit");
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
+					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
+					gratuit);
 			retour.add(activite);
 
 		}
@@ -1018,17 +990,16 @@ int gratuit = rs.getInt("gratuit");
 			int sexe = rs.getInt("sexe");
 			int totalavis = rs.getInt("totalavis");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
-			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-			String fulldescriptionNull=null;
+			String fulldescriptionNull = null;
 			int gratuit = rs.getInt("gratuit");
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, 1, archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces,fulldescriptionNull,gratuit);
+					typeUser, typeAcces, fulldescriptionNull, gratuit);
 			retour.add(activite);
 
 		}
@@ -1119,12 +1090,11 @@ int gratuit = rs.getInt("gratuit");
 	// Defini si la personne participe � une activite
 	public boolean isInscrit(Activite activite, int idpersonne)
 			throws Exception {
-		
-		boolean retour=false;
+
+		boolean retour = false;
 		String requete = "SELECT  idpersonne FROM public.participer "
 				+ "where( idpersonne=? and idactivite=?);";
-		
-		
+
 		PreparedStatement preparedStatement;
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idpersonne);
@@ -1133,13 +1103,11 @@ int gratuit = rs.getInt("gratuit");
 
 		if (rs.next()) {
 			activite.setDejainscrit(true);
-			retour=true;
-		} 
-		
+			retour = true;
+		}
+
 		CxoPool.close(preparedStatement, rs);
 		return retour;
-
-		
 
 	}
 
@@ -1179,13 +1147,11 @@ int gratuit = rs.getInt("gratuit");
 		preparedStatement.setInt(2, idactivite);
 		ResultSet rs = preparedStatement.executeQuery();
 
-		if (rs.next()) 
+		if (rs.next())
 			retour = true;
-		
-		CxoPool.close(preparedStatement,rs);
-		return retour;
 
-		
+		CxoPool.close(preparedStatement, rs);
+		return retour;
 
 	}
 
@@ -1240,7 +1206,7 @@ int gratuit = rs.getInt("gratuit");
 		if (rs.next()) {
 			nbrparticipation = rs.getInt("nbrparticipation");
 		}
-		
+
 		CxoPool.close(preparedStatement, rs);
 		return nbractivite + nbrparticipation;
 
@@ -1416,7 +1382,6 @@ int gratuit = rs.getInt("gratuit");
 	}
 
 	public int getNbrNotification(int idpersonne) throws SQLException {
-		
 
 		int nbrnotification = 0;
 		String requete = "select  count(iddestinataire) as nbrnotification from notification"
@@ -1435,7 +1400,6 @@ int gratuit = rs.getInt("gratuit");
 	}
 
 	public int getNbrAmi(int idpersonne) throws SQLException {
-		
 
 		String requete = "select  count(idpersonne) as nbrami from ami where  idpersonne=?;";
 		PreparedStatement preparedStatement = connexion
@@ -1463,7 +1427,8 @@ int gratuit = rs.getInt("gratuit");
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idactivite);
 		preparedStatement.execute();
-		if (preparedStatement != null)preparedStatement.close();
+		if (preparedStatement != null)
+			preparedStatement.close();
 	}
 
 	public IndicateurWayd getIndicateurs() throws SQLException {
@@ -1519,9 +1484,9 @@ int gratuit = rs.getInt("gratuit");
 		if (rs.next()) {
 			nbrTotalMessageByAct = rs.getInt("nbrmessagebyact");
 		}
-	
+
 		CxoPool.close(preparedStatement, rs);
-		
+
 		return new IndicateurWayd(nbrTotalactivite, nbrTotalparticipation,
 				nbrTotalInscrit, nbrTotalMessage, nbrTotalMessageByAct) {
 		};
@@ -1541,8 +1506,6 @@ int gratuit = rs.getInt("gratuit");
 		preparedStatement.setInt(5, idactivite);
 		preparedStatement.execute();
 		preparedStatement.close();
-
-		
 
 	}
 
@@ -1698,14 +1661,15 @@ int gratuit = rs.getInt("gratuit");
 			boolean archive = false;
 			int totalavis = rs.getInt("totalavis");
 			int typeAcces = rs.getInt("typeacces");
-			String fulldescriptionNull=null;
+			String fulldescriptionNull = null;
 			int gratuit = rs.getInt("gratuit");
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
 					adresse, nom, prenom, photo, note, role, archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces,fulldescriptionNull,gratuit);
+					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
+					gratuit);
 			retour.add(activite);
 
 		}
@@ -1715,12 +1679,10 @@ int gratuit = rs.getInt("gratuit");
 
 	}
 
-	
 	public void addActivitePro(String titre, String libelle,
 			int idorganisateur, int idtypeactivite, String latitudestr,
 			String longitudestr, String adresse, Long debut, Long fin) {
 
-		
 	}
 
 }

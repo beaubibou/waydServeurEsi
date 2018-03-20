@@ -3329,8 +3329,8 @@ public class WBservices {
 		
 			String longitudestr, int rayonmetre, int typeactivite,
 			String motcle, int typeUser, int commenceDans, String jeton) {
-		double malatitude = Double.valueOf(latitudestr);
-		double malongitude = Double.valueOf(longitudestr);
+		double malatitude = Double.parseDouble(latitudestr);
+		double malongitude = Double.parseDouble(longitudestr);
 
 		long debut = System.currentTimeMillis();
 
@@ -3375,13 +3375,36 @@ public class WBservices {
 			// Renvoi les imm�diates
 			if (commenceDans == 0) {
 
-				requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
-						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
-						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-						+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-						+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
-						+ "and (? between datedebut and  datefin )"
+				requete = " SELECT "
+						+ " activite.gratuit,"
+						+ " activite.datedebut,"
+						+ " activite.adresse,"
+						+ " activite.latitude,"
+						+ " activite.longitude,"
+						+ " personne.prenom,"
+						+ " personne.sexe,"
+						+ " personne.nom,"
+						+ " personne.idpersonne,"
+						+ " personne.datenaissance,"
+						+ " personne.note,"
+						+ " personne.nbravis as totalavis,"
+						+ " personne.photo,"
+						+ " personne.affichesexe,"
+						+ " personne.afficheage,"
+						+ " activite.typeuser,"
+						+ " activite.nbrwaydeur as nbrparticipant,"
+						+ " 1 as role,"
+						+ " activite.idactivite,"
+						+ " activite.libelle,"
+						+ " activite.titre,"
+						+ " activite.datefin,"
+						+ " activite.idtypeactivite,"
+						+ " activite.nbmaxwayd"
+						+ " FROM personne,activite"
+						+ " WHERE "
+						+ " personne.idpersonne = activite.idpersonne"
+						+ " and activite.actif=true"
+						+ " and (? between datedebut and  datefin )"
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ?";
 			}
@@ -3390,13 +3413,36 @@ public class WBservices {
 			// datefinde rechere et maintenant
 			else {
 				// Requete N�2
-				requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
-						+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-						+ "personne.note,personne.nbravis as totalavis,personne.photo,personne.affichesexe,personne.afficheage,activite.typeuser,"
-						+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-						+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd  FROM personne,"
-						+ "activite  WHERE personne.idpersonne = activite.idpersonne  "
-						+ "and datedebut>? "
+				requete = " SELECT "
+						+ " activite.gratuit,"
+						+ " activite.datedebut,"
+						+ " activite.adresse,"
+						+ " activite.latitude,"
+						+ " activite.longitude,"
+						+ " personne.prenom,"
+						+ " personne.sexe,"
+						+ " personne.nom,"
+						+ " personne.idpersonne,"
+						+ " personne.datenaissance,"
+						+ " personne.note,"
+						+ " personne.nbravis as totalavis,"
+						+ " personne.photo,"
+						+ " personne.affichesexe,"
+						+ " personne.afficheage,"
+						+ " activite.typeuser,"
+						+ " activite.nbrwaydeur as nbrparticipant,"
+						+ " 1 as role,"
+						+ " activite.idactivite,"
+						+ " activite.libelle,"
+						+ " activite.titre,"
+						+ " activite.datefin,"
+						+ " activite.idtypeactivite,"
+						+ " activite.nbmaxwayd"
+						+ " FROM "
+						+ " personne,activite"
+						+ " WHERE personne.idpersonne = activite.idpersonne  "
+						+ " and activite.actif=true"
+						+ " and datedebut>? "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ? and datedebut<?";
 
