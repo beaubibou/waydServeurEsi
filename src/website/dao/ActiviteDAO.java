@@ -3,7 +3,6 @@ package website.dao;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Connection;
@@ -17,13 +16,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-
 import javax.imageio.ImageIO;
 import javax.naming.NamingException;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
-
 import sun.misc.BASE64Encoder;
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
@@ -314,9 +310,7 @@ public class ActiviteDAO {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
@@ -391,8 +385,6 @@ public class ActiviteDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
@@ -449,9 +441,7 @@ public class ActiviteDAO {
 			}
 
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
@@ -460,7 +450,7 @@ public class ActiviteDAO {
 		LogDAO.LOG_DUREE("getListActiviteEncoursAjax", debut);
 		return retour;
 
-		// Cherche dans les activite
+	
 
 	}
 
@@ -493,14 +483,10 @@ public class ActiviteDAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		return false;
-
-		// TODO Auto-generated method stub
 
 	}
 
@@ -542,8 +528,6 @@ public class ActiviteDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -563,8 +547,7 @@ public class ActiviteDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			// LOG.info("Mise a jour activite"+ commentaire.length());
-
+	
 			String requete = "UPDATE  activite set gratuit=? WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, gratuit);
@@ -577,9 +560,7 @@ public class ActiviteDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
 		} finally {
@@ -599,8 +580,7 @@ public class ActiviteDAO {
 		try {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			// LOG.info("Mise a jour activite"+ commentaire.length());
-
+		
 			String requete = "UPDATE  activite set idtypeactivite=? WHERE idactivite=?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, typeActivite);
@@ -613,8 +593,6 @@ public class ActiviteDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -626,6 +604,39 @@ public class ActiviteDAO {
 
 	}
 
+	public static boolean setActif(int idactivite,boolean actif) {
+
+		long debut = System.currentTimeMillis();
+
+		PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			// LOG.info("Mise a jour activite"+ commentaire.length());
+
+			String requete = "UPDATE  activite set actif=? WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setBoolean(1, actif);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("setActif", debut);
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int typeuser, int typeaccess) {
@@ -677,7 +688,7 @@ public class ActiviteDAO {
 
 			return cle;
 		} catch (NamingException | SQLException e) {
-			e.printStackTrace();
+	
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
@@ -761,7 +772,7 @@ public class ActiviteDAO {
 
 		} catch (SQLException | NamingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		}
@@ -824,12 +835,14 @@ public class ActiviteDAO {
 				int gratuit = rs.getInt("gratuit");
 				String libelleActivite = rs.getString("libelleActivite");
 				int nbrSignalement = 0;
+				boolean actif=rs.getBoolean("actif");
+			
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement,descriptionall,gratuit);
+						nbrSignalement,descriptionall,gratuit,actif);
 				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
@@ -843,7 +856,7 @@ public class ActiviteDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -891,9 +904,10 @@ public class ActiviteDAO {
 			try {
 				connexion.rollback();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
-			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
@@ -1004,8 +1018,6 @@ public class ActiviteDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -1250,8 +1262,6 @@ public class ActiviteDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -1262,8 +1272,7 @@ public class ActiviteDAO {
 
 			@Override
 			public int compare(ActiviteBean o1, ActiviteBean o2) {
-				// TODO Auto-generated method stub
-
+		
 				return o2.datedebut.compareTo(o1.datedebut);
 			}
 		});
@@ -1343,8 +1352,6 @@ public class ActiviteDAO {
 			// Cherche dans les activite
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -1356,8 +1363,7 @@ public class ActiviteDAO {
 			@Override
 			public int compare(website.metier.MessageBean o1,
 					website.metier.MessageBean o2) {
-				// TODO Auto-generated method stub
-
+		
 				return o2.getDateCreation().compareTo(o1.getDateCreation());
 			}
 		});
@@ -1550,13 +1556,14 @@ public class ActiviteDAO {
 				int nbrSignalement = rs.getInt("nbrsignalement");
 				int nbrVu = rs.getInt("nbrvu");
 				int gratuite = rs.getInt("gratuit");
+				boolean actif=rs.getBoolean("actif");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement,descriptionall,gratuite);
+						nbrSignalement,descriptionall,gratuite,actif);
 
 				activite.setPositionRecherche(filtre.getLatitude(),
 						filtre.getLongitude());
@@ -1597,9 +1604,7 @@ public class ActiviteDAO {
 			return true;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return false;
 
@@ -1674,9 +1679,7 @@ public class ActiviteDAO {
 
 			return true;
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return false;
 
@@ -1731,8 +1734,6 @@ public class ActiviteDAO {
 			return new MessageServeur(true, TextWebService.suppressionActivite);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
@@ -1747,7 +1748,7 @@ public class ActiviteDAO {
 			String commentaire, String adresse, double latitude,
 			double longitude, int idtypeactivite, int maxwaydeur, int duree,
 			int compteWaydeur) {
-		// TODO Auto-generated method stub
+		
 
 		long debut = System.currentTimeMillis();
 
@@ -1794,8 +1795,6 @@ public class ActiviteDAO {
 			LogDAO.LOG_DUREE("addActiviteWaydeur", debut);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -2155,7 +2154,7 @@ public class ActiviteDAO {
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
 					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall)"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			System.out.println("d============="+fulldescription);
+	
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
 			preparedStatement.setString(2, adresse);
@@ -2182,7 +2181,7 @@ public class ActiviteDAO {
 				connexion.rollback();
 			} catch (SQLException e1) {
 
-				e1.printStackTrace();
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 
 		} finally {

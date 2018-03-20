@@ -49,7 +49,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -68,7 +68,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -126,9 +126,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			dateFin = getDateFromString(datefin, heuredebut);
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 		
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		
 			authentification.setAlertMessageDialog(new MessageAlertDialog(
@@ -225,7 +223,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 			String description, String adresse, double latitude,
 			double longitude, int typeactivite, Date dateDebut, Date dateFin,
 			HashMap<Integer, String> joursVoulus, int duree) {
-		// TODO Auto-generated method stub
+		
 		int nbrAjout = 0;
 		long nbrJours = (dateFin.getTime() - dateDebut.getTime()) / 1000 / 3600/ 24 + 1;
 
@@ -251,7 +249,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 	private boolean ajouteActiviteDAO(int idPersonne, String titre,
 			String description, String adresse, double latitude,
 			double longitude, int typeactivite, Calendar dateDebut, int duree) {
-		// TODO Auto-generated method stub
+		
 
 		Calendar calFin = Calendar.getInstance();
 		calFin.setTime(dateDebut.getTime());
@@ -288,7 +286,7 @@ public class AjouteActivitePlanifiee extends HttpServlet {
 	private MessageServeur testParametreReque(String titre, String adresse,
 			String description, double latitude, double longitude,
 			int typeactivite, Date dateDebut, Date dateFin, int duree) {
-		// TODO Auto-generated method stub
+		
 
 		if (duree > 8 * 60)
 

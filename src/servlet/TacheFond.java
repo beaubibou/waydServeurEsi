@@ -16,7 +16,7 @@ public class TacheFond implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		while (true) {
 			try {
 		
@@ -34,8 +34,7 @@ public class TacheFond implements Runnable {
 				doTacheFond();
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
 				LOG.error( ExceptionUtils.getStackTrace(e));
 			}
 		}
@@ -51,7 +50,6 @@ public class TacheFond implements Runnable {
 
 	private void doTacheFond() {
 		
-	//System.out.println("Nbr log"+LogDAO.getNbrLogs());
 	LogDAO.supprimeNderniersLogd();
 	
 	}

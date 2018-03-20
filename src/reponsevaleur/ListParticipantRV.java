@@ -2,8 +2,6 @@ package reponsevaleur;
 
 import java.util.ArrayList;
 
-import wayde.bean.Activite;
-import wayde.bean.Notification;
 import wayde.bean.Participant;
 
 public class ListParticipantRV {

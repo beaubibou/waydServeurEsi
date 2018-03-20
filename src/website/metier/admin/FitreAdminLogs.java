@@ -67,7 +67,7 @@ public class FitreAdminLogs {
 
 
 	public void setLogLevel(String log_level) {
-		// TODO Auto-generated method stub
+		
 		switch (log_level) {
 		case "INFO":
 			niveau_log = TypeEtatLogs.INFO;

@@ -148,7 +148,7 @@ public class ActiviteAjax implements Comparable<ActiviteAjax> {
 
 	@Override
 	public int compareTo(ActiviteAjax activiteAjax) {
-		// TODO Auto-generated method stub
+		
 		if (this.distancePoint>activiteAjax.distancePoint)
 			return 0;
 	

@@ -97,10 +97,8 @@ public class ParticipationDAO {
 	public  void RemoveParticipation(int idpersonne, int idactivite,int idorganisateur)
 			throws SQLException {
 		
-	//	System.out.println("Effacement d'un participation");
 		String requete = "DELETE FROM public.participer where ( idactivite=? and idpersonne=? and role=0);";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
+		PreparedStatement preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite);
 		preparedStatement.setInt(2, idpersonne);
 
@@ -226,7 +224,7 @@ public class ParticipationDAO {
 
 	public boolean isInListParticipant(ArrayList<Personne> listparticipant,
 			int idemetteur) {
-		// TODO Auto-generated method stub
+		
 	for (Personne personne:listparticipant){
 		
 		if (personne.getId()==idemetteur)return true;

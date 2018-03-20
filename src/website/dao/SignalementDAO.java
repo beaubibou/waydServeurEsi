@@ -62,9 +62,6 @@ public class SignalementDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -121,9 +118,6 @@ public class SignalementDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -160,9 +154,7 @@ public class SignalementDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+	
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -191,7 +183,6 @@ public class SignalementDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setInt(2, idsignalee);
-			// if (motif.equals(""))motif=null;
 			preparedStatement.setInt(3, idmotif);
 			preparedStatement.setString(4, motif);
 			preparedStatement.setTimestamp(5,
@@ -202,8 +193,6 @@ public class SignalementDAO {
 			return new MessageServeur(true, Erreur_HTML.ACTIVITE_SIGNALEE);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			
 			return new MessageServeur(false, e.getMessage());

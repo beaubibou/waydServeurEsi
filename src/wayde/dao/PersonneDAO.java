@@ -136,7 +136,7 @@ public class PersonneDAO {
 	}
 
 	public Personne getPersonneId(int idpersonne) throws SQLException {
-		// System.out.println("Cherche compte personen par Id" + idpersonne);
+	
 		String requete = " SELECT personne.notification,personne.note,"
 				+ "personne.nbravis as totalavis,"
 				+ "idpersonne, nom, prenom, login, pwd, ville, actif, verrouille,commentaire,"
@@ -605,8 +605,7 @@ public class PersonneDAO {
 
 		} catch (SQLException | NamingException e) {
 
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		}
 		// ...
@@ -1088,7 +1087,7 @@ public class PersonneDAO {
 
 		return photo;
 
-		// TODO Auto-generated method stub
+		
 	}
 
 	public boolean isPseudoExist(String pseudo) throws SQLException {
@@ -1110,7 +1109,7 @@ public class PersonneDAO {
 
 		
 
-		// TODO Auto-generated method stub
+		
 	}
 
 	public Personne test_GetPersonneAle() throws SQLException {
@@ -1176,7 +1175,7 @@ public class PersonneDAO {
 	}
 
 	public PhotoWaydeur getPhotoWaydeur(int idpersonne) throws SQLException {
-		// TODO Auto-generated method stub
+		
 		PhotoWaydeur retour = null;
 		String requete = "select idpersonne,photo from personne where idpersonne =?";
 		PreparedStatement preparedStatement = connexion

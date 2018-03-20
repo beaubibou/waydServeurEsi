@@ -49,12 +49,12 @@ public class ContactMessageCaptcha extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
+		
 		super.init();
 		if (FirebaseApp.getApps().isEmpty())
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
@@ -67,7 +67,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		String message = request.getParameter("message");
 		String email = request.getParameter("email");
@@ -100,8 +100,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 			return;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			String messageAlert =Erreur_HTML.ERREUR_INCONNUE;
 			// response.sendRedirect("/commun/acceuil.jsp");
@@ -113,7 +112,6 @@ public class ContactMessageCaptcha extends HttpServlet {
 
 	private MessageServeur testRequete(String message, String email,
 			String pseudo, String reponseCaptcha) throws Exception {
-		// TODO Auto-generated method stub
 
 	
 		if (message == null)
@@ -181,8 +179,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return new MessageServeur(false,ExceptionUtils.getStackTrace(e));
 	

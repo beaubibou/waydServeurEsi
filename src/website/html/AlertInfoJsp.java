@@ -104,8 +104,6 @@ public class AlertInfoJsp {
 			request.getRequestDispatcher("commun/alert.jsp").forward(
 					request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 	}

@@ -25,8 +25,6 @@ public class StatistiqueBean implements Comparable<StatistiqueBean>{
 		try {
 			date= lDateFormat.parse(dateStr);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 			
@@ -73,7 +71,7 @@ public class StatistiqueBean implements Comparable<StatistiqueBean>{
 
 	@Override
 	public int compareTo(StatistiqueBean o) {
-		// TODO Auto-generated method stub
+		
 	
 	
 		return this.date.compareTo(o.getDate());

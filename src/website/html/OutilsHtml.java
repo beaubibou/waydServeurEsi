@@ -2,6 +2,7 @@ package website.html;
 
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 public class OutilsHtml {
@@ -58,7 +59,7 @@ public static String convertISO85591(String chaine){
 		} catch (UnsupportedEncodingException e) {
 		
 			
-			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return "Conversion impossible";
 		}
 	}

@@ -1,7 +1,5 @@
 package website.dao;
 
-import gcmnotification.EffaceActiviteGcm;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,15 +13,8 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import texthtml.pro.Erreur_HTML;
-import threadpool.PoolThreadGCM;
-import wayd.ws.TextWebService;
 import wayd.ws.WBservices;
-import wayde.bean.Activite;
 import wayde.bean.CxoPool;
-import wayde.bean.MessageServeur;
-import wayde.bean.Personne;
-import wayde.dao.ParticipationDAO;
 import website.metier.AvisBean;
 import website.metier.Outils;
 import website.metier.ProfilBean;
@@ -43,7 +34,7 @@ public class PersonneDAO {
 	private static final Logger LOG = Logger.getLogger(PersonneDAO.class);
 
 	public static boolean supprimePersonne(int idPersonne) {
-		// TODO Auto-generated method stub
+		
 		long debut = System.currentTimeMillis();
 		String uid = PersonneDAO.getUID(idPersonne);
 
@@ -356,9 +347,6 @@ public static boolean isLoginExist(String login)  {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		} finally {
@@ -367,8 +355,6 @@ public static boolean isLoginExist(String login)  {
 		}
 		return false;
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 
 	}
 
@@ -389,8 +375,6 @@ public static boolean isLoginExist(String login)  {
 
 		} catch (InterruptedException | ExecutionException e) {
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
@@ -416,8 +400,6 @@ public static boolean isLoginExist(String login)  {
 
 		} catch (InterruptedException | ExecutionException e) {
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
@@ -456,7 +438,7 @@ public static boolean isLoginExist(String login)  {
 	}
 
 	public static boolean isSiretExist(String siret) {
-		// TODO Auto-generated method stub
+		
 
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -475,8 +457,6 @@ public static boolean isLoginExist(String login)  {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -489,7 +469,7 @@ public static boolean isLoginExist(String login)  {
 	}
 
 	public static boolean isTelephoneExist(String telephone) {
-		// TODO Auto-generated method stub
+		
 
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -508,8 +488,6 @@ public static boolean isLoginExist(String login)  {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -521,7 +499,7 @@ public static boolean isLoginExist(String login)  {
 	}
 
 	public static boolean isSiretExistPersonne(String siret, int idPersonne) {
-		// TODO Auto-generated method stub
+		
 
 		// Renvoi si le numero est déja utilisé par une personne différente de
 		// la personne en parametre
@@ -545,8 +523,6 @@ public static boolean isLoginExist(String login)  {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -560,7 +536,7 @@ public static boolean isLoginExist(String login)  {
 
 	public static boolean isTelephoneExistPersonne(String telephone,
 			int idPersonne) {
-		// TODO Auto-generated method stub
+		
 
 		// Renvoi si le numero est déja utilisé par une personne différente de
 		// la personne en parametre
@@ -583,8 +559,6 @@ public static boolean isLoginExist(String login)  {
 				return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -597,7 +571,7 @@ public static boolean isLoginExist(String login)  {
 	}
 
 	public static boolean isProfilActif(int idpersonne) {
-		// TODO Auto-generated method stub
+		
 
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -618,9 +592,7 @@ public static boolean isLoginExist(String login)  {
 					return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
@@ -816,10 +788,7 @@ public static boolean isLoginExist(String login)  {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -905,9 +874,6 @@ public static boolean isLoginExist(String login)  {
 			return profil;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return profil;
 		} finally {
@@ -922,8 +888,7 @@ public static boolean isLoginExist(String login)  {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ProfilBean profil = null;
-
+	
 		try {
 			connexion = CxoPool.getConnection();
 
@@ -943,9 +908,6 @@ public static boolean isLoginExist(String login)  {
 			return uid;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -1029,9 +991,6 @@ public static boolean isLoginExist(String login)  {
 			return profil;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -1041,8 +1000,7 @@ public static boolean isLoginExist(String login)  {
 	}
 
 	public static boolean activerProfilEtActivite(int idPersonne, boolean actif) {
-		// TODO Auto-generated method stub
-
+	
 		
 		long debut = System.currentTimeMillis();
 		String uid = PersonneDAO.getUID(idPersonne);
@@ -1081,8 +1039,6 @@ public static boolean isLoginExist(String login)  {
 			
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return false;
@@ -1096,8 +1052,7 @@ public static boolean isLoginExist(String login)  {
 	}
 	
 	public static boolean valideCompte(int idPersonne, boolean actif) {
-		// TODO Auto-generated method stub
-
+	
 		
 		long debut = System.currentTimeMillis();
 		PreparedStatement preparedStatement=null;
@@ -1121,8 +1076,6 @@ public static boolean isLoginExist(String login)  {
 			LogDAO.LOG_DUREE("valideCompte", debut);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return false;
@@ -1138,8 +1091,7 @@ public static boolean isLoginExist(String login)  {
 	public boolean updateProfilPro(String nom, String adresse, double latitude,
 			double longitude, String commentaire, String siret,
 			String telephonne, int idpersonne) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement=null;
@@ -1173,8 +1125,6 @@ public static boolean isLoginExist(String login)  {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -1191,7 +1141,6 @@ public static boolean isLoginExist(String login)  {
 			double latitude, double longitude, String commentaire,
 			int idpersonne, String siteWeb, String telephone, String siret) {
 
-		long debut = System.currentTimeMillis();
 		if (pseudo != null)
 			pseudo = pseudo.trim();
 
@@ -1230,8 +1179,7 @@ public static boolean isLoginExist(String login)  {
 
 		} catch (InterruptedException | ExecutionException e) {
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return false;
 		}
@@ -1241,8 +1189,7 @@ public static boolean isLoginExist(String login)  {
 	public boolean updateProfilProDAO(String pseudo, String adresse,
 			double latitude, double longitude, String commentaire,
 			int idpersonne, String siteWeb, String telephone, String siret) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement =null;
@@ -1275,8 +1222,6 @@ public static boolean isLoginExist(String login)  {
 			
 			return true;
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -1319,8 +1264,6 @@ public static boolean isLoginExist(String login)  {
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return false;
@@ -1353,9 +1296,7 @@ public static boolean isLoginExist(String login)  {
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return false;
 
@@ -1398,8 +1339,6 @@ public static boolean isLoginExist(String login)  {
 			connexion.commit();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -1469,8 +1408,6 @@ public static boolean isLoginExist(String login)  {
 			return new TableauBordBean(idpersonne, nbrFini, nbrPlanifiee, nbrEnCours);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			
 		} finally {
@@ -1528,8 +1465,6 @@ public static boolean isLoginExist(String login)  {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 
 		} finally {

@@ -1,4 +1,5 @@
 
+<%@page import="website.metier.TypeActiveActivite"%>
 <%@page import="website.metier.TypeGratuitActivite"%>
 <%@page import="website.metier.TypeSignalement"%>
 <%@page import="website.metier.TypeEtatActivite"%>
@@ -49,6 +50,8 @@
 			ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
 			ArrayList<TypeGratuitActivite> listGratuitActivite=CacheValueDAO.getListGratuitActivite();
 			ArrayList<TypeGratuitActivite> listGratuitActiviteRequete=CacheValueDAO.getListGratuitActiviteRequete();
+			ArrayList<TypeActiveActivite> listActiveActivites=CacheValueDAO.getListActivteActivite();
+			
 			PagerActiviteBean pager=(PagerActiviteBean) request
 			.getAttribute("pager");
 			ArrayList<ActiviteBean> listActivite = pager.getListActivite();
@@ -204,6 +207,9 @@
 					<th style="width: 10%;" class="text-center">Le</th>
 					<th style="width: 5%;" class="text-center">Vu</th>
 					<th style="width: 5%;" class="text-center">Sign.</th>
+					<th style="width: 5%;" class="text-center">Actif.</th>
+					
+					
 				
 				</tr>
 			</thead>
@@ -274,6 +280,13 @@
 					<td><%=activite.getNbrVu()%></td>
 					<td><%=activite.getNbrSignalement()%></td>
 					
+					<td class="actif">
+							
+						<label><input name="<%=activite.getId() %>" type="checkbox"
+					<%=Outils.jspAdapterCheked(activite.actif)%>> 		</label>
+					
+					</td>
+				
 
 				</tr>
 
@@ -285,8 +298,6 @@
 		</table>
 	</div>
 
-
-
 	<ul class="pager">
 
 		<li <%=pager.isPreviousHtml()%>><a
@@ -294,8 +305,6 @@
 		<li>Page N° <%=pager.getPageEnCours()%></li>
 		<li <%=pager.isNextHtml()%>><a
 			href="<%=pager.getLienNextHtml()%>">Next</a></li>
-
-
 	</ul>
 	<script>
 		var placeSearch, autocomplete;
@@ -378,29 +387,7 @@
 							,
 							function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 
-								if (responseText == 'ok')
-								{
-									BootstrapDialog.show({
-							            title: 'Confirmation',
-							            closable: false,
-							            message: 'Votre activité a été modfiée',
-							            buttons: [{
-							                label: 'Ok',
-							                action: function(dialog) {
-							               	dialog.close();
-							               	alert(ok)
-							                  //  dialog.setMessage('Message 1');
-							                }
-							            
-							            }]
-							        }); 
-									
-									
-								}
-								else{
-									
-									BootstrapDialog.alert(responseText);
-								}
+								
 
 					
 							});	
@@ -418,32 +405,26 @@
 						,
 						function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 
-							if (responseText == 'ok')
-							{
-								BootstrapDialog.show({
-						            title: 'Confirmation',
-						            closable: false,
-						            message: 'Votre activité a été modfiée',
-						            buttons: [{
-						                label: 'Ok',
-						                action: function(dialog) {
-						               	dialog.close();
-						               	alert(ok)
-						                  //  dialog.setMessage('Message 1');
-						                }
-						            
-						            }]
-						        }); 
-								
-								
-							}
-							else{
-								
-								BootstrapDialog.alert(responseText);
-							}
+							
+							
+
+						});	
+				
+				
+			});
+			
+			
+			$('td.actif :checkbox').change(function() {
+				
+			
+			
+ 				$.post("ModifieActivite?action=setactif&actif="+this.checked+"&idactivite="+this.name
+						,
+						function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 
 							
 
+				
 						});	
 				
 				

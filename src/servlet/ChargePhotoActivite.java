@@ -45,7 +45,7 @@ public class ChargePhotoActivite extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -70,7 +70,7 @@ public class ChargePhotoActivite extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -84,8 +84,7 @@ public class ChargePhotoActivite extends HttpServlet {
 		File file;
 		int maxFileSize = 5000 * 1024;
 		int maxMemSize = 5000 * 1024;
-		// String filePath = "c:/apache-tomcat/webapps/data/";
-
+	
 		String contentType = request.getContentType();
 		if ((contentType.indexOf("multipart/form-data") >= 0)) {
 
@@ -120,7 +119,6 @@ public class ChargePhotoActivite extends HttpServlet {
 				}
 
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(ex));
 			}
 		} else {

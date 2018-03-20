@@ -1,6 +1,5 @@
 package wayde.bean;
 
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,9 +11,7 @@ import website.metier.ActiviteBean;
 public class Activite {
 	private static final Logger LOG = Logger.getLogger(Activite.class);
 
-
 	int id;
-
 
 	String titre;
 
@@ -25,9 +22,9 @@ public class Activite {
 	String datedebutStr;
 
 	String datefinStr;
-		
+
 	String adresse;
-	
+
 	double latitude;
 
 	double longitude;
@@ -39,59 +36,54 @@ public class Activite {
 	private String prenomorganisateur;
 
 	private double note;
-	
+
 	private int typeactivite;
-	
+
 	private boolean dejainscrit;
-	
+
 	private boolean organisateur;
 
 	private boolean archive;
-	
+
 	private int totalavis;
-	
+
 	private int sexe;
-	
+
 	private String age;
-	
+
 	private int nbrparticipant;
 
 	private String tpsrestant;
-	
-	public  Date datedebut,datecreation;
-	
-	public  Date datefinactivite;
+
+	public Date datedebut, datecreation;
+
+	public Date datefinactivite;
 
 	public boolean actif;
-	 
+
 	public int role;
-	
+
 	public long finidans;
 
 	private int nbmaxwaydeur;
-	
+
 	public int gratuite;
-	
+
 	String fulldescrition;
 
 	private boolean interet;
+
 	public boolean isInteret() {
 		return interet;
 	}
-
-	
 
 	public int getGratuite() {
 		return gratuite;
 	}
 
-
-
 	public void setGratuite(int gratuite) {
 		this.gratuite = gratuite;
 	}
-
-
 
 	public String getFulldescrition() {
 		return fulldescrition;
@@ -123,11 +115,8 @@ public class Activite {
 
 	private int typeUser;
 
-
 	private int typeAcces;
-	
-	
-	
+
 	public long getFinidans() {
 		return finidans;
 	}
@@ -144,13 +133,13 @@ public class Activite {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 	}
 
-	public boolean isOganisateurActivite(int idpersonne){
-	
-		if (idpersonne==idorganisateur) return true;
-	
+	public boolean isOganisateurActivite(int idpersonne) {
+
+		if (idpersonne == idorganisateur)
+			return true;
+
 		return false;
 	}
-
 
 	public Activite() {
 
@@ -172,152 +161,156 @@ public class Activite {
 		this.tpsrestant = tpsrestant;
 	}
 
-	public Activite(String titre, String libelle, int idorganisateur, Date datedebut,
-	        int idtypeactivite, double latitude, double longitude,String adresse,boolean actif,int nbmaxwaydeur,Date finactivite,int typeUser)
-	    {
-	        super();
-	        this.titre = titre;
-	        this.libelle = libelle;
-	        this.idorganisateur = idorganisateur;
-	        this.datedebut = datedebut;
-	        this.latitude = latitude;
-	        this.longitude=longitude;
-	        this.adresse=adresse;
-	        this.datecreation = new Date();
-	        this.typeactivite=idtypeactivite;
-	        this.actif=actif;
-	        this.nbmaxwaydeur=nbmaxwaydeur;
-	        this.nbrparticipant=1;
-	        this.datefinactivite=finactivite;
-	        this.finidans=getSeTermine(finactivite);
-	        this.typeUser=typeUser;
-	        
-	    }
+	public Activite(String titre, String libelle, int idorganisateur,
+			Date datedebut, int idtypeactivite, double latitude,
+			double longitude, String adresse, boolean actif, int nbmaxwaydeur,
+			Date finactivite, int typeUser) {
+		super();
+		this.titre = titre;
+		this.libelle = libelle;
+		this.idorganisateur = idorganisateur;
+		this.datedebut = datedebut;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.adresse = adresse;
+		this.datecreation = new Date();
+		this.typeactivite = idtypeactivite;
+		this.actif = actif;
+		this.nbmaxwaydeur = nbmaxwaydeur;
+		this.nbrparticipant = 1;
+		this.datefinactivite = finactivite;
+		this.finidans = getSeTermine(finactivite);
+		this.typeUser = typeUser;
+
+	}
+
+	public Activite(int id, String titre, String libelle, int idorganisateur,
+			Date datedebut, Date datefin, int idtypeactivite, double latitude,
+			double longitude, String adresse, String nom, String prenom,
+			String photo, double note, int role, boolean archive,
+			int totalavis, Date datenaissance, int sexe, int nbrparticipant,
+			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
+			int typeUser, int typeAcces, String fulldescription, int gratuit) {
 	
-	
-	
-	public Activite(int id,String titre, String libelle, int idorganisateur, Date datedebut,
-	            Date datefin, int idtypeactivite, double latitude, double longitude,String adresse,
-	            String nom,String prenom,String photo,double note,
-	            int role,boolean archive,int totalavis,Date datenaissance,int sexe,
-	            int nbrparticipant,boolean afficheage,boolean affichesexe,int nbmaxwaydeur,
-	            int typeUser,int typeAcces ,String fulldescription,int gratuit)
-	        {
-	            super();
-	        	this.id=id;
-	    		this.titre = titre;
-	    		this.libelle =libelle;
-	    		this.idorganisateur = idorganisateur;
-	    		this.latitude = latitude;
-	    		this.longitude = longitude;
-	    		this.adresse = adresse;
-	    		this.datefinStr = Parametres.getStringWsFromDate(datefin);
-	    		this.datedebut=datedebut;
-	    		this.datefinactivite=datefin;
-	    		this.datedebutStr = Parametres.getStringWsFromDate(datedebut);
-	    		this.nomorganisateur=nom;
-	    		this.prenomorganisateur=prenom;
-	    		this.photo=photo;
-	    		this.note=note;
-	    		this.organisateur=false;
-	    		this.dejainscrit=false;
-	    		this.archive=archive;
-	    		this.totalavis=totalavis;
-	    		this.sexe=sexe;
-	    		this.nbrparticipant=nbrparticipant;
-	    		this.typeactivite=idtypeactivite;
-	    		this.tpsrestant=getTempsRestant(datefin);
-	    		this.finidans=getSeTermine(datefin);
-	    		this.age=getAgeStr(datenaissance,afficheage);
-	    		if (affichesexe)this.sexe=3;
-	    		this.role=role;
-	    		this.typeUser=typeUser;
-	    		this.typeAcces=typeAcces;
-	    		this.nbmaxwaydeur=nbmaxwaydeur;
-	    		this.fulldescrition=fulldescription;
-	    		if (this.titre.equals(""))this.titre=" ";
-	    		this.gratuite=gratuit;
-	    			
-	    		
-	        }
-		
-	
+		super();
+		this.id = id;
+		this.titre = titre;
+		this.libelle = libelle;
+		this.idorganisateur = idorganisateur;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.adresse = adresse;
+		this.datefinStr = Parametres.getStringWsFromDate(datefin);
+		this.datedebut = datedebut;
+		this.datefinactivite = datefin;
+		this.datedebutStr = Parametres.getStringWsFromDate(datedebut);
+		this.nomorganisateur = nom;
+		this.prenomorganisateur = prenom;
+		this.photo = photo;
+		this.note = note;
+		this.organisateur = false;
+		this.dejainscrit = false;
+		this.archive = archive;
+		this.totalavis = totalavis;
+		this.sexe = sexe;
+		this.nbrparticipant = nbrparticipant;
+		this.typeactivite = idtypeactivite;
+		this.tpsrestant = getTempsRestant(datefin);
+		this.finidans = getSeTermine(datefin);
+		this.age = getAgeStr(datenaissance, afficheage);
+		if (affichesexe)
+			this.sexe = 3;
+		this.role = role;
+		this.typeUser = typeUser;
+		this.typeAcces = typeAcces;
+		this.nbmaxwaydeur = nbmaxwaydeur;
+		this.fulldescrition = fulldescription;
+		if (this.titre.equals(""))
+			this.titre = " ";
+		this.gratuite = gratuit;
+
+	}
+
 	public Activite(ActiviteBean activiteBean) {
-		// TODO Auto-generated constructor stub
 	
-		this.id=activiteBean.getId();
+		this.id = activiteBean.getId();
 		this.titre = activiteBean.getTitre();
-		this.libelle =activiteBean.getLibelle();
+		this.libelle = activiteBean.getLibelle();
 		this.idorganisateur = activiteBean.getIdorganisateur();
 		this.latitude = activiteBean.getLatitude();
 		this.longitude = activiteBean.getLongitude();
 		this.adresse = activiteBean.getAdresse();
-		this.datefinStr = Parametres.getStringWsFromDate(activiteBean.getDatefin());
-		this.datedebut=activiteBean.getDatedebut();
-		this.datefinactivite=activiteBean.datefin;
-		this.datedebutStr = Parametres.getStringWsFromDate(activiteBean.getDatedebut());
-		this.nomorganisateur=activiteBean.getNomorganisateur();
-		this.prenomorganisateur=activiteBean.getPseudo();
-		this.photo=activiteBean.getPhoto();
-		this.typeUser=activiteBean.getTypeUser();
-		this.typeAcces=activiteBean.getTypeAccess();
-		this.nbmaxwaydeur=activiteBean.getNbmaxwaydeur();
-		if (this.titre.equals(""))this.titre=" ";
-		
-	
+		this.datefinStr = Parametres.getStringWsFromDate(activiteBean
+				.getDatefin());
+		this.datedebut = activiteBean.getDatedebut();
+		this.datefinactivite = activiteBean.datefin;
+		this.datedebutStr = Parametres.getStringWsFromDate(activiteBean
+				.getDatedebut());
+		this.nomorganisateur = activiteBean.getNomorganisateur();
+		this.prenomorganisateur = activiteBean.getPseudo();
+		this.photo = activiteBean.getPhoto();
+		this.typeUser = activiteBean.getTypeUser();
+		this.typeAcces = activiteBean.getTypeAccess();
+		this.nbmaxwaydeur = activiteBean.getNbmaxwaydeur();
+		if (this.titre.equals(""))
+			this.titre = " ";
+
 	}
 
-	private long getSeTermine(Date finActivite) {// calcul en miliseconde le temps avant la fin
-		return  finActivite.getTime()-new Date().getTime();
-		
+	private long getSeTermine(Date finActivite) {// calcul en miliseconde le
+													// temps avant la fin
+		return finActivite.getTime() - new Date().getTime();
+
 	}
 
-	public  String getAgeStr(Date datenaissance,boolean afficheage)
-	{
-		if (afficheage)return TextWebService.NON_COMMUNIQUE;
-		if (datenaissance!=null){
+	public String getAgeStr(Date datenaissance, boolean afficheage) {
+		if (afficheage)
+			return TextWebService.NON_COMMUNIQUE;
+		if (datenaissance != null) {
 			Calendar curr = Calendar.getInstance();
 			Calendar birth = Calendar.getInstance();
 			birth.setTime(datenaissance);
 			int yeardiff = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
-			curr.add(Calendar.YEAR,-yeardiff);
-			if(birth.after(curr))
-			{
+			curr.add(Calendar.YEAR, -yeardiff);
+			if (birth.after(curr)) {
 				yeardiff = yeardiff - 1;
 			}
-			if (yeardiff<0)return TextWebService.ERREUR_INCONNUE;
-			if (yeardiff==0)return TextWebService.PAS_AGE_INDIQUE;
-			return Integer.toString(yeardiff) +" ans";
+			if (yeardiff < 0)
+				return TextWebService.ERREUR_INCONNUE;
+
+			if (yeardiff == 0)
+				return TextWebService.PAS_AGE_INDIQUE;
+
+			return Integer.toString(yeardiff) + " ans";
 		}
 
 		return TextWebService.PAS_AGE_INDIQUE;
 	}
 
-public String getTempsRestant(Date datefinactivite){
-		
-		if (datefinactivite==null)return TextWebService.ACTIVITE_INEXISTANTE;
-		if (new Date().after(datefinactivite))return TextWebService.TERMINEE;
-		else
-		{
-		
-			long diff =  datefinactivite.getTime()-new Date().getTime();
-		//	long diffSeconds = diff / 1000 % 60;
+	public String getTempsRestant(Date datefinactivite) {
+
+		if (datefinactivite == null)
+			return TextWebService.ACTIVITE_INEXISTANTE;
+		if (new Date().after(datefinactivite))
+			return TextWebService.TERMINEE;
+		else {
+
+			long diff = datefinactivite.getTime() - new Date().getTime();
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
-		//	long diffDays = diff / (24 * 60 * 60 * 1000);
-		if (diff<0)return TextWebService.TERMINEE;
-			
-			return diffHours+":" +String.format("%02d", diffMinutes);
-	
-			
+		
+			if (diff < 0)
+				return TextWebService.TERMINEE;
+
+			return diffHours + ":" + String.format("%02d", diffMinutes);
+
 		}
-	
+
 	}
+
 	public int getTypeactivite() {
 		return typeactivite;
 	}
-	
-
 
 	public void setTypeactivite(int typeactivite) {
 		this.typeactivite = typeactivite;
@@ -359,12 +352,10 @@ public String getTempsRestant(Date datefinactivite){
 		return photo;
 	}
 
-	
 	public double getNote() {
 		return note;
 	}
 
-		
 	public void setNote(double note) {
 		this.note = note;
 	}
@@ -377,12 +368,9 @@ public String getTempsRestant(Date datefinactivite){
 		return prenomorganisateur;
 	}
 
-	
 	public int getId() {
 		return id;
 	}
-
-	
 
 	public String getTitre() {
 		return titre;
@@ -401,7 +389,7 @@ public String getTempsRestant(Date datefinactivite){
 	}
 
 	public void setDejainscrit(boolean dejainscrit) {
-		
+
 		this.dejainscrit = dejainscrit;
 	}
 
@@ -413,12 +401,9 @@ public String getTempsRestant(Date datefinactivite){
 		return datefinStr;
 	}
 
-	
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public void setTitre(String titre) {
 		this.titre = titre;
@@ -472,7 +457,6 @@ public String getTempsRestant(Date datefinactivite){
 		return longitude;
 	}
 
-	
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
@@ -486,26 +470,28 @@ public String getTempsRestant(Date datefinactivite){
 	}
 
 	public boolean isComplete() {
-	if (nbmaxwaydeur==nbrparticipant)return true;
-		// TODO Auto-generated method stub
+		if (nbmaxwaydeur == nbrparticipant)
+			return true;
+		
 		return false;
 	}
 
 	public boolean isTerminee() {
-		// TODO Auto-generated method stub
-		if (datefinactivite.before(new Date()))return true;
 		
+		if (datefinactivite.before(new Date()))
+			return true;
+
 		return false;
 	}
 
 	public void defineOrganisateur(int idpersonne) {
-		
+
 		if (idorganisateur == idpersonne)
 			setOrganisateur(true);
 		else
 			setOrganisateur(false);
-			// TODO Auto-generated method stub
 		
+
 	}
 
 	public void defineOrganisateur() {
@@ -514,21 +500,17 @@ public String getTempsRestant(Date datefinactivite){
 		}
 		if (role == 1) {
 			setOrganisateur(true);
-		}// TODO Auto-generated method stub
-		
+		}
+
 	}
 
-	
-public boolean isEnCours(){
-		
-		Date maintenant=new Date();
-		if (maintenant.after(datedebut) && maintenant.before(datefinactivite))return true;
+	public boolean isEnCours() {
+
+		Date maintenant = new Date();
+		if (maintenant.after(datedebut) && maintenant.before(datefinactivite))
+			return true;
 		return false;
-		
-	}
-	
-		
-	
 
-	
+	}
+
 }

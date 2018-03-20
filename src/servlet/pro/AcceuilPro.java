@@ -39,7 +39,7 @@ public class AcceuilPro extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		
 	//*********  Regle d'authentification*********************
 		
@@ -52,7 +52,7 @@ public class AcceuilPro extends HttpServlet {
 		request.getRequestDispatcher("MesActivites").forward(request, response);
 		
 		
-		// TODO Auto-generated method stub
+		
 	
 	}
 

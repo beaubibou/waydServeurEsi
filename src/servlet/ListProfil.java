@@ -36,7 +36,7 @@ public class ListProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -72,7 +72,7 @@ public class ListProfil extends HttpServlet {
 	}
 
 	private void doAction(String action,HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 		
 		int idPersonne = 0;
 	
@@ -121,14 +121,14 @@ public class ListProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 
 	}
 
 	private void metAjourFiltre(HttpServletRequest request,
 			HttpServletResponse response, FitreAdminProfils filtre) {
-		// TODO Auto-generated method stub
+		
 
 		if (request.getParameter("typeUser") != null) {
 			int typeUser = Integer.parseInt(request.getParameter("typeUser"));

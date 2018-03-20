@@ -103,9 +103,6 @@ public class ParticipantDAO {
 			return retour;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {

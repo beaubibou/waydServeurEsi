@@ -20,7 +20,7 @@ public class Outils {
 	private static final Logger LOG = Logger.getLogger(Outils.class);
 
  	public static String getCleActivation() {
-		// TODO Auto-generated method stub
+		
 		return  ""+(int) (Math.random() * 9000 + 110);
 	}
 	

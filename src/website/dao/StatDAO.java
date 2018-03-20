@@ -42,9 +42,6 @@ public class StatDAO {
 			return nbrMessage;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrMessage;
 			
@@ -78,9 +75,6 @@ public class StatDAO {
 			return nbrMessage;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrMessage;
 		} finally {
@@ -116,9 +110,6 @@ public class StatDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -153,9 +144,7 @@ public class StatDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -188,9 +177,7 @@ public class StatDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -222,9 +209,7 @@ public class StatDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -257,9 +242,7 @@ public class StatDAO {
 			return nbrActivite;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrActivite;
 		} finally {
@@ -291,9 +274,7 @@ public class StatDAO {
 			return nbrParticipation;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return nbrParticipation;
 		} finally {

@@ -11,7 +11,7 @@ public class ContactProText {
 	
 
 	public static String getNbrCarateresDescriptionMessage() {
-		// TODO Auto-generated method stub
+		
 		return  "/"+TAILLE_MAX_MESSAGE;
 	}
 

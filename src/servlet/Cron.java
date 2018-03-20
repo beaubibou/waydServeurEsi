@@ -42,7 +42,7 @@ public class Cron extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	public void destroy() {
@@ -61,12 +61,12 @@ public class Cron extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
+		
 		
 		super.init();
 		// Initialistion de l'application 
@@ -83,7 +83,7 @@ public class Cron extends HttpServlet {
 			String photoStr = Outils.encodeToString(img, "jpg");
 			CacheValueDAO.addPhotoCache(TypePhoto.Inconnu, photoStr);
 		} catch (IOException e) {
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		LogDAO.prepareStatPerf();

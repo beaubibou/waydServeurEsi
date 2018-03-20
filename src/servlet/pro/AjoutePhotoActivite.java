@@ -45,14 +45,14 @@ public class AjoutePhotoActivite extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 
@@ -109,7 +109,6 @@ public class AjoutePhotoActivite extends HttpServlet {
 				}
 
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(ex));
 				request.setAttribute("message",ex.getMessage());	
 				request.getRequestDispatcher("pro/messageInfo.jsp").forward(request, response);

@@ -91,8 +91,7 @@ public class ListLogs extends HttpServlet {
 			}
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -116,7 +115,7 @@ public class ListLogs extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		doGet(request, response);
 	}

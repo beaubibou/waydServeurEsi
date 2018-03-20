@@ -40,7 +40,7 @@ public class SignalementDAO {
 		}
 		CxoPool.close(preparedStatement, rs);
 		return retour;
-		// TODO Auto-generated method stub
+		
 	}
 
 	public boolean isSignalerActvite(int idpersonne, int idactivite)
@@ -59,7 +59,7 @@ public class SignalementDAO {
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		// TODO Auto-generated method stub
+		
 	}
 
 	public void signalerProfil(int idpersonne, int idsignalement, int idmotif,

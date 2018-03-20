@@ -27,12 +27,43 @@ import fcm.ServeurMethodes;
 
 public class ActiviteDAO {
 	private static final Logger LOG = Logger.getLogger(ActiviteDAO.class);
+	
+private static String REQ_ACTIVITE=
+		"activite.datedebut,"
+		+ "activite.adresse,"
+		+ "activite.latitude,"
+		+ "activite.longitude,"
+		+ "activite.idactivite,"
+		+ "activite.libelle,"
+		+ "activite.titre,"
+		+ "activite.nbrwaydeur,"
+		+ "activite.nbmaxwayd,"
+		+ "activite.datefin,"
+		+ "activite.idtypeactivite,"
+		+ "activite.typeuser,"
+		+ "activite.typeacces,"
+		+ "activite.descriptionall,"
+		+ "activite.gratuit,"
+		+ "personne.prenom,"
+		+ "personne.sexe,"
+		+ "personne.nom,"
+		+ "personne.idpersonne,"
+		+ "personne.affichesexe,"
+		+ "personne.afficheage,"
+		+ "personne.datenaissance,"
+		+ "personne.note,"
+		+ "personne.nbravis as totalavis,"
+		+ "personne.photo,"
+		+ "1 as role,";
+	
 
 	Connection connexion;
+	
 
 	public ActiviteDAO(Connection connexion) {
 		this.connexion = connexion;
 	}
+	
 
 	public Activite getActivite(int idactivite_) throws Exception {
 
@@ -52,6 +83,8 @@ public class ActiviteDAO {
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite_);
 		rs = preparedStatement.executeQuery();
+		
+		
 		while (rs.next()) {
 			int id = rs.getInt("idactivite");
 			int idtypeactivite = rs.getInt("idtypeactivite");
@@ -108,6 +141,58 @@ public class ActiviteDAO {
 		return activite;
 
 	}
+	
+	public Activite getActiviteByRS(ResultSet rs) throws SQLException{
+		
+		if (rs==null)
+			return null;
+		int id = rs.getInt("idactivite");
+		int idtypeactivite = rs.getInt("idtypeactivite");
+		String libelle = rs.getString("libelle");
+		String titre = rs.getString("titre");
+		int idorganisateur = rs.getInt("idpersonne");
+		int sexe = rs.getInt("sexe");
+		Date datedebut = rs.getTimestamp("datedebut");
+		Date datefin = rs.getTimestamp("datefin");
+		String adresse = rs.getString("adresse");
+		double latitude = rs.getDouble("latitude");
+		double longitude = rs.getDouble("longitude");
+		double note = rs.getDouble("note");
+		String nom = rs.getString("nom");
+		String prenom = rs.getString("prenom");
+		String fulldescription = rs.getString("descriptionall");
+		Date datenaissance = rs.getTimestamp("datenaissance");
+		boolean afficheage = rs.getBoolean("afficheage");
+		boolean affichesexe = rs.getBoolean("affichesexe");
+		int nbmaxwayd = rs.getInt("nbmaxwayd");
+		int nbrparticipant = rs.getInt("nbrwaydeur");
+		if (prenom == null)
+			prenom = "";
+		String photo = rs.getString("photo");
+		int role = rs.getInt("role");
+		Date maintenant = new Date();
+		boolean archive = false;
+
+		if (datefin != null)
+			if (datefin.before(maintenant))
+				archive = true;
+
+		if (datefin == null)
+			archive = true;
+
+		int totalavis = rs.getInt("totalavis");
+
+		int typeUser = rs.getInt("typeuser");
+		int typeAcces = rs.getInt("typeacces");
+		int gratuit = rs.getInt("gratuit");
+
+		return  new Activite(id, titre, libelle, idorganisateur,
+					datedebut, datefin, idtypeactivite, latitude, longitude,
+					adresse, nom, prenom, photo, note, role, archive,
+					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
+					affichesexe, nbmaxwayd, typeUser, typeAcces,fulldescription,gratuit);
+		
+	}
 
 	public ArrayList<Personne> getListPersonneInterresse(Activite activite)
 			throws Exception {
@@ -127,15 +212,23 @@ public class ActiviteDAO {
 		double actlatitude = activite.getLatitude();
 		double actlongitude = activite.getLongitude();
 
-		String requete = "SELECT personne.notification,personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne,"
-				+ " prefere.idtypeactivite FROM public.plage,prefere,personne "
-				+ "where jour=? and heuredebut<=? and ?<=heurefin and plage.idtypeactivite=? "
-				+ " and prefere.idpersonne=plage.idpersonne	 and prefere.idtypeactivite=plage.idtypeactivite"
-				+ "  and prefere.active=true  and prefere.always=false  and personne.idpersonne=prefere.idpersonne "
-				+ "and personne.idpersonne!=? union"
-				+ "  select personne.notification,personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne, prefere.idtypeactivite  "
-				+ "FROM prefere,personne "
-				+ "where "
+		String requete = "SELECT "
+				+ " personne.notification,"
+				+ " personne.gcm,"
+				+ " personne.latitude,"
+				+ " personne.longitude,"
+				+ " personne.rayon,prefere.idpersonne,"
+				+ " prefere.idtypeactivite"
+				+ " FROM public.plage,prefere,personne"
+				+ " where jour=? and heuredebut<=? and ?<=heurefin and plage.idtypeactivite=? "
+				+ " and prefere.idpersonne=plage.idpersonne"
+				+ " and prefere.idtypeactivite=plage.idtypeactivite"
+				+ " and prefere.active=true  and prefere.always=false  and personne.idpersonne=prefere.idpersonne "
+				+ " and personne.idpersonne!=?"
+				+ " union"
+				+ " select personne.notification,personne.gcm,personne.latitude,personne.longitude,personne.rayon,prefere.idpersonne, prefere.idtypeactivite  "
+				+ " FROM prefere,personne"
+				+ " where "
 				+ " prefere.idtypeactivite=? and  prefere.active=true  and prefere.always=true"
 				+ " and personne.idpersonne=prefere.idpersonne and personne.idpersonne!=?;";
 
@@ -270,19 +363,42 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
-				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
-				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeuser,activite.typeacces   FROM personne,"
-				+ "activite  WHERE (personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
-				+ "and ? between datedebut and datefin"
+		String requete = " SELECT"
+				+ " activite.gratuit,activite.datedebut,"
+				+ " activite.adresse,"
+				+ " activite.latitude,"
+				+ " activite.longitude,"
+				+ " personne.prenom,"
+				+ " personne.sexe,"
+				+ " personne.nom,"
+				+ " personne.idpersonne,"
+				+ " personne.datenaissance,"
+				+ " personne.note,"
+				+ " personne.nbravis"
+				+ " as totalavis,personne.photo,"
+				+ " activite.nbrwaydeur as nbrparticipant,"
+				+ " 1 as role,"
+				+ " activite.idactivite,"
+				+ " activite.libelle,"
+				+ " activite.titre,"
+				+ " activite.datefin,"
+				+ " activite.idtypeactivite,"
+				+ " activite.nbmaxwayd,"
+				+ " activite.typeuser,"
+				+ " activite.typeacces"
+				+ " FROM personne,"
+				+ " activite"
+				+ " WHERE (personne.idpersonne = activite.idpersonne"
+				+ " and activite.idtypeactivite=?"
+				+ " and activite.actif=true "
+				+ " and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
 				+ " and activite.longitude between ? and ?"
 				+ " and (UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
+	
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
-		// System.out.println(new Date());
+	
 		preparedStatement.setInt(1, idtypeactivite_);
 		preparedStatement.setTimestamp(2, new java.sql.Timestamp(calendrier
 				.getTime().getTime()));
@@ -319,8 +435,6 @@ public class ActiviteDAO {
 			double note = rs.getDouble("note");
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
-			// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
 			if (prenom == null)
 				prenom = "";
 			String photo = rs.getString("photo");
@@ -362,16 +476,37 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT activite.gratuit,activite.datedebut,      activite.adresse,    activite.latitude,"
-				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,personne.datenaissance  ,    personne.idpersonne,    "
-				+ " personne.note,personne.nbravis as totalavis  ,personne.photo,"
-				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,activite.idtypeactivite ,activite.nbmaxwayd,activite.typeuser,activite.typeacces  FROM personne,"
-				+ "activite  WHERE (personne.idpersonne = activite.idpersonne  "
-				+ "and ? between datedebut and datefin"
+		String requete = " SELECT "
+				+ " activite.gratuit,"
+				+ " activite.datedebut,"
+				+ " activite.adresse, "
+				+ " activite.latitude,"
+				+ " activite.longitude,"
+				+ " personne.prenom, "
+				+ " personne.sexe,"
+				+ " personne.nom,"
+				+ " personne.datenaissance,"
+				+ " personne.idpersonne,"
+				+ " personne.note,"
+				+ " personne.nbravis as totalavis  ,"
+				+ " personne.photo,"
+				+ " activite.nbrwaydeur as nbrparticipant,"
+				+ " 1 as role,"
+				+ " activite.idactivite,"
+				+ " activite.libelle,  "
+				+ " activite.titre,"
+				+ " activite.datefin,"
+				+ " activite.idtypeactivite,"
+				+ " activite.nbmaxwayd,"
+				+ " activite.typeuser,"
+				+ " activite.typeacces  FROM personne,"
+				+ " activite  WHERE (personne.idpersonne = activite.idpersonne"
+				+ " and activite.actif=true"
+				+ " and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
 				+ " and activite.longitude between ? and ?"
-				+ " and (UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
+				+ " and (UPPER(libelle) like UPPER(?)"
+				+ " or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -419,8 +554,7 @@ public class ActiviteDAO {
 			int role = rs.getInt("role");
 			boolean archive = false;
 			Date datenaissance = rs.getTimestamp("datenaissance");
-			// Date datefinactivite = rs.getTimestamp("d_finactivite");
-
+		
 			int totalavis = rs.getInt("totalavis");
 
 			int typeUser = rs.getInt("typeuser");
@@ -461,20 +595,37 @@ public class ActiviteDAO {
 		double longMax = proprietepreference.getLongitude() + coef;
 
 		// Modifcation des requets pour n'avoir que les suggestions en cours
-		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude, activite.longitude,activite.idactivite,"
-				+ " activite.libelle,    activite.titre,    activite.datefin,   activite.idtypeactivite,personne.photo,0 as role,"
-				+ "personne.datenaissance,activite.typeuser,activite.typeacces,  "
-				+ " personne.note,personne.nbravis as totalavis,"
-				+ " activite.nbrwaydeur as nbrparticipant,activite.nbmaxwayd,"
-				+ " personne.prenom,personne.sexe,personne.nom,personne.idpersonne "
+		String requete = " SELECT "
+				+ "activite.gratuit,"
+				+ "activite.datedebut, "
+				+ "activite.adresse,"
+				+ "activite.latitude,"
+				+ "activite.longitude,"
+				+ "activite.idactivite,"
+				+ "activite.libelle,"
+				+ "activite.titre, "
+				+ "activite.datefin,"
+				+ "activite.idtypeactivite,"
+				+ "personne.photo,0 as role,"
+				+ "personne.datenaissance,"
+				+ "activite.typeuser,"
+				+ "activite.typeacces,"
+				+ "personne.note,"
+				+ "personne.nbravis as totalavis,"
+				+ "activite.nbrwaydeur as nbrparticipant,"
+				+ "activite.nbmaxwayd,"
+				+ "personne.prenom,"
+				+ "personne.sexe,"
+				+ "personne.nom,"
+				+ "personne.idpersonne "
 				+ " FROM activite,personne "
-
 				+ " where exists ("
 				+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 "
 				+ " and prefere.always=true and prefere.active=true )"
 				+ " and personne.idpersonne = activite.idpersonne  and ? between datedebut and datefin and activite.idpersonne!=? "
 				+ " and activite.latitude between ? and ?"
-				+ " and activite.longitude between ? and ? ORDER BY datedebut ASC;";
+				+ " and activite.longitude between ? and ? "
+				+ " and activite.actif=true ORDER BY datedebut ASC;";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -726,8 +877,8 @@ public class ActiviteDAO {
 
 		preparedStatement.close();
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
+		
 
 	}
 
@@ -762,8 +913,6 @@ public class ActiviteDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 
 	}
 
@@ -990,7 +1139,7 @@ int gratuit = rs.getInt("gratuit");
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -1036,7 +1185,7 @@ int gratuit = rs.getInt("gratuit");
 		CxoPool.close(preparedStatement,rs);
 		return retour;
 
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -1267,7 +1416,7 @@ int gratuit = rs.getInt("gratuit");
 	}
 
 	public int getNbrNotification(int idpersonne) throws SQLException {
-		// TODO Auto-generated method stub
+		
 
 		int nbrnotification = 0;
 		String requete = "select  count(iddestinataire) as nbrnotification from notification"
@@ -1281,13 +1430,12 @@ int gratuit = rs.getInt("gratuit");
 			nbrnotification = rs.getInt("nbrnotification");
 		}
 
-		// System.out.println(nbrnotification);
 		CxoPool.close(preparedStatement, rs);
 		return nbrnotification;
 	}
 
 	public int getNbrAmi(int idpersonne) throws SQLException {
-		// TODO Auto-generated method stub
+		
 
 		String requete = "select  count(idpersonne) as nbrami from ami where  idpersonne=?;";
 		PreparedStatement preparedStatement = connexion
@@ -1394,7 +1542,7 @@ int gratuit = rs.getInt("gratuit");
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -1432,9 +1580,6 @@ int gratuit = rs.getInt("gratuit");
 			return true;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return false;
 
@@ -1460,13 +1605,26 @@ int gratuit = rs.getInt("gratuit");
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commenceDans);
 
-		String requete = " SELECT activite.gratuit,activite.datedebut,        activite.adresse,    activite.latitude,"
-				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,    "
-				+ "personne.note,personne.nbravis as totalavis,personne.photo,"
+		String requete = " SELECT activite.gratuit,"
+				+ "activite.datedebut,  "
+				+ "activite.adresse,"
+				+ "activite.latitude,"
+				+ "activite.longitude,"
+				+ "personne.prenom,"
+				+ "personne.sexe,"
+				+ "personne.nom,"
+				+ "personne.idpersonne,"
+				+ "personne.datenaissance,    "
+				+ "personne.note,"
+				+ "personne.nbravis as totalavis,personne.photo,"
 				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser   FROM personne,"
-				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idtypeactivite=?  "
-				+ "and ? between datedebut and datefin"
+				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser"
+				+ " FROM personne,activite"
+				+ " WHERE"
+				+ " personne.idpersonne = activite.idpersonne"
+				+ " and activite.idtypeactivite=? "
+				+ " and activite.actif=true"
+				+ " and ? between datedebut and datefin"
 				+ " and activite.latitude between ? and ?"
 				+ " and activite.longitude between ? and ?"
 				+ " and (UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
@@ -1562,8 +1720,7 @@ int gratuit = rs.getInt("gratuit");
 			int idorganisateur, int idtypeactivite, String latitudestr,
 			String longitudestr, String adresse, Long debut, Long fin) {
 
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

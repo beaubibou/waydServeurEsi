@@ -24,8 +24,7 @@ public abstract class CxoPool {
 			ctx = new InitialContext();
 			 
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -76,8 +75,7 @@ public abstract class CxoPool {
 			try {
 				connexion.rollback();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+					
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
@@ -89,23 +87,18 @@ public abstract class CxoPool {
 			try {
 				resultSet.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e1));
+					LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (statement != null)
 			try {
 				statement.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (connection != null)
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
@@ -116,16 +109,13 @@ public abstract class CxoPool {
 			try {
 				statement.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e1));
+					LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (connexion != null)
 			try {
 				connexion.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
-				LOG.error(ExceptionUtils.getStackTrace(e));
+					LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
 
@@ -136,27 +126,21 @@ public abstract class CxoPool {
 			try {
 				connexion.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 	}
 
 	public static void close(PreparedStatement preparedStatement, ResultSet rs) {
-		// TODO Auto-generated method stub
 		if (rs != null)
 			try {
 				rs.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 		if (preparedStatement != null)
 			try {
 				preparedStatement.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 	}

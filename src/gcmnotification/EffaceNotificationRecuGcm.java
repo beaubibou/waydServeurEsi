@@ -28,8 +28,6 @@ public class EffaceNotificationRecuGcm implements Runnable {
 			new ServeurMethodes(connexionGcm).gcmUpdateNotification(idDestinataire);
 
 		} catch (SQLException | NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexionGcm);

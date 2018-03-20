@@ -37,7 +37,7 @@ public class CompteWaydeur extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	
 		// ********* Regle d'authentification*********************
 		if (true)return;
@@ -56,7 +56,7 @@ public class CompteWaydeur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		
 		
 		if (true)return;
@@ -85,9 +85,9 @@ public class CompteWaydeur extends HttpServlet {
 		try {
 			datenaissance = Outils.getDateFromString( request.getParameter("datenaissance"));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		
 			datenaissance=new Date();
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		

@@ -1,6 +1,7 @@
 package reponsevaleur;
 
 import java.util.ArrayList;
+
 import wayde.bean.Message;
 
 public class DiscussionByActRV {

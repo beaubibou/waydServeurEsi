@@ -54,13 +54,13 @@ public class CreerUserPro extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
+		
 		super.init();
 		if (FirebaseApp.getApps().isEmpty())
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
@@ -89,7 +89,7 @@ public class CreerUserPro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		// **************************RECUEPRETAION DES PARAMETRES
 
@@ -140,9 +140,6 @@ public class CreerUserPro extends HttpServlet {
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 			redirige(pwd, pwd1, email, pseudo, siret, telephone, adresse,
@@ -191,7 +188,7 @@ public class CreerUserPro extends HttpServlet {
 	private void envoiMailConfirmation(HttpServletRequest request,
 			HttpServletResponse response, String email, String pwd)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		request.setAttribute("email", email);
 		request.setAttribute("pwd", pwd);
 		request.getRequestDispatcher("auth/sendEmail.jsp").forward(request,
@@ -219,8 +216,6 @@ public class CreerUserPro extends HttpServlet {
 			request.getRequestDispatcher("auth/CreationComptePro.jsp").forward(
 					request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -228,13 +223,7 @@ public class CreerUserPro extends HttpServlet {
 
 	private MessageServeur creerUtilisateurFireBase(String email, String pwd,
 			String pseudo) {
-		// TODO Auto-generated method stub
 
-		// if (true)
-		//
-		// return new MessageServeur(true,"ok");
-		//
-		//
 		if (FirebaseApp.getApps().isEmpty())
 			FirebaseApp.initializeApp(WBservices.optionFireBase);
 
@@ -250,8 +239,7 @@ public class CreerUserPro extends HttpServlet {
 			return new MessageServeur(true, userRecord.getUid());
 
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-
+		
 			String s = ExceptionUtils.getStackTrace(e);
 			String erreur = "Erreur inconnue";
 
@@ -268,8 +256,7 @@ public class CreerUserPro extends HttpServlet {
 			String pwd1, String email, String pseudo, String siret,
 			String telephone, String adresse, String commentaire,
 			String siteweb, double latitude, double longitude) {
-		// TODO Auto-generated method stub
-
+	
 		Connection connexion = null;
 
 		try {
@@ -283,8 +270,7 @@ public class CreerUserPro extends HttpServlet {
 			return new MessageServeur(true, Erreur_HTML.CREATION_COMPTE);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
@@ -302,7 +288,7 @@ public class CreerUserPro extends HttpServlet {
 			String email, String pseudo, String siret, String telephone,
 			String adresse, String commentaire, double latitude,
 			double longitude) {
-		// TODO Auto-generated method stub
+		
 
 		if (PersonneDAO.isPseudoExist(pseudo.trim()))
 			return new MessageServeur(false, Erreur_HTML.PSEUDO_EXISTE);

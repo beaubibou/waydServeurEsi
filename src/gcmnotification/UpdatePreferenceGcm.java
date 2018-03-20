@@ -18,13 +18,11 @@ public class UpdatePreferenceGcm implements Runnable {
 	int idPersonne;
 
 	public UpdatePreferenceGcm(int idPersonne) {
-		// TODO Auto-generated constructor stub
 		this.idPersonne = idPersonne;
 	}
 
 
 	public void run() {
-		// TODO Auto-generated method stub
 		Connection connexionGcm = null;
 		try {
 			connexionGcm = CxoPool.getConnection();
@@ -32,8 +30,7 @@ public class UpdatePreferenceGcm implements Runnable {
 					.envoiAndroidRefreshTDB(idPersonne);
 
 		} catch (SQLException | NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexionGcm);

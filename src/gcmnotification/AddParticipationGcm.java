@@ -27,7 +27,7 @@ public class AddParticipationGcm implements Runnable {
 	}
 
 	public void run() {
-		// TODO Auto-generated method stub
+		
 
 		Connection connexionGcm = null;
 		try {
@@ -44,8 +44,7 @@ public class AddParticipationGcm implements Runnable {
 							idActivite);
 
 		} catch (SQLException | NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	
 			LOG.error( ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexionGcm);

@@ -93,8 +93,6 @@ public class Coordination {
 			LogDAO.LOG_DUREE("addParticipation", debut);
 			return new MessageServeur(true, TextWebService.activiteInscription);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -116,10 +114,7 @@ public class Coordination {
 			return new ActiviteDAO(connexion).getActivite(idActivite);
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 
 		} finally {
@@ -174,8 +169,6 @@ public class Coordination {
 			return new MessageBean("Ok");
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return new MessageBean(TextWebService.ERREUR_INCONNUE);
 		} finally {

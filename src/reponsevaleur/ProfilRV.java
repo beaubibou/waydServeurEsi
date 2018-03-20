@@ -3,7 +3,6 @@ package reponsevaleur;
 import java.util.ArrayList;
 
 import wayde.bean.Profil;
-import wayde.bean.ProfilPro;
 
 public class ProfilRV {
 

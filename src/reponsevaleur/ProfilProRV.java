@@ -2,8 +2,6 @@ package reponsevaleur;
 
 import java.util.ArrayList;
 
-import wayde.bean.Activite;
-import wayde.bean.Avis;
 import wayde.bean.Profil;
 
 public class ProfilProRV {

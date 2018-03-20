@@ -92,8 +92,7 @@ public class ActiviteBean {
 	}
 
 	public String getFulldescription() {
-		System.out.println(fulldescription);
-		return fulldescription;
+			return fulldescription;
 	}
 
 	public void setFulldescription(String fulldescription) {
@@ -404,7 +403,7 @@ public class ActiviteBean {
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
 			int typeUser, int typeAcces, String libelleActivite,
-			String adresse, int nbrSignalement, String fulldescription,int gratuit) {
+			String adresse, int nbrSignalement, String fulldescription,int gratuit,boolean actif) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -431,6 +430,7 @@ public class ActiviteBean {
 		this.nbrSignalement = nbrSignalement;
 		this.fulldescription = fulldescription;
 		this.gratuite=gratuit;
+		this.actif=actif;
 	}
 
 	public int getNbrSignalement() {
@@ -584,12 +584,12 @@ public class ActiviteBean {
 	public boolean isComplete() {
 		if (nbmaxwaydeur == nbrparticipant)
 			return true;
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	public boolean isTerminee() {
-		// TODO Auto-generated method stub
+		
 		if (datefin.before(new Date()))
 			return true;
 
@@ -597,7 +597,7 @@ public class ActiviteBean {
 	}
 
 	public void setListParticipant(ArrayList<ParticipantBean> listParticipant) {
-		// TODO Auto-generated method stub
+		
 
 		this.listParticipant = listParticipant;
 
@@ -622,7 +622,7 @@ public class ActiviteBean {
 	}
 
 	public boolean isInscrit(int iddemandeur) {
-		// TODO Auto-generated method stub
+		
 		for (ParticipantBean participantBean : listParticipant)
 			if (participantBean.getId() == iddemandeur)
 				return true;
@@ -706,7 +706,7 @@ public class ActiviteBean {
 	}
 
 	public boolean isSupprimable(int idOrganisateur) {
-		// TODO Auto-generated method stub
+		
 		if (this.idorganisateur == idOrganisateur && !isTerminee())
 			return true;
 		return false;

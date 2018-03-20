@@ -3,7 +3,6 @@ package reponsevaleur;
 import java.util.ArrayList;
 
 import wayde.bean.IndicateurWayd;
-import wayde.bean.Version;
 
 public class IndicateurWaydRV {
 

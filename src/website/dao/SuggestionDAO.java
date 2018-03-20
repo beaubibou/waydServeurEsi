@@ -58,9 +58,7 @@ public class SuggestionDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -142,9 +140,7 @@ public class SuggestionDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -180,8 +176,6 @@ public class SuggestionDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.close(connexion, preparedStatement);
@@ -191,7 +185,7 @@ public class SuggestionDAO {
 	}
 
 	public static boolean supprime(int idSuggestion) {
-		// TODO Auto-generated method stub
+		
 	
 		long debut = System.currentTimeMillis();
 		
@@ -211,9 +205,6 @@ public class SuggestionDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
@@ -224,8 +215,8 @@ public class SuggestionDAO {
 		}
 		return false;
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub	
+		
+			
 	}
 	
 	public static MessageServeur lireProbleme(int idMessage) {
@@ -249,10 +240,7 @@ public class SuggestionDAO {
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+		LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
 		} finally {
@@ -264,8 +252,7 @@ public class SuggestionDAO {
 		return new MessageServeur(false,
 				"Erreur dans la métode lit probleme admin");
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub// TODO Auto-generated method stub
+				
 
 	}
 
@@ -350,10 +337,7 @@ public class SuggestionDAO {
 			return retour;
 	
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-	
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 	

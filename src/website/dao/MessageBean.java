@@ -8,7 +8,6 @@ public class MessageBean {
 	private String message;
 
 	public MessageBean(String message) {
-		// TODO Auto-generated constructor stub
 	this.message=message;
 	
 	}

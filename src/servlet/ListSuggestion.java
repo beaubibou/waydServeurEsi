@@ -40,7 +40,7 @@ public class ListSuggestion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -80,8 +80,6 @@ public class ListSuggestion extends HttpServlet {
 			}
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -110,7 +108,7 @@ public class ListSuggestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	doGet(request, response);
 	}
 	

@@ -1,12 +1,9 @@
 package carpediem;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -23,7 +20,6 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fcm.PushAndroidMessage;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -245,7 +241,7 @@ public class ImportCarpe {
 			return new String(chaine.getBytes("ISO-8859-1"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 
-			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return "Conversion impossible";
 		}
 	}

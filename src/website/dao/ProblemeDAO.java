@@ -96,9 +96,6 @@ public class ProblemeDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -109,8 +106,7 @@ public class ProblemeDAO {
 
 
 	public static boolean supprime(int idProbleme) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		
 		Connection connexion = null;
@@ -129,9 +125,6 @@ public class ProblemeDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
@@ -142,8 +135,7 @@ public class ProblemeDAO {
 		}
 		return false;
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
 	}
 
 	public static MessageServeur lireProbleme(int idMessage) {
@@ -167,9 +159,6 @@ public class ProblemeDAO {
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			
@@ -181,8 +170,8 @@ public class ProblemeDAO {
 		return new MessageServeur(false,
 				"Erreur dans la métode lit probleme admin");
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub// TODO Auto-generated method stub
+		
+		
 
 	}
 }

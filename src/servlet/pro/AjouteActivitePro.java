@@ -143,7 +143,7 @@ public class AjouteActivitePro extends HttpServlet {
 	private MessageServeur testParametreReque(String titre, String adresse,
 			String description, double latitude, double longitude,
 			int typeactivite, Date dateDebut, Date dateFin) {
-		// TODO Auto-generated method stub
+		
 	
 
 		

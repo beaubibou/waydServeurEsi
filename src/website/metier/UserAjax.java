@@ -78,7 +78,7 @@ public class UserAjax implements Comparable<UserAjax> {
 
 	@Override
 	public int compareTo(UserAjax userAjax) {
-		// TODO Auto-generated method stub
+		
 		if (this.distancePoint>userAjax.distancePoint)
 			return 0;
 	

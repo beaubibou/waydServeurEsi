@@ -29,7 +29,7 @@ public class SupprimePhotoActivite extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 	
@@ -61,7 +61,7 @@ public class SupprimePhotoActivite extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		doGet(request, response);
-		// TODO Auto-generated method stub
+		
 	}
 
 }

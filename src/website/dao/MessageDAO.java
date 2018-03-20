@@ -41,10 +41,6 @@ public class MessageDAO {
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 			CxoPool.rollBack(connexion);
@@ -56,8 +52,8 @@ public class MessageDAO {
 		return new MessageServeur(false,
 				"Erreur dans la métode supprime activité");
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
+		
 
 	}
 
@@ -93,9 +89,6 @@ public class MessageDAO {
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 		} finally {
@@ -106,8 +99,7 @@ public class MessageDAO {
 		return new MessageServeur(false,
 				"Erreur dans la métode supprime activité");
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -132,9 +124,6 @@ public class MessageDAO {
 			return new MessageServeur(true, "ok");
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -146,8 +135,8 @@ public class MessageDAO {
 		return new MessageServeur(false,
 				"Erreur dans la métode lit message pro");
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub// TODO Auto-generated method stub
+		
+		
 
 	}
 
@@ -177,10 +166,7 @@ public class MessageDAO {
 			return new Integer(nbrmessagenonlu).toString();
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
 		} finally {
@@ -191,20 +177,19 @@ public class MessageDAO {
 
 		return new Integer(nbrmessagenonlu).toString();
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub// TODO Auto-generated method stub
-
+		
+		
 	}
 
 	public static void ajouteMessageETclore(String message, int idPersonne,
 			int idEmetteur) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	public static boolean ajouteMessage(String message, int idDestinataire,
 			int idEmetteur) {
-		// TODO Auto-generated method stub
+		
 		long debut = System.currentTimeMillis();
 
 		String iddiscussion;
@@ -256,9 +241,7 @@ public class MessageDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
@@ -271,8 +254,7 @@ public class MessageDAO {
 
 	public static boolean ajouteMessageProbleme(String message, String email,
 			String pseudo) {
-		// TODO Auto-generated method stub
-
+	
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -299,8 +281,6 @@ public class MessageDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 

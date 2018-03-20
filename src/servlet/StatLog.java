@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
@@ -38,7 +39,7 @@ public class StatLog extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
@@ -87,8 +88,9 @@ public class StatLog extends HttpServlet {
 							response);
 			
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				
+					LOG.error( ExceptionUtils.getStackTrace(e));
+				
 				}
 				
 			
@@ -116,7 +118,7 @@ public class StatLog extends HttpServlet {
 
 		}
 
-		// response.sendRedirect("admin/statLog.jsp");
+	
 	}
 
 	/**
@@ -125,7 +127,7 @@ public class StatLog extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		if (!authentification.isAuthentifieAdmin())
@@ -134,7 +136,7 @@ public class StatLog extends HttpServlet {
 		request.getRequestDispatcher("admin/statLog.jsp").forward(request,
 				response);
 
-		// response.sendRedirect("admin/statLog.jsp");
+	
 	}
 
 }

@@ -30,7 +30,7 @@ public class AcquitMessageDiscussionByActGcm implements Runnable {
 
 		} catch (SQLException | NamingException e) {
 	
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.closeConnection(connexiongcm);

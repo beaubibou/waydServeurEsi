@@ -145,9 +145,6 @@ public class LogDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
@@ -197,10 +194,7 @@ public class LogDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -230,9 +224,7 @@ public class LogDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -267,9 +259,7 @@ public class LogDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
@@ -303,9 +293,7 @@ public class LogDAO {
 			CxoPool.close(connexion, preparedStatement);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			
 		} finally {
@@ -318,7 +306,7 @@ public class LogDAO {
 	}
 
 	public static boolean supprimeNderniersLogd() {
-		// TODO Auto-generated method stub
+		
 
 		long debut = System.currentTimeMillis();
 
@@ -341,9 +329,6 @@ public class LogDAO {
 			return true;
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -354,12 +339,12 @@ public class LogDAO {
 		}
 		return false;
 
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		
+		
 	}
 
 	public static void LOG_DUREE(String string, long debut) {
-		// TODO Auto-generated method stub
+		
 		long duree = System.currentTimeMillis() - debut;
 
 		if (ETAT_PERF == TypeEtatLogPerf.ACTIVE) {
@@ -405,9 +390,6 @@ public class LogDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 finally{
@@ -446,9 +428,7 @@ finally{
 			}
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 finally{
@@ -499,9 +479,7 @@ finally{
 			LogDAO.LOG_DUREE("prepareStatPerf", debut);
 
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 

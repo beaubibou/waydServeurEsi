@@ -30,15 +30,14 @@ public class MapUserList extends HttpServlet {
      */
     public MapUserList() {
         super();
-        // TODO Auto-generated constructor stub
+      
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		AuthentificationSite authentification = new AuthentificationSite(
+			AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
 		
 		if (!authentification.isAuthentifieAdmin())
@@ -61,8 +60,7 @@ public class MapUserList extends HttpServlet {
 			response.getWriter().write(json);
 		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 		
@@ -74,7 +72,7 @@ public class MapUserList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 }

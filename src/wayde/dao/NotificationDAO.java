@@ -140,7 +140,7 @@ public class NotificationDAO {
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		// TODO Auto-generated method stub
+		
 	}
 
 	public void removeNotificationAnoter(int idpersonne, int idpersonnenotee,

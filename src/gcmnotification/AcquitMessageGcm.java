@@ -28,9 +28,8 @@ public class AcquitMessageGcm implements Runnable {
 					.gcmUpdateNbrMessage(idPersonne);
 
 		} catch (SQLException | NamingException e1) {
-			// TODO Auto-generated catch block
 			LOG.error(ExceptionUtils.getStackTrace(e1));
-			e1.printStackTrace();
+		
 		} finally {
 			CxoPool.closeConnection(connexiongcm);
 		}

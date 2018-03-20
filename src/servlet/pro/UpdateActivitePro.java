@@ -41,7 +41,7 @@ public class UpdateActivitePro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -58,7 +58,7 @@ public class UpdateActivitePro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -89,8 +89,7 @@ public class UpdateActivitePro extends HttpServlet {
 			dateFin = Outils.getDateFromString(datefin);
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return;
 		}

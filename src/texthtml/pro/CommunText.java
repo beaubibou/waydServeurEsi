@@ -64,18 +64,18 @@ public class CommunText {
 	}
 
 	public static String getNbrCarateresDescription() {
-		// TODO Auto-generated method stub
+		
 		return  " / "+TAILLE_DESCRIPTION_ACTIVITE_MAX;
 	}
 
 
 	public static String PSEUDO_LIMITE_A_CARATERE() {
-		// TODO Auto-generated method stub
+		
 		return "Pseudo limité à "+ TAILLE_PSEUDO_MAX+ " caractères.";
 	}
 
 	public static String DESCRIPTION_PROFIL_LIMITE_A_CARATERE() {
-		// TODO Auto-generated method stub
+		
 		return "La description est limitée à "+ TAILLE_DESCRIPTION_PROFIL_MAX+ " caractères.";
 	}
 	

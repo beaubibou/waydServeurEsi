@@ -15,9 +15,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONException;
 
-import carpediem.ImportCarpe;
-import website.metier.ActiviteCarpeDiem;
 import website.metier.AuthentificationSite;
+import carpediem.ImportCarpe;
 
 /**
  * Servlet implementation class ImportCarpeDiem

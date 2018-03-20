@@ -42,7 +42,7 @@ public class ListProbleme extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		HttpSession session = request.getSession();
 
@@ -90,8 +90,6 @@ public class ListProbleme extends HttpServlet {
 			}
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 		}
 
@@ -111,7 +109,7 @@ public class ListProbleme extends HttpServlet {
 	}
 
 	private void doAction(String action,HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		
 	
 		int idMessage = 0;
 		MessageServeur messageServeur=new MessageServeur(false,"nok");
@@ -156,7 +154,7 @@ public class ListProbleme extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		
 		doGet(request, response);
 	}

@@ -104,7 +104,7 @@ public class PushNotifictionHelper {
 			result = "ok";
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			result = "Nok";
 			
 			LOG.error( ExceptionUtils.getStackTrace(e));
@@ -159,7 +159,6 @@ public class PushNotifictionHelper {
 
 			result = "ok";
 		} catch (Exception e) {
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			result = "Nok";
 		}

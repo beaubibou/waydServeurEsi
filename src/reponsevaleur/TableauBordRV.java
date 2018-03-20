@@ -2,8 +2,6 @@ package reponsevaleur;
 
 import java.util.ArrayList;
 
-import wayde.bean.Profil;
-import wayde.bean.ProfilPro;
 import wayde.bean.TableauBord;
 
 public class TableauBordRV {

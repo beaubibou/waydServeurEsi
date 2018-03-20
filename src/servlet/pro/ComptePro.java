@@ -43,7 +43,7 @@ public class ComptePro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		
 		// ********* Regle d'authentification*********************
@@ -82,7 +82,7 @@ public class ComptePro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
@@ -151,7 +151,7 @@ public class ComptePro extends HttpServlet {
 	private MessageServeur testParametreRequete(String nom, String adresse,
 			String commentaire, double latitude, double longitude,
 			String telephone, String siteWeb, String siret, int idPersonne) {
-		// TODO Auto-generated method stub
+		
 
 		nom = nom.trim();
 	
@@ -186,7 +186,7 @@ public class ComptePro extends HttpServlet {
 	}
 
 	private MessageServeur testFormatTelephone(String telephone, int idPersonne) {
-		// TODO Auto-generated method stub
+		
 
 		if (telephone == null)
 			return new MessageServeur(false, Erreur_HTML.NUMERO_TELEPHONE_VIDE);
@@ -205,7 +205,7 @@ public class ComptePro extends HttpServlet {
 	}
 
 	private MessageServeur testFormatSiret(String siret, int idPersonne) {
-		// TODO Auto-generated method stub
+		
 
 		if (siret == null || siret.isEmpty())
 			return new MessageServeur(false, Erreur_HTML.SIRET_VIDE);

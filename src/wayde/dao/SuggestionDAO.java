@@ -34,7 +34,7 @@ public void addSuggestion(int idpersonne, String suggestion) throws SQLException
 
 
 public void addPrbConnexion(String probleme, String email) throws SQLException {
-	// TODO Auto-generated method stub
+	
 	
 	String requete = "INSERT into problemeconnexion(probleme, email,d_creation)"
 			+ " VALUES (?, ?,?)";

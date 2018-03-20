@@ -45,9 +45,7 @@ public class AddActiviteGcm implements Runnable {
 			this.activite = activiteTemp;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+				LOG.error( ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -77,8 +75,6 @@ public class AddActiviteGcm implements Runnable {
 					personneinteresse, activite);
 
 		} catch ( Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexiongcm);

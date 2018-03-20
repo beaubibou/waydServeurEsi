@@ -13,8 +13,9 @@ import fcm.ServeurMethodes;
 
 public class AcquitMessageByActGcm implements Runnable {
 
-	private static final Logger LOG = Logger.getLogger(AcquitMessageByActGcm.class);
-	
+	private static final Logger LOG = Logger
+			.getLogger(AcquitMessageByActGcm.class);
+
 	private int idPersonne;
 
 	public AcquitMessageByActGcm(int idPersonne) {
@@ -26,12 +27,9 @@ public class AcquitMessageByActGcm implements Runnable {
 		Connection connexiongcm = null;
 		try {
 			connexiongcm = CxoPool.getConnection();
-			new ServeurMethodes(connexiongcm)
-					.gcmUpdateNbrMessage(idPersonne);
+			new ServeurMethodes(connexiongcm).gcmUpdateNbrMessage(idPersonne);
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 
 			CxoPool.closeConnection(connexiongcm);

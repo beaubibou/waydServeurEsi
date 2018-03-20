@@ -2,9 +2,6 @@ package reponsevaleur;
 
 import java.util.ArrayList;
 
-import wayde.bean.Activite;
-import wayde.bean.Notification;
-import wayde.bean.Participant;
 import wayde.bean.PhotoWaydeur;
 
 public class ListPhotoWaydeurRV {

@@ -242,7 +242,7 @@ public class AvisDAO {
 		preparedStatement.execute();
 		preparedStatement.close();
 
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -312,7 +312,7 @@ public class AvisDAO {
 		preparedStatement.setInt(5, idparticipant);
 		preparedStatement.setInt(6, idactivite);
 		preparedStatement.execute();
-		// TODO Auto-generated method stub
+		
 
 		CxoPool.close(preparedStatement, rs);
 

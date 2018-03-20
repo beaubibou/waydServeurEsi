@@ -57,7 +57,7 @@ public class ParticipantBean {
 	}
 
 	private boolean isAdmin() {
-		// TODO Auto-generated method stub
+		
 		return admin;
 	}
 

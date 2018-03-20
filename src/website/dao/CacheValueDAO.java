@@ -22,6 +22,7 @@ import website.metier.QuantiteWaydeurBean;
 import website.metier.RayonBean;
 import website.metier.SexeBean;
 import website.metier.TypeAccess;
+import website.metier.TypeActiveActivite;
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
 import website.metier.TypeEtatLogPerf;
@@ -41,6 +42,7 @@ public class CacheValueDAO {
 	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
 	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<TypePhoto, String>();
 	static ArrayList<TypeEtatActivite> ListTypeEtatActivite = new ArrayList<TypeEtatActivite>();
+	static ArrayList<TypeActiveActivite> ListTypeActiveActivite = new ArrayList<TypeActiveActivite>();
 	static ArrayList<TypeEtatMessage> listTypeEtatMessage = new ArrayList<TypeEtatMessage>();
 	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<TypeActiviteBean>();
 	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
@@ -358,9 +360,6 @@ public class CacheValueDAO {
 			return tousTypeActivite;
 
 		} catch (SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
 			LOG.error( ExceptionUtils.getStackTrace(e));
 			return tousTypeActivite;
 		} finally {
@@ -370,7 +369,7 @@ public class CacheValueDAO {
 	}
 
 	public ArrayList<DureeBean> getListDuree() {
-		// TODO Auto-generated method stub
+		
 		ArrayList<DureeBean> listDuree = new ArrayList<DureeBean>();
 		
 		listDuree.add(new DureeBean( 60, 1 + " Heure"));
@@ -437,8 +436,21 @@ public class CacheValueDAO {
 		return ListTypeGRATUITActivite;
 	}
 	
+	public static ArrayList<TypeActiveActivite> getListActivteActivite() {
+		
+		
+		if (ListTypeActiveActivite.isEmpty()){
+		
+			ListTypeActiveActivite.add(new TypeActiveActivite(TypeActiveActivite.ACTIVE,  ListeValeurText.ACTIVE));
+			ListTypeActiveActivite.add(new TypeActiveActivite(TypeActiveActivite.INACTIVE,  ListeValeurText.INACTIF));
+		
+		}
+		
+		
+		return ListTypeActiveActivite;
+	}
+	
 	public static ArrayList<TypeEtatActivite> getListEtatActivite() {
-		// TODO Auto-generated method stub
 
 		
 		
@@ -457,7 +469,7 @@ public class CacheValueDAO {
 	}
 	
 	public static ArrayList<TypeEtatMessage> getListEtatMessage() {
-		// TODO Auto-generated method stub
+		
 
 		if (listTypeEtatMessage.size()==0){
 		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.LU, ListeValeurText.LU));
@@ -469,7 +481,7 @@ public class CacheValueDAO {
 	}
 	
 	public static ArrayList<EtatProbleme> getListEtatProbleme() {
-		// TODO Auto-generated method stub
+		
 
 		if (listTypeEtatProbleme.size()==0){
 			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.CLOTURE, ListeValeurText.CLOTURE));
@@ -482,7 +494,7 @@ public class CacheValueDAO {
 
 	
 	public static ArrayList<EtatSuggestion> getListEtatSuggestions() {
-		// TODO Auto-generated method stub
+		
 
 		if (listTypeEtatSuggestion.size()==0){
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, ListeValeurText.CLOTURE));
@@ -493,7 +505,7 @@ public class CacheValueDAO {
 		return listTypeEtatSuggestion;
 	}
 	public static ArrayList<QuandBean> getListQuand() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<QuandBean> listQuand = new ArrayList<QuandBean>();
 		listQuand.add(new QuandBean(0, "Maintenant"));
@@ -506,7 +518,7 @@ public class CacheValueDAO {
 	}
 	
 	public static ArrayList<TypeEtatProfil> getListEtatProfil() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<TypeEtatProfil> listEtat = new ArrayList<TypeEtatProfil>();
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, ListeValeurText.TOUS));
@@ -518,7 +530,7 @@ public class CacheValueDAO {
 	}
 	
 	public static ArrayList<TypeEtatValide> getListEtatValide() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<TypeEtatValide> listEtat = new ArrayList<TypeEtatValide>();
 		listEtat.add(new TypeEtatValide(TypeEtatValide.VALIDE, ListeValeurText.VALIDE));
@@ -531,7 +543,7 @@ public class CacheValueDAO {
 	}
 	
 	public static ArrayList<TypeSignalement> getListTypeSignalementProfil() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
 		listEtat.add(new TypeSignalement(TypeSignalement.TOUS,ListeValeurText.TOUS));
@@ -547,7 +559,7 @@ public class CacheValueDAO {
 	
 	
 	public static ArrayList<TypeEtatLogs> getListTypeEtatLogs() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<TypeEtatLogs> listEtat = new ArrayList<TypeEtatLogs>();
 		listEtat.add(new TypeEtatLogs(TypeEtatLogs.TOUTES,ListeValeurText.TOUS));
@@ -561,7 +573,7 @@ public class CacheValueDAO {
 	}
 
 	public static ArrayList<TypeEtatLogPerf> getListTypeEtatLogPerf() {
-		// TODO Auto-generated method stub
+		
 
 		ArrayList<TypeEtatLogPerf> listEtat = new ArrayList<TypeEtatLogPerf>();
 		listEtat.add(new TypeEtatLogPerf(TypeEtatLogPerf.ACTIVE,ListeValeurText.ACTIVE));
@@ -592,7 +604,7 @@ public class CacheValueDAO {
 	}
 
 	public static ArrayList<RayonBean> getListRayon() {
-		// TODO Auto-generated method stub
+		
 		
 		if (listRayon.size()==0){
 
@@ -611,13 +623,13 @@ public class CacheValueDAO {
 	}
 
 	public static void addPhotoCache(TypePhoto inconnu, String photoStr) {
-		// TODO Auto-generated method stub
+		
 		mapPhotoCache.put(inconnu, photoStr);
 
 	}
 
 	public static String getPhoto(TypePhoto typePhoto) {
-		// TODO Auto-generated method stub
+		
 		return mapPhotoCache.get(typePhoto);
 	}
 }
