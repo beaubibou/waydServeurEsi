@@ -43,6 +43,7 @@
 			return;
 			FitreAdminActivites filtre=(FitreAdminActivites)session.getAttribute("filtreActivite");
 			ArrayList<TypeActiviteBean> listTypeActiviteBean=CacheValueDAO.getListTypeActiviteToutes();
+			ArrayList<TypeActiviteBean> listTypeActiviteCritere=CacheValueDAO.getListTypeActiviteWaydeur();
 			ArrayList<TypeUser> listTypeUser=CacheValueDAO.getListTypeUser();
 			ArrayList<TypeSignalement> listTypeSignalement=CacheValueDAO.getListTypeSignalementActivite();
 			ArrayList<TypeEtatActivite> listEtatActivite=CacheValueDAO.getListEtatActivite();
@@ -196,13 +197,14 @@
 			<thead>
 				<tr>
 					<th style="width: 10%;" class="text-center">Etat</th>
-					<th style="width: 45%;" class="text-center">Description</th>
+					<th style="width: 40%;" class="text-center">Description</th>
+						<th style="width: 10%;" class="text-center">Type</th>
+					<th style="width: 10%;" class="text-center">Payant</th>
 					<th style="width: 10%;" class="text-center">User</th>
 					<th style="width: 10%;" class="text-center">Le</th>
 					<th style="width: 5%;" class="text-center">Vu</th>
 					<th style="width: 5%;" class="text-center">Sign.</th>
-					<th style="width: 5%;" class="text-center">Type</th>
-					<th style="width: 10%;" class="text-center">Payant</th>
+				
 				</tr>
 			</thead>
 			<tbody
@@ -234,12 +236,22 @@
 					<td><a href=<%=lien%>>
 							<p><%=activite.getFulldescription()%></p>
 					</a></td>
-					<td><a href=<%=lienParticipant%>><%=activite.getPseudo()%></a></td>
-					<td><%=activite.getHoraireLeA()%></td>
-					<td><%=activite.getNbrVu()%></td>
-					<td><%=activite.getNbrSignalement()%></td>
-					<td><%=activite.getLibelleActivite()%></td>
-					<td>
+					<td class="categorie"><select
+								data-style="btn-primary" class="form-control" id="typeactivite"
+								name="<%=activite.getId()%>">
+
+								<%
+									for (TypeActiviteBean typeActivite:listTypeActiviteCritere) {
+								%>
+								<option value="<%=typeActivite.getId()%>"
+									<%=Outils.jspAdapterListSelected(typeActivite.getId(), activite.getTypeactivite())%>>
+									<%=typeActivite.getLibelle()%></option>
+								<%
+									}
+								%>
+
+							</select></td>
+					<td class="payant">
 						 <select
 								data-style="btn-primary" class="form-control" id="etatActivite"
 								name="<%=activite.getId()%>">
@@ -257,6 +269,11 @@
 							</select>
 						
 					</td>
+					<td><a href=<%=lienParticipant%>><%=activite.getPseudo()%></a></td>
+					<td><%=activite.getHoraireLeA()%></td>
+					<td><%=activite.getNbrVu()%></td>
+					<td><%=activite.getNbrSignalement()%></td>
+					
 
 				</tr>
 
@@ -354,8 +371,45 @@
 				document.getElementById("formulaire").submit();
 			});
 			
+			$('td.categorie select').change(function() {
+
+				
+					$.post("ModifieActivite?action=setcategorie&categorie="+this.value+"&idactivite="+this.name
+							,
+							function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+
+								if (responseText == 'ok')
+								{
+									BootstrapDialog.show({
+							            title: 'Confirmation',
+							            closable: false,
+							            message: 'Votre activité a été modfiée',
+							            buttons: [{
+							                label: 'Ok',
+							                action: function(dialog) {
+							               	dialog.close();
+							               	alert(ok)
+							                  //  dialog.setMessage('Message 1');
+							                }
+							            
+							            }]
+							        }); 
+									
+									
+								}
+								else{
+									
+									BootstrapDialog.alert(responseText);
+								}
+
+					
+							});	
+					
+					
+				});
 			
-			$('td select').change(function() {
+			
+			$('td.payant select').change(function() {
 
 				
 			//alert(this.value);

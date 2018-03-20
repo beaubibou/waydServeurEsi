@@ -149,11 +149,9 @@ public class ImportCarpe {
 		start = parsedContentFromUrl.indexOf("lng:");
 		numberStr = getNumber(parsedContentFromUrl, start);
 		double lng = Double.parseDouble(numberStr);
-
 		activiteCarpe.setId(id);
 		activiteCarpe.setLat(lat);
 		activiteCarpe.setLng(lng);
-		
 		
 
 	}
@@ -169,7 +167,6 @@ public class ImportCarpe {
 		String description=tmpdescription;
 		int debutBalise=tmpdescription.indexOf("<a");
 		int finBalise=tmpdescription.indexOf("</a>");
-		
 	
 		
 		if (debutBalise!=-1 && finBalise!=-1){

@@ -62,6 +62,21 @@ public class ModifieActivite extends HttpServlet {
 		
 			}
 			break;
+			
+		case "setcategorie":
+
+			try{
+			int typeactivite=Integer.parseInt(request.getParameter("categorie"));
+			int idactivite=Integer.parseInt(request.getParameter("idactivite"));
+			ActiviteDAO.setTypeActivite(idactivite, typeactivite);
+			System.out.println(typeactivite);
+			}
+			
+			catch(Exception e){
+			e.printStackTrace();	
+		
+			}
+			break;
 
 		default:
 			break;

@@ -589,6 +589,42 @@ public class ActiviteDAO {
 		return false;
 
 	}
+	
+	public static boolean setTypeActivite(int idactivite,int typeActivite) {
+
+		long debut = System.currentTimeMillis();
+
+		PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			// LOG.info("Mise a jour activite"+ commentaire.length());
+
+			String requete = "UPDATE  activite set idtypeactivite=? WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, typeActivite);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("setTypeActivite", debut);
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
 
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
@@ -748,7 +784,7 @@ public class ActiviteDAO {
 		ResultSet rs = null;
 		ActiviteBean activite = null;
 
-		String requete = " SELECT activite.datedebut,       activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.gratuit,activite.datedebut,       activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,descriptionall,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
