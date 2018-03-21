@@ -112,6 +112,8 @@ public class ActiviteDAO {
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite_);
 		rs = preparedStatement.executeQuery();
+	
+		while(rs.next())
 		activite = getActiviteByRs(rs);
 
 		CxoPool.close(preparedStatement, rs);
@@ -289,7 +291,7 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT"
+		String requete = " SELECT "
 				+ REQ_ACTIVITE
 				+ " FROM personne, activite"
 				+ " WHERE (personne.idpersonne = activite.idpersonne"
@@ -455,7 +457,7 @@ public class ActiviteDAO {
 		Activite activite;
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 
-		String requete = " SELECT"
+		String requete = " SELECT "
 				+ REQ_ACTIVITE
 				+ " FROM personne,activite,participer"
 				+ " WHERE (personne.idpersonne=activite.idpersonne and "

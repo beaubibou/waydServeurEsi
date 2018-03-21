@@ -514,4 +514,9 @@ public class Activite {
 
 	}
 
+	public boolean isOrganisateur() {
+		return organisateur;
+	}
+	
+
 }

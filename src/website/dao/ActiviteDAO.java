@@ -2155,7 +2155,7 @@ public class ActiviteDAO {
 			preparedStatement.close();
 
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall)"
+					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook)"
 					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 			preparedStatement = connexion.prepareStatement(requete);
