@@ -21,10 +21,19 @@ public class ActiviteCarpeDiem {
 	String ville;
 	double lat,lng;
 	int id;
+	String lienFaceBook;
 	private String fulldescription;
 	
 
 	
+	public String getLienFaceBook() {
+		return lienFaceBook;
+	}
+
+	public void setLienFaceBook(String lienFaceBook) {
+		this.lienFaceBook = lienFaceBook;
+	}
+
 	public String getFulldescription() {
 		return fulldescription;
 	}
@@ -231,6 +240,8 @@ public class ActiviteCarpeDiem {
 	    return formatter.parse(endDate);
 	
 	}
+
+	
 
 	
 		

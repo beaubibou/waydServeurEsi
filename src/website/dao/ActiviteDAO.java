@@ -2099,6 +2099,7 @@ public class ActiviteDAO {
 			String photoUrl = activite.getImage();
 			String ville = activite.getVille();
 			String fulldescription=activite.getFulldescription();
+			String lienFb=activite.getLienFaceBook();
 			double latitude = activite.getLat();
 			double longitude = activite.getLng();
 			double latitudeFixe = activite.getLat();
@@ -2117,7 +2118,9 @@ public class ActiviteDAO {
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			uc.connect();
 			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+			
 			//	BufferedImage imBuff = ImageIO.read(url);
+			
 			String photo = encodeToString(imBuff, "jpeg");
 			//	String photo="oooooooo";
 			// ****************** Recuperation valeur***********************
@@ -2153,7 +2156,7 @@ public class ActiviteDAO {
 
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
 					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall)"
-					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
@@ -2171,6 +2174,7 @@ public class ActiviteDAO {
 			preparedStatement.setInt(11, 2);
 			preparedStatement.setInt(12, 5);
 			preparedStatement.setString(13, fulldescription);
+			preparedStatement.setString(14, lienFb);
 			preparedStatement.execute();
 			connexion.commit();
 

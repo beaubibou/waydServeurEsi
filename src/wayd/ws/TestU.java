@@ -379,7 +379,7 @@ public class TestU {
 
 		} catch ( Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		//	LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 

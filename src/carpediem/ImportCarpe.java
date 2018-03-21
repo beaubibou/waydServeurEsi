@@ -35,8 +35,8 @@ public class ImportCarpe {
 		int page = 0;
 		Integer status;
 		do {
-			LOG.info("*********************CHARGE ***********PAGE"
-					+ ville + "N°page:" + page);
+			LOG.info("*********************CHARGE ***********PAGE" + ville
+					+ "N°page:" + page);
 			page++;
 			String ur = "http://" + ville + ".carpediem.cd/events/?" + date;
 			String post = "mode=load_content&page=" + page + "&_csrf=getCsrf()";
@@ -44,7 +44,7 @@ public class ImportCarpe {
 			URLConnection conn = url.openConnection();
 			conn.addRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-		
+
 			conn.setDoOutput(true);
 			OutputStreamWriter writer = new OutputStreamWriter(
 					conn.getOutputStream());
@@ -69,7 +69,6 @@ public class ImportCarpe {
 
 		} while (status == 1 && page < 30);
 
-	
 	}
 
 	public void charge(String sourcehtml) throws IOException {
@@ -98,12 +97,10 @@ public class ImportCarpe {
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
-		
+
 		listActivite.clear();
 
 	}
-
-	
 
 	public ImportCarpe() throws IOException {
 
@@ -128,12 +125,11 @@ public class ImportCarpe {
 		int ch;
 		while ((ch = in.read()) != -1)
 			parsedContentFromUrl.append((char) ch);
-		
-	
-		String description=getFullDescrition(parsedContentFromUrl);
-	
+
+		String description = getFullDescrition(parsedContentFromUrl);
+
 		activiteCarpe.setFulldescription(description);
-		
+
 		int start = parsedContentFromUrl.indexOf("id:");
 		String numberStr = getNumber(parsedContentFromUrl, start);
 		int id = Integer.parseInt(numberStr);
@@ -145,33 +141,60 @@ public class ImportCarpe {
 		start = parsedContentFromUrl.indexOf("lng:");
 		numberStr = getNumber(parsedContentFromUrl, start);
 		double lng = Double.parseDouble(numberStr);
+
+		String lienFaceBook = getLienFaceBook(parsedContentFromUrl);
+
 		activiteCarpe.setId(id);
 		activiteCarpe.setLat(lat);
 		activiteCarpe.setLng(lng);
-		
+		activiteCarpe.setLienFaceBook(lienFaceBook);
 
 	}
-	public String getFullDescrition(StringBuilder parsedContentFromUrl){
-		
+
+	private String getLienFaceBook(StringBuilder parsedContentFromUrl) {
+				
+		String chaine="https://www.facebook.com/events/";
+		int start = parsedContentFromUrl
+					.indexOf(chaine) + 32;
+
+		if (start==-1)
+				return null;
 	
-		String[] mo= convertISO85591(parsedContentFromUrl.toString()).split("<br/>");
-		String tmpdescription="";
-		for (int f=1;f<mo.length-1;f++){
-			
-			tmpdescription=tmpdescription+mo[f];
+		StringBuilder lien = new StringBuilder();
+			String charactere;
+
+			do {
+
+				charactere = parsedContentFromUrl.substring(start, start+1);
+				lien.append(charactere);
+				start++;
+
+			} while (!charactere.equals("/"));
+
+		
+		return chaine+lien;
+	}
+
+	public String getFullDescrition(StringBuilder parsedContentFromUrl) {
+
+		String[] mo = convertISO85591(parsedContentFromUrl.toString()).split(
+				"<br/>");
+		String tmpdescription = "";
+		for (int f = 1; f < mo.length - 1; f++) {
+
+			tmpdescription = tmpdescription + mo[f];
 		}
-		String description=tmpdescription;
-		int debutBalise=tmpdescription.indexOf("<a");
-		int finBalise=tmpdescription.indexOf("</a>");
-	
-		
-		if (debutBalise!=-1 && finBalise!=-1){
-			description=new StringBuilder(tmpdescription).delete(debutBalise, finBalise+4).toString();
-			
+		String description = tmpdescription;
+		int debutBalise = tmpdescription.indexOf("<a");
+		int finBalise = tmpdescription.indexOf("</a>");
+
+		if (debutBalise != -1 && finBalise != -1) {
+			description = new StringBuilder(tmpdescription).delete(debutBalise,
+					finBalise + 4).toString();
+
 		}
 		return description;
 	}
-	
 
 	public void instancieActivite(Element element, ActiviteCarpeDiem activite) {
 
@@ -183,7 +206,7 @@ public class ImportCarpe {
 			return;
 
 		String attribute = idAttribute.getValue();
-	
+
 		switch (attribute) {
 
 		case "startDate":
@@ -253,7 +276,7 @@ public class ImportCarpe {
 		for (int f = start; f < start + 50; f++) {
 
 			String nombre = String.valueOf(chaine.charAt(f));
-		
+
 			if (nombre.equals(".")) {
 				retour = retour + nombre;
 				continue;
@@ -277,30 +300,29 @@ public class ImportCarpe {
 
 		return retour;
 	}
-public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException{
-	
-	String ur = activiteCarpe.getUrl().replace(
-			"carpediem.cd/events", "carpediem.cd/events/");
-	
-	URL url = new URL(ur);
-	URLConnection conn = url.openConnection();
-	conn.addRequestProperty("User-Agent",
-			"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-	conn.setDoOutput(true);
-	OutputStreamWriter writer = new OutputStreamWriter(
-			conn.getOutputStream());
+	public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException {
 
-	writer.flush();
+		String ur = activiteCarpe.getUrl().replace("carpediem.cd/events",
+				"carpediem.cd/events/");
 
-	StringBuilder parsedContentFromUrl = new StringBuilder();
+		URL url = new URL(ur);
+		URLConnection conn = url.openConnection();
+		conn.addRequestProperty("User-Agent",
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-	BufferedInputStream in = new BufferedInputStream(
-			conn.getInputStream());
-	int ch;
-	while ((ch = in.read()) != -1)
-		parsedContentFromUrl.append((char) ch);
+		conn.setDoOutput(true);
+		OutputStreamWriter writer = new OutputStreamWriter(
+				conn.getOutputStream());
 
-	
-}
+		writer.flush();
+
+		StringBuilder parsedContentFromUrl = new StringBuilder();
+
+		BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
+		int ch;
+		while ((ch = in.read()) != -1)
+			parsedContentFromUrl.append((char) ch);
+
+	}
 }
