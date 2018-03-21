@@ -10,7 +10,7 @@ import wayd.ws.TextWebService;
 import website.metier.ActiviteBean;
 
 public class Activite {
-	
+
 	private static final Logger LOG = Logger.getLogger(Activite.class);
 
 	int id;
@@ -62,7 +62,7 @@ public class Activite {
 	public Date datefinactivite;
 
 	public boolean actif;
-	
+
 	public long finidans;
 
 	private int nbmaxwaydeur;
@@ -165,7 +165,7 @@ public class Activite {
 			Date datedebut, int idtypeactivite, double latitude,
 			double longitude, String adresse, boolean actif, int nbmaxwaydeur,
 			Date finactivite, int typeUser) {
-		
+
 		super();
 		this.titre = titre;
 		this.libelle = libelle;
@@ -189,11 +189,11 @@ public class Activite {
 	public Activite(int id, String titre, String libelle, int idorganisateur,
 			Date datedebut, Date datefin, int idtypeactivite, double latitude,
 			double longitude, String adresse, String nom, String prenom,
-			String photo, double note,  boolean archive,
-			int totalavis, Date datenaissance, int sexe, int nbrparticipant,
+			String photo, double note, boolean archive, int totalavis,
+			Date datenaissance, int sexe, int nbrparticipant,
 			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
 			int typeUser, int typeAcces, String fulldescription, int gratuit) {
-	
+
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -233,7 +233,7 @@ public class Activite {
 	}
 
 	public Activite(ActiviteBean activiteBean) {
-	
+
 		this.id = activiteBean.getId();
 		this.titre = activiteBean.getTitre();
 		this.libelle = activiteBean.getLibelle();
@@ -254,7 +254,7 @@ public class Activite {
 		this.typeAcces = activiteBean.getTypeAccess();
 		this.nbmaxwaydeur = activiteBean.getNbmaxwaydeur();
 		defineOrganisateur(activiteBean.getIdorganisateur());
-		
+
 		if (this.titre.equals(""))
 			this.titre = " ";
 
@@ -301,7 +301,7 @@ public class Activite {
 			long diff = datefinactivite.getTime() - new Date().getTime();
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
-		
+
 			if (diff < 0)
 				return TextWebService.TERMINEE;
 
@@ -464,16 +464,15 @@ public class Activite {
 		this.photo = photo;
 	}
 
-
 	public boolean isComplete() {
 		if (nbmaxwaydeur == nbrparticipant)
 			return true;
-		
+
 		return false;
 	}
 
 	public boolean isTerminee() {
-		
+
 		if (datefinactivite.before(new Date()))
 			return true;
 
@@ -483,10 +482,10 @@ public class Activite {
 	public void defineOrganisateur(int idpersonne) {
 
 		if (idorganisateur == idpersonne)
-			organisateur=true;
+			organisateur = true;
 		else
-			organisateur=false;
-	
+			organisateur = false;
+
 	}
 
 	public boolean isEnCours() {
@@ -500,14 +499,19 @@ public class Activite {
 
 	public boolean isInRayon(double malatitude, double malongitude,
 			int rayonmetre) {
-		
+
 		double distance = ServeurMethodes.getDistance(malatitude, latitude,
 				malongitude, longitude);
-		
-		if (distance<=rayonmetre)
+
+		if (distance <= rayonmetre)
 			return true;
-	
+
 		return false;
+	}
+
+	public void setOrganisateur(boolean organisateur) {
+		this.organisateur = organisateur;
+
 	}
 
 }

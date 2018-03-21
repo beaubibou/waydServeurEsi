@@ -5,30 +5,25 @@
   <service name="WBservices" provider="java:RPC" style="wrapped" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://ws.wayd"/>
       <parameter name="wsdlServiceElement" value="WBservicesService"/>
-      <parameter name="schemaQualified" value="http://ws.wayd,http://reponsevaleur,http://bean.wayde"/>
+      <parameter name="schemaQualified" value="http://ws.wayd,http://bean.wayde"/>
       <parameter name="wsdlServicePort" value="WBservices"/>
       <parameter name="className" value="wayd.ws.WBservices"/>
       <parameter name="wsdlPortType" value="WBservices"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getVersion" qname="operNS:getVersion" returnQName="retNS:getVersionReturn" returnType="rtns:Version" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addMessage" qname="operNS:addMessage" returnQName="retNS:addMessageReturn" returnType="rtns:RetourMessage" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:corps" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePreference" qname="operNS:updatePreference" returnQName="retNS:updatePreferenceReturn" returnType="rtns:MessageServeur" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getVersion" qname="operNS:getVersion" returnQName="retNS:getVersionReturn" returnType="rtns:Version" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:active" type="tns:boolean"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="supprimerCompte" qname="operNS:supprimerCompte" returnQName="retNS:supprimerCompteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePosition" qname="operNS:updatePosition" returnQName="retNS:updatePositionReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getAvis" qname="operNS:getAvis" returnQName="retNS:getAvisReturn" returnType="rtns:Avis" soapAction="">
@@ -39,34 +34,11 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idDemandeur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getActivite" qname="operNS:getActivite" returnQName="retNS:getActiviteReturn" returnType="rtns:Activite" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePreference" qname="operNS:updatePreference" returnQName="retNS:updatePreferenceReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActivites" qname="operNS:getListActivites" returnQName="retNS:getListActivitesReturn" returnType="rtns:Activite" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:debutActivite" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:finActivite" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeUser" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:accessActivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commenceDans" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="isDejaInteret" qname="operNS:isDejaInteret" returnQName="retNS:isDejaInteretReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeInteret" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListAvis" qname="operNS:getListAvis" returnQName="retNS:getListAvisReturn" returnType="rtns:Avis" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonnenotee" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:active" type="tns:boolean"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListAmi" qname="operNS:getListAmi" returnQName="retNS:getListAmiReturn" returnType="rtns:Ami" soapAction="">
@@ -74,17 +46,24 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getDiscussion" qname="operNS:getDiscussion" returnQName="retNS:getDiscussionReturn" returnType="rtns:Message" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListParticipant" qname="operNS:getListParticipant" returnQName="retNS:getListParticipantReturn" returnType="rtns:Participant" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getTableauBord" qname="operNS:getTableauBord" returnQName="retNS:getTableauBordReturn" returnType="rtns:TableauBord" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPreferences" qname="operNS:getListPreferences" returnQName="retNS:getListPreferencesReturn" returnType="rtns:Preference" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getIndicateurs" qname="operNS:getIndicateurs" returnQName="retNS:getIndicateursReturn" returnType="rtns:IndicateurWayd" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoWaydeur" qname="operNS:getListPhotoWaydeur" returnQName="retNS:getListPhotoWaydeurReturn" returnType="rtns:PhotoWaydeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoWaydeurByAct" qname="operNS:getListPhotoWaydeurByAct" returnQName="retNS:getListPhotoWaydeurByActReturn" returnType="rtns:PhotoWaydeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getPhotoWaydeur" qname="operNS:getPhotoWaydeur" returnQName="retNS:getPhotoWaydeurReturn" returnType="rtns:PhotoWaydeur" soapAction="">
@@ -92,204 +71,14 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addMessageByAct" qname="operNS:addMessageByAct" returnQName="retNS:addMessageByActReturn" returnType="rtns:RetourMessage" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:corps" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="addActiviteRV" qname="operNS:addActiviteRV" returnQName="retNS:addActiviteRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureebalise" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:adresse" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbmaxwaydeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceActivite" qname="operNS:effaceActivite" returnQName="retNS:effaceActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessage" qname="operNS:effaceMessage" returnQName="retNS:effaceMessageReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:listmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addParticipation" qname="operNS:addParticipation" returnQName="retNS:addParticipationReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addPrbConnexion" qname="operNS:addPrbConnexion" returnQName="retNS:addPrbConnexionReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:probleme" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addActivite" qname="operNS:addActivite" returnQName="retNS:addActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureebalise" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:adresse" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbmaxwaydeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceAmi" qname="operNS:effaceAmi" returnQName="retNS:effaceAmiReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idami" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessage" qname="operNS:acquitMessage" returnQName="retNS:acquitMessageReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="addActiviteProRV" qname="operNS:addActiviteProRV" returnQName="retNS:addActiviteProRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:adresse" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dateDebut" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:DateFin" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addSuggestion" qname="operNS:addSuggestion" returnQName="retNS:addSuggestionReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:suggestion" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceDiscussion" qname="operNS:effaceDiscussion" returnQName="retNS:effaceDiscussionReturn" returnType="rtns:MessageServeur" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getDiscussion" qname="operNS:getDiscussion" returnQName="retNS:getDiscussionReturn" returnType="rtns:Message" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getPersonne" qname="operNS:getPersonne" returnQName="retNS:getPersonneReturn" returnType="rtns:Personne" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtoken" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:gcmToken" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getFullProfil" qname="operNS:getFullProfil" returnQName="retNS:getFullProfilReturn" returnType="rtns:Profil" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateGCM" qname="operNS:updateGCM" returnQName="retNS:updateGCMReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:gcm" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePseudo" qname="operNS:updatePseudo" returnQName="retNS:updatePseudoReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pseudo" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:datenaissance" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:sexe" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addAvis" qname="operNS:addAvis" returnQName="retNS:addAvisReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonnenotee" type="tns:int"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getDiscussionByAct" qname="operNS:getDiscussionByAct" returnQName="retNS:getDiscussionByActReturn" returnType="rtns:Message" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:demandeami" type="tns:boolean"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePosition" qname="operNS:updatePosition" returnQName="retNS:updatePositionReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateActivite" qname="operNS:updateActivite" returnQName="retNS:updateActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbrmax" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateProfilPro" qname="operNS:updateProfilPro" returnQName="retNS:updateProfilProReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pseudo" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commentaire" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:tel" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:siret" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:siteweb" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getFullProfilPro" qname="operNS:getFullProfilPro" returnQName="retNS:getFullProfilProReturn" returnType="rtns:ProfilPro" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="signalerActivite" qname="operNS:signalerActivite" returnQName="retNS:signalerActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmotif" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motif" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateProfilWayd" qname="operNS:updateProfilWayd" returnQName="retNS:updateProfilWaydReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:prenom" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:datenaissancestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:sexe" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commentaire" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:afficheage" type="tns:boolean"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:affichesexe" type="tns:boolean"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getActivites" qname="operNS:getActivites" returnQName="retNS:getActivitesReturn" returnType="rtns:Activite" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayonmetre" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeUser" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commenceDans" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="signalerProfil" qname="operNS:signalerProfil" returnQName="retNS:signalerProfilReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idsignalement" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmotif" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motif" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitMessageRV" qname="operNS:acquitMessageRV" returnQName="retNS:acquitMessageRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="addAvisRV" qname="operNS:addAvisRV" returnQName="retNS:addAvisRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonnenotee" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:demandeami" type="tns:boolean"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListDiscussion" qname="operNS:getListDiscussion" returnQName="retNS:getListDiscussionReturn" returnType="rtns:Discussion" soapAction="">
@@ -302,29 +91,13 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="supprimerCompte" qname="operNS:supprimerCompte" returnQName="retNS:supprimerCompteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListMessageAfter" qname="operNS:getListMessageAfter" returnQName="retNS:getListMessageAfterReturn" returnType="rtns:Message" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idxmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPreferences" qname="operNS:getListPreferences" returnQName="retNS:getListPreferencesReturn" returnType="rtns:Preference" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getDiscussionByAct" qname="operNS:getDiscussionByAct" returnQName="retNS:getDiscussionByActReturn" returnType="rtns:Message" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoWaydeur" qname="operNS:getListPhotoWaydeur" returnQName="retNS:getListPhotoWaydeurReturn" returnType="rtns:PhotoWaydeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoWaydeurByAct" qname="operNS:getListPhotoWaydeurByAct" returnQName="retNS:getListPhotoWaydeurByActReturn" returnType="rtns:PhotoWaydeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListNotificationAfter" qname="operNS:getListNotificationAfter" returnQName="retNS:getListNotificationAfterReturn" returnType="rtns:Notification" soapAction="">
@@ -338,9 +111,54 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListParticipant" qname="operNS:getListParticipant" returnQName="retNS:getListParticipantReturn" returnType="rtns:Participant" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getActivite" qname="operNS:getActivite" returnQName="retNS:getActiviteReturn" returnType="rtns:Activite" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="isDejaInteret" qname="operNS:isDejaInteret" returnQName="retNS:isDejaInteretReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeInteret" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addInteretActivite" qname="operNS:addInteretActivite" returnQName="retNS:addInteretActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeInteret" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getTableauBord" qname="operNS:getTableauBord" returnQName="retNS:getTableauBordReturn" returnType="rtns:TableauBord" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getIndicateurs" qname="operNS:getIndicateurs" returnQName="retNS:getIndicateursReturn" returnType="rtns:IndicateurWayd" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListAvis" qname="operNS:getListAvis" returnQName="retNS:getListAvisReturn" returnType="rtns:Avis" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonnenotee" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActivitePref" qname="operNS:getListActivitePref" returnQName="retNS:getListActivitePrefReturn" returnType="rtns:Activite" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoActivite" qname="operNS:getListPhotoActivite" returnQName="retNS:getListPhotoActiviteReturn" returnType="rtns:PhotoActivite" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActiviteAvenir" qname="operNS:getListActiviteAvenir" returnQName="retNS:getListActiviteAvenirReturn" returnType="rtns:Activite" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commencedans" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActiviteAvenirNocritere" qname="operNS:getListActiviteAvenirNocritere" returnQName="retNS:getListActiviteAvenirNocritereReturn" returnType="rtns:Activite" soapAction="">
@@ -350,36 +168,6 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commencedans" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListPhotoActivite" qname="operNS:getListPhotoActivite" returnQName="retNS:getListPhotoActiviteReturn" returnType="rtns:PhotoActivite" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="getListActivitesRV" qname="operNS:getListActivitesRV" returnQName="retNS:getListActivitesRVReturn" returnType="rtns:ListActivitesRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:debutActivite" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:finActivite" type="tns:long"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeUser" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:accessActivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commenceDans" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActivitePref" qname="operNS:getListActivitePref" returnQName="retNS:getListActivitePrefReturn" returnType="rtns:Activite" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addInteretActivite" qname="operNS:addInteretActivite" returnQName="retNS:addInteretActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeInteret" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getMesActiviteEncours" qname="operNS:getMesActiviteEncours" returnQName="retNS:getMesActiviteEncoursReturn" returnType="rtns:Activite" soapAction="">
@@ -396,49 +184,32 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getListActiviteAvenir" qname="operNS:getListActiviteAvenir" returnQName="retNS:getListActiviteAvenirReturn" returnType="rtns:Activite" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addActivite" qname="operNS:addActivite" returnQName="retNS:addActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureebalise" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayon" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtypeactivite" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commencedans" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:adresse" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbmaxwaydeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dureeactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitAllNotification" qname="operNS:acquitAllNotification" returnQName="retNS:acquitAllNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addSuggestion" qname="operNS:addSuggestion" returnQName="retNS:addSuggestionReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:suggestion" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateNotification" qname="operNS:updateNotification" returnQName="retNS:updateNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addPrbConnexion" qname="operNS:addPrbConnexion" returnQName="retNS:addPrbConnexionReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:probleme" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceNotificationRecu" qname="operNS:effaceNotificationRecu" returnQName="retNS:effaceNotificationRecuReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idnotification" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateNotificationPref" qname="operNS:updateNotificationPref" returnQName="retNS:updateNotificationPrefReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notification" type="tns:boolean"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getProfilNotation" qname="operNS:getProfilNotation" returnQName="retNS:getProfilNotationReturn" returnType="rtns:ProfilNotation" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notateur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addMessageByAct" qname="operNS:addMessageByAct" returnQName="retNS:addMessageByActReturn" returnType="rtns:RetourMessage" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:corps" type="tns:string"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitMessageByActRV" qname="operNS:acquitMessageByActRV" returnQName="retNS:acquitMessageByActRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitNotification" qname="operNS:acquitNotification" returnQName="retNS:acquitNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceParticipation" qname="operNS:effaceParticipation" returnQName="retNS:effaceParticipationReturn" returnType="rtns:MessageServeur" soapAction="">
@@ -447,7 +218,17 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessageEmisByAct" qname="operNS:effaceMessageEmisByAct" returnQName="retNS:effaceMessageEmisByActReturn" returnType="rtns:MessageServeur" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceActivite" qname="operNS:effaceActivite" returnQName="retNS:effaceActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessage" qname="operNS:effaceMessage" returnQName="retNS:effaceMessageReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:listmessage" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessageRecu" qname="operNS:effaceMessageRecu" returnQName="retNS:effaceMessageRecuReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
@@ -457,19 +238,19 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitMessageDiscussionRV" qname="operNS:acquitMessageDiscussionRV" returnQName="retNS:acquitMessageDiscussionRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessageDiscussion" qname="operNS:acquitMessageDiscussion" returnQName="retNS:acquitMessageDiscussionReturn" returnType="rtns:MessageServeur" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitMessageDiscussionByActRV" qname="operNS:acquitMessageDiscussionByActRV" returnQName="retNS:acquitMessageDiscussionByActRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceNotificationRecu" qname="operNS:effaceNotificationRecu" returnQName="retNS:effaceNotificationRecuReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idnotification" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceAmi" qname="operNS:effaceAmi" returnQName="retNS:effaceAmiReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idami" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessageEmisByAct" qname="operNS:effaceMessageEmisByAct" returnQName="retNS:effaceMessageEmisByActReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessageEmis" qname="operNS:effaceMessageEmis" returnQName="retNS:effaceMessageEmisReturn" returnType="rtns:MessageServeur" soapAction="">
@@ -477,9 +258,140 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceMessageRecu" qname="operNS:effaceMessageRecu" returnQName="retNS:effaceMessageRecuReturn" returnType="rtns:MessageServeur" soapAction="">
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="effaceDiscussion" qname="operNS:effaceDiscussion" returnQName="retNS:effaceDiscussionReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitAllNotification" qname="operNS:acquitAllNotification" returnQName="retNS:acquitAllNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessage" qname="operNS:acquitMessage" returnQName="retNS:acquitMessageReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitNotification" qname="operNS:acquitNotification" returnQName="retNS:acquitNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addParticipation" qname="operNS:addParticipation" returnQName="retNS:addParticipationReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idorganisateur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="addAvis" qname="operNS:addAvis" returnQName="retNS:addAvisReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonnenotee" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:demandeami" type="tns:boolean"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateProfilPro" qname="operNS:updateProfilPro" returnQName="retNS:updateProfilProReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pseudo" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commentaire" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:tel" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:siret" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:siteweb" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateProfilWayd" qname="operNS:updateProfilWayd" returnQName="retNS:updateProfilWaydReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:prenom" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:datenaissancestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:sexe" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commentaire" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:afficheage" type="tns:boolean"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:affichesexe" type="tns:boolean"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updatePseudo" qname="operNS:updatePseudo" returnQName="retNS:updatePseudoReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pseudo" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:datenaissance" type="tns:long"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:sexe" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateNotification" qname="operNS:updateNotification" returnQName="retNS:updateNotificationReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateNotificationPref" qname="operNS:updateNotificationPref" returnQName="retNS:updateNotificationPrefReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notification" type="tns:boolean"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateActivite" qname="operNS:updateActivite" returnQName="retNS:updateActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nbrmax" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="updateGCM" qname="operNS:updateGCM" returnQName="retNS:updateGCMReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:gcm" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getFullProfil" qname="operNS:getFullProfil" returnQName="retNS:getFullProfilReturn" returnType="rtns:Profil" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getFullProfilPro" qname="operNS:getFullProfilPro" returnQName="retNS:getFullProfilProReturn" returnType="rtns:ProfilPro" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getProfilNotation" qname="operNS:getProfilNotation" returnQName="retNS:getProfilNotationReturn" returnType="rtns:ProfilNotation" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddemandeur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:notateur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getPersonne" qname="operNS:getPersonne" returnQName="retNS:getPersonneReturn" returnType="rtns:Personne" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idtoken" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:photostr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:gcmToken" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="signalerActivite" qname="operNS:signalerActivite" returnQName="retNS:signalerActiviteReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmotif" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motif" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:titre" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:libelle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="signalerProfil" qname="operNS:signalerProfil" returnQName="retNS:signalerProfilReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idsignalement" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmotif" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motif" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="getActivites" qname="operNS:getActivites" returnQName="retNS:getActivitesReturn" returnType="rtns:Activite" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idPersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:latitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:longitudestr" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:rayonmetre" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeactivite" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:motcle" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:typeUser" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:commenceDans" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessageByAct" qname="operNS:acquitMessageByAct" returnQName="retNS:acquitMessageByActReturn" returnType="rtns:MessageServeur" soapAction="">
@@ -487,46 +399,37 @@
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
+      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessageDiscussion" qname="operNS:acquitMessageDiscussion" returnQName="retNS:acquitMessageDiscussionReturn" returnType="rtns:MessageServeur" soapAction="">
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idemetteur" type="tns:int"/>
+        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://bean.wayde" name="acquitMessageDiscussionByAct" qname="operNS:acquitMessageDiscussionByAct" returnQName="retNS:acquitMessageDiscussionByActReturn" returnType="rtns:MessageServeur" soapAction="">
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iddestinataire" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idactivite" type="tns:int"/>
         <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitAllNotificationRV" qname="operNS:acquitAllNotificationRV" returnQName="retNS:acquitAllNotificationRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://ws.wayd" xmlns:retNS="http://ws.wayd" xmlns:rtns="http://reponsevaleur" name="acquitNotificationRV" qname="operNS:acquitNotificationRV" returnQName="retNS:acquitNotificationRVReturn" returnType="rtns:MessageServeurRV" soapAction="">
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idpersonne" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:idmessage" type="tns:int"/>
-        <parameter xmlns:pns="http://ws.wayd" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:jeton" type="tns:string"/>
-      </operation>
-      <parameter name="allowedMethods" value="acquitNotificationRV acquitMessageDiscussion acquitMessageByAct signalerActivite getListTypeActivite acquitMessageDiscussionByActRV addActivite getPersonne acquitAllNotificationRV getListPhotoWaydeur getFullProfilPro getIndicateurs getListPreferences addMessage getListActivites addSuggestion getListActivitesRV getListParticipant getListDiscussion effaceMessageRecu effaceMessageRecuByAct effaceDiscussion getPhotoWaydeur addParticipation getListMessageAfter getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo effaceActivite addPrbConnexion updateNotificationPref getMesActiviteEncours effaceMessageEmis getListAmi addInteretActivite acquitMessageByActRV isDejaInteret addMessageByAct getListNotification acquitMessageRV getListPhotoActivite getActivites acquitNotification getTableauBord effaceAmi updateNotification getFullProfil acquitMessageDiscussionByAct addAvisRV addActiviteRV updateActivite acquitMessage addActiviteProRV acquitMessageDiscussionRV getListActivitePref supprimerCompte getListAvis getActivite updateGCM signalerProfil getMesActiviteArchive getProfilNotation getVersion addAvis getListPhotoWaydeurByAct getListMessageAfterByAct updatePosition getListNotificationAfter updateProfilPro updateProfilWayd getListActiviteAvenir getAvis effaceNotificationRecu effaceMessage updatePreference getDiscussion acquitAllNotification"/>
+      <parameter name="allowedMethods" value="acquitMessageByAct acquitMessageDiscussion getListTypeActivite signalerActivite addActivite getPersonne getListPhotoWaydeur getFullProfilPro getListPreferences getIndicateurs addMessage addSuggestion getListParticipant getListDiscussion effaceMessageRecu effaceMessageRecuByAct effaceDiscussion getPhotoWaydeur getListMessageAfter addParticipation getListActiviteAvenirNocritere getDiscussionByAct effaceMessageEmisByAct effaceParticipation updatePseudo addPrbConnexion effaceActivite updateNotificationPref getMesActiviteEncours effaceMessageEmis getListAmi addInteretActivite isDejaInteret addMessageByAct getListNotification getListPhotoActivite getActivites acquitNotification getTableauBord effaceAmi updateNotification getFullProfil acquitMessageDiscussionByAct updateActivite acquitMessage getListActivitePref supprimerCompte getListAvis getActivite updateGCM signalerProfil getMesActiviteArchive getProfilNotation getVersion getListPhotoWaydeurByAct getListMessageAfterByAct addAvis updatePosition getListNotificationAfter updateProfilPro getListActiviteAvenir updateProfilWayd getAvis effaceNotificationRecu effaceMessage updatePreference getDiscussion acquitAllNotification"/>
 
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Message" type="java:wayde.bean.Message" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:ProfilNotation" type="java:wayde.bean.ProfilNotation" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <arrayMapping xmlns:ns="http://ws.wayd" xmlns:cmp-ns="http://bean.wayde" qname="ns:ArrayOf_tns1_Activite" type="java:wayde.bean.Activite[]" innerType="cmp-ns:Activite" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Personne" type="java:wayde.bean.Personne" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:MessageServeur" type="java:wayde.bean.MessageServeur" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://reponsevaleur" qname="ns:Erreur" type="java:reponsevaleur.Erreur" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://reponsevaleur" qname="ns:ListActivitesRV" type="java:reponsevaleur.ListActivitesRV" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Ami" type="java:wayde.bean.Ami" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:PhotoActivite" type="java:wayde.bean.PhotoActivite" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:PhotoWaydeur" type="java:wayde.bean.PhotoWaydeur" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:ProfilPro" type="java:wayde.bean.ProfilPro" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Preference" type="java:wayde.bean.Preference" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:TypeActivite" type="java:wayde.bean.TypeActivite" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Personne" type="java:wayde.bean.Personne" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:IndicateurWayd" type="java:wayde.bean.IndicateurWayd" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Profil" type="java:wayde.bean.Profil" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:MessageServeur" type="java:wayde.bean.MessageServeur" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Discussion" type="java:wayde.bean.Discussion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Ami" type="java:wayde.bean.Ami" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Version" type="java:wayde.bean.Version" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:RetourMessage" type="java:wayde.bean.RetourMessage" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Notification" type="java:wayde.bean.Notification" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:PhotoActivite" type="java:wayde.bean.PhotoActivite" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:PhotoWaydeur" type="java:wayde.bean.PhotoWaydeur" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Avis" type="java:wayde.bean.Avis" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <arrayMapping xmlns:ns="http://ws.wayd" xmlns:cmp-ns="http://reponsevaleur" qname="ns:ArrayOf_tns2_Erreur" type="java:reponsevaleur.Erreur[]" innerType="cmp-ns:Erreur" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:TableauBord" type="java:wayde.bean.TableauBord" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
-      <typeMapping xmlns:ns="http://reponsevaleur" qname="ns:MessageServeurRV" type="java:reponsevaleur.MessageServeurRV" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Activite" type="java:wayde.bean.Activite" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Preference" type="java:wayde.bean.Preference" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://bean.wayde" qname="ns:ProfilPro" type="java:wayde.bean.ProfilPro" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://bean.wayde" qname="ns:Participant" type="java:wayde.bean.Participant" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>
 </deployment>
