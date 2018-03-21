@@ -1,3 +1,4 @@
+<%@page import="servlet.EffaceActiviteCarpediem"%>
 <%@page import="servlet.pro.CreerUserPro"%>
 <%@page import="servlet.Connexion"%>
 <%@page import="website.metier.CountLogInfo"%>
@@ -90,6 +91,7 @@
 
 		<form action="/wayd/EffaceActiviteCarpediem" method="post">
 
+		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.RAZ_CARPEDIEM %>">
 		<button type="submit" class="btn btn-default">Efface</button>
 		</form>
 	</div>

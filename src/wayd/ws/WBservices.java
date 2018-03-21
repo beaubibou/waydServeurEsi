@@ -1,6 +1,5 @@
 package wayd.ws;
 
-import fcm.ServeurMethodes;
 import gcmnotification.AcquitAllNotificationGcm;
 import gcmnotification.AcquitMessageByActGcm;
 import gcmnotification.AcquitMessageDiscussionByActGcm;
@@ -47,10 +46,6 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import reponsevaleur.Erreur;
-import reponsevaleur.ErreurReponseValeur;
-import reponsevaleur.ListActivitesRV;
-import reponsevaleur.MessageServeurRV;
 import threadpool.PoolThreadGCM;
 import wayde.bean.Activite;
 import wayde.bean.Ami;
@@ -176,7 +171,6 @@ public class WBservices {
 				}
 			} catch (IOException e) {
 
-			
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
@@ -215,7 +209,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -259,7 +252,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -293,14 +285,14 @@ public class WBservices {
 			preferencedao.addPreference(idpersonne, idtypeactivite, active);
 			personnedao.updateRayon(idpersonne, rayon);
 			connexion.commit();
-			// new UpdatePreferenceGcm(idpersonne).start();
+
 			PoolThreadGCM.poolThread
 					.execute(new UpdatePreferenceGcm(idpersonne));
 
 		} catch (Exception e) {
 
 			CxoPool.rollBack(connexion);
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -338,7 +330,6 @@ public class WBservices {
 
 		} catch (SQLException | NamingException e) {
 
-		
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -370,7 +361,6 @@ public class WBservices {
 
 		} catch (SQLException | NamingException e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -402,7 +392,6 @@ public class WBservices {
 
 		} catch (SQLException | NamingException e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -428,7 +417,7 @@ public class WBservices {
 			listPhotoWaydeur = personneDao.getListPhotoWaydeur(idpersonne);
 
 		} catch (SQLException | NamingException e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -453,10 +442,10 @@ public class WBservices {
 
 			connexion = CxoPool.getConnection();
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-	
+
 			if (!personneDAO.isAutorise(iddemandeur, jeton))
 				return null;
-	
+
 			ParticipantDAO participantDAO = new ParticipantDAO(connexion);
 			ArrayList<Participant> listParticipants = participantDAO
 					.getListPaticipant(idactivite);
@@ -468,7 +457,6 @@ public class WBservices {
 
 		} catch (SQLException | NamingException e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -528,7 +516,7 @@ public class WBservices {
 			listmessage = messagedao.getDiscussion(iddestinataire, idemetteur);
 
 		} catch (SQLException | NamingException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -561,7 +549,7 @@ public class WBservices {
 					idactivite);
 
 		} catch (SQLException | NamingException e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -700,7 +688,7 @@ public class WBservices {
 					idpersonne, idxmessage);
 
 		} catch (SQLException | NamingException e) {
-	
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -729,7 +717,7 @@ public class WBservices {
 					idpersonne, idxmessage, idactivite);
 
 		} catch (SQLException | NamingException e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
@@ -761,7 +749,7 @@ public class WBservices {
 			Activite activite = activitedao.getActivite(idactivite);
 
 			if (activite != null) {
-				activite.defineOrganisateur(idpersonne);//
+				// activite.defineOrganisateur(idpersonne);//
 				activitedao.isInscrit(activite, idpersonne);
 				activite.setInteret(activitedao.isDejaInteret(idpersonne,
 						idactivite));
@@ -777,7 +765,7 @@ public class WBservices {
 			return activite;
 
 		} catch (Exception e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
@@ -794,7 +782,6 @@ public class WBservices {
 
 		Connection connexion = null;
 
-		
 		try {
 
 			typeInteret = 0;
@@ -820,7 +807,7 @@ public class WBservices {
 			return new MessageServeur(isdejaInteret, "ok");
 
 		} catch (SQLException | NamingException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -904,7 +891,7 @@ public class WBservices {
 			return tableaubord;
 
 		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return null;
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -993,9 +980,9 @@ public class WBservices {
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			listActivite = activitedao.getListActivitePref(idpersonne);
 
-			for (Activite activite : listActivite) {
-				activite.setOrganisateur(false);
-			}
+			// for (Activite activite : listActivite) {
+			// activite.setOrganisateur(false);
+			// }
 
 		} catch (Exception e) {
 
@@ -1045,114 +1032,6 @@ public class WBservices {
 
 	}
 
-	public Activite[] getListActivites(int idpersonne, String latitudestr,
-			String longitudestr, int rayon, int idtypeactivite, String motcle,
-			long debutActivite, long finActivite, int typeUser,
-			int accessActivite, int commenceDans, String jeton) {
-
-		// commenceDans en minutes
-		// accessActivite payante/gratuite
-		// typeUser pro/asso/waydeur
-
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
-
-		try {
-			connexion = CxoPool.getConnection();
-
-			// *****************Securite*****************
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			if (!personneDAO.isAutorise(idpersonne, jeton))
-				return null;
-
-			// ********************************************************
-
-			ActiviteDAO activitedao = new ActiviteDAO(connexion);
-			listActivite = activitedao.getListActivites(
-					Double.valueOf(latitudestr), Double.valueOf(longitudestr),
-					rayon, idtypeactivite, motcle, debutActivite, finActivite,
-					typeUser, accessActivite, commenceDans);
-
-			for (Activite activite : listActivite) {
-				activite.defineOrganisateur(idpersonne);
-			}
-
-		} catch (NumberFormatException | SQLException | NamingException e1) {
-			LOG.error(ExceptionUtils.getStackTrace(e1));
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-		LogDAO.LOG_DUREE("getListActivites", debut);
-
-		return (Activite[]) listActivite.toArray(new Activite[listActivite
-				.size()]);
-
-	}
-
-	public ListActivitesRV getListActivitesRV(int idpersonne, String latitudestr,
-			String longitudestr, int rayon, int idtypeactivite, String motcle,
-			long debutActivite, long finActivite, int typeUser,
-			int accessActivite, int commenceDans, String jeton) {
-
-		// commenceDans en minutes
-		// accessActivite payante/gratuite
-		// typeUser pro/asso/waydeur
-
-		
-		long debut = System.currentTimeMillis();
-		
-		ListActivitesRV retour=new ListActivitesRV();
-	
-		Connection connexion = null;
-
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
-		ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
-	
-		try {
-			connexion = CxoPool.getConnection();
-
-			// *****************Securite*****************
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-		
-			if (!personneDAO.isAutorise(idpersonne, jeton)){
-				listErreurs.add(new Erreur(1, "Pas authentifié"));
-				retour.initErreurs(listErreurs);
-				return retour;
-			}
-			// ********************************************************
-
-			ActiviteDAO activitedao = new ActiviteDAO(connexion);
-			listActivite = activitedao.getListActivites(
-					Double.valueOf(latitudestr), Double.valueOf(longitudestr),
-					rayon, idtypeactivite, motcle, debutActivite, finActivite,
-					typeUser, accessActivite, commenceDans);
-
-			for (Activite activite : listActivite) {
-				activite.defineOrganisateur(idpersonne);
-			}
-
-		} catch (NumberFormatException | SQLException | NamingException e1) {
-			LOG.error(ExceptionUtils.getStackTrace(e1));
-			listErreurs.add(new Erreur(2, e1.getMessage()));
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		LogDAO.LOG_DUREE("getListActivites", debut);
-		retour.initActivite(listActivite);
-		retour.initErreurs(listErreurs);
-
-		return  retour;
-		
-
-	}
-
 	public Activite[] getListActiviteAvenir(int idpersonne, String latitudestr,
 			String longitudestr, int rayon, int idtypeactivite, String motcle,
 			int commencedans, String jeton) {
@@ -1178,13 +1057,13 @@ public class WBservices {
 					Double.valueOf(latitudestr), Double.valueOf(longitudestr),
 					rayon, idtypeactivite, motcle, commencedans);
 
-			for (Activite activite : listActivite) {
-				activite.defineOrganisateur(idpersonne);
-			}
+			// for (Activite activite : listActivite) {
+			// activite.defineOrganisateur(idpersonne);
+			// }
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
 
-				LOG.error(ExceptionUtils.getStackTrace(e1));
+			LOG.error(ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -1221,13 +1100,12 @@ public class WBservices {
 					Double.valueOf(latitudestr), Double.valueOf(longitudestr),
 					rayon, motcle, commencedans);
 
-			for (Activite activite : listActivite) {
-				activite.defineOrganisateur(idpersonne);
-			}
+			// for (Activite activite : listActivite) {
+			// activite.defineOrganisateur(idpersonne);
+			// }
 
 		} catch (NumberFormatException | SQLException | NamingException e1) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e1));
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -1249,23 +1127,22 @@ public class WBservices {
 
 		try {
 			connexion = CxoPool.getConnection();
-			// ************************************Securite
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			if (!personneDAO.isAutorise(iddemandeur, jeton))
 				return null;
-			// ************************************
 
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 
 			listActivite = activitedao.getMesActiviteEncours(idpersonne);
 
-			for (Activite activite : listActivite)
-				activite.defineOrganisateur(idpersonne);
+			// for (Activite activite : listActivite)
+			// activite.defineOrganisateur(idpersonne);
 
 			LogDAO.LOG_DUREE("getMesActiviteEncours", debut);
 
 		} catch (SQLException | NamingException e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1292,13 +1169,12 @@ public class WBservices {
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			listActivite = activitedao.getMesActiviteArchive(idpersonne);
 
-			for (Activite activite : listActivite) {
-				activite.defineOrganisateur(idpersonne);
-			}
+			// for (Activite activite : listActivite) {
+			// activite.defineOrganisateur(idpersonne);
+			// }
 
 		} catch (SQLException | NamingException e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1334,7 +1210,6 @@ public class WBservices {
 
 		} catch (SQLException | NamingException e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.closeConnection(connexion);
@@ -1374,7 +1249,7 @@ public class WBservices {
 
 			}
 		} catch (SQLException | NamingException e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
 		} finally {
@@ -1414,13 +1289,8 @@ public class WBservices {
 
 			double latitude = Double.parseDouble(latitudestr);
 			double longitude = Double.parseDouble(longitudestr);
-			Date datedebut,  datefinActivite;
+			Date datedebut, datefinActivite;
 			datedebut = new Date();
-			// Calendar calBalise = Calendar.getInstance();
-			// calBalise.setTime(datedebut);
-			// calBalise.add(Calendar.MINUTE, dureebalise);
-			// datebalise = calBalise.getTime();
-
 			Calendar calFinActivite = Calendar.getInstance();
 			calFinActivite.setTime(datedebut);
 			calFinActivite.add(Calendar.MINUTE, dureeactivite);
@@ -1459,171 +1329,6 @@ public class WBservices {
 		}
 
 	}
-	
-	public MessageServeurRV addActiviteRV(String titre, String libelle,
-			int idorganisateur, int dureebalise, int idtypeactivite,
-			String latitudestr, String longitudestr, String adresse,
-			int nbmaxwaydeur, int dureeactivite, String jeton)
-			throws ParseException {
-
-		long debut = System.currentTimeMillis();
-
-		Connection connexion = null;
-		Activite activite=null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-
-		try {
-			connexion = CxoPool.getConnection();
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-		
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idorganisateur, jeton);
-					
-			if (!autorise.isReponse()) {
-				
-				return autorise;
-			}
-
-			connexion.setAutoCommit(false);
-			ActiviteDAO activitedao = new ActiviteDAO(connexion);
-
-			double latitude = Double.parseDouble(latitudestr);
-			double longitude = Double.parseDouble(longitudestr);
-			Date datedebut,  datefinActivite;
-			datedebut = new Date();
-		
-			Calendar calFinActivite = Calendar.getInstance();
-			calFinActivite.setTime(datedebut);
-			calFinActivite.add(Calendar.MINUTE, dureeactivite);
-			datefinActivite = calFinActivite.getTime();
-
-			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
-			
-				listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
-				MessageServeurRV messageServeur=new MessageServeurRV(false,	TextWebService.QUOTA_ACTIVITE_DEPASSE); 
-				messageServeur.initErreurs(listErreurs);
-		
-				return messageServeur;
-			}
-
-			activite = new Activite(titre, libelle, idorganisateur,
-					datedebut, idtypeactivite, latitude, longitude, adresse,
-					true, nbmaxwaydeur, datefinActivite, ProfilBean.WAYDEUR);
-
-			// ****************Ajoute l'activite*****************************
-
-			activitedao.addActivite(activite);
-			connexion.commit();
-
-			// new AddActiviteGcm(activite, idorganisateur).start();
-
-			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,
-					idorganisateur));
-
-			
-			LogDAO.LOG_DUREE("addActivite", debut);
-	
-			MessageServeurRV messageServeur=new MessageServeurRV(true, Integer.toString(activite.getId())); 
-			messageServeur.initErreurs(listErreurs);
-			return  messageServeur;
-
-
-		} catch (Exception e) {
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-		
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			MessageServeurRV messageServeur=new MessageServeurRV(false,	e.getMessage()); 
-			messageServeur.initErreurs(listErreurs);
-		
-			return messageServeur;
-
-		} finally {
-
-			CxoPool.closeConnection(connexion);
-		}
-		
-		
-		
-	}
-
-	public MessageServeurRV addActiviteProRV(String titre, String libelle,
-			int idorganisateur, int idtypeactivite, String latitudestr,
-			String longitudestr, String adresse, Long dateDebut, Long DateFin,
-			String jeton) throws ParseException {
-
-		long debut = System.currentTimeMillis();
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-		Connection connexion = null;
-
-		try {
-			connexion = CxoPool.getConnection();
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idorganisateur, jeton);
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-
-			connexion.setAutoCommit(false);
-			ActiviteDAO activitedao = new ActiviteDAO(connexion);
-
-			double latitude = Double.parseDouble(latitudestr);
-			double longitude = Double.parseDouble(longitudestr);
-			Date datedebut, datefinActivite;
-			datedebut = new Date(dateDebut);
-			datefinActivite = new Date(DateFin);
-
-			if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) == WBservices.NB_MAX_ACTIVITE) {
-				listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
-				MessageServeurRV messageServeur=new MessageServeurRV(false,	TextWebService.QUOTA_ACTIVITE_DEPASSE); 
-				messageServeur.initErreurs(listErreurs);
-		
-				return messageServeur;
-			}
-
-			Activite activite = new Activite(titre, libelle, idorganisateur,
-					datedebut, idtypeactivite, latitude, longitude, adresse,
-					true, 0, datefinActivite, ProfilBean.PRO);
-
-			// ****************Ajoute l'activite*****************************
-
-			activitedao.addActivite(activite);
-			connexion.commit();
-
-			// new AddActiviteGcm(activite, idorganisateur).start();
-
-			PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,
-					idorganisateur));
-
-			LogDAO.LOG_DUREE("addActivitePro", debut);
-
-			MessageServeurRV messageServeur=new MessageServeurRV(true, Integer.toString(activite.getId())); 
-			messageServeur.initErreurs(listErreurs);
-			return  messageServeur;
-
-
-		} catch (Exception e) {
-
-			
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			MessageServeurRV messageServeur=new MessageServeurRV(false,	e.getMessage()); 
-			messageServeur.initErreurs(listErreurs);
-			return messageServeur;
-		
-
-		} finally {
-
-			CxoPool.closeConnection(connexion);
-		}
-
-	}
 
 	public MessageServeur addSuggestion(String suggestion, int idpersonne,
 			String jeton) throws ParseException {
@@ -1648,7 +1353,7 @@ public class WBservices {
 			return new MessageServeur(true, TextWebService.AJOUTE_SUGGESTION);
 
 		} catch (Exception e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
@@ -1689,7 +1394,6 @@ public class WBservices {
 
 		if (corps.length() == 0)
 			return null;
-		// return new MessageServeur(false, "Chaine vide non autoris�e");
 
 		Connection connexion = null;
 		Message message = new Message(idemetteur, corps, 0, 0);
@@ -1700,9 +1404,6 @@ public class WBservices {
 
 			AmiDAO amidao = new AmiDAO(connexion);
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-
-			// Droit droit = new PersonneDAO(connexion)
-			// .getDroit(idemetteur, jeton);
 
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idemetteur, jeton);
@@ -1749,7 +1450,6 @@ public class WBservices {
 
 		if (corps.length() == 0)
 			return null;
-		// return new MessageServeur(false, "Chaine vide non autoris�e");
 
 		Connection connexion = null;
 
@@ -1771,21 +1471,6 @@ public class WBservices {
 				return new RetourMessage(new Date().getTime(),
 						RetourMessage.NON_AUTORISE, idemetteur);
 			}
-			// Droit droit = new PersonneDAO(connexion)
-			// .getDroit(idemetteur, jeton);
-
-			// if (droit == null)
-			// return new RetourMessage(new Date().getTime(),
-			// RetourMessage.NON_AUTORISE, idemetteur);
-			// // return new MessageServeur(false, "Tu n'es pas reconnu");
-			//
-			// MessageServeur autorisation = droit.isDefautAccess();
-			//
-			// if (!autorisation.isReponse()) {
-			// return new RetourMessage(new Date().getTime(),
-			// RetourMessage.NON_AUTORISE, idemetteur);
-			// // return autorisation;
-			// }
 
 			ArrayList<Personne> listparticipant = participationdao
 					.getListPartipantActivite(idactivite);
@@ -1899,7 +1584,7 @@ public class WBservices {
 			return new MessageServeur(true,
 					TextWebService.suppressionParicipation);
 		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 
 			return new MessageServeur(false, e.getMessage());
@@ -2009,7 +1694,7 @@ public class WBservices {
 			return new MessageServeur(true, "Suppressin ok");
 
 		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
@@ -2093,7 +1778,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
@@ -2136,7 +1821,7 @@ public class WBservices {
 					TextWebService.suppressionNotifiaction);
 
 		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
@@ -2255,7 +1940,7 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.suppressionMessage);
 		} catch (Exception e) {
-		LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 
@@ -2301,107 +1986,6 @@ public class WBservices {
 			CxoPool.closeConnection(connexion);
 		}
 
-	}
-
-	public MessageServeurRV acquitMessageDiscussionRV(int idpersonne,
-			int idemetteur, String jeton) {
-		// lit les message d'une discussion en bloc pour un emetteur et un
-		// destinataire apres la fermeture de la liste des messages.
-
-		Connection connexion = null;
-		long debut = System.currentTimeMillis();
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-		
-		try {
-			connexion = CxoPool.getConnection();
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-
-			connexion.setAutoCommit(false);
-			MessageDAO messagedao = new MessageDAO(connexion);
-			messagedao.LitMessageDiscussion(idpersonne, idemetteur);
-			connexion.commit();
-
-			// new AcquitMessageDiscussionGcm(idpersonne).start();
-			PoolThreadGCM.poolThread.execute(new AcquitMessageDiscussionGcm(
-					idpersonne));
-			LogDAO.LOG_DUREE("acquitMessageDiscussion", debut);
-
-			
-		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-		
-	}
-
-	public MessageServeurRV acquitMessageDiscussionByActRV(int iddestinataire,
-			int idactivite, String jeton) {
-		// lit les message d'une discussion en bloc pour un emetteur et un
-		// destinataire apres la fermeture de la liste des messages.
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-		try {
-
-			connexion = CxoPool.getConnection();
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					iddestinataire, jeton);
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-
-			connexion.setAutoCommit(false);
-			MessageDAO messagedao = new MessageDAO(connexion);
-			messagedao.LitMessageDiscussionByAct(iddestinataire, idactivite);
-			connexion.commit();
-
-			// new AcquitMessageDiscussionByActGcm(iddestinataire).start();
-			PoolThreadGCM.poolThread
-					.execute(new AcquitMessageDiscussionByActGcm(iddestinataire));
-
-			LogDAO.LOG_DUREE("acquitMessageDiscussionByAct", debut);
-
-			
-		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-		
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-		
 	}
 
 	public MessageServeur acquitAllNotification(int idpersonne, String jeton) {
@@ -2483,58 +2067,6 @@ public class WBservices {
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-
-	}
-
-	public MessageServeurRV acquitMessageByActRV(int idpersonne, int idmessage,
-			String jeton) {
-		long debut = System.currentTimeMillis();
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		Connection connexion = null;
-
-		try {
-			connexion = CxoPool.getConnection();
-
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-
-			connexion.setAutoCommit(false);
-			MessageDAO messagedao = new MessageDAO(connexion);
-			messagedao.LitMessageByAct(idpersonne, idmessage);
-			connexion.commit();
-
-			// new AcquitMessageByActGcm(idpersonne).start();
-
-			PoolThreadGCM.poolThread.execute(new AcquitMessageByActGcm(
-					idpersonne));
-
-			LogDAO.LOG_DUREE("acquitMessageByAct", debut);
-
-		} catch (Exception e) {
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-			
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		
-
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-
-		
 
 	}
 
@@ -2934,7 +2466,7 @@ public class WBservices {
 			return new MessageServeur(true, TextWebService.preferenceMisAjour);
 
 		} catch (Exception e) {
-		LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
 		} finally {
@@ -3043,11 +2575,11 @@ public class WBservices {
 
 			return new MessageServeur(true, TextWebService.profilMisAjour);
 		} catch (Exception e) {
-	
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
-		
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
@@ -3186,7 +2718,7 @@ public class WBservices {
 				personne.setId(0);// echec connexion
 				return personne;
 			}
-			
+
 			if (!droit.isJetonOk(idtoken)) {
 				personne.setMessage(TextWebService.JETON_NON_VALIDE);
 				personne.setId(0);// echec connexion
@@ -3261,7 +2793,6 @@ public class WBservices {
 
 		} catch (Exception e) {
 
-			
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
@@ -3318,13 +2849,9 @@ public class WBservices {
 	}
 
 	public Activite[] getActivites(int idPersonne, String latitudestr,
-		
-			String longitudestr, int rayonmetre, int typeactivite,
-			String motcle, int typeUser, int commenceDans, String jeton) {
-		double malatitude = Double.parseDouble(latitudestr);
-		double malongitude = Double.parseDouble(longitudestr);
 
-		long debut = System.currentTimeMillis();
+	String longitudestr, int rayonmetre, int typeactivite, String motcle,
+			int typeUser, int commenceDans, String jeton) {
 
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<Activite>();
@@ -3337,219 +2864,20 @@ public class WBservices {
 			PersonneDAO personnedao = new PersonneDAO(connexion);
 			MessageServeur autorise = personnedao.isAutoriseMessageServeur(
 					idPersonne, jeton);
-			if (!autorise.isReponse()) {
+
+			if (!autorise.isReponse())
 				return null;
 
-			}
+			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 
-			double coef = rayonmetre * 0.007 / 700;
-			double latMin = malatitude - coef;
-			double latMax = malatitude + coef;
-			double longMin = malongitude - coef;
-			double longMax = malongitude + coef;
-			Activite activite = null;
+			listActivite = activitedao.getActivites(idPersonne,
+					Double.parseDouble(latitudestr),
+					Double.parseDouble(longitudestr), rayonmetre, typeactivite,
+					motcle, typeUser, commenceDans);
 
-			Calendar calendrierDebut = Calendar.getInstance();
-
-			Date dateRechercheDebut = calendrierDebut.getTime();
-
-			Calendar calendrierFin = Calendar.getInstance();
-
-			calendrierFin.add(Calendar.MINUTE, commenceDans);
-			Date dateRechercheFin = calendrierFin.getTime();
-			// on remonte les activités dont le debut est comprise entre
-			// l'heure
-			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
-			// heure
-
-			String requete = null;
-
-			// Renvoi les imm�diates
-			if (commenceDans == 0) {
-
-				requete = " SELECT "
-						+ " activite.gratuit,"
-						+ " activite.datedebut,"
-						+ " activite.adresse,"
-						+ " activite.latitude,"
-						+ " activite.longitude,"
-						+ " personne.prenom,"
-						+ " personne.sexe,"
-						+ " personne.nom,"
-						+ " personne.idpersonne,"
-						+ " personne.datenaissance,"
-						+ " personne.note,"
-						+ " personne.nbravis as totalavis,"
-						+ " personne.photo,"
-						+ " personne.affichesexe,"
-						+ " personne.afficheage,"
-						+ " activite.typeuser,"
-						+ " activite.nbrwaydeur as nbrparticipant,"
-						+ " activite.idactivite,"
-						+ " activite.libelle,"
-						+ " activite.titre,"
-						+ " activite.datefin,"
-						+ " activite.idtypeactivite,"
-						+ " activite.nbmaxwayd"
-						+ " FROM personne,activite"
-						+ " WHERE "
-						+ " personne.idpersonne = activite.idpersonne"
-						+ " and activite.actif=true"
-						+ " and (? between datedebut and  datefin )"
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ?";
-			}
-
-			// recheche les activite dont la date de debut est comprise entre
-			// datefinde rechere et maintenant
-			else {
-				// Requete N�2
-				requete = " SELECT "
-						+ " activite.gratuit,"
-						+ " activite.datedebut,"
-						+ " activite.adresse,"
-						+ " activite.latitude,"
-						+ " activite.longitude,"
-						+ " personne.prenom,"
-						+ " personne.sexe,"
-						+ " personne.nom,"
-						+ " personne.idpersonne,"
-						+ " personne.datenaissance,"
-						+ " personne.note,"
-						+ " personne.nbravis as totalavis,"
-						+ " personne.photo,"
-						+ " personne.affichesexe,"
-						+ " personne.afficheage,"
-						+ " activite.typeuser,"
-						+ " activite.nbrwaydeur as nbrparticipant,"
-						+ " activite.idactivite,"
-						+ " activite.libelle,"
-						+ " activite.titre,"
-						+ " activite.datefin,"
-						+ " activite.idtypeactivite,"
-						+ " activite.nbmaxwayd"
-						+ " FROM "
-						+ " personne,activite"
-						+ " WHERE personne.idpersonne = activite.idpersonne  "
-						+ " and activite.actif=true"
-						+ " and datedebut>? "
-						+ " and activite.latitude between ? and ?"
-						+ " and activite.longitude between ? and ? and datedebut<?";
-
-			}
-
-			if (typeactivite != -1) {
-				requete = requete + " and activite.idtypeactivite=?";
-			}
-
-			if (!motcle.isEmpty()) {
-
-				requete = requete
-						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
-
-			}
-
-			if (typeUser != 0) {
-
-				requete = requete + " and activite.typeuser=?";
-
-			}
-
-			requete = requete + " ORDER BY datedebut asc;";
-
-			preparedStatement = connexion.prepareStatement(requete);
-
-			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
-					dateRechercheDebut.getTime()));
-
-			preparedStatement.setDouble(2, latMin);
-			preparedStatement.setDouble(3, latMax);
-			preparedStatement.setDouble(4, longMin);
-			preparedStatement.setDouble(5, longMax);
-
-			int index = 5;
-
-			if (commenceDans != 0) {
-				// ajoute � la requete n�2 la date de fin
-				index++;
-				preparedStatement.setTimestamp(index, new java.sql.Timestamp(
-						dateRechercheFin.getTime()));
-			}
-
-			if (typeactivite != -1) {
-				index++;
-				preparedStatement.setInt(index, typeactivite);
-
-			}
-
-			if (!motcle.isEmpty()) {
-				index++;
-				String test = "%" + motcle + "%";
-				preparedStatement.setString(index, test);
-				index++;
-				preparedStatement.setString(index, test);
-
-			}
-
-			if (typeUser != 0) {
-
-				index++;
-				preparedStatement.setInt(index, typeUser);
-
-			}
-
-			//
-
-			rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-
-				double latitude = rs.getDouble("latitude");
-				double longitude = rs.getDouble("longitude");
-				double distance = ServeurMethodes.getDistance(malatitude,
-						latitude, malongitude, longitude);
-				if (distance >= rayonmetre)
-					continue;
-
-				int id = rs.getInt("idactivite");
-				String libelle = rs.getString("libelle");
-				String titre = rs.getString("titre");
-				int idorganisateur = rs.getInt("idpersonne");
-				int idtypeactivite = rs.getInt("idtypeactivite");
-				int sexe = rs.getInt("sexe");
-				int nbmaxwayd = rs.getInt("nbmaxwayd");
-				int nbrparticipant = rs.getInt("nbrparticipant");
-				Date datedebut = rs.getTimestamp("datedebut");
-				Date datefin = rs.getTimestamp("datefin");
-				String adresse = rs.getString("adresse");
-				double note = rs.getDouble("note");
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				boolean afficheage = rs.getBoolean("afficheage");
-				boolean affichesexe = rs.getBoolean("affichesexe");
-				if (prenom == null)
-					prenom = "";
-				String photo = rs.getString("photo");
-				Date datenaissance = rs.getTimestamp("datenaissance");
-				boolean archive = false;
-				int totalavis = rs.getInt("totalavis");
-				int typeuser = rs.getInt("typeuser");
-				int gratuit = rs.getInt("gratuit");
-				String fulldescription="descriptionall";
-				activite = new Activite(id, titre, libelle, idorganisateur,
-						datedebut, datefin, idtypeactivite, latitude,
-						longitude, adresse, nom, prenom, photo, note, 
-						archive, totalavis, datenaissance, sexe,
-						nbrparticipant, afficheage, affichesexe, nbmaxwayd,
-						typeuser, 0,fulldescription,gratuit);
-
-				listActivite.add(activite);
-
-			}
-
-			rs.close();
-			preparedStatement.close();
-
-			LogDAO.LOG_DUREE("getActivites", debut);
+			// for (Activite activite : listActivite) {
+			// activite.defineOrganisateur(idPersonne);
+			// }
 
 			return (Activite[]) listActivite.toArray(new Activite[listActivite
 					.size()]);
@@ -3564,192 +2892,88 @@ public class WBservices {
 
 	}
 
-	public MessageServeurRV acquitAllNotificationRV(int idpersonne, String jeton) {
-		// lit les message d'une discussion en bloc pour un emetteur et un
-		// destinataire
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-	
-		try {
-			connexion = CxoPool.getConnection();
-	
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-		
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-		
-			if (!autorise.isReponse()) {
-	
-				return autorise;
-			}
-	
-			connexion.setAutoCommit(false);
-			NotificationDAO notificationdao = new NotificationDAO(connexion);
-			notificationdao.litNotification(idpersonne);
-			connexion.commit();
-	
-			PoolThreadGCM.poolThread.execute(new AcquitAllNotificationGcm(
-					idpersonne));
-	
-			LogDAO.LOG_DUREE("acquitAllNotification", debut);
-	
-		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-		
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-	
-		} finally {
-	
-			CxoPool.closeConnection(connexion);
-	
-		}
-		
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-	
-	}
-
-	public MessageServeurRV acquitMessageRV(int idpersonne, int idmessage,
-			String jeton) {
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		try {
-			connexion = CxoPool.getConnection();
-	
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-	
-			MessageDAO messagedao = new MessageDAO(connexion);
-	
-			connexion.setAutoCommit(false);
-			messagedao.LitMessage(idpersonne, idmessage);
-			connexion.commit();
-	
-			// new AcquitMessageGcm(idpersonne).start();
-	
-			PoolThreadGCM.poolThread.execute(new AcquitMessageGcm(idpersonne));
-	
-			LogDAO.LOG_DUREE("acquitMessage", debut);
-	
-			
-		} catch (Exception e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-			
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-	
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-		
-		
-	
-	}
-
 	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
-	
+
 		Connection connexion = null;
-	
+
 		try {
 			connexion = CxoPool.getConnection();
-	
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
-	
+
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
-	
+
 			connexion.setAutoCommit(false);
 			MessageDAO messagedao = new MessageDAO(connexion);
 			messagedao.LitMessageByAct(idpersonne, idmessage);
 			connexion.commit();
-	
+
 			// new AcquitMessageByActGcm(idpersonne).start();
-	
+
 			PoolThreadGCM.poolThread.execute(new AcquitMessageByActGcm(
 					idpersonne));
-	
+
 			LogDAO.LOG_DUREE("acquitMessageByAct", debut);
-	
+
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
 		} catch (Exception e) {
-		
-				LOG.error(ExceptionUtils.getStackTrace(e));
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-	
+
 	}
 
 	public MessageServeur acquitMessageDiscussion(int idpersonne,
 			int idemetteur, String jeton) {
 		// lit les message d'une discussion en bloc pour un emetteur et un
 		// destinataire apres la fermeture de la liste des messages.
-	
+
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-	
+
 		try {
 			connexion = CxoPool.getConnection();
-	
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					idpersonne, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
-	
+
 			connexion.setAutoCommit(false);
 			MessageDAO messagedao = new MessageDAO(connexion);
 			messagedao.LitMessageDiscussion(idpersonne, idemetteur);
 			connexion.commit();
-	
+
 			// new AcquitMessageDiscussionGcm(idpersonne).start();
 			PoolThreadGCM.poolThread.execute(new AcquitMessageDiscussionGcm(
 					idpersonne));
 			LogDAO.LOG_DUREE("acquitMessageDiscussion", debut);
-	
+
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
 		} catch (Exception e) {
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-	
+
 	}
 
 	public MessageServeur acquitMessageDiscussionByAct(int iddestinataire,
@@ -3758,176 +2982,705 @@ public class WBservices {
 		// destinataire apres la fermeture de la liste des messages.
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-	
+
 		try {
-	
+
 			connexion = CxoPool.getConnection();
-	
+
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
 			MessageServeur autorise = personneDAO.isAutoriseMessageServeur(
 					iddestinataire, jeton);
 			if (!autorise.isReponse()) {
 				return autorise;
 			}
-	
+
 			connexion.setAutoCommit(false);
 			MessageDAO messagedao = new MessageDAO(connexion);
 			messagedao.LitMessageDiscussionByAct(iddestinataire, idactivite);
 			connexion.commit();
-	
+
 			PoolThreadGCM.poolThread
 					.execute(new AcquitMessageDiscussionByActGcm(iddestinataire));
-	
+
 			LogDAO.LOG_DUREE("acquitMessageDiscussionByAct", debut);
-	
+
 			return new MessageServeur(true,
 					TextWebService.acquittementMessageDiscussion);
 		} catch (Exception e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			CxoPool.rollBack(connexion);
 			return new MessageServeur(false, e.getMessage());
-	
+
 		} finally {
 			CxoPool.closeConnection(connexion);
 		}
-	
+
 	}
 
-	public MessageServeurRV acquitNotificationRV(int idpersonne, int idmessage,
-			String jeton) {
-		long debut = System.currentTimeMillis();
-		Connection connexion = null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		
-		try {
-			connexion = CxoPool.getConnection();
-	
-			PersonneDAO personnedao = new PersonneDAO(connexion);
-	
-			MessageServeurRV autorise = personnedao.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-	
-			connexion.setAutoCommit(false);
-	
-			NotificationDAO notificationdao = new NotificationDAO(connexion);
-			notificationdao.LitNotification(idpersonne, idmessage);
-			connexion.commit();
-			// new AcquitNotificationGcm(idpersonne).start();
-			PoolThreadGCM.poolThread.execute(new AcquitNotificationGcm(
-					idpersonne));
-	
-			LogDAO.LOG_DUREE("acquitNotification", debut);
-	
-			
-		} catch (Exception e) {
-			LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-	
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-		
-			return messageServeurRV;
-	
-		} finally {
-			CxoPool.closeConnection(connexion);
-	
-		}
-		
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-		
-	}
+	// public MessageServeurRV acquitNotificationRV(int idpersonne, int
+	// idmessage,
+	// String jeton) {
+	// long debut = System.currentTimeMillis();
+	// Connection connexion = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personnedao = new PersonneDAO(connexion);
+	//
+	// MessageServeurRV autorise = personnedao.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	//
+	// NotificationDAO notificationdao = new NotificationDAO(connexion);
+	// notificationdao.LitNotification(idpersonne, idmessage);
+	// connexion.commit();
+	// // new AcquitNotificationGcm(idpersonne).start();
+	// PoolThreadGCM.poolThread.execute(new AcquitNotificationGcm(
+	// idpersonne));
+	//
+	// LogDAO.LOG_DUREE("acquitNotification", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	//
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
 
-	public MessageServeurRV addAvisRV(int idpersonne, int idpersonnenotee,
-			int idactivite, String titre, String libelle, String notestr,
-			boolean demandeami, String jeton) {
-		long debut = System.currentTimeMillis();
-	
-		Connection connexion = null;
-		ArrayList<Erreur> listErreurs=new ArrayList<Erreur>();
-		double note = Double.parseDouble(notestr);
-	
-		try {
-	
-			connexion = CxoPool.getConnection();
-			PersonneDAO personneDAO = new PersonneDAO(connexion);
-			MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
-					idpersonne, jeton);
-		
-			if (!autorise.isReponse()) {
-				return autorise;
-			}
-	
-			connexion.setAutoCommit(false);
-			AvisDAO avisdao = new AvisDAO(connexion);
-			NotificationDAO notificationdao = new NotificationDAO(connexion);
-	
-			avisdao.addAvis(idpersonnenotee, idpersonne, idactivite, titre,
-					libelle, note);// Ajoute
-	
-			new PersonneDAO(connexion)
-					.updateChampCalculePersonne(idpersonnenotee);
-			avisdao.updateDemande(idpersonne, idpersonnenotee, idactivite,
-					demandeami); //
-	
-			boolean ajoutami = avisdao.gestionAmi(idpersonne, idpersonnenotee,
-					idactivite);
-	
-			notificationdao.removeNotificationAnoter(idpersonne,
-					idpersonnenotee, idactivite);
-	
-			// Envoi la notification si les 2 ont notés
-	
-			if (avisdao.isDoubleAvis(idpersonne, idpersonnenotee, idactivite)) {
-	
-				notificationdao.addNotification(idpersonnenotee,
-						Notification.RecoitAvis, idactivite, idpersonne); //
-	
-				notificationdao.addNotification(idpersonne,
-						Notification.RecoitAvis, idactivite, idpersonnenotee); //
-			}
-	
-			if (ajoutami) // Envoi au 2 personne le
-				// fait quelles soient amies
-				notificationdao.addNotificationAjoutAmi(idpersonnenotee,
-						idactivite, idpersonne);
-	
-			connexion.commit();
-	
-			// new AddAvisGcm(idpersonnenotee, idpersonne).start();
-	
-			PoolThreadGCM.poolThread.execute(new AddAvisGcm(idpersonnenotee,
-					idpersonne));
-	
-			LogDAO.LOG_DUREE("addAvis", debut);
-	
-			
-	
-		} catch (Exception e) {
-	
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			CxoPool.rollBack(connexion);
-			
-			MessageServeurRV messageServeurRV=new MessageServeurRV(false, e.getMessage());
-			listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
-			messageServeurRV.initErreurs(listErreurs);
-			return messageServeurRV;
-	
-		} finally {
-			CxoPool.closeConnection(connexion);
-		}
-		
-		MessageServeurRV messageServeurRV=new MessageServeurRV(true, TextWebService.acquittementMessageDiscussion);
-		messageServeurRV.initErreurs(listErreurs);
-		return messageServeurRV;
-		
-	
-	}
+	// public MessageServeurRV addAvisRV(int idpersonne, int idpersonnenotee,
+	// int idactivite, String titre, String libelle, String notestr,
+	// boolean demandeami, String jeton) {
+	// long debut = System.currentTimeMillis();
+	//
+	// Connection connexion = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	// double note = Double.parseDouble(notestr);
+	//
+	// try {
+	//
+	// connexion = CxoPool.getConnection();
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	//
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// AvisDAO avisdao = new AvisDAO(connexion);
+	// NotificationDAO notificationdao = new NotificationDAO(connexion);
+	//
+	// avisdao.addAvis(idpersonnenotee, idpersonne, idactivite, titre,
+	// libelle, note);// Ajoute
+	//
+	// new PersonneDAO(connexion)
+	// .updateChampCalculePersonne(idpersonnenotee);
+	// avisdao.updateDemande(idpersonne, idpersonnenotee, idactivite,
+	// demandeami); //
+	//
+	// boolean ajoutami = avisdao.gestionAmi(idpersonne, idpersonnenotee,
+	// idactivite);
+	//
+	// notificationdao.removeNotificationAnoter(idpersonne,
+	// idpersonnenotee, idactivite);
+	//
+	// // Envoi la notification si les 2 ont notés
+	//
+	// if (avisdao.isDoubleAvis(idpersonne, idpersonnenotee, idactivite)) {
+	//
+	// notificationdao.addNotification(idpersonnenotee,
+	// Notification.RecoitAvis, idactivite, idpersonne); //
+	//
+	// notificationdao.addNotification(idpersonne,
+	// Notification.RecoitAvis, idactivite, idpersonnenotee); //
+	// }
+	//
+	// if (ajoutami) // Envoi au 2 personne le
+	// // fait quelles soient amies
+	// notificationdao.addNotificationAjoutAmi(idpersonnenotee,
+	// idactivite, idpersonne);
+	//
+	// connexion.commit();
+	//
+	// // new AddAvisGcm(idpersonnenotee, idpersonne).start();
+	//
+	// PoolThreadGCM.poolThread.execute(new AddAvisGcm(idpersonnenotee,
+	// idpersonne));
+	//
+	// LogDAO.LOG_DUREE("addAvis", debut);
+	//
+	// } catch (Exception e) {
+	//
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+
+	// public Activite[] getListActivites(int idpersonne, String latitudestr,
+	// String longitudestr, int rayon, int idtypeactivite, String motcle,
+	// long debutActivite, long finActivite, int typeUser,
+	// int accessActivite, int commenceDans, String jeton) {
+	//
+	// // commenceDans en minutes
+	// // accessActivite payante/gratuite
+	// // typeUser pro/asso/waydeur
+	//
+	// long debut = System.currentTimeMillis();
+	// Connection connexion = null;
+	//
+	// ArrayList<Activite> listActivite = new ArrayList<Activite>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// // *****************Securite*****************
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// if (!personneDAO.isAutorise(idpersonne, jeton))
+	// return null;
+	//
+	// // ********************************************************
+	//
+	// ActiviteDAO activitedao = new ActiviteDAO(connexion);
+	// listActivite = activitedao.getListActivites(
+	// Double.valueOf(latitudestr), Double.valueOf(longitudestr),
+	// rayon, idtypeactivite, motcle, debutActivite, finActivite,
+	// typeUser, accessActivite, commenceDans);
+	//
+	// for (Activite activite : listActivite) {
+	// activite.defineOrganisateur(idpersonne);
+	// }
+	//
+	// } catch (NumberFormatException | SQLException | NamingException e1) {
+	// LOG.error(ExceptionUtils.getStackTrace(e1));
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// LogDAO.LOG_DUREE("getListActivites", debut);
+	//
+	// return (Activite[]) listActivite.toArray(new Activite[listActivite
+	// .size()]);
+	//
+	// }
+
+	// public ListActivitesRV getListActivitesRV(int idpersonne,
+	// String latitudestr, String longitudestr, int rayon,
+	// int idtypeactivite, String motcle, long debutActivite,
+	// long finActivite, int typeUser, int accessActivite,
+	// int commenceDans, String jeton) {
+	//
+	// // commenceDans en minutes
+	// // accessActivite payante/gratuite
+	// // typeUser pro/asso/waydeur
+	//
+	// long debut = System.currentTimeMillis();
+	//
+	// ListActivitesRV retour = new ListActivitesRV();
+	//
+	// Connection connexion = null;
+	//
+	// ArrayList<Activite> listActivite = new ArrayList<Activite>();
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// // *****************Securite*****************
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	//
+	// if (!personneDAO.isAutorise(idpersonne, jeton)) {
+	// listErreurs.add(new Erreur(1, "Pas authentifié"));
+	// retour.initErreurs(listErreurs);
+	// return retour;
+	// }
+	// // ********************************************************
+	//
+	// ActiviteDAO activitedao = new ActiviteDAO(connexion);
+	// listActivite = activitedao.getListActivites(
+	// Double.valueOf(latitudestr), Double.valueOf(longitudestr),
+	// rayon, idtypeactivite, motcle, debutActivite, finActivite,
+	// typeUser, accessActivite, commenceDans);
+	//
+	// for (Activite activite : listActivite) {
+	// activite.defineOrganisateur(idpersonne);
+	// }
+	//
+	// } catch (NumberFormatException | SQLException | NamingException e1) {
+	// LOG.error(ExceptionUtils.getStackTrace(e1));
+	// listErreurs.add(new Erreur(2, e1.getMessage()));
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	// LogDAO.LOG_DUREE("getListActivites", debut);
+	// retour.initActivite(listActivite);
+	// retour.initErreurs(listErreurs);
+	//
+	// return retour;
+	//
+	// }
+	// public MessageServeurRV acquitAllNotificationRV(int idpersonne, String
+	// jeton) {
+	// // lit les message d'une discussion en bloc pour un emetteur et un
+	// // destinataire
+	// long debut = System.currentTimeMillis();
+	// Connection connexion = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	//
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	//
+	// if (!autorise.isReponse()) {
+	//
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// NotificationDAO notificationdao = new NotificationDAO(connexion);
+	// notificationdao.litNotification(idpersonne);
+	// connexion.commit();
+	//
+	// PoolThreadGCM.poolThread.execute(new AcquitAllNotificationGcm(
+	// idpersonne));
+	//
+	// LogDAO.LOG_DUREE("acquitAllNotification", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	//
+	// CxoPool.closeConnection(connexion);
+	//
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+
+	// public MessageServeurRV acquitMessageRV(int idpersonne, int idmessage,
+	// String jeton) {
+	// long debut = System.currentTimeMillis();
+	// Connection connexion = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// MessageDAO messagedao = new MessageDAO(connexion);
+	//
+	// connexion.setAutoCommit(false);
+	// messagedao.LitMessage(idpersonne, idmessage);
+	// connexion.commit();
+	//
+	// // new AcquitMessageGcm(idpersonne).start();
+	//
+	// PoolThreadGCM.poolThread.execute(new AcquitMessageGcm(idpersonne));
+	//
+	// LogDAO.LOG_DUREE("acquitMessage", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	//
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+	// public MessageServeurRV acquitMessageByActRV(int idpersonne, int
+	// idmessage,
+	// String jeton) {
+	// long debut = System.currentTimeMillis();
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	// Connection connexion = null;
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	//
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// MessageDAO messagedao = new MessageDAO(connexion);
+	// messagedao.LitMessageByAct(idpersonne, idmessage);
+	// connexion.commit();
+	//
+	// // new AcquitMessageByActGcm(idpersonne).start();
+	//
+	// PoolThreadGCM.poolThread.execute(new AcquitMessageByActGcm(
+	// idpersonne));
+	//
+	// LogDAO.LOG_DUREE("acquitMessageByAct", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+	// public MessageServeurRV acquitMessageDiscussionRV(int idpersonne,
+	// int idemetteur, String jeton) {
+	// // lit les message d'une discussion en bloc pour un emetteur et un
+	// // destinataire apres la fermeture de la liste des messages.
+	//
+	// Connection connexion = null;
+	// long debut = System.currentTimeMillis();
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idpersonne, jeton);
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// MessageDAO messagedao = new MessageDAO(connexion);
+	// messagedao.LitMessageDiscussion(idpersonne, idemetteur);
+	// connexion.commit();
+	//
+	// // new AcquitMessageDiscussionGcm(idpersonne).start();
+	// PoolThreadGCM.poolThread.execute(new AcquitMessageDiscussionGcm(
+	// idpersonne));
+	// LogDAO.LOG_DUREE("acquitMessageDiscussion", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+
+	// public MessageServeurRV acquitMessageDiscussionByActRV(int
+	// iddestinataire,
+	// int idactivite, String jeton) {
+	// // lit les message d'une discussion en bloc pour un emetteur et un
+	// // destinataire apres la fermeture de la liste des messages.
+	// long debut = System.currentTimeMillis();
+	// Connection connexion = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	//
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// iddestinataire, jeton);
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// MessageDAO messagedao = new MessageDAO(connexion);
+	// messagedao.LitMessageDiscussionByAct(iddestinataire, idactivite);
+	// connexion.commit();
+	//
+	// // new AcquitMessageDiscussionByActGcm(iddestinataire).start();
+	// PoolThreadGCM.poolThread
+	// .execute(new AcquitMessageDiscussionByActGcm(iddestinataire));
+	//
+	// LogDAO.LOG_DUREE("acquitMessageDiscussionByAct", debut);
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(false,
+	// e.getMessage());
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// messageServeurRV.initErreurs(listErreurs);
+	//
+	// return messageServeurRV;
+	//
+	// } finally {
+	// CxoPool.closeConnection(connexion);
+	// }
+	// MessageServeurRV messageServeurRV = new MessageServeurRV(true,
+	// TextWebService.acquittementMessageDiscussion);
+	// messageServeurRV.initErreurs(listErreurs);
+	// return messageServeurRV;
+	//
+	// }
+	// public MessageServeurRV addActiviteRV(String titre, String libelle,
+	// int idorganisateur, int dureebalise, int idtypeactivite,
+	// String latitudestr, String longitudestr, String adresse,
+	// int nbmaxwaydeur, int dureeactivite, String jeton)
+	// throws ParseException {
+	//
+	// long debut = System.currentTimeMillis();
+	//
+	// Connection connexion = null;
+	// Activite activite = null;
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	//
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idorganisateur, jeton);
+	//
+	// if (!autorise.isReponse()) {
+	//
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// ActiviteDAO activitedao = new ActiviteDAO(connexion);
+	//
+	// double latitude = Double.parseDouble(latitudestr);
+	// double longitude = Double.parseDouble(longitudestr);
+	// Date datedebut, datefinActivite;
+	// datedebut = new Date();
+	//
+	// Calendar calFinActivite = Calendar.getInstance();
+	// calFinActivite.setTime(datedebut);
+	// calFinActivite.add(Calendar.MINUTE, dureeactivite);
+	// datefinActivite = calFinActivite.getTime();
+	//
+	// if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) ==
+	// WBservices.NB_MAX_ACTIVITE) {
+	//
+	// listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
+	// MessageServeurRV messageServeur = new MessageServeurRV(false,
+	// TextWebService.QUOTA_ACTIVITE_DEPASSE);
+	// messageServeur.initErreurs(listErreurs);
+	//
+	// return messageServeur;
+	// }
+	//
+	// activite = new Activite(titre, libelle, idorganisateur, datedebut,
+	// idtypeactivite, latitude, longitude, adresse, true,
+	// nbmaxwaydeur, datefinActivite, ProfilBean.WAYDEUR);
+	//
+	// // ****************Ajoute l'activite*****************************
+	//
+	// activitedao.addActivite(activite);
+	// connexion.commit();
+	//
+	// // new AddActiviteGcm(activite, idorganisateur).start();
+	//
+	// PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,
+	// idorganisateur));
+	//
+	// LogDAO.LOG_DUREE("addActivite", debut);
+	//
+	// MessageServeurRV messageServeur = new MessageServeurRV(true,
+	// Integer.toString(activite.getId()));
+	// messageServeur.initErreurs(listErreurs);
+	// return messageServeur;
+	//
+	// } catch (Exception e) {
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// MessageServeurRV messageServeur = new MessageServeurRV(false,
+	// e.getMessage());
+	// messageServeur.initErreurs(listErreurs);
+	//
+	// return messageServeur;
+	//
+	// } finally {
+	//
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// }
+
+	// public MessageServeurRV addActiviteProRV(String titre, String libelle,
+	// int idorganisateur, int idtypeactivite, String latitudestr,
+	// String longitudestr, String adresse, Long dateDebut, Long DateFin,
+	// String jeton) throws ParseException {
+	//
+	// long debut = System.currentTimeMillis();
+	// ArrayList<Erreur> listErreurs = new ArrayList<Erreur>();
+	//
+	// Connection connexion = null;
+	//
+	// try {
+	// connexion = CxoPool.getConnection();
+	//
+	// PersonneDAO personneDAO = new PersonneDAO(connexion);
+	// MessageServeurRV autorise = personneDAO.isAutoriseMessageServeurRV(
+	// idorganisateur, jeton);
+	// if (!autorise.isReponse()) {
+	// return autorise;
+	// }
+	//
+	// connexion.setAutoCommit(false);
+	// ActiviteDAO activitedao = new ActiviteDAO(connexion);
+	//
+	// double latitude = Double.parseDouble(latitudestr);
+	// double longitude = Double.parseDouble(longitudestr);
+	// Date datedebut, datefinActivite;
+	// datedebut = new Date(dateDebut);
+	// datefinActivite = new Date(DateFin);
+	//
+	// if (activitedao.getNbrActiviteProposeEnCours(idorganisateur) ==
+	// WBservices.NB_MAX_ACTIVITE) {
+	// listErreurs.add(ErreurReponseValeur.ERR_QUOTA_ACTIVITE_DEPASSE);
+	// MessageServeurRV messageServeur = new MessageServeurRV(false,
+	// TextWebService.QUOTA_ACTIVITE_DEPASSE);
+	// messageServeur.initErreurs(listErreurs);
+	//
+	// return messageServeur;
+	// }
+	//
+	// Activite activite = new Activite(titre, libelle, idorganisateur,
+	// datedebut, idtypeactivite, latitude, longitude, adresse,
+	// true, 0, datefinActivite, ProfilBean.PRO);
+	//
+	// // ****************Ajoute l'activite*****************************
+	//
+	// activitedao.addActivite(activite);
+	// connexion.commit();
+	//
+	// // new AddActiviteGcm(activite, idorganisateur).start();
+	//
+	// PoolThreadGCM.poolThread.execute(new AddActiviteGcm(activite,
+	// idorganisateur));
+	//
+	// LogDAO.LOG_DUREE("addActivitePro", debut);
+	//
+	// MessageServeurRV messageServeur = new MessageServeurRV(true,
+	// Integer.toString(activite.getId()));
+	// messageServeur.initErreurs(listErreurs);
+	// return messageServeur;
+	//
+	// } catch (Exception e) {
+	//
+	// LOG.error(ExceptionUtils.getStackTrace(e));
+	// CxoPool.rollBack(connexion);
+	//
+	// listErreurs.add(ErreurReponseValeur.ERREUR_SYSTEME(e.getMessage()));
+	// MessageServeurRV messageServeur = new MessageServeurRV(false,
+	// e.getMessage());
+	// messageServeur.initErreurs(listErreurs);
+	// return messageServeur;
+	//
+	// } finally {
+	//
+	// CxoPool.closeConnection(connexion);
+	// }
+	//
+	// }
 
 }

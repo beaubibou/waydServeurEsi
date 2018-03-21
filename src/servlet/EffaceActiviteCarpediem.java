@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,31 +16,55 @@ import website.metier.AuthentificationSite;
  */
 public class EffaceActiviteCarpediem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EffaceActiviteCarpediem() {
-        super();
-   
-    }
+	public final static String RAZ_CARPEDIEM = "RAZ_CARPEDIEM";
+	public final static String RAZ_CARPEDIEM_BEFORE_NOW = "RAZ_CARPEDIEM_BEFORE_NOW";
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	doPost(request, response);
+
+	public EffaceActiviteCarpediem() {
+		super();
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		AuthentificationSite authentification = new AuthentificationSite(
 				request, response);
+
 		if (!authentification.isAuthentifieAdmin())
 			return;
-		ActiviteDAO.effaceTouteCarpeDiem();
+
+		String action = request.getParameter("action");
+
+		switch (action) {
+
+		case RAZ_CARPEDIEM:
+
+			ActiviteDAO.effaceTouteCarpeDiem();
+
+			break;
+		case RAZ_CARPEDIEM_BEFORE_NOW:
+
+			ActiviteDAO.effaceTouteCarpeDiem(new Date());
+	
+			break;
+
+		}
 	}
 
 }

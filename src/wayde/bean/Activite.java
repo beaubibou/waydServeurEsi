@@ -5,10 +5,12 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import fcm.ServeurMethodes;
 import wayd.ws.TextWebService;
 import website.metier.ActiviteBean;
 
 public class Activite {
+	
 	private static final Logger LOG = Logger.getLogger(Activite.class);
 
 	int id;
@@ -60,9 +62,7 @@ public class Activite {
 	public Date datefinactivite;
 
 	public boolean actif;
-
-	//public int role;
-
+	
 	public long finidans;
 
 	private int nbmaxwaydeur;
@@ -210,7 +210,6 @@ public class Activite {
 		this.prenomorganisateur = prenom;
 		this.photo = photo;
 		this.note = note;
-		this.organisateur = false;
 		this.dejainscrit = false;
 		this.archive = archive;
 		this.totalavis = totalavis;
@@ -222,7 +221,6 @@ public class Activite {
 		this.age = getAgeStr(datenaissance, afficheage);
 		if (affichesexe)
 			this.sexe = 3;
-	//	this.role = role;
 		this.typeUser = typeUser;
 		this.typeAcces = typeAcces;
 		this.nbmaxwaydeur = nbmaxwaydeur;
@@ -230,6 +228,7 @@ public class Activite {
 		if (this.titre.equals(""))
 			this.titre = " ";
 		this.gratuite = gratuit;
+		defineOrganisateur(idorganisateur);
 
 	}
 
@@ -254,6 +253,8 @@ public class Activite {
 		this.typeUser = activiteBean.getTypeUser();
 		this.typeAcces = activiteBean.getTypeAccess();
 		this.nbmaxwaydeur = activiteBean.getNbmaxwaydeur();
+		defineOrganisateur(activiteBean.getIdorganisateur());
+		
 		if (this.titre.equals(""))
 			this.titre = " ";
 
@@ -463,14 +464,6 @@ public class Activite {
 		this.photo = photo;
 	}
 
-	public boolean isOrganisateur() {
-		
-		return organisateur;
-	}
-
-	public void setOrganisateur(boolean organisateur) {
-		this.organisateur = organisateur;
-	}
 
 	public boolean isComplete() {
 		if (nbmaxwaydeur == nbrparticipant)
@@ -490,21 +483,11 @@ public class Activite {
 	public void defineOrganisateur(int idpersonne) {
 
 		if (idorganisateur == idpersonne)
-			setOrganisateur(true);
+			organisateur=true;
 		else
-			setOrganisateur(false);
+			organisateur=false;
 	
 	}
-
-	//public void defineOrganisateur() {
-	//	if (role == 0) {
-	//		setDejainscrit(true);
-	//	}
-	//	if (role == 1) {
-	//		setOrganisateur(true);
-	//	}
-
-	//}
 
 	public boolean isEnCours() {
 
@@ -513,6 +496,18 @@ public class Activite {
 			return true;
 		return false;
 
+	}
+
+	public boolean isInRayon(double malatitude, double malongitude,
+			int rayonmetre) {
+		
+		double distance = ServeurMethodes.getDistance(malatitude, latitude,
+				malongitude, longitude);
+		
+		if (distance<=rayonmetre)
+			return true;
+	
+		return false;
 	}
 
 }

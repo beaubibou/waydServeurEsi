@@ -2254,4 +2254,60 @@ public class ActiviteDAO {
 
 	}
 
+	public static void effaceTouteCarpeDiem(Date date) {
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection connexion = null;
+
+		try {
+			
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			
+			String requete = "delete from nbrvu where idactivite in (select idactivite from activite where typeuser=4 and datefin<? )";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					date.getTime()));
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "delete from interet where idactivite in (select idactivite from activite where typeuser=4 and datefin<?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					date.getTime()));
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "delete from personne where typeuser=4 and idpersonne in(select idpersonne from personne where typeuser=4 and datefin<?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					date.getTime()));
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "delete from activite where idpersonne in (select idpersonne from personne where typeuser=4 and datefin<?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					date.getTime()));
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+
+		} catch (NamingException | SQLException e) {
+
+			try {
+				connexion.rollback();
+			} catch (SQLException e1) {
+				LOG.error(ExceptionUtils.getStackTrace(e));
+			}
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+
+		
+	}
+
 }
