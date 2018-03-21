@@ -55,7 +55,7 @@ public class ActiviteBean {
 
 	public boolean actif;
 
-	public int role;
+	
 
 	public long finidans;
 
@@ -324,7 +324,7 @@ public class ActiviteBean {
 			int idorganisateur, Date datedebut, Date datefin,
 			int idtypeactivite, double latitude, double longitude,
 			String adresse, String nom, String pseudo, String photo,
-			double note, int role, boolean archive, int totalavis,
+			double note,  boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
 			boolean afficheage, boolean affichesexe, int nbmaxwaydeur) {
 

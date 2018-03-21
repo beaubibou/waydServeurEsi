@@ -1260,7 +1260,7 @@ public class WBservices {
 			listActivite = activitedao.getMesActiviteEncours(idpersonne);
 
 			for (Activite activite : listActivite)
-				activite.defineOrganisateur();
+				activite.defineOrganisateur(idpersonne);
 
 			LogDAO.LOG_DUREE("getMesActiviteEncours", debut);
 
@@ -1293,15 +1293,7 @@ public class WBservices {
 			listActivite = activitedao.getMesActiviteArchive(idpersonne);
 
 			for (Activite activite : listActivite) {
-				if (activite.role == 0) {
-					activite.setDejainscrit(true);
-				}
-
-				if (activite.role == 1) {
-					activite.setOrganisateur(true);
-
-				}
-
+				activite.defineOrganisateur(idpersonne);
 			}
 
 		} catch (SQLException | NamingException e) {
@@ -3393,7 +3385,6 @@ public class WBservices {
 						+ " personne.afficheage,"
 						+ " activite.typeuser,"
 						+ " activite.nbrwaydeur as nbrparticipant,"
-						+ " 1 as role,"
 						+ " activite.idactivite,"
 						+ " activite.libelle,"
 						+ " activite.titre,"
@@ -3431,7 +3422,6 @@ public class WBservices {
 						+ " personne.afficheage,"
 						+ " activite.typeuser,"
 						+ " activite.nbrwaydeur as nbrparticipant,"
-						+ " 1 as role,"
 						+ " activite.idactivite,"
 						+ " activite.libelle,"
 						+ " activite.titre,"
@@ -3539,19 +3529,18 @@ public class WBservices {
 				if (prenom == null)
 					prenom = "";
 				String photo = rs.getString("photo");
-				int role = rs.getInt("role");
 				Date datenaissance = rs.getTimestamp("datenaissance");
 				boolean archive = false;
 				int totalavis = rs.getInt("totalavis");
 				int typeuser = rs.getInt("typeuser");
 				int gratuit = rs.getInt("gratuit");
-				
+				String fulldescription="descriptionall";
 				activite = new Activite(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
-						longitude, adresse, nom, prenom, photo, note, role,
+						longitude, adresse, nom, prenom, photo, note, 
 						archive, totalavis, datenaissance, sexe,
 						nbrparticipant, afficheage, affichesexe, nbmaxwayd,
-						typeuser, 0,null,gratuit);
+						typeuser, 0,fulldescription,gratuit);
 
 				listActivite.add(activite);
 

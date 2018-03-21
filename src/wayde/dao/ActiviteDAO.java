@@ -39,8 +39,7 @@ public class ActiviteDAO {
 			+ "personne.nom," + "personne.idpersonne,"
 			+ "personne.affichesexe," + "personne.afficheage,"
 			+ "personne.datenaissance," + "personne.note,"
-			+ "personne.nbravis as totalavis," + "personne.photo,"
-			+ "1 as role,";
+			+ "personne.nbravis as totalavis," + "personne.photo";
 
 	Connection connexion;
 
@@ -48,84 +47,8 @@ public class ActiviteDAO {
 		this.connexion = connexion;
 	}
 
-	public Activite getActivite(int idactivite_) throws Exception {
-
-		Activite activite = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-
-		String requete = " SELECT activite.datedebut,       activite.adresse,    activite.latitude,"
-				+ " activite.longitude,    personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,"
-				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,"
-				+ "personne.nbravis as totalavis,    personne.photo,1 as role,"
-				+ "activite.idactivite,    activite.libelle,    activite.titre,"
-				+ "activite.nbrwaydeur,activite.nbmaxwayd,   activite.datefin, activite.idtypeactivite"
-				+ ",activite.typeuser,activite.typeacces,activite.descriptionall,activite.gratuit   FROM personne,"
-				+ "activite  WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
-
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite_);
-		rs = preparedStatement.executeQuery();
-
-		while (rs.next()) {
-			int id = rs.getInt("idactivite");
-			int idtypeactivite = rs.getInt("idtypeactivite");
-			String libelle = rs.getString("libelle");
-			String titre = rs.getString("titre");
-			int idorganisateur = rs.getInt("idpersonne");
-			int sexe = rs.getInt("sexe");
-			Date datedebut = rs.getTimestamp("datedebut");
-			Date datefin = rs.getTimestamp("datefin");
-			String adresse = rs.getString("adresse");
-			double latitude = rs.getDouble("latitude");
-			double longitude = rs.getDouble("longitude");
-			double note = rs.getDouble("note");
-			String nom = rs.getString("nom");
-			String prenom = rs.getString("prenom");
-			String fulldescription = rs.getString("descriptionall");
-			Date datenaissance = rs.getTimestamp("datenaissance");
-			boolean afficheage = rs.getBoolean("afficheage");
-			boolean affichesexe = rs.getBoolean("affichesexe");
-			int nbmaxwayd = rs.getInt("nbmaxwayd");
-			int nbrparticipant = rs.getInt("nbrwaydeur");
-			if (prenom == null)
-				prenom = "";
-			String photo = rs.getString("photo");
-			int role = rs.getInt("role");
-			Date maintenant = new Date();
-			boolean archive = false;
-
-			if (datefin != null)
-				if (datefin.before(maintenant))
-					archive = true;
-
-			if (datefin == null)
-				archive = true;
-
-			int totalavis = rs.getInt("totalavis");
-
-			int typeUser = rs.getInt("typeuser");
-			int typeAcces = rs.getInt("typeacces");
-			int gratuit = rs.getInt("gratuit");
-
-			activite = new Activite(id, titre, libelle, idorganisateur,
-					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
-					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
-					affichesexe, nbmaxwayd, typeUser, typeAcces,
-					fulldescription, gratuit);
-
-		}
-
-		CxoPool.close(preparedStatement, rs);
-		return activite;
-
-	}
-
-	public Activite getActiviteByRS(ResultSet rs) throws SQLException {
-
-		if (rs == null)
-			return null;
+	public Activite getActiviteByRs(ResultSet rs) throws SQLException{
+	
 		int id = rs.getInt("idactivite");
 		int idtypeactivite = rs.getInt("idtypeactivite");
 		String libelle = rs.getString("libelle");
@@ -149,7 +72,7 @@ public class ActiviteDAO {
 		if (prenom == null)
 			prenom = "";
 		String photo = rs.getString("photo");
-		int role = rs.getInt("role");
+	
 		Date maintenant = new Date();
 		boolean archive = false;
 
@@ -161,19 +84,114 @@ public class ActiviteDAO {
 			archive = true;
 
 		int totalavis = rs.getInt("totalavis");
-
 		int typeUser = rs.getInt("typeuser");
 		int typeAcces = rs.getInt("typeacces");
 		int gratuit = rs.getInt("gratuit");
 
-		return new Activite(id, titre, libelle, idorganisateur, datedebut,
-				datefin, idtypeactivite, latitude, longitude, adresse, nom,
-				prenom, photo, note, role, archive, totalavis, datenaissance,
-				sexe, nbrparticipant, afficheage, affichesexe, nbmaxwayd,
-				typeUser, typeAcces, fulldescription, gratuit);
+		return  new Activite(id, titre, libelle, idorganisateur,
+				datedebut, datefin, idtypeactivite, latitude, longitude,
+				adresse, nom, prenom, photo, note,  archive,
+				totalavis, datenaissance, sexe, nbrparticipant, afficheage,
+				affichesexe, nbmaxwayd, typeUser, typeAcces,
+				fulldescription, gratuit);
+				
+	}
+	public Activite getActivite(int idactivite_) throws Exception {
+
+		Activite activite = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		String requete = " SELECT activite.datedebut,"
+				+ " activite.adresse,"
+				+ " activite.latitude,"
+				+ " activite.longitude,"
+				+ " personne.prenom,"
+				+ " personne.sexe, "
+				+ " personne.nom, "
+				+ " personne.idpersonne,"
+				+ " personne.affichesexe,"
+				+ " personne.afficheage,"
+				+ " personne.datenaissance,"
+				+ " personne.note,"
+				+ " personne.nbravis as totalavis,"
+				+ " personne.photo,"
+				+ " activite.idactivite,"
+				+ " activite.libelle, "
+				+ " activite.titre,"
+				+ " activite.nbrwaydeur,"
+				+ " activite.nbmaxwayd,"
+				+ " activite.datefin,"
+				+ " activite.idtypeactivite,"
+				+ " activite.typeuser,"
+				+ " activite.typeacces,"
+				+ " activite.descriptionall,"
+				+ " activite.gratuit   "
+				+ " FROM personne,activite"
+				+ " WHERE personne.idpersonne = activite.idpersonne  and activite.idactivite=?";
+
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setInt(1, idactivite_);
+		rs = preparedStatement.executeQuery();
+		if (rs==null) return activite;
+		
+		while (rs.next()) {
+//			int id = rs.getInt("idactivite");
+//			int idtypeactivite = rs.getInt("idtypeactivite");
+//			String libelle = rs.getString("libelle");
+//			String titre = rs.getString("titre");
+//			int idorganisateur = rs.getInt("idpersonne");
+//			int sexe = rs.getInt("sexe");
+//			Date datedebut = rs.getTimestamp("datedebut");
+//			Date datefin = rs.getTimestamp("datefin");
+//			String adresse = rs.getString("adresse");
+//			double latitude = rs.getDouble("latitude");
+//			double longitude = rs.getDouble("longitude");
+//			double note = rs.getDouble("note");
+//			String nom = rs.getString("nom");
+//			String prenom = rs.getString("prenom");
+//			String fulldescription = rs.getString("descriptionall");
+//			Date datenaissance = rs.getTimestamp("datenaissance");
+//			boolean afficheage = rs.getBoolean("afficheage");
+//			boolean affichesexe = rs.getBoolean("affichesexe");
+//			int nbmaxwayd = rs.getInt("nbmaxwayd");
+//			int nbrparticipant = rs.getInt("nbrwaydeur");
+//			if (prenom == null)
+//				prenom = "";
+//			String photo = rs.getString("photo");
+//		
+//			Date maintenant = new Date();
+//			boolean archive = false;
+//
+//			if (datefin != null)
+//				if (datefin.before(maintenant))
+//					archive = true;
+//
+//			if (datefin == null)
+//				archive = true;
+//
+//			int totalavis = rs.getInt("totalavis");
+//
+//			int typeUser = rs.getInt("typeuser");
+//			int typeAcces = rs.getInt("typeacces");
+//			int gratuit = rs.getInt("gratuit");
+//
+//			activite = new Activite(id, titre, libelle, idorganisateur,
+//					datedebut, datefin, idtypeactivite, latitude, longitude,
+//					adresse, nom, prenom, photo, note,  archive,
+//					totalavis, datenaissance, sexe, nbrparticipant, afficheage,
+//					affichesexe, nbmaxwayd, typeUser, typeAcces,
+//					fulldescription, gratuit);
+			return getActiviteByRs(rs);
+
+		}
+
+		CxoPool.close(preparedStatement, rs);
+		return activite;
 
 	}
 
+	
 	public ArrayList<Personne> getListPersonneInterresse(Activite activite)
 			throws Exception {
 
@@ -328,6 +346,7 @@ public class ActiviteDAO {
 		}
 
 	}
+	
 
 	public ArrayList<Activite> getListActiviteAvenir(double malatitude,
 			double malongitude, int rayonmetre, int idtypeactivite_,
@@ -394,45 +413,51 @@ public class ActiviteDAO {
 		ResultSet rs = preparedStatement.executeQuery();
 		while (rs.next()) {
 
-			double latitude = rs.getDouble("latitude");
-			double longitude = rs.getDouble("longitude");
-			double distance = ServeurMethodes.getDistance(malatitude, latitude,
-					malongitude, longitude);
-			if (distance >= rayonmetre)
-				continue;
-
-			int id = rs.getInt("idactivite");
-			String libelle = rs.getString("libelle");
-			String titre = rs.getString("titre");
-			int idorganisateur = rs.getInt("idpersonne");
-			int idtypeactivite = rs.getInt("idtypeactivite");
-			int sexe = rs.getInt("sexe");
-			int nbmaxwayd = rs.getInt("nbmaxwayd");
-			int nbrparticipant = rs.getInt("nbrparticipant");
-			Date datedebut = rs.getTimestamp("datedebut");
-			Date datefin = rs.getTimestamp("datefin");
-			String adresse = rs.getString("adresse");
-			double note = rs.getDouble("note");
-			String nom = rs.getString("nom");
-			String prenom = rs.getString("prenom");
-			if (prenom == null)
-				prenom = "";
-			String photo = rs.getString("photo");
-			int role = rs.getInt("role");
-			Date datenaissance = rs.getTimestamp("datenaissance");
-			boolean archive = false;
-			int totalavis = rs.getInt("totalavis");
-
-			int typeUser = rs.getInt("typeuser");
-			int typeAcces = rs.getInt("typeacces");
-			int gratuit = rs.getInt("gratuit");
-
-			activite = new Activite(id, titre, libelle, idorganisateur,
-					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
-					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces, null, gratuit);
-			retour.add(activite);
+//			double latitude = rs.getDouble("latitude");
+//			double longitude = rs.getDouble("longitude");
+////			double distance = ServeurMethodes.getDistance(malatitude, latitude,
+////					malongitude, longitude);
+////			if (distance >= rayonmetre)
+////				continue;
+//
+//			int id = rs.getInt("idactivite");
+//			String libelle = rs.getString("libelle");
+//			String titre = rs.getString("titre");
+//			int idorganisateur = rs.getInt("idpersonne");
+//			int idtypeactivite = rs.getInt("idtypeactivite");
+//			int sexe = rs.getInt("sexe");
+//			int nbmaxwayd = rs.getInt("nbmaxwayd");
+//			int nbrparticipant = rs.getInt("nbrparticipant");
+//			Date datedebut = rs.getTimestamp("datedebut");
+//			Date datefin = rs.getTimestamp("datefin");
+//			String adresse = rs.getString("adresse");
+//			double note = rs.getDouble("note");
+//			String nom = rs.getString("nom");
+//			String prenom = rs.getString("prenom");
+//			if (prenom == null)
+//				prenom = "";
+//			String photo = rs.getString("photo");
+//			Date datenaissance = rs.getTimestamp("datenaissance");
+//			boolean archive = false;
+//			int totalavis = rs.getInt("totalavis");
+//
+//			int typeUser = rs.getInt("typeuser");
+//			int typeAcces = rs.getInt("typeacces");
+//			int gratuit = rs.getInt("gratuit");
+//			String fulldescription="descriptionall";
+				
+//			activite = new Activite(id, titre, libelle, idorganisateur,
+//					datedebut, datefin, idtypeactivite, latitude, longitude,
+//					adresse, nom, prenom, photo, note,  archive,
+//					totalavis, datenaissance, sexe, nbrparticipant, true, true,
+//					nbmaxwayd, typeUser, typeAcces, fulldescription, gratuit);
+			activite=getActiviteByRs(rs);
+		
+			double distance = ServeurMethodes.getDistance(malatitude, activite.getLatitude(),
+					malongitude, activite.getLongitude());
+			
+			if (distance <= rayonmetre)
+					retour.add(activite);
 
 		}
 
@@ -463,7 +488,7 @@ public class ActiviteDAO {
 				+ " personne.datenaissance," + " personne.idpersonne,"
 				+ " personne.note," + " personne.nbravis as totalavis  ,"
 				+ " personne.photo,"
-				+ " activite.nbrwaydeur as nbrparticipant," + " 1 as role,"
+				+ " activite.nbrwaydeur as nbrparticipant," 
 				+ " activite.idactivite," + " activite.libelle,  "
 				+ " activite.titre," + " activite.datefin,"
 				+ " activite.idtypeactivite," + " activite.nbmaxwayd,"
@@ -519,7 +544,6 @@ public class ActiviteDAO {
 			if (prenom == null)
 				prenom = "";
 			String photo = rs.getString("photo");
-			int role = rs.getInt("role");
 			boolean archive = false;
 			Date datenaissance = rs.getTimestamp("datenaissance");
 
@@ -528,12 +552,12 @@ public class ActiviteDAO {
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
 			int gratuit = rs.getInt("gratuit");
-
+			String fulldescription="descriptionall";
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
+					adresse, nom, prenom, photo, note,  archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
-					nbmaxwayd, typeUser, typeAcces, null, gratuit);
+					nbmaxwayd, typeUser, typeAcces, fulldescription, gratuit);
 
 			retour.add(activite);
 
@@ -653,7 +677,7 @@ public class ActiviteDAO {
 			String fullDescriptionNull = null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
+					adresse, nom, prenom, photo, note,  archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
 					nbmaxwayd, typeUser, typeAcces, fullDescriptionNull,
 					gratuit);
@@ -724,7 +748,7 @@ public class ActiviteDAO {
 			String fulldescriptionNull = null;
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
+					adresse, nom, prenom, photo, note,  archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
 					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
 					gratuit);
@@ -777,14 +801,13 @@ public class ActiviteDAO {
 			// Date datefinactivite = rs.getTimestamp("d_finactivite");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-			String fulldescriptionNull = null;
 			int gratuit = rs.getInt("gratuit");
-
+			String fulldescription="descriptionall";
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, 1, archive, totalavis,
+					adresse, nom, prenom, photo, note,  archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces, fulldescriptionNull, gratuit);
+					typeUser, typeAcces, fulldescription, gratuit);
 
 			retour.add(activite);
 
@@ -932,7 +955,6 @@ public class ActiviteDAO {
 			String photo = rs.getString("photo");
 			boolean archive = true;
 			int totalavis = rs.getInt("totalavis");
-			int role = rs.getInt("role");
 			int sexe = rs.getInt("sexe");
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 			int typeUser = rs.getInt("typeuser");
@@ -942,7 +964,7 @@ public class ActiviteDAO {
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
+					adresse, nom, prenom, photo, note,  archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
 					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
 					gratuit);
@@ -992,14 +1014,14 @@ public class ActiviteDAO {
 			int nbmaxwayd = rs.getInt("nbmaxwayd");
 			int typeUser = rs.getInt("typeuser");
 			int typeAcces = rs.getInt("typeacces");
-			String fulldescriptionNull = null;
+			
 			int gratuit = rs.getInt("gratuit");
-
+			String fulldescription="descriptionall";
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, 1, archive, totalavis,
+					adresse, nom, prenom, photo, note,  archive, totalavis,
 					datenaissance, sexe, nbrparticipant, true, true, nbmaxwayd,
-					typeUser, typeAcces, fulldescriptionNull, gratuit);
+					typeUser, typeAcces, fulldescription, gratuit);
 			retour.add(activite);
 
 		}
@@ -1580,7 +1602,7 @@ public class ActiviteDAO {
 				+ "personne.datenaissance,    "
 				+ "personne.note,"
 				+ "personne.nbravis as totalavis,personne.photo,"
-				+ "activite.nbrwaydeur as nbrparticipant,1 as role,"
+				+ "activite.nbrwaydeur as nbrparticipant,"
 				+ "activite.idactivite,    activite.libelle,    activite.titre,    activite.datefin,    activite.idtypeactivite,activite.nbmaxwayd,activite.typeacces,activite.typeuser"
 				+ " FROM personne,activite"
 				+ " WHERE"
@@ -1654,9 +1676,8 @@ public class ActiviteDAO {
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
 			if (prenom == null)
-				prenom = "";
+			prenom = "";
 			String photo = rs.getString("photo");
-			int role = rs.getInt("role");
 			Date datenaissance = rs.getTimestamp("datenaissance");
 			boolean archive = false;
 			int totalavis = rs.getInt("totalavis");
@@ -1666,7 +1687,7 @@ public class ActiviteDAO {
 
 			activite = new Activite(id, titre, libelle, idorganisateur,
 					datedebut, datefin, idtypeactivite, latitude, longitude,
-					adresse, nom, prenom, photo, note, role, archive,
+					adresse, nom, prenom, photo, note,  archive,
 					totalavis, datenaissance, sexe, nbrparticipant, true, true,
 					nbmaxwayd, typeUser, typeAcces, fulldescriptionNull,
 					gratuit);

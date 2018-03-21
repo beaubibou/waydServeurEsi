@@ -61,7 +61,7 @@ public class Activite {
 
 	public boolean actif;
 
-	public int role;
+	//public int role;
 
 	public long finidans;
 
@@ -165,6 +165,7 @@ public class Activite {
 			Date datedebut, int idtypeactivite, double latitude,
 			double longitude, String adresse, boolean actif, int nbmaxwaydeur,
 			Date finactivite, int typeUser) {
+		
 		super();
 		this.titre = titre;
 		this.libelle = libelle;
@@ -181,13 +182,14 @@ public class Activite {
 		this.datefinactivite = finactivite;
 		this.finidans = getSeTermine(finactivite);
 		this.typeUser = typeUser;
+		defineOrganisateur(idorganisateur);
 
 	}
 
 	public Activite(int id, String titre, String libelle, int idorganisateur,
 			Date datedebut, Date datefin, int idtypeactivite, double latitude,
 			double longitude, String adresse, String nom, String prenom,
-			String photo, double note, int role, boolean archive,
+			String photo, double note,  boolean archive,
 			int totalavis, Date datenaissance, int sexe, int nbrparticipant,
 			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
 			int typeUser, int typeAcces, String fulldescription, int gratuit) {
@@ -220,7 +222,7 @@ public class Activite {
 		this.age = getAgeStr(datenaissance, afficheage);
 		if (affichesexe)
 			this.sexe = 3;
-		this.role = role;
+	//	this.role = role;
 		this.typeUser = typeUser;
 		this.typeAcces = typeAcces;
 		this.nbmaxwaydeur = nbmaxwaydeur;
@@ -462,6 +464,7 @@ public class Activite {
 	}
 
 	public boolean isOrganisateur() {
+		
 		return organisateur;
 	}
 
@@ -490,19 +493,18 @@ public class Activite {
 			setOrganisateur(true);
 		else
 			setOrganisateur(false);
-		
-
+	
 	}
 
-	public void defineOrganisateur() {
-		if (role == 0) {
-			setDejainscrit(true);
-		}
-		if (role == 1) {
-			setOrganisateur(true);
-		}
+	//public void defineOrganisateur() {
+	//	if (role == 0) {
+	//		setDejainscrit(true);
+	//	}
+	//	if (role == 1) {
+	//		setOrganisateur(true);
+	//	}
 
-	}
+	//}
 
 	public boolean isEnCours() {
 
