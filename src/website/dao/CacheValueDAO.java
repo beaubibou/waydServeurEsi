@@ -39,18 +39,18 @@ import website.metier.admin.EtatSuggestion;
 public class CacheValueDAO {
 	private static final Logger LOG = Logger.getLogger(CacheValueDAO.class);
 	
-	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<Integer, TypeActiviteBean>();
-	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<TypePhoto, String>();
-	static ArrayList<TypeEtatActivite> ListTypeEtatActivite = new ArrayList<TypeEtatActivite>();
-	static ArrayList<TypeActiveActivite> ListTypeActiveActivite = new ArrayList<TypeActiveActivite>();
-	static ArrayList<TypeEtatMessage> listTypeEtatMessage = new ArrayList<TypeEtatMessage>();
-	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<TypeActiviteBean>();
-	static ArrayList<RayonBean> listRayon = new ArrayList<RayonBean>();
-	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<EtatProbleme>();
-	static ArrayList<EtatSuggestion> listTypeEtatSuggestion = new ArrayList<EtatSuggestion>();
-	static ArrayList<TypeActiviteBean> tousTypeActivite = new ArrayList<TypeActiviteBean>();
-	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActivite = new ArrayList<TypeGratuitActivite>();
-	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActiviteREQUETE = new ArrayList<TypeGratuitActivite>();
+	static Map<Integer, TypeActiviteBean> mapTypeActivite = new HashMap<>();
+	static final Map<TypePhoto, String> mapPhotoCache = new HashMap<>();
+	static ArrayList<TypeEtatActivite> ListTypeEtatActivite = new ArrayList<>();
+	static ArrayList<TypeActiveActivite> ListTypeActiveActivite = new ArrayList<>();
+	static ArrayList<TypeEtatMessage> listTypeEtatMessage = new ArrayList<>();
+	static ArrayList<TypeActiviteBean> listTypeActivitePro = new ArrayList<>();
+	static ArrayList<RayonBean> listRayon = new ArrayList<>();
+	static ArrayList<EtatProbleme> listTypeEtatProbleme = new ArrayList<>();
+	static ArrayList<EtatSuggestion> listTypeEtatSuggestion = new ArrayList<>();
+	static ArrayList<TypeActiviteBean> tousTypeActivite = new ArrayList<>();
+	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActivite = new ArrayList<>();
+	static ArrayList<TypeGratuitActivite> ListTypeGRATUITActiviteREQUETE = new ArrayList<>();
 
 	
 	
@@ -74,7 +74,7 @@ public class CacheValueDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+		ArrayList<TypeActiviteBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -270,7 +270,7 @@ public class CacheValueDAO {
 
 		// SOllicite le cache
 		
-		if (listTypeActivitePro.size()>0)
+		if (!listTypeActivitePro.isEmpty())
 			return listTypeActivitePro;
 		
 		
@@ -308,7 +308,7 @@ public class CacheValueDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+		ArrayList<TypeActiviteBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -341,7 +341,7 @@ public class CacheValueDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		
-		if (tousTypeActivite.size()>0)
+		if (!tousTypeActivite.isEmpty())
 			return tousTypeActivite;
 				
 		try {
@@ -370,7 +370,7 @@ public class CacheValueDAO {
 
 	public ArrayList<DureeBean> getListDuree() {
 		
-		ArrayList<DureeBean> listDuree = new ArrayList<DureeBean>();
+		ArrayList<DureeBean> listDuree = new ArrayList<>();
 		
 		listDuree.add(new DureeBean( 60, 1 + " Heure"));
 		
@@ -383,7 +383,7 @@ public class CacheValueDAO {
 
 	public ArrayList<QuantiteWaydeurBean> getListQuantiteWaydeur() {
 	
-		ArrayList<QuantiteWaydeurBean> listQuantite = new ArrayList<QuantiteWaydeurBean>();
+		ArrayList<QuantiteWaydeurBean> listQuantite = new ArrayList<>();
 		for (int f = 1; f < 9; f++) {
 			listQuantite.add(new QuantiteWaydeurBean(f, f + " Waydeur"));
 		}
@@ -392,7 +392,7 @@ public class CacheValueDAO {
 
 	public static ArrayList<TypeSignalement> getListTypeSignalementActivite() {
 	
-		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
+		ArrayList<TypeSignalement> listEtat = new ArrayList<>();
 		listEtat.add(new TypeSignalement(TypeSignalement.TOUS, ListeValeurText.TOUS));
 		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE,  ListeValeurText.AUMOINSUN));
 		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, ListeValeurText.MOINSDE10));
@@ -454,7 +454,7 @@ public class CacheValueDAO {
 
 		
 		
-		if (ListTypeEtatActivite.size()==0){
+		if (ListTypeEtatActivite.isEmpty()){
 			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.TOUTES,  ListeValeurText.TOUTES));
 			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.ENCOURS,  ListeValeurText.ENCOURS));
 			ListTypeEtatActivite.add(new TypeEtatActivite(TypeEtatActivite.PLANIFIEE,  ListeValeurText.PLANIFIEES));
@@ -471,7 +471,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatMessage> getListEtatMessage() {
 		
 
-		if (listTypeEtatMessage.size()==0){
+		if (listTypeEtatMessage.isEmpty()){
 		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.LU, ListeValeurText.LU));
 		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.NONLU, ListeValeurText.NONLU));
 		listTypeEtatMessage.add(new TypeEtatMessage(TypeEtatMessage.TOUS, ListeValeurText.TOUS));
@@ -483,7 +483,7 @@ public class CacheValueDAO {
 	public static ArrayList<EtatProbleme> getListEtatProbleme() {
 		
 
-		if (listTypeEtatProbleme.size()==0){
+		if (listTypeEtatProbleme.isEmpty()){
 			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.CLOTURE, ListeValeurText.CLOTURE));
 			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.NONCLOTOURE, ListeValeurText.NONCLOTURE));
 			listTypeEtatProbleme.add(new EtatProbleme(EtatProbleme.TOUS, ListeValeurText.TOUS));
@@ -496,7 +496,7 @@ public class CacheValueDAO {
 	public static ArrayList<EtatSuggestion> getListEtatSuggestions() {
 		
 
-		if (listTypeEtatSuggestion.size()==0){
+		if (listTypeEtatSuggestion.isEmpty()){
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.CLOTURE, ListeValeurText.CLOTURE));
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.NONCLOTOURE, ListeValeurText.NONCLOTURE));
 			listTypeEtatSuggestion.add(new EtatSuggestion(EtatSuggestion.TOUS, ListeValeurText.TOUS));
@@ -507,7 +507,7 @@ public class CacheValueDAO {
 	public static ArrayList<QuandBean> getListQuand() {
 		
 
-		ArrayList<QuandBean> listQuand = new ArrayList<QuandBean>();
+		ArrayList<QuandBean> listQuand = new ArrayList<>();
 		listQuand.add(new QuandBean(0, "Maintenant"));
 		for (int f = 1; f < 9; f++) {
 			listQuand.add(new QuandBean(f, "Dans " + f + " heures"));
@@ -520,7 +520,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatProfil> getListEtatProfil() {
 		
 
-		ArrayList<TypeEtatProfil> listEtat = new ArrayList<TypeEtatProfil>();
+		ArrayList<TypeEtatProfil> listEtat = new ArrayList<>();
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.TOUTES, ListeValeurText.TOUS));
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.ACTIF, ListeValeurText.ACTIF));
 		listEtat.add(new TypeEtatProfil(TypeEtatProfil.INACTIF,ListeValeurText.INACTIF));
@@ -532,7 +532,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatValide> getListEtatValide() {
 		
 
-		ArrayList<TypeEtatValide> listEtat = new ArrayList<TypeEtatValide>();
+		ArrayList<TypeEtatValide> listEtat = new ArrayList<>();
 		listEtat.add(new TypeEtatValide(TypeEtatValide.VALIDE, ListeValeurText.VALIDE));
 		listEtat.add(new TypeEtatValide(TypeEtatValide.EN_ATTENTE, ListeValeurText.EN_ATTENTE));
 		listEtat.add(new TypeEtatValide(TypeEtatValide.TOUS, ListeValeurText.TOUS));
@@ -545,7 +545,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeSignalement> getListTypeSignalementProfil() {
 		
 
-		ArrayList<TypeSignalement> listEtat = new ArrayList<TypeSignalement>();
+		ArrayList<TypeSignalement> listEtat = new ArrayList<>();
 		listEtat.add(new TypeSignalement(TypeSignalement.TOUS,ListeValeurText.TOUS));
 		listEtat.add(new TypeSignalement(TypeSignalement.AUMOINSUNE, ListeValeurText.AUMOINSUN));
 		listEtat.add(new TypeSignalement(TypeSignalement.MOINSDE10, ListeValeurText.MOINSDE10));
@@ -561,7 +561,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatLogs> getListTypeEtatLogs() {
 		
 
-		ArrayList<TypeEtatLogs> listEtat = new ArrayList<TypeEtatLogs>();
+		ArrayList<TypeEtatLogs> listEtat = new ArrayList<>();
 		listEtat.add(new TypeEtatLogs(TypeEtatLogs.TOUTES,ListeValeurText.TOUS));
 		listEtat.add(new TypeEtatLogs(TypeEtatLogs.DEBUG, ListeValeurText.LOG4J_DEBUG));
 		listEtat.add(new TypeEtatLogs(TypeEtatLogs.INFO, ListeValeurText.LOG4J_INFO));
@@ -575,7 +575,7 @@ public class CacheValueDAO {
 	public static ArrayList<TypeEtatLogPerf> getListTypeEtatLogPerf() {
 		
 
-		ArrayList<TypeEtatLogPerf> listEtat = new ArrayList<TypeEtatLogPerf>();
+		ArrayList<TypeEtatLogPerf> listEtat = new ArrayList<>();
 		listEtat.add(new TypeEtatLogPerf(TypeEtatLogPerf.ACTIVE,ListeValeurText.ACTIVE));
 		listEtat.add(new TypeEtatLogPerf(TypeEtatLogPerf.DESACTIVE, ListeValeurText.DESACTIVE));
 				
@@ -606,7 +606,7 @@ public class CacheValueDAO {
 	public static ArrayList<RayonBean> getListRayon() {
 		
 		
-		if (listRayon.size()==0){
+		if (listRayon.isEmpty()){
 
 		for (int f = 1; f < 9; f++) {
 			listRayon.add(new RayonBean(f, "" + f + " Km"));

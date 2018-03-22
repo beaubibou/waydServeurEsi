@@ -344,7 +344,7 @@ public class WBservices {
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<Participant> retour = new ArrayList<Participant>();
+		ArrayList<Participant> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -376,7 +376,7 @@ public class WBservices {
 			String jeton) {
 
 		Connection connexion = null;
-		ArrayList<Preference> retour = new ArrayList<Preference>();
+		ArrayList<Preference> retour = new ArrayList<>();
 		long debut = System.currentTimeMillis();
 
 		try {
@@ -410,7 +410,7 @@ public class WBservices {
 			int idpersonne[]) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<PhotoWaydeur>();
+		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<>();
 
 		try {
 
@@ -438,7 +438,7 @@ public class WBservices {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<PhotoWaydeur>();
+		ArrayList<PhotoWaydeur> listPhotoWaydeur = new ArrayList<>();
 
 		try {
 
@@ -504,7 +504,7 @@ public class WBservices {
 			String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<Message> listmessage = new ArrayList<Message>();
+		ArrayList<Message> listmessage = new ArrayList<>();
 
 		try {
 
@@ -536,7 +536,7 @@ public class WBservices {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<Message> listmessage = new ArrayList<Message>();
+		ArrayList<Message> listmessage = new ArrayList<>();
 
 		try {
 
@@ -567,7 +567,7 @@ public class WBservices {
 			String jeton) {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<Discussion> retour = new ArrayList<Discussion>();
+		ArrayList<Discussion> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -613,7 +613,7 @@ public class WBservices {
 
 	public Notification[] getListNotification(int iddemandeur, int idpersonne,
 			String jeton) {
-		ArrayList<Notification> retour = new ArrayList<Notification>();
+		ArrayList<Notification> retour = new ArrayList<>();
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
@@ -646,7 +646,7 @@ public class WBservices {
 	public Message[] getListMessageAfter(int idpersonne, int idxmessage,
 			String jeton) {
 		long debut = System.currentTimeMillis();
-		ArrayList<Message> listmessage = new ArrayList<Message>();
+		ArrayList<Message> listmessage = new ArrayList<>();
 		Connection connexion = null;
 
 		try {
@@ -677,7 +677,7 @@ public class WBservices {
 			int idxmessage, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<Notification> retour = new ArrayList<Notification>();
+		ArrayList<Notification> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -707,7 +707,7 @@ public class WBservices {
 			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<Message> listmessage = new ArrayList<Message>();
+		ArrayList<Message> listmessage = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -931,7 +931,7 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
-		ArrayList<Avis> listavis = new ArrayList<Avis>();
+		ArrayList<Avis> listavis = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -966,7 +966,7 @@ public class WBservices {
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1003,7 +1003,7 @@ public class WBservices {
 			int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<PhotoActivite> listPhoto = new ArrayList<PhotoActivite>();
+		ArrayList<PhotoActivite> listPhoto = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1039,7 +1039,7 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
 
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1080,7 +1080,7 @@ public class WBservices {
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
 
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 
 		// ************************************Securite
 
@@ -1119,7 +1119,7 @@ public class WBservices {
 		long debut = System.currentTimeMillis();
 
 		Connection connexion = null;
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -1150,7 +1150,7 @@ public class WBservices {
 			String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 		try {
 			connexion = CxoPool.getConnection();
 			// ************************************Securite
@@ -1183,7 +1183,7 @@ public class WBservices {
 
 		Connection connexion = null;
 		long debut = System.currentTimeMillis();
-		ArrayList<TypeActivite> retour = new ArrayList<TypeActivite>();
+		ArrayList<TypeActivite> retour = new ArrayList<>();
 		ArrayList<TypeActiviteDb> listtypeactivitedb;
 
 		try {
@@ -2827,7 +2827,7 @@ public class WBservices {
 			int typeUser, int commenceDans, String jeton) {
 
 		Connection connexion = null;
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		ArrayList<Activite> listActivite = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 

@@ -17,7 +17,6 @@ public class DefinintionPreferenceDAO {
 	
 	Connection connexion;
 	public DefinintionPreferenceDAO(Connection connexion) {
-		// TODO Auto-generated constructor stub
 	this.connexion=connexion;
 	}
 

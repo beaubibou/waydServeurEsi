@@ -25,7 +25,7 @@ public class AmiDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<AmiBean> retour = new ArrayList<AmiBean>();
+		ArrayList<AmiBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();

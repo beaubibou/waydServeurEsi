@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.Avis;
@@ -24,51 +25,63 @@ public class AvisDAO {
 
 	}
 
-	public void addAvis(Avis avis) throws SQLException {
+	public void addAvis(Avis avis) {
 
 		String requete = "UPDATE public.noter   SET datenotation=?, note=?, libelle=?, titre=?,  fait=? WHERE idnoter=?;";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.setDouble(2, avis.getNote());
+			preparedStatement.setString(3, avis.getLibelle());
+			preparedStatement.setString(4, avis.getTitre());
+			preparedStatement.setBoolean(5, true);
+			preparedStatement.setInt(6, avis.getIdnoter());
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
 
-		preparedStatement.setTimestamp(1,
-				new java.sql.Timestamp(new Date().getTime()));
-		preparedStatement.setDouble(2, avis.getNote());
-		preparedStatement.setString(3, avis.getLibelle());
-		preparedStatement.setString(4, avis.getTitre());
-		preparedStatement.setBoolean(5, true);
-		preparedStatement.setInt(6, avis.getIdnoter());
-		preparedStatement.execute();
-		preparedStatement.close();
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public void addAvis(int idpersonnenotee, int idnotateur, int idactivite,
-			String titre, String libelle, double note) throws SQLException {
+			String titre, String libelle, double note) throws Exception {
 
 		String requete = "UPDATE public.noter   SET datenotation=?, note=?, libelle=?, titre=?,  fait=? "
 				+ "WHERE idpersonnenotee=? and idactivite=? and idpersonnenotateur=? and fait=false;";
 
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
+		try {
 
-		preparedStatement.setTimestamp(1,
-				new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(new Date().getTime()));
 
-		if (libelle.equals(""))
-			libelle = null;
-		if (titre.equals(""))
-			titre = null;
+			if (libelle.equals(""))
+				libelle = null;
+			if (titre.equals(""))
+				titre = null;
 
-		preparedStatement.setDouble(2, note);
-		preparedStatement.setString(3, libelle);
-		preparedStatement.setString(4, titre);
-		preparedStatement.setBoolean(5, true);
-		preparedStatement.setInt(6, idpersonnenotee);
-		preparedStatement.setInt(7, idactivite);
-		preparedStatement.setInt(8, idnotateur);
+			preparedStatement.setDouble(2, note);
+			preparedStatement.setString(3, libelle);
+			preparedStatement.setString(4, titre);
+			preparedStatement.setBoolean(5, true);
+			preparedStatement.setInt(6, idpersonnenotee);
+			preparedStatement.setInt(7, idactivite);
+			preparedStatement.setInt(8, idnotateur);
+			preparedStatement.execute();
 
-		preparedStatement.execute();
-		preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -114,8 +127,8 @@ public class AvisDAO {
 	}
 
 	public ArrayList<Avis> getListAvis(int idpersonnenotee) throws Exception {
-		Avis avis = null;
-		ArrayList<Avis> retour = new ArrayList<Avis>();
+		Avis avis;
+		ArrayList<Avis> retour = new ArrayList<>();
 
 		String requete = " SELECT   activite.titre as titreactivite,personne.prenom,      personne.nom,    personne.photo,"
 				+ "noter.idactivite,  noter.idpersonnenotateur,noter.idpersonnenotee,noter.idnoter,noter.titre,"
@@ -149,6 +162,7 @@ public class AvisDAO {
 			retour.add(avis);
 
 		}
+
 		CxoPool.close(preparedStatement, rs);
 
 		return retour;
@@ -214,18 +228,8 @@ public class AvisDAO {
 				+ " WHERE ((idparticipant=? and idorganisateur=?) or (idparticipant=? and idorganisateur=?))and idactivite=? ";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
+		try {
 
-		preparedStatement.setInt(1, idparticipant);
-		preparedStatement.setInt(2, idorganisateur);
-		preparedStatement.setInt(3, idorganisateur);
-		preparedStatement.setInt(4, idparticipant);
-		preparedStatement.setInt(5, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
-		if (ami) {
-			requete = "UPDATE demandeami   SET reponse=reponse+1"
-					+ " WHERE ((idparticipant=? and idorganisateur=?) or (idparticipant=? and idorganisateur=?))and idactivite=? ";
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idparticipant);
 			preparedStatement.setInt(2, idorganisateur);
 			preparedStatement.setInt(3, idorganisateur);
@@ -233,16 +237,30 @@ public class AvisDAO {
 			preparedStatement.setInt(5, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
+			if (ami) {
+				requete = "UPDATE demandeami   SET reponse=reponse+1"
+						+ " WHERE ((idparticipant=? and idorganisateur=?) or (idparticipant=? and idorganisateur=?))and idactivite=? ";
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setInt(1, idparticipant);
+				preparedStatement.setInt(2, idorganisateur);
+				preparedStatement.setInt(3, idorganisateur);
+				preparedStatement.setInt(4, idparticipant);
+				preparedStatement.setInt(5, idactivite);
+				preparedStatement.execute();
+				preparedStatement.close();
+
+			}
+
+			requete = "delete from demandeami where nbrreponse>reponse";// <un a
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.execute();
+
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
 
 		}
-
-		requete = "delete from demandeami where nbrreponse>reponse";// <un a dit
-																	// non
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.execute();
-		preparedStatement.close();
-
-		
 
 	}
 
@@ -257,6 +275,8 @@ public class AvisDAO {
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
 
+		try{
+			
 		preparedStatement.setInt(1, idparticipant);
 		preparedStatement.setInt(2, idorganisateur);
 		preparedStatement.setInt(3, idactivite);
@@ -312,10 +332,16 @@ public class AvisDAO {
 		preparedStatement.setInt(5, idparticipant);
 		preparedStatement.setInt(6, idactivite);
 		preparedStatement.execute();
-		
 
-		CxoPool.close(preparedStatement, rs);
+		}
+		catch(SQLException e){
+			throw e;
+		}
+		finally{
+			
+		CxoPool.closePS(preparedStatement);
 
+		}
 		return ajoutami;
 	}
 
@@ -329,11 +355,11 @@ public class AvisDAO {
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idami);
 		ResultSet rs = preparedStatement.executeQuery();
-		
+
 		if (rs.next()) {
 			retour = true;
 		}
-		
+
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
@@ -353,7 +379,6 @@ public class AvisDAO {
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idnotateur);
 		preparedStatement.setInt(3, idactivite);
-
 		preparedStatement.setInt(4, idpersonne);
 		preparedStatement.setInt(5, idnotateur);
 		preparedStatement.setInt(6, idactivite);

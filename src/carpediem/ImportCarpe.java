@@ -26,7 +26,7 @@ import website.metier.ActiviteCarpeDiem;
 public class ImportCarpe {
 	private static final Logger LOG = Logger.getLogger(ImportCarpe.class);
 
-	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<ActiviteCarpeDiem>();
+	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<>();
 	ActiviteCarpeDiem activite;
 	StringBuilder log = new StringBuilder();
 

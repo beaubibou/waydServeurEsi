@@ -23,7 +23,7 @@ public class TypeActiviteDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<TypeActiviteBean> retour = new ArrayList<TypeActiviteBean>();
+		ArrayList<TypeActiviteBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();

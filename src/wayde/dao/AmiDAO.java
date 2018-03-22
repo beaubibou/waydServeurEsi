@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.Ami;
@@ -23,8 +24,8 @@ public class AmiDAO {
 	}
 
 	public ArrayList<Ami> getListAmi(int idpersonne) throws SQLException {
-		Ami ami = null;
-		ArrayList<Ami> retour = new ArrayList<Ami>();
+		Ami ami;
+		ArrayList<Ami> retour = new ArrayList<>();
 
 		String requete = " SELECT   ami.d_creation,personne.login,personne.idpersonne,personne.prenom, personne.nom,personne.photo,personne.note "
 				+ "  FROM personne,ami  WHERE personne.idpersonne = ami.idami and ami.idpersonne=?  ";
@@ -54,24 +55,30 @@ public class AmiDAO {
 
 	}
 
-	public void effaceAmi(int idpersonne, int idami) throws SQLException {
+	public void effaceAmi(int idpersonne, int idami) {
 
 		String requete = " delete   from ami where idpersonne=? and idami=?;"
 				+ " delete   from ami where idpersonne=? and idami=?; ";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setInt(2, idami);
-		preparedStatement.setInt(3, idami);
-		preparedStatement.setInt(4, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
-
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idami);
+			preparedStatement.setInt(3, idami);
+			preparedStatement.setInt(4, idpersonne);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 	}
 
 	public boolean isAmiFrom(int idpersonne, int idami) throws SQLException {
 		// Renvoi si id ami appartient aux ami de idpersonne
-		boolean retour=false;
+		
+		 boolean retour = false;
 		String requete = " SELECT idami from ami  where idpersonne=? and idami=?  ";
 		PreparedStatement preparedStatement = connexion
 				.prepareStatement(requete);
@@ -79,13 +86,14 @@ public class AmiDAO {
 		preparedStatement.setInt(1, idpersonne);
 		preparedStatement.setInt(2, idami);
 		ResultSet rs = preparedStatement.executeQuery();
+		
 		if (rs.next()) {
-			
-			retour= true;
+
+			retour = true;
 		}
+		
 		CxoPool.close(preparedStatement, rs);
 		return retour;
-
 
 	}
 

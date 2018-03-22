@@ -32,7 +32,6 @@ public class MessageDAO {
 			connexion.setAutoCommit(false);
 			String requete = "DELETE FROM message where  idmessage=? ;";
 			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idMessage);
 			preparedStatement.execute();
 			preparedStatement.close();
@@ -78,7 +77,6 @@ public class MessageDAO {
 			connexion.setAutoCommit(false);
 			String requete = "DELETE FROM message where idmessage in ?);";
 			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, param.toString());
 			preparedStatement.execute();
 			preparedStatement.close();
@@ -114,7 +112,6 @@ public class MessageDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "update message set lu=true   where  idmessage=? ";
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idMessage);
 			preparedStatement.execute();

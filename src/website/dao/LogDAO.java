@@ -32,8 +32,8 @@ public class LogDAO {
 	public static final String PERSONNE_INEXISTANTANE = "personne inconnue";
 	public static final String JETON_NON_VALIDE = "Jeton invalide";
 	public static long TPS_CALCUL_PERFOMENCE = 60;
-	public static int HEURE=3600;
-	public static long TPS_IMPORTCARPEDIEM = 4*HEURE;
+	public static int HEURE = 3600;
+	public static long TPS_IMPORTCARPEDIEM = 4 * HEURE;
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
 
@@ -161,7 +161,7 @@ public class LogDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<LogBean> retour = new ArrayList<LogBean>();
+		ArrayList<LogBean> retour = new ArrayList<>();
 
 		try {
 
@@ -194,7 +194,7 @@ public class LogDAO {
 			return retour;
 
 		} catch (SQLException | NamingException e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 			return retour;
 		} finally {
 
@@ -224,7 +224,7 @@ public class LogDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
@@ -259,7 +259,7 @@ public class LogDAO {
 			}
 
 		} catch (NamingException | SQLException e) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
@@ -293,9 +293,9 @@ public class LogDAO {
 			CxoPool.close(connexion, preparedStatement);
 
 		} catch (NamingException | SQLException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
-			
+
 		} finally {
 			CxoPool.close(connexion, preparedStatement);
 		}
@@ -306,7 +306,6 @@ public class LogDAO {
 	}
 
 	public static boolean supprimeNderniersLogd() {
-		
 
 		long debut = System.currentTimeMillis();
 
@@ -339,12 +338,10 @@ public class LogDAO {
 		}
 		return false;
 
-		
-		
 	}
 
 	public static void LOG_DUREE(String string, long debut) {
-		
+
 		long duree = System.currentTimeMillis() - debut;
 
 		if (ETAT_PERF == TypeEtatLogPerf.ACTIVE) {
@@ -391,10 +388,9 @@ public class LogDAO {
 
 		} catch (NamingException | SQLException e) {
 			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			CxoPool.close(connexion, preparedStatement);
 		}
-finally{
-		CxoPool.close(connexion, preparedStatement);
-}
 		LogDAO.LOG_DUREE("getStatLogs", debut);
 
 		return retour;
@@ -428,12 +424,11 @@ finally{
 			}
 
 		} catch (NamingException | SQLException e) {
-		
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+			CxoPool.close(connexion, preparedStatement);
 		}
-finally{
-		CxoPool.close(connexion, preparedStatement);
-}
 		LogDAO.LOG_DUREE("avgTpsRequeteJour", debut);
 
 		return retour;
@@ -479,7 +474,7 @@ finally{
 			LogDAO.LOG_DUREE("prepareStatPerf", debut);
 
 		} catch (NamingException | SQLException e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 

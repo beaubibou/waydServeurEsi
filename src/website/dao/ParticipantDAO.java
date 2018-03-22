@@ -29,7 +29,7 @@ public class ParticipantDAO {
 		long debut = System.currentTimeMillis();
 		
 		ParticipantBean participant = null;
-		ArrayList<ParticipantBean> retour = new ArrayList<ParticipantBean>();
+		ArrayList<ParticipantBean> retour = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 

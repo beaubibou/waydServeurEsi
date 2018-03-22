@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
@@ -36,22 +37,29 @@ public class NotificationDAO {
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.setInt(1, iddestinataire);
-		preparedStatement.setInt(2, idtype);
-		Date datecreation = Calendar.getInstance().getTime();
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
-		preparedStatement.setInt(4, idactivite);
-		preparedStatement.setInt(5, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
+		try {
+			preparedStatement.setInt(1, iddestinataire);
+			preparedStatement.setInt(2, idtype);
+			Date datecreation = Calendar.getInstance().getTime();
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, idactivite);
+			preparedStatement.setInt(5, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public void addNotification(ArrayList<Personne> listpersonne, int idtype,
 			int idactivite, int idpersonne) throws Exception {
 
-		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement;
 		String requete;
 
 		for (Personne personne : listpersonne) {
@@ -84,15 +92,21 @@ public class NotificationDAO {
 
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
-
-		preparedStatement.setInt(1, idDestinataire);
-		preparedStatement.setInt(2, Notification.DonneAvis);
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(new Date().getTime()));
-		preparedStatement.setInt(4, idactivite);
-		preparedStatement.setInt(5, idpersonneAnoter);
-		preparedStatement.execute();
-		preparedStatement.close();
+		try {
+			preparedStatement.setInt(1, idDestinataire);
+			preparedStatement.setInt(2, Notification.DonneAvis);
+			preparedStatement.setTimestamp(3,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.setInt(4, idactivite);
+			preparedStatement.setInt(5, idpersonneAnoter);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -108,7 +122,7 @@ public class NotificationDAO {
 			if (!isDemandeAvisExist(idpersonne,
 					avisadonner.getIdpersonnenotee(),
 					avisadonner.getIdactivite()))
-				
+
 				addNotifiRappelAnoter(idpersonne, avisadonner.getIdactivite(),
 						avisadonner.getIdpersonnenotee(),
 						avisadonner.getDateDebutActivite());
@@ -140,17 +154,17 @@ public class NotificationDAO {
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		
 	}
 
 	public void removeNotificationAnoter(int idpersonne, int idpersonnenotee,
-			int idactivite) throws Exception {// Efface un message dans la table notificiation
+			int idactivite) throws Exception {// Efface un message dans la table
+												// notificiation
 		// utilis� apr�s a voir d�pos� un avis
 
 		String requete = "Delete from notification where iddestinataire=? and idtype=?"
 				+ " and idactivite=? and idpersonne=?;";
-		PreparedStatement preparedStatement;
-		
+		PreparedStatement preparedStatement = null;
+		try {
 			preparedStatement = connexion.prepareStatement(requete,
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setInt(1, idpersonne);
@@ -159,7 +173,12 @@ public class NotificationDAO {
 			preparedStatement.setInt(4, idpersonnenotee);
 			preparedStatement.execute();
 			preparedStatement.close();
-		
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -197,7 +216,7 @@ public class NotificationDAO {
 			retour.add(notification);
 
 		}
-	
+
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
@@ -206,7 +225,7 @@ public class NotificationDAO {
 	public ArrayList<Notification> getListNotificationAfter(int idpersonne,
 			int idnotification) throws SQLException {
 
-		ArrayList<Notification> retour = new ArrayList<Notification>();
+		ArrayList<Notification> retour = new ArrayList<>();
 
 		String requete = "select a.titre,p.nom,n.iddestinataire,n.idtype,n.d_creation,n.idactivite,"
 				+ "n.idpersonne,n.lu,n.idnotification from notification n left join personne p on n.idpersonne=p.idpersonne "
@@ -248,13 +267,20 @@ public class NotificationDAO {
 	public void litNotification(int idpersonne) throws SQLException {
 		PreparedStatement preparedStatement = null;
 
-		String requete = "UPDATE  notification set lu=true  "
-				+ " WHERE iddestinataire=?";
+		try {
+			String requete = "UPDATE  notification set lu=true  "
+					+ " WHERE iddestinataire=?";
 
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -263,44 +289,59 @@ public class NotificationDAO {
 
 		String requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
 				+ " VALUES (?, ?, ?, ?,? ,false)";
-		PreparedStatement preparedStatement = connexion.prepareStatement(
-				requete, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
 
-		preparedStatement.setInt(1, iddestinataire);
-		preparedStatement.setInt(2, Notification.NouvelAmi);
-		Date datecreation = Calendar.getInstance().getTime();
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
-		preparedStatement.setInt(4, idactivite);
-		preparedStatement.setInt(5, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement.setInt(1, iddestinataire);
+			preparedStatement.setInt(2, Notification.NouvelAmi);
+			Date datecreation = Calendar.getInstance().getTime();
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, idactivite);
+			preparedStatement.setInt(5, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
-				+ " VALUES (?, ?, ?, ?,? ,false)";
-		preparedStatement = connexion.prepareStatement(requete,
-				Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setInt(2, Notification.NouvelAmi);
-		datecreation = Calendar.getInstance().getTime();
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
-		preparedStatement.setInt(4, idactivite);
-		preparedStatement.setInt(5, iddestinataire);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = " INSERT into notification(iddestinataire, idtype, d_creation, idactivite, idpersonne,lu)"
+					+ " VALUES (?, ?, ?, ?,? ,false)";
+			preparedStatement = connexion.prepareStatement(requete,
+					Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, Notification.NouvelAmi);
+			datecreation = Calendar.getInstance().getTime();
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, idactivite);
+			preparedStatement.setInt(5, iddestinataire);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public void effaceNotification(int iddestinataire, int idnotification)
 			throws SQLException {
 		PreparedStatement preparedStatement = null;
-		String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idnotification);
-		preparedStatement.setInt(2, iddestinataire);
-		preparedStatement.execute();
-		preparedStatement.close();
+		try {
+			String requete = "DELETE FROM notification where ( idnotification=? and iddestinataire=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idnotification);
+			preparedStatement.setInt(2, iddestinataire);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -311,16 +352,23 @@ public class NotificationDAO {
 				+ " VALUES (?, ?, ?, ?,? ,false)";
 		PreparedStatement preparedStatement = connexion.prepareStatement(
 				requete, Statement.RETURN_GENERATED_KEYS);
+		try {
 
-		preparedStatement.setInt(1, idami);
-		preparedStatement.setInt(2, Notification.SUPPRIME_AMI);
-		Date datecreation = Calendar.getInstance().getTime();
-		preparedStatement.setTimestamp(3,
-				new java.sql.Timestamp(datecreation.getTime()));
-		preparedStatement.setInt(4, 0);
-		preparedStatement.setInt(5, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement.setInt(1, idami);
+			preparedStatement.setInt(2, Notification.SUPPRIME_AMI);
+			Date datecreation = Calendar.getInstance().getTime();
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+					datecreation.getTime()));
+			preparedStatement.setInt(4, 0);
+			preparedStatement.setInt(5, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
@@ -329,12 +377,18 @@ public class NotificationDAO {
 		PreparedStatement preparedStatement = null;
 		String requete = "UPDATE  notification set lu=true  "
 				+ " WHERE idnotification=? and iddestinataire=? ";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idnotification);
-		preparedStatement.setInt(2, idpersonne);
-		preparedStatement.execute();
-		preparedStatement.close();
-
+		try {
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idnotification);
+			preparedStatement.setInt(2, idpersonne);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 	}
 
 }

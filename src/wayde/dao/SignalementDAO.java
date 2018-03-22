@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import wayde.bean.CxoPool;
@@ -40,12 +41,12 @@ public class SignalementDAO {
 		}
 		CxoPool.close(preparedStatement, rs);
 		return retour;
-		
+
 	}
 
 	public boolean isSignalerActvite(int idpersonne, int idactivite)
 			throws SQLException {
-		boolean retour=false;
+		boolean retour = false;
 		String requete = "SELECT idpersonne  FROM signaler_activite where idpersonne=? and idactivite=?;";
 		PreparedStatement preparedStatement;
 		preparedStatement = connexion.prepareStatement(requete);
@@ -55,46 +56,62 @@ public class SignalementDAO {
 
 		if (rs.next()) {
 			retour = true;
-		} 
+		}
 		CxoPool.close(preparedStatement, rs);
 		return retour;
 
-		
 	}
 
 	public void signalerProfil(int idpersonne, int idsignalement, int idmotif,
 			String motif) throws SQLException {
+		PreparedStatement preparedStatement = null;
 
 		String requete = "INSERT INTO signaler_profil(idpersonne,idsignalement,idmotif,motif,d_creation)  VALUES (?, ?, ?,?,?);";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setInt(2, idsignalement);
-		if (motif.equals(""))
-			motif = null;
-		preparedStatement.setInt(3, idmotif);
-		preparedStatement.setString(4, motif);
-		preparedStatement.setTimestamp(5,
-				new java.sql.Timestamp(new Date().getTime()));
-		preparedStatement.execute();
-		preparedStatement.close();
+		try {
+
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idsignalement);
+			if (motif.equals(""))
+				motif = null;
+			preparedStatement.setInt(3, idmotif);
+			preparedStatement.setString(4, motif);
+			preparedStatement.setTimestamp(5,
+					new java.sql.Timestamp(new Date().getTime()));
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public void signalerActivite(int idpersonne, int idactivite, int idmotif,
 			String motif, String titre, String libelle) throws SQLException {
+		PreparedStatement preparedStatement = null;
 
 		String requete = "INSERT INTO signaler_activite(idpersonne,idactivite,idmotif,motif,titre,libelle)  VALUES (?, ?, ?,?,?,?);";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idpersonne);
-		preparedStatement.setInt(2, idactivite);
-		preparedStatement.setInt(3, idmotif);
-		preparedStatement.setString(4, motif);
-		preparedStatement.setString(5, titre);
-		preparedStatement.setString(6, libelle);
-		preparedStatement.execute();
-		preparedStatement.close();
+		try {
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.setInt(3, idmotif);
+			preparedStatement.setString(4, motif);
+			preparedStatement.setString(5, titre);
+			preparedStatement.setString(6, libelle);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 

@@ -4,6 +4,7 @@ package wayde.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,10 +21,10 @@ public class AvisaDonnerDAO {
 	public  AvisaDonnerDAO(Connection connexion){
 		this.connexion=connexion;
 	}
-	public  ArrayList<AvisaDonnerDb> getListAvisaDonner(int idpersonne) throws Exception {
+	public  ArrayList<AvisaDonnerDb> getListAvisaDonner(int idpersonne) throws SQLException {
 		
-		AvisaDonnerDb avisadonnerdb = null;
-		ArrayList<AvisaDonnerDb> retour = new ArrayList<AvisaDonnerDb>();
+		AvisaDonnerDb avisadonnerdb ;
+		ArrayList<AvisaDonnerDb> retour = new ArrayList<>();
 
 			String requete = " SELECT   personne.prenom,      personne.nom,    personne.photo,"
 					+ "activite.idactivite,activite.datedebut,   activite.titre, noter.idpersonnenotee,noter.idnoter"
@@ -57,9 +58,6 @@ public class AvisaDonnerDAO {
 			CxoPool.close(preparedStatement, rs);
 		
 			return retour;
-
-		
-
 	
 
 	}

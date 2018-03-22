@@ -144,5 +144,29 @@ public abstract class CxoPool {
 				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 	}
+	public static void close(Statement preparedStatement, ResultSet rs) {
+		if (rs != null)
+			try {
+				rs.close();
+			} catch (SQLException e1) {
+				LOG.error(ExceptionUtils.getStackTrace(e1));
+			}
+		if (preparedStatement != null)
+			try {
+				preparedStatement.close();
+			} catch (SQLException e1) {
+				LOG.error(ExceptionUtils.getStackTrace(e1));
+			}
+	}
+
+	public static void closePS(PreparedStatement preparedStatement) {
+		if (preparedStatement != null)
+			try {
+				preparedStatement.close();
+			} catch (SQLException e1) {
+				LOG.error(ExceptionUtils.getStackTrace(e1));
+			}
+		
+	}
 
 }

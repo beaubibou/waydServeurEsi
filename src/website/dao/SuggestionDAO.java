@@ -47,10 +47,10 @@ public class SuggestionDAO {
 				String suggestion = rs.getString("suggestion");
 				String pseudo = rs.getString("pseudo");
 				String email = rs.getString("mail");
-				Date d_creation = rs.getTimestamp("d_creation");
+				Date dcreation = rs.getTimestamp("d_creation");
 				boolean lu = rs.getBoolean("lu");
 				retour.add(new SuggestionBean(id, idPersonne,email, suggestion,
-						d_creation, pseudo,lu));
+						dcreation, pseudo,lu));
 			}
 			
 			LogDAO.LOG_DUREE("getListSuggestion", debut);
@@ -74,7 +74,7 @@ public class SuggestionDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SuggestionBean> retour = new ArrayList<SuggestionBean>();
+		ArrayList<SuggestionBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -230,7 +230,6 @@ public class SuggestionDAO {
 			connexion.setAutoCommit(false);
 			String requete = "update amelioration set lu=true   where  id=? ";
 			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idMessage);
 			preparedStatement.execute();
 			preparedStatement.close();
@@ -268,7 +267,7 @@ public class SuggestionDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SuggestionBean> retour = new ArrayList<SuggestionBean>();
+		ArrayList<SuggestionBean> retour = new ArrayList<>();
 	
 		try {
 	

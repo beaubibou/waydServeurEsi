@@ -25,7 +25,7 @@ public class ParticipantDAO {
 
 	public ArrayList<Participant> getListPaticipant(int idactivite) throws SQLException {
 		Participant participant = null;
-		ArrayList<Participant> retour = new ArrayList<Participant>();
+		ArrayList<Participant> retour = new ArrayList<>();
 
 		String requete = " SELECT   personne.prenom,personne.photo,personne.idpersonne,personne.nbravis,personne.sexe,personne.note,"
 				+ "personne.datenaissance,personne.afficheage,personne.affichesexe from personne,participer where personne.idpersonne=participer.idpersonne"

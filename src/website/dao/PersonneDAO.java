@@ -128,7 +128,7 @@ public static boolean isLoginExist(String login)  {
 
 		long debut = System.currentTimeMillis();
 
-		ArrayList<UserAjax> retour = new ArrayList<UserAjax>();
+		ArrayList<UserAjax> retour = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection connexion=null;
@@ -588,7 +588,7 @@ public static boolean isLoginExist(String login)  {
 			LogDAO.LOG_DUREE("isProfilActif", debut);
 			
 			if (rs.next())
-				if (rs.getBoolean("actif") == true)
+				if (rs.getBoolean("actif") )
 					return true;
 
 		} catch (NamingException | SQLException e) {
@@ -613,9 +613,7 @@ public static boolean isLoginExist(String login)  {
 		int etatProfil = filtre.getEtatProfil();
 		int typeSignalement = filtre.getTypeSignalement();
 		int etatValide=filtre.getEtatValide();
-	//	pseudo = pseudo.replace("*", "%");
-	//	email = email.replace("*", "%");
-
+	
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;

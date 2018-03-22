@@ -1248,7 +1248,7 @@ public class ActiviteDAO {
 			requete = requete + " and activite.idtypeactivite=?";
 		}
 
-		if (!motcle.isEmpty()) {
+		if (motcle != null && !motcle.isEmpty()) {
 
 			requete = requete
 					+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
@@ -1287,8 +1287,7 @@ public class ActiviteDAO {
 			preparedStatement.setInt(index, typeactivite);
 
 		}
-
-		if (!motcle.isEmpty()) {
+		if (motcle != null && !motcle.isEmpty()) {
 			index++;
 			String test = "%" + motcle + "%";
 			preparedStatement.setString(index, test);
