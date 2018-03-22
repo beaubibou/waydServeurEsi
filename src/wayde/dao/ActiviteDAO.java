@@ -35,7 +35,7 @@ public class ActiviteDAO {
 			+ "activite.nbmaxwayd," + "activite.datefin,"
 			+ "activite.idtypeactivite," + "activite.typeuser,"
 			+ "activite.typeacces," + "activite.descriptionall,"
-			+ "activite.gratuit," + "personne.prenom," + "personne.sexe,"
+			+ "activite.gratuit,activite.lienfacebook," + "personne.prenom," + "personne.sexe,"
 			+ "personne.nom," + "personne.idpersonne,"
 			+ "personne.affichesexe," + "personne.afficheage,"
 			+ "personne.datenaissance," + "personne.note,"
@@ -67,6 +67,7 @@ public class ActiviteDAO {
 		String nom = rs.getString("nom");
 		String prenom = rs.getString("prenom");
 		String fulldescription = rs.getString("descriptionall");
+		String lienfacebook = rs.getString("lienfacebook");
 		Date datenaissance = rs.getTimestamp("datenaissance");
 		boolean afficheage = rs.getBoolean("afficheage");
 		boolean affichesexe = rs.getBoolean("affichesexe");
@@ -94,7 +95,7 @@ public class ActiviteDAO {
 				datefin, idtypeactivite, latitude, longitude, adresse, nom,
 				prenom, photo, note, archive, totalavis, datenaissance, sexe,
 				nbrparticipant, afficheage, affichesexe, nbmaxwayd, typeUser,
-				typeAcces, fulldescription, gratuit);
+				typeAcces, fulldescription, gratuit,lienfacebook);
 
 	}
 

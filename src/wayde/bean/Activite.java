@@ -73,6 +73,8 @@ public class Activite {
 
 	private boolean interet;
 
+	private String lienfacebook;
+	
 	public boolean isInteret() {
 		return interet;
 	}
@@ -83,6 +85,14 @@ public class Activite {
 
 	public void setGratuite(int gratuite) {
 		this.gratuite = gratuite;
+	}
+
+	public String getLienfacebook() {
+		return lienfacebook;
+	}
+
+	public void setLienfacebook(String lienfacebook) {
+		this.lienfacebook = lienfacebook;
 	}
 
 	public String getFulldescrition() {
@@ -192,7 +202,7 @@ public class Activite {
 			String photo, double note, boolean archive, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant,
 			boolean afficheage, boolean affichesexe, int nbmaxwaydeur,
-			int typeUser, int typeAcces, String fulldescription, int gratuit) {
+			int typeUser, int typeAcces, String fulldescription, int gratuit,String lienfacebook) {
 
 		super();
 		this.id = id;
@@ -228,6 +238,7 @@ public class Activite {
 		if (this.titre.equals(""))
 			this.titre = " ";
 		this.gratuite = gratuit;
+		this.lienfacebook=lienfacebook;
 		defineOrganisateur(idorganisateur);
 
 	}
@@ -253,6 +264,7 @@ public class Activite {
 		this.typeUser = activiteBean.getTypeUser();
 		this.typeAcces = activiteBean.getTypeAccess();
 		this.nbmaxwaydeur = activiteBean.getNbmaxwaydeur();
+	
 		defineOrganisateur(activiteBean.getIdorganisateur());
 
 		if (this.titre.equals(""))
