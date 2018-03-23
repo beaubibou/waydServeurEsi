@@ -33,7 +33,7 @@ public class ProblemeDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<ProblemeBean> retour = new ArrayList<ProblemeBean>();
+		ArrayList<ProblemeBean> retour = new ArrayList<>();
 
 		try {
 
@@ -149,7 +149,6 @@ public class ProblemeDAO {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "update problemeconnexion set lu=true   where  id=? ";
-			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idMessage);
 			preparedStatement.execute();

@@ -18,8 +18,21 @@ public class FitreAdminActivites {
 	int typeSignalement;
 	int etatActivite;
 	int gratuit;
+	boolean actif,masque;
 	
 	
+	public boolean isActif() {
+		return actif;
+	}
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+	public boolean isMasque() {
+		return masque;
+	}
+	public void setMasque(boolean masque) {
+		this.masque = masque;
+	}
 	public int getGratuit() {
 		return gratuit;
 	}
@@ -100,5 +113,7 @@ public class FitreAdminActivites {
 		typeSignalement=TypeSignalement.TOUS;
 		this.etatActivite=TypeEtatActivite.TOUTES;
 		this.gratuit=TypeGratuitActivite.GRATUITE_INCONNU;
+		this.actif=false;
+		this.masque=false;
 	}
 }

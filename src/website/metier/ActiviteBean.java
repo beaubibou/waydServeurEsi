@@ -81,6 +81,8 @@ public class ActiviteBean {
 	String fulldescription;
 
 	private int gratuite;
+	
+	boolean masque;
 
 	
 	public int getGratuite() {
@@ -100,6 +102,14 @@ public class ActiviteBean {
 	}
 
 	
+
+	public boolean isMasque() {
+		return masque;
+	}
+
+	public void setMasque(boolean masque) {
+		this.masque = masque;
+	}
 
 	public int getNbrInteret() {
 		return nbrInteret;
@@ -403,7 +413,7 @@ public class ActiviteBean {
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
 			int typeUser, int typeAcces, String libelleActivite,
-			String adresse, int nbrSignalement, String fulldescription,int gratuit,boolean actif) {
+			String adresse, int nbrSignalement, String fulldescription,int gratuit,boolean actif,boolean masque) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -431,6 +441,7 @@ public class ActiviteBean {
 		this.fulldescription = fulldescription;
 		this.gratuite=gratuit;
 		this.actif=actif;
+		this.masque=masque;
 	}
 
 	public int getNbrSignalement() {
@@ -477,10 +488,8 @@ public class ActiviteBean {
 		else {
 
 			long diff = datefinactivite.getTime() - new Date().getTime();
-			// long diffSeconds = diff / 1000 % 60;
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
-			// long diffDays = diff / (24 * 60 * 60 * 1000);
 			if (diff < 0)
 				return Erreur_HTML.TERMINEE;
 

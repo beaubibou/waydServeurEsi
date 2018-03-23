@@ -183,6 +183,14 @@
 								placeholder="longitude" name="longitudeFiltre"
 								value=<%=pager.getFiltAdminActivites().getLongitude()%>>
 						</div>
+								<label><input name="actif" type="checkbox"
+					<%=Outils.jspAdapterCheked(filtre.isActif())%>> Actif		</label>
+					
+										<label><input name="masque" type="checkbox"
+					
+					<%=Outils.jspAdapterCheked(filtre.isMasque())%>> Masqué		</label>
+				
+					
 						
 						<button id="go" type="submit" class="btn btn-info"
 							name="rechercheactivite">Rechercher</button>
@@ -208,6 +216,7 @@
 					<th style="width: 5%;" class="text-center">Vu</th>
 					<th style="width: 5%;" class="text-center">Sign.</th>
 					<th style="width: 5%;" class="text-center">Actif.</th>
+					<th style="width: 5%;" class="text-center">Masqué.</th>
 					
 					
 				
@@ -284,6 +293,13 @@
 							
 						<label><input name="<%=activite.getId() %>" type="checkbox"
 					<%=Outils.jspAdapterCheked(activite.actif)%>> 		</label>
+					
+					</td>
+					
+					<td class="masque">
+							
+						<label><input name="<%=activite.getId() %>" type="checkbox"
+					<%=Outils.jspAdapterCheked(activite.isMasque())%>> 		</label>
 					
 					</td>
 				
@@ -365,8 +381,7 @@
 
 	<script>
 	
-	
-	
+		
 		$(function() {
 
 			
@@ -419,6 +434,22 @@
 			
 			
  				$.post("ModifieActivite?action=setactif&actif="+this.checked+"&idactivite="+this.name
+						,
+						function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+
+							
+
+				
+						});	
+				
+				
+			});
+			
+			$('td.masque :checkbox').change(function() {
+				
+				
+			
+ 				$.post("ModifieActivite?action=setmasque&masque="+this.checked+"&idactivite="+this.name
 						,
 						function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
 

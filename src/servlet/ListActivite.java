@@ -130,6 +130,20 @@ public class ListActivite extends HttpServlet {
 			filtreActivite.setGratuit(gratuit);
 		}
 		
+		
+		
+		if (request.getParameter("actif") != null)
+			filtreActivite.setActif(true);
+		else
+			filtreActivite.setActif(false);
+		
+		if (request.getParameter("masque") != null)
+			filtreActivite.setMasque(true);
+		else
+			filtreActivite.setMasque(false);
+		
+		
+		
 
 	}
 

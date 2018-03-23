@@ -634,7 +634,73 @@ public class ActiviteDAO {
 		return false;
 
 	}
+	
+	public static boolean setDateDebut(int idactivite, Date datedebut) {
 
+		long debut = System.currentTimeMillis();
+
+		PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE  activite set datedebut=? WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(datedebut.getTime()));
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("setDatedebut", debut);
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
+
+	public static boolean setMasque(int idactivite, boolean masque) {
+
+		long debut = System.currentTimeMillis();
+
+		PreparedStatement preparedStatement = null;
+		Connection connexion = null;
+		try {
+	
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE  activite set masque=? WHERE idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setBoolean(1, masque);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("setMasque", debut);
+
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
+	
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int typeuser, int typeaccess) {
@@ -791,7 +857,7 @@ public class ActiviteDAO {
 		ResultSet rs = null;
 		ActiviteBean activite = null;
 
-		String requete = " SELECT activite.gratuit,activite.datedebut,       activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.masque,activite.actif,activite.gratuit,activite.datedebut,       activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,descriptionall,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
@@ -833,12 +899,13 @@ public class ActiviteDAO {
 				int nbrSignalement = 0;
 				boolean actif = rs.getBoolean("actif");
 
+				boolean masque = rs.getBoolean("masque");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuit, actif);
+						nbrSignalement, descriptionall, gratuit, actif,masque);
 				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
@@ -1380,6 +1447,8 @@ public class ActiviteDAO {
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
+		boolean masqueFiltre=filtre.isMasque();
+		boolean actifFiltre=filtre.isActif();
 
 		ActiviteBean activite = null;
 
@@ -1396,14 +1465,14 @@ public class ActiviteDAO {
 					+ " personne.note,personne.nbravis as totalavis,personne.photo,activite.idactivite,    activite.titre,    activite.libelle,    activite.adresse,"
 					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
 					+ "activite.idpersonne,    activite.datecreation,    activite.nbrwaydeur as nbrparticipant,    activite.nbmaxwayd,    activite.d_finactivite,"
-					+ "activite.typeacces,    activite.typeuser,activite.nbrvu,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
+					+ "activite.typeacces, activite.masque,   activite.typeuser,activite.nbrvu,    activite.nbrvu, COALESCE(tablesignalement.nbrsignalement, 0::bigint) AS nbrsignalement, "
 					+ "type_activite.nom as libelleActivite,descriptionall,gratuit "
 					+ " FROM activite"
 					+ " LEFT JOIN ( SELECT count(*) AS nbrsignalement, signaler_activite.idactivite "
 					+ " FROM signaler_activite  GROUP BY signaler_activite.idactivite) tablesignalement ON activite.idactivite = tablesignalement.idactivite"
 					+ " LEFT JOIN type_activite ON type_activite.idtypeactivite = activite.idtypeactivite "
 					+ " left join personne on personne.idpersonne = activite.idpersonne "
-					+ " WHERE activite.latitude between ? and ? and activite.longitude between ? and ?  ";
+					+ " WHERE activite.latitude between ? and ? and activite.longitude between ? and ? and activite.masque=? and activite.actif=? ";
 
 			// tablesignalement.nbrsignalement = 1
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
@@ -1423,7 +1492,7 @@ public class ActiviteDAO {
 
 				requete = requete + " and activite.gratuit=? ";
 
-			}
+			} 
 
 			switch (etatActivite) {
 
@@ -1475,8 +1544,11 @@ public class ActiviteDAO {
 			preparedStatement.setDouble(2, latMax);
 			preparedStatement.setDouble(3, longMin);
 			preparedStatement.setDouble(4, longMax);
+			preparedStatement.setBoolean(5, masqueFiltre);
+			preparedStatement.setBoolean(6, actifFiltre);
 
-			int index = 5;
+
+			int index = 7;
 
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
 														// l'activité
@@ -1539,13 +1611,14 @@ public class ActiviteDAO {
 				int nbrVu = rs.getInt("nbrvu");
 				int gratuite = rs.getInt("gratuit");
 				boolean actif = rs.getBoolean("actif");
+				boolean masque = rs.getBoolean("masque");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuite, actif);
+						nbrSignalement, descriptionall, gratuite, actif,masque);
 
 				activite.setPositionRecherche(filtre.getLatitude(),
 						filtre.getLongitude());
@@ -2091,18 +2164,16 @@ public class ActiviteDAO {
 			String titre = activite.getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
-			URLConnection uc;
-			URL url = new URL(photoUrl);
-			uc = url.openConnection();
-			uc.addRequestProperty("User-Agent",
-					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-			uc.connect();
-			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+//			URLConnection uc;
+//			URL url = new URL(photoUrl);
+//			uc = url.openConnection();
+//			uc.addRequestProperty("User-Agent",
+//					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+//			uc.connect();
+//			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+//			String photo = encodeToString(imBuff, "jpeg");
 
-			// BufferedImage imBuff = ImageIO.read(url);
-
-			String photo = encodeToString(imBuff, "jpeg");
-
+			String photo="ppppppp";
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 
@@ -2147,7 +2218,7 @@ public class ActiviteDAO {
 			preparedStatement.setInt(7, idpersonne);
 			preparedStatement.setString(8, libelle);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			preparedStatement.setBoolean(10, true);
+			preparedStatement.setBoolean(10, false);
 			preparedStatement.setInt(11, 2);
 			preparedStatement.setInt(12, 5);
 			preparedStatement.setString(13, fulldescription);
@@ -2314,6 +2385,67 @@ public class ActiviteDAO {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
 
+	}
+
+	public static void updateDateCarpeDiem(Date date) {
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Connection connexion = null;
+		ArrayList<Integer> listIdActivte = new ArrayList<>();
+		ArrayList<Integer> listPersonne = new ArrayList<>();
+
+		try {
+
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = " SELECT idactivite,datedebut from activite where"
+					+ " to_date(to_char(datedebut,'dd/mm/yyyy'),'dd/mm/yyyy')<? "
+					+ " and typeuser=4";
+		
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setTimestamp(1,
+					new java.sql.Timestamp(date.getTime()));
+			rs = preparedStatement.executeQuery();
+			LOG.info("Recherche  les activités CARPEDIEM à effacer:");
+		
+			while (rs.next()) {
+
+				Date maintenant=new Date();
+				Calendar calNow=Calendar.getInstance();
+				calNow.setTime(maintenant);
+				int idActivite = rs.getInt("idactivite");
+				Date datedebut = rs.getTimestamp("datedebut");
+				Calendar cal=Calendar.getInstance();
+			
+				cal.setTime(datedebut);
+				cal.set(Calendar.DAY_OF_MONTH,calNow.get(Calendar.DAY_OF_MONTH));
+				cal.set(Calendar.MONTH,calNow.get(Calendar.MONTH));
+				cal.set(Calendar.YEAR,calNow.get(Calendar.YEAR));
+			
+				setDateDebut(idActivite, cal.getTime());
+			
+				LOG.info("Activite à changer la date: id= " + idActivite);
+			}
+
+			
+			preparedStatement.close();
+
+		
+
+		} catch (NamingException | SQLException e) {
+
+			try {
+				if (connexion != null)
+					connexion.rollback();
+			} catch (SQLException e1) {
+				LOG.error(ExceptionUtils.getStackTrace(e));
+			}
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
+		} finally {
+			CxoPool.close(connexion, preparedStatement, rs);
+		}
+		
 	}
 
 }

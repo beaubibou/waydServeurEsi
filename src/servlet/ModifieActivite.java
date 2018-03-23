@@ -68,6 +68,12 @@ public class ModifieActivite extends HttpServlet {
 			setActif(request, response);
 
 			break;
+			
+		case "setmasque":
+
+			setMasque(request, response);
+
+			break;
 
 		default:
 			break;
@@ -114,6 +120,23 @@ public class ModifieActivite extends HttpServlet {
 					.getParameter("idactivite"));
 			ActiviteDAO.setActif(idactivite, actif);
 			LOG.info("setActif");
+		}
+
+		catch (Exception e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+
+		}
+	}
+
+	private void setMasque(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			boolean masque = Boolean.parseBoolean(request.getParameter("masque"));
+			int idactivite = Integer.parseInt(request
+					.getParameter("idactivite"));
+			ActiviteDAO.setMasque(idactivite, masque);
+			LOG.info("setMasque");
 		}
 
 		catch (Exception e) {
