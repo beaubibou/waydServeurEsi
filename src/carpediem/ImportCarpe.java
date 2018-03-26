@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.htmlparser.jericho.Attribute;
@@ -20,6 +21,8 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
+
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -27,48 +30,79 @@ public class ImportCarpe {
 	private static final Logger LOG = Logger.getLogger(ImportCarpe.class);
 
 	ArrayList<ActiviteCarpeDiem> listActivite = new ArrayList<>();
+	HashMap<String, ActiviteCarpeDiem> mapActivite = new HashMap<String, ActiviteCarpeDiem>();
 	ActiviteCarpeDiem activite;
 	StringBuilder log = new StringBuilder();
 
 	public void importActivitesByPage(String date, String ville)
 			throws IOException, JSONException {
 		int page = 0;
-		Integer status;
+		Integer status = 1;
 		do {
-			LOG.info("*********************CHARGE ***********PAGE" + ville
-					+ "N°page:" + page);
-			page++;
-			String ur = "http://" + ville + ".carpediem.cd/events/?" + date;
-			String post = "mode=load_content&page=" + page + "&_csrf=getCsrf()";
-			URL url = new URL(ur);
-			URLConnection conn = url.openConnection();
-			conn.addRequestProperty("User-Agent",
-					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-			conn.setDoOutput(true);
-			OutputStreamWriter writer = new OutputStreamWriter(
-					conn.getOutputStream());
-			writer.write(post);
-			writer.flush();
+			try {
+				LOG.info("*********************CHARGE ***********PAGE" + ville
+						+ "N°page:" + page + " du" + date);
+				page++;
+				String ur = "http://" + ville + ".carpediem.cd/events/?dt=" + date;
+			
+				String post = "mode=load_content&page=" + page
+						+ "&_csrf=getCsrf()";
+				
+				URL url = new URL(ur);
+				URLConnection conn = url.openConnection();
+				conn.addRequestProperty("User-Agent",
+						"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-			StringBuilder parsedContentFromUrl = new StringBuilder();
+				conn.setDoOutput(true);
+				OutputStreamWriter writer = new OutputStreamWriter(
+						conn.getOutputStream());
+				writer.write(post);
+				writer.flush();
 
-			BufferedInputStream in = new BufferedInputStream(
-					conn.getInputStream());
-			int ch;
-			while ((ch = in.read()) != -1)
-				parsedContentFromUrl.append((char) ch);
+				StringBuilder parsedContentFromUrl = new StringBuilder();
 
-			JSONObject json = new JSONObject(parsedContentFromUrl.toString());
+				BufferedInputStream in = new BufferedInputStream(
+						conn.getInputStream());
+				int ch;
+				while ((ch = in.read()) != -1)
+					parsedContentFromUrl.append((char) ch);
 
-			status = (Integer) json.get("status");
-			String reponse = (String) json.get("html");
+				JSONObject json = new JSONObject(
+						parsedContentFromUrl.toString());
 
-			if (status == 1)
-				charge(reponse);
+				status = (Integer) json.get("status");
+				String reponse = (String) json.get("html");
 
-		} while (status == 1 && page < 30);
+				if (status == 1)
+					charge(reponse);
 
+			}
+
+			catch (Exception e) {
+				e.printStackTrace();
+
+			}
+
+		} while (status == 1 && page < 10);
+
+		int g = 0;
+		for (ActiviteCarpeDiem activiteCarpe : mapActivite.values()) {
+			try {
+				g++;
+				LOG.info("Recupere " + g + "/" + mapActivite.values().size()
+						+ " du jour " + date);
+				getDetailActivite(activiteCarpe);
+				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+				LOG.info("Activite ajoutée");
+			} catch (Exception e) {
+				LOG.error("Detail activite non disponible");
+				LOG.error(ExceptionUtils.getStackTrace(e));
+			}
+		}
+
+		listActivite.clear();
+		mapActivite.clear();
 	}
 
 	public void charge(String sourcehtml) throws IOException {
@@ -86,19 +120,6 @@ public class ImportCarpe {
 			instancieActivite(element, activite);
 
 		}
-
-		for (ActiviteCarpeDiem activiteCarpe : listActivite) {
-			try {
-				getDetailActivite(activiteCarpe);
-				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
-				LOG.info("Activite ajoutée");
-			} catch (Exception e) {
-				LOG.error("Detail activite non disponible");
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			}
-		}
-
-		listActivite.clear();
 
 	}
 
@@ -152,27 +173,25 @@ public class ImportCarpe {
 	}
 
 	private String getLienFaceBook(StringBuilder parsedContentFromUrl) {
-				
-		String chaine="https://www.facebook.com/events/";
-		int start = parsedContentFromUrl
-					.indexOf(chaine) + 32;
 
-		if (start==-1)
-				return null;
-	
+		String chaine = "https://www.facebook.com/events/";
+		int start = parsedContentFromUrl.indexOf(chaine) + 32;
+
+		if (start == -1)
+			return null;
+
 		StringBuilder lien = new StringBuilder();
-			String charactere;
+		String charactere;
 
-			do {
+		do {
 
-				charactere = parsedContentFromUrl.substring(start, start+1);
-				lien.append(charactere);
-				start++;
+			charactere = parsedContentFromUrl.substring(start, start + 1);
+			lien.append(charactere);
+			start++;
 
-			} while (!charactere.equals("/"));
+		} while (!charactere.equals("/"));
 
-		
-		return chaine+lien;
+		return chaine + lien;
 	}
 
 	public String getFullDescrition(StringBuilder parsedContentFromUrl) {
@@ -249,7 +268,9 @@ public class ImportCarpe {
 		}
 		if (activite.isComplete()) {
 
-			listActivite.add(new ActiviteCarpeDiem(activite));
+			// listActivite.add(new ActiviteCarpeDiem(activite));
+			if (!mapActivite.containsKey(activite.getUrl()))
+				mapActivite.put(activite.getUrl(), new ActiviteCarpeDiem(activite));
 
 			activite.reset();
 			return;

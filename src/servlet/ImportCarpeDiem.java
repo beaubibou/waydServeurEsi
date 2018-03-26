@@ -57,20 +57,23 @@ public class ImportCarpeDiem extends HttpServlet {
 		if (!authentification.isAuthentifieAdmin())
 			return;
 
-		String ville_ = "montpelleier";
-
-		String startDate = "2018-03-22T19:45:00+01:00";
-		String endDate = "2018-03-23T22:30:00+01:00";
-		String image = "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
-		String description = "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
-		String url = "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
-		String name = "Trilogie du Seigneur des Anneaux";
-		String address = "43, rue des Docks, 69009 Lyon";
-		String nomLieu = "PathÃ© Vaise";
-
-		double lat = 34.3;
-		double lng = 4.3;
-		int id = 503030;
+		// String ville_ = "montpelleier";
+		//
+		// String startDate = "2018-03-22T19:45:00+01:00";
+		// String endDate = "2018-03-23T22:30:00+01:00";
+		// String image =
+		// "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
+		// String description =
+		// "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
+		// String url =
+		// "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
+		// String name = "Trilogie du Seigneur des Anneaux";
+		// String address = "43, rue des Docks, 69009 Lyon";
+		// String nomLieu = "PathÃ© Vaise";
+		//
+		// double lat = 34.3;
+		// double lng = 4.3;
+		// int id = 503030;
 
 		// ActiviteCarpeDiem activite = new ActiviteCarpeDiem(startDate,
 		// endDate,
@@ -82,6 +85,8 @@ public class ImportCarpeDiem extends HttpServlet {
 		ArrayList<String> villes = new ArrayList<String>();
 
 		villes.add("lyon");
+		
+		executer();
 		// villes.add("paris");
 		// villes.add("bordeaux");
 		// villes.add("lyon");
@@ -91,14 +96,28 @@ public class ImportCarpeDiem extends HttpServlet {
 		// villes.add("strasbourg");
 		// villes.add("toulouse");
 
+	}
+
+	private static String getFormatDate(DateTime dt) {
+		
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
+		return fmt.print(dt);
+
+	}
+
+	public static void executer() throws IOException {
+
+		ArrayList<String> villes = new ArrayList<String>();
+
+		villes.add("lyon");
+
 		ImportCarpe importCarpe = new ImportCarpe();
-		StringBuilder totalLog = new StringBuilder();
 
 		for (String ville : villes) {
 
 			DateTime date = new DateTime();
 
-			for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
+			for (int nbrJours = 0; nbrJours < 10; nbrJours++) {
 
 				DateTime date1 = date.plusDays(nbrJours);
 				String dateEventStr = getFormatDate(date1);
@@ -110,7 +129,6 @@ public class ImportCarpeDiem extends HttpServlet {
 				}
 
 			}
-			
 
 			DateTime dateInit = new DateTime();
 			DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
@@ -118,16 +136,9 @@ public class ImportCarpeDiem extends HttpServlet {
 					0);
 
 			ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
-			ActiviteDAO.updateDateCarpeDiem(new Date());
+		//	ActiviteDAO.updateDateCarpeDiem(new Date());
 
 		}
-
-	}
-
-	private String getFormatDate(DateTime dt) {
-
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
-		return fmt.print(dt);
 
 	}
 }

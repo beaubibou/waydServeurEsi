@@ -217,6 +217,7 @@
 					<th style="width: 5%;" class="text-center">Sign.</th>
 					<th style="width: 5%;" class="text-center">Actif.</th>
 					<th style="width: 5%;" class="text-center">Masqué.</th>
+					<th style="width: 5%;" class="text-center">Fbook.</th>
 					
 					
 				
@@ -302,6 +303,7 @@
 					<%=Outils.jspAdapterCheked(activite.isMasque())%>> 		</label>
 					
 					</td>
+					<td><a href=<%=activite.getLienFaceBook() %>>FB</a></td>
 				
 
 				</tr>

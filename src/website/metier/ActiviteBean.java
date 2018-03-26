@@ -84,6 +84,7 @@ public class ActiviteBean {
 	
 	boolean masque;
 
+	String lienFaceBook;
 	
 	public int getGratuite() {
 		return gratuite;
@@ -95,6 +96,14 @@ public class ActiviteBean {
 
 	public String getFulldescription() {
 			return fulldescription;
+	}
+
+	public String getLienFaceBook() {
+		return lienFaceBook;
+	}
+
+	public void setLienFaceBook(String lienFaceBook) {
+		this.lienFaceBook = lienFaceBook;
 	}
 
 	public void setFulldescription(String fulldescription) {
@@ -413,7 +422,7 @@ public class ActiviteBean {
 			String pseudo, String photo, double note, int totalavis,
 			Date datenaissance, int sexe, int nbrparticipant, int nbmaxwayd,
 			int typeUser, int typeAcces, String libelleActivite,
-			String adresse, int nbrSignalement, String fulldescription,int gratuit,boolean actif,boolean masque) {
+			String adresse, int nbrSignalement, String fulldescription,int gratuit,boolean actif,boolean masque,String lienFb) {
 		this.id = id;
 		this.titre = titre;
 		this.libelle = libelle;
@@ -442,6 +451,7 @@ public class ActiviteBean {
 		this.gratuite=gratuit;
 		this.actif=actif;
 		this.masque=masque;
+		this.lienFaceBook=lienFb;
 	}
 
 	public int getNbrSignalement() {

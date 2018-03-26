@@ -16,10 +16,14 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+
 import javax.imageio.ImageIO;
 import javax.naming.NamingException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+
 import sun.misc.BASE64Encoder;
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
@@ -857,7 +861,7 @@ public class ActiviteDAO {
 		ResultSet rs = null;
 		ActiviteBean activite = null;
 
-		String requete = " SELECT activite.masque,activite.actif,activite.gratuit,activite.datedebut,       activite.adresse,    activite.latitude,"
+		String requete = " SELECT activite.lienfacebook,activite.masque,activite.actif,activite.gratuit,activite.datedebut,       activite.adresse,    activite.latitude,"
 				+ " activite.longitude,    personne.prenom as pseudo,    personne.sexe,    personne.nom,    personne.idpersonne,"
 				+ "personne.affichesexe,personne.afficheage,personne.datenaissance,personne.note,descriptionall,"
 				+ "personne.nbravis as totalavis,    personne.photo,activite.idactivite,activite.libelle,"
@@ -898,6 +902,8 @@ public class ActiviteDAO {
 				String libelleActivite = rs.getString("libelleActivite");
 				int nbrSignalement = 0;
 				boolean actif = rs.getBoolean("actif");
+				String lienFb = rs.getString("lienfacebook");
+
 
 				boolean masque = rs.getBoolean("masque");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
@@ -905,7 +911,7 @@ public class ActiviteDAO {
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuit, actif,masque);
+						nbrSignalement, descriptionall, gratuit, actif,masque,lienFb);
 				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
@@ -1461,7 +1467,7 @@ public class ActiviteDAO {
 
 			connexion = CxoPool.getConnection();
 
-			String requete = "SELECT 	personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,"
+			String requete = "SELECT 	activite.lienfacebook,personne.prenom,    personne.sexe,    personne.nom,    personne.idpersonne,personne.datenaissance,"
 					+ " personne.note,personne.nbravis as totalavis,personne.photo,activite.idactivite,    activite.titre,    activite.libelle,    activite.adresse,"
 					+ "activite.latitude,    activite.longitude,    activite.actif,    activite.idtypeactivite,    activite.datefin,    activite.datedebut,"
 					+ "activite.idpersonne,    activite.datecreation,    activite.nbrwaydeur as nbrparticipant,    activite.nbmaxwayd,    activite.d_finactivite,"
@@ -1538,7 +1544,7 @@ public class ActiviteDAO {
 			}
 
 			requete = requete
-					+ " order by activite.datecreation desc limit ?  offset ?";
+					+ " order by activite.datedebut desc limit ?  offset ?";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setDouble(1, latMin);
 			preparedStatement.setDouble(2, latMax);
@@ -1612,13 +1618,14 @@ public class ActiviteDAO {
 				int gratuite = rs.getInt("gratuit");
 				boolean actif = rs.getBoolean("actif");
 				boolean masque = rs.getBoolean("masque");
+				String lienFb = rs.getString("lienfacebook");
 
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuite, actif,masque);
+						nbrSignalement, descriptionall, gratuite, actif,masque,lienFb);
 
 				activite.setPositionRecherche(filtre.getLatitude(),
 						filtre.getLongitude());
@@ -2164,16 +2171,22 @@ public class ActiviteDAO {
 			String titre = activite.getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
-//			URLConnection uc;
-//			URL url = new URL(photoUrl);
-//			uc = url.openConnection();
-//			uc.addRequestProperty("User-Agent",
-//					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-//			uc.connect();
-//			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
-//			String photo = encodeToString(imBuff, "jpeg");
+			
+			if (!valideActivite(activite.getDateDebut(),activite.getDateFin())){
+				return;
+			}
+			
+			
+			URLConnection uc;
+			URL url = new URL(photoUrl);
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+			String photo = encodeToString(imBuff, "jpeg");
 
-			String photo="ppppppp";
+			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 
@@ -2218,12 +2231,14 @@ public class ActiviteDAO {
 			preparedStatement.setInt(7, idpersonne);
 			preparedStatement.setString(8, libelle);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			preparedStatement.setBoolean(10, false);
+			boolean active=false;
+			preparedStatement.setBoolean(10, active);
 			preparedStatement.setInt(11, 2);
 			preparedStatement.setInt(12, 5);
 			preparedStatement.setString(13, fulldescription);
 			preparedStatement.setString(14, lienFb);
 			preparedStatement.execute();
+						
 			connexion.commit();
 
 		} catch (NamingException | SQLException | ParseException e) {
@@ -2243,6 +2258,23 @@ public class ActiviteDAO {
 
 		}
 
+	}
+
+	private static boolean valideActivite(Date dateDebut, Date dateFin) {
+		
+		DateTime maitenant = new DateTime().withHourOfDay(0).withMinuteOfHour(0)
+				.withSecondOfMinute(0).withMillisOfSecond(00);
+		
+			if (dateDebut.before(maitenant.toDate()))
+				return false;
+			
+			long Heure=3600000;
+			if (dateFin.getTime()-dateDebut.getTime()>24*Heure)
+			return false;
+			
+			
+			return true;
+		
 	}
 
 	public static String encodeToString(BufferedImage image, String type) {
