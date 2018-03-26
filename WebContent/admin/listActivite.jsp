@@ -31,6 +31,14 @@
 	type="text/css">
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/moment.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+	<link href="/wayd/css/styleWaydAdmin.css" rel="stylesheet"
+	type="text/css">
 </head>
 
 <body>
@@ -133,6 +141,16 @@
 
 							</select>
 						</div>
+						<div class="form-group">
+				<label for="iddaterecherche">Date fin</label>
+				<div class='input-group date' id="daterecherche">
+					<input readonly style="background-color:white;" type='text' class="form-control" id="iddaterecherche" name="daterecherche" />
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+						
 
 
 						<div class="form-group">
@@ -386,6 +404,16 @@
 		
 		$(function() {
 
+			$('#daterecherche').datetimepicker({
+				defaultDate : new Date(<%=filtre.getDateRecherche().getYear()%>,<%=filtre.getDateRecherche().getMonthOfYear()-1%>,<%=filtre.getDateRecherche().getDayOfMonth()%>),
+				format : 'DD/MM/YYYY',
+				focusOnShow: false,
+				  ignoreReadonly: true
+
+			}).on('dp.change', function (e) {document.getElementById("formulaire").submit(); });
+			
+			
+			
 			
 			$('form select').change(function() {
 

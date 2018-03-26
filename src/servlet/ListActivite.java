@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import website.metier.AuthentificationSite;
 import website.metier.admin.FitreAdminActivites;
@@ -128,6 +132,14 @@ public class ListActivite extends HttpServlet {
 		if (request.getParameter("gratuit") != null) {
 			int gratuit = Integer.parseInt(request.getParameter("gratuit"));
 			filtreActivite.setGratuit(gratuit);
+		}
+		
+		if (request.getParameter("daterecherche") != null) {
+			
+				DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
+				DateTime dateRecherche = formatter.parseDateTime(request.getParameter("daterecherche") );
+				filtreActivite.setDateRecherche(dateRecherche);
+			
 		}
 		
 		

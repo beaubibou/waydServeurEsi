@@ -23,6 +23,8 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import sun.misc.BASE64Encoder;
 import texthtml.pro.Erreur_HTML;
@@ -1434,6 +1436,12 @@ public class ActiviteDAO {
 
 	}
 
+private static String getFormatDate(DateTime dt) {
+		
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
+		return fmt.print(dt);
+
+	}
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
 		long debut = System.currentTimeMillis();
@@ -1478,7 +1486,8 @@ public class ActiviteDAO {
 					+ " FROM signaler_activite  GROUP BY signaler_activite.idactivite) tablesignalement ON activite.idactivite = tablesignalement.idactivite"
 					+ " LEFT JOIN type_activite ON type_activite.idtypeactivite = activite.idtypeactivite "
 					+ " left join personne on personne.idpersonne = activite.idpersonne "
-					+ " WHERE activite.latitude between ? and ? and activite.longitude between ? and ? and activite.masque=? and activite.actif=? ";
+					+ " WHERE activite.latitude between ? and ? and activite.longitude between ? and ?"
+					+ " and activite.masque=? and activite.actif=? and to_char(activite.datedebut,'dd/MM/yyyy')=?";
 
 			// tablesignalement.nbrsignalement = 1
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
@@ -1552,9 +1561,10 @@ public class ActiviteDAO {
 			preparedStatement.setDouble(4, longMax);
 			preparedStatement.setBoolean(5, masqueFiltre);
 			preparedStatement.setBoolean(6, actifFiltre);
+			LOG.info(getFormatDate(filtre.getDateRecherche()));
+			preparedStatement.setString(7, getFormatDate(filtre.getDateRecherche()));
 
-
-			int index = 7;
+			int index = 8;
 
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
 														// l'activité

@@ -1,6 +1,7 @@
 package website.metier.admin;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 
 import website.metier.TypeActiviteBean;
 import website.metier.TypeEtatActivite;
@@ -19,6 +20,7 @@ public class FitreAdminActivites {
 	int etatActivite;
 	int gratuit;
 	boolean actif,masque;
+	DateTime dateRecherche;
 	
 	
 	public boolean isActif() {
@@ -115,5 +117,13 @@ public class FitreAdminActivites {
 		this.gratuit=TypeGratuitActivite.GRATUITE_INCONNU;
 		this.actif=false;
 		this.masque=false;
+		dateRecherche = new DateTime().withHourOfDay(0).withMinuteOfHour(0)
+				.withSecondOfMinute(0).withMillisOfSecond(00);
+	}
+	public DateTime getDateRecherche() {
+		return dateRecherche;
+	}
+	public void setDateRecherche(DateTime dateRecherche) {
+		this.dateRecherche = dateRecherche;
 	}
 }
