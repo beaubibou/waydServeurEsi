@@ -84,7 +84,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 		ArrayList<String> villes = new ArrayList<String>();
 
-		villes.add("lyon");
+		villes.add("paris");
 		
 		executer();
 		// villes.add("paris");
@@ -109,7 +109,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 		ArrayList<String> villes = new ArrayList<String>();
 
-		villes.add("lyon");
+		villes.add("paris");
 
 		ImportCarpe importCarpe = new ImportCarpe();
 

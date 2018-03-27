@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -1221,6 +1222,9 @@ public class ActiviteDAO {
 
 		String requete = null;
 
+		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+		String dateDuJour= formater.format(new Date());
+	LOG.info(dateDuJour);
 		// Renvoi les imm�diates
 		if (commenceDans == 0) {
 
@@ -1236,13 +1240,13 @@ public class ActiviteDAO {
 		// datefinde rechere et maintenant
 		else {
 			// Requete N�2
-			requete = " SELECT " + REQ_ACTIVITE + " FROM "
+				requete = " SELECT " + REQ_ACTIVITE + " FROM "
 					+ " personne,activite"
 					+ " WHERE personne.idpersonne = activite.idpersonne  "
-					+ " and activite.actif=true" + " and datedebut>? "
+					+ " and activite.actif=true" + " and datedebut!=? "
 					+ " and activite.latitude between ? and ?"
-					+ " and activite.longitude between ? and ? and datedebut<?";
-
+					+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
+						// le critere ne sert datedebut!=? ne sert à rien.
 		}
 
 		if (typeactivite != -1) {
@@ -1279,8 +1283,10 @@ public class ActiviteDAO {
 		if (commenceDans != 0) {
 			// ajoute � la requete n�2 la date de fin
 			index++;
-			preparedStatement.setTimestamp(index, new java.sql.Timestamp(
-					dateRechercheFin.getTime()));
+//			preparedStatement.setTimestamp(index, new java.sql.Timestamp(
+//					dateRechercheFin.getTime()));
+			preparedStatement.setString(index, dateDuJour);
+			
 		}
 
 		if (typeactivite != -1) {

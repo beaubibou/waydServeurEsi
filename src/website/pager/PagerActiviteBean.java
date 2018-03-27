@@ -14,7 +14,7 @@ public class PagerActiviteBean {
 	   
 	private ArrayList<ActiviteBean> listActivite;
 	private int pageEnCours = 0;
-	private final int maxResult = 35;
+	private final int maxResult = 50;
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
 	private FitreAdminActivites filtAdminActivites;

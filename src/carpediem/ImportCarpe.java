@@ -84,7 +84,7 @@ public class ImportCarpe {
 
 			}
 
-		} while (status == 1 && page < 10);
+		} while (status == 1 && page < 30);
 
 		int g = 0;
 		for (ActiviteCarpeDiem activiteCarpe : mapActivite.values()) {
