@@ -520,7 +520,7 @@ public class MessageDAO {
 	public ArrayList<Discussion> getListDiscussion(int idpersonne)
 			throws SQLException {
 		Discussion discussion = null;
-		ArrayList<Discussion> retour = new ArrayList<Discussion>();
+		ArrayList<Discussion> retour = new ArrayList<>();
 
 		// " personne p where m.idpersonne=p.idpersonne and iddestinataire=? group by m.idpersonne,p.nom,p.prenom,p.photo,m.corps,m.idmessage";
 		// Une personne appartient � la discussion x-y ou y-x on gere les 2 cas

@@ -75,7 +75,7 @@ public class Cron extends HttpServlet {
 		LOG.info("Demarrage serveur");
 	
 		if (FirebaseApp.getApps().isEmpty())
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
+			FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File(getServletContext().getRealPath("/")

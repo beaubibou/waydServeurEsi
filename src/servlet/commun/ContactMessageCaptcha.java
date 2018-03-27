@@ -57,7 +57,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 		
 		super.init();
 		if (FirebaseApp.getApps().isEmpty())
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
+			FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 	}
 
@@ -153,7 +153,7 @@ public class ContactMessageCaptcha extends HttpServlet {
 
 		// add header
 
-		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+		List<BasicNameValuePair> urlParameters = new ArrayList<>();
 
 		urlParameters.add(new BasicNameValuePair("secret",
 				"6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));

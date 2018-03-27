@@ -1561,14 +1561,12 @@ private static String getFormatDate(DateTime dt) {
 			preparedStatement.setDouble(4, longMax);
 			preparedStatement.setBoolean(5, masqueFiltre);
 			preparedStatement.setBoolean(6, actifFiltre);
-			LOG.info(getFormatDate(filtre.getDateRecherche()));
 			preparedStatement.setString(7, getFormatDate(filtre.getDateRecherche()));
 
 			int index = 8;
 
 			if (typeactivite != TypeActiviteBean.TOUS) {// on trie sur
 														// l'activité
-
 				preparedStatement.setInt(index, typeactivite);
 				index++;
 			}
@@ -2279,6 +2277,7 @@ private static String getFormatDate(DateTime dt) {
 				return false;
 			
 			long Heure=3600000;
+			
 			if (dateFin.getTime()-dateDebut.getTime()>24*Heure)
 			return false;
 			

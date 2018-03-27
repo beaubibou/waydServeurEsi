@@ -30,7 +30,7 @@ public class SignalementDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SignalementProfilBean> retour = new ArrayList<SignalementProfilBean>();
+		ArrayList<SignalementProfilBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -78,7 +78,7 @@ public class SignalementDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SignalementActiviteBean> retour = new ArrayList<SignalementActiviteBean>();
+		ArrayList<SignalementActiviteBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -132,7 +132,7 @@ public class SignalementDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SignalementCount> retour = new ArrayList<SignalementCount>();
+		ArrayList<SignalementCount> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();

@@ -130,7 +130,7 @@ public class PushNotifictionHelper {
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
-		List<String> test = new ArrayList<String>();
+		List<String> test = new ArrayList<>();
 		test.add(deviceToken);
 
 		json.put("to", deviceToken.trim());
@@ -169,7 +169,7 @@ public class PushNotifictionHelper {
 	
 	public static ArrayList<String> getListGCMNotification(ArrayList<Personne> listpersonne) {
 		
-		ArrayList<String> listgcm = new ArrayList<String>();
+		ArrayList<String> listgcm = new ArrayList<>();
 		for (Personne pers : listpersonne) {
 			if (pers.getGcm()!=null ){
 				

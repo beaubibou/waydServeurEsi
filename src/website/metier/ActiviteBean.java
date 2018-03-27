@@ -16,8 +16,8 @@ import fcm.ServeurMethodes;
 
 public class ActiviteBean {
 	private static final Logger LOG = Logger.getLogger(ActiviteBean.class);
-	int id;
 
+	int id;
 	public static int GRATUIT = 1;
 	public static int PAYANT = 2;
 	public static int GRATUITE_INCONNU = 0;
@@ -241,7 +241,7 @@ public class ActiviteBean {
 		this.urlPhoto = urlPhoto;
 	}
 
-	private ArrayList<ParticipantBean> listParticipant = new ArrayList<ParticipantBean>();
+	private ArrayList<ParticipantBean> listParticipant = new ArrayList<>();
 	private int nbrSignalement;
 
 	public String getDatefinStr() {

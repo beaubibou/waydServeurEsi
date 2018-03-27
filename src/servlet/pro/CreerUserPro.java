@@ -63,7 +63,7 @@ public class CreerUserPro extends HttpServlet {
 		
 		super.init();
 		if (FirebaseApp.getApps().isEmpty())
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
+			FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 	}
 
@@ -225,7 +225,7 @@ public class CreerUserPro extends HttpServlet {
 			String pseudo) {
 
 		if (FirebaseApp.getApps().isEmpty())
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
+			FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 		CreateRequest nouveauUser = new CreateRequest().setEmail(email)
 				.setEmailVerified(false).setPassword(pwd).setDisabled(false)
@@ -325,7 +325,7 @@ public class CreerUserPro extends HttpServlet {
 
 		// add header
 
-		List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+		List<BasicNameValuePair> urlParameters = new ArrayList<>();
 
 		urlParameters.add(new BasicNameValuePair("secret",
 				"6Ld6TzgUAAAAAFZnSygMYDyAM83ZuReVIT7O068z"));

@@ -36,8 +36,8 @@ public class ActiviteDAO {
 			+ "activite.nbmaxwayd," + "activite.datefin,"
 			+ "activite.idtypeactivite," + "activite.typeuser,"
 			+ "activite.typeacces," + "activite.descriptionall,"
-			+ "activite.gratuit,activite.lienfacebook," + "personne.prenom," + "personne.sexe,"
-			+ "personne.nom," + "personne.idpersonne,"
+			+ "activite.gratuit,activite.lienfacebook," + "personne.prenom,"
+			+ "personne.sexe," + "personne.nom," + "personne.idpersonne,"
 			+ "personne.affichesexe," + "personne.afficheage,"
 			+ "personne.datenaissance," + "personne.note,"
 			+ "personne.nbravis as totalavis," + "personne.photo";
@@ -96,7 +96,7 @@ public class ActiviteDAO {
 				datefin, idtypeactivite, latitude, longitude, adresse, nom,
 				prenom, photo, note, archive, totalavis, datenaissance, sexe,
 				nbrparticipant, afficheage, affichesexe, nbmaxwayd, typeUser,
-				typeAcces, fulldescription, gratuit,lienfacebook);
+				typeAcces, fulldescription, gratuit, lienfacebook);
 
 	}
 
@@ -114,9 +114,9 @@ public class ActiviteDAO {
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setInt(1, idactivite_);
 		rs = preparedStatement.executeQuery();
-	
-		while(rs.next())
-		activite = getActiviteByRs(rs);
+
+		while (rs.next())
+			activite = getActiviteByRs(rs);
 
 		CxoPool.close(preparedStatement, rs);
 
@@ -127,7 +127,7 @@ public class ActiviteDAO {
 	public ArrayList<Personne> getListPersonneInterresse(Activite activite)
 			throws Exception {
 
-		ArrayList<Personne> listpersonne = new ArrayList<Personne>();
+		ArrayList<Personne> listpersonne = new ArrayList<>();
 
 		if (!activite.isEnCours())
 			return listpersonne;
@@ -200,7 +200,7 @@ public class ActiviteDAO {
 	public ArrayList<PhotoActivite> getListPhotoActivite(int idactivite)
 			throws SQLException {
 
-		ArrayList<PhotoActivite> listPhotos = new ArrayList<PhotoActivite>();
+		ArrayList<PhotoActivite> listPhotos = new ArrayList<>();
 
 		String requete = "SELECT photo,id,idactivite from photo_activite where idactivite=?";
 
@@ -261,20 +261,31 @@ public class ActiviteDAO {
 	}
 
 	public void addRefus(int idPersonne, int idActivite) throws SQLException {
+		PreparedStatement preparedStatement = null;
 
-		if (!isADejaRefuse(idPersonne, idActivite)) {
+		try {
 
-			String requete = "INSERT INTO refusparticipation(idpersonne, idactivite, datecreation)"
-					+ " VALUES (?, ?, ?)";
+			if (!isADejaRefuse(idPersonne, idActivite)) {
 
-			PreparedStatement preparedStatement = connexion.prepareStatement(
-					requete, Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.setInt(1, idPersonne);
-			preparedStatement.setInt(2, idActivite);
-			preparedStatement.setTimestamp(3,
-					new java.sql.Timestamp(new Date().getTime()));
-			preparedStatement.execute();
-			preparedStatement.close();
+				String requete = "INSERT INTO refusparticipation(idpersonne, idactivite, datecreation)"
+						+ " VALUES (?, ?, ?)";
+
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, idPersonne);
+				preparedStatement.setInt(2, idActivite);
+				preparedStatement.setTimestamp(3, new java.sql.Timestamp(
+						new Date().getTime()));
+				preparedStatement.execute();
+				preparedStatement.close();
+			}
+		} catch (SQLException e) {
+
+			throw e;
+
+		} finally {
+			CxoPool.closePS(preparedStatement);
+
 		}
 
 	}
@@ -288,7 +299,8 @@ public class ActiviteDAO {
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
-		Activite activite = null;
+		Activite activite ;
+	
 		ArrayList<Activite> retour = new ArrayList<Activite>();
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
@@ -347,7 +359,7 @@ public class ActiviteDAO {
 		double longMax = malongitude + coef;
 
 		Activite activite;
-		ArrayList<Activite> retour = new ArrayList<Activite>();
+		ArrayList<Activite> retour = new ArrayList<>();
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
@@ -395,7 +407,7 @@ public class ActiviteDAO {
 			throws Exception {
 
 		Activite activite;
-		ArrayList<Activite> retour = new ArrayList<Activite>();
+		ArrayList<Activite> retour = new ArrayList<>();
 
 		// ************************************Recupere les pref de
 		// l'USER**********************
@@ -457,7 +469,7 @@ public class ActiviteDAO {
 			throws SQLException {
 
 		Activite activite;
-		ArrayList<Activite> retour = new ArrayList<Activite>();
+		ArrayList<Activite> retour = new ArrayList<>();
 
 		String requete = " SELECT "
 				+ REQ_ACTIVITE
@@ -512,88 +524,104 @@ public class ActiviteDAO {
 
 	}
 
-	public void RemoveActivite(int idactivite) throws Exception {
+	public void removeActivite(int idactivite) throws Exception {
+		PreparedStatement preparedStatement = null;
+		try {
+			String requete = "DELETE FROM demandeami where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		String requete = "DELETE FROM demandeami where ( idactivite=? );";
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM nbrvu where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM nbrvu where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM interet where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM interet where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM public.participer where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
 
-		requete = "DELETE FROM public.participer where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM public.noter where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM public.noter where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM public.activite where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
 
-		requete = "DELETE FROM public.activite where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
+			preparedStatement.close();
 
-		preparedStatement.close();
+		} catch (SQLException e) {
+			throw e;
+
+		} finally {
+			if (preparedStatement != null)
+				CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public void RemoveOnlyActivite(int idactivite) throws SQLException {
 
-		String requete = "DELETE FROM photo_activite where ( idactivite=? );";
+		PreparedStatement preparedStatement = null;
+		try {
+			String requete = "DELETE FROM photo_activite where ( idactivite=? );";
 
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM nbrvu where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM nbrvu where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM interet where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM interet where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
-		requete = "DELETE FROM activite where ( idactivite=? );";
-		preparedStatement = connexion.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			requete = "DELETE FROM activite where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			if (preparedStatement != null)
+				CxoPool.closePS(preparedStatement);
+
+		}
 
 	}
 
 	public ArrayList<Activite> getMesActiviteArchive(int idpersonne)
 			throws SQLException {
 		Activite activite = null;
-		ArrayList<Activite> retour = new ArrayList<Activite>();
+		ArrayList<Activite> retour = new ArrayList<>();
 
 		String requete = "SELECT " + REQ_ACTIVITE
 				+ " FROM personne,activite,participer"
@@ -752,9 +780,10 @@ public class ActiviteDAO {
 			throws SQLException {
 		long debut = System.currentTimeMillis();
 
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
+		PreparedStatement preparedStatement =null;
+		ResultSet rs=null ;
 		boolean retour = false;
+		
 
 		String requete = " SELECT idpersonne from interet where idpersonne=? and idactivite=?";
 		preparedStatement = connexion.prepareStatement(requete);
@@ -996,6 +1025,7 @@ public class ActiviteDAO {
 		preparedStatement.setInt(1, idpersonne);
 		rs = preparedStatement.executeQuery();
 		int nbrnotification = 0;
+
 		if (rs.next()) {
 			nbrnotification = rs.getInt("nbrnotification");
 		}
@@ -1007,6 +1037,7 @@ public class ActiviteDAO {
 		preparedStatement.setInt(1, idpersonne);
 		rs = preparedStatement.executeQuery();
 		int nbrami = 0;
+
 		if (rs.next()) {
 			nbrami = rs.getInt("nbrami");
 		}
@@ -1056,16 +1087,23 @@ public class ActiviteDAO {
 	public void updateChampCalcule(int idactivite) throws Exception {
 		// Met aj our le nbr participant dans activite
 
+		PreparedStatement preparedStatement = null;
 		String requete = "UPDATE activite SET nbrwaydeur=(select  count(idpersonne)+1 "
 				+ " from participer where  idactivite=?) WHERE idactivite=?";
 
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setInt(1, idactivite);
-		preparedStatement.setInt(2, idactivite);
-		preparedStatement.execute();
-		if (preparedStatement != null)
-			preparedStatement.close();
+		try {
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+
+			if (preparedStatement != null)
+				CxoPool.closePS(preparedStatement);
+
+		}
 
 	}
 
@@ -1133,23 +1171,29 @@ public class ActiviteDAO {
 	public void updateActivite(int idpersonne, String libelle, String titre,
 			int idactivite, int nbrmax) throws SQLException {
 
-		String requete = "UPDATE  activite set titre=?,libelle=?,nbmaxwayd=? WHERE idpersonne=? and idactivite=?";
+		PreparedStatement preparedStatement = null;
+		try {
+			String requete = "UPDATE  activite set titre=?,libelle=?,nbmaxwayd=? WHERE idpersonne=? and idactivite=?";
 
-		PreparedStatement preparedStatement = connexion
-				.prepareStatement(requete);
-		preparedStatement.setString(1, titre);
-		preparedStatement.setString(2, libelle);
-		preparedStatement.setInt(3, nbrmax);
-		preparedStatement.setInt(4, idpersonne);
-		preparedStatement.setInt(5, idactivite);
-		preparedStatement.execute();
-		preparedStatement.close();
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, titre);
+			preparedStatement.setString(2, libelle);
+			preparedStatement.setInt(3, nbrmax);
+			preparedStatement.setInt(4, idpersonne);
+			preparedStatement.setInt(5, idactivite);
+			preparedStatement.execute();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
 
 	}
 
 	public boolean isADejaRefuse(int idpersonne, int idactivite)
 			throws SQLException {
 		// Renvoi si id ami appartient aux ami de idpersonne
+
 		boolean retour = false;
 		String requete = " SELECT idpersonne from refusparticipation  where idpersonne=? and idactivite=?  ";
 		PreparedStatement preparedStatement = connexion
@@ -1191,228 +1235,301 @@ public class ActiviteDAO {
 
 	}
 
-	public ArrayList<Activite> getActivites(int idPersonne, double malatitude,
+	public ArrayList<Activite> getActivites(double malatitude,
 			double malongitude, int rayonmetre, int typeactivite,
 			String motcle, int typeUser, int commenceDans) throws SQLException {
 
-		PreparedStatement preparedStatement;
-		ResultSet rs;
-		Activite activite;
-		ArrayList<Activite> listActivite = new ArrayList<Activite>();
+		PreparedStatement preparedStatement = null;
+		ArrayList<Activite> listActivite = new ArrayList<>();
+		ResultSet rs = null;
 
-		double coef = rayonmetre * 0.007 / 700;
-		double latMin = malatitude - coef;
-		double latMax = malatitude + coef;
-		double longMin = malongitude - coef;
-		double longMax = malongitude + coef;
+		try {
 
-		Calendar calendrierDebut = Calendar.getInstance();
+			Activite activite;
 
-		Date dateRechercheDebut = calendrierDebut.getTime();
+			double coef = rayonmetre * 0.007 / 700;
+			double latMin = malatitude - coef;
+			double latMax = malatitude + coef;
+			double longMin = malongitude - coef;
+			double longMax = malongitude + coef;
 
-		Calendar calendrierFin = Calendar.getInstance();
+			Calendar calendrierDebut = Calendar.getInstance();
 
-		calendrierFin.add(Calendar.MINUTE, commenceDans);
-		Date dateRechercheFin = calendrierFin.getTime();
+			Date dateRechercheDebut = calendrierDebut.getTime();
 
-		// on remonte les activités dont le debut est comprise entre
-		// l'heure
-		// actuelle + commenceDans et l'heure actuelle + commenceDans+1
-		// heure
+			Calendar calendrierFin = Calendar.getInstance();
 
-		String requete = null;
+			calendrierFin.add(Calendar.MINUTE, commenceDans);
 
-		SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-		String dateDuJour= formater.format(new Date());
-	LOG.info(dateDuJour);
-		// Renvoi les imm�diates
-		if (commenceDans == 0) {
+			// on remonte les activités dont le debut est comprise entre
+			// l'heure
+			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
+			// heure
 
-			requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
-					+ " WHERE " + " personne.idpersonne = activite.idpersonne"
-					+ " and activite.actif=true"
-					+ " and (? between datedebut and  datefin )"
-					+ " and activite.latitude between ? and ?"
-					+ " and activite.longitude between ? and ?";
+			String requete = null;
+
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			String dateDuJour = formater.format(new Date());
+
+			// Renvoi les imm�diates
+			if (commenceDans == 0) {
+
+				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+						+ " WHERE "
+						+ " personne.idpersonne = activite.idpersonne"
+						+ " and activite.actif=true"
+						+ " and (? between datedebut and  datefin )"
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?";
+			}
+
+			// recheche les activite dont la date de debut est comprise entre
+			// datefinde rechere et maintenant
+			else {
+				// Requete N�2
+				requete = " SELECT "
+						+ REQ_ACTIVITE
+						+ " FROM "
+						+ " personne,activite"
+						+ " WHERE personne.idpersonne = activite.idpersonne  "
+						+ " and activite.actif=true"
+						+ " and datedebut!=? "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
+				// le critere ne sert datedebut!=? ne sert à rien.
+			}
+
+			if (typeactivite != -1) {
+				requete = requete + " and activite.idtypeactivite=?";
+			}
+
+			if (motcle != null && !motcle.isEmpty()) {
+
+				requete = requete
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
+
+			}
+
+			if (typeUser != 0) {
+
+				requete = requete + " and activite.typeuser=?";
+
+			}
+
+			requete = requete + " ORDER BY datedebut asc;";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+
+			preparedStatement.setDouble(2, latMin);
+			preparedStatement.setDouble(3, latMax);
+			preparedStatement.setDouble(4, longMin);
+			preparedStatement.setDouble(5, longMax);
+
+			int index = 5;
+
+			if (commenceDans != 0) {
+				// ajoute � la requete n�2 la date de fin
+				index++;
+				preparedStatement.setString(index, dateDuJour);
+
+			}
+
+			if (typeactivite != -1) {
+				index++;
+				preparedStatement.setInt(index, typeactivite);
+
+			}
+			if (motcle != null && !motcle.isEmpty()) {
+				index++;
+				String test = "%" + motcle + "%";
+				preparedStatement.setString(index, test);
+				index++;
+				preparedStatement.setString(index, test);
+
+			}
+
+			if (typeUser != 0) {
+
+				index++;
+				preparedStatement.setInt(index, typeUser);
+
+			}
+
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+
+				activite = getActiviteByRs(rs);
+
+				if (activite.isInRayon(malatitude, malongitude, rayonmetre))
+					listActivite.add(activite);
+
+			}
+
+		} catch (SQLException e) {
+			throw e;
 		}
 
-		// recheche les activite dont la date de debut est comprise entre
-		// datefinde rechere et maintenant
-		else {
-			// Requete N�2
-				requete = " SELECT " + REQ_ACTIVITE + " FROM "
-					+ " personne,activite"
-					+ " WHERE personne.idpersonne = activite.idpersonne  "
-					+ " and activite.actif=true" + " and datedebut!=? "
-					+ " and activite.latitude between ? and ?"
-					+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
-						// le critere ne sert datedebut!=? ne sert à rien.
+		finally {
+			CxoPool.close(preparedStatement, rs);
 		}
-
-		if (typeactivite != -1) {
-			requete = requete + " and activite.idtypeactivite=?";
-		}
-
-		if (motcle != null && !motcle.isEmpty()) {
-
-			requete = requete
-					+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
-
-		}
-
-		if (typeUser != 0) {
-
-			requete = requete + " and activite.typeuser=?";
-
-		}
-
-		requete = requete + " ORDER BY datedebut asc;";
-
-		preparedStatement = connexion.prepareStatement(requete);
-
-		preparedStatement.setTimestamp(1, new java.sql.Timestamp(
-				dateRechercheDebut.getTime()));
-
-		preparedStatement.setDouble(2, latMin);
-		preparedStatement.setDouble(3, latMax);
-		preparedStatement.setDouble(4, longMin);
-		preparedStatement.setDouble(5, longMax);
-
-		int index = 5;
-
-		if (commenceDans != 0) {
-			// ajoute � la requete n�2 la date de fin
-			index++;
-//			preparedStatement.setTimestamp(index, new java.sql.Timestamp(
-//					dateRechercheFin.getTime()));
-			preparedStatement.setString(index, dateDuJour);
-			
-		}
-
-		if (typeactivite != -1) {
-			index++;
-			preparedStatement.setInt(index, typeactivite);
-
-		}
-		if (motcle != null && !motcle.isEmpty()) {
-			index++;
-			String test = "%" + motcle + "%";
-			preparedStatement.setString(index, test);
-			index++;
-			preparedStatement.setString(index, test);
-
-		}
-
-		if (typeUser != 0) {
-
-			index++;
-			preparedStatement.setInt(index, typeUser);
-
-		}
-
-		//
-
-		rs = preparedStatement.executeQuery();
-		while (rs.next()) {
-
-			activite = getActiviteByRs(rs);
-
-			if (activite.isInRayon(malatitude, malongitude, rayonmetre))
-				listActivite.add(activite);
-
-		}
-
-		rs.close();
-		preparedStatement.close();
 
 		return listActivite;
 
 	}
 
-	// public ArrayList<Activite> getListActivites(Double malatitude,
-	// Double malongitude, int rayonmetre, int idtypeactivite_,
-	// String motcle, long debutActivite, long finActivite, int typeUser,
-	// int accessActivite, int commenceDans) throws SQLException {
-	//
-	// double coef = rayonmetre * 0.007 / 700;
-	// double latMin = malatitude - coef;
-	// double latMax = malatitude + coef;
-	// double longMin = malongitude - coef;
-	// double longMax = malongitude + coef;
-	// Activite activite = null;
-	// ArrayList<Activite> retour = new ArrayList<Activite>();
-	// Calendar calendrier = Calendar.getInstance();
-	// calendrier.add(Calendar.MINUTE, commenceDans);
-	//
-	// String requete = " SELECT "
-	// + REQ_ACTIVITE
-	// + " FROM personne,activite"
-	// + " WHERE"
-	// + " personne.idpersonne = activite.idpersonne"
-	// + " and activite.idtypeactivite=? "
-	// + " and activite.actif=true"
-	// + " and ? between datedebut and datefin"
-	// + " and activite.latitude between ? and ?"
-	// + " and activite.longitude between ? and ?"
-	// +
-	// " and (UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?))  )  ORDER BY datedebut asc";
-	//
-	// if (idtypeactivite_ != 0) {
-	//
-	// }
-	//
-	// if (motcle != null)
-	// if (!motcle.equals("")) {
-	//
-	// }
-	//
-	// if (typeUser != 0) {
-	//
-	// }
-	//
-	// if (accessActivite != 0) {
-	//
-	// }
-	//
-	// if (commenceDans != 0) {
-	//
-	// }
-	//
-	// PreparedStatement preparedStatement = connexion
-	// .prepareStatement(requete);
-	// preparedStatement.setInt(1, idtypeactivite_);
-	// preparedStatement.setTimestamp(2, new java.sql.Timestamp(calendrier
-	// .getTime().getTime()));
-	//
-	// String test = "%" + motcle + "%";
-	// preparedStatement.setDouble(3, latMin);
-	// preparedStatement.setDouble(4, latMax);
-	// preparedStatement.setDouble(5, longMin);
-	// preparedStatement.setDouble(6, longMax);
-	// preparedStatement.setString(7, test);
-	// preparedStatement.setString(8, test);
-	// //
-	//
-	// ResultSet rs = preparedStatement.executeQuery();
-	//
-	// while (rs.next()) {
-	//
-	// activite = getActiviteByRs(rs);
-	// if (activite != null
-	// && activite.isInRayon(malatitude, malongitude, rayonmetre))
-	// retour.add(activite);
-	//
-	// }
-	//
-	// CxoPool.close(preparedStatement, rs);
-	// return retour;
-	//
-	// }
-	//
-	// public void addActivitePro(String titre, String libelle,
-	// int idorganisateur, int idtypeactivite, String latitudestr,
-	// String longitudestr, String adresse, Long debut, Long fin) {
-	//
-	// }
+	public ArrayList<Activite> getActivitesOffSet(double malatitude,
+			double malongitude, int rayonmetre, int typeactivite,
+			String motcle, int typeUser, int commenceDans, int offset)
+			throws SQLException {
+
+		int NBR_RETOUR_LIGNE = 4;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Activite activite;
+		ArrayList<Activite> listActivite = new ArrayList<>();
+		try {
+
+			double coef = rayonmetre * 0.007 / 700;
+			double latMin = malatitude - coef;
+			double latMax = malatitude + coef;
+			double longMin = malongitude - coef;
+			double longMax = malongitude + coef;
+
+			Calendar calendrierDebut = Calendar.getInstance();
+
+			Date dateRechercheDebut = calendrierDebut.getTime();
+
+			Calendar calendrierFin = Calendar.getInstance();
+
+			calendrierFin.add(Calendar.MINUTE, commenceDans);
+
+			// on remonte les activités dont le debut est comprise entre
+			// l'heure
+			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
+			// heure
+
+			String requete;
+
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			String dateDuJour = formater.format(new Date());
+
+			// Renvoi les imm�diates
+			if (commenceDans == 0) {
+
+				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+						+ " WHERE "
+						+ " personne.idpersonne = activite.idpersonne"
+						+ " and activite.actif=true"
+						+ " and (? between datedebut and  datefin )"
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?";
+			}
+
+			// recheche les activite dont la date de debut est comprise entre
+			// datefinde rechere et maintenant
+			else {
+
+				requete = " SELECT "
+						+ REQ_ACTIVITE
+						+ " FROM "
+						+ " personne,activite"
+						+ " WHERE personne.idpersonne = activite.idpersonne  "
+						+ " and activite.actif=true"
+						+ " and datedebut!=? "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
+				// le critere ne sert datedebut!=? ne sert à rien.
+			}
+
+			if (typeactivite != -1) {
+				requete = requete + " and activite.idtypeactivite=?";
+			}
+
+			if (motcle != null && !motcle.isEmpty()) {
+
+				requete = requete
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
+
+			}
+
+			if (typeUser != 0) {
+
+				requete = requete + " and activite.typeuser=?";
+
+			}
+
+			requete = requete + " ORDER BY datedebut asc limit=? offset=? ;";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+
+			preparedStatement.setDouble(2, latMin);
+			preparedStatement.setDouble(3, latMax);
+			preparedStatement.setDouble(4, longMin);
+			preparedStatement.setDouble(5, longMax);
+
+			int index = 5;
+
+			if (commenceDans != 0) {
+				// ajoute � la requete n�2 la date de fin
+				index++;
+				preparedStatement.setString(index, dateDuJour);
+
+			}
+
+			if (typeactivite != -1) {
+				index++;
+				preparedStatement.setInt(index, typeactivite);
+
+			}
+
+			if (motcle != null && !motcle.isEmpty()) {
+				index++;
+				String test = "%" + motcle + "%";
+				preparedStatement.setString(index, test);
+				index++;
+				preparedStatement.setString(index, test);
+
+			}
+
+			if (typeUser != 0) {
+
+				index++;
+				preparedStatement.setInt(index, typeUser);
+
+			}
+			
+			index++;
+			preparedStatement.setInt(index, NBR_RETOUR_LIGNE);
+			index++;
+			preparedStatement.setInt(index, offset);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				activite = getActiviteByRs(rs);
+
+				if (activite.isInRayon(malatitude, malongitude, rayonmetre))
+					listActivite.add(activite);
+
+			}
+
+		} catch (SQLException e) {
+			throw e;
+		}
+		finally {
+			
+			CxoPool.close(preparedStatement, rs);
+		}
+
+		return listActivite;
+
+	}
 
 }

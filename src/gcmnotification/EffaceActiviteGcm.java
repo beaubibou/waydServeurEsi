@@ -66,7 +66,7 @@ public class EffaceActiviteGcm implements Runnable {
 			ServeurMethodes serveurmethode = new ServeurMethodes(
 					connexionGcm);
 
-			ArrayList<Personne> listpersonneTotal = new ArrayList<Personne>();
+			ArrayList<Personne> listpersonneTotal = new ArrayList<>();
 			listpersonneTotal.addAll(participants);
 			listpersonneTotal.addAll(personneInterresse);
 

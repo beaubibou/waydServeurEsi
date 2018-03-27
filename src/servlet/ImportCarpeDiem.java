@@ -82,7 +82,7 @@ public class ImportCarpeDiem extends HttpServlet {
 		//
 		// website.dao.ActiviteDAO.ajouteActiviteCarpeDiem(activite);
 
-		ArrayList<String> villes = new ArrayList<String>();
+		ArrayList<String> villes = new ArrayList<>();
 
 		villes.add("paris");
 		
@@ -107,7 +107,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 	public static void executer() throws IOException {
 
-		ArrayList<String> villes = new ArrayList<String>();
+		ArrayList<String> villes = new ArrayList<>();
 
 		villes.add("paris");
 

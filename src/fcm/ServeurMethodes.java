@@ -542,7 +542,7 @@ public class ServeurMethodes {
 
 	public ArrayList<String> getListGCM(ArrayList<Personne> listpersonne) {
 
-		ArrayList<String> listgcm = new ArrayList<String>();
+		ArrayList<String> listgcm = new ArrayList<>();
 		for (Personne pers : listpersonne) {
 			if (pers.getGcm() != null) {
 				listgcm.add(pers.getGcm());

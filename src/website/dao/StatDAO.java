@@ -91,7 +91,7 @@ public class StatDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<StatistiqueBean> retour = new ArrayList<StatistiqueBean>();
+		ArrayList<StatistiqueBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -126,7 +126,7 @@ public class StatDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<StatistiqueBean> retour = new ArrayList<StatistiqueBean>();
+		ArrayList<StatistiqueBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -159,7 +159,7 @@ public class StatDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<StatistiqueBean> retour = new ArrayList<StatistiqueBean>();
+		ArrayList<StatistiqueBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();
@@ -191,7 +191,7 @@ public class StatDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<StatistiqueBean> retour = new ArrayList<StatistiqueBean>();
+		ArrayList<StatistiqueBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();

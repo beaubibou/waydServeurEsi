@@ -364,7 +364,7 @@ public static boolean isLoginExist(String login)  {
 		try {
 
 			if (FirebaseApp.getApps().isEmpty())
-				FirebaseApp.initializeApp(WBservices.optionFireBase);
+				FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 			FirebaseAuth.getInstance().deleteUserAsync(uid).get();
 			supprimePersonneDAO(idPersonne);
@@ -387,7 +387,7 @@ public static boolean isLoginExist(String login)  {
 		try {
 
 			if (FirebaseApp.getApps().isEmpty())
-				FirebaseApp.initializeApp(WBservices.optionFireBase);
+				FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 			UpdateRequest request = new UpdateRequest(uid);
 
@@ -618,7 +618,7 @@ public static boolean isLoginExist(String login)  {
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		ProfilBean profil = null;
-		ArrayList<ProfilBean> retour = new ArrayList<ProfilBean>();
+		ArrayList<ProfilBean> retour = new ArrayList<>();
 		//
 		int index = 1;
 		try {
@@ -659,7 +659,9 @@ public static boolean isLoginExist(String login)  {
 			}
 
 			if (etatProfil != TypeEtatProfil.TOUTES) {
+			
 				switch (etatProfil) {
+				
 				case TypeEtatProfil.ACTIF:
 					requete = requete + " and actif=true";
 					break;
@@ -1157,7 +1159,7 @@ public static boolean isLoginExist(String login)  {
 		try {
 
 			if (FirebaseApp.getApps().isEmpty())
-				FirebaseApp.initializeApp(WBservices.optionFireBase);
+				FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 			String uid = PersonneDAO.getUID(idpersonne);
 			if (uid == null)
@@ -1421,7 +1423,7 @@ public static boolean isLoginExist(String login)  {
 		long debut = System.currentTimeMillis();
 		
 		AvisBean avis = null;
-		ArrayList<AvisBean> retour = new ArrayList<AvisBean>();
+		ArrayList<AvisBean> retour = new ArrayList<>();
 		Connection connexion = null;
 		ResultSet rs = null;
 		PreparedStatement preparedStatement = null;

@@ -57,9 +57,9 @@ public class ProfilBean {
 	private boolean actif, admin;
 	private int typeuser;
 	private boolean premiereconnexion;
-	private ArrayList<AmiBean> listAmi = new ArrayList<AmiBean>();
-	private ArrayList<ActiviteBean> listActivite = new ArrayList<ActiviteBean>();
-	private ArrayList<SignalementProfilBean> listSignalement = new ArrayList<SignalementProfilBean>();
+	private ArrayList<AmiBean> listAmi = new ArrayList<>();
+	private ArrayList<ActiviteBean> listActivite = new ArrayList<>();
+	private ArrayList<SignalementProfilBean> listSignalement = new ArrayList<>();
 	private double latitude;
 	private double longitude;
 	private double latitudeFixe;

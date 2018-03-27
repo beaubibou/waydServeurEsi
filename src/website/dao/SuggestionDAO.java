@@ -30,7 +30,7 @@ public class SuggestionDAO {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		ArrayList<SuggestionBean> retour = new ArrayList<SuggestionBean>();
+		ArrayList<SuggestionBean> retour = new ArrayList<>();
 
 		try {
 			connexion = CxoPool.getConnection();

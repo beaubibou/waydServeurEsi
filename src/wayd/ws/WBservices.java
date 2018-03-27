@@ -95,12 +95,13 @@ import com.google.firebase.auth.FirebaseToken;
 import comparator.DiscussionDateComparator;
 
 public class WBservices {
-	public final static int NB_MAX_ACTIVITE = 1;
+	public static final int NB_MAX_ACTIVITE = 1;
 	public static SimpleDateFormat formatDate = new SimpleDateFormat(
 			"dd-MM HH:mm:ss");
 	
 	private static final Logger LOG = Logger.getLogger(WBservices.class);
-	public static FirebaseOptions optionFireBase;
+	public static FirebaseOptions OPTION_FIRE_BASE;
+	
 	public static final  String CHEMIN_UNIX_BOULOT_CLE = "/home/devel/perso/cle.json";
 	public static final  String CHEMIN_WINDOWS_CLE = "d:/cle.json";
 	public static final  String CHEMIN_PRODUCTION_CLE = "/usr/lib/jvm/java-8-openjdk-amd64/jre/cle/cle.json";
@@ -108,7 +109,7 @@ public class WBservices {
 
 	static {
 		boolean chargement = false;
-		if (optionFireBase == null) {
+		if (OPTION_FIRE_BASE == null) {
 
 			try {
 
@@ -119,7 +120,7 @@ public class WBservices {
 					FileInputStream serviceAccount = new FileInputStream(
 							CHEMIN_UNIX_BOULOT_CLE);
 
-					optionFireBase = new FirebaseOptions.Builder()
+					OPTION_FIRE_BASE = new FirebaseOptions.Builder()
 							.setCredentials(
 									GoogleCredentials
 											.fromStream(serviceAccount))
@@ -132,7 +133,7 @@ public class WBservices {
 			}
 		}
 
-		if (optionFireBase == null) {
+		if (OPTION_FIRE_BASE == null) {
 
 			try {
 				File f = new File(CHEMIN_WINDOWS_CLE);
@@ -140,7 +141,7 @@ public class WBservices {
 					FileInputStream serviceAccount = new FileInputStream(
 							CHEMIN_WINDOWS_CLE);
 
-					optionFireBase = new FirebaseOptions.Builder()
+					OPTION_FIRE_BASE = new FirebaseOptions.Builder()
 							.setCredentials(
 									GoogleCredentials
 											.fromStream(serviceAccount))
@@ -154,7 +155,7 @@ public class WBservices {
 			}
 		}
 
-		if (optionFireBase == null) {
+		if (OPTION_FIRE_BASE == null) {
 
 			try {
 				File f = new File(CHEMIN_PRODUCTION_CLE);
@@ -163,7 +164,7 @@ public class WBservices {
 					FileInputStream serviceAccount = new FileInputStream(
 							CHEMIN_PRODUCTION_CLE);
 
-					optionFireBase = new FirebaseOptions.Builder()
+					OPTION_FIRE_BASE = new FirebaseOptions.Builder()
 							.setCredentials(
 									GoogleCredentials
 											.fromStream(serviceAccount))
@@ -1622,7 +1623,7 @@ public class WBservices {
 			ArrayList<Personne> participants = participationdao
 					.getListPartipantActivite(idactivite);
 
-			activitedao.RemoveActivite(idactivite);
+			activitedao.removeActivite(idactivite);
 
 			notificationdao.addNotification(participants,
 					Notification.Supprime_Activite, 0, idorganisateur);
@@ -2653,7 +2654,7 @@ public class WBservices {
 
 		if (FirebaseApp.getApps().isEmpty()) {
 
-			FirebaseApp.initializeApp(WBservices.optionFireBase);
+			FirebaseApp.initializeApp(WBservices.OPTION_FIRE_BASE);
 
 		}
 		PreparedStatement preparedStatement = null;
@@ -2843,7 +2844,7 @@ public class WBservices {
 
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 
-			listActivite = activitedao.getActivites(idPersonne,
+			listActivite = activitedao.getActivites(
 					Double.parseDouble(latitudestr),
 					Double.parseDouble(longitudestr), rayonmetre, typeactivite,
 					motcle, typeUser, commenceDans);
@@ -2861,6 +2862,49 @@ public class WBservices {
 		}
 
 	}
+	
+	public Activite[] getActivitesOffset(int idPersonne, String latitudestr,
+
+			String longitudestr, int rayonmetre, int typeactivite, String motcle,
+					int typeUser, int commenceDans, String jeton,int offset) {
+
+				Connection connexion = null;
+				ArrayList<Activite> listActivite = new ArrayList<>();
+				PreparedStatement preparedStatement = null;
+				ResultSet rs = null;
+
+				try {
+					connexion = CxoPool.getConnection();
+
+					PersonneDAO personnedao = new PersonneDAO(connexion);
+					MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+							idPersonne, jeton);
+
+					if (!autorise.isReponse())
+						return null;
+
+					ActiviteDAO activitedao = new ActiviteDAO(connexion);
+
+					listActivite = activitedao.getActivitesOffSet(
+							Double.parseDouble(latitudestr),
+							Double.parseDouble(longitudestr), rayonmetre, typeactivite,
+							motcle, typeUser, commenceDans, offset);
+
+					
+					return  listActivite.toArray(new Activite[listActivite
+							.size()]);
+
+				} catch (Exception e) {
+					LOG.error(ExceptionUtils.getStackTrace(e));
+					return listActivite.toArray(new Activite[listActivite
+							.size()]);
+				} finally {
+			
+					CxoPool.close(connexion, preparedStatement, rs);
+				}
+
+			}
+
 
 	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
 			String jeton) {
