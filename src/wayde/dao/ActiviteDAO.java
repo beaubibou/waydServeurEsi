@@ -1293,7 +1293,7 @@ public class ActiviteDAO {
 						+ " personne,activite"
 						+ " WHERE personne.idpersonne = activite.idpersonne  "
 						+ " and activite.actif=true"
-						+ " and datedebut!=? "
+						+ " and datefin>? "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
 				// le critere ne sert datedebut!=? ne sert à rien.
@@ -1438,7 +1438,7 @@ public class ActiviteDAO {
 						+ " personne,activite"
 						+ " WHERE personne.idpersonne = activite.idpersonne  "
 						+ " and activite.actif=true"
-						+ " and datedebut!=? "
+						+ " and datefin>? "
 						+ " and activite.latitude between ? and ?"
 						+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
 				// le critere ne sert datedebut!=? ne sert à rien.
