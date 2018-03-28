@@ -2182,7 +2182,7 @@ private static String getFormatDate(DateTime dt) {
 	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite)
 			throws IOException {
 
-		addLienCarpeDiem(activite.getUrl());
+		
 		
 		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
 				.getId())))
@@ -2214,6 +2214,9 @@ private static String getFormatDate(DateTime dt) {
 			String urlCarpe=activite.getUrl();
 			
 			if (!valideActivite(activite.getDateDebut(),activite.getDateFin())){
+				// L'activite n'est pas valide
+				// Ajoute le lien dans la table carpe pour eviter de la redondance.
+				addLienCarpeDiem(activite.getUrl());
 				return;
 			}
 			
@@ -2226,7 +2229,10 @@ private static String getFormatDate(DateTime dt) {
 			uc.connect();
 			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
 			String photo = encodeToString(imBuff, "jpeg");
-
+			
+			// L'activite est complete est peut donc être inserée
+			// Ajoute le lien dans la table carpe pour eviter la redondance.
+			addLienCarpeDiem(activite.getUrl());
 			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);

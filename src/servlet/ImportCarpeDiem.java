@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,7 @@ import carpediem.ImportCarpe;
 public class ImportCarpeDiem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ImportCarpeDiem.class);
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -57,36 +58,36 @@ public class ImportCarpeDiem extends HttpServlet {
 		if (!authentification.isAuthentifieAdmin())
 			return;
 
-		 String ville_ = "montpelleier";
-		
-		 String startDate = "2018-03-22T19:45:00+01:00";
-		 String endDate = "2018-03-23T22:30:00+01:00";
-		 String image =
-		 "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
-		 String description =
-		 "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
-		 String url =
-		 "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
-		 String name = "Trilogie du Seigneur des Anneaux";
-		 String address = "43, rue des Docks, 69009 Lyon";
-		 String nomLieu = "PathÃ© Vaise";
-		
-		 double lat = 34.3;
-		 double lng = 4.3;
-		 int id = 503030;
+//		 String ville_ = "montpelleier";
+//		
+//		 String startDate = "2018-03-22T19:45:00+01:00";
+//		 String endDate = "2018-03-23T22:30:00+01:00";
+//		 String image =
+//		 "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
+//		 String description =
+//		 "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
+//		 String url =
+//		 "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
+//		 String name = "Trilogie du Seigneur des Anneaux";
+//		 String address = "43, rue des Docks, 69009 Lyon";
+//		 String nomLieu = "PathÃ© Vaise";
+//		
+//		 double lat = 34.3;
+//		 double lng = 4.3;
+//		 int id = 503030;
+//
+//		 ActiviteCarpeDiem activite = new ActiviteCarpeDiem(startDate,
+//		 endDate,
+//		 image, description, url, name, address, nomLieu, ville_, lat,
+//		 lng, id);
+//		
+//		 website.dao.ActiviteDAO.ajouteActiviteCarpeDiem(activite);
+//
+//		ArrayList<String> villes = new ArrayList<>();
+//
+//		villes.add("paris");
 
-		 ActiviteCarpeDiem activite = new ActiviteCarpeDiem(startDate,
-		 endDate,
-		 image, description, url, name, address, nomLieu, ville_, lat,
-		 lng, id);
-		
-		 website.dao.ActiviteDAO.ajouteActiviteCarpeDiem(activite);
-
-		ArrayList<String> villes = new ArrayList<>();
-
-		villes.add("paris");
-
-	//	executer();
+		executer();
 		
 
 	}
@@ -100,6 +101,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 	public static void executer() throws IOException {
 
+				
 		ArrayList<String> villes = new ArrayList<>();
 
 		villes.add("lyon");

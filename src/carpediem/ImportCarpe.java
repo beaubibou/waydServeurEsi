@@ -9,18 +9,15 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -31,11 +28,15 @@ public class ImportCarpe {
 	HashMap<String, ActiviteCarpeDiem> mapActivite = new HashMap<String, ActiviteCarpeDiem>();
 	ActiviteCarpeDiem activite;
 	StringBuilder log = new StringBuilder();
+	
+
+	
 
 	public void importActivitesByPage(String date, String ville)
 			throws IOException, JSONException {
 		int page = 0;
 		Integer status = 1;
+		
 		do {
 
 			try {
@@ -265,8 +266,7 @@ public class ImportCarpe {
 
 		}
 		if (activite.isComplete()) {
-
-			// listActivite.add(new ActiviteCarpeDiem(activite));
+			
 			if (!ActiviteDAO.isDejaTraiteCarpediemExist(activite.getUrl()))
 				mapActivite.put(activite.getUrl(), new ActiviteCarpeDiem(activite));
 
