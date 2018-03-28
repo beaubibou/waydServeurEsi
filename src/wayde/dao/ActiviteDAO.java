@@ -118,6 +118,7 @@ public class ActiviteDAO {
 		while (rs.next())
 			activite = getActiviteByRs(rs);
 
+		
 		CxoPool.close(preparedStatement, rs);
 
 		return activite;
@@ -1385,7 +1386,7 @@ public class ActiviteDAO {
 			String motcle, int typeUser, int commenceDans, int offset)
 			throws SQLException {
 
-		int NBR_RETOUR_LIGNE = 4;
+		int NBR_RETOUR_LIGNE = 20;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Activite activite;
@@ -1461,7 +1462,7 @@ public class ActiviteDAO {
 
 			}
 
-			requete = requete + " ORDER BY datedebut asc limit=? offset=? ;";
+			requete = requete + " ORDER BY datedebut asc limit ? offset ?";
 
 			preparedStatement = connexion.prepareStatement(requete);
 

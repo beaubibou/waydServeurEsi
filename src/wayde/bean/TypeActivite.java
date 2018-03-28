@@ -10,6 +10,8 @@ public class TypeActivite {
 	
 	private static final Logger LOG = Logger.getLogger(TypeActivite.class);
 
+	public static final int FACEBOOK = 9;
+
 	long id;
 	long idcategorie;
 	String nom;

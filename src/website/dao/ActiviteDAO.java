@@ -34,6 +34,7 @@ import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.MessageServeur;
 import wayde.bean.Personne;
+import wayde.bean.TypeActivite;
 import wayde.dao.ParticipationDAO;
 import wayde.dao.PersonneDAO;
 import wayde.dao.SignalementDAO;
@@ -67,6 +68,36 @@ public class ActiviteDAO {
 	public ActiviteDAO() {
 
 	}
+	
+	public static boolean isDejaTraiteCarpediemExist(String url)  {
+		
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT lien from carpediem where lien=? ";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, url);
+			rs = preparedStatement.executeQuery();
+		
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+				LOG.error( ExceptionUtils.getStackTrace(e));
+		}
+
+		finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+
+		}
+		return false;
+
+		
+		}
 
 	public static ArrayList<PhotoActiviteBean> getListPhotoActivite(
 			int idactivite) {
@@ -2172,13 +2203,13 @@ private static String getFormatDate(DateTime dt) {
 			double longitude = activite.getLng();
 			double latitudeFixe = activite.getLat();
 			double longitudeFixe = activite.getLng();
-
 			Date debut = activite.getDateDebut();
 			Date fin = activite.getDateFin();
 			String libelle = activite.getDescription();
 			String titre = activite.getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
+			String urlCarpe=activite.getUrl();
 			
 			if (!valideActivite(activite.getDateDebut(),activite.getDateFin())){
 				return;
@@ -2224,8 +2255,8 @@ private static String getFormatDate(DateTime dt) {
 			preparedStatement.close();
 
 			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook)"
-					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, titre);
@@ -2239,12 +2270,15 @@ private static String getFormatDate(DateTime dt) {
 			preparedStatement.setInt(7, idpersonne);
 			preparedStatement.setString(8, libelle);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			boolean active=false;
+			boolean active=true;
+			int idTypeActivite=TypeActivite.FACEBOOK;
 			preparedStatement.setBoolean(10, active);
 			preparedStatement.setInt(11, 2);
-			preparedStatement.setInt(12, 5);
+			preparedStatement.setInt(12, idTypeActivite);
 			preparedStatement.setString(13, fulldescription);
 			preparedStatement.setString(14, lienFb);
+			preparedStatement.setString(15,urlCarpe );
+			
 			preparedStatement.execute();
 						
 			connexion.commit();

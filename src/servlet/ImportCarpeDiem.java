@@ -85,7 +85,7 @@ public class ImportCarpeDiem extends HttpServlet {
 		ArrayList<String> villes = new ArrayList<>();
 
 		villes.add("paris");
-		
+
 		executer();
 		// villes.add("paris");
 		// villes.add("bordeaux");
@@ -99,7 +99,7 @@ public class ImportCarpeDiem extends HttpServlet {
 	}
 
 	private static String getFormatDate(DateTime dt) {
-		
+
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
 		return fmt.print(dt);
 
@@ -109,7 +109,15 @@ public class ImportCarpeDiem extends HttpServlet {
 
 		ArrayList<String> villes = new ArrayList<>();
 
+		villes.add("lyon");
 		villes.add("paris");
+		villes.add("bordeaux");
+		villes.add("lyon");
+		villes.add("marseille");
+		villes.add("nantes");
+		villes.add("nice");
+		villes.add("strasbourg");
+		villes.add("toulouse");
 
 		ImportCarpe importCarpe = new ImportCarpe();
 
@@ -136,7 +144,7 @@ public class ImportCarpeDiem extends HttpServlet {
 					0);
 
 			ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
-		//	ActiviteDAO.updateDateCarpeDiem(new Date());
+			// ActiviteDAO.updateDateCarpeDiem(new Date());
 
 		}
 

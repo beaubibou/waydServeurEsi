@@ -43,8 +43,6 @@ public class Activite {
 
 	private boolean dejainscrit;
 
-	private boolean organisateur;
-
 	private boolean archive;
 
 	private int totalavis;
@@ -143,6 +141,8 @@ public class Activite {
 		this.nbmaxwaydeur = nbmaxwaydeur;
 	}
 
+	
+	
 	public boolean isOganisateurActivite(int idpersonne) {
 
 		if (idpersonne == idorganisateur)
@@ -192,7 +192,7 @@ public class Activite {
 		this.datefinactivite = finactivite;
 		this.finidans = getSeTermine(finactivite);
 		this.typeUser = typeUser;
-		defineOrganisateur(idorganisateur);
+		
 
 	}
 
@@ -239,8 +239,7 @@ public class Activite {
 			this.titre = " ";
 		this.gratuite = gratuit;
 		this.lienfacebook=lienfacebook;
-		defineOrganisateur(idorganisateur);
-
+	
 	}
 
 	public Activite(ActiviteBean activiteBean) {
@@ -265,8 +264,7 @@ public class Activite {
 		this.typeAcces = activiteBean.getTypeAccess();
 		this.nbmaxwaydeur = activiteBean.getNbmaxwaydeur();
 	
-		defineOrganisateur(activiteBean.getIdorganisateur());
-
+		
 		if (this.titre.equals(""))
 			this.titre = " ";
 
@@ -491,14 +489,7 @@ public class Activite {
 		return false;
 	}
 
-	public void defineOrganisateur(int idpersonne) {
-
-		if (idorganisateur == idpersonne)
-			organisateur = true;
-		else
-			organisateur = false;
-
-	}
+	
 
 	public boolean isEnCours() {
 
@@ -521,14 +512,7 @@ public class Activite {
 		return false;
 	}
 
-	public void setOrganisateur(boolean organisateur) {
-		this.organisateur = organisateur;
-
-	}
-
-	public boolean isOrganisateur() {
-		return organisateur;
-	}
+	
 	
 
 }

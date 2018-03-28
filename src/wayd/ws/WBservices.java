@@ -980,10 +980,7 @@ public class WBservices {
 			// ************************************
 			ActiviteDAO activitedao = new ActiviteDAO(connexion);
 			listActivite = activitedao.getListActivitePref(idpersonne);
-
-			 for (Activite activite : listActivite) {
-			 activite.setOrganisateur(false);
-			 }
+			
 
 		} catch (Exception e) {
 

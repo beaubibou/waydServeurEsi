@@ -34,7 +34,7 @@ public class LogDAO {
 	public static long TPS_CALCUL_PERFOMENCE = 60;
 	public static int HEURE = 3600;
 	public static int MINUTE = 60;
-	public static long TPS_IMPORTCARPEDIEM = 4 * HEURE;
+	public static long TPS_IMPORTCARPEDIEM = 6 * HEURE;
 
 	public static int ETAT_PERF = TypeEtatLogPerf.ACTIVE;
 
