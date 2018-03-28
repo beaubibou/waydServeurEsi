@@ -21,8 +21,6 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
-
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -80,8 +78,8 @@ public class ImportCarpe {
 			}
 
 			catch (Exception e) {
-				e.printStackTrace();
-
+			
+				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
 		} while (status == 1 && page < 30);
@@ -269,7 +267,7 @@ public class ImportCarpe {
 		if (activite.isComplete()) {
 
 			// listActivite.add(new ActiviteCarpeDiem(activite));
-			if (!mapActivite.containsKey(activite.getUrl()))
+			if (!ActiviteDAO.isDejaTraiteCarpediemExist(activite.getUrl()))
 				mapActivite.put(activite.getUrl(), new ActiviteCarpeDiem(activite));
 
 			activite.reset();

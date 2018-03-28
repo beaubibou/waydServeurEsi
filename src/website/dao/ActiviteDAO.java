@@ -2182,6 +2182,8 @@ private static String getFormatDate(DateTime dt) {
 	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite)
 			throws IOException {
 
+		addLienCarpeDiem(activite.getUrl());
+		
 		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
 				.getId())))
 			return;
@@ -2190,7 +2192,7 @@ private static String getFormatDate(DateTime dt) {
 		PreparedStatement preparedStatement = null;
 
 		try {
-
+		
 			// ****************** Recuperation valeur***********************
 
 			String prenom = activite.getName();
@@ -2315,6 +2317,7 @@ private static String getFormatDate(DateTime dt) {
 			if (dateFin.getTime()-dateDebut.getTime()>24*Heure)
 			return false;
 			
+			else
 			
 			return true;
 		
@@ -2379,6 +2382,44 @@ private static String getFormatDate(DateTime dt) {
 		}
 
 		return new MessageServeur(false, Erreur_HTML.ERREUR_INCONNUE);
+
+	}
+
+	public static void addLienCarpeDiem(String url) {
+
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		if (isDejaTraiteCarpediemExist(url))
+			return;
+		
+
+		try {
+			
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "INSERT INTO carpediem(lien)"
+					+ "	VALUES (?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, url);
+			preparedStatement.execute();
+			connexion.commit();
+
+			LogDAO.LOG_DUREE("addUrlCarpeDien", debut);
+
+			
+
+		} catch (NamingException | SQLException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+	
 
 	}
 
@@ -2513,7 +2554,7 @@ private static String getFormatDate(DateTime dt) {
 				if (connexion != null)
 					connexion.rollback();
 			} catch (SQLException e1) {
-				LOG.error(ExceptionUtils.getStackTrace(e));
+				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 			LOG.error(ExceptionUtils.getStackTrace(e));
 
