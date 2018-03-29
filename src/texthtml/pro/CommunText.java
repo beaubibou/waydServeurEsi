@@ -5,9 +5,9 @@ public class CommunText {
 	
 	public static final String LABEL_BUTTON_PROPOSEZ = "Proposez";
 	public static final String INFO_SUPPRIME_SELECTION ="Supprimez les selections";
-	public static int TAILLE_TITRE_ACTIVITE_MAX = 50;
+	public static int TAILLE_TITRE_ACTIVITE_MAX = 200;
 	
-	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 250;
+	public static int TAILLE_DESCRIPTION_ACTIVITE_MAX = 2000;
 	public static int TAILLE_ADRESSE_MAX = 250;
 	public static String HINT_ADRESSE="Saissisez une adresse";
 	public static String HINT_TITRE="Saisisez un titre";
