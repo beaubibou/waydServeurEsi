@@ -120,7 +120,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			DateTime date = new DateTime();
 
-			for (int nbrJours = 0; nbrJours < 10; nbrJours++) {
+			for (int nbrJours = 0; nbrJours < 2; nbrJours++) {
 
 				DateTime date1 = date.plusDays(nbrJours);
 				String dateEventStr = getFormatDate(date1);
