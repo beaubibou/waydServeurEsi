@@ -9,15 +9,18 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -193,7 +196,7 @@ public class ImportCarpe {
 		return chaine + lien;
 	}
 
-	public String getFullDescrition(StringBuilder parsedContentFromUrl) {
+	public String getFullDescritionold(StringBuilder parsedContentFromUrl) {
 
 		String[] mo = convertISO85591(parsedContentFromUrl.toString()).split(
 				"<br/>");
@@ -214,6 +217,32 @@ public class ImportCarpe {
 		return description;
 	}
 
+	public static String getFullDescrition(StringBuilder parsedContentFromUrl) {
+
+		String[] mo = convertISO85591(parsedContentFromUrl.toString()).split(
+				"<br/>");
+		String tmpdescription = "";
+		for (int f = 0; f < mo.length ; f++) {
+
+			tmpdescription = tmpdescription + mo[f];
+		}
+		String description = tmpdescription;
+
+		//Recherche </div>
+		
+		int index=description.indexOf("/div");
+		index=index+5;
+		
+		StringBuilder descriptionSansBaliseDebut=new StringBuilder(description);
+		descriptionSansBaliseDebut.delete(0, index);
+		
+		description=descriptionSansBaliseDebut.toString();
+		index=description.indexOf("<div class");
+		descriptionSansBaliseDebut=new StringBuilder(description);
+		descriptionSansBaliseDebut.delete(index, descriptionSansBaliseDebut.length());
+		
+		return descriptionSansBaliseDebut.toString();
+	}
 	public void instancieActivite(Element element, ActiviteCarpeDiem activite) {
 
 		StartTag startTag = element.getStartTag();
@@ -267,7 +296,7 @@ public class ImportCarpe {
 		}
 		if (activite.isComplete()) {
 			
-			if (!ActiviteDAO.isDejaTraiteCarpediemExist(activite.getUrl()))
+			//if (!ActiviteDAO.isDejaTraiteCarpediemExist(activite.getUrl()))
 				mapActivite.put(activite.getUrl(), new ActiviteCarpeDiem(activite));
 
 			activite.reset();

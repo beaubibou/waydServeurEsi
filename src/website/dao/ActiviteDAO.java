@@ -2216,7 +2216,7 @@ private static String getFormatDate(DateTime dt) {
 			if (!valideActivite(activite.getDateDebut(),activite.getDateFin())){
 				// L'activite n'est pas valide
 				// Ajoute le lien dans la table carpe pour eviter de la redondance.
-				addLienCarpeDiem(activite.getUrl());
+				//addLienCarpeDiem(activite.getUrl());
 				return;
 			}
 			
@@ -2232,7 +2232,8 @@ private static String getFormatDate(DateTime dt) {
 			
 			// L'activite est complete est peut donc être inserée
 			// Ajoute le lien dans la table carpe pour eviter la redondance.
-			addLienCarpeDiem(activite.getUrl());
+		
+		//	addLienCarpeDiem(activite.getUrl());
 			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
