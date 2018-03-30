@@ -304,18 +304,37 @@ public class Activite {
 
 		if (datefinactivite == null)
 			return TextWebService.ACTIVITE_INEXISTANTE;
+	
 		if (new Date().after(datefinactivite))
 			return TextWebService.TERMINEE;
+		
+		long diff;
+		long diffMinutes;
+		long diffHours ;
+	
+		if (new Date().before(datedebut))
+		{
+		
+			 diff = datedebut.getTime() - new Date().getTime();
+			 diffMinutes = diff / (60 * 1000) % 60;
+			 diffHours = diff / (60 * 60 * 1000) % 24;
+
+		return diffHours + ":" + String.format("%02d", diffMinutes);
+			
+			
+		}
+		
+		
 		else {
 
-			long diff = datefinactivite.getTime() - new Date().getTime();
-			long diffMinutes = diff / (60 * 1000) % 60;
-			long diffHours = diff / (60 * 60 * 1000) % 24;
+			 diff = datefinactivite.getTime() - new Date().getTime();
+			 diffMinutes = diff / (60 * 1000) % 60;
+			 diffHours = diff / (60 * 60 * 1000) % 24;
 
 			if (diff < 0)
 				return TextWebService.TERMINEE;
 
-			return diffHours + ":" + String.format("%02d", diffMinutes);
+		return diffHours + ":" + String.format("%02d", diffMinutes);
 
 		}
 
