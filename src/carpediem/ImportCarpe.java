@@ -223,26 +223,23 @@ public class ImportCarpe {
 		String[] mo = convertISO85591(parsedContentFromUrl.toString()).split(
 				"<br/>");
 		String tmpdescription = "";
+		if (mo.length==0)return "Pas de description";
+	
 		for (int f = 0; f < mo.length ; f++) {
 
 			tmpdescription = tmpdescription + mo[f];
 		}
 		String description = tmpdescription;
 
-		//Recherche </div>
+		String[] mi=description.split("<div class=\"messages-list\"");
+	
+		String[] me=mi[0].split("</div>");
 		
-		int index=description.indexOf("/div");
-		index=index+5;
 		
-		StringBuilder descriptionSansBaliseDebut=new StringBuilder(description);
-		descriptionSansBaliseDebut.delete(0, index);
+		System.out.println(me[me.length-1]);
+		//System.out.println(description);
 		
-		description=descriptionSansBaliseDebut.toString();
-		index=description.indexOf("<div class");
-		descriptionSansBaliseDebut=new StringBuilder(description);
-		descriptionSansBaliseDebut.delete(index, descriptionSansBaliseDebut.length());
-		
-		return descriptionSansBaliseDebut.toString();
+		return me[me.length-1];
 	}
 	public void instancieActivite(Element element, ActiviteCarpeDiem activite) {
 

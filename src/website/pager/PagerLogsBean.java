@@ -14,7 +14,7 @@ public class PagerLogsBean {
 	   
 	private ArrayList<LogBean> listLogs;
 	private int pageEnCours = 0;
-	private final int maxResult = 35;
+	private final int maxResult = 100;
 	private boolean hasNext = false;
 	private boolean hasPrevious = false;
 
@@ -40,8 +40,6 @@ public class PagerLogsBean {
 	}
 
 
-
-	
 
 	public ArrayList<LogBean> getListLogs() {
 		return listLogs;
