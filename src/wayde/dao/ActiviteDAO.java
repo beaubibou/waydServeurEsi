@@ -881,6 +881,7 @@ public class ActiviteDAO {
 	}
 
 	public int getNbrActiviteTotal(int idpersonne) throws SQLException {
+		
 		int nbractivite = 0;
 		String requete = "Select count(idactivite) as nbractivite  FROM activite where (  idpersonne=? and  activite.datefin>?) ;";
 		PreparedStatement preparedStatement = connexion
