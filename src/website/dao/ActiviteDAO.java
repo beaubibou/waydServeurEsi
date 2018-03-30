@@ -357,6 +357,8 @@ public class ActiviteDAO {
 		}
 		return false;
 	}
+	
+	
 
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double nelat, double nelon, double swlat,
@@ -2378,6 +2380,47 @@ private static String getFormatDate(DateTime dt) {
 			LogDAO.LOG_DUREE("addInteretActivite", debut);
 
 			return new MessageServeur(true, Erreur_HTML.INTERET_SIGNALEE);
+
+		} catch (NamingException | SQLException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+		return new MessageServeur(false, Erreur_HTML.ERREUR_INCONNUE);
+
+	}
+	
+	public static MessageServeur addFavori(int idpersonne,
+			int idactivite) {
+
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		if (isInteretDejaSignale(idpersonne, idactivite))
+			return new MessageServeur(false, Erreur_HTML.INTERET_DEJA_SIGNALEE);
+
+		try {
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "INSERT INTO favori("
+					+ "   idpersonne, idactivite)"
+					+ "	VALUES (?,?)";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			connexion.commit();
+
+			LogDAO.LOG_DUREE("addFavoriActivite", debut);
+
+			return new MessageServeur(true, Erreur_HTML.FAVORI_AJOUTE);
 
 		} catch (NamingException | SQLException e) {
 

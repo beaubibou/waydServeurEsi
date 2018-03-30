@@ -886,7 +886,10 @@ public class MessageDAO {
 		return retour;
 
 	}
+	
 
+
+	
 	public void effaceDiscussion(int iddestinataire, int idemetteur)
 			throws SQLException {
 		// Efface les mesages que j'ai recu

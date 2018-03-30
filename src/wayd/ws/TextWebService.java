@@ -13,6 +13,7 @@ public class TextWebService {
 	public static final String PAS_AGE_INDIQUE = "Pas d'age indiqué";
 	public static final String TERMINEE = "Terminée";
 	public static final String PERSONNE_INEXISTANTE = "La personne n'existe pas";
+	public static final String SUPPRESSION_FAVORI = "Suppression du favori";
 	public static String PROFIL_NON_RECONNU = "Vous n'êtes pas reconnu";
 	public static String pasAMI = "Pas ami";
 	public static String JETON_NON_VALIDE = "Jeton non valide";

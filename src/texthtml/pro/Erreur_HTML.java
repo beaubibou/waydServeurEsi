@@ -48,6 +48,7 @@ public class Erreur_HTML {
 	public static final String INTERET_SIGNALEE = "Votre intérêt a été pris en compte";
 	public static final Object ERREUR_INCONNUE_CONNEXION = "Une erreur inconnue est survenue. Nous vous invitons à remplir le formulaire de contact sur wayd.fr";
 	public static final Object MESSAGE_VALIDATION_ATTENTE = "Votre inscription est en cours de validation. Vous recevrez un mail de confirmation.</br></br> L'équipe WAYD.";
+	public static final String FAVORI_AJOUTE = "Favori ajouté";
 	
 	
 	

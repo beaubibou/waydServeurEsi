@@ -47,6 +47,28 @@ public class ActiviteDAO {
 	public ActiviteDAO(Connection connexion) {
 		this.connexion = connexion;
 	}
+	
+	public void effaceFavori(int idpersonne, int idactivite)
+			throws SQLException {
+		// Efface les mesages que j'ai recu
+
+		String requete = "delete  from favori  where idpersonne=? and idactivite=?";
+		PreparedStatement preparedStatement = connexion
+				.prepareStatement(requete);
+		try {
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+		
+		} catch (SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			CxoPool.closePS(preparedStatement);
+		}
+
+	}
 
 	public Activite getActiviteByRs(ResultSet rs) throws SQLException {
 
@@ -550,6 +572,12 @@ public class ActiviteDAO {
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
+			
+			requete = "DELETE FROM favori where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
 
 			requete = "DELETE FROM public.participer where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
@@ -599,6 +627,12 @@ public class ActiviteDAO {
 			preparedStatement.close();
 
 			requete = "DELETE FROM interet where ( idactivite=? );";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idactivite);
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			requete = "DELETE FROM favori where ( idactivite=? );";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idactivite);
 			preparedStatement.execute();
@@ -1168,6 +1202,38 @@ public class ActiviteDAO {
 				nbrTotalInscrit, nbrTotalMessage, nbrTotalMessageByAct) {
 		};
 	}
+	public static boolean isFavoriDejaSignale(int idpersonne, int idactivite) {
+
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from favori where idpersonne=? and idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			rs = preparedStatement.executeQuery();
+
+			LogDAO.LOG_DUREE("isIFavoriDejaSignale", debut);
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+		finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+
+		}
+		return false;
+	}
 
 	public void updateActivite(int idpersonne, String libelle, String titre,
 			int idactivite, int nbrmax) throws SQLException {
@@ -1236,6 +1302,52 @@ public class ActiviteDAO {
 
 	}
 
+	public ArrayList<Activite> getFavoris(int idpersonne) throws SQLException {
+
+		PreparedStatement preparedStatement = null;
+		ArrayList<Activite> listActivite = new ArrayList<>();
+		ResultSet rs = null;
+
+		try {
+
+		
+			String requete;
+
+				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+						+ " WHERE  personne.idpersonne = activite.idpersonne"
+						+ " and activite.actif=true "
+						+ " and activite.idactivite in (select idactivite from favori where idpersonne=?)";
+						
+			
+			requete = requete + " ORDER BY datedebut asc;";
+			preparedStatement = connexion.prepareStatement(requete);
+
+			//preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+				//	dateRechercheDebut.getTime()));
+
+			preparedStatement.setDouble(1, idpersonne);
+	
+			rs = preparedStatement.executeQuery();
+		
+			while (rs.next()) {
+
+			listActivite.add( getActiviteByRs(rs));
+
+			}
+
+		} catch (SQLException e) {
+			throw e;
+		}
+
+		finally {
+			CxoPool.close(preparedStatement, rs);
+		}
+
+		return listActivite;
+
+	}
+	
+	
 	public ArrayList<Activite> getActivites(double malatitude,
 			double malongitude, int rayonmetre, int typeactivite,
 			String motcle, int typeUser, int commenceDans) throws SQLException {
