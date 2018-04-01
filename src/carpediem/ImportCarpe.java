@@ -92,11 +92,10 @@ public class ImportCarpe {
 		for (ActiviteCarpeDiem activiteCarpe : mapActivite.values()) {
 			try {
 				g++;
-				LOG.info("Recupere " + g + "/" + mapActivite.values().size()
-						+ " du jour " + date);
+				LOG.info(ville+":"+g+"/"+mapActivite.values().size());
 				getDetailActivite(activiteCarpe);
 				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
-				LOG.info("Activite ajoutée");
+			
 			} catch (Exception e) {
 				LOG.error("Detail activite non disponible");
 				LOG.error(ExceptionUtils.getStackTrace(e));
@@ -236,7 +235,7 @@ public class ImportCarpe {
 		String[] me=mi[0].split("</div>");
 		
 		
-		System.out.println(me[me.length-1]);
+		//System.out.println(me[me.length-1]);
 		//System.out.println(description);
 		
 		return me[me.length-1];

@@ -68,9 +68,9 @@ public class ActiviteDAO {
 	public ActiviteDAO() {
 
 	}
-	
-	public static boolean isDejaTraiteCarpediemExist(String url)  {
-		
+
+	public static boolean isDejaTraiteCarpediemExist(String url) {
+
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -81,12 +81,12 @@ public class ActiviteDAO {
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, url);
 			rs = preparedStatement.executeQuery();
-		
+
 			if (rs.next())
 				return true;
 
 		} catch (NamingException | SQLException e) {
-				LOG.error( ExceptionUtils.getStackTrace(e));
+			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 
 		finally {
@@ -96,8 +96,7 @@ public class ActiviteDAO {
 		}
 		return false;
 
-		
-		}
+	}
 
 	public static ArrayList<PhotoActiviteBean> getListPhotoActivite(
 			int idactivite) {
@@ -357,7 +356,7 @@ public class ActiviteDAO {
 		}
 		return false;
 	}
-	
+
 	public static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
 
 		long debut = System.currentTimeMillis();
@@ -390,8 +389,6 @@ public class ActiviteDAO {
 		}
 		return false;
 	}
-	
-	
 
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double nelat, double nelon, double swlat,
@@ -706,7 +703,7 @@ public class ActiviteDAO {
 		return false;
 
 	}
-	
+
 	public static boolean setDateDebut(int idactivite, Date datedebut) {
 
 		long debut = System.currentTimeMillis();
@@ -747,7 +744,7 @@ public class ActiviteDAO {
 		PreparedStatement preparedStatement = null;
 		Connection connexion = null;
 		try {
-	
+
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "UPDATE  activite set masque=? WHERE idactivite=?";
@@ -772,7 +769,7 @@ public class ActiviteDAO {
 		return false;
 
 	}
-	
+
 	public int addActivitePro(int idpersonne, String titre, String commentaire,
 			Date datedebut, Date datefin, String adresse, double latitude,
 			double longitude, int idtypeactivite, int typeuser, int typeaccess) {
@@ -972,14 +969,14 @@ public class ActiviteDAO {
 				boolean actif = rs.getBoolean("actif");
 				String lienFb = rs.getString("lienfacebook");
 
-
 				boolean masque = rs.getBoolean("masque");
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuit, actif,masque,lienFb);
+						nbrSignalement, descriptionall, gratuit, actif, masque,
+						lienFb);
 				activite.setNbrVu(nbrVu);
 
 				ArrayList<ParticipantBean> listParticipant = new ParticipantDAO(
@@ -1384,7 +1381,6 @@ public class ActiviteDAO {
 				int nbrvu = rs.getInt("nbrvu");
 				int nbr_interet = rs.getInt("nbr_interet");
 
-		
 				activite = new ActiviteBean(id, titre, libelle, idorganisateur,
 						datedebut, datefin, idtypeactivite, latitude,
 						longitude, adresse, nom, prenom, photo, note, 1,
@@ -1502,12 +1498,13 @@ public class ActiviteDAO {
 
 	}
 
-private static String getFormatDate(DateTime dt) {
-		
+	private static String getFormatDate(DateTime dt) {
+
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
 		return fmt.print(dt);
 
 	}
+
 	public static ArrayList<ActiviteBean> getListActivite(
 			FitreAdminActivites filtre, int page, int maxResult) {
 		long debut = System.currentTimeMillis();
@@ -1527,8 +1524,8 @@ private static String getFormatDate(DateTime dt) {
 		double latMax = malatitude + coef;
 		double longMin = malongitude - coef;
 		double longMax = malongitude + coef;
-		boolean masqueFiltre=filtre.isMasque();
-		boolean actifFiltre=filtre.isActif();
+		boolean masqueFiltre = filtre.isMasque();
+		boolean actifFiltre = filtre.isActif();
 
 		ActiviteBean activite = null;
 
@@ -1573,7 +1570,7 @@ private static String getFormatDate(DateTime dt) {
 
 				requete = requete + " and activite.gratuit=? ";
 
-			} 
+			}
 
 			switch (etatActivite) {
 
@@ -1627,7 +1624,8 @@ private static String getFormatDate(DateTime dt) {
 			preparedStatement.setDouble(4, longMax);
 			preparedStatement.setBoolean(5, masqueFiltre);
 			preparedStatement.setBoolean(6, actifFiltre);
-			preparedStatement.setString(7, getFormatDate(filtre.getDateRecherche()));
+			preparedStatement.setString(7,
+					getFormatDate(filtre.getDateRecherche()));
 
 			int index = 8;
 
@@ -1699,7 +1697,8 @@ private static String getFormatDate(DateTime dt) {
 						longitude, nom, pseudo, photo, note, totalavis,
 						datenaissance, sexe, nbrparticipant, nbmaxwayd,
 						typeUser, typeAcces, libelleActivite, adresse,
-						nbrSignalement, descriptionall, gratuite, actif,masque,lienFb);
+						nbrSignalement, descriptionall, gratuite, actif,
+						masque, lienFb);
 
 				activite.setPositionRecherche(filtre.getLatitude(),
 						filtre.getLongitude());
@@ -2120,7 +2119,6 @@ private static String getFormatDate(DateTime dt) {
 
 			connexion = CxoPool.getConnection();
 
-		
 			SignalementDAO signalementdao = new SignalementDAO(connexion);
 
 			// Verfiie que le signalement est unique
@@ -2216,13 +2214,12 @@ private static String getFormatDate(DateTime dt) {
 
 	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite)
 			throws IOException {
-		
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
-		
+
 			// ****************** Recuperation valeur***********************
 
 			String prenom = activite.getName();
@@ -2241,16 +2238,13 @@ private static String getFormatDate(DateTime dt) {
 			String titre = activite.getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
-			String urlCarpe=activite.getUrl();
-			
-			if (!valideActivite(activite.getDateDebut(),activite.getDateFin())){
-				// L'activite n'est pas valide
-				// Ajoute le lien dans la table carpe pour eviter de la redondance.
-				//addLienCarpeDiem(activite.getUrl());
+			String urlCarpe = activite.getUrl();
+
+			if (!valideActivite(activite.getDateDebut(), activite.getDateFin())) {
+				LOG.info("Activite ignorée");
 				return;
 			}
-			
-			
+
 			URLConnection uc;
 			URL url = new URL(photoUrl);
 			uc = url.openConnection();
@@ -2259,79 +2253,107 @@ private static String getFormatDate(DateTime dt) {
 			uc.connect();
 			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
 			String photo = encodeToString(imBuff, "jpeg");
-			
+
 			// L'activite est complete est peut donc être inserée
 			// Ajoute le lien dans la table carpe pour eviter la redondance.
-		
-		//	addLienCarpeDiem(activite.getUrl());
-			
-			//Si elle existe mise à jour 
+
+			// addLienCarpeDiem(activite.getUrl());
+
+			// Si elle existe mise à jour
 			if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
-					.getId()))){
-				
-				
+					.getId()))) {
+
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
+				String requete = "update activite set titre=?,"
+						+ " adresse=?,latitude=?,longitude=?,datedebut=?,datefin=?,"
+						+ "libelle=?,typeuser=?,actif=?,typeacces=?,idtypeactivite=?,descriptionall=?,lienfacebook=?,liencarpediem=?"
+						+ " where idpersonne=?";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setString(1, titre);
+				preparedStatement.setString(2, adresse);
+				preparedStatement.setDouble(3, latitude);
+				preparedStatement.setDouble(4, longitude);
+				preparedStatement.setTimestamp(5,
+						new java.sql.Timestamp(debut.getTime()));
+				preparedStatement.setTimestamp(6,
+						new java.sql.Timestamp(fin.getTime()));
+
+				preparedStatement.setString(7, libelle);
+				preparedStatement.setInt(8, ProfilBean.CARPEDIEM);
+				boolean active = true;
+				int idTypeActivite = TypeActivite.FACEBOOK;
+				preparedStatement.setBoolean(9, active);
+				preparedStatement.setInt(10, 2);
+				preparedStatement.setInt(11, idTypeActivite);
+				preparedStatement.setString(12, fulldescription);
+				preparedStatement.setString(13, lienFb);
+				preparedStatement.setString(14, urlCarpe);
+				preparedStatement.setInt(15, activite.getId());
+				preparedStatement.execute();
+				connexion.commit();
+				LOG.info("Activite mis à jour:");
 				return;
-				
-			}
-			else
-			{
-			
-			connexion = CxoPool.getConnection();
-			connexion.setAutoCommit(false);
 
-			String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
-					+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
-			preparedStatement = connexion.prepareStatement(requete,
-					Statement.RETURN_GENERATED_KEYS);
+			} else {
 
-			preparedStatement.setString(1, prenom);
-			preparedStatement.setString(2, login);
-			preparedStatement.setString(3, ville);
-			preparedStatement.setString(4, photo);
-			preparedStatement.setDouble(5, latitude);
-			preparedStatement.setDouble(6, longitude);
-			preparedStatement.setDouble(7, latitudeFixe);
-			preparedStatement.setDouble(8, longitudeFixe);
-			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			preparedStatement.setInt(10, 1);
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
 
-			preparedStatement.execute();
+				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
 
-			ResultSet rs = preparedStatement.getGeneratedKeys();
-			int idpersonne = 0;
-			if (rs.next())
-				idpersonne = rs.getInt("idpersonne");
+				preparedStatement.setString(1, prenom);
+				preparedStatement.setString(2, login);
+				preparedStatement.setString(3, ville);
+				preparedStatement.setString(4, photo);
+				preparedStatement.setDouble(5, latitude);
+				preparedStatement.setDouble(6, longitude);
+				preparedStatement.setDouble(7, latitudeFixe);
+				preparedStatement.setDouble(8, longitudeFixe);
+				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+				preparedStatement.setInt(10, 1);
 
-			preparedStatement.close();
+				preparedStatement.execute();
 
-			requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
-					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				ResultSet rs = preparedStatement.getGeneratedKeys();
+				int idpersonne = 0;
+				if (rs.next())
+					idpersonne = rs.getInt("idpersonne");
 
-			preparedStatement = connexion.prepareStatement(requete);
-			preparedStatement.setString(1, titre);
-			preparedStatement.setString(2, adresse);
-			preparedStatement.setDouble(3, latitude);
-			preparedStatement.setDouble(4, longitude);
-			preparedStatement.setTimestamp(5,
-					new java.sql.Timestamp(debut.getTime()));
-			preparedStatement.setTimestamp(6,
-					new java.sql.Timestamp(fin.getTime()));
-			preparedStatement.setInt(7, idpersonne);
-			preparedStatement.setString(8, libelle);
-			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
-			boolean active=true;
-			int idTypeActivite=TypeActivite.FACEBOOK;
-			preparedStatement.setBoolean(10, active);
-			preparedStatement.setInt(11, 2);
-			preparedStatement.setInt(12, idTypeActivite);
-			preparedStatement.setString(13, fulldescription);
-			preparedStatement.setString(14, lienFb);
-			preparedStatement.setString(15,urlCarpe );
-			
-			preparedStatement.execute();
-						
-			connexion.commit();
+				preparedStatement.close();
+
+				requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
+						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setString(1, titre);
+				preparedStatement.setString(2, adresse);
+				preparedStatement.setDouble(3, latitude);
+				preparedStatement.setDouble(4, longitude);
+				preparedStatement.setTimestamp(5,
+						new java.sql.Timestamp(debut.getTime()));
+				preparedStatement.setTimestamp(6,
+						new java.sql.Timestamp(fin.getTime()));
+				preparedStatement.setInt(7, idpersonne);
+				preparedStatement.setString(8, libelle);
+				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+				boolean active = true;
+				int idTypeActivite = TypeActivite.FACEBOOK;
+				preparedStatement.setBoolean(10, active);
+				preparedStatement.setInt(11, 2);
+				preparedStatement.setInt(12, idTypeActivite);
+				preparedStatement.setString(13, fulldescription);
+				preparedStatement.setString(14, lienFb);
+				preparedStatement.setString(15, urlCarpe);
+
+				preparedStatement.execute();
+				LOG.info("Activite ajoutée");
+				connexion.commit();
 			}
 
 		} catch (NamingException | SQLException | ParseException e) {
@@ -2354,22 +2376,23 @@ private static String getFormatDate(DateTime dt) {
 	}
 
 	private static boolean valideActivite(Date dateDebut, Date dateFin) {
-		
-		DateTime maitenant = new DateTime().withHourOfDay(0).withMinuteOfHour(0)
-				.withSecondOfMinute(0).withMillisOfSecond(00);
-		
-			if (dateDebut.before(maitenant.toDate()))
-				return false;
-			
-			long Heure=3600000;
-			
-			if (dateFin.getTime()-dateDebut.getTime()>24*Heure)
+
+		DateTime maitenant = new DateTime().withHourOfDay(0)
+				.withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(00);
+
+		if (dateDebut.before(maitenant.toDate()))
 			return false;
-			
-			else
-			
+
+		long Heure = 3600000;
+
+		if (dateFin.getTime() - dateDebut.getTime() > 24 * Heure)
+			return false;
+
+		else
+
 			return true;
-		
+
 	}
 
 	public static String encodeToString(BufferedImage image, String type) {
@@ -2433,9 +2456,8 @@ private static String getFormatDate(DateTime dt) {
 		return new MessageServeur(false, Erreur_HTML.ERREUR_INCONNUE);
 
 	}
-	
-	public static MessageServeur addFavori(int idpersonne,
-			int idactivite) {
+
+	public static MessageServeur addFavori(int idpersonne, int idactivite) {
 
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -2448,14 +2470,13 @@ private static String getFormatDate(DateTime dt) {
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
 			String requete = "INSERT INTO favori("
-					+ "   idpersonne, idactivite)"
-					+ "	VALUES (?,?)";
+					+ "   idpersonne, idactivite)" + "	VALUES (?,?)";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setInt(1, idpersonne);
 			preparedStatement.setInt(2, idactivite);
 			preparedStatement.execute();
 			preparedStatement.close();
-			
+
 			connexion.commit();
 
 			LogDAO.LOG_DUREE("addFavoriActivite", debut);
@@ -2483,22 +2504,18 @@ private static String getFormatDate(DateTime dt) {
 
 		if (isDejaTraiteCarpediemExist(url))
 			return;
-		
 
 		try {
-			
+
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
-			String requete = "INSERT INTO carpediem(lien)"
-					+ "	VALUES (?)";
+			String requete = "INSERT INTO carpediem(lien)" + "	VALUES (?)";
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setString(1, url);
 			preparedStatement.execute();
 			connexion.commit();
 
 			LogDAO.LOG_DUREE("addUrlCarpeDien", debut);
-
-			
 
 		} catch (NamingException | SQLException e) {
 
@@ -2508,8 +2525,6 @@ private static String getFormatDate(DateTime dt) {
 			CxoPool.close(connexion, preparedStatement);
 
 		}
-
-	
 
 	}
 
@@ -2607,36 +2622,34 @@ private static String getFormatDate(DateTime dt) {
 			String requete = " SELECT idactivite,datedebut from activite where"
 					+ " to_date(to_char(datedebut,'dd/mm/yyyy'),'dd/mm/yyyy')<? "
 					+ " and typeuser=4";
-		
+
 			preparedStatement = connexion.prepareStatement(requete);
 			preparedStatement.setTimestamp(1,
 					new java.sql.Timestamp(date.getTime()));
 			rs = preparedStatement.executeQuery();
 			LOG.info("Recherche  les activités CARPEDIEM à effacer:");
-		
+
 			while (rs.next()) {
 
-				Date maintenant=new Date();
-				Calendar calNow=Calendar.getInstance();
+				Date maintenant = new Date();
+				Calendar calNow = Calendar.getInstance();
 				calNow.setTime(maintenant);
 				int idActivite = rs.getInt("idactivite");
 				Date datedebut = rs.getTimestamp("datedebut");
-				Calendar cal=Calendar.getInstance();
-			
+				Calendar cal = Calendar.getInstance();
+
 				cal.setTime(datedebut);
-				cal.set(Calendar.DAY_OF_MONTH,calNow.get(Calendar.DAY_OF_MONTH));
-				cal.set(Calendar.MONTH,calNow.get(Calendar.MONTH));
-				cal.set(Calendar.YEAR,calNow.get(Calendar.YEAR));
-			
+				cal.set(Calendar.DAY_OF_MONTH,
+						calNow.get(Calendar.DAY_OF_MONTH));
+				cal.set(Calendar.MONTH, calNow.get(Calendar.MONTH));
+				cal.set(Calendar.YEAR, calNow.get(Calendar.YEAR));
+
 				setDateDebut(idActivite, cal.getTime());
-			
+
 				LOG.info("Activite à changer la date: id= " + idActivite);
 			}
 
-			
 			preparedStatement.close();
-
-		
 
 		} catch (NamingException | SQLException e) {
 
@@ -2651,7 +2664,7 @@ private static String getFormatDate(DateTime dt) {
 		} finally {
 			CxoPool.close(connexion, preparedStatement, rs);
 		}
-		
+
 	}
 
 }
