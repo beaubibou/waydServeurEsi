@@ -22,6 +22,7 @@ import gcmnotification.EffaceMessageRecuGcm;
 import gcmnotification.EffaceNotificationRecuGcm;
 import gcmnotification.EffaceParticipationGcm;
 import gcmnotification.UpdateActiviteGcm;
+import gcmnotification.UpdateInteretGcm;
 import gcmnotification.UpdateNotificationGcm;
 import gcmnotification.UpdatePositionGcm;
 import gcmnotification.UpdatePreferenceGcm;
@@ -766,6 +767,38 @@ public class WBservices {
 
 	}
 
+	public MessageServeur getLoginTestFireBase() {
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+
+			// *****************Securite*****************
+
+			PersonneDAO personneDAO = new PersonneDAO(connexion);
+
+			LogDAO.LOG_DUREE("Login fire base", debut);
+			return personneDAO.getLoginTestFireBase();
+
+				
+
+			}
+
+	
+		 catch (Exception e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			return null;
+		} finally {
+
+			CxoPool.closeConnection(connexion);
+
+		}
+
+	}
+
+	
 	public Activite getActivite(int idpersonne, int idactivite, String jeton) {
 		long debut = System.currentTimeMillis();
 		Connection connexion = null;
@@ -788,6 +821,7 @@ public class WBservices {
 				activitedao.isInscrit(activite, idpersonne);
 				activite.setInteret(activitedao.isDejaInteret(idpersonne,
 						idactivite));
+				activite.setFavori(ActiviteDAO.isFavoriDejaSignale(idpersonne, idactivite));
 				website.dao.ActiviteDAO.addNbrVu(idpersonne, idactivite,
 						activite.getIdorganisateur());
 
@@ -913,7 +947,6 @@ public class WBservices {
 			// *****************Securite*****************
 
 			PersonneDAO personneDAO = new PersonneDAO(connexion);
-
 			if (!personneDAO.isAutorise(idpersonne, jeton))
 				return new MessageServeur(false,
 						TextWebService.PROFIL_NON_RECONNU);
@@ -922,12 +955,14 @@ public class WBservices {
 
 			retour = website.dao.ActiviteDAO.addInteretActivite(idpersonne,
 					idactivite, typeInteret);
+			 website.dao.ActiviteDAO.addFavori(idpersonne, idactivite);
+			
+			LogDAO.LOG_DUREE("addInteretActivite et FAVORI", debut);
 
-			// Ajoute le nbr de vu pour chaque vu de l'activit�
+			PoolThreadGCM.poolThread
+			.execute(new UpdateInteretGcm(idpersonne));
 
-			LogDAO.LOG_DUREE("addInteretActivite", debut);
-
-			return retour;
+			return new MessageServeur(true, "Retrouvez la dans vos favoris");
 
 		} catch (SQLException | NamingException e) {
 			LOG.error(ExceptionUtils.getStackTrace(e));
@@ -2085,7 +2120,9 @@ public class WBservices {
 			connexion.setAutoCommit(false);
 			new ActiviteDAO(connexion).effaceFavori(idpersonne, idactivite);
 			connexion.commit();
-
+			
+			PoolThreadGCM.poolThread
+			.execute(new UpdateInteretGcm(idpersonne));
 			LogDAO.LOG_DUREE("effaceFavori", debut);
 
 			return new MessageServeur(true, TextWebService.SUPPRESSION_FAVORI);
@@ -2987,6 +3024,39 @@ public class WBservices {
 		}
 
 	}
+
+	public Activite[] getActiviteFavoris(int idpersonne, String jeton) {
+
+				Connection connexion = null;
+				ArrayList<Activite> listActivite = new ArrayList<>();
+				PreparedStatement preparedStatement = null;
+				ResultSet rs = null;
+
+				try {
+					connexion = CxoPool.getConnection();
+
+					PersonneDAO personnedao = new PersonneDAO(connexion);
+					MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+							idpersonne, jeton);
+
+					if (!autorise.isReponse())
+						return null;
+
+					ActiviteDAO activitedao = new ActiviteDAO(connexion);
+
+					listActivite = activitedao.getFavoris(idpersonne);
+					LOG.info("getActiviteFavoris");
+			
+					return listActivite.toArray(new Activite[listActivite.size()]);
+
+				} catch (Exception e) {
+					LOG.error(ExceptionUtils.getStackTrace(e));
+					return listActivite.toArray(new Activite[listActivite.size()]);
+				} finally {
+					CxoPool.close(connexion, preparedStatement, rs);
+				}
+
+			}
 
 	public Activite[] getActivitesOffset(int idPersonne, String latitudestr,
 

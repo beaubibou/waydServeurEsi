@@ -11,6 +11,7 @@ int nbractiviteencours;
 int nbrsuggestion;
 int nbrnotification;
 int nbrami;
+int nbrfavori;
 public TableauBord() {
 	
 	super();
@@ -18,8 +19,17 @@ public TableauBord() {
 }
 
 
+public int getNbrfavori() {
+	return nbrfavori;
+}
 
-public TableauBord(int nbrmessagenonlu, int nbractiviteencours,int nbrsuggestion,int nbrnotification,int nbrami) {
+
+public void setNbrfavori(int nbrfavori) {
+	this.nbrfavori = nbrfavori;
+}
+
+
+public TableauBord(int nbrmessagenonlu, int nbractiviteencours,int nbrsuggestion,int nbrnotification,int nbrami,int nbrfavori) {
 	
 	super();
 	this.nbrmessagenonlu = nbrmessagenonlu;
@@ -27,6 +37,7 @@ public TableauBord(int nbrmessagenonlu, int nbractiviteencours,int nbrsuggestion
 	this.nbrsuggestion=nbrsuggestion;
 	this.nbrnotification=nbrnotification;
 	this.nbrami=nbrami;
+	this.nbrfavori=nbrfavori;
 }
 
 

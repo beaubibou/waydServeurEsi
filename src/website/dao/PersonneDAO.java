@@ -1137,6 +1137,41 @@ public static boolean isLoginExist(String login)  {
 
 	}
 
+	public static boolean prepareTestFireBaseUser() {
+	
+		long debut = System.currentTimeMillis();
+		Connection connexion = null;
+		PreparedStatement preparedStatement=null;
+		try {
+
+			// on met le sexe � autre
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			String requete = "UPDATE  personne set jeton=null "
+					+ " WHERE mail like 'test.firebase%'";
+		  preparedStatement = connexion
+					.prepareStatement(requete);
+		
+			preparedStatement.execute();
+			preparedStatement.close();
+			connexion.commit();
+			LogDAO.LOG_DUREE("updateProfilPro", debut);
+			
+			return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error( ExceptionUtils.getStackTrace(e));
+			CxoPool.rollBack(connexion);
+
+		} finally {
+
+
+			CxoPool.close(connexion, preparedStatement);
+		}
+		return false;
+
+	}
+
 	public boolean updateProfilProFull(String pseudo, String adresse,
 			double latitude, double longitude, String commentaire,
 			int idpersonne, String siteWeb, String telephone, String siret) {

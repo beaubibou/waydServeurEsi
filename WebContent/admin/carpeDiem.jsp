@@ -85,14 +85,21 @@
 					class="form-control" name="ville">
 			</div>
 
-
-			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="submit" class="btn btn-default">Charge carpeDiem</button>
+	
+	
 		</form>
 
 		<form action="/wayd/EffaceActiviteCarpediem" method="post">
 
 		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.RAZ_CARPEDIEM %>">
 		<button type="submit" class="btn btn-default">Efface</button>
+		</form>
+		
+		<form action="/wayd/EffaceActiviteCarpediem" method="post">
+
+		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.PREPARE_TEST_FIREBASE %>">
+		<button type="submit" class="btn btn-default">Prepare test firebase</button>
 		</form>
 	</div>
 

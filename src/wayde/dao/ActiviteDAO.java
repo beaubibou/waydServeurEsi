@@ -1079,10 +1079,24 @@ public class ActiviteDAO {
 		}
 
 		CxoPool.close(preparedStatement, rs);
+		
+		
+		requete = "select  count(*) as nbrfavori from favori where  idpersonne=?";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setInt(1, idpersonne);
+		rs = preparedStatement.executeQuery();
+		int nbrfavori = 0;
+
+		if (rs.next()) {
+			nbrfavori = rs.getInt("nbrfavori");
+		}
+
+		
+		CxoPool.close(preparedStatement, rs);
 
 		// Compte le nbr de notification"
 		return new TableauBord(nbrmessagenonlu, nbrparticipation + nbractivite,
-				nbrsuggestion, nbrnotification, nbrami);
+				nbrsuggestion, nbrnotification, nbrami,nbrfavori);
 	}
 
 	public int getNbrNotification(int idpersonne) throws SQLException {

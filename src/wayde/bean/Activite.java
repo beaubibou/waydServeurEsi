@@ -70,6 +70,8 @@ public class Activite {
 	String fulldescrition;
 
 	private boolean interet;
+	
+	private boolean favori;
 
 	private String lienfacebook;
 	
@@ -79,6 +81,14 @@ public class Activite {
 
 	public int getGratuite() {
 		return gratuite;
+	}
+
+	public boolean isFavori() {
+		return favori;
+	}
+
+	public void setFavori(boolean favori) {
+		this.favori = favori;
 	}
 
 	public void setGratuite(int gratuite) {
@@ -319,7 +329,7 @@ public class Activite {
 			 diffMinutes = diff / (60 * 1000) % 60;
 			 diffHours = diff / (60 * 60 * 1000) % 24;
 
-		return diffHours + ":" + String.format("%02d", diffMinutes);
+		return "Débute dans " +diffHours + ":" + String.format("%02d", diffMinutes);
 			
 			
 		}
@@ -334,7 +344,7 @@ public class Activite {
 			if (diff < 0)
 				return TextWebService.TERMINEE;
 
-		return diffHours + ":" + String.format("%02d", diffMinutes);
+		return "Se termine dans "+diffHours + ":" + String.format("%02d", diffMinutes);
 
 		}
 

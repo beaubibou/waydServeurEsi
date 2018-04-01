@@ -325,6 +325,39 @@ public class ActiviteDAO {
 		return false;
 	}
 
+	public static boolean isFavoriDejaSignale(int idpersonne, int idactivite) {
+
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idpersonne from favori where idpersonne=? and idactivite=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setInt(1, idpersonne);
+			preparedStatement.setInt(2, idactivite);
+			rs = preparedStatement.executeQuery();
+
+			LogDAO.LOG_DUREE("isFavoriDejaSignale", debut);
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+		finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+
+		}
+		return false;
+	}
+	
 	public static boolean isInteretDejaSignale(int idpersonne, int idactivite) {
 
 		long debut = System.currentTimeMillis();
@@ -2183,12 +2216,7 @@ private static String getFormatDate(DateTime dt) {
 
 	public static void ajouteActiviteCarpeDiem(ActiviteCarpeDiem activite)
 			throws IOException {
-
 		
-		
-		if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
-				.getId())))
-			return;
 
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
@@ -2236,6 +2264,17 @@ private static String getFormatDate(DateTime dt) {
 			// Ajoute le lien dans la table carpe pour eviter la redondance.
 		
 		//	addLienCarpeDiem(activite.getUrl());
+			
+			//Si elle existe mise à jour 
+			if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
+					.getId()))){
+				
+				
+				return;
+				
+			}
+			else
+			{
 			
 			connexion = CxoPool.getConnection();
 			connexion.setAutoCommit(false);
@@ -2293,6 +2332,7 @@ private static String getFormatDate(DateTime dt) {
 			preparedStatement.execute();
 						
 			connexion.commit();
+			}
 
 		} catch (NamingException | SQLException | ParseException e) {
 
@@ -2401,7 +2441,7 @@ private static String getFormatDate(DateTime dt) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
-		if (isInteretDejaSignale(idpersonne, idactivite))
+		if (isFavoriDejaSignale(idpersonne, idactivite))
 			return new MessageServeur(false, Erreur_HTML.INTERET_DEJA_SIGNALEE);
 
 		try {

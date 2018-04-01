@@ -120,7 +120,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			DateTime date = new DateTime();
 
-			for (int nbrJours = 0; nbrJours < 2; nbrJours++) {
+			for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
 
 				DateTime date1 = date.plusDays(nbrJours);
 				String dateEventStr = getFormatDate(date1);
@@ -133,12 +133,12 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			}
 
-			DateTime dateInit = new DateTime();
-			DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
-					dateInit.getMonthOfYear(), dateInit.getDayOfMonth(), 0, 0,
-					0);
+			//DateTime dateInit = new DateTime();
+			//DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
+			//		dateInit.getMonthOfYear(), dateInit.getDayOfMonth(), 0, 0,
+			//		0);
 
-			ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
+		//	ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
 			// ActiviteDAO.updateDateCarpeDiem(new Date());
 
 		}

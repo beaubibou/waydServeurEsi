@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import website.dao.ActiviteDAO;
+import website.dao.PersonneDAO;
 import website.metier.AuthentificationSite;
 
 /**
@@ -18,7 +19,9 @@ public class EffaceActiviteCarpediem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public final static String RAZ_CARPEDIEM = "RAZ_CARPEDIEM";
 	public final static String RAZ_CARPEDIEM_BEFORE_NOW = "RAZ_CARPEDIEM_BEFORE_NOW";
+	public final static String PREPARE_TEST_FIREBASE = "PREPARE_TEST_FIREBASE";
 
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -61,6 +64,11 @@ public class EffaceActiviteCarpediem extends HttpServlet {
 		case RAZ_CARPEDIEM_BEFORE_NOW:
 
 			ActiviteDAO.effaceTouteCarpeDiem(new Date());
+	
+			break;
+		case PREPARE_TEST_FIREBASE:
+
+			PersonneDAO.prepareTestFireBaseUser();
 	
 			break;
 

@@ -171,7 +171,11 @@ public class ServeurMethodes {
 						.addData("nbrnotification",
 								Integer.toString(tdb.getNbrnotification()))
 						.addData("idpersonne",
-								Integer.toString(participant.getId())).build();
+								Integer.toString(participant.getId()))
+						.addData("nbrfavori",
+								Integer.toString(tdb.getNbrfavori()))
+								.build()
+								;
 				n.send(androidMessage, GCMid, 3);
 
 			} catch (Exception e) {

@@ -130,6 +130,49 @@ public class PersonneDAO {
 	public PersonneDAO(Connection connexion) {
 		this.connexion = connexion;
 	}
+	
+	public synchronized MessageServeur getLoginTestFireBase() throws SQLException {
+
+		PreparedStatement preparedStatement = null;
+		ResultSet rs =null;
+		try {
+			String requete = " SELECT personne.mail from personne where jeton is null and mail like 'test.firebase%@wayd.fr'  offset 0 limit 1";
+
+			preparedStatement = connexion.prepareStatement(requete);
+			rs = preparedStatement.executeQuery();
+			String mail=null;
+		
+			if(rs.next())
+				mail= rs.getString("mail");
+		
+			if (mail==null)
+			{
+				
+				return new MessageServeur(false, mail);	
+				
+			}
+			preparedStatement.close();
+			requete = "UPDATE  personne set jeton='xxx' WHERE mail=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, mail);
+			preparedStatement.execute();
+		
+			CxoPool.close(preparedStatement, rs);
+			
+			return new MessageServeur(true, mail);
+	
+		} catch (SQLException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			throw e;
+		} finally {
+			
+			CxoPool.close(preparedStatement,rs);
+		}
+
+		
+
+	}
 
 	public Personne getPersonneId(int idpersonne) throws SQLException {
 
