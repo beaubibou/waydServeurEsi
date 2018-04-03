@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import servlet.ImportCarpeDiem;
 import website.dao.ActiviteDAO;
 import website.metier.ActiviteCarpeDiem;
 
@@ -37,14 +38,24 @@ public class ImportCarpe {
 	ActiviteCarpeDiem activite;
 	StringBuilder log = new StringBuilder();
 	String tokenFb;
-	ArrayList<ActiviteCarpeDiem> listFinal = new ArrayList<ActiviteCarpeDiem>();
+	ArrayList<ActiviteCarpeDiem> listFinal = new ArrayList<>();
 
-	public void importActivitesByPageNew(String date, String ville,String tokenfb) {
-		this.tokenFb=tokenfb;
+	public void importActivitesByPageNew( String ville,
+			String tokenfb,int nbrJour) {
+	
+		this.tokenFb = tokenfb;
 		listFinal.clear();
 		int page = 0;
 		Integer status = 1;
+	
+		DateTime date = new DateTime();
+	
+		for (int nbrJours = 0; nbrJours < nbrJour; nbrJours++) {
 
+			DateTime date1 = date.plusDays(nbrJours);
+			String dateEventStr = ImportCarpeDiem.getFormatDate(date1);
+	
+		
 		do {
 
 			try {
@@ -52,7 +63,7 @@ public class ImportCarpe {
 						+ "N°page:" + page + " du" + date);
 				page++;
 				String ur = "http://" + ville + ".carpediem.cd/events/?dt="
-						+ date;
+						+ dateEventStr;
 
 				String post = "mode=load_content&page=" + page
 						+ "&_csrf=getCsrf()";
@@ -92,7 +103,10 @@ public class ImportCarpe {
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 
-		} while (status == 1 && page <30);
+		} while (status == 1 && page < 30);
+		
+		
+		}
 
 		int g = 0;
 
@@ -101,22 +115,23 @@ public class ImportCarpe {
 				g++;
 				LOG.info(ville + ":" + g + "/" + mapActivite.values().size());
 				getDetailActivite(activiteCarpe);
-
-				getListEvenementFaceBook(activiteCarpe.getIdEventFaceBook(),activiteCarpe);
-			System.out.println("Taille globale:"+listFinal.size());
-				//	ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+			
+				getListEvenementFaceBook(activiteCarpe.getIdEventFaceBook(),
+						activiteCarpe);
+			
+				LOG.info("Taille globale:" + listFinal.size());
 
 			} catch (Exception e) {
 				LOG.error("Detail activite non disponible");
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
-		
-		for (ActiviteCarpeDiem activiteCarpe :listFinal) {
+
+		for (ActiviteCarpeDiem activiteCarpe : listFinal) {
 			try {
 				g++;
-				LOG.info(ville + ":" + g + "/" + mapActivite.values().size());
-			
+				LOG.info(ville + ":" + g + "/" + listFinal.size());
+
 				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
 
 			} catch (Exception e) {
@@ -125,7 +140,6 @@ public class ImportCarpe {
 			}
 		}
 
-		
 		listActivite.clear();
 		mapActivite.clear();
 
@@ -205,12 +219,8 @@ public class ImportCarpe {
 
 	public void getListEvenementFaceBook(String eventid,
 			ActiviteCarpeDiem activite) throws IOException, JSONException {
-		
-		//String token = "EAACEdEose0cBAIsyx3eAX7g7fZCFh81BBCHAZBRSWXKuErgkzhhfFoapoBZA53er1HEig1NHaIwoABSd8wnYZBCsCafBhtfp8FINU53JevRtAjqWk4ZCPLAlqEZBzV0eZAcxmPxVSx4KtPrhIqvjEK1OlpgkiegMu1Vge989RAuVlrOVYCHcFlZBLT0mL3mvnvR880VXshJHRAZDZD";
-		// String eventid="121440975205061";
 
-		
-		
+
 		String urlString = "https://graph.facebook.com/v2.11/" + eventid
 				+ "?access_token=" + tokenFb;
 
@@ -232,6 +242,7 @@ public class ImportCarpe {
 
 		String description = json.getString("description");
 		String titre = json.getString("name");
+	
 		// Recupere l'adresse;
 
 		JSONObject place = json.getJSONObject("place");
@@ -253,47 +264,47 @@ public class ImportCarpe {
 
 		// Recupere les dates
 
-		boolean isEvent_times=false;
+		boolean isEvent_times = false;
 		try {
-		
+
 			JSONArray array = json.getJSONArray("event_times");
-			isEvent_times=true;
-		
+			isEvent_times = true;
+
 			for (int i = 0; i < array.length(); i++) {
 
 				String datedebut = array.getJSONObject(i).getString(
 						"start_time");
 				String datefin = array.getJSONObject(i).getString("end_time");
 				String idEvent = array.getJSONObject(i).getString("id");
-			//	System.out.println(datedebut + ":****************************" + datefin + ":" + id);
-				ActiviteCarpeDiem tmp=new ActiviteCarpeDiem(activite);
+	
+				ActiviteCarpeDiem tmp = new ActiviteCarpeDiem(activite);
 				tmp.setIdEvent(idEvent);
 				tmp.setStartDate(datedebut);
 				tmp.setEndDate(datefin);
-				LOG.info("??????????Ajourte");
+				LOG.info("Ajoure activite"+ville);
 				listFinal.add(tmp);
-				
+
 			}
 		} catch (Exception e) {
-			
-			LOG.info("Pas de planification"+e);
+
+			LOG.info("Pas de planification" + e);
 		}
+		
 		// Si pas d'event time et quelle a ete valide on l'ajoute.
-	
+
 		try {
 			if (!valideActivite(activite.getDateDebut(), activite.getDateFin())) {
 				LOG.info("Activite ignorée");
 				return;
 			}
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			LOG.info("Les dates ne n'ont pas été parsé dans la méthode getListEvenementFaceBook ");
 			return;
 		}
-		
-		if (!isEvent_times){
-		activite.setIdEvent(activite.getLienFaceBook());	
-		listFinal.add(activite);
+
+		if (!isEvent_times) {
+			activite.setIdEvent(activite.getLienFaceBook());
+			listFinal.add(activite);
 		}
 
 	}

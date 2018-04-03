@@ -93,7 +93,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 	}
 
-	private static String getFormatDate(DateTime dt) {
+	public static String getFormatDate(DateTime dt) {
 
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd.MM.yyyy");
 		return fmt.print(dt);
@@ -112,20 +112,28 @@ public class ImportCarpeDiem extends HttpServlet {
 		villes.add("nice");
 		villes.add("strasbourg");
 		villes.add("toulouse");
-
-		ImportCarpe importCarpe = new ImportCarpe();
-
+		
 		for (String ville : villes) {
+		
+			new Thread(new ImportRunnable(1, ville, jeton)).start();;
+		
+		}
 
-			DateTime date = new DateTime();
-
-			for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
-
-				DateTime date1 = date.plusDays(nbrJours);
-				String dateEventStr = getFormatDate(date1);
-				importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
-
-			}
+		
+		
+		//		ImportCarpe importCarpe = new ImportCarpe();
+//
+//		for (String ville : villes) {
+//
+//			DateTime date = new DateTime();
+//
+//			for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
+//
+//				DateTime date1 = date.plusDays(nbrJours);
+//				String dateEventStr = getFormatDate(date1);
+//				importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
+//
+//			}
 
 			//DateTime dateInit = new DateTime();
 			//DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
@@ -137,5 +145,5 @@ public class ImportCarpeDiem extends HttpServlet {
 
 		}
 
-	}
+	
 }
