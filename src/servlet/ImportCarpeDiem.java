@@ -24,7 +24,10 @@ import website.metier.AuthentificationSite;
 public class ImportCarpeDiem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(ImportCarpeDiem.class);
-	
+	public final static String ACTION_CHARGE_CARPEDIEM = "ACTION_CHARGE_CARPEDIEM";
+	public final static String ACTION_CHARGE_EVENT_FACEBOOK = "ACTION_CHARGE_EVENT_FACEBOOK";
+	private static final int THREAD_SIMULTANEE = 10;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -52,56 +55,82 @@ public class ImportCarpeDiem extends HttpServlet {
 		if (!authentification.isAuthentifieAdmin())
 			return;
 
-//		 String ville_ = "montpelleier";
-//		
-//		 String startDate = "2018-03-22T19:45:00+01:00";
-//		 String endDate = "2018-03-23T22:30:00+01:00";
-//		 String image =
-//		 "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
-//		 String description =
-//		 "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
-//		 String url =
-//		 "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
-//		 String name = "Trilogie du Seigneur des Anneaux";
-//		 String address = "43, rue des Docks, 69009 Lyon";
-//		 String nomLieu = "PathÃ© Vaise";
-//		
-//		 double lat = 34.3;
-//		 double lng = 4.3;
-//		 int id = 503030;
-//
-//		 ActiviteCarpeDiem activite = new ActiviteCarpeDiem(startDate,
-//		 endDate,
-//		 image, description, url, name, address, nomLieu, ville_, lat,
-//		 lng, id);
-//		
-//		 website.dao.ActiviteDAO.ajouteActiviteCarpeDiem(activite);
-//
-//		ArrayList<String> villes = new ArrayList<>();
-//
-//		villes.add("paris");
+		// String ville_ = "montpelleier";
+		//
+		// String startDate = "2018-03-22T19:45:00+01:00";
+		// String endDate = "2018-03-23T22:30:00+01:00";
+		// String image =
+		// "http://lyon.carpediem.cd/data/afisha/bp/0b/b8/0bb8796831.jpg";
+		// String description =
+		// "Revivez la trilogie du Seigneur des Anneaux en version longue, et en Dolby CinÃ©ma! Vendredi 09 Mars Ã  19h45: La";
+		// String url =
+		// "http://lyon.carpediem.cd/events6020360-trilogie-du-seigneur-des-anneaux-at-path-vaise";
+		// String name = "Trilogie du Seigneur des Anneaux";
+		// String address = "43, rue des Docks, 69009 Lyon";
+		// String nomLieu = "PathÃ© Vaise";
+		//
+		// double lat = 34.3;
+		// double lng = 4.3;
+		// int id = 503030;
+		//
+		// ActiviteCarpeDiem activite = new ActiviteCarpeDiem(startDate,
+		// endDate,
+		// image, description, url, name, address, nomLieu, ville_, lat,
+		// lng, id);
+		//
+		// website.dao.ActiviteDAO.ajouteActiviteCarpeDiem(activite);
+		//
+		// ArrayList<String> villes = new ArrayList<>();
+		//
+		// villes.add("paris");
 
-		String jeton=request.getParameter("token");
-		String listevents=request.getParameter("listevents");
+		String jeton = request.getParameter("token");
+
+		String action = request.getParameter("action");
 		
-		System.out.println(listevents);
+
+		switch (action) {
+
+		case ACTION_CHARGE_CARPEDIEM:
+			LOG.info("CHARGE CARPEDIEM ");
+			 executer(jeton);
 		
-		String[] listEvent=listevents.split(" ");
-		for (int f=0; f<listEvent.length;f++){
+			break;
+
 			
-			LOG.info(listEvent[f]);
+		case ACTION_CHARGE_EVENT_FACEBOOK:
 			
+			LOG.info("CHARGE EVNETS FB");
+		
+			
+			String listevents = request.getParameter("listevents");
+			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
+			
+			String[] listEvent = listevents.split(" ");
+			for (int f = 0; f < listEvent.length; f++) {
+
+				LOG.info("Charge THREAD:"+f);
+				executor.execute(new ImportFaceBook(listEvent[0], jeton));
+
+			}
+		
+			executor.shutdown();
+		
+			
+			break;
+
 		}
-		//executer(jeton);
-	ExecutorService executor = Executors.newFixedThreadPool(1);
-	executor.execute(new ImportFaceBook(listEvent[0], jeton));
-	executor.shutdown();
-	//		
-//		for (int f=0;f<10;f++){
-//			
-//			executor.execute(new Import(f));
-//			
-//		}
+		request.getRequestDispatcher("Acceuil").forward(request,
+				response);
+
+		
+		// executer(jeton);
+			//
+		// for (int f=0;f<10;f++){
+		//
+		// executor.execute(new Import(f));
+		//
+		// }
 	}
 
 	public static String getFormatDate(DateTime dt) {
@@ -113,7 +142,6 @@ public class ImportCarpeDiem extends HttpServlet {
 
 	public static void executer(String jeton) throws IOException {
 
-				
 		ArrayList<String> villes = new ArrayList<>();
 		villes.add("lyon");
 		villes.add("paris");
@@ -123,38 +151,36 @@ public class ImportCarpeDiem extends HttpServlet {
 		villes.add("nice");
 		villes.add("strasbourg");
 		villes.add("toulouse");
-		
+
 		for (String ville : villes) {
-		
-			new Thread(new ImportRunnable(1, ville, jeton)).start();;
-		
-		}
 
-		
-		
-		//		ImportCarpe importCarpe = new ImportCarpe();
-//
-//		for (String ville : villes) {
-//
-//			DateTime date = new DateTime();
-//
-//			for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
-//
-//				DateTime date1 = date.plusDays(nbrJours);
-//				String dateEventStr = getFormatDate(date1);
-//				importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
-//
-//			}
-
-			//DateTime dateInit = new DateTime();
-			//DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
-			//		dateInit.getMonthOfYear(), dateInit.getDayOfMonth(), 0, 0,
-			//		0);
-
-		//	ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
-			// ActiviteDAO.updateDateCarpeDiem(new Date());
+			new Thread(new ImportRunnable(1, ville, jeton)).start();
+			;
 
 		}
 
-	
+		// ImportCarpe importCarpe = new ImportCarpe();
+		//
+		// for (String ville : villes) {
+		//
+		// DateTime date = new DateTime();
+		//
+		// for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
+		//
+		// DateTime date1 = date.plusDays(nbrJours);
+		// String dateEventStr = getFormatDate(date1);
+		// importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
+		//
+		// }
+
+		// DateTime dateInit = new DateTime();
+		// DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
+		// dateInit.getMonthOfYear(), dateInit.getDayOfMonth(), 0, 0,
+		// 0);
+
+		// ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
+		// ActiviteDAO.updateDateCarpeDiem(new Date());
+
+	}
+
 }

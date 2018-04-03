@@ -1,3 +1,4 @@
+<%@page import="servlet.ImportCarpeDiem"%>
 <%@page import="servlet.EffaceActiviteCarpediem"%>
 <%@page import="servlet.pro.CreerUserPro"%>
 <%@page import="servlet.Connexion"%>
@@ -72,33 +73,48 @@
 		//LogDAO.LOG_PERF_REQUETE=true;
 	%>
 	<div class="container">
-		<h2>Paramétres</h2>
-
+	
+		
+		
 		<form action="/wayd/ImportCarpeDiem" method="post">
 
+				<input type="hidden" name="action" value="<%=ImportCarpeDiem.ACTION_CHARGE_CARPEDIEM %>">
 			<div class="form-group">
-				<label for="maxLogs">Date</label> <input name="date" type="text"
-					placeholder="jj.mm.yyyy" class="form-control" id="maxlogs">
+		
+				
 			</div>
+		
+			<input type="text" name="token" placeholder="token fb" ></input>
+			
+		
+			<button type="submit" class="btn btn-default">Charge via carpeDiem </button>
+	
+	
+		</form>
+			<br/>
+		<form action="/wayd/ImportCarpeDiem" method="post">
+
+				<input type="hidden" name="action" value="<%=ImportCarpeDiem.ACTION_CHARGE_EVENT_FACEBOOK %>">
 			<div class="form-group">
-				<label for="nbrLogSupprimer">Ville</label> <input type="text"
-					class="form-control" name="ville">
+				
 			</div>
+			
 
 			<input type="text" name="token" placeholder="token fb" ></input>
 			
 				<input type="text" name="listevents" placeholder="List de events" ></input>
-			<button type="submit" class="btn btn-default">Charge carpeDiem</button>
+			<button type="submit" class="btn btn-default">Charge FB avec List Event</button>
 	
 	
 		</form>
-
+		
+	<br/>
 		<form action="/wayd/EffaceActiviteCarpediem" method="post">
 
 		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.RAZ_CARPEDIEM %>">
-		<button type="submit" class="btn btn-default">Efface</button>
+		<button type="submit" class="btn btn-default">Efface toutes activites carpeDiem</button>
 		</form>
-		
+		<br/>
 		<form action="/wayd/EffaceActiviteCarpediem" method="post">
 
 		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.PREPARE_TEST_FIREBASE %>">
