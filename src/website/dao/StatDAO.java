@@ -228,7 +228,7 @@ public class StatDAO {
 		try {
 			connexion = CxoPool.getConnection();
 
-			String requete = " SELECT count( idactivite) as nbrActivite  FROM activite where to_char(datecreation,'DD-MM-YYYY')="
+			String requete = " SELECT count( idactivite) as nbrActivite  FROM activite where to_char(datedebut,'DD-MM-YYYY')="
 					+ " to_char(current_timestamp, 'DD-MM-YYYY')";
 			preparedStatement = connexion.prepareStatement(requete);
 			rs = preparedStatement.executeQuery();

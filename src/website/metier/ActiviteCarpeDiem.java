@@ -20,12 +20,31 @@ public class ActiviteCarpeDiem {
 	String nomLieu;
 	String ville;
 	double lat,lng;
+	String idEventFaceBook;
+	String idEvent;
 	int id;
 	String lienFaceBook;
 	private String fulldescription;
 	
 
 	
+	
+	public String getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(String idEvent) {
+		this.idEvent = idEvent;
+	}
+
+	public String getIdEventFaceBook() {
+		return idEventFaceBook;
+	}
+
+	public void setIdEventFaceBook(String idEventFaceBook) {
+		this.idEventFaceBook = idEventFaceBook;
+	}
+
 	public String getLienFaceBook() {
 		return lienFaceBook;
 	}

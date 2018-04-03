@@ -87,7 +87,8 @@ public class ImportCarpeDiem extends HttpServlet {
 //
 //		villes.add("paris");
 
-		executer();
+		String jeton=request.getParameter("token");
+		executer(jeton);
 		
 
 	}
@@ -99,15 +100,13 @@ public class ImportCarpeDiem extends HttpServlet {
 
 	}
 
-	public static void executer() throws IOException {
+	public static void executer(String jeton) throws IOException {
 
 				
 		ArrayList<String> villes = new ArrayList<>();
-
 		villes.add("lyon");
 		villes.add("paris");
 		villes.add("bordeaux");
-		villes.add("lyon");
 		villes.add("marseille");
 		villes.add("nantes");
 		villes.add("nice");
@@ -124,12 +123,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 				DateTime date1 = date.plusDays(nbrJours);
 				String dateEventStr = getFormatDate(date1);
-				try {
-					importCarpe.importActivitesByPage(dateEventStr, ville);
-				} catch (JSONException e) {
-
-					LOG.error(ExceptionUtils.getStackTrace(e));
-				}
+				importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
 
 			}
 

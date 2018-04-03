@@ -26,6 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import carpediem.ImportCarpe;
 import sun.misc.BASE64Encoder;
 import texthtml.pro.Erreur_HTML;
 import threadpool.PoolThreadGCM;
@@ -2223,7 +2224,7 @@ public class ActiviteDAO {
 			// ****************** Recuperation valeur***********************
 
 			String prenom = activite.getName();
-			String login = String.valueOf(activite.getId());
+			String login = activite.getIdEvent();
 			String photoUrl = activite.getImage();
 			String ville = activite.getVille();
 			String fulldescription = activite.getFulldescription();
@@ -2240,7 +2241,7 @@ public class ActiviteDAO {
 					+ activite.getNomLieu();
 			String urlCarpe = activite.getUrl();
 
-			if (!valideActivite(activite.getDateDebut(), activite.getDateFin())) {
+			if (!ImportCarpe.valideActivite(activite.getDateDebut(), activite.getDateFin())) {
 				LOG.info("Activite ignorée");
 				return;
 			}
@@ -2260,8 +2261,9 @@ public class ActiviteDAO {
 			// addLienCarpeDiem(activite.getUrl());
 
 			// Si elle existe mise à jour
-			if (website.dao.PersonneDAO.isLoginExist(String.valueOf(activite
-					.getId()))) {
+			int idOrganisteur=website.dao.PersonneDAO.isLoginExist(activite.getIdEvent());
+		
+			if (idOrganisteur!=0) {
 
 				connexion = CxoPool.getConnection();
 				connexion.setAutoCommit(false);
@@ -2290,7 +2292,7 @@ public class ActiviteDAO {
 				preparedStatement.setString(12, fulldescription);
 				preparedStatement.setString(13, lienFb);
 				preparedStatement.setString(14, urlCarpe);
-				preparedStatement.setInt(15, activite.getId());
+				preparedStatement.setInt(15, idOrganisteur);
 				preparedStatement.execute();
 				connexion.commit();
 				LOG.info("Activite mis à jour:");
@@ -2375,25 +2377,7 @@ public class ActiviteDAO {
 
 	}
 
-	private static boolean valideActivite(Date dateDebut, Date dateFin) {
-
-		DateTime maitenant = new DateTime().withHourOfDay(0)
-				.withMinuteOfHour(0).withSecondOfMinute(0)
-				.withMillisOfSecond(00);
-
-		if (dateDebut.before(maitenant.toDate()))
-			return false;
-
-		long Heure = 3600000;
-
-		if (dateFin.getTime() - dateDebut.getTime() > 24 * Heure)
-			return false;
-
-		else
-
-			return true;
-
-	}
+	
 
 	public static String encodeToString(BufferedImage image, String type) {
 		String imageString = null;

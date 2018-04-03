@@ -36,12 +36,12 @@ public class TacheFond implements Runnable {
 					debutCarpediem=new Date();
 					LOG.info("*******Import carpeDiem*******************");
 				
-					try {
-						ImportCarpeDiem.executer();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						ImportCarpeDiem.executer();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				
 				}
 				

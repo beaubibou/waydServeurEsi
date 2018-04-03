@@ -85,6 +85,7 @@
 					class="form-control" name="ville">
 			</div>
 
+			<input type="text" name="token" placeholder="token fb" ></input>
 			<button type="submit" class="btn btn-default">Charge carpeDiem</button>
 	
 	
@@ -99,7 +100,9 @@
 		<form action="/wayd/EffaceActiviteCarpediem" method="post">
 
 		<input type="hidden" name="action" value="<%=EffaceActiviteCarpediem.PREPARE_TEST_FIREBASE %>">
+		
 		<button type="submit" class="btn btn-default">Prepare test firebase</button>
+		
 		</form>
 	</div>
 

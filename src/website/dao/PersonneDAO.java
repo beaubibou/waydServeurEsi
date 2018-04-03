@@ -93,7 +93,7 @@ public class PersonneDAO {
 	
 	
 	
-public static boolean isLoginExist(String login)  {
+public static int isLoginExist(String login)  {
 		
 	Connection connexion = null;
 	PreparedStatement preparedStatement = null;
@@ -107,7 +107,7 @@ public static boolean isLoginExist(String login)  {
 		rs = preparedStatement.executeQuery();
 	
 		if (rs.next())
-			return true;
+			return rs.getInt("idpersonne");
 
 	} catch (NamingException | SQLException e) {
 			LOG.error( ExceptionUtils.getStackTrace(e));
@@ -118,7 +118,7 @@ public static boolean isLoginExist(String login)  {
 		CxoPool.close(connexion, preparedStatement, rs);
 
 	}
-	return false;
+	return 0;
 
 	
 	}
