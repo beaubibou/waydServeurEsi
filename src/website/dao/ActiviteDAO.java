@@ -2378,6 +2378,173 @@ public class ActiviteDAO {
 
 	}
 
+	public static void ajouteActiviteFaceBook(ActiviteCarpeDiem activite)
+			throws IOException {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+
+			// ****************** Recuperation valeur***********************
+
+			String prenom = activite.getName();
+			String login = activite.getIdEvent();
+			String photoUrl = activite.getUrlPhotoFB();
+			String ville = activite.getVille();
+			String fulldescription = activite.getFulldescription();
+			String lienFb = activite.getLienFaceBook();
+			double latitude = activite.getLat();
+			double longitude = activite.getLng();
+			double latitudeFixe = activite.getLat();
+			double longitudeFixe = activite.getLng();
+			Date debut = activite.getDateDebut();
+			Date fin = activite.getDateFin();
+			String libelle = activite.getDescription();
+			String titre = activite.getName();
+			String adresse = activite.getAddress() + " "
+					+ activite.getNomLieu();
+			String urlCarpe = activite.getUrl();
+
+			if (!ImportCarpe.valideActivite(activite.getDateDebut(), activite.getDateFin())) {
+				LOG.info("Activite ignorée");
+				return;
+			}
+
+			LOG.info("??????????????????????????????????????????????"+photoUrl);
+			URLConnection uc;
+			URL url = new URL(photoUrl);
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			BufferedImage imBuff = ImageIO.read(uc.getInputStream());
+			String photo = encodeToString(imBuff, "jpeg");
+
+		//	String photo=null;
+			// L'activite est complete est peut donc être inserée
+			// Ajoute le lien dans la table carpe pour eviter la redondance.
+
+			// addLienCarpeDiem(activite.getUrl());
+
+			// Si elle existe mise à jour
+		
+			int idOrganisteur=website.dao.PersonneDAO.isLoginExist(activite.getIdEvent());
+		
+			if (idOrganisteur!=0) {
+
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
+				String requete = "update activite set titre=?,"
+						+ " adresse=?,latitude=?,longitude=?,datedebut=?,datefin=?,"
+						+ "libelle=?,typeuser=?,actif=?,typeacces=?,idtypeactivite=?,descriptionall=?,lienfacebook=?,liencarpediem=?"
+						+ " where idpersonne=?";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setString(1, titre);
+				preparedStatement.setString(2, adresse);
+				preparedStatement.setDouble(3, latitude);
+				preparedStatement.setDouble(4, longitude);
+				preparedStatement.setTimestamp(5,
+						new java.sql.Timestamp(debut.getTime()));
+				preparedStatement.setTimestamp(6,
+						new java.sql.Timestamp(fin.getTime()));
+
+				preparedStatement.setString(7, libelle);
+				preparedStatement.setInt(8, ProfilBean.CARPEDIEM);
+				boolean active = true;
+				int idTypeActivite = TypeActivite.FACEBOOK;
+				preparedStatement.setBoolean(9, active);
+				preparedStatement.setInt(10, 2);
+				preparedStatement.setInt(11, idTypeActivite);
+				preparedStatement.setString(12, fulldescription);
+				preparedStatement.setString(13, lienFb);
+				preparedStatement.setString(14, urlCarpe);
+				preparedStatement.setInt(15, idOrganisteur);
+				preparedStatement.execute();
+				connexion.commit();
+				LOG.info("Activite mis à jour:");
+				return;
+
+			} else {
+
+				connexion = CxoPool.getConnection();
+				connexion.setAutoCommit(false);
+
+				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
+
+				preparedStatement.setString(1, prenom);
+				preparedStatement.setString(2, login);
+				preparedStatement.setString(3, ville);
+				preparedStatement.setString(4, photo);
+				preparedStatement.setDouble(5, latitude);
+				preparedStatement.setDouble(6, longitude);
+				preparedStatement.setDouble(7, latitudeFixe);
+				preparedStatement.setDouble(8, longitudeFixe);
+				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+				preparedStatement.setInt(10, 1);
+
+				preparedStatement.execute();
+
+				ResultSet rs = preparedStatement.getGeneratedKeys();
+				int idpersonne = 0;
+				if (rs.next())
+					idpersonne = rs.getInt("idpersonne");
+
+				preparedStatement.close();
+
+				requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
+						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+				preparedStatement = connexion.prepareStatement(requete);
+				preparedStatement.setString(1, titre);
+				preparedStatement.setString(2, adresse);
+				preparedStatement.setDouble(3, latitude);
+				preparedStatement.setDouble(4, longitude);
+				preparedStatement.setTimestamp(5,
+						new java.sql.Timestamp(debut.getTime()));
+				preparedStatement.setTimestamp(6,
+						new java.sql.Timestamp(fin.getTime()));
+				preparedStatement.setInt(7, idpersonne);
+				preparedStatement.setString(8, libelle);
+				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+				boolean active = true;
+				int idTypeActivite = TypeActivite.FACEBOOK;
+				preparedStatement.setBoolean(10, active);
+				preparedStatement.setInt(11, 2);
+				preparedStatement.setInt(12, idTypeActivite);
+				preparedStatement.setString(13, fulldescription);
+				preparedStatement.setString(14, lienFb);
+				preparedStatement.setString(15, urlCarpe);
+
+				preparedStatement.execute();
+				LOG.info("Activite ajoutée");
+				connexion.commit();
+			}
+
+		} catch (NamingException | SQLException | ParseException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			try {
+				if (connexion != null)
+					connexion.rollback();
+			} catch (SQLException e1) {
+
+				LOG.error(ExceptionUtils.getStackTrace(e1));
+			}
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+	}
+
 	
 
 	public static String encodeToString(BufferedImage image, String type) {

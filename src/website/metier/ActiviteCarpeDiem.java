@@ -21,6 +21,15 @@ public class ActiviteCarpeDiem {
 	int id;
 	String lienFaceBook;
 	private String fulldescription;
+	private String urlPhotoFB;
+
+	public String getUrlPhotoFB() {
+		return urlPhotoFB;
+	}
+
+	public void setUrlPhotoFB(String urlPhotoFB) {
+		this.urlPhotoFB = urlPhotoFB;
+	}
 
 	public String getIdEvent() {
 		return idEvent;
@@ -121,7 +130,7 @@ public class ActiviteCarpeDiem {
 
 	public ActiviteCarpeDiem(String datedebut, String datefin, String image,
 			String description, String titre, String adresseTotal,
-			String nomLieu, String ville, Double lat, Double lng, String idEvent) {
+			String nomLieu, String ville, Double lat, Double lng, String idEvent,String ulrPhotoFB) {
 		this.startDate = datedebut;
 		this.endDate = datefin;
 		this.image = image;
@@ -133,6 +142,7 @@ public class ActiviteCarpeDiem {
 		this.lat = lat;
 		this.lng = lng;
 		this.idEvent = idEvent;
+		this.urlPhotoFB=ulrPhotoFB;
 	}
 
 	public String getVille() {

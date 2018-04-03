@@ -105,12 +105,12 @@ public class ImportCarpeDiem extends HttpServlet {
 			
 			String listevents = request.getParameter("listevents");
 			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
-			
+			jeton="EAACEdEose0cBAGSdKMsl5qDAz0OxMIZB95pd1DHxEnk6xZCcrYjR2YDqmmBrsmSsfLZBhVD0iKUbe2dCzPqEgZCnR9OQrBZAWn2ZCoHLsfbL8ZA0MVyk4TDcUE8i7I17Bl9C7FCCB5L50en2qrOauTlxwh0blfU2WUpnUJnmU7OeBDD9DfhiZAena3fpoCSEqJMZD";
 			String[] listEvent = listevents.split(" ");
 			for (int f = 0; f < listEvent.length; f++) {
 
-				LOG.info("Charge THREAD:"+f);
-				executor.execute(new ImportFaceBook(listEvent[0], jeton));
+				LOG.info("Charge THREAD:");
+				executor.execute(new ImportFaceBook(listEvent[f], jeton));
 
 			}
 		

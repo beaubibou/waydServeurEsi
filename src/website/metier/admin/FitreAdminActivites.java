@@ -114,8 +114,8 @@ public class FitreAdminActivites {
 		typeUser=TypeUser.TOUS;
 		typeSignalement=TypeSignalement.TOUS;
 		this.etatActivite=TypeEtatActivite.TOUTES;
-		this.gratuit=TypeGratuitActivite.GRATUITE_INCONNU;
-		this.actif=false;
+		this.gratuit=TypeGratuitActivite.TOUS;
+		this.actif=true;
 		this.masque=false;
 		dateRecherche = new DateTime().withHourOfDay(0).withMinuteOfHour(0)
 				.withSecondOfMinute(0).withMillisOfSecond(00);
