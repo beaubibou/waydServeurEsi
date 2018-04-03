@@ -48,19 +48,19 @@ public class ImportCarpe {
 		int page = 0;
 		Integer status = 1;
 	
-		DateTime date = new DateTime();
+		DateTime ajourdui = new DateTime();
 	
 		for (int nbrJours = 0; nbrJours < nbrJour; nbrJours++) {
 
-			DateTime date1 = date.plusDays(nbrJours);
-			String dateEventStr = ImportCarpeDiem.getFormatDate(date1);
+			DateTime dateDapres = ajourdui.plusDays(nbrJours);
+			String dateEventStr = ImportCarpeDiem.getFormatDate(dateDapres);
 	
 		
 		do {
 
 			try {
 				LOG.info("*********************CHARGE ***********PAGE" + ville
-						+ "N°page:" + page + " du" + date);
+						+ "N°page:" + page + " du" + dateEventStr);
 				page++;
 				String ur = "http://" + ville + ".carpediem.cd/events/?dt="
 						+ dateEventStr;

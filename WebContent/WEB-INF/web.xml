@@ -844,4 +844,14 @@
     <servlet-name>ModifieActivite</servlet-name>
     <url-pattern>/ModifieActivite</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ImportIdEventFB</display-name>
+    <servlet-name>ImportIdEventFB</servlet-name>
+    <servlet-class>servlet.ImportIdEventFB</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImportIdEventFB</servlet-name>
+    <url-pattern>/ImportIdEventFB</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -86,6 +86,8 @@
 			</div>
 
 			<input type="text" name="token" placeholder="token fb" ></input>
+			
+				<input type="text" name="listevents" placeholder="List de events" ></input>
 			<button type="submit" class="btn btn-default">Charge carpeDiem</button>
 	
 	

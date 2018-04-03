@@ -23,20 +23,15 @@ public class ImportRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		DateTime date = new DateTime();
-
+	
 		ImportCarpe importCarpe;
 		try {
 			
 			importCarpe = new ImportCarpe();
-		//	for (int nbrJours = 0; nbrJours < nbrJour; nbrJours++) {
-
-			//	DateTime date1 = date.plusDays(nbrJours);
-			//	String dateEventStr = ImportCarpeDiem.getFormatDate(date1);
-				importCarpe
+					importCarpe
 						.importActivitesByPageNew( ville, jeton,nbrJour);
 
-		//	}
+		
 		} catch (IOException e) {
 
 			e.printStackTrace();

@@ -2261,6 +2261,7 @@ public class ActiviteDAO {
 			// addLienCarpeDiem(activite.getUrl());
 
 			// Si elle existe mise à jour
+		
 			int idOrganisteur=website.dao.PersonneDAO.isLoginExist(activite.getIdEvent());
 		
 			if (idOrganisteur!=0) {

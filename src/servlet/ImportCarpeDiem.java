@@ -2,27 +2,21 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.JSONException;
 
-import website.dao.ActiviteDAO;
-import website.metier.ActiviteCarpeDiem;
+import carpediem.ImportFaceBook;
 import website.metier.AuthentificationSite;
-import carpediem.ImportCarpe;
 
 /**
  * Servlet implementation class ImportCarpeDiem
@@ -88,9 +82,26 @@ public class ImportCarpeDiem extends HttpServlet {
 //		villes.add("paris");
 
 		String jeton=request.getParameter("token");
-		executer(jeton);
+		String listevents=request.getParameter("listevents");
 		
-
+		System.out.println(listevents);
+		
+		String[] listEvent=listevents.split(" ");
+		for (int f=0; f<listEvent.length;f++){
+			
+			LOG.info(listEvent[f]);
+			
+		}
+		//executer(jeton);
+	ExecutorService executor = Executors.newFixedThreadPool(1);
+	executor.execute(new ImportFaceBook(listEvent[0], jeton));
+	executor.shutdown();
+	//		
+//		for (int f=0;f<10;f++){
+//			
+//			executor.execute(new Import(f));
+//			
+//		}
 	}
 
 	public static String getFormatDate(DateTime dt) {
