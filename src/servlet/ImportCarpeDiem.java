@@ -26,7 +26,7 @@ public class ImportCarpeDiem extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(ImportCarpeDiem.class);
 	public final static String ACTION_CHARGE_CARPEDIEM = "ACTION_CHARGE_CARPEDIEM";
 	public final static String ACTION_CHARGE_EVENT_FACEBOOK = "ACTION_CHARGE_EVENT_FACEBOOK";
-	private static final int THREAD_SIMULTANEE = 10;
+	private static final int THREAD_SIMULTANEE = 30;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
