@@ -40,72 +40,72 @@ public class ImportCarpe {
 	String tokenFb;
 	ArrayList<ActiviteCarpeDiem> listFinal = new ArrayList<>();
 
-	public void importActivitesByPageNew( String ville,
-			String tokenfb,int nbrJour) {
-	
+	public void importActivitesByPageNew(String ville, String tokenfb,
+			int nbrJour) {
+
 		this.tokenFb = tokenfb;
 		listFinal.clear();
 		int page = 0;
 		Integer status = 1;
-	
+
 		DateTime ajourdui = new DateTime();
-	
+
 		for (int nbrJours = 0; nbrJours < nbrJour; nbrJours++) {
 
 			DateTime dateDapres = ajourdui.plusDays(nbrJours);
 			String dateEventStr = ImportCarpeDiem.getFormatDate(dateDapres);
-	
-		
-		do {
 
-			try {
-				LOG.info("*********************CHARGE ***********PAGE" + ville
-						+ "N°page:" + page + " du" + dateEventStr);
-				page++;
-				String ur = "http://" + ville + ".carpediem.cd/events/?dt="
-						+ dateEventStr;
+			do {
 
-				String post = "mode=load_content&page=" + page
-						+ "&_csrf=getCsrf()";
+				try {
+					LOG.info("*********************CHARGE ***********PAGE"
+							+ ville + "N°page:" + page + " du" + dateEventStr);
+					page++;
+					String ur = "http://" + ville + ".carpediem.cd/events/?dt="
+							+ dateEventStr;
 
-				URL url = new URL(ur);
-				URLConnection conn = url.openConnection();
-				conn.addRequestProperty("User-Agent",
-						"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+					String post = "mode=load_content&page=" + page
+							+ "&_csrf=getCsrf()";
 
-				conn.setDoOutput(true);
-				OutputStreamWriter writer = new OutputStreamWriter(
-						conn.getOutputStream());
-				writer.write(post);
-				writer.flush();
+					URL url = new URL(ur);
+					URLConnection conn = url.openConnection();
+					conn.addRequestProperty("User-Agent",
+							"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
-				StringBuilder parsedContentFromUrl = new StringBuilder();
+					conn.setDoOutput(true);
+					OutputStreamWriter writer = new OutputStreamWriter(
+							conn.getOutputStream());
+					writer.write(post);
+					writer.flush();
 
-				BufferedInputStream in = new BufferedInputStream(
-						conn.getInputStream());
-				int ch;
-				while ((ch = in.read()) != -1)
-					parsedContentFromUrl.append((char) ch);
+					StringBuilder parsedContentFromUrl = new StringBuilder();
 
-				JSONObject json = new JSONObject(
-						parsedContentFromUrl.toString());
+					BufferedInputStream in = new BufferedInputStream(
+							conn.getInputStream());
+					int ch;
 
-				status = (Integer) json.get("status");
-				String reponse = (String) json.get("html");
+					while ((ch = in.read()) != -1)
+						parsedContentFromUrl.append((char) ch);
 
-				if (status == 1)
-					charge(reponse);
+					JSONObject json = new JSONObject(
+							parsedContentFromUrl.toString());
 
-			}
+					status = (Integer) json.get("status");
 
-			catch (Exception e) {
+					String reponse = (String) json.get("html");
 
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			}
+					if (status == 1)
+						charge(reponse);
 
-		} while (status == 1 && page < 30);
-		
-		
+				}
+
+				catch (Exception e) {
+
+					LOG.error(ExceptionUtils.getStackTrace(e));
+				}
+
+			} while (status == 1 && page < 30);
+
 		}
 
 		int g = 0;
@@ -115,24 +115,23 @@ public class ImportCarpe {
 				g++;
 				LOG.info(ville + ":" + g + "/" + mapActivite.values().size());
 				getDetailActivite(activiteCarpe);
-			
 				getListEvenementFaceBook(activiteCarpe.getIdEventFaceBook(),
 						activiteCarpe);
-			
-				LOG.info("Taille globale:" + listFinal.size());
 
 			} catch (Exception e) {
 				LOG.error("Detail activite non disponible");
 				LOG.error(ExceptionUtils.getStackTrace(e));
 			}
 		}
+
+		g = 0;
 
 		for (ActiviteCarpeDiem activiteCarpe : listFinal) {
 			try {
 				g++;
 				LOG.info(ville + ":" + g + "/" + listFinal.size());
 
-				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
+				ActiviteDAO.ajouteActiviteFaceBook(activiteCarpe);
 
 			} catch (Exception e) {
 				LOG.error("Detail activite non disponible");
@@ -145,84 +144,11 @@ public class ImportCarpe {
 
 	}
 
-	public void importActivitesByPage(String date, String ville)
-			throws IOException, JSONException {
-		int page = 0;
-		Integer status = 1;
-
-		do {
-
-			try {
-				LOG.info("*********************CHARGE ***********PAGE" + ville
-						+ "N°page:" + page + " du" + date);
-				page++;
-				String ur = "http://" + ville + ".carpediem.cd/events/?dt="
-						+ date;
-
-				String post = "mode=load_content&page=" + page
-						+ "&_csrf=getCsrf()";
-
-				URL url = new URL(ur);
-				URLConnection conn = url.openConnection();
-				conn.addRequestProperty("User-Agent",
-						"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-
-				conn.setDoOutput(true);
-				OutputStreamWriter writer = new OutputStreamWriter(
-						conn.getOutputStream());
-				writer.write(post);
-				writer.flush();
-
-				StringBuilder parsedContentFromUrl = new StringBuilder();
-
-				BufferedInputStream in = new BufferedInputStream(
-						conn.getInputStream());
-				int ch;
-				while ((ch = in.read()) != -1)
-					parsedContentFromUrl.append((char) ch);
-
-				JSONObject json = new JSONObject(
-						parsedContentFromUrl.toString());
-
-				status = (Integer) json.get("status");
-				String reponse = (String) json.get("html");
-
-				if (status == 1)
-					charge(reponse);
-
-			}
-
-			catch (Exception e) {
-
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			}
-
-		} while (status == 1 && page < 30);
-
-		int g = 0;
-		for (ActiviteCarpeDiem activiteCarpe : mapActivite.values()) {
-			try {
-				g++;
-				LOG.info(ville + ":" + g + "/" + mapActivite.values().size());
-				getDetailActivite(activiteCarpe);
-				ActiviteDAO.ajouteActiviteCarpeDiem(activiteCarpe);
-
-			} catch (Exception e) {
-				LOG.error("Detail activite non disponible");
-				LOG.error(ExceptionUtils.getStackTrace(e));
-			}
-		}
-
-		listActivite.clear();
-		mapActivite.clear();
-	}
-
-	public void getListEvenementFaceBook(String eventid,
+	public void getListEvenementFaceBook(String ideventfacebook,
 			ActiviteCarpeDiem activite) throws IOException, JSONException {
 
-
-		String urlString = "https://graph.facebook.com/v2.11/" + eventid
-				+ "?access_token=" + tokenFb;
+		String urlString = "https://graph.facebook.com/v2.11/"
+				+ ideventfacebook + "?access_token=" + tokenFb;
 
 		StringBuilder parsedContentFromUrl = new StringBuilder();
 
@@ -238,58 +164,40 @@ public class ImportCarpe {
 		while ((ch = in.read()) != -1)
 			parsedContentFromUrl.append((char) ch);
 		//
+
 		JSONObject json = new JSONObject(parsedContentFromUrl.toString());
-
-		String description = json.getString("description");
-		String titre = json.getString("name");
-	
-		// Recupere l'adresse;
-
-		JSONObject place = json.getJSONObject("place");
-
-		String nomDuSite = place.getString("name");
-
-		JSONObject location = place.getJSONObject("location");
-
-		String ville = location.getString("city");
-		String pays = location.getString("country");
-		Double latitude = location.getDouble("latitude");
-		Double longitude = location.getDouble("longitude");
-
-		String rue = location.getString("street");
-
-		String codePostal = location.getString("zip");
-
-		String adresseTotal = rue + " " + codePostal + " " + ville;
 
 		// Recupere les dates
 
-		boolean isEvent_times = false;
+		boolean iseventtimes = false;
 		try {
 
 			JSONArray array = json.getJSONArray("event_times");
-			isEvent_times = true;
 
 			for (int i = 0; i < array.length(); i++) {
 
 				String datedebut = array.getJSONObject(i).getString(
 						"start_time");
 				String datefin = array.getJSONObject(i).getString("end_time");
-				String idEvent = array.getJSONObject(i).getString("id");
-	
+				String idactiviteFB = array.getJSONObject(i).getString("id");
 				ActiviteCarpeDiem tmp = new ActiviteCarpeDiem(activite);
-				tmp.setIdEvent(idEvent);
+				tmp.setIdEventFaceBook(ideventfacebook);
 				tmp.setStartDate(datedebut);
 				tmp.setEndDate(datefin);
-				LOG.info("Ajoure activite"+ville);
+				tmp.setIdactiviteFB(idactiviteFB);
+
+				LOG.info("Ajoute activite");
 				listFinal.add(tmp);
 
 			}
+			iseventtimes = true;
+
 		} catch (Exception e) {
 
+			iseventtimes = false;
 			LOG.info("Pas de planification" + e);
 		}
-		
+
 		// Si pas d'event time et quelle a ete valide on l'ajoute.
 
 		try {
@@ -302,8 +210,10 @@ public class ImportCarpe {
 			return;
 		}
 
-		if (!isEvent_times) {
-			activite.setIdEvent(activite.getLienFaceBook());
+		if (!iseventtimes) {
+
+			activite.setIdEventFaceBook(ideventfacebook);
+			activite.setIdactiviteFB(ideventfacebook);
 			listFinal.add(activite);
 		}
 
@@ -335,7 +245,7 @@ public class ImportCarpe {
 			throws IOException {
 
 		StringBuilder parsedContentFromUrl = new StringBuilder();
-		String urlString = activiteCarpe.getUrl().replace(
+		String urlString = activiteCarpe.getUrlCarpeDiem().replace(
 				"carpediem.cd/events", "carpediem.cd/events/");
 		URL url;
 
@@ -351,9 +261,9 @@ public class ImportCarpe {
 		while ((ch = in.read()) != -1)
 			parsedContentFromUrl.append((char) ch);
 
-		String description = getFullDescrition(parsedContentFromUrl);
+		String fulldescription = getFullDescrition(parsedContentFromUrl);
 
-		activiteCarpe.setFulldescription(description);
+		activiteCarpe.setFulldescription(fulldescription);
 
 		int start = parsedContentFromUrl.indexOf("id:");
 		String numberStr = getNumber(parsedContentFromUrl, start);
@@ -368,6 +278,7 @@ public class ImportCarpe {
 		double lng = Double.parseDouble(numberStr);
 
 		String lienFaceBook = getLienFaceBook(parsedContentFromUrl);
+
 		activiteCarpe.setId(id);
 		activiteCarpe.setLat(lat);
 		activiteCarpe.setLng(lng);
@@ -376,7 +287,7 @@ public class ImportCarpe {
 		String idEventFaceBook = getIdEventFacebook(new StringBuilder(
 				lienFaceBook));
 		activiteCarpe.setIdEventFaceBook(idEventFaceBook);
-		System.out.println("N eent fb=" + idEventFaceBook);
+
 	}
 
 	private String getLienFaceBook(StringBuilder parsedContentFromUrl) {
@@ -441,9 +352,6 @@ public class ImportCarpe {
 
 		String[] me = mi[0].split("</div>");
 
-		// System.out.println(me[me.length-1]);
-		// System.out.println(description);
-
 		return me[me.length - 1];
 	}
 
@@ -473,16 +381,17 @@ public class ImportCarpe {
 			break;
 		case "image":
 
-			activite.setImage(element.getContent().toString());
+			activite.setUrlPhotoFB((element.getContent().toString()));
 
 			break;
 		case "description":
 
 			activite.setDescription(element.getContent().toString());
+	
 			break;
 		case "url":
 
-			activite.setUrl(element.getContent().toString());
+			activite.setUrlCarpeDiem(element.getContent().toString());
 			break;
 
 		case "name":
@@ -500,9 +409,8 @@ public class ImportCarpe {
 		}
 		if (activite.isComplete()) {
 
-			// if (!ActiviteDAO.isDejaTraiteCarpediemExist(activite.getUrl()))
-			mapActivite.put(activite.getUrl(), new ActiviteCarpeDiem(activite));
-
+			mapActivite.put(activite.getUrlCarpeDiem(), new ActiviteCarpeDiem(
+					activite));
 			activite.reset();
 			return;
 		}
@@ -587,8 +495,8 @@ public class ImportCarpe {
 
 	public void detailNew(ActiviteCarpeDiem activiteCarpe) throws IOException {
 
-		String ur = activiteCarpe.getUrl().replace("carpediem.cd/events",
-				"carpediem.cd/events/");
+		String ur = activiteCarpe.getUrlCarpeDiem().replace(
+				"carpediem.cd/events", "carpediem.cd/events/");
 
 		URL url = new URL(ur);
 		URLConnection conn = url.openConnection();
@@ -627,6 +535,48 @@ public class ImportCarpe {
 		else
 
 			return true;
+
+	}
+	
+	public static boolean valideActivite(ActiviteCarpeDiem activite) throws ParseException {
+
+		DateTime maitenant = new DateTime().withHourOfDay(0)
+				.withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(00);
+
+		if (activite.getDateDebut().before(maitenant.toDate()))
+			return false;
+
+		long Heure = 3600000;
+
+		if (activite.getDateFin().getTime() - activite.getDateDebut().getTime() > 24 * Heure)
+			return false;
+
+		else
+
+			return true;
+
+	}
+
+
+	public StringBuilder getSourceHtml(String urlString) throws IOException {
+
+		StringBuilder parsedContentFromUrl = new StringBuilder();
+		URL url;
+
+		url = new URL(urlString);
+		URLConnection uc;
+		uc = url.openConnection();
+		uc.addRequestProperty("User-Agent",
+				"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+		uc.connect();
+		uc.getInputStream();
+		BufferedInputStream in = new BufferedInputStream(uc.getInputStream());
+		int ch;
+		while ((ch = in.read()) != -1)
+			parsedContentFromUrl.append((char) ch);
+
+		return parsedContentFromUrl;
 
 	}
 }

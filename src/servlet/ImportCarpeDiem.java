@@ -107,10 +107,11 @@ public class ImportCarpeDiem extends HttpServlet {
 			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
 			jeton="EAACEdEose0cBAGSdKMsl5qDAz0OxMIZB95pd1DHxEnk6xZCcrYjR2YDqmmBrsmSsfLZBhVD0iKUbe2dCzPqEgZCnR9OQrBZAWn2ZCoHLsfbL8ZA0MVyk4TDcUE8i7I17Bl9C7FCCB5L50en2qrOauTlxwh0blfU2WUpnUJnmU7OeBDD9DfhiZAena3fpoCSEqJMZD";
 			String[] listEvent = listevents.split(" ");
-			for (int f = 0; f < listEvent.length; f++) {
+			for (int courant = 0; courant < listEvent.length; courant++) {
 
-				LOG.info("Charge THREAD:");
-				executor.execute(new ImportFaceBook(listEvent[f], jeton));
+				LOG.info("Charge THREAD:"+courant+"/"+listevents.length());
+			
+				executor.execute(new ImportFaceBook(listEvent[courant], jeton,listEvent.length,courant));
 
 			}
 		
@@ -155,31 +156,11 @@ public class ImportCarpeDiem extends HttpServlet {
 		for (String ville : villes) {
 
 			new Thread(new ImportRunnable(1, ville, jeton)).start();
-			;
+
 
 		}
 
-		// ImportCarpe importCarpe = new ImportCarpe();
-		//
-		// for (String ville : villes) {
-		//
-		// DateTime date = new DateTime();
-		//
-		// for (int nbrJours = 0; nbrJours < 1; nbrJours++) {
-		//
-		// DateTime date1 = date.plusDays(nbrJours);
-		// String dateEventStr = getFormatDate(date1);
-		// importCarpe.importActivitesByPageNew(dateEventStr, ville,jeton);
-		//
-		// }
-
-		// DateTime dateInit = new DateTime();
-		// DateTime dateDujourEffacer = new DateTime(dateInit.getYear(),
-		// dateInit.getMonthOfYear(), dateInit.getDayOfMonth(), 0, 0,
-		// 0);
-
-		// ActiviteDAO.effaceTouteCarpeDiem(dateDujourEffacer.toDate());
-		// ActiviteDAO.updateDateCarpeDiem(new Date());
+		
 
 	}
 

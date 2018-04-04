@@ -65,8 +65,7 @@ public class ChargePhotoPro extends HttpServlet {
 		File file;
 		int maxFileSize = 6000 * 1024;
 		int maxMemSize = 6000 * 1024;
-		// String filePath = "c:/apache-tomcat/webapps/data/";
-
+	
 		String contentType = request.getContentType();
 		if ((contentType.indexOf("multipart/form-data") >= 0)) {
 

@@ -8,20 +8,27 @@ public class ActiviteCarpeDiem {
 
 	String startDate;
 	String endDate;
-	String image;
 	String description;
-	String url;
+	String urlCarpeDiem;
 	String name;
 	String address;
 	String nomLieu;
 	String ville;
 	double lat, lng;
 	String idEventFaceBook;
-	String idEvent;
 	int id;
 	String lienFaceBook;
 	private String fulldescription;
 	private String urlPhotoFB;
+	private String idactiviteFB;
+
+	public String getIdactiviteFB() {
+		return idactiviteFB;
+	}
+
+	public void setIdactiviteFB(String idactiviteFB) {
+		this.idactiviteFB = idactiviteFB;
+	}
 
 	public String getUrlPhotoFB() {
 		return urlPhotoFB;
@@ -29,14 +36,6 @@ public class ActiviteCarpeDiem {
 
 	public void setUrlPhotoFB(String urlPhotoFB) {
 		this.urlPhotoFB = urlPhotoFB;
-	}
-
-	public String getIdEvent() {
-		return idEvent;
-	}
-
-	public void setIdEvent(String idEvent) {
-		this.idEvent = idEvent;
 	}
 
 	public String getIdEventFaceBook() {
@@ -69,9 +68,8 @@ public class ActiviteCarpeDiem {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.image = image;
 		this.description = description;
-		this.url = url;
+		this.urlCarpeDiem = url;
 		this.name = name;
 		this.address = address;
 		this.nomLieu = nomLieu;
@@ -84,9 +82,8 @@ public class ActiviteCarpeDiem {
 	public ActiviteCarpeDiem() {
 		this.startDate = null;
 		this.endDate = null;
-		this.image = null;
 		this.description = null;
-		this.url = null;
+		this.urlCarpeDiem = null;
 		this.name = null;
 		this.address = null;
 		this.nomLieu = null;
@@ -99,9 +96,9 @@ public class ActiviteCarpeDiem {
 	public void reset() {
 		this.startDate = null;
 		this.endDate = null;
-		this.image = null;
+
 		this.description = null;
-		this.url = null;
+		this.urlCarpeDiem = null;
 		this.name = null;
 		this.address = null;
 		this.nomLieu = null;
@@ -115,9 +112,8 @@ public class ActiviteCarpeDiem {
 	public ActiviteCarpeDiem(ActiviteCarpeDiem activite) {
 		this.startDate = activite.startDate;
 		this.endDate = activite.endDate;
-		this.image = activite.image;
 		this.description = activite.description;
-		this.url = activite.url;
+		this.urlCarpeDiem = activite.urlCarpeDiem;
 		this.name = activite.name;
 		this.address = activite.address;
 		this.nomLieu = activite.nomLieu;
@@ -130,10 +126,11 @@ public class ActiviteCarpeDiem {
 
 	public ActiviteCarpeDiem(String datedebut, String datefin, String image,
 			String description, String titre, String adresseTotal,
-			String nomLieu, String ville, Double lat, Double lng, String idEvent,String ulrPhotoFB) {
+			String nomLieu, String ville, Double lat, Double lng,
+			String idactiviteFB, String ulrPhotoFB, String idEvent) {
+
 		this.startDate = datedebut;
 		this.endDate = datefin;
-		this.image = image;
 		this.description = description;
 		this.name = titre;
 		this.address = adresseTotal;
@@ -141,8 +138,9 @@ public class ActiviteCarpeDiem {
 		this.ville = ville;
 		this.lat = lat;
 		this.lng = lng;
-		this.idEvent = idEvent;
-		this.urlPhotoFB=ulrPhotoFB;
+		this.urlPhotoFB = ulrPhotoFB;
+		this.idactiviteFB = idactiviteFB;
+
 	}
 
 	public String getVille() {
@@ -193,28 +191,24 @@ public class ActiviteCarpeDiem {
 		this.endDate = endDate;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public String getDescription() {
-		return description;
+
+		if (fulldescription.length() < 40)
+			return fulldescription;
+
+		return fulldescription.substring(0, 38);
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getUrlCarpeDiem() {
+		return urlCarpeDiem;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrlCarpeDiem(String url) {
+		this.urlCarpeDiem = url;
 	}
 
 	public String getName() {
@@ -260,10 +254,13 @@ public class ActiviteCarpeDiem {
 	@Override
 	public String toString() {
 		return "ActiviteCarpeDiem [startDate=" + startDate + ", endDate="
-				+ endDate + ", image=" + image + ", description=" + description
-				+ ", url=" + url + ", name=" + name + ", address=" + address
-				+ ", nomLieu=" + nomLieu + ", lat=" + lat + ", lng=" + lng
-				+ ", id=" + id + "]";
+				+ endDate + ", description=" + description + ", urlCarpeDiem="
+				+ urlCarpeDiem + ", name=" + name + ", address=" + address
+				+ ", nomLieu=" + nomLieu + ", ville=" + ville + ", lat=" + lat
+				+ ", lng=" + lng + ", idEventFaceBook=" + idEventFaceBook
+				+ ", id=" + id + ", lienFaceBook=" + lienFaceBook
+				+ ", fulldescription=" + fulldescription + ", urlPhotoFB="
+				+ urlPhotoFB + ", idactiviteFB=" + idactiviteFB + "]";
 	}
 
 	public Date getDateDebut() throws ParseException {
