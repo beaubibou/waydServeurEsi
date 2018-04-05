@@ -2234,10 +2234,10 @@ public class ActiviteDAO {
 			uc.connect();
 			BufferedImage imageTailleNormale = ImageIO
 					.read(uc.getInputStream());
-
+		
 			String photo = encodeToString(imageTailleNormale, "jpeg");
 
-			BufferedImage photoReduite = resize(imageTailleNormale, 120, 120);
+			BufferedImage photoReduite = resize(imageTailleNormale, 	imageTailleNormale.getWidth()/4, imageTailleNormale.getHeight()/4);
 
 			int idOrganisteur = website.dao.PersonneDAO.isLoginExist(evenement
 					.getIdEvent());
@@ -2399,7 +2399,8 @@ public class ActiviteDAO {
 			Date debut = activite.getDateDebut();
 			Date fin = activite.getDateFin();
 			String libelle = activite.getDescription();
-			String titre = activite.getName();
+			String titre = activite.
+					getName();
 			String adresse = activite.getAddress() + " "
 					+ activite.getNomLieu();
 			String urlCarpe = activite.getUrlCarpeDiem();
@@ -2421,8 +2422,10 @@ public class ActiviteDAO {
 
 			String photo = encodeToString(imageTailleNormale, "jpeg");
 
-			BufferedImage photoReduite = resize(imageTailleNormale, 120, 120);
+			BufferedImage buff_photoReduite = resize(imageTailleNormale,100, 100);
 
+			String photoReduite=encodeToString(buff_photoReduite, "jpeg");
+			
 			int idOrganisteur = website.dao.PersonneDAO.isLoginExist(activite
 					.getIdEventFaceBook());
 
@@ -2438,7 +2441,7 @@ public class ActiviteDAO {
 					String requete = "update activite set titre=?,"
 							+ " adresse=?,latitude=?,longitude=?,datedebut=?,datefin=?,"
 							+ "libelle=?,typeuser=?,actif=?,typeacces=?,idtypeactivite=?,descriptionall=?,lienfacebook=?,liencarpediem=?"
-							+ " where idpersonne=?";
+							+ " where idactivite=?";
 
 					preparedStatement = connexion.prepareStatement(requete);
 					preparedStatement.setString(1, titre);
@@ -2460,7 +2463,7 @@ public class ActiviteDAO {
 					preparedStatement.setString(12, fulldescription);
 					preparedStatement.setString(13, lienFb);
 					preparedStatement.setString(14, urlCarpe);
-					preparedStatement.setInt(15, idOrganisteur);
+					preparedStatement.setInt(15, idActivite);
 					preparedStatement.execute();
 					connexion.commit();
 					LOG.info("Activite mis à jour:");
@@ -2470,7 +2473,7 @@ public class ActiviteDAO {
 					connexion = CxoPool.getConnection();
 					connexion.setAutoCommit(false);
 					String requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-							+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
+							+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem,idactivitefacebook)"
 							+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 					preparedStatement = connexion.prepareStatement(requete);
@@ -2494,6 +2497,7 @@ public class ActiviteDAO {
 					preparedStatement.setString(14, lienFb);
 					preparedStatement.setString(15, urlCarpe);
 					preparedStatement.setString(16, idactivitefb);
+					
 					preparedStatement.execute();
 					LOG.info("Activite ajoutée");
 					connexion.commit();
@@ -2504,8 +2508,8 @@ public class ActiviteDAO {
 
 				connexion = CxoPool.getConnection();
 				connexion.setAutoCommit(false);
-				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe)"
-						+ "	VALUES (?,?,?,?,?,?,?,?,?,?)";
+				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe,photosmall)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 				preparedStatement = connexion.prepareStatement(requete,
 						Statement.RETURN_GENERATED_KEYS);
 				preparedStatement.setString(1, prenom);
@@ -2518,6 +2522,7 @@ public class ActiviteDAO {
 				preparedStatement.setDouble(8, longitudeFixe);
 				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 				preparedStatement.setInt(10, 1);
+				preparedStatement.setString(11,photoReduite);
 				preparedStatement.execute();
 
 				ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -2529,7 +2534,7 @@ public class ActiviteDAO {
 				preparedStatement.close();
 
 				requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
-						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem)"
+						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,lienfacebook,liencarpediem,idactivitefacebook)"
 						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 				preparedStatement = connexion.prepareStatement(requete);

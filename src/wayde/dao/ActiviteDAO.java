@@ -41,6 +41,19 @@ public class ActiviteDAO {
 			+ "personne.affichesexe," + "personne.afficheage,"
 			+ "personne.datenaissance," + "personne.note,"
 			+ "personne.nbravis as totalavis," + "personne.photo";
+	
+	private static String REQ_ACTIVITE_LIST = "activite.datedebut,"
+			+ "activite.adresse," + "activite.latitude,"
+			+ "activite.longitude," + "activite.idactivite,"
+			+ "activite.libelle," + "activite.titre," + "activite.nbrwaydeur,"
+			+ "activite.nbmaxwayd," + "activite.datefin,"
+			+ "activite.idtypeactivite," + "activite.typeuser,"
+			+ "activite.typeacces," + "'no descirption' as descriptionall,"
+			+ "activite.gratuit,activite.lienfacebook," + "personne.prenom,"
+			+ "personne.sexe," + "personne.nom," + "personne.idpersonne,"
+			+ "personne.affichesexe," + "personne.afficheage,"
+			+ "personne.datenaissance," + "personne.note,"
+			+ "personne.nbravis as totalavis," + "personne.photosmall as photo";
 
 	Connection connexion;
 
@@ -386,7 +399,7 @@ public class ActiviteDAO {
 		Calendar calendrier = Calendar.getInstance();
 		calendrier.add(Calendar.MINUTE, commencedans);
 
-		String requete = " SELECT " + REQ_ACTIVITE + ""
+		String requete = " SELECT " + REQ_ACTIVITE_LIST + ""
 				+ " FROM personne, activite"
 				+ " WHERE (personne.idpersonne = activite.idpersonne"
 				+ " and activite.actif=true"
@@ -446,7 +459,7 @@ public class ActiviteDAO {
 
 		// Modifcation des requets pour n'avoir que les suggestions en cours
 		String requete = " SELECT "
-				+ REQ_ACTIVITE
+				+ REQ_ACTIVITE_LIST
 				+ " FROM activite,personne "
 				+ " where exists ("
 				+ "	select 1 from prefere	 where prefere.idpersonne=? and	 prefere.idtypeactivite=activite.idtypeactivite	 "
@@ -495,7 +508,7 @@ public class ActiviteDAO {
 		ArrayList<Activite> retour = new ArrayList<>();
 
 		String requete = " SELECT "
-				+ REQ_ACTIVITE
+				+ REQ_ACTIVITE_LIST
 				+ " FROM personne,activite,participer"
 				+ " WHERE (personne.idpersonne=activite.idpersonne and "
 				+ " activite.idactivite = participer.idactivite "
@@ -658,7 +671,7 @@ public class ActiviteDAO {
 		Activite activite = null;
 		ArrayList<Activite> retour = new ArrayList<>();
 
-		String requete = "SELECT " + REQ_ACTIVITE
+		String requete = "SELECT " + REQ_ACTIVITE_LIST
 				+ " FROM personne,activite,participer"
 				+ "  WHERE (personne.idpersonne=activite.idpersonne and "
 				+ " activite.idactivite = participer.idactivite "
@@ -1328,7 +1341,7 @@ public class ActiviteDAO {
 		
 			String requete;
 
-				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+				requete = " SELECT " + REQ_ACTIVITE_LIST + " FROM personne,activite"
 						+ " WHERE  personne.idpersonne = activite.idpersonne"
 						+ " and activite.actif=true "
 						+ " and activite.idactivite in (select idactivite from favori where idpersonne=?)";
@@ -1402,7 +1415,7 @@ public class ActiviteDAO {
 			// Renvoi les imm�diates
 			if (commenceDans == 0) {
 
-				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+				requete = " SELECT " + REQ_ACTIVITE_LIST + " FROM personne,activite"
 						+ " WHERE "
 						+ " personne.idpersonne = activite.idpersonne"
 						+ " and activite.actif=true"
@@ -1416,7 +1429,7 @@ public class ActiviteDAO {
 			else {
 				// Requete N�2
 				requete = " SELECT "
-						+ REQ_ACTIVITE
+						+ REQ_ACTIVITE_LIST
 						+ " FROM "
 						+ " personne,activite"
 						+ " WHERE personne.idpersonne = activite.idpersonne  "

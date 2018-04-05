@@ -132,7 +132,7 @@ public static int isIdActiviteFBExist(String idactivite)  {
 	try {
 		
 		connexion = CxoPool.getConnection();
-		String requete = " SELECT idactivite from activite where idactivitefb=? ";
+		String requete = " SELECT idactivite from activite where idactivitefacebook=? ";
 		preparedStatement = connexion.prepareStatement(requete);
 		preparedStatement.setString(1, idactivite);
 		rs = preparedStatement.executeQuery();

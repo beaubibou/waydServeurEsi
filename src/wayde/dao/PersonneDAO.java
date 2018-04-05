@@ -737,9 +737,9 @@ public class PersonneDAO {
 		Date datecreation = Calendar.getInstance().getTime();
 
 		requete = "INSERT INTO personne(nom, prenom, login, pwd,mail,sexe,verrouille,actif,datecreation,"
-				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,"
+				+ "datenaissance,cleactivation,latitude,longitude,rayon,adressepref,jeton,photo,photosmall,"
 				+ "commentaire,affichesexe,afficheage,premiereconnexion,gcm,notification,typeuser,valide)"
-				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,3,true);";
+				+ "  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,3,true);";
 		String commentaire = null;
 		preparedStatement = connexion.prepareStatement(requete,
 				Statement.RETURN_GENERATED_KEYS);
@@ -762,10 +762,14 @@ public class PersonneDAO {
 		preparedStatement.setString(15, "Paris, France");
 		preparedStatement.setString(16, idtoken);
 
-		if (photostr.equals(""))
+		if (photostr.equals("")){
 			preparedStatement.setString(17, null);
-		else
+			preparedStatement.setString(18, null);
+		}
+		else{
 			preparedStatement.setString(17, photostr);
+			preparedStatement.setString(18, photostr);
+		}
 
 		preparedStatement.setString(18, commentaire);
 		preparedStatement.setBoolean(19, true);// affiche sexe
@@ -1038,7 +1042,7 @@ public class PersonneDAO {
 			String prenom, String datenaissancestr, int sexe,
 			String commentaire, boolean afficheage, boolean affichesexe)
 			throws SQLException, ParseException {
-		String requete = "UPDATE  personne set photo=?, nom=?,prenom=?,datenaissance=?,sexe=?,commentaire=?, afficheage=?,affichesexe=? "
+		String requete = "UPDATE  personne set photo=?, nom=?,prenom=?,datenaissance=?,sexe=?,commentaire=?, afficheage=?,affichesexe=?,photosmall=? "
 				+ " WHERE idpersonne=?";
 		PreparedStatement preparedStatement = null;
 		Date dateanniversaire = Parametres.getDateFromString(datenaissancestr);
@@ -1056,7 +1060,8 @@ public class PersonneDAO {
 				preparedStatement.setString(6, commentaire);
 			preparedStatement.setBoolean(7, afficheage);
 			preparedStatement.setBoolean(8, affichesexe);
-			preparedStatement.setInt(9, idpersonne);
+			preparedStatement.setString(9, photostr);
+			preparedStatement.setInt(10, idpersonne);
 			preparedStatement.execute();
 			preparedStatement.close();
 		} catch (SQLException e) {

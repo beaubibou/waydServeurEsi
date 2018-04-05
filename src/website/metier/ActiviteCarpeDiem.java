@@ -47,7 +47,7 @@ public class ActiviteCarpeDiem {
 	}
 
 	public String getLienFaceBook() {
-		return lienFaceBook;
+		return "https://www.facebook.com/"+idEventFaceBook;
 	}
 
 	public void setLienFaceBook(String lienFaceBook) {
@@ -125,13 +125,13 @@ public class ActiviteCarpeDiem {
 	}
 
 	public ActiviteCarpeDiem(String datedebut, String datefin, String image,
-			String description, String titre, String adresseTotal,
+			String fulldescription, String titre, String adresseTotal,
 			String nomLieu, String ville, Double lat, Double lng,
 			String idactiviteFB, String ulrPhotoFB, String idEvent) {
 
 		this.startDate = datedebut;
 		this.endDate = datefin;
-		this.description = description;
+		this.fulldescription = fulldescription;
 		this.name = titre;
 		this.address = adresseTotal;
 		this.nomLieu = nomLieu;
@@ -140,6 +140,7 @@ public class ActiviteCarpeDiem {
 		this.lng = lng;
 		this.urlPhotoFB = ulrPhotoFB;
 		this.idactiviteFB = idactiviteFB;
+		this.idEventFaceBook=idEvent;
 
 	}
 

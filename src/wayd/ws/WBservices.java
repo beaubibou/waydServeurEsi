@@ -2991,7 +2991,9 @@ public class WBservices {
 
 	String longitudestr, int rayonmetre, int typeactivite, String motcle,
 			int typeUser, int commenceDans, String jeton) {
-
+	
+		long debut = System.currentTimeMillis();
+		
 		Connection connexion = null;
 		ArrayList<Activite> listActivite = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
@@ -3014,6 +3016,7 @@ public class WBservices {
 					Double.parseDouble(longitudestr), rayonmetre, typeactivite,
 					motcle, typeUser, commenceDans);
 
+			LogDAO.LOG_DUREE("getActivites", debut);
 			return listActivite.toArray(new Activite[listActivite.size()]);
 
 		} catch (Exception e) {

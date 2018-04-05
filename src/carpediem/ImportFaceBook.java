@@ -222,7 +222,7 @@ public class ImportFaceBook implements Runnable {
 						nomLieu, ville, latitude, longitude, idEvent, urlPhoto,
 						idEvent);
 
-				LOG.info("Ajoute activite alone sans events ");
+				LOG.info("Ajoute activite alone sans events "+activite.toString());
 
 				website.dao.ActiviteDAO.ajouteActiviteFaceBook(activite);
 
