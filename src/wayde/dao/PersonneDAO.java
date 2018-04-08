@@ -771,12 +771,12 @@ public class PersonneDAO {
 			preparedStatement.setString(18, photostr);
 		}
 
-		preparedStatement.setString(18, commentaire);
-		preparedStatement.setBoolean(19, true);// affiche sexe
-		preparedStatement.setBoolean(20, true);// affiche age
+		preparedStatement.setString(19, commentaire);
+		preparedStatement.setBoolean(20, true);// affiche sexe
 		preparedStatement.setBoolean(21, true);// affiche age
-		preparedStatement.setString(22, gcmToken);// affiche age
-		preparedStatement.setBoolean(23, true);// affiche age
+		preparedStatement.setBoolean(22, true);// affiche age
+		preparedStatement.setString(23, gcmToken);// affiche age
+		preparedStatement.setBoolean(24, true);// affiche age
 
 		preparedStatement.execute();
 		ResultSet rs = preparedStatement.getGeneratedKeys();

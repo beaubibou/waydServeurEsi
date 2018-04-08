@@ -3099,6 +3099,45 @@ public class WBservices {
 		}
 
 	}
+	
+	public Activite[] getActivitesOffsetold(int idPersonne, String latitudestr,
+
+			String longitudestr, int rayonmetre, int typeactivite, String motcle,
+					int typeUser, int commenceDans, String jeton, int offset) {
+
+				Connection connexion = null;
+				ArrayList<Activite> listActivite = new ArrayList<>();
+				PreparedStatement preparedStatement = null;
+				ResultSet rs = null;
+
+				try {
+					connexion = CxoPool.getConnection();
+
+					PersonneDAO personnedao = new PersonneDAO(connexion);
+					MessageServeur autorise = personnedao.isAutoriseMessageServeur(
+							idPersonne, jeton);
+
+					if (!autorise.isReponse())
+						return null;
+
+					ActiviteDAO activitedao = new ActiviteDAO(connexion);
+
+					listActivite = activitedao.getActivitesOffSet(
+							Double.parseDouble(latitudestr),
+							Double.parseDouble(longitudestr), rayonmetre, typeactivite,
+							motcle, typeUser, commenceDans, offset);
+
+					return listActivite.toArray(new Activite[listActivite.size()]);
+
+				} catch (Exception e) {
+					LOG.error(ExceptionUtils.getStackTrace(e));
+					return listActivite.toArray(new Activite[listActivite.size()]);
+				} finally {
+
+					CxoPool.close(connexion, preparedStatement, rs);
+				}
+
+			}
 
 	public MessageServeur acquitMessageByAct(int idpersonne, int idmessage,
 			String jeton) {

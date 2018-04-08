@@ -72,6 +72,7 @@ public class ImportFaceBook implements Runnable {
 
 		catch (IOException e1) {
 			LOG.error("Url face BOOK non valide: activité rejetée");
+			e1.printStackTrace();
 			return;
 		}
 
@@ -196,7 +197,6 @@ public class ImportFaceBook implements Runnable {
 						urlPhoto, idEvent);
 
 				LOG.info("Tentative Ajoute activite");
-
 				website.dao.ActiviteDAO.ajouteActiviteFaceBook(activite);
 
 			}

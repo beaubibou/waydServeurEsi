@@ -60,7 +60,7 @@ public class Connexion extends HttpServlet {
 	
 //	if (testEsi(request, response))
 //	return;
- 
+// 
 		String pwd = (String) request.getParameter("pwd");
 		testToken(request.getParameter("token"), request, response, pwd);
 

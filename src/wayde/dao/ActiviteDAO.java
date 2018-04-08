@@ -1560,7 +1560,7 @@ public class ActiviteDAO {
 			// Renvoi les imm�diates
 			if (commenceDans == 0) {
 
-				requete = " SELECT " + REQ_ACTIVITE + " FROM personne,activite"
+				requete = " SELECT " + REQ_ACTIVITE_LIST + " FROM personne,activite"
 						+ " WHERE "
 						+ " personne.idpersonne = activite.idpersonne"
 						+ " and activite.actif=true"
@@ -1574,7 +1574,158 @@ public class ActiviteDAO {
 			else {
 
 				requete = " SELECT "
-						+ REQ_ACTIVITE
+						+ REQ_ACTIVITE_LIST
+						+ " FROM "
+						+ " personne,activite"
+						+ " WHERE personne.idpersonne = activite.idpersonne  "
+						+ " and activite.actif=true"
+						+ " and datefin>? "
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ? and to_char(datedebut,'dd/MM/yyyy')=?";
+				// le critere ne sert datedebut!=? ne sert à rien.
+			}
+
+			if (typeactivite != -1) {
+				requete = requete + " and activite.idtypeactivite=?";
+			}
+
+			if (motcle != null && !motcle.isEmpty()) {
+
+				requete = requete
+						+ " and ( UPPER(libelle) like UPPER(?) or UPPER(titre) like UPPER(?)) ";
+
+			}
+
+			if (typeUser != 0) {
+
+				requete = requete + " and activite.typeuser=?";
+
+			}
+
+			requete = requete + " and idactivite>? ORDER BY idactivite asc limit 20 offset 0";
+
+			preparedStatement = connexion.prepareStatement(requete);
+
+			preparedStatement.setTimestamp(1, new java.sql.Timestamp(
+					dateRechercheDebut.getTime()));
+
+			preparedStatement.setDouble(2, latMin);
+			preparedStatement.setDouble(3, latMax);
+			preparedStatement.setDouble(4, longMin);
+			preparedStatement.setDouble(5, longMax);
+
+			int index = 5;
+
+			if (commenceDans != 0) {
+				// ajoute � la requete n�2 la date de fin
+				index++;
+				preparedStatement.setString(index, dateDuJour);
+
+			}
+
+			if (typeactivite != -1) {
+				index++;
+				preparedStatement.setInt(index, typeactivite);
+
+			}
+
+			if (motcle != null && !motcle.isEmpty()) {
+				index++;
+				String test = "%" + motcle + "%";
+				preparedStatement.setString(index, test);
+				index++;
+				preparedStatement.setString(index, test);
+
+			}
+
+			if (typeUser != 0) {
+
+				index++;
+				preparedStatement.setInt(index, typeUser);
+
+			}
+			
+			index++;
+			//preparedStatement.setInt(index, NBR_RETOUR_LIGNE);
+			//index++;
+			preparedStatement.setInt(index, offset);
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+
+				activite = getActiviteByRs(rs);
+
+				if (activite.isInRayon(malatitude, malongitude, rayonmetre))
+					listActivite.add(activite);
+
+			}
+
+		} catch (SQLException e) {
+			throw e;
+		}
+		finally {
+			
+			CxoPool.close(preparedStatement, rs);
+		}
+
+		return listActivite;
+
+	}
+	public ArrayList<Activite> getActivitesOffSetold(double malatitude,
+			double malongitude, int rayonmetre, int typeactivite,
+			String motcle, int typeUser, int commenceDans, int offset)
+			throws SQLException {
+
+		int NBR_RETOUR_LIGNE = 20;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		Activite activite;
+		ArrayList<Activite> listActivite = new ArrayList<>();
+		try {
+
+			double coef = rayonmetre * 0.007 / 700;
+			double latMin = malatitude - coef;
+			double latMax = malatitude + coef;
+			double longMin = malongitude - coef;
+			double longMax = malongitude + coef;
+
+			Calendar calendrierDebut = Calendar.getInstance();
+
+			Date dateRechercheDebut = calendrierDebut.getTime();
+
+			Calendar calendrierFin = Calendar.getInstance();
+
+			calendrierFin.add(Calendar.MINUTE, commenceDans);
+
+			// on remonte les activités dont le debut est comprise entre
+			// l'heure
+			// actuelle + commenceDans et l'heure actuelle + commenceDans+1
+			// heure
+
+			String requete;
+
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+			String dateDuJour = formater.format(new Date());
+
+			// Renvoi les imm�diates
+			if (commenceDans == 0) {
+
+				requete = " SELECT " + REQ_ACTIVITE_LIST + " FROM personne,activite"
+						+ " WHERE "
+						+ " personne.idpersonne = activite.idpersonne"
+						+ " and activite.actif=true"
+						+ " and (? between datedebut and  datefin )"
+						+ " and activite.latitude between ? and ?"
+						+ " and activite.longitude between ? and ?";
+			}
+
+			// recheche les activite dont la date de debut est comprise entre
+			// datefinde rechere et maintenant
+			else {
+
+				requete = " SELECT "
+						+ REQ_ACTIVITE_LIST
 						+ " FROM "
 						+ " personne,activite"
 						+ " WHERE personne.idpersonne = activite.idpersonne  "
