@@ -2830,6 +2830,7 @@ public class WBservices {
 					.get();
 			String uid = token.getUid();
 			String email = token.getEmail();
+			
 
 			// *******************Cree ou met à jour le profil
 			PersonneDAO
