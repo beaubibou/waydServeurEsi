@@ -94,6 +94,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 
 import comparator.DiscussionDateComparator;
 
@@ -2830,7 +2831,11 @@ public class WBservices {
 					.get();
 			String uid = token.getUid();
 			String email = token.getEmail();
-			
+		
+//			UserRecord userRecord = FirebaseAuth.getInstance().getUserAsync(uid).get();
+//			
+//			LOG.info(userRecord.getProviderId());
+//			
 
 			// *******************Cree ou met à jour le profil
 			PersonneDAO

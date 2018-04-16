@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import carpediem.ImportFaceBook;
+import carpediem.ImportFaceBookUser;
 import website.metier.AuthentificationSite;
 
 /**
@@ -106,15 +107,16 @@ public class ImportCarpeDiem extends HttpServlet {
 			String listevents = request.getParameter("listevents");
 			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
 		//	jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
-			String[] listEvent = listevents.split(" ");
-			for (int courant = 0; courant < listEvent.length; courant++) {
-
-				LOG.info("Charge THREAD:"+courant+"/"+listevents.length());
-			
-				executor.execute(new ImportFaceBook(listEvent[courant], jeton,listEvent.length,courant));
-
-			}
+//			String[] listEvent = listevents.split(" ");
+//			for (int courant = 0; courant < listEvent.length; courant++) {
+//
+//				LOG.info("Charge THREAD:"+courant+"/"+listevents.length());
+//			
+//				executor.execute(new ImportFaceBook(listEvent[courant], jeton,listEvent.length,courant));
+//			}
 		
+			executor.execute(new ImportFaceBookUser( jeton,"paris"));
+			
 			executor.shutdown();
 		
 			
