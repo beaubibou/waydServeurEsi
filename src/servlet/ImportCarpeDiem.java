@@ -17,6 +17,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import carpediem.ImportFaceBook;
 import carpediem.ImportFaceBookUser;
+import carpediem.ImportOpenAgendaEvent;
 import website.metier.AuthentificationSite;
 
 /**
@@ -115,8 +116,8 @@ public class ImportCarpeDiem extends HttpServlet {
 //				executor.execute(new ImportFaceBook(listEvent[courant], jeton,listEvent.length,courant));
 //			}
 		
-			executor.execute(new ImportFaceBookUser( jeton,"paris"));
-			
+		//	executor.execute(new ImportFaceBookUser( jeton,"paris"));
+			executor.execute(new ImportOpenAgendaEvent("261c569041f74c8180088cda3e47b375", "21254869"));
 			executor.shutdown();
 		
 			
