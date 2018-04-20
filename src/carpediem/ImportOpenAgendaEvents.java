@@ -69,8 +69,8 @@ public class ImportOpenAgendaEvents {
 			
 			String urlString = REQUETE_EVENT.replace("token", token)
 					.replace("monoffset", Integer.toString(offset))
-					.replace("malimite", Integer.toString(limit))
-					.replace("monwhen", when);
+					.replace("malimite", Integer.toString(limit));
+					//.replace("monwhen", when);
 			
 //			json = Outils.getJsonFromUrl(urlString);
 			json = new JSONObject(getFile());
