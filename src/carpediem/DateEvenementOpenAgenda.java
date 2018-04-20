@@ -13,8 +13,12 @@ public class DateEvenementOpenAgenda {
 	}
 	public boolean egale(Date dateDebut2, Date dateFin2) {
 	
-		if (dateDebut.compareTo(dateDebut2)==0 && dateFin.compareTo(dateFin2)==0)
-			return true;
+			
+		if (dateDebut.compareTo(dateDebut2)==0 && dateFin.compareTo(dateFin2)==0){
+		//System.out.println("******Exitste");	
+		return true;
+		}
+			
 		
 		return false;
 		

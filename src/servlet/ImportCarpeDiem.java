@@ -106,8 +106,8 @@ public class ImportCarpeDiem extends HttpServlet {
 			LOG.info("CHARGE EVNETS FB");
 		
 			
-			String listevents = request.getParameter("listevents");
-			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
+		//	String listevents = request.getParameter("listevents");
+		//	ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
 		//	jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
 //			String[] listEvent = listevents.split(" ");
 //			for (int courant = 0; courant < listEvent.length; courant++) {
@@ -119,10 +119,11 @@ public class ImportCarpeDiem extends HttpServlet {
 		
 		//	executor.execute(new ImportFaceBookUser( jeton,"paris"));
 		//	executor.execute(new ImportOpenAgendaEvent("261c569041f74c8180088cda3e47b375", "19133512"));
-			new ImportOpenAgendaAgenda("261c569041f74c8180088cda3e47b375", "50522407").start();
+		//	new ImportOpenAgendaAgenda("261c569041f74c8180088cda3e47b375", "50522407").start();
 			
-				
-			executor.shutdown();
+			new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "20/04/2018").start();
+					
+			//executor.shutdown();
 		
 			
 			break;

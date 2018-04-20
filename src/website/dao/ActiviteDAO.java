@@ -3076,18 +3076,18 @@ public class ActiviteDAO {
 				photoReduite = encodeToString(buffphotoReduite, "jpeg");
 
 			}
+			LOG.info("Verifie personne");
 
-			int idOrganisteur = website.dao.PersonneDAO
+			int idpersonneCree = website.dao.PersonneDAO
 					.isLoginExist(evenementOpenAGenda.getUidEvent());
-			int idpersonneCree = 0;
 
 			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			if (idpersonneCree == 0) {
+				LOG.info("Cree personne");
 
-			if (idOrganisteur == 0) {
-
-				connexion.setAutoCommit(false);
-				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe,photosmall)"
-						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe,photosmall,actif,verrouille)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				preparedStatement = connexion.prepareStatement(requete,
 						Statement.RETURN_GENERATED_KEYS);
 				preparedStatement.setString(1, prenom);
@@ -3101,6 +3101,8 @@ public class ActiviteDAO {
 				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 				preparedStatement.setInt(10, 1);
 				preparedStatement.setString(11, photoReduite);
+				preparedStatement.setBoolean(12, true);
+				preparedStatement.setBoolean(13, false);
 				preparedStatement.execute();
 
 				ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -3121,9 +3123,8 @@ public class ActiviteDAO {
 
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-
-				Date dateDebut = rs.getDate("datedebut");
-				Date dateFin = rs.getDate("datefin");
+				Date dateDebut = rs.getTimestamp("datedebut");
+				Date dateFin = rs.getTimestamp("datefin");
 				int idactivite = rs.getInt("idactivite");
 				if (!evenementOpenAGenda.isExistEvenement(dateDebut, dateFin)) {
 					ActiviteDAO.supprimeActivite(idactivite);
@@ -3133,12 +3134,14 @@ public class ActiviteDAO {
 			}
 
 			preparedStatement.close();
+			LOG.info("**NBE EVENEMTN :**"
+					+ evenementOpenAGenda.getListActivite().size());
 
 			for (DateEvenementOpenAgenda dateEvenementOpenAGenda : evenementOpenAGenda
 					.getListActivite()) {
 				String requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
 						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,idactiviteopen)"
-						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 				preparedStatement = connexion.prepareStatement(requete);
 				preparedStatement.setString(1, titre);
@@ -3153,25 +3156,24 @@ public class ActiviteDAO {
 				preparedStatement.setString(8, libelle);
 				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 				boolean active = true;
-				int idTypeActivite = TypeActivite.OPEN_AGENDA;
+				// int idTypeActivite = TypeActivite.OPEN_AGENDA;
+				int idTypeActivite = 1;
 				preparedStatement.setBoolean(10, active);
 				preparedStatement.setInt(11, 2);
 				preparedStatement.setInt(12, idTypeActivite);
 				preparedStatement.setString(13, fulldescription);
 				preparedStatement.setString(14,
 						evenementOpenAGenda.getUidEvent());
-
 				preparedStatement.execute();
 				LOG.info("Activite ajoutée");
 				connexion.commit();
 				preparedStatement.close();
-				
-				
+
 			}
 			connexion.close();
 			preparedStatement.close();
 
-		} catch (NamingException | SQLException |IOException e) {
+		} catch (NamingException | SQLException | IOException e) {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));
 			try {
@@ -3182,12 +3184,14 @@ public class ActiviteDAO {
 				LOG.error(ExceptionUtils.getStackTrace(e1));
 			}
 
-		}  finally {
+		} finally {
 
 			CxoPool.close(connexion, preparedStatement);
 
 		}
 
 	}
+
+	
 
 }
