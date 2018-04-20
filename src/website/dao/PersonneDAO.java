@@ -123,6 +123,37 @@ public static int isLoginExist(String login)  {
 	
 	}
 
+public static int isIdActiviteOPENExist(String idactivite)  {
+	
+	Connection connexion = null;
+	PreparedStatement preparedStatement = null;
+	ResultSet rs = null;
+
+	try {
+		
+		connexion = CxoPool.getConnection();
+		String requete = " SELECT idactivite from activite where idactiviteopen=? ";
+		preparedStatement = connexion.prepareStatement(requete);
+		preparedStatement.setString(1, idactivite);
+		rs = preparedStatement.executeQuery();
+	
+		if (rs.next())
+			return rs.getInt("idactivite");
+
+	} catch (NamingException | SQLException e) {
+			LOG.error( ExceptionUtils.getStackTrace(e));
+	}
+
+	finally {
+
+		CxoPool.close(connexion, preparedStatement, rs);
+
+	}
+	return 0;
+
+	
+	}
+
 public static int isIdActiviteFBExist(String idactivite)  {
 	
 	Connection connexion = null;

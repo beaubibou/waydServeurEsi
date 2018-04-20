@@ -12,6 +12,8 @@ public class TypeActivite {
 
 	public static final int FACEBOOK = 9;
 
+	public static final int OPEN_AGENDA = 10;
+
 	long id;
 	long idcategorie;
 	String nom;

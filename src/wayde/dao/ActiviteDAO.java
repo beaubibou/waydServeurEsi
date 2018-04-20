@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
+import carpediem.EvenementOpenAGenda;
 import wayde.bean.Activite;
 import wayde.bean.CxoPool;
 import wayde.bean.IndicateurWayd;
@@ -1823,5 +1824,9 @@ public class ActiviteDAO {
 		return listActivite;
 
 	}
+	
+	
+
+	
 
 }

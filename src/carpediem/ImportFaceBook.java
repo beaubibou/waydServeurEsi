@@ -76,7 +76,7 @@ public class ImportFaceBook implements Runnable {
 			return;
 		}
 
-		//
+		//LOG.e
 		try {
 			json = new JSONObject(parsedContentFromUrl.toString());
 		} catch (JSONException e1) {

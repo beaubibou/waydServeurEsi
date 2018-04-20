@@ -451,12 +451,12 @@ public class ImportCarpe {
 				int testConvert = Integer.parseInt(nombre);
 
 				retour = retour + nombre;
-				if (debut == false)
+				if (!debut)
 					debut = true;
 
 			} catch (Exception e) {
 
-				if (debut == true)
+				if (debut )
 					return retour;
 			}
 
@@ -524,11 +524,14 @@ public class ImportCarpe {
 				.withMinuteOfHour(0).withSecondOfMinute(0)
 				.withMillisOfSecond(00);
 
-		if (dateDebut.before(maitenant.toDate()))
+		if (dateFin.before(maitenant.toDate()))
 			return false;
 
 		long Heure = 3600000;
 
+		if (dateDebut.after(maitenant.plusDays(3).toDate()))
+			return false;
+		
 		if (dateFin.getTime() - dateDebut.getTime() > 24 * Heure)
 			return false;
 

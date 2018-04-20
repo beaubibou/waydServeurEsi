@@ -1,8 +1,12 @@
 package website.metier;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +19,8 @@ import javax.imageio.ImageIO;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import sun.misc.BASE64Encoder;
 
@@ -31,8 +37,49 @@ public class Outils {
 
 		if (clemapadmin)
 			return mapKeyProduction;
-	
+
 		return mapKeyTest;
+	}
+
+	public static JSONObject getJsonFromUrl(String urlString) {
+
+		StringBuilder parsedContentFromUrl = new StringBuilder();
+
+		LOG.info(urlString);
+
+		URL url;
+		JSONObject json;
+
+		try {
+			url = new URL(urlString);
+			URLConnection uc;
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			uc.getInputStream();
+			BufferedInputStream in = new BufferedInputStream(
+					uc.getInputStream());
+			int ch;
+			while ((ch = in.read()) != -1)
+				parsedContentFromUrl.append((char) ch);
+		}
+
+		catch (IOException e1) {
+			LOG.error("Url face BOOK non valide: activité rejetée");
+
+			return null;
+		}
+
+		try {
+			json = new JSONObject(parsedContentFromUrl.toString());
+		} catch (JSONException e1) {
+			LOG.error("Le parcours du json de l'évenemt FB a échoué: activité rejetée");
+			return null;
+
+		}
+
+		return json;
 	}
 
 	public static String jspAdapterCheked(boolean value) {
@@ -128,7 +175,7 @@ public class Outils {
 			imageString = encoder.encode(imageBytes);
 			bos.close();
 		} catch (IOException e) {
-			
+
 			LOG.error(ExceptionUtils.getStackTrace(e));
 		}
 		return imageString;
@@ -146,7 +193,7 @@ public class Outils {
 	}
 
 	public static String getStringStatement(String chaine) {
-	
+
 		if (chaine == null)
 			return null;
 
@@ -156,6 +203,28 @@ public class Outils {
 		}
 
 		return chaine;
+	}
+
+	public static BufferedImage getImageFromURL(String photoUrl) {
+
+		BufferedImage imageTailleNormale = null;
+		URLConnection uc;
+		URL url;
+		try {
+			url = new URL(photoUrl);
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			imageTailleNormale = ImageIO.read(uc.getInputStream());
+
+		} catch (IOException e) {
+			LOG.error(e.getMessage());
+			return null;
+		}
+
+		return imageTailleNormale;
+
 	}
 
 }
