@@ -14,15 +14,17 @@ import org.json.JSONObject;
 
 import website.metier.Outils;
 
-public class ImportOpenAgendaEvents {
+public class ImportOpenAgendaEvents implements Runnable {
 
 	String token;
 	private String when;
+	int debut,fin;
 	
 	private EvenementOpenAGenda evenement;
 	private static final Logger LOG = Logger
 			.getLogger(ImportOpenAgendaEvents.class);
-	private static String REQUETE_EVENT = "https://api.openagenda.com/v1/events?key=token&offset=monoffset&limit=malimite&when=monwhen";
+	private static String REQUETE_EVENT_WHEN = "https://api.openagenda.com/v1/events?key=token&offset=monoffset&limit=malimite&when=monwhen";
+	private static String REQUETE_EVENT = "https://api.openagenda.com/v1/events?key=token&offset=monoffset&limit=malimite";
 
 	public ImportOpenAgendaEvents(String tokenFb, String when) {
 
@@ -32,6 +34,16 @@ public class ImportOpenAgendaEvents {
 
 	}
 
+	public ImportOpenAgendaEvents(String tokenFb, String when,int debut,int fin) {
+
+		super();
+		this.token = tokenFb;
+		this.when = when;
+		this.debut=debut;
+		this.fin=fin;
+
+	}
+	
 	public String getFile() {
 
 		BufferedReader br;
@@ -57,34 +69,38 @@ public class ImportOpenAgendaEvents {
 
 	public void start() {
 
-		boolean stop=false;
+	boolean stop=false;
 	int limit=100;
 	int offset=1;
 		while(!stop){
 	
 		try {
 			
-			LOG.info("OFFSET EN COURS");
+			
 			JSONObject json;
 			
 			String urlString = REQUETE_EVENT.replace("token", token)
 					.replace("monoffset", Integer.toString(offset))
-					.replace("malimite", Integer.toString(limit));
-					//.replace("monwhen", when);
+					.replace("malimite", Integer.toString(limit)).replace("monwhen", when);
+					
 			
-//			json = Outils.getJsonFromUrl(urlString);
-			json = new JSONObject(getFile());
+			json = Outils.getJsonFromUrl(urlString);
+		
 			JSONArray arrayData = json.getJSONArray("data");
+			LOG.info("OFFSET EN COURS"+offset+" nber activre fichier JSOn:"+arrayData.length());
 			if (arrayData.length()==0)
-				{stop=true;}
+				{LOG.info("********** stop");
+				stop=true;}
 			else
 			{
 				getEvenements(json);
 				offset=offset+100;
 			}
 	
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			LOG.error(e.getMessage());
+			LOG.error("erreur offest:"+offset);
+			offset=offset+100;
 		}
 		
 	
@@ -122,13 +138,17 @@ public class ImportOpenAgendaEvents {
 			try {
 				data = arrayData.getJSONObject(j);
 				uidEvenement = data.getString("uid");
+				image = data.getString("image");
 				titreJSON = data.getJSONObject("title");
 				titre = titreJSON.getString("fr");
 				descriptionJSON = data.getJSONObject("description");
 				description = descriptionJSON.getString("fr");
 			} catch (JSONException e1) {
-				e1.printStackTrace();
+				LOG.error(e1.getMessage());
+				continue;
 			}
+			
+			
 
 			try {
 
@@ -191,7 +211,7 @@ public class ImportOpenAgendaEvents {
 				LOG.error(e.getMessage());
 			}
 
-			// System.out.println("uid:" + uidEvenement);
+			 System.out.println("image:" + image);
 			// System.out.println("TITRE:" + titre);
 			// System.out.println("Description:" + description);
 			// System.out.println("freeText:" + freetext);
@@ -201,10 +221,10 @@ public class ImportOpenAgendaEvents {
 			// System.out.println("adresseTotal:" + adress);
 			// System.out.println("latitude:" + latitude);
 			// System.out.println("longitude:" + longitude);
-			String adresseTotal = adress + " " + codePostal + " " + ville;
+			//String adresseTotal = adress + " " + codePostal + " " + ville;
 
 			evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
-					description, freetext, adresseTotal, latitude, longitude,
+					description, freetext, adress, latitude, longitude,
 					image, lienurl, ville, nomLieu);
 
 			JSONArray array = null;
@@ -216,11 +236,12 @@ public class ImportOpenAgendaEvents {
 				LOG.error(e.getMessage());
 			}
 			boolean ajout=false;
+			LOG.info("taille ajoute event" + array.length());
+			
 			for (int i = 0; i < array.length(); i++) {
 
 				String date;
 				try {
-					LOG.info("taille ajoute event" + array.length());
 					date = array.getJSONObject(i).getString("date");
 					String timeStart = array.getJSONObject(i).getString(
 							"timeStart");
@@ -267,6 +288,47 @@ public class ImportOpenAgendaEvents {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return formatter.parse(datetmp);
 
+	}
+
+	@Override
+	public void run() {
+		boolean stop=false;
+		int limit=100;
+		int offset=debut;
+			while(!stop){
+		
+			try {
+				
+				
+				JSONObject json;
+				
+				String urlString = REQUETE_EVENT.replace("token", token)
+						.replace("monoffset", Integer.toString(offset))
+						.replace("malimite", Integer.toString(limit)).replace("monwhen", when);
+						
+				
+				json = Outils.getJsonFromUrl(urlString);
+			
+				JSONArray arrayData = json.getJSONArray("data");
+				LOG.info("OFFSET EN COURS"+offset+" nber activre fichier JSOn:"+arrayData.length());
+				if (arrayData.length()==0 || offset>fin)
+					{LOG.info("********** stop");
+					stop=true;}
+				else
+				{
+					getEvenements(json);
+					offset=offset+100;
+				}
+		
+			} catch (Exception e) {
+				LOG.error(e.getMessage());
+				LOG.error("erreur offest:"+offset);
+				offset=offset+100;
+			}
+			
+		
+			}
+		
 	}
 
 }

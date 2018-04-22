@@ -211,15 +211,16 @@ public class Outils {
 		URLConnection uc;
 		URL url;
 		try {
-			url = new URL(photoUrl);
+			url = new URL("https:"+photoUrl);
 			uc = url.openConnection();
 			uc.addRequestProperty("User-Agent",
 					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 			uc.connect();
 			imageTailleNormale = ImageIO.read(uc.getInputStream());
 
-		} catch (IOException e) {
-			LOG.error(e.getMessage());
+		} catch (Exception e) {
+			LOG.error(photoUrl);
+			e.printStackTrace();
 			return null;
 		}
 

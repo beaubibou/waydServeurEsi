@@ -68,12 +68,13 @@ public class ImportOpenAgendaAgenda {
 		}
 
 		ExecutorService executor = Executors.newFixedThreadPool(20);
-
-		for (String idEvent : listIdEvent) {
-			executor.execute(new ImportOpenAgendaEvent(
-					"261c569041f74c8180088cda3e47b375", idEvent,idagenda));
-
-		}
+			LOG.info("------------nbr rid trouve"+listIdEvent.size());
+	
+//			for (String idEvent : listIdEvent) {
+//			executor.execute(new ImportOpenAgendaEvent(
+//					"261c569041f74c8180088cda3e47b375", idEvent,idagenda));
+//
+//		}
 		
 		executor.shutdown();
 		
@@ -89,6 +90,7 @@ public class ImportOpenAgendaAgenda {
 
 		try {
 			totalActiviteAgenda = json.getInt("total");
+			LOG.info("***********total"+total);
 		} catch (JSONException e2) {
 
 			LOG.error("total est non présente");

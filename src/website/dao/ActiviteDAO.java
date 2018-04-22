@@ -3043,11 +3043,11 @@ public class ActiviteDAO {
 
 			// ****************** Recuperation valeur***********************
 
-			String prenom = evenementOpenAGenda.getUidEvent();
+			String prenom = evenementOpenAGenda.getTitre();
 			String login = evenementOpenAGenda.getUidEvent();
 			String photoUrl = evenementOpenAGenda.getImage();
 			String ville = evenementOpenAGenda.getVille();
-			String fulldescription = evenementOpenAGenda.getDescription();
+			String fulldescription =evenementOpenAGenda.getFreetext();
 
 			String lien = evenementOpenAGenda.getLienurl();
 			double latitude = evenementOpenAGenda.getLatitude();
@@ -3064,7 +3064,8 @@ public class ActiviteDAO {
 			String photo = "";
 			BufferedImage buffphotoReduite;
 			String photoReduite = "";
-
+			System.out.println("mon image"+photoUrl);
+			
 			if (imageNormal == null) {
 
 				LOG.error("image non disponible - Activite refusée");

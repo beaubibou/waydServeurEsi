@@ -17,6 +17,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 import carpediem.ImportFaceBook;
 import carpediem.ImportFaceBookUser;
+import carpediem.ImportMapadoEvent;
+import carpediem.ImportMapodoEvents;
 import carpediem.ImportOpenAgendaAgenda;
 import carpediem.ImportOpenAgendaEvents;
 import website.metier.AuthentificationSite;
@@ -29,7 +31,7 @@ public class ImportCarpeDiem extends HttpServlet {
 	private static final Logger LOG = Logger.getLogger(ImportCarpeDiem.class);
 	public final static String ACTION_CHARGE_CARPEDIEM = "ACTION_CHARGE_CARPEDIEM";
 	public final static String ACTION_CHARGE_EVENT_FACEBOOK = "ACTION_CHARGE_EVENT_FACEBOOK";
-	private static final int THREAD_SIMULTANEE = 30;
+	private static final int THREAD_SIMULTANEE = 5;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -107,7 +109,7 @@ public class ImportCarpeDiem extends HttpServlet {
 		
 			
 		//	String listevents = request.getParameter("listevents");
-		//	ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
+			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
 		//	jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
 //			String[] listEvent = listevents.split(" ");
 //			for (int courant = 0; courant < listEvent.length; courant++) {
@@ -121,11 +123,18 @@ public class ImportCarpeDiem extends HttpServlet {
 		//	executor.execute(new ImportOpenAgendaEvent("261c569041f74c8180088cda3e47b375", "19133512"));
 		//	new ImportOpenAgendaAgenda("261c569041f74c8180088cda3e47b375", "50522407").start();
 			
-			new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "20/04/2018").start();
-					
-			//executor.shutdown();
-		
-			
+		//	new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "01/10/2018-01/01/2019").start();
+//			for (int f=0;f<300;f++)
+//			executor.execute(new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "19133512",1000*f,(f+1)*1000));
+////			
+//			executor.shutdown();
+//			
+//			while(!executor.isTerminated()){
+//				
+//			 }
+//			
+	new ImportMapodoEvents("paris", "today").start();
+	//new ImportMapadoEvent("NmIwNDQwMDhhZTY0NDU3ZGY4ZjI3Nzk4YjQ3MDRkOTU0ZGQxNGE4MzI5OWU4OTNiZDg0ODExZjFmMWQwOTU1Yw", "33a3044f-347b-41d1-b099-6af03c214bfe").start();
 			break;
 
 		}
@@ -165,10 +174,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			new Thread(new ImportRunnable(1, ville, jeton)).start();
 
-
 		}
-
-		
 
 	}
 
