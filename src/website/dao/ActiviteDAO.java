@@ -21,6 +21,8 @@ import javax.imageio.ImageIO;
 import javax.naming.NamingException;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.makers.ThumbnailMaker;
+import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
@@ -3263,11 +3265,12 @@ public class ActiviteDAO {
 			String adresse = evenementOpenAGenda.getAdresseTotal()
 					+ evenementOpenAGenda.getNomLieu();
 
-			BufferedImage imageNormal = Outils.getImageMapodoFromURL(photoUrl);
+			
+		//	BufferedImage imageNormal = Outils.getImageMapodoFromURL(photoUrl);
+			BufferedImage imageNormal =Thumbnails.of(photoUrl).asBufferedImage();
 			String photo = "";
 			BufferedImage buffphotoReduite;
 			String photoReduite = "";
-			System.out.println("mon image" + photoUrl);
 
 			if (imageNormal == null) {
 
@@ -3286,8 +3289,9 @@ public class ActiviteDAO {
 					.isLoginExist(evenementOpenAGenda.getUidEvent());
 
 			connexion = CxoPool.getConnection();
-			connexion.setAutoCommit(false);
 			if (idpersonneCree == 0) {
+
+				connexion.setAutoCommit(false);
 				LOG.info("Cree personne");
 
 				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe,photosmall,actif,verrouille)"
@@ -3319,12 +3323,6 @@ public class ActiviteDAO {
 
 			}
 
-			// Recupere toutes les ID de la base
-
-			if (PersonneDAO.isPseudoExist(login))
-				return;
-
-			
 			if (ActiviteDAO.isDejaExits(latitude, longitude, debut, fin))
 				return;
 
@@ -3345,7 +3343,6 @@ public class ActiviteDAO {
 			preparedStatement.setString(8, libelle);
 			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
 			boolean active = true;
-			// int idTypeActivite = TypeActivite.OPEN_AGENDA;
 			int idTypeActivite = 1;
 			preparedStatement.setBoolean(10, active);
 			preparedStatement.setInt(11, 2);
@@ -3355,8 +3352,6 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			LOG.info("Activite ajoutée");
 			connexion.commit();
-			preparedStatement.close();
-
 			connexion.close();
 			preparedStatement.close();
 

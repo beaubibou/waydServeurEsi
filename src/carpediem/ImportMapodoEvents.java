@@ -28,7 +28,8 @@ public class ImportMapodoEvents implements Runnable {
 			.getLogger(ImportMapodoEvents.class);
 	private static String REQUETE_ACCESS_TOKEN = "https://oauth2.mapado.com/oauth/v2/token?client_id=454_2bn7u2t8g3dwkss4ogwkco4ow8wws4ocossw8wc40o0gw4kgwk&client_secret=3qxhc5jhr04kw8cswkc04oos4kgcw4gok0csc8s88go8kwcc4c&grant_type=password&username=pmestivier@club.fr&password=azerty";
 	private static String REQUETE_EVENT = "https://api.mapado.com/v1/activities?access_token=montoken&offset=monoffset&limit=malimite&q=maville&when=monwhen";
-	private ArrayList<String> listUUID=new ArrayList<String>();
+	private ArrayList<String> listUUID = new ArrayList<String>();
+
 	public ImportMapodoEvents(String ville, String when) {
 
 		super();
@@ -47,17 +48,14 @@ public class ImportMapodoEvents implements Runnable {
 		try {
 			return json.getString("access_token");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	
-
 	public void start() {
 
-		ArrayList<String> villes=new ArrayList<String>();
+		ArrayList<String> villes = new ArrayList<String>();
 		villes.add("paris");
 		villes.add("toulouse");
 		villes.add("nantes");
@@ -67,60 +65,58 @@ public class ImportMapodoEvents implements Runnable {
 		villes.add("bordeaux");
 		villes.add("limoges");
 		villes.add("nimes");
-	
-		for (String ville:villes){
-		
-		int limit = 100;
-		int offset = 1;
-		
-		boolean stop = false;
-		while (!stop) {
 
-			try {
+		for (String ville : villes) {
 
-				JSONObject json;
+			int limit = 100;
+			int offset = 1;
 
-				String urlString = REQUETE_EVENT
-						.replace("montoken", access_token)
-						.replace("monoffset", Integer.toString(offset))
-						.replace("malimite", Integer.toString(limit))
-						.replace("monwhen", when).replace("maville", ville);
-				LOG.info(urlString);
-				json = Outils.getJsonFromUrl(urlString);
+			boolean stop = false;
+			while (!stop) {
+
+				try {
+
+					JSONObject json;
+
+					String urlString = REQUETE_EVENT
+							.replace("montoken", access_token)
+							.replace("monoffset", Integer.toString(offset))
+							.replace("malimite", Integer.toString(limit))
+							.replace("monwhen", when).replace("maville", ville);
+					LOG.info(urlString);
+					json = Outils.getJsonFromUrl(urlString);
 					JSONArray arrayData = json.getJSONArray("data");
-				LOG.info("OFFSET EN COURS" + offset
-						+ " nber activre fichier JSOn:" + arrayData.length());
-				if (arrayData.length() == 0) {
-					LOG.info("********** stop");
+
+					if (arrayData.length() == 0) {
+						LOG.info("********** stop");
+						stop = true;
+					} else {
+						getEvenements(json);
+						offset = offset + 100;
+					}
+
+				} catch (Exception e) {
+					LOG.error(e.getMessage());
 					stop = true;
-				} else {
-					getEvenements(json);
-					offset = offset + 100;
 				}
 
-			} catch (Exception e) {
-				LOG.error(e.getMessage());
-			//	LOG.error("erreur offest:" + offset);
-				stop=true;
 			}
 
 		}
-		}
-		
-		System.out.println("***********************"+listUUID.size());
+
+		int ajout = 0;
 	
-		ExecutorService executor = Executors.newFixedThreadPool(3);
-		for (String uuid:listUUID){
-			
-			executor.execute(new ImportMapadoEvent(access_token, uuid));
-			
+		for (String uuid : listUUID) {
+			ajout++;
+			new ImportMapadoEvent(access_token, uuid).start();
+			LOG.info("En cours" + ajout + "/" + listUUID.size());
+
 		}
-	
+
 	}
 
 	public void getEvenements(JSONObject json) {
 
-		
 		JSONArray arrayData = null;
 		try {
 			arrayData = json.getJSONArray("data");
@@ -134,15 +130,14 @@ public class ImportMapodoEvents implements Runnable {
 			JSONObject data = null;
 			try {
 				data = arrayData.getJSONObject(j);
-			String	uidEvenement = data.getString("uuid");
-			listUUID.add(uidEvenement);
-			//LOG.info(uidEvenement);
+				String uidEvenement = data.getString("uuid");
+				listUUID.add(uidEvenement);
+				// LOG.info(uidEvenement);
 			} catch (JSONException e1) {
 				LOG.error(e1.getMessage());
 				continue;
 			}
 
-		
 		}
 
 	}

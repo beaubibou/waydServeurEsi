@@ -30,7 +30,7 @@ public class ImportMapadoEvent implements Runnable {
 
 		this.access_token = acces_token;
 		this.uuid = uuid;
-		// LOG.info(access_token);
+		
 	}
 
 	public void start() {
@@ -47,8 +47,7 @@ public class ImportMapadoEvent implements Runnable {
 
 			} catch (Exception e) {
 				LOG.error(e.getMessage());
-				// LOG.error("erreur offest:" + offset);
-
+			
 			}
 		}
 
@@ -125,8 +124,7 @@ public class ImportMapadoEvent implements Runnable {
 			DateTime finale = datefinDt.withHourOfDay(23).withMinuteOfHour(59)
 					.withSecondOfMinute(59);
 			dateFin = finale.toDate();
-			System.out.println(finale);
-			// dateFin=
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -150,62 +148,24 @@ public class ImportMapadoEvent implements Runnable {
 			e.printStackTrace();
 		}
 
-		System.out.println("image:" + image);
-		System.out.println("TITRE:" + titre);
-		System.out.println("Description:" + description);
-		System.out.println("freeText:" + freetext);
-		System.out.println("nomlieu:" + nomLieu);
-		// System.out.println("ville:" + ville);
-		// System.out.println("code postal:" + codePostal);
-		// System.out.println("adresseTotal:" + adress);
-		System.out.println("latitude:" + latitude);
-		System.out.println("longitude:" + longitude);
-		// String adresseTotal = adress + " " + codePostal + " " + ville;
-
+		LOG.info("image:" + image);
+		LOG.info("TITRE:" + titre);
+		LOG.info("Description:" + description);
+		LOG.info("freeText:" + freetext);
+		LOG.info("nomlieu:" + nomLieu);
+		LOG.info("latitude:" + latitude);
+		LOG.info("longitude:" + longitude);
 		 evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
 		 description, freetext, adress, latitude, longitude, image, lienurl, ville, nomLieu);
-		//
-		// JSONArray array = null;
-		//
-		// try {
-		// array = arrayLocations.getJSONObject(0).getJSONArray("dates");
-		//
-		// } catch (JSONException e) {
-		// LOG.error(e.getMessage());
-		// }
-		// boolean ajout = false;
-		// LOG.info("taille ajoute event" + array.length());
-		//
-		// for (int i = 0; i < array.length(); i++) {
-		//
-		// String date;
-		// try {
-		// date = array.getJSONObject(i).getString("date");
-		// String timeStart = array.getJSONObject(i).getString(
-		// "timeStart");
-		// String timeEnd = array.getJSONObject(i)
-		// .getString("timeEnd");
-		// Date dateDebut = getDate(date, timeStart);
-		// Date dateFin = getDate(date, timeEnd);
+
 		 try {
 			if (!valideActivite(dateDebut, dateFin)) return;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//
-		// } catch (JSONException | ParseException e) {
-		//
-		// LOG.info("Pas de date on passe");
-		// continue;
-		//
-		// }
-		// }
-		//
-		// LOG.info("ajoute dao");
-		// if (ajout)
+	
 		 evenement.ajouteDAO(dateDebut,dateFin);
-		// }
+		
 
 	}
 
@@ -228,6 +188,28 @@ public class ImportMapadoEvent implements Runnable {
 		String datetmp = date + " " + heure;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return formatter.parse(datetmp);
+
+	}
+	public String getFile() {
+
+		BufferedReader br;
+		StringBuilder retour = new StringBuilder();
+		try {
+			br = new BufferedReader(new FileReader("donnees"));
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+
+				retour.append(line);
+
+			}
+			br.close();
+
+		} catch (Exception e) {
+
+			LOG.error(e.getMessage());
+		}
+		return retour.toString();
 
 	}
 
