@@ -132,8 +132,8 @@ public class ImportMapodoEvents implements Runnable {
 				data = arrayData.getJSONObject(j);
 				String uidEvenement = data.getString("uuid");
 				listUUID.add(uidEvenement);
-				// LOG.info(uidEvenement);
 			} catch (JSONException e1) {
+			
 				LOG.error(e1.getMessage());
 				continue;
 			}

@@ -127,24 +127,24 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			// new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375",
 			// "01/10/2018-01/01/2019").start();
-while(true){
-			
-			new ImportMapodoEvents("paris", "today").start();
-			new ImportMapodoEvents("paris", "tomorrow").start();
-			new ImportMapodoEvents("paris", "soon").start();
-			
-		
-			for (int f = 0; f < 200; f++)
-				executor.execute(new ImportOpenAgendaEvents(
-						"261c569041f74c8180088cda3e47b375", "19133512",
-						1000 * f, (f + 1) * 1000));
+			while (true) {
 
-			executor.shutdown();
-			//
-			while (!executor.isTerminated()) {
+				executor.execute(new ImportMapodoEvents("paris", "today"));
+				// new ImportMapodoEvents("paris", "tomorrow").start();
+				// new ImportMapodoEvents("paris", "soon").start();
+				//
+				//
+				// for (int f = 0; f < 200; f++)
+				// executor.execute(new ImportOpenAgendaEvents(
+				// "261c569041f74c8180088cda3e47b375", "19133512",
+				// 1000 * f, (f + 1) * 1000));
 
+				executor.shutdown();
+				//
+				while (!executor.isTerminated()) {
+
+				}
 			}
-}
 			//
 
 			// new
