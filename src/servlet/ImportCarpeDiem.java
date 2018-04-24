@@ -107,7 +107,7 @@ public class ImportCarpeDiem extends HttpServlet {
 
 			// String listevents = request.getParameter("listevents");
 			ExecutorService executor = Executors
-					.newFixedThreadPool(THREAD_SIMULTANEE);
+					.newFixedThreadPool(1);
 			// jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
 			// String[] listEvent = listevents.split(" ");
 			// for (int courant = 0; courant < listEvent.length; courant++) {
@@ -130,8 +130,8 @@ public class ImportCarpeDiem extends HttpServlet {
 			while (true) {
 
 				executor.execute(new ImportMapodoEvents("paris", "today"));
-				// new ImportMapodoEvents("paris", "tomorrow").start();
-				// new ImportMapodoEvents("paris", "soon").start();
+				executor.execute( new ImportMapodoEvents("paris", "tomorrow"));
+				executor.execute(new ImportMapodoEvents("paris", "soon"));
 				//
 				//
 				// for (int f = 0; f < 200; f++)
@@ -139,7 +139,7 @@ public class ImportCarpeDiem extends HttpServlet {
 				// "261c569041f74c8180088cda3e47b375", "19133512",
 				// 1000 * f, (f + 1) * 1000));
 
-				executor.shutdown();
+			//	executor.shutdown();
 				//
 				while (!executor.isTerminated()) {
 

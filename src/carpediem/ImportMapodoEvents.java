@@ -109,7 +109,7 @@ public class ImportMapodoEvents implements Runnable {
 		for (String uuid : listUUID) {
 			ajout++;
 			new ImportMapadoEvent(access_token, uuid).start();
-			LOG.info("En cours" + ajout + "/" + listUUID.size());
+			LOG.info("************Ajout evenement du "+when +":"+ ajout + "/" + listUUID.size());
 
 		}
 
