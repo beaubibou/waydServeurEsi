@@ -116,7 +116,6 @@ public class ImportOpenAgendaEvents implements Runnable {
 		String lienurl = null;
 		double latitude = 0;
 		double longitude = 0;
-		String codePostal = null;
 		String adress = null;
 		String freetext = null;
 		String image = null;
@@ -203,15 +202,9 @@ public class ImportOpenAgendaEvents implements Runnable {
 				LOG.error(e.getMessage());
 			}
 
-			try {
+			
 
-				codePostal = arrayLocations.getJSONObject(0).getString(
-						"postalCode");
-			} catch (JSONException e) {
-				LOG.error(e.getMessage());
-			}
-
-			 System.out.println("image:" + image);
+		//	 System.out.println("image:" + image);
 			// System.out.println("TITRE:" + titre);
 			// System.out.println("Description:" + description);
 			// System.out.println("freeText:" + freetext);

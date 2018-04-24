@@ -63,12 +63,15 @@ public class ImportMapadoEvent implements Runnable {
 		String lienurl = null;
 		double latitude = 0;
 		double longitude = 0;
-	
+
 		String adress = null;
 		String freetext = null;
 		String image = null;
 		String nomLieu = null;
-		String formatted_schedule="";
+		String formatted_schedule = "";
+		String datedebutstr = "";
+
+		Date dateDebut = null, dateFin=null;
 
 		try {
 			nomLieu = json.getString("front_place_name");
@@ -95,12 +98,12 @@ public class ImportMapadoEvent implements Runnable {
 		} catch (Exception e) {
 
 		}
-		
+
 		try {
 
 			freetext = json.getString("description");
 
-			freetext=freetext+"\n"+formatted_schedule;
+			freetext = freetext + "\n" + formatted_schedule;
 		} catch (Exception e) {
 
 		}
@@ -115,21 +118,34 @@ public class ImportMapadoEvent implements Runnable {
 
 		try {
 
+			datedebutstr = json.getString("next_date");
+			dateDebut = getDate(datedebutstr);
+
+			DateTime datefinDt = new DateTime(dateDebut.getTime());
+			DateTime finale = datefinDt.withHourOfDay(23).withMinuteOfHour(59)
+					.withSecondOfMinute(59);
+			dateFin = finale.toDate();
+			System.out.println(finale);
+			// dateFin=
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
 			image = json.getString("image");
 
 		} catch (Exception e) {
 
 		}
 
-		JSONArray array = null;
-
 		try {
-			JSONObject adressejson = json.getJSONObject("_embedded").getJSONObject("address");
+			JSONObject adressejson = json.getJSONObject("_embedded")
+					.getJSONObject("address");
 			LOG.info(adressejson);
 			latitude = adressejson.getDouble("latitude");
-			longitude =adressejson.getDouble("longitude");
-			adress =adressejson.getString("formatted_address");
-			
+			longitude = adressejson.getDouble("longitude");
+			adress = adressejson.getString("formatted_address");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,9 +162,8 @@ public class ImportMapadoEvent implements Runnable {
 		System.out.println("longitude:" + longitude);
 		// String adresseTotal = adress + " " + codePostal + " " + ville;
 
-		// evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
-		// description, freetext, adress, latitude, longitude, image,
-		// lienurl, ville, nomLieu);
+		 evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
+		 description, freetext, adress, latitude, longitude, image, lienurl, ville, nomLieu);
 		//
 		// JSONArray array = null;
 		//
@@ -172,10 +187,12 @@ public class ImportMapadoEvent implements Runnable {
 		// .getString("timeEnd");
 		// Date dateDebut = getDate(date, timeStart);
 		// Date dateFin = getDate(date, timeEnd);
-		// if (valideActivite(dateDebut, dateFin)) {
-		// evenement.ajouteEvenement(dateDebut, dateFin);
-		// ajout = true;
-		// }
+		 try {
+			if (!valideActivite(dateDebut, dateFin)) return;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//
 		// } catch (JSONException | ParseException e) {
 		//
@@ -187,7 +204,7 @@ public class ImportMapadoEvent implements Runnable {
 		//
 		// LOG.info("ajoute dao");
 		// if (ajout)
-		// evenement.ajouteDAO();
+		 evenement.ajouteDAO(dateDebut,dateFin);
 		// }
 
 	}
@@ -217,6 +234,13 @@ public class ImportMapadoEvent implements Runnable {
 	@Override
 	public void run() {
 		start();
+	}
+
+	public Date getDate(String date) throws ParseException {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+		return formatter.parse(date);
+
 	}
 
 }

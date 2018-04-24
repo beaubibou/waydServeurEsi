@@ -227,5 +227,28 @@ public class Outils {
 		return imageTailleNormale;
 
 	}
+	
+	public static BufferedImage getImageMapodoFromURL(String photoUrl) {
+
+		BufferedImage imageTailleNormale = null;
+		URLConnection uc;
+		URL url;
+		try {
+			url = new URL(photoUrl);
+			uc = url.openConnection();
+			uc.addRequestProperty("User-Agent",
+					"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+			uc.connect();
+			imageTailleNormale = ImageIO.read(uc.getInputStream());
+
+		} catch (Exception e) {
+			LOG.error(photoUrl);
+			e.printStackTrace();
+			return null;
+		}
+
+		return imageTailleNormale;
+
+	}
 
 }

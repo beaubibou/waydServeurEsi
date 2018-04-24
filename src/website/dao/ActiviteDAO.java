@@ -395,6 +395,44 @@ public class ActiviteDAO {
 		return false;
 	}
 
+	public static boolean isDejaExits(double latitude, double longitude,
+			Date datedebut, Date datefin) {
+
+		long debut = System.currentTimeMillis();
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connexion = CxoPool.getConnection();
+			String requete = " SELECT idactivite from activite where latitude=? and longitude=? and datedebut=? and datefin=?";
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setDouble(1, latitude);
+			preparedStatement.setDouble(2, longitude);
+			preparedStatement.setTimestamp(3,
+					new java.sql.Timestamp(datedebut.getTime()));
+			preparedStatement.setTimestamp(4,
+					new java.sql.Timestamp(datefin.getTime()));
+			rs = preparedStatement.executeQuery();
+
+			LogDAO.LOG_DUREE("Activite existante rejetée", debut);
+
+			if (rs.next())
+				return true;
+
+		} catch (NamingException | SQLException e) {
+			LOG.error(ExceptionUtils.getStackTrace(e));
+		}
+
+		finally {
+
+			CxoPool.close(connexion, preparedStatement, rs);
+
+		}
+		return false;
+	}
+
 	public ArrayList<ActiviteAjax> getListActiviteAjaxMap(double malatitude,
 			double malongitude, double nelat, double nelon, double swlat,
 			double swlon) {
@@ -3047,7 +3085,7 @@ public class ActiviteDAO {
 			String login = evenementOpenAGenda.getUidEvent();
 			String photoUrl = evenementOpenAGenda.getImage();
 			String ville = evenementOpenAGenda.getVille();
-			String fulldescription =evenementOpenAGenda.getFreetext();
+			String fulldescription = evenementOpenAGenda.getFreetext();
 
 			String lien = evenementOpenAGenda.getLienurl();
 			double latitude = evenementOpenAGenda.getLatitude();
@@ -3064,8 +3102,8 @@ public class ActiviteDAO {
 			String photo = "";
 			BufferedImage buffphotoReduite;
 			String photoReduite = "";
-			System.out.println("mon image"+photoUrl);
-			
+			System.out.println("mon image" + photoUrl);
+
 			if (imageNormal == null) {
 
 				LOG.error("image non disponible - Activite refusée");
@@ -3140,6 +3178,11 @@ public class ActiviteDAO {
 
 			for (DateEvenementOpenAgenda dateEvenementOpenAGenda : evenementOpenAGenda
 					.getListActivite()) {
+
+				if (ActiviteDAO.isDejaExits(latitude, longitude,
+						dateEvenementOpenAGenda.getDateDebut(),
+						dateEvenementOpenAGenda.getDateFin()))
+					continue;
 				String requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
 						+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,idactiviteopen)"
 						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -3193,6 +3236,147 @@ public class ActiviteDAO {
 
 	}
 
-	
+	public static void ajouteEvenementMapado(
+			EvenementOpenAGenda evenementOpenAGenda, Date debut, Date fin) {
+
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+
+			// ****************** Recuperation valeur***********************
+
+			String prenom = evenementOpenAGenda.getTitre();
+			String login = evenementOpenAGenda.getUidEvent();
+			String photoUrl = evenementOpenAGenda.getImage();
+			String ville = evenementOpenAGenda.getVille();
+			String fulldescription = evenementOpenAGenda.getFreetext();
+
+			String lien = evenementOpenAGenda.getLienurl();
+			double latitude = evenementOpenAGenda.getLatitude();
+			double longitude = evenementOpenAGenda.getLongitude();
+			double latitudeFixe = evenementOpenAGenda.getLatitude();
+			double longitudeFixe = evenementOpenAGenda.getLongitude();
+			String libelle = evenementOpenAGenda.getDescription();
+			String titre = evenementOpenAGenda.getTitre();
+
+			String adresse = evenementOpenAGenda.getAdresseTotal()
+					+ evenementOpenAGenda.getNomLieu();
+
+			BufferedImage imageNormal = Outils.getImageMapodoFromURL(photoUrl);
+			String photo = "";
+			BufferedImage buffphotoReduite;
+			String photoReduite = "";
+			System.out.println("mon image" + photoUrl);
+
+			if (imageNormal == null) {
+
+				LOG.error("image non disponible - Activite refusée");
+				return;
+			} else {
+
+				photo = encodeToString(imageNormal, "jpeg");
+				buffphotoReduite = resize(imageNormal, 100, 100);
+				photoReduite = encodeToString(buffphotoReduite, "jpeg");
+
+			}
+			LOG.info("Verifie personne");
+
+			int idpersonneCree = website.dao.PersonneDAO
+					.isLoginExist(evenementOpenAGenda.getUidEvent());
+
+			connexion = CxoPool.getConnection();
+			connexion.setAutoCommit(false);
+			if (idpersonneCree == 0) {
+				LOG.info("Cree personne");
+
+				String requete = "INSERT into personne ( prenom, login,ville,photo,latitude,longitude,latitudefixe,longitudefixe,typeuser,sexe,photosmall,actif,verrouille)"
+						+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				preparedStatement = connexion.prepareStatement(requete,
+						Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, prenom);
+				preparedStatement.setString(2, login);
+				preparedStatement.setString(3, ville);
+				preparedStatement.setString(4, photo);
+				preparedStatement.setDouble(5, latitude);
+				preparedStatement.setDouble(6, longitude);
+				preparedStatement.setDouble(7, latitudeFixe);
+				preparedStatement.setDouble(8, longitudeFixe);
+				preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+				preparedStatement.setInt(10, 1);
+				preparedStatement.setString(11, photoReduite);
+				preparedStatement.setBoolean(12, true);
+				preparedStatement.setBoolean(13, false);
+				preparedStatement.execute();
+
+				ResultSet rs = preparedStatement.getGeneratedKeys();
+
+				if (rs.next())
+					idpersonneCree = rs.getInt("idpersonne");
+
+				preparedStatement.close();
+				connexion.commit();
+
+			}
+
+			// Recupere toutes les ID de la base
+
+			if (PersonneDAO.isPseudoExist(login))
+				return;
+
+			
+			if (ActiviteDAO.isDejaExits(latitude, longitude, debut, fin))
+				return;
+
+			String requete = "INSERT into activite ( titre, adresse,latitude,longitude,datedebut,datefin,"
+					+ "idpersonne,libelle,typeuser,actif,typeacces,idtypeactivite,descriptionall,idactiviteopen)"
+					+ "	VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			preparedStatement = connexion.prepareStatement(requete);
+			preparedStatement.setString(1, titre);
+			preparedStatement.setString(2, adresse);
+			preparedStatement.setDouble(3, latitude);
+			preparedStatement.setDouble(4, longitude);
+			preparedStatement.setTimestamp(5,
+					new java.sql.Timestamp(debut.getTime()));
+			preparedStatement.setTimestamp(6,
+					new java.sql.Timestamp(fin.getTime()));
+			preparedStatement.setInt(7, idpersonneCree);
+			preparedStatement.setString(8, libelle);
+			preparedStatement.setInt(9, ProfilBean.CARPEDIEM);
+			boolean active = true;
+			// int idTypeActivite = TypeActivite.OPEN_AGENDA;
+			int idTypeActivite = 1;
+			preparedStatement.setBoolean(10, active);
+			preparedStatement.setInt(11, 2);
+			preparedStatement.setInt(12, idTypeActivite);
+			preparedStatement.setString(13, fulldescription);
+			preparedStatement.setString(14, evenementOpenAGenda.getUidEvent());
+			preparedStatement.execute();
+			LOG.info("Activite ajoutée");
+			connexion.commit();
+			preparedStatement.close();
+
+			connexion.close();
+			preparedStatement.close();
+
+		} catch (NamingException | SQLException | IOException e) {
+
+			LOG.error(ExceptionUtils.getStackTrace(e));
+			try {
+				if (connexion != null)
+					connexion.rollback();
+			} catch (SQLException e1) {
+
+				LOG.error(ExceptionUtils.getStackTrace(e1));
+			}
+
+		} finally {
+
+			CxoPool.close(connexion, preparedStatement);
+
+		}
+
+	}
 
 }

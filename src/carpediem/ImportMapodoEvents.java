@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -55,6 +57,18 @@ public class ImportMapodoEvents implements Runnable {
 
 	public void start() {
 
+		ArrayList<String> villes=new ArrayList<String>();
+		villes.add("paris");
+		villes.add("toulouse");
+		villes.add("nantes");
+		villes.add("montpellier");
+		villes.add("nice");
+		villes.add("rennes");
+		villes.add("bordeaux");
+		villes.add("limoges");
+		villes.add("nimes");
+	
+		for (String ville:villes){
 		
 		int limit = 100;
 		int offset = 1;
@@ -91,10 +105,14 @@ public class ImportMapodoEvents implements Runnable {
 			}
 
 		}
+		}
 		
+		System.out.println("***********************"+listUUID.size());
+	
+		ExecutorService executor = Executors.newFixedThreadPool(3);
 		for (String uuid:listUUID){
 			
-			new ImportMapadoEvent(access_token, uuid).start();
+			executor.execute(new ImportMapadoEvent(access_token, uuid));
 			
 		}
 	

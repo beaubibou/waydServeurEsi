@@ -92,58 +92,71 @@ public class ImportCarpeDiem extends HttpServlet {
 		String jeton = request.getParameter("token");
 
 		String action = request.getParameter("action");
-		
 
 		switch (action) {
 
 		case ACTION_CHARGE_CARPEDIEM:
 			LOG.info("CHARGE CARPEDIEM ");
-			 executer(jeton);
-		
+			executer(jeton);
+
 			break;
 
-			
 		case ACTION_CHARGE_EVENT_FACEBOOK:
-			
+
 			LOG.info("CHARGE EVNETS FB");
-		
+
+			// String listevents = request.getParameter("listevents");
+			ExecutorService executor = Executors
+					.newFixedThreadPool(THREAD_SIMULTANEE);
+			// jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
+			// String[] listEvent = listevents.split(" ");
+			// for (int courant = 0; courant < listEvent.length; courant++) {
+			//
+			// LOG.info("Charge THREAD:"+courant+"/"+listevents.length());
+			//
+			// executor.execute(new ImportFaceBook(listEvent[courant],
+			// jeton,listEvent.length,courant));
+			// }
+
+			// executor.execute(new ImportFaceBookUser( jeton,"paris"));
+			// executor.execute(new
+			// ImportOpenAgendaEvent("261c569041f74c8180088cda3e47b375",
+			// "19133512"));
+			// new ImportOpenAgendaAgenda("261c569041f74c8180088cda3e47b375",
+			// "50522407").start();
+
+			// new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375",
+			// "01/10/2018-01/01/2019").start();
+while(true){
 			
-		//	String listevents = request.getParameter("listevents");
-			ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIMULTANEE);
-		//	jeton="EAACEdEose0cBAC5nW0ZBMwcnm2EoZBrVahw76clbe72jIWb0t4C5I4g7ZChETfhf1Om49DwTx6jfGdcepS4dyV9pvhSjRtzn1YaPAdZCQW5jxOfHIysBZClJeMFXiOcsrKllhdFgT94mSKZAnxC7X2mmwEuQENN98a31iD2x2dgkw0701D0YZCxMpRZAc0YcDdsZD";
-//			String[] listEvent = listevents.split(" ");
-//			for (int courant = 0; courant < listEvent.length; courant++) {
-//
-//				LOG.info("Charge THREAD:"+courant+"/"+listevents.length());
-//			
-//				executor.execute(new ImportFaceBook(listEvent[courant], jeton,listEvent.length,courant));
-//			}
-		
-		//	executor.execute(new ImportFaceBookUser( jeton,"paris"));
-		//	executor.execute(new ImportOpenAgendaEvent("261c569041f74c8180088cda3e47b375", "19133512"));
-		//	new ImportOpenAgendaAgenda("261c569041f74c8180088cda3e47b375", "50522407").start();
+			new ImportMapodoEvents("paris", "today").start();
+			new ImportMapodoEvents("paris", "tomorrow").start();
+			new ImportMapodoEvents("paris", "soon").start();
 			
-		//	new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "01/10/2018-01/01/2019").start();
-//			for (int f=0;f<300;f++)
-//			executor.execute(new ImportOpenAgendaEvents("261c569041f74c8180088cda3e47b375", "19133512",1000*f,(f+1)*1000));
-////			
-//			executor.shutdown();
-//			
-//			while(!executor.isTerminated()){
-//				
-//			 }
-//			
-	new ImportMapodoEvents("paris", "today").start();
-	//new ImportMapadoEvent("NmIwNDQwMDhhZTY0NDU3ZGY4ZjI3Nzk4YjQ3MDRkOTU0ZGQxNGE4MzI5OWU4OTNiZDg0ODExZjFmMWQwOTU1Yw", "33a3044f-347b-41d1-b099-6af03c214bfe").start();
-			break;
+		
+			for (int f = 0; f < 200; f++)
+				executor.execute(new ImportOpenAgendaEvents(
+						"261c569041f74c8180088cda3e47b375", "19133512",
+						1000 * f, (f + 1) * 1000));
+
+			executor.shutdown();
+			//
+			while (!executor.isTerminated()) {
+
+			}
+}
+			//
+
+			// new
+			// ImportMapadoEvent("ODJjZTY5ODQzZTExNmYwNzVlZDVjYTY4MjM1MTIwOWNhNTkyNGU0ZmQ2NmQ3YzA5NTU5MzQ3NzI2Njg4YzcwMA",
+			// "33a3044f-347b-41d1-b099-6af03c214bfe").start();
+			// break;
 
 		}
-		request.getRequestDispatcher("Acceuil").forward(request,
-				response);
+		request.getRequestDispatcher("Acceuil").forward(request, response);
 
-		
 		// executer(jeton);
-			//
+		//
 		// for (int f=0;f<10;f++){
 		//
 		// executor.execute(new Import(f));

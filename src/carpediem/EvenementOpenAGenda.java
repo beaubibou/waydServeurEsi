@@ -189,6 +189,12 @@ public class EvenementOpenAGenda {
 		website.dao.ActiviteDAO.ajouteEvenementOpenAgenda(this);
 
 	}
+	
+	public void ajouteDAO(Date debut,Date fin) {
+
+		website.dao.ActiviteDAO.ajouteEvenementMapado(this,debut,fin);
+
+	}
 
 	public boolean isExistEvenement(Date dateDebut, Date dateFin) {
 
