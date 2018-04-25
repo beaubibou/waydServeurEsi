@@ -95,7 +95,7 @@ public class ImportMapadoEvent implements Runnable {
 			formatted_schedule = json.getString("formatted_schedule");
 
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
 
 		try {
@@ -104,7 +104,7 @@ public class ImportMapadoEvent implements Runnable {
 
 			freetext = freetext + "\n" + formatted_schedule;
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
 
 		try {
@@ -112,7 +112,7 @@ public class ImportMapadoEvent implements Runnable {
 			description = json.getString("short_description");
 
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
 
 		try {
@@ -133,7 +133,7 @@ public class ImportMapadoEvent implements Runnable {
 			image = json.getString("image");
 
 		} catch (Exception e) {
-
+e.printStackTrace();
 		}
 
 		try {
@@ -148,11 +148,11 @@ public class ImportMapadoEvent implements Runnable {
 			e.printStackTrace();
 		}
 
-		LOG.info("image:" + image);
+		//LOG.info("image:" + image);
 		LOG.info("TITRE:" + titre);
-		LOG.info("Description:" + description);
-		LOG.info("freeText:" + freetext);
-		LOG.info("nomlieu:" + nomLieu);
+	//	LOG.info("Description:" + description);
+		//LOG.info("freeText:" + freetext);
+	//	LOG.info("nomlieu:" + nomLieu);
 		LOG.info("latitude:" + latitude);
 		LOG.info("longitude:" + longitude);
 		 evenement = new EvenementOpenAGenda("0", uidEvenement, titre,

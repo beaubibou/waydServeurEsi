@@ -65,6 +65,8 @@ public class ImportMapodoEvents implements Runnable {
 		villes.add("bordeaux");
 		villes.add("limoges");
 		villes.add("nimes");
+		villes.add("marseille");
+		villes.add("lyon");
 
 		for (String ville : villes) {
 

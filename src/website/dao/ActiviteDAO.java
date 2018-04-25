@@ -3266,8 +3266,8 @@ public class ActiviteDAO {
 					+ evenementOpenAGenda.getNomLieu();
 
 			
-		//	BufferedImage imageNormal = Outils.getImageMapodoFromURL(photoUrl);
-			BufferedImage imageNormal =Thumbnails.of(photoUrl).asBufferedImage();
+			BufferedImage imageNormal = Outils.getImageMapodoFromURL(photoUrl);
+		//	BufferedImage imageNormal =Thumbnails.of(photoUrl).asBufferedImage();
 			String photo = "";
 			BufferedImage buffphotoReduite;
 			String photoReduite = "";
