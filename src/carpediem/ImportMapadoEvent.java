@@ -30,7 +30,7 @@ public class ImportMapadoEvent implements Runnable {
 
 		this.access_token = acces_token;
 		this.uuid = uuid;
-		
+
 	}
 
 	public void start() {
@@ -47,7 +47,7 @@ public class ImportMapadoEvent implements Runnable {
 
 			} catch (Exception e) {
 				LOG.error(e.getMessage());
-			
+
 			}
 		}
 
@@ -70,7 +70,7 @@ public class ImportMapadoEvent implements Runnable {
 		String formatted_schedule = "";
 		String datedebutstr = "";
 
-		Date dateDebut = null, dateFin=null;
+		Date dateDebut = null, dateFin = null;
 
 		try {
 			nomLieu = json.getString("front_place_name");
@@ -95,7 +95,7 @@ public class ImportMapadoEvent implements Runnable {
 			formatted_schedule = json.getString("formatted_schedule");
 
 		} catch (Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		try {
@@ -104,7 +104,7 @@ e.printStackTrace();
 
 			freetext = freetext + "\n" + formatted_schedule;
 		} catch (Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		try {
@@ -112,7 +112,7 @@ e.printStackTrace();
 			description = json.getString("short_description");
 
 		} catch (Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		try {
@@ -124,7 +124,7 @@ e.printStackTrace();
 			DateTime finale = datefinDt.withHourOfDay(23).withMinuteOfHour(59)
 					.withSecondOfMinute(59);
 			dateFin = finale.toDate();
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,7 +133,7 @@ e.printStackTrace();
 			image = json.getString("image");
 
 		} catch (Exception e) {
-e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		try {
@@ -148,24 +148,25 @@ e.printStackTrace();
 			e.printStackTrace();
 		}
 
-		//LOG.info("image:" + image);
+		// LOG.info("image:" + image);
 		LOG.info("TITRE:" + titre);
-	//	LOG.info("Description:" + description);
-		//LOG.info("freeText:" + freetext);
-	//	LOG.info("nomlieu:" + nomLieu);
+		// LOG.info("Description:" + description);
+		// LOG.info("freeText:" + freetext);
+		// LOG.info("nomlieu:" + nomLieu);
 		LOG.info("latitude:" + latitude);
 		LOG.info("longitude:" + longitude);
-		 evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
-		 description, freetext, adress, latitude, longitude, image, lienurl, ville, nomLieu);
+		evenement = new EvenementOpenAGenda("0", uidEvenement, titre,
+				description, freetext, adress, latitude, longitude, image,
+				lienurl, ville, nomLieu);
 
-		 try {
-			if (!valideActivite(dateDebut, dateFin)) return;
+		try {
+			if (!valideActivite(dateDebut, dateFin))
+				return;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	
-		 evenement.ajouteDAO(dateDebut,dateFin);
-		
+
+		evenement.ajouteDAO(dateDebut, dateFin);
 
 	}
 
@@ -190,6 +191,7 @@ e.printStackTrace();
 		return formatter.parse(datetmp);
 
 	}
+
 	public String getFile() {
 
 		BufferedReader br;

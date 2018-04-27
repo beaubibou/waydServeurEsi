@@ -3319,7 +3319,7 @@ public class ActiviteDAO {
 					idpersonneCree = rs.getInt("idpersonne");
 
 				preparedStatement.close();
-				connexion.commit();
+			//	connexion.commit();
 
 			}
 
@@ -3352,9 +3352,7 @@ public class ActiviteDAO {
 			preparedStatement.execute();
 			LOG.info("Activite ajoutée");
 			connexion.commit();
-			connexion.close();
-			preparedStatement.close();
-
+		
 		} catch (NamingException | SQLException | IOException e) {
 
 			LOG.error(ExceptionUtils.getStackTrace(e));

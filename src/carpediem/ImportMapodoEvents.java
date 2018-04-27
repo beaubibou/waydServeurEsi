@@ -28,6 +28,9 @@ public class ImportMapodoEvents implements Runnable {
 			.getLogger(ImportMapodoEvents.class);
 	private static String REQUETE_ACCESS_TOKEN = "https://oauth2.mapado.com/oauth/v2/token?client_id=454_2bn7u2t8g3dwkss4ogwkco4ow8wws4ocossw8wc40o0gw4kgwk&client_secret=3qxhc5jhr04kw8cswkc04oos4kgcw4gok0csc8s88go8kwcc4c&grant_type=password&username=pmestivier@club.fr&password=azerty";
 	private static String REQUETE_EVENT = "https://api.mapado.com/v1/activities?access_token=montoken&offset=monoffset&limit=malimite&q=maville&when=monwhen";
+	private static String REQUETE_EVENT_POSITION = "https://api.mapado.com/v1/activities?access_token"
+			+ "=montoken&offset=monoffset&limit=malimite&latlng=malatlng&distance=auto&when=monwhen";
+	
 	private ArrayList<String> listUUID = new ArrayList<String>();
 
 	public ImportMapodoEvents(String ville, String when) {
@@ -56,17 +59,17 @@ public class ImportMapodoEvents implements Runnable {
 	public void start() {
 
 		ArrayList<String> villes = new ArrayList<String>();
-		villes.add("paris");
-		villes.add("toulouse");
-		villes.add("nantes");
-		villes.add("montpellier");
-		villes.add("nice");
-		villes.add("rennes");
-		villes.add("bordeaux");
-		villes.add("limoges");
-		villes.add("nimes");
-		villes.add("marseille");
-		villes.add("lyon");
+//		villes.add("paris");
+//		villes.add("toulouse");
+//		villes.add("nantes");
+//		villes.add("montpellier");
+//		villes.add("nice");
+//		villes.add("rennes");
+//		villes.add("bordeaux");
+//		villes.add("limoges");
+//		villes.add("nimes");
+//		villes.add("marseille");
+//		villes.add("lyon");
 
 		for (String ville : villes) {
 
@@ -106,6 +109,54 @@ public class ImportMapodoEvents implements Runnable {
 
 		}
 
+		ArrayList<VillePosition> villePositions = new ArrayList<VillePosition>();
+		villePositions.add(new VillePosition("paris", 48.8667, 2.3333));
+		villePositions.add(new VillePosition("lyon", 45.76, 4.83));
+		villePositions.add(new VillePosition("marseille", 43.29, 5.36));
+		villePositions.add(new VillePosition("rennes", 48.11, -1.67));
+		villePositions.add(new VillePosition("nantes", 47.21, -1.55));
+		villePositions.add(new VillePosition("montpellier", 43.61, 3.87));
+		villePositions.add(new VillePosition("bordeaux", 44.83, -0.57));
+		villePositions.add(new VillePosition("nimes", 43.83, 4.360));
+	
+		for (VillePosition villeposition : villePositions) {
+
+			int limit = 100;
+			int offset = 1;
+
+			boolean stop = false;
+			while (!stop) {
+
+				try {
+
+					JSONObject json;
+
+					String urlString = REQUETE_EVENT_POSITION
+							.replace("montoken", access_token)
+							.replace("monoffset", Integer.toString(offset))
+							.replace("malimite", Integer.toString(limit))
+							.replace("monwhen", when).replace("malatlng", villeposition.getPosition());
+					LOG.info(urlString);
+					json = Outils.getJsonFromUrl(urlString);
+					JSONArray arrayData = json.getJSONArray("data");
+
+					if (arrayData.length() == 0) {
+						LOG.info("********** stop");
+						stop = true;
+					} else {
+						getEvenements(json);
+						offset = offset + 100;
+					}
+
+				} catch (Exception e) {
+					LOG.error(e.getMessage());
+					stop = true;
+				}
+
+			}
+
+		}
+	
 		int ajout = 0;
 	
 		for (String uuid : listUUID) {
@@ -133,7 +184,8 @@ public class ImportMapodoEvents implements Runnable {
 			try {
 				data = arrayData.getJSONObject(j);
 				String uidEvenement = data.getString("uuid");
-				listUUID.add(uidEvenement);
+				//listUUID.add(uidEvenement);
+				ajouteUUID(listUUID,uidEvenement);
 			} catch (JSONException e1) {
 			
 				LOG.error(e1.getMessage());
@@ -142,6 +194,19 @@ public class ImportMapodoEvents implements Runnable {
 
 		}
 
+	}
+
+	private void ajouteUUID(ArrayList<String> listUUID2, String uidEvenement) {
+	
+		boolean contient=false;
+		for (String uuid:listUUID2){
+			if (uuid.equals(uidEvenement))
+				contient=true;
+		}
+			
+		if (!contient)
+			listUUID2.add(uidEvenement);
+		
 	}
 
 	public static boolean valideActivite(Date debut, Date fin)
